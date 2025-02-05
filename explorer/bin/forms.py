@@ -4,7 +4,7 @@ def print_all_forms(forms):
         print(f"{form['document-url']}\n")
 
 
-def form_details(form):
+def form_details(form, modules=None):
     print("===")
     print("Form")
     print("===")
@@ -21,7 +21,21 @@ def form_details(form):
     print("===")
     print(form['document-url'])
 
+    if modules:
+        print("\nModules (in form)")
+        print("===")
+        for module in modules:
+            print(module['name'])
+
+
 
 def get_forms_by_app_type(app_type, forms):
     return [form for form in forms if app_type in form['application-types'].split(';')]
+
+
+def get_form(ref, forms):
+    matches = [form for form in forms if ref == form['reference']]
+    if matches:
+        return matches[0]
+    return None
 

@@ -9,5 +9,10 @@ def load_forms():
     return read_csv("../data/planning-application-form.csv", as_dict=True)
 
 
+def load_modules():
+    modules = read_csv("../data/planning-application-module.csv", as_dict=True)
+    return sorted(modules, key=lambda x: x["name"])
+
+
 def load_all():
-    return load_app_types(), load_forms()
+    return load_app_types(), load_forms(), load_modules()
