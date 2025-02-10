@@ -2,7 +2,7 @@
 
 import click
 
-from bin.application_types import print_all, overview
+from bin.application_types import print_all, app_type_overview
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form
 from bin.loader import load_all
 
@@ -24,7 +24,7 @@ def cli():
     help="Print all references in alphabetical order",
 )
 def app_type(ref, all):
-    application_types, forms, modules = load_all()
+    application_types, forms, modules, app_mod_joins = load_all()
 
     if all:
         refs = sorted(app["reference"] for app in application_types)
@@ -34,9 +34,11 @@ def app_type(ref, all):
         return
 
     if ref:
-        overview(application_types[0])
+        app_modules = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref]
+        application_types[0]["modules"] = app_modules
+        app_type_overview(application_types[0])
     else:
-        all(application_types)
+        print_all(application_types)
         print(f"\nForms: {len(forms)}")
 
 

@@ -14,5 +14,10 @@ def load_modules():
     return sorted(modules, key=lambda x: x["name"])
 
 
+def load_app_modules():
+    joins = read_csv("../data/application-type-module.csv", as_dict=True)
+    return joins
+
+
 def load_all():
-    return load_app_types(), load_forms(), load_modules()
+    return load_app_types(), load_forms(), load_modules(), load_app_modules()
