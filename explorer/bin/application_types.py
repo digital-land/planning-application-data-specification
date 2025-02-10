@@ -1,4 +1,4 @@
-def all(app_types):
+def print_all(app_types):
     print("===")
     print("All application types")
     print("===")

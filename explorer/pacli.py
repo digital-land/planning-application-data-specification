@@ -2,7 +2,7 @@
 
 import click
 
-from bin.application_types import all, overview
+from bin.application_types import print_all, overview
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form
 from bin.loader import load_all
 
@@ -18,8 +18,20 @@ def cli():
     type=str,
     help="Reference of application type",
 )
-def app_type(ref):
+@click.option(
+    "--all",
+    is_flag=True,
+    help="Print all references in alphabetical order",
+)
+def app_type(ref, all):
     application_types, forms, modules = load_all()
+
+    if all:
+        refs = sorted(app["reference"] for app in application_types)
+        print("\nAll References:\n---")
+        for r in refs:
+            print(r)
+        return
 
     if ref:
         overview(application_types[0])
