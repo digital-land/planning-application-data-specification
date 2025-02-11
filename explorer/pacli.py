@@ -3,6 +3,7 @@
 import click
 
 from bin.application_types import print_all, app_type_overview
+from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form
 from bin.loader import load_all
 
@@ -54,7 +55,7 @@ def app_type(ref, all):
     help="Reference of application form",
 )
 def form(app_type, form_ref):
-    application_types, forms, modules = load_all()
+    application_types, forms, modules, app_mod_joins = load_all()
 
     if app_type:
         print("===")
@@ -68,6 +69,51 @@ def form(app_type, form_ref):
     else:
         print_all_forms(forms)
 
+
+@cli.command(name="csv")
+@click.option(
+    "--filename",
+    type=str,
+    help="CSV file to read",
+)
+@click.option(
+    "--fieldname",
+    type=str,
+    help="Fieldname for performing action",
+)
+@click.option(
+    "--action",
+    type=click.Choice(['sort'], case_sensitive=False),
+    help="Action to perform on the CSV file",
+)
+@click.option(
+    "--col-order",
+    type=str,
+    help="Order of columns in output",
+)
+def csv(filename, fieldname, action, col_order):
+    if not filename:
+        print("Please provide a filename")
+        return
+    
+    data = read_csv(filename, as_dict=True)
+
+    if not fieldname:
+        print("Please provide a fieldname")
+        return
+    if fieldname not in data[0].keys():
+        print(f"fieldname {fieldname} is not a field in this file")
+        return
+
+    if action == 'sort':
+        # sort by the field given
+        sorted_data = sorted(data, key=lambda x: x[fieldname])
+        if col_order:
+            write_csv(sorted_data, output_file=filename, first_headers=col_order.split(','), final_headers=[])
+            return
+        write_csv(sorted_data, output_file=filename, final_headers=[])
+    else:
+        print(f"Action {action} is not supported")
 
 
 if __name__ == "__main__":
