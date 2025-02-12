@@ -1,7 +1,8 @@
 def print_all_forms(forms):
     for form in forms:
-        print(f"{form['name']} (ref: {form['reference']}) - for app-types: {form['application-types']}")
-        print(f"{form['document-url']}\n")
+        print(f"{form['name']} (ref: {form['reference']})")
+        print(f"Covers app-types: {form['application-types']}")
+        print(f"URL: {form['document-url']}\n")
 
 
 def form_details(form, modules=None):
