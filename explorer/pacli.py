@@ -35,9 +35,13 @@ def app_type(ref, all):
         return
 
     if ref:
+        app_type = next((app for app in application_types if app["reference"] == ref), None)
+        if not app_type:
+            print(f"Application type {ref} not found")
+            return
         app_modules = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref]
-        application_types[0]["modules"] = app_modules
-        app_type_overview(application_types[0])
+        app_type["modules"] = app_modules
+        app_type_overview(app_type)
     else:
         print_all(application_types)
         print(f"\nForms: {len(forms)}")
