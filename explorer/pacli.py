@@ -58,7 +58,12 @@ def app_type(ref, all):
     type=str,
     help="Reference of application form",
 )
-def form(app_type, form_ref):
+@click.option(
+    "--module-name",
+    type=str,
+    help="Name of a module or section present in forms",
+)
+def form(app_type, form_ref, module_name):
     application_types, forms, modules, app_mod_joins = load_all()
 
     if app_type:
@@ -67,11 +72,25 @@ def form(app_type, form_ref):
         print("===")
         # TO DO: check it is legit app type
         print_all_forms(get_forms_by_app_type(app_type, forms))
-    elif form_ref:
+        return
+
+    if form_ref:
         applicable_modules = [module for module in modules if form_ref in module['application-forms'].split(';')]
         form_details(get_form(form_ref, forms), modules=applicable_modules)
-    else:
-        print_all_forms(forms)
+        return
+
+    if module_name:
+        module = next((module for module in modules if module["name"] == module_name), None)
+        if not module:
+            print(f"Module {module_name} not found")
+            return
+        matching_form_refs = module['application-forms'].split(';')
+        forms_with_module = [get_form(ref, forms) for ref in matching_form_refs]
+        print(f"Forms with module = {len(forms_with_module)}\n---")
+        print_all_forms(forms_with_module)
+        return
+
+    print_all_forms(forms)
 
 
 @cli.command(name="csv")
