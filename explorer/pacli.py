@@ -63,7 +63,12 @@ def app_type(ref, all):
     type=str,
     help="Name of a module or section present in forms",
 )
-def form(app_type, form_ref, module_name):
+@click.option(
+    "--not-in",
+    is_flag=True,
+    help="Only show forms --module-name is not in",
+)
+def form(app_type, form_ref, module_name, not_in):
     application_types, forms, modules, app_mod_joins = load_all()
 
     if app_type:
@@ -80,14 +85,20 @@ def form(app_type, form_ref, module_name):
         return
 
     if module_name:
+        print(f"\nModule: {module_name}\n\n")
         module = next((module for module in modules if module["name"] == module_name), None)
         if not module:
             print(f"Module {module_name} not found")
             return
-        matching_form_refs = module['application-forms'].split(';')
-        forms_with_module = [get_form(ref, forms) for ref in matching_form_refs]
-        print(f"Forms with module = {len(forms_with_module)}\n---")
-        print_all_forms(forms_with_module)
+        form_refs = module['application-forms'].split(';')
+        if not_in:
+            form_refs = list(set([_f['reference'] for _f in forms]) - set(form_refs))
+            print(f"not in {len(form_refs)} forms\n---")
+        else:
+            print(f"in {len(form_refs)} forms\n---")
+
+        filtered_forms = [get_form(ref, forms) for ref in form_refs]
+        print_all_forms(filtered_forms)
         return
 
     print_all_forms(forms)
