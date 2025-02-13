@@ -3,6 +3,10 @@ def print_all_forms(forms):
         print(f"{form['name']} (ref: {form['reference']})")
         print(f"Covers app-types: {form['application-types']}")
         print(f"URL: {form['document-url']}\n")
+    print("================================================")
+    app_types = [form['application-types'] for form in forms]
+    flattened_app_types = sorted(set([app_type for types in app_types for app_type in types.split(';')]))
+    print(f"Application types covered by forms: {';'.join(flattened_app_types)}")
 
 
 def form_details(form, modules=None):
