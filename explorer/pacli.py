@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
 import click
+from datetime import datetime
 
 from bin.application_types import print_all, app_type_overview
 from bin.csv_helpers import read_csv, write_csv
-from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form
+from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
 
 
@@ -102,6 +103,55 @@ def form(app_type, form_ref, module_name, not_in):
         return
 
     print_all_forms(forms)
+
+
+@cli.command(name="module")
+@click.option(
+    "--ref",
+    type=str,
+    help="Reference of module",
+)
+@click.option(
+    "--show",
+    type=click.Choice(['form', 'app-types'], case_sensitive=False),
+    help="Show either forms or application types covered by the module",
+)
+@click.option(
+    "--make",
+    is_flag=True,
+    help="Helps make records for module - application type dataset",
+)
+def module(ref, show, make):
+    application_types, forms, modules, app_mod_joins = load_all()
+
+    if not show and not make:
+        print("Please provide either --show or --make option")
+        return
+
+    if ref:
+        module = next((module for module in modules if module["reference"] == ref), None)
+        if not module:
+            print(f"Module {ref} not found")
+            return
+        print(f"\nModule: {module['name']} (ref: {module['reference']})")
+        
+        app_types_covered = get_app_types_covered(get_forms(module['application-forms'].split(';'), forms))
+
+        if show == 'form':
+            print(f"Forms: {module['application-forms']}")
+        elif show == 'app-types':
+            print(f"Application types (as per the forms) with module: {';'.join(app_types_covered)}")
+        
+        # temp option whilst making this dataset
+        if make:
+            print("\nPotential entries to application-type-module dataset:\n")
+            today = datetime.today().strftime('%Y-%m-%d')
+            for app_type in app_types_covered:
+                print(f"{app_type}-{module['reference']},{app_type},{module['reference']},{today},")
+    else:
+        print("Modules:")
+        for module in modules:
+            print(f"{module['name']} (ref: {module['reference']})")
 
 
 @cli.command(name="csv")
