@@ -44,3 +44,13 @@ def get_form(ref, forms):
         return matches[0]
     return None
 
+
+def get_forms(refs, forms):
+    matched_forms = [get_form(ref, forms) for ref in refs]
+    return matched_forms
+
+
+def get_app_types_covered(forms):
+    app_types = [form['application-types'] for form in forms]
+    flattened_app_types = sorted(set([app_type for types in app_types for app_type in types.split(';')]))
+    return flattened_app_types
