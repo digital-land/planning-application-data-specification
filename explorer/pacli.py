@@ -114,7 +114,7 @@ def form(app_type, form_ref, module_name, not_in):
 )
 @click.option(
     "--show",
-    type=click.Choice(['form', 'app-types'], case_sensitive=False),
+    type=click.Choice(['form', 'app-types', 'summary', 'all'], case_sensitive=False),
     help="Show either forms or application types covered by the module",
 )
 @click.option(
@@ -150,9 +150,16 @@ def module(ref, show, make):
             for app_type in app_types_covered:
                 print(f"{app_type}-{module['reference']},{app_type},{module['reference']},{today},")
     else:
-        print("Modules:")
-        for module in modules:
-            print(f"{module['name']} (ref: {module['reference']})")
+        print(f"---\n{len(modules)} Modules\n---\n")
+        if show == 'all':
+            print("All:\n")
+            for module in modules:
+                print(f"{module['name']} (ref: {module['reference']})")
+        if show == 'summary':
+            modules_without_end_date = [module for module in modules if not module.get("end-date")]
+            print(f"Modules with end-date: {len(modules) - len(modules_without_end_date)}")
+            modules_with_refs = [module for module in modules_without_end_date if module["reference"] and module["reference"] != ""]
+            print(f"Modules with references: {len(modules_with_refs)}")
 
 
 @cli.command(name="csv")
