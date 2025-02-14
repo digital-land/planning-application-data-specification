@@ -22,11 +22,16 @@ def cli():
     help="Reference of application type",
 )
 @click.option(
+    "--refs",
+    type=str,
+    help="References of application types",
+)
+@click.option(
     "--all",
     is_flag=True,
     help="Print all references in alphabetical order",
 )
-def app_type(ref, all):
+def app_type(ref, refs, all):
     application_types, forms, modules, app_mod_joins = load_all()
 
     if all:
@@ -34,6 +39,12 @@ def app_type(ref, all):
         print("\nAll References:\n---")
         for r in refs:
             print(r)
+        return
+    
+    if refs:
+        refs = refs.split(';')
+        matching_app_types = [app for r in refs for app in application_types if app["reference"] == r]
+        print_all(matching_app_types)
         return
 
     if ref:
