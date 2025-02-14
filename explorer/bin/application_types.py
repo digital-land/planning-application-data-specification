@@ -22,4 +22,4 @@ def app_type_overview(app_type):
     if app_type.get("modules"):
         print("\nModules\n---")
         for module in app_type["modules"]:
-            print(module)
+            print(f"{module['name']} ({module['reference']})")

@@ -7,6 +7,7 @@ from bin.application_types import print_all, app_type_overview
 from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
+from bin.modules import get_modules
 
 
 @click.group()
@@ -40,8 +41,8 @@ def app_type(ref, all):
         if not app_type:
             print(f"Application type {ref} not found")
             return
-        app_modules = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref]
-        app_type["modules"] = app_modules
+        app_module_refs = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref]
+        app_type["modules"] = get_modules(app_module_refs, modules)
         app_type_overview(app_type)
     else:
         print_all(application_types)
