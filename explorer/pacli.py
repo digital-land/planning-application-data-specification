@@ -39,11 +39,13 @@ def app_type(ref, refs, all):
         print("\nAll References:\n---")
         for r in refs:
             print(r)
+        print("----------------")
+        print(f"All application type references: {';'.join(refs)}")
         return
     
     if refs:
         refs = refs.split(';')
-        matching_app_types = [app for r in refs for app in application_types if app["reference"] == r]
+        matching_app_types = sorted([app for r in refs for app in application_types if app["reference"] == r], key=lambda x: x['name'])
         print_all(matching_app_types)
         return
 
@@ -133,7 +135,12 @@ def form(app_type, form_ref, module_name, not_in):
     is_flag=True,
     help="Helps make records for module - application type dataset",
 )
-def module(ref, show, make):
+@click.option(
+    "--app-types",
+    type=str,
+    help="List of application types separated by ';' to use instead of app_types_covered",
+)
+def module(ref, show, make, app_types):
     application_types, forms, modules, app_mod_joins = load_all()
 
     if not show and not make:
@@ -158,8 +165,10 @@ def module(ref, show, make):
         if make:
             print("\nPotential entries to application-type-module dataset:\n")
             today = datetime.today().strftime('%Y-%m-%d')
+            if app_types:
+                app_types_covered = app_types.split(';')
             for app_type in app_types_covered:
-                print(f"{app_type}-{module['reference']},{app_type},{module['reference']},{today},")
+                print(f"{app_type}-{module['reference']},{app_type},{module['reference']},{today},,")
     else:
         print(f"---\n{len(modules)} Modules\n---\n")
         if show == 'all':

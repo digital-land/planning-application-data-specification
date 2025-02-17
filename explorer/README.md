@@ -1,8 +1,22 @@
 
+## Application types
+
 Show details about an application type. Details include name, reference, description, legislation and modules required.
 
 ```
 python pacli.py app-type --ref {app_ref} 
+```
+
+Show list of application types if you have a list of refs
+```
+python pacli.py app-type --refs "advertising;demolition-con-area;extraction-oil-gas;full;hh;lbc;outline"
+```
+
+## Form
+
+List all the forms a named module appears in
+```
+python pacli.py form --module-name "Planning application requirements - checklist"  
 ```
 
 
