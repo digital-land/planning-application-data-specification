@@ -3,7 +3,7 @@
 import click
 from datetime import datetime
 
-from bin.application_types import print_all, app_type_overview
+from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules
 from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
@@ -31,7 +31,12 @@ def cli():
     is_flag=True,
     help="Print all references in alphabetical order",
 )
-def app_type(ref, refs, all):
+@click.option(
+    "--combine",
+    type=str,
+    help="References of application types",
+)
+def app_type(ref, refs, all, combine):
     application_types, forms, modules, app_mod_joins = load_all()
 
     if all:
@@ -47,6 +52,16 @@ def app_type(ref, refs, all):
         refs = refs.split(';')
         matching_app_types = sorted([app for r in refs for app in application_types if app["reference"] == r], key=lambda x: x['name'])
         print_all(matching_app_types)
+        return
+
+    if combine:
+        app_types = [app_type for app_type_ref in combine.split(';') if (app_type := get_app_type_from_ref(app_type_ref, application_types)) is not None]
+        app_types = [add_modules(app_type, application_types, app_mod_joins, modules) for app_type in app_types]
+        combined_modules = {module['reference']: module for app_type in app_types for module in app_type['modules']}
+        print(f"Combined application: {' + '.join([at['reference'] for at in app_types])}\n----\n")
+        print("Modules:\n")
+        for module in sorted(combined_modules.values(), key=lambda x: x['name']):
+            print(f"{module['name']} (ref: {module['reference']})")
         return
 
     if ref:

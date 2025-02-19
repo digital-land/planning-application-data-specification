@@ -1,3 +1,5 @@
+from bin.modules import get_modules
+
 def print_all(app_types):
     print("===")
     print("All application types")
@@ -23,3 +25,13 @@ def app_type_overview(app_type):
         print("\nModules\n---")
         for module in app_type["modules"]:
             print(f"{module['name']} ({module['reference']})")
+
+
+def get_app_type_from_ref(app_ref, app_types):
+    return next((app for app in app_types if app["reference"] == app_ref), None)
+
+
+def add_modules(app_type, app_types, app_mod_joins, modules):
+    app_module_refs = [j['application-module'] for j in app_mod_joins if j["application-type"] == app_type['reference']]
+    app_type["modules"] = get_modules(app_module_refs, modules)
+    return app_type
