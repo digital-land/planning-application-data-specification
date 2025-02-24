@@ -142,7 +142,7 @@ def form(app_type, form_ref, module_name, not_in):
 )
 @click.option(
     "--show",
-    type=click.Choice(['form', 'app-types', 'summary', 'all'], case_sensitive=False),
+    type=click.Choice(['form', 'app-types', 'summary', 'all', 'summary-extra'], case_sensitive=False),
     help="Show either forms or application types covered by the module",
 )
 @click.option(
@@ -194,7 +194,13 @@ def module(ref, show, make, app_types):
             modules_without_end_date = [module for module in modules if not module.get("end-date")]
             print(f"Modules with end-date: {len(modules) - len(modules_without_end_date)}")
             modules_with_refs = [module for module in modules_without_end_date if module["reference"] and module["reference"] != ""]
-            print(f"Modules with references: {len(modules_with_refs)}")
+            print(f"Modules with references: {len(modules_with_refs)}")  
+            modules_without_refs = [module for module in modules_without_end_date if not module.get("reference")]
+            print("----")
+            print(f"Modules to do: {len(modules_without_refs)}")
+            print("----")
+            for module in modules_without_refs:
+                print(f"{module['name']} (ref: {module['reference']})")
 
 
 @cli.command(name="csv")
