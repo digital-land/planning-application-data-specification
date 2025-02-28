@@ -30,7 +30,7 @@ def form_details(form, modules=None):
     print(form['document-url'])
 
     if modules:
-        print("\nModules (in form)")
+        print(f"\n{len(modules)} Sections (in form)")
         print("===")
         for module in modules:
             print(f"'{module['name']}'")

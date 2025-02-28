@@ -7,7 +7,7 @@ from bin.application_types import print_all, app_type_overview, get_app_type_fro
 from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
-from bin.modules import get_modules
+from bin.modules import get_modules, get_expected_joins, join_data_maker
 from bin.markdown_helpers import csv_to_markdown
 
 
@@ -116,8 +116,20 @@ def form(app_type, form_ref, module_name, not_in, markdown):
         return
 
     if form_ref:
+        app_form = get_form(form_ref, forms)
+        if not app_form:
+            print(f"Form {form_ref} not found")
+            return
         applicable_modules = [module for module in modules if form_ref in module['application-forms'].split(';')]
         form_details(get_form(form_ref, forms), modules=applicable_modules)
+        
+        if markdown:
+            app_types_covered = app_form['application-types'].split(';')
+            if len(app_types_covered) > 1:
+                print("Form covers multiple application types")
+                return
+            expected_joins = get_expected_joins(app_types_covered[0], applicable_modules, modules)
+            join_data_maker(expected_joins, app_mod_joins)
         return
 
     if module_name:

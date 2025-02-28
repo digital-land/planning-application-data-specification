@@ -22,9 +22,9 @@ def app_type_overview(app_type):
         print(url)
 
     if app_type.get("modules"):
-        print("\nModules\n---")
+        print(f"\n{len(app_type['modules'])} Modules\n---")
         for module in app_type["modules"]:
-            print(f"{module['name']} ({module['reference']})")
+            print(f"{module['name']} (ref: {module['reference']})")
 
 
 def get_app_type_from_ref(app_ref, app_types):
