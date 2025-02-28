@@ -8,6 +8,7 @@ from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
 from bin.modules import get_modules
+from bin.markdown_helpers import csv_to_markdown
 
 
 @click.group()
@@ -98,7 +99,12 @@ def app_type(ref, refs, all, combine):
     is_flag=True,
     help="Only show forms --module-name is not in",
 )
-def form(app_type, form_ref, module_name, not_in):
+@click.option(
+    "--markdown",
+    is_flag=True,
+    help="Print as Markdown text to the terminal",
+)
+def form(app_type, form_ref, module_name, not_in, markdown):
     application_types, forms, modules, app_mod_joins = load_all()
 
     if app_type:
@@ -128,7 +134,7 @@ def form(app_type, form_ref, module_name, not_in):
             print(f"in {len(form_refs)} forms\n---")
 
         filtered_forms = [get_form(ref, forms) for ref in form_refs]
-        print_all_forms(filtered_forms)
+        print_all_forms(filtered_forms, markdown=markdown)
         return
 
     print_all_forms(forms)
@@ -224,12 +230,22 @@ def module(ref, show, make, app_types):
     type=str,
     help="Order of columns in output",
 )
-def csv(filename, fieldname, action, col_order):
+@click.option(
+    "--markdown",
+    is_flag=True,
+    help="Print the CSV as Markdown to the terminal",
+)
+def csv(filename, fieldname, action, col_order, markdown):
     if not filename:
         print("Please provide a filename")
         return
+    print(filename)
     
     data = read_csv(filename, as_dict=True)
+
+    if markdown:
+        print(csv_to_markdown(filename))
+        return
 
     if not fieldname:
         print("Please provide a fieldname")
