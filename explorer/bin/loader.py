@@ -5,6 +5,11 @@ def load_app_types():
     return read_csv("../data/planning-application-type.csv", as_dict=True)
 
 
+def load_sub_types():
+    joins = read_csv("../data/planning-application-sub-type.csv", as_dict=True)
+    return joins
+
+
 def load_forms():
     return read_csv("../data/planning-application-form.csv", as_dict=True)
 
@@ -20,4 +25,4 @@ def load_app_modules():
 
 
 def load_all():
-    return load_app_types(), load_forms(), load_modules(), load_app_modules()
+    return load_app_types(), load_forms(), load_modules(), load_app_modules(), load_sub_types()

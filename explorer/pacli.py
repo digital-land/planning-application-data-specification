@@ -38,7 +38,7 @@ def cli():
     help="References of application types",
 )
 def app_type(ref, refs, all, combine):
-    application_types, forms, modules, app_mod_joins = load_all()
+    application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if all:
         refs = sorted(app["reference"] for app in application_types)
@@ -70,8 +70,18 @@ def app_type(ref, refs, all, combine):
         if not app_type:
             print(f"Application type {ref} not found")
             return
+        # match all joins with app type
         app_module_refs = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref]
         app_type["modules"] = get_modules(app_module_refs, modules)
+        # check if app type has any sub-types
+        sub_types = [j for j in sub_types if j["application-type"] == ref]
+        
+        app_type['sub-types'] = []
+        for sub_type in sub_types:
+            matched_modules = [j['application-module'] for j in app_mod_joins if j["application-sub-type"] == sub_type['reference']]
+            sub_type["modules"] = get_modules(matched_modules, modules)
+            app_type['sub-types'].append(sub_type)
+        
         app_type_overview(app_type)
     else:
         print_all(application_types)
@@ -105,7 +115,7 @@ def app_type(ref, refs, all, combine):
     help="Print as Markdown text to the terminal",
 )
 def form(app_type, form_ref, module_name, not_in, markdown):
-    application_types, forms, modules, app_mod_joins = load_all()
+    application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if app_type:
         print("===")
@@ -174,7 +184,7 @@ def form(app_type, form_ref, module_name, not_in, markdown):
     help="List of application types separated by ';' to use instead of app_types_covered",
 )
 def module(ref, show, make, app_types):
-    application_types, forms, modules, app_mod_joins = load_all()
+    application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if not show and not make:
         print("Please provide either --show or --make option")
