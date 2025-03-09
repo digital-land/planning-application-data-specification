@@ -37,7 +37,12 @@ def cli():
     type=str,
     help="References of application types",
 )
-def app_type(ref, refs, all, combine):
+@click.option(
+    "--markdown",
+    is_flag=True,
+    help="Print as Markdown text to the terminal",
+)
+def app_type(ref, refs, all, combine, markdown):
     application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if all:
@@ -82,7 +87,7 @@ def app_type(ref, refs, all, combine):
             sub_type["modules"] = get_modules(matched_modules, modules)
             app_type['sub-types'].append(sub_type)
         
-        app_type_overview(app_type)
+        app_type_overview(app_type, markdown=markdown)
     else:
         print_all(application_types)
         print(f"\nForms: {len(forms)}")

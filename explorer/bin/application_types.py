@@ -8,7 +8,7 @@ def print_all(app_types):
         print(f"{app['name']} (ref: {app['reference']})")
 
 
-def app_type_overview(app_type):
+def app_type_overview(app_type, markdown=False):
     print("Application type")
     print("===")
     print(f"{app_type['name']} (ref: {app_type['reference']})")
@@ -22,20 +22,35 @@ def app_type_overview(app_type):
         print(url)
 
     if app_type.get("modules"):
-        print(f"\n{len(app_type['modules'])} Modules\n---")
-        for module in app_type["modules"]:
-            print(f"{module['name']} (ref: {module['reference']})")
+        if markdown:
+            print("\nModules\n---")
+            for module in app_type["modules"]:
+                print(f"* {module['name']} (ref: {module['reference']})")
+        else:
+            print(f"\n{len(app_type['modules'])} Modules\n---")
+            for module in app_type["modules"]:
+                print(f"{module['name']} (ref: {module['reference']})")
     
     if app_type.get("sub-types"):
-        print("\nSub-types\n---")
-        for sub_type in app_type["sub-types"]:
-            print(f"Sub-type: {sub_type['reference']}")
-            if sub_type["modules"]:
-                print(f"{len(sub_type['modules'])} associated modules:")
-                for module in sub_type["modules"]:
-                    print(f"  {module['name']} (ref: {module['reference']})")
-            else:
-                print("  0 associated modules for this sub-type")
+        if markdown:
+            print("\nSub-types\n---")
+            for sub_type in app_type["sub-types"]:
+                print(f"* Sub-type: {sub_type['reference']}")
+                if sub_type["modules"]:
+                    for module in sub_type["modules"]:
+                        print(f"  * {module['name']} (ref: {module['reference']})")
+                else:
+                    print("Note: 0 associated modules for this sub-type")
+        else:
+            print("\nSub-types\n---")
+            for sub_type in app_type["sub-types"]:
+                print(f"Sub-type: {sub_type['reference']}")
+                if sub_type["modules"]:
+                    print(f"{len(sub_type['modules'])} associated modules:")
+                    for module in sub_type["modules"]:
+                        print(f"  {module['name']} (ref: {module['reference']})")
+                else:
+                    print("  0 associated modules for this sub-type")
 
 
 def get_app_type_from_ref(app_ref, app_types):
