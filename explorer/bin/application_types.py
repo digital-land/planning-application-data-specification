@@ -17,9 +17,12 @@ def app_type_overview(app_type, markdown=False):
     print(f"{app_type['description']}")
 
     print("\nLegislation\n---")
-    legislation_urls = app_type['legislation'].split(";")
-    for url in legislation_urls:
-        print(url)
+    if app_type['legislation']:
+        legislation_urls = app_type['legislation'].split(";")
+        for url in legislation_urls:
+            print(url)
+    else:
+        print("No legislation specified")
 
     if app_type.get("modules"):
         if markdown:
