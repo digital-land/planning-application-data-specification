@@ -28,6 +28,11 @@ def get_expected_joins(app_type, modules_in_form, all_modules):
     return exp_app_mod_joins
 
 
+def get_module_discussion_url(module):
+    discussion_number = module['discussion-number'].lstrip('#')
+    return f"https://github.com/digital-land/planning-application-data-specification/discussions/{discussion_number}"
+
+
 def join_data_maker(expected_joins, all_joins):
     today = datetime.today().strftime('%Y-%m-%d')
     matched_joins = []
