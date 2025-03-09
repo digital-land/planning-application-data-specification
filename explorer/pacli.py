@@ -3,7 +3,7 @@
 import click
 from datetime import datetime
 
-from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules
+from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table
 from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
@@ -38,15 +38,24 @@ def cli():
     help="References of application types",
 )
 @click.option(
+    "--sort-by",
+    type=str,
+    default="reference",
+    help="Field name to sort by",
+)
+@click.option(
     "--markdown",
     is_flag=True,
     help="Print as Markdown text to the terminal",
 )
-def app_type(ref, refs, all, combine, markdown):
+def app_type(ref, refs, all, combine, sort_by, markdown):
     application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if all:
-        refs = sorted(app["reference"] for app in application_types)
+        if markdown:
+            print_app_types_as_markdown_table(application_types)
+            return
+        refs = sorted(app[sort_by] for app in application_types)
         print("\nAll References:\n---")
         for r in refs:
             print(r)

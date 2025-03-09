@@ -65,3 +65,11 @@ def add_modules(app_type, app_types, app_mod_joins, modules):
     app_type["modules"] = get_modules(app_module_refs, modules)
     return app_type
 
+
+def print_app_types_as_markdown_table(app_types):
+    sorted_app_types = sorted(app_types, key=lambda x: x['name'])
+    discussion_url = f"https://github.com/digital-land/planning-application-data-specification/discussions/"
+    print("| Application Type | Notes |")
+    print("|---|---|")
+    for app in sorted_app_types:
+        print(f"| [{app['name']}]({discussion_url}) | {app.get('notes', '')} |")
