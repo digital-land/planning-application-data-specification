@@ -14,30 +14,34 @@ We started this initiative to create baseline planning application specification
 
 To support this work, we set up [an advisory group](https://design.planning.data.gov.uk/advisory-group) and have been sharing high-level updates through a [GitHub discussion](https://github.com/digital-land/data-standards-backlog/discussions/98). However, as the discussion has grown quite lengthy, we’ve decided to create this repository to help manage the issues more effectively, allow contributors to focus on them one at a time.
 
+
+## Application types
+
+| Application type | Sub type | Notes |
+|---|---|---|
+| [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) |  | |
+| [Approval (discharge) of conditions](https://github.com/digital-land/planning-application-data-specification/discussions/173) |  | |
+| Consent under TPO |  | |
+| [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | | A form of full planning |
+| [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) | |  |
+| Hedgerow removal notice | | |
+| [Householder planning pplication](https://github.com/digital-land/planning-application-data-specification/discussions/166) | | |
+| Lawful development certificate | | |
+| [Listed building consent](https://github.com/digital-land/planning-application-data-specification/discussions/170) | | |
+| [Non-material amendment](https://github.com/digital-land/planning-application-data-specification/discussions/174) | | |
+| Notification of proposed works to trees in a conservation area |  |
+| Outline planning | [All matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/179) | |
+| Outline planning | [Some matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/178) | |
+| [Permission in principle](https://github.com/digital-land/planning-application-data-specification/discussions/175) | | |
+| [Planning permission for relevant demolition in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/169) | | |
+| Prior approval | | |
+| [Removal/variation of conditions (S73)](https://github.com/digital-land/planning-application-data-specification/discussions/172) | | |
+| [Reserved matters](https://github.com/digital-land/planning-application-data-specification/discussions/168) | | |
+
+
 ## Contributing
 
 It is important that these specifications work for the people (software vendors, planning officers, analysts, policy makers) that need them. For that to happen we need feedback, questions and contributions from the community.
 
 You can comment on any of the items in this respository and we encourage you to help us work through the [issues](https://github.com/digital-land/planning-application-data-specification/issues).
 
-## Application types
-
-| Application Type | Notes |
-|---|---|
-| [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) |  |
-| [Approval (discharge) of conditions](https://github.com/digital-land/planning-application-data-specification/discussions/173) |  |
-| [Consent under TPO](https://github.com/digital-land/planning-application-data-specification/discussions/) |  |
-| [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | A form of full planning |
-| [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) |  |
-| [Hedgerow removal notice](https://github.com/digital-land/planning-application-data-specification/discussions/) |  |
-| [Householder planning pplication](https://github.com/digital-land/planning-application-data-specification/discussions/166) |  |
-| [Lawful development certificate](https://github.com/digital-land/planning-application-data-specification/discussions/) |  |
-| [Listed building consent](https://github.com/digital-land/planning-application-data-specification/discussions/170) |  |
-| [Non-material amendment](https://github.com/digital-land/planning-application-data-specification/discussions/174) |  |
-| [Notification of proposed works to trees in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/) |  |
-| [Outline planning](https://github.com/digital-land/planning-application-data-specification/discussions/) |  |
-| [Permission in principle](https://github.com/digital-land/planning-application-data-specification/discussions/175) |  |
-| [Planning permission for relevant demolition in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/169) |  |
-| [Prior approval](https://github.com/digital-land/planning-application-data-specification/discussions/) |  |
-| [Removal/variation of conditions (S73)](https://github.com/digital-land/planning-application-data-specification/discussions/172) |  |
-| [Reserved matters](https://github.com/digital-land/planning-application-data-specification/discussions/168) |  |
