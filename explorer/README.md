@@ -17,6 +17,11 @@ Show list of application types if you have a list of refs
 python pacli.py app-type --refs "advertising;demolition-con-area;extraction-oil-gas;full;hh;lbc;outline"
 ```
 
+List the sub types by application types
+```
+python pacli.py app-type --show-sub-types
+```
+
 ## Form
 
 Print details, including list of sections, about an application form

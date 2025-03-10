@@ -1,3 +1,4 @@
+from collections import defaultdict
 from bin.modules import get_modules, get_module_discussion_url
 
 def print_all(app_types):
@@ -73,3 +74,15 @@ def print_app_types_as_markdown_table(app_types):
     print("|---|---|")
     for app in sorted_app_types:
         print(f"| [{app['name']}]({discussion_url}) | {app.get('notes', '')} |")
+
+
+def print_sub_types(sub_types):
+    sub_types_by_app_type = defaultdict(list)
+    for sub_type in sub_types:
+        app_type = sub_type["application-type"]
+        sub_types_by_app_type[app_type].append(sub_type["reference"])
+
+    for app_type, sub_type_refs in sub_types_by_app_type.items():
+        print(f"Application Type: {app_type}")
+        for sub_type_ref in sub_type_refs:
+            print(f"  Sub-type: {sub_type_ref}")

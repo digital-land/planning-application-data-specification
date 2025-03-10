@@ -3,7 +3,7 @@
 import click
 from datetime import datetime
 
-from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table
+from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types
 from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
@@ -44,11 +44,16 @@ def cli():
     help="Field name to sort by",
 )
 @click.option(
+    "--show-sub-types",
+    is_flag=True,
+    help="Print all application sub types",
+)
+@click.option(
     "--markdown",
     is_flag=True,
     help="Print as Markdown text to the terminal",
 )
-def app_type(ref, refs, all, combine, sort_by, markdown):
+def app_type(ref, refs, all, combine, sort_by, show_sub_types, markdown):
     application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if all:
@@ -61,6 +66,10 @@ def app_type(ref, refs, all, combine, sort_by, markdown):
             print(r)
         print("----------------")
         print(f"All application type references: {';'.join(refs)}")
+        return
+
+    if show_sub_types:
+        print_sub_types(sub_types)
         return
     
     if refs:
