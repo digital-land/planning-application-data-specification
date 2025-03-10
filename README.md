@@ -30,7 +30,9 @@ You can download a csv of [planning application types](https://github.com/digita
 | [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) | |  |
 | Hedgerow removal notice | | _Need to know what modules are required (see #177)_ |
 | [Householder planning application](https://github.com/digital-land/planning-application-data-specification/discussions/166) | | |
-| Lawful development certificate | | _Working through how to handle sub-types (see #158)_ |
+| Lawful development certificate | [Existing use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/182) | |
+| Lawful development certificate | [Prospective use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/181) | |
+| Lawful development certificate | [Proposed work to a listed building](https://github.com/digital-land/planning-application-data-specification/discussions/180) | |
 | [Listed building consent](https://github.com/digital-land/planning-application-data-specification/discussions/170) | | |
 | [Non-material amendment](https://github.com/digital-land/planning-application-data-specification/discussions/174) | | |
 | Notification of proposed works to trees in a conservation area | | _Need to confirm the modules required for this application type (see #1)_ |
