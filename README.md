@@ -17,6 +17,10 @@ To support this work, we set up [an advisory group](https://design.planning.data
 
 ## Application types
 
+Below is the list of official application types, and their sub-types where application that we are working through.
+
+You can download a csv of [planning application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv) and [sub-types](http://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv).
+
 | Application type | Sub type | Notes |
 |---|---|---|
 | [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) |  | |
