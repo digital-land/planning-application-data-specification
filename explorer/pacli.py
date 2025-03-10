@@ -10,6 +10,9 @@ from bin.loader import load_all
 from bin.modules import get_modules, get_expected_joins, join_data_maker
 from bin.markdown_helpers import csv_to_markdown
 
+# these are taken from data/planning-application-sub-type.csv
+SUB_TYPES = "ldc-existing-use", "ldc-prospective-use", "ldc-proposed-work-lb", "outline-some", "outline-all", "pa-extension", "pa-storey"
+
 
 @click.group()
 def cli():
@@ -49,11 +52,16 @@ def cli():
     help="Print all application sub types",
 )
 @click.option(
+    "--sub-type-ref",
+    type=click.Choice(SUB_TYPES, case_sensitive=False),
+    help="Show either forms or application types covered by the module",
+)
+@click.option(
     "--markdown",
     is_flag=True,
     help="Print as Markdown text to the terminal",
 )
-def app_type(ref, refs, all, combine, sort_by, show_sub_types, markdown):
+def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, markdown):
     application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if all:
@@ -105,7 +113,7 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, markdown):
             sub_type["modules"] = get_modules(matched_modules, modules)
             app_type['sub-types'].append(sub_type)
         
-        app_type_overview(app_type, markdown=markdown)
+        app_type_overview(app_type, sub_type_ref=sub_type_ref, markdown=markdown)
     else:
         print_all(application_types)
         print(f"\nForms: {len(forms)}")

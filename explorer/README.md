@@ -22,6 +22,11 @@ List the sub types by application types
 python pacli.py app-type --show-sub-types
 ```
 
+List complete set of modules for a app-type and sub-type
+```
+python pacli.py app-type --ref outline --sub-type-ref outline-some
+```
+
 ## Form
 
 Print details, including list of sections, about an application form
