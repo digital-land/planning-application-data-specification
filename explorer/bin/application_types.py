@@ -101,3 +101,12 @@ def print_sub_types(sub_types):
         print(f"Application Type: {app_type}")
         for sub_type_ref in sub_type_refs:
             print(f"  Sub-type: {sub_type_ref}")
+
+
+def get_app_types_with_module(module_ref, app_mod_joins, app_types, sub_types):
+    app_types_with_module = [join['application-type'] for join in app_mod_joins if join['application-module'] == module_ref and join['application-type']]
+    sub_types_with_module = [join['application-sub-type'] for join in app_mod_joins if join['application-module'] == module_ref and join['application-sub-type']]
+    return {
+        "application-types": [app for app in app_types if app['reference'] in app_types_with_module],
+        "sub-types": [app for app in sub_types if app['reference'] in sub_types_with_module]
+    }

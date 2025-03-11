@@ -3,7 +3,7 @@
 import click
 from datetime import datetime
 
-from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types
+from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types, get_app_types_with_module
 from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
@@ -228,21 +228,18 @@ def module(ref, show, make, app_types):
             return
         print(f"\nModule: {module['name']} (ref: {module['reference']})")
         
-        app_types_covered = get_app_types_covered(get_forms(module['application-forms'].split(';'), forms))
+        app_types_covered = get_app_types_with_module(ref, app_mod_joins, application_types, sub_types)
 
         if show == 'form':
             print(f"Forms: {module['application-forms']}")
         elif show == 'app-types':
-            print(f"Application types (as per the forms) with module: {';'.join(app_types_covered)}")
-        
-        # temp option whilst making this dataset
-        if make:
-            print("\nPotential entries to application-type-module dataset:\n")
-            today = datetime.today().strftime('%Y-%m-%d')
-            if app_types:
-                app_types_covered = app_types.split(';')
-            for app_type in app_types_covered:
-                print(f"{app_type}-{module['reference']},{app_type},{module['reference']},{today},,")
+            print(f"Application types with module:")
+            # print the application types with the module
+            for at in app_types_covered['application-types']:
+                print(f"  {at['name']}")
+            # print the sub types with the module
+            for at in app_types_covered['sub-types']:
+                print(f"  {at['application-type']} -> {at['name']}")
     else:
         print(f"---\n{len(modules)} Modules\n---\n")
         if show == 'all':
