@@ -1,3 +1,4 @@
+import os
 from collections import defaultdict
 from bin.modules import get_modules, get_module_discussion_url
 
@@ -110,3 +111,20 @@ def get_app_types_with_module(module_ref, app_mod_joins, app_types, sub_types):
         "application-types": [app for app in app_types if app['reference'] in app_types_with_module],
         "sub-types": [app for app in sub_types if app['reference'] in sub_types_with_module]
     }
+
+
+def generate_application_markdown(application, modules_dir="../specification/module", output_dir="../specification/application"):
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, f"{application['reference']}.md")
+    
+    with open(output_file, "w") as f:
+        f.write(f"# {application['name']}\n\n")
+        
+        for module in application.get("modules", []):
+            module_file = os.path.join(modules_dir, f"{module['reference']}.md")
+            if os.path.exists(module_file):
+                with open(module_file, "r") as mf:
+                    module_content = mf.read()
+                f.write(f"## {module['name']} ({module['reference']})\n\n")
+                f.write(module_content)
+                f.write("\n---\n\n")

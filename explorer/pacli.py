@@ -3,7 +3,7 @@
 import click
 from datetime import datetime
 
-from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types, get_app_types_with_module
+from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types, get_app_types_with_module, generate_application_markdown
 from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
@@ -61,7 +61,12 @@ def cli():
     is_flag=True,
     help="Print as Markdown text to the terminal",
 )
-def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, markdown):
+@click.option(
+    "--generate-application",
+    is_flag=True,
+    help="Build application type markdown",
+)
+def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, markdown, generate_application):
     application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if all:
@@ -101,9 +106,16 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, mar
         if not app_type:
             print(f"Application type {ref} not found")
             return
+        
+        # need to restructure this so that ALL modules are added to app and sub type obj
         # match all joins with app type
         app_module_refs = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref]
         app_type["modules"] = get_modules(app_module_refs, modules)
+
+        if generate_application:
+            generate_application_markdown(app_type)
+            return
+
         # check if app type has any sub-types
         sub_types = [j for j in sub_types if j["application-type"] == ref]
         
