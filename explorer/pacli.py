@@ -112,10 +112,6 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, mar
         app_module_refs = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref]
         app_type["modules"] = get_modules(app_module_refs, modules)
 
-        if generate_application:
-            generate_application_markdown(app_type)
-            return
-
         # check if app type has any sub-types
         sub_types = [j for j in sub_types if j["application-type"] == ref]
         
@@ -125,6 +121,10 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, mar
             sub_type["modules"] = get_modules(matched_modules, modules)
             app_type['sub-types'].append(sub_type)
         
+        if generate_application:
+            generate_application_markdown(app_type, sub_type_ref=sub_type_ref)
+            return
+
         app_type_overview(app_type, sub_type_ref=sub_type_ref, markdown=markdown)
     else:
         print_all(application_types)

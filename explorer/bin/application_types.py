@@ -113,18 +113,44 @@ def get_app_types_with_module(module_ref, app_mod_joins, app_types, sub_types):
     }
 
 
-def generate_application_markdown(application, modules_dir="../specification/module", output_dir="../specification/application"):
+def add_modules_to_file(open_file, modules, modules_dir):
+    if len(modules):
+        for module in modules:
+            module_file = os.path.join(modules_dir, f"{module['reference']}.md")
+            if os.path.exists(module_file):
+                with open(module_file, "r") as mf:
+                    module_content = mf.read()
+                print(f"adding {module['reference']} to application file")
+                open_file.write(f"## {module['name']} ({module['reference']})\n\n")
+                open_file.write(module_content)
+                open_file.write("\n---\n\n")
+            else:
+                print(f"can't locate {module_file}")
+
+
+def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application"):
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, f"{application['reference']}.md")
     
     with open(output_file, "w") as f:
         f.write(f"# {application['name']}\n\n")
+        if sub_type_ref:
+            print(f'Generating markdown file for {application["name"]} -> {sub_type_ref}\n')
+        else:
+            print(f'Generating markdown file for {application["name"]}\n')
         
-        for module in application.get("modules", []):
-            module_file = os.path.join(modules_dir, f"{module['reference']}.md")
-            if os.path.exists(module_file):
-                with open(module_file, "r") as mf:
-                    module_content = mf.read()
-                f.write(f"## {module['name']} ({module['reference']})\n\n")
-                f.write(module_content)
-                f.write("\n---\n\n")
+        sub_type = None
+        if sub_type_ref:
+            for st in application.get("sub-types", []):
+                if st["reference"] == sub_type_ref:
+                    sub_type = st
+                    break
+            if sub_type:
+                f.write(f"## Sub-type: {sub_type['name']}\n\n")
+        
+        add_modules_to_file(f, application.get("modules", []), modules_dir)
+        
+        if sub_type_ref and sub_type:
+            f.write("## Sub-type modules\n")
+            f.write("The following modules are required for this sub-type.\n\n")
+            add_modules_to_file(f, sub_type.get("modules", []), modules_dir)
