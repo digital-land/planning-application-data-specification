@@ -1,0 +1,12 @@
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| has-related-proposals | True of False. True if any related applications, previous proposals or demolitions for the site |  | MUST | |
+| related-proposal[] | List of related applications | MAY | Rule is a MUST if `has-related-proposals` is True |
+
+**Related proposal**
+
+| field | description | notes |
+| --- | --- | --- |
+| reference | reference for the related proposal | |
+| description | description of the related proposal | |
+| decision-data | date of the decision | If decided | |
