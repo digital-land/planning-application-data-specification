@@ -1,0 +1,24 @@
+Field | Description | application-type | Required? | Notes
+-- | -- | -- | -- | --
+site-activity-details | Description of activities, processes, and end products | | MUST | Describe site operations, including plant, ventilation, and machinery.
+proposal-waste-management | Whether the proposal involves waste management development | | MUST | True if the proposal includes waste management.
+waste-management[] | List of waste management facilities involved | | MAY | MUST if proposal-waste-management is True.
+waste-streams{} | Annual throughput for waste streams | | MAY | MUST if proposal-waste-management is True.
+
+**Waste management**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+type | Type of waste management facility | Enum | MUST | See [Waste Management Type Enum](https://github.com/digital-land/planning-application-data-specification/discussions/164)
+not-applicable | Whether the facility is not applicable | Boolean | MAY | If True, capacity and throughput are not required.
+total-capacity | Total capacity of void in cubic metres (or tonnes/litres) | Integer | MAY | MUST if not-applicable is False.
+annual-throughput | Maximum annual operational throughput in tonnes/litres | Integer | MAY | MUST if not-applicable is False.
+
+**Waste streams**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+municipal | Maximum throughput for municipal waste | Integer | MAY | Annual throughput in tonnes/litres.
+construction-demolition | Maximum throughput for construction and demolition waste | Integer | MAY | Annual throughput in tonnes/litres.
+commercial-industrial | Maximum throughput for commercial and industrial waste | Integer | MAY | Annual throughput in tonnes/litres.
+hazardous | Maximum throughput for hazardous waste | Integer | MAY | Annual throughput in tonnes/litres.
