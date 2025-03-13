@@ -27,6 +27,12 @@ List complete set of modules for a app-type and sub-type
 python pacli.py app-type --ref outline --sub-type-ref outline-some
 ```
 
+Generate a complete 'spec' file based on app and sub type provided
+```
+python pacli.py app-type --ref prior-approval --sub-type-ref pa-storey --generate-application
+```
+
+
 ## Form
 
 Print details, including list of sections, about an application form

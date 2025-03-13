@@ -130,7 +130,10 @@ def add_modules_to_file(open_file, modules, modules_dir):
 
 def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application"):
     os.makedirs(output_dir, exist_ok=True)
-    output_file = os.path.join(output_dir, f"{application['reference']}.md")
+    filename = f"{application['reference']}.md"
+    if sub_type_ref:
+        filename = f"{application['reference']}-{sub_type_ref}.md"
+    output_file = os.path.join(output_dir, filename)
     
     with open(output_file, "w") as f:
         f.write(f"# {application['name']}\n\n")
