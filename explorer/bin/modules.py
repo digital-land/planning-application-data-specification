@@ -1,4 +1,5 @@
 from datetime import datetime
+import os
 
 
 def get_module(ref, modules):
@@ -52,3 +53,27 @@ def join_data_maker(expected_joins, all_joins):
     for _join in missing_joins:
         print(f"{_join[0]}-{_join[1]},{_join[0]},{_join[1]},{today},,")
     return
+
+
+def check_modules(modules, modules_dir):
+    modules_with_refs = [m for m in modules if m.get("reference")]
+    modules_with_end_date = [m for m in modules if m.get("end-date")]
+    
+    print(f"\nModule Statistics\n---")
+    print(f"Total modules: {len(modules)}")
+    print(f"Modules with references: {len(modules_with_refs)}")
+    print(f"Modules with end dates: {len(modules_with_end_date)}")
+    
+    print(f"\nChecking markdown files\n---")
+    missing_files = []
+    for module in modules_with_refs:
+        expected_file = os.path.join(modules_dir, f"{module['reference']}.md")
+        if not os.path.exists(expected_file):
+            missing_files.append(module['reference'])
+            
+    if missing_files:
+        print(f"\nMissing markdown files ({len(missing_files)}):")
+        for ref in missing_files:
+            print(f"  {ref}.md")
+    else:
+        print("All modules with references have corresponding markdown files")

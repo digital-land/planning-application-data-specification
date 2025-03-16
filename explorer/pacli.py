@@ -7,8 +7,7 @@ from bin.application_types import print_all, app_type_overview, get_app_type_fro
 from bin.csv_helpers import read_csv, write_csv
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
-from bin.modules import get_modules, get_expected_joins, join_data_maker
-from bin.markdown_helpers import csv_to_markdown
+from bin.modules import get_modules, get_expected_joins, join_data_maker, check_modules
 
 # these are taken from data/planning-application-sub-type.csv
 SUB_TYPES = "ldc-existing-use", "ldc-prospective-use", "ldc-proposed-work-lb", "outline-some", "outline-all", "pa-extension", "pa-storey"
@@ -325,6 +324,18 @@ def csv(filename, fieldname, action, col_order, markdown):
         write_csv(sorted_data, output_file=filename, final_headers=[])
     else:
         print(f"Action {action} is not supported")
+
+
+@cli.command(name="check")
+@click.option(
+    "--module",
+    is_flag=True,
+    help="Check module references and markdown files",
+)
+def check(module):
+    if module:
+        _, _, modules, _, _ = load_all()
+        check_modules(modules, "../specification/module")
 
 
 if __name__ == "__main__":

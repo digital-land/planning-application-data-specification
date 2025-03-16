@@ -71,3 +71,11 @@ Command to help make application - module records
 python pacli.py module --ref {module-ref} --make
 ```
 _We will eventually remove this command_
+
+
+## Check
+
+Summarise modules with
+```
+python pacli.py check --module
+```
