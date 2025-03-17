@@ -136,7 +136,8 @@ def generate_application_markdown(application, sub_type_ref=None, modules_dir=".
     output_file = os.path.join(output_dir, filename)
     
     with open(output_file, "w") as f:
-        f.write(f"# {application['name']}\n\n")
+        f.write(f"# {application['name']}\n")
+        f.write(f"\n{application['description']}\n\n")
         if sub_type_ref:
             print(f'Generating markdown file for {application["name"]} -> {sub_type_ref}\n')
         else:
