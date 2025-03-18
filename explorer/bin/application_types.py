@@ -1,4 +1,5 @@
 import os
+import csv
 from collections import defaultdict
 from bin.modules import get_modules, get_module_discussion_url
 
@@ -71,6 +72,14 @@ def app_type_overview(app_type, sub_type_ref=None, markdown=False):
                             print(f"  {module['name']} (ref: {module['reference']})")
                     else:
                         print("  0 associated modules for this sub-type")
+    
+    # Get codelists required for the modules
+    all_modules = get_all_modules_for_application(app_type, sub_type_ref)
+    codelists = get_codelists_for_modules(all_modules)
+    if codelists:
+        print("\nCodelists\n---")
+        for codelist in codelists:
+            print(f"{codelist['name']} (ref: {codelist['reference']})")
 
 
 def get_app_type_from_ref(app_ref, app_types):
@@ -128,6 +137,35 @@ def add_modules_to_file(open_file, modules, modules_dir):
                 print(f"can't locate {module_file}")
 
 
+def get_codelists_for_modules(modules, codelists_file="../data/codelists.csv"):
+    """Get all codelists that reference any of the given modules"""
+    if not modules:
+        return []
+        
+    module_refs = {m['reference'] for m in modules if m.get('reference')}
+    required_codelists = []
+    
+    with open(codelists_file, 'r') as f:
+        reader = csv.DictReader(f)
+        for row in reader:
+            if not row.get('end-date'):  # Only include active codelists
+                codelist_modules = [m.strip() for m in row.get('modules', '').split(';') if m.strip()]
+                if any(m in module_refs for m in codelist_modules):
+                    required_codelists.append(row)
+                    
+    return sorted(required_codelists, key=lambda x: x['name'])
+
+
+def get_all_modules_for_application(application, sub_type_ref=None):
+    """Get all modules for an application type, including sub-type modules if specified"""
+    all_modules = application.get("modules", [])
+    if sub_type_ref:
+        for st in application.get("sub-types", []):
+            if st["reference"] == sub_type_ref:
+                all_modules.extend(st.get("modules", []))
+    return all_modules
+
+
 def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application"):
     os.makedirs(output_dir, exist_ok=True)
     filename = f"{application['reference']}.md"
@@ -158,3 +196,12 @@ def generate_application_markdown(application, sub_type_ref=None, modules_dir=".
             f.write("## Sub-type modules\n")
             f.write("The following modules are required for this sub-type.\n\n")
             add_modules_to_file(f, sub_type.get("modules", []), modules_dir)
+
+        # Add codelists section at the end
+        all_modules = get_all_modules_for_application(application, sub_type_ref)
+        codelists = get_codelists_for_modules(all_modules)
+        if codelists:
+            f.write("\n## Required codelists\n\n")
+            f.write("The following codelists are required by modules in this application type:\n\n")
+            for codelist in codelists:
+                f.write(f"* {codelist['name']} (ref: {codelist['reference']})\n")
