@@ -79,3 +79,8 @@ Summarise modules with
 ```
 python pacli.py check --module
 ```
+
+Check no issues with codelists
+```
+python pacli.py check --codelist
+```

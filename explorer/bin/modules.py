@@ -1,5 +1,7 @@
 from datetime import datetime
 import os
+import csv
+from pathlib import Path
 
 
 def get_module(ref, modules):
@@ -77,3 +79,53 @@ def check_modules(modules, modules_dir):
             print(f"  {ref}.md")
     else:
         print("All modules with references have corresponding markdown files")
+
+
+def check_codelists(modules, codelist_file="../data/codelists.csv"):
+    print("\nChecking codelists\n---")
+    
+    # Get all module references
+    valid_module_refs = {m['reference'] for m in modules if m.get('reference')}
+    
+    missing_modules = []
+    invalid_module_refs = []
+    
+    with open(codelist_file, 'r') as f:
+        reader = csv.DictReader(f)
+        rows = list(reader)
+        
+        for row in rows:
+            if not row.get('end-date'):  # Only check active entries
+                modules_str = row.get('modules', '').strip()
+                
+                # Check if modules field is empty
+                if not modules_str:
+                    missing_modules.append({
+                        'codelist': row.get('name'),
+                        'reference': row.get('reference')
+                    })
+                    continue
+                
+                # Check each module reference is valid
+                module_refs = [ref.strip() for ref in modules_str.split(';') if ref.strip()]
+                invalid_refs = [ref for ref in module_refs if ref not in valid_module_refs]
+                
+                if invalid_refs:
+                    invalid_module_refs.append({
+                        'codelist': row.get('name'),
+                        'reference': row.get('reference'),
+                        'invalid_refs': invalid_refs
+                    })
+    
+    if missing_modules:
+        print("\nCodelist(s) missing module references:")
+        for item in missing_modules:
+            print(f"  Codelist: {item['codelist']}, Ref: {item['reference']}")
+            
+    if invalid_module_refs:
+        print("\nCodelist(s) with invalid module references:")
+        for item in invalid_module_refs:
+            print(f"  Codelist: {item['codelist']}, Ref: {item['reference']} - Invalid module(s) = {', '.join(item['invalid_refs'])}")
+
+    if not missing_modules and not invalid_module_refs:
+        print("All codelists are valid!")
