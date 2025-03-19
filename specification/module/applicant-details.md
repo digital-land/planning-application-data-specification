@@ -3,11 +3,13 @@
 | title | Title of individual | | MAY |  |
 | first-name | First name of the individual | | MUST |  |
 | last-name | last name of the individual | | MUST |  |
-| address | | | | exact structure of address TBC |
-| post-code | | | MAY | |
-| email | Email used to contact applicant | pip | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact applicant | pip | MUST | see Phone number below. Only one number can be set as the primary number |
+| address-text | The address that can be used to correspond with the applicant| | MAY | |
+| post-code | The post code for the address provided | | MAY | |
+| email | Email used to contact agent | pip | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact agent | pip | MUST | see Phone number below. Only one number can be set as the primary number |
 | fax-number | | pip | MAY | is this still necessary? |
+
+We should decide if one combined module makes sense for all forms (issue #23)
 
 **Phone number structure**
 | field | description | notes |

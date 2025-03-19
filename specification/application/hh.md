@@ -35,7 +35,7 @@ These modules are all required for this application type
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | email | Email used to contact agent | | MUST |  |
-| phone-number{} | 1 or more telephone numbers to contact agent | | MUST | see Phone number below. Only one number can be set as the primary number |
+| phone-number[]{} | 1 or more telephone numbers to contact agent | | MUST | see Phone number below. Only one number can be set as the primary number |
 | fax-number | | | MAY | is this still necessary? |
 
 **Phone number structure**
@@ -48,13 +48,15 @@ These modules are all required for this application type
 
 ### Agent name and address (agent-details)
 
+
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | title | Title of individual | | MAY |  |
 | first-name | First name of the individual | | MUST |  |
 | last-name | last name of the individual | | MUST |  |
-| address | | | | exact structure of address TBC |
-| post-code | | | MAY | |
+| company | company agent works for | | ? | |
+| address-text | The address that can be used to correspond with the agent | | MAY | |
+| post-code | The post code for the address provided | | MAY | |
 | email | Email used to contact agent | pip | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | pip | MUST | see Phone number below. Only one number can be set as the primary number |
 | fax-number | | pip | MAY | is this still necessary? |
@@ -74,7 +76,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | email | Email used to contact applicant | | MUST |  |
-| phone-number{} | 1 or more telephone numbers to contact applicant | | MUST | see Phone number below. Only one number can be set as the primary number |
+| phone-number[]{} | 1 or more telephone numbers to contact applicant | | MUST | see Phone number below. Only one number can be set as the primary number |
 | fax-number | | | MAY | is this still necessary? |
 
 **Phone number structure**
@@ -92,11 +94,13 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 | title | Title of individual | | MAY |  |
 | first-name | First name of the individual | | MUST |  |
 | last-name | last name of the individual | | MUST |  |
-| address | | | | exact structure of address TBC |
-| post-code | | | MAY | |
-| email | Email used to contact applicant | pip | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact applicant | pip | MUST | see Phone number below. Only one number can be set as the primary number |
+| address-text | The address that can be used to correspond with the applicant| | MAY | |
+| post-code | The post code for the address provided | | MAY | |
+| email | Email used to contact agent | pip | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact agent | pip | MUST | see Phone number below. Only one number can be set as the primary number |
 | fax-number | | pip | MAY | is this still necessary? |
+
+We should decide if one combined module makes sense for all forms (issue #23)
 
 **Phone number structure**
 | field | description | notes |
