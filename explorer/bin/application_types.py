@@ -166,7 +166,25 @@ def get_all_modules_for_application(application, sub_type_ref=None):
     return all_modules
 
 
-def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application"):
+def add_codelist_content_to_file(open_file, codelist, codelist_dir):
+    """Add a codelist's markdown content to the output file"""
+    codelist_file = os.path.join(codelist_dir, f"{codelist['reference']}.md")
+    if os.path.exists(codelist_file):
+        with open(codelist_file, "r") as cf:
+            codelist_content = cf.read()
+        print(f"adding {codelist['reference']} codelist content to application file")
+        open_file.write(f"### {codelist['name']} ({codelist['reference']})\n\n")
+        if codelist.get("description"):
+            open_file.write(f"{codelist['description']}\n\n")
+        else:
+            open_file.write("_To do: add description for codelist_\n\n")
+        open_file.write(codelist_content)
+        open_file.write("\n---\n\n")
+    else:
+        print(f"can't locate codelist file: {codelist_file}")
+
+
+def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application", codelist_dir="../specification/codelist"):
     os.makedirs(output_dir, exist_ok=True)
     filename = f"{application['reference']}.md"
     if sub_type_ref:
@@ -201,7 +219,9 @@ def generate_application_markdown(application, sub_type_ref=None, modules_dir=".
         all_modules = get_all_modules_for_application(application, sub_type_ref)
         codelists = get_codelists_for_modules(all_modules)
         if codelists:
+            # Add detailed codelist content
             f.write("\n## Required codelists\n\n")
-            f.write("The following codelists are required by modules in this application type:\n\n")
+            f.write("The following codelists are required by modules in this application type:\n\n")            
+            print("\n")
             for codelist in codelists:
-                f.write(f"* {codelist['name']} (ref: {codelist['reference']})\n")
+                add_codelist_content_to_file(f, codelist, codelist_dir)
