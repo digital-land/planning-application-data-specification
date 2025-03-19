@@ -32,6 +32,8 @@ These modules are all required for this application type
 
 ### Agent contact details (agent-contact)
 
+Details needed for contacting the agent
+
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | email | Email used to contact agent | | MUST |  |
@@ -49,6 +51,8 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 ---
 
 ### Agent name and address (agent-details)
+
+Details about the agent
 
 
 | field | description | application-types | required | notes |
@@ -75,6 +79,8 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Applicant contact details (applicant-contact)
 
+Details needed for contacting the applicant
+
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | email | Email used to contact applicant | | MUST |  |
@@ -92,6 +98,8 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 ---
 
 ### Applicant name and address (applicant-details)
+
+Details about the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -118,6 +126,8 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Authority employee / member (conflict-of-interest)
 
+This section ensures transparency by declaring any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest.
+
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | conflict-to-declare | With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member  | | MUST | answer may be different depending on the parties involved |
@@ -127,6 +137,8 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 ---
 
 ### Biodiversity net gain (bng)
+
+This section asks for information to show how the development will protect or improve wildlife habitats on the site, and whether any exemptions or special rules apply.
 
 | field | description | application-types | data-type | required | notes |
 | --- | --- | --- | --- | --- | --- |
@@ -175,6 +187,8 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Checklist (checklist)
 
+This section provides details of the national planning requirements the applicant is required to submit along with the application
+
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | national-req-types[] | List of the document types required for the given application type |  | MUST |  |
@@ -183,15 +197,19 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Declaration (declaration)
 
-| field | description | application-types |
-| --- | --- | --- |
-| name | A name of the person making the declaration |  |
-| declaration-confirmed | `true` or `false` based on answer | |
-| declaration-date | the date, in YYYY-MM-DD format, the person made the declaration | |
+Applicants and agents are required to declare information provided is correct
+
+| field | description | application-types | required | notes | 
+| --- | --- | --- | --- | --- |
+| name | A name of the person making the declaration |  | MUST | |
+| declaration-confirmed | The applicant(s) and agent need to confirm the information provided is correct to the best of their knowledge | | MUST | Boolean - `true` / `false`
+| declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
 
 ### Description of the proposal (proposal-details)
+
+Details about the proposal
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -217,6 +235,8 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Materials (materials)
 
+Where applicable details about the materials to be used or changed should be provided. Including type, colour and name for each material
+
 **Materials**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -236,6 +256,8 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 ---
 
 ### Ownership certificates and agricultural land declaration (ownership-certs)
+
+Ownership of the site and/or property for development needs to be understood
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -269,6 +291,8 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 ### Parking (parking)
 
+Details of how the proposed development will affect the parking are required.
+
 | field | description | application-types |
 | --- | --- | --- |
 | description | A description of how the proposed works will affect existing car parking arrangements | hh |
@@ -276,6 +300,8 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 ---
 
 ### Pedestrian and vehicle access, roads and rights of way (access-rights-of-way)
+
+This section asks you to explain any changes to how people or vehicles access the site, including any new or affected roads, footpaths, or public rights of way.
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -292,6 +318,8 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 ### Pre-application advice (pre-app-advice)
 
+A section for providing details of pre application advice received from the authority
+
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -304,6 +332,8 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 ---
 
 ### Site address details (site-details)
+
+Details to help locate the site proposed for development
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -325,6 +355,8 @@ Applicant/agent must provide one of:
 
 ### Site visit (site-visit)
 
+Details needed to support a site visit
+
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | site-seen-from | Flag if site be seen from a public road  public footpath  bridleway or other public land | | MUST | Indicates whether a site visit can be done without arranging access |
@@ -337,6 +369,8 @@ Does the authority primarily need to know who to contact for a site visit or do 
 ---
 
 ### Trees and hedges (trees-hedges)
+
+Details of trees and hedges affecting the site or that will be affected by the proposed development
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

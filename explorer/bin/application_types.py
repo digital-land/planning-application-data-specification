@@ -144,6 +144,10 @@ def add_modules_to_file(open_file, modules, modules_dir):
                     module_content = mf.read()
                 print(f"adding {module['reference']} to application file")
                 open_file.write(f"### {module['name']} ({module['reference']})\n\n")
+                if module.get("description"):
+                    open_file.write(f"{module['description']}\n\n")
+                else:
+                    open_file.write("_To do: add description for module_\n\n")
                 open_file.write(module_content)
                 open_file.write("\n---\n\n")
             else:
