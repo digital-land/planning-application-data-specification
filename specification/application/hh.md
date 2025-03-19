@@ -36,13 +36,15 @@ These modules are all required for this application type
 | --- | --- | --- | --- | --- |
 | email | Email used to contact agent | | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | | | MAY | is this still necessary? |
+| fax-number | Fax number used to contact the agent | | MAY | |
 
 **Phone number structure**
 | field | description | notes |
 | --- | --- | --- | 
-| number | | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Let user set which is the primary number to use | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+
+Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
@@ -59,13 +61,13 @@ These modules are all required for this application type
 | post-code | The post code for the address provided | | MAY | |
 | email | Email used to contact agent | pip | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | pip | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | | pip | MAY | is this still necessary? |
+| fax-number | Fax number used to contact the applicant | pip | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
 | --- | --- | --- | 
-| number | | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Let user set which is the primary number to use | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
 
 Rule: one phone number provided should have `contact-priority` == `primary`
 
@@ -77,13 +79,15 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 | --- | --- | --- | --- | --- |
 | email | Email used to contact applicant | | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact applicant | | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | | | MAY | is this still necessary? |
+| fax-number | Fax number used to contact the applicant | | MAY | |
 
 **Phone number structure**
 | field | description | notes |
 | --- | --- | --- | 
-| number | | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Let user set which is the primary number to use | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+
+Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
@@ -98,15 +102,15 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 | post-code | The post code for the address provided | | MAY | |
 | email | Email used to contact agent | pip | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | pip | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | | pip | MAY | is this still necessary? |
+| fax-number | Fax number used to contact the applicant | pip | MAY | is this still necessary? |
 
 We should decide if one combined module makes sense for all forms (issue #23)
 
 **Phone number structure**
 | field | description | notes |
 | --- | --- | --- | 
-| number | | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Let user set which is the primary number to use | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
 
 Rule: one phone number provided should have `contact-priority` == `primary`
 
@@ -116,17 +120,56 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | True or False based on statements in "With respect to the Authority, I am" list | | MUST | answer may be different depending on the parties involved |
-| name | name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
-| details | Details including name, role and how you are related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST. |
+| conflict-to-declare | With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member  | | MUST | answer may be different depending on the parties involved |
+| name | Name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
+| details | Details including name, role and how individual is related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
 ---
 
 ### Biodiversity net gain (bng)
 
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-| bng-exempt | Flag true for householder, false otherwise | | MUST | |
+| field | description | application-types | data-type | required | notes |
+| --- | --- | --- | --- | --- | --- |
+| bng-exempt | Applicants for planning permission are required to make a statement as to whether they believe the biodiversity gain condition will apply if permission is granted. Householder applicants need to confirm the biodiversity gain condition does not apply. (`true`/`false`) | hh | Boolean | MUST | |
+| bng-condition-applies | Does the applicant believe the Biodiversity Gain Condition applies? | full;outline;demolition-con-area | Boolean | MUST | |
+| bng-condition-exemption-reason | Reason why BNG does not apply, referencing exemptions or transitional arrangements | full;outline;demolition-con-area | String | MAY | | Rule: Required if `bng-condition-applies` = False |
+| bng-details{} | Biodiversity net gain details | full;outline;demolition-con-area | Object | MAY | Rule: is MUST if bng-condition-applies = True |
+
+**BNG details** structure
+
+Field | Description | Data Type | Required | Notes
+--- | --- | --- | --- | ---
+pre-development-date | Date of pre-development biodiversity value calculation | Date | MUST | Rule: Must align with application or justified earlier date
+pre-development-biodiversity-value | Calculated biodiversity value | Number | MUST | In Habitat Biodiversity Units
+earlier-date-reason | Reason for using an earlier pre-development date | String | MAY | If date is earlier than application submission
+habitat-loss-after-2020 | Has there been degradation of onsite habitat(s) after 30 Jan 2020? | Boolean | MAY | True/False
+habitat-loss-details{} | Details of loss/degradation events | Object | MAY | Required if habitat-loss-after-2020 = True
+metric-publication-date | Publication date of the biodiversity metric tool used | Date | MUST | 
+irreplaceable-habitats | Does the site contain irreplaceable habitats? | Boolean | MUST | True/False
+irreplaceable-habitats-details | Description and references for any irreplaceable habitats | String | MAY | Required if irreplaceable-habitats = True
+supporting-documents[]{} | A list of documents supporting the information provided | LIST | MUST | Rules for various required documents can be seen in Planning requirement documents section
+
+
+**Habitat loss details** structure
+
+Field | Description | Data Type | Required
+--- | --- | --- | ---
+loss-date | Date the activity causing the loss occurred | Date | MUST
+pre-loss-biodiversity-value | Biodiversity value immediately before the activity | Number | MUST
+supporting-evidence | Description or reference to supporting documents | String | MAY
+
+**Planning requirement documents**
+
+* Completed biodiversity metric tool - Shows pre-development value and loss if applicable (REQUIRED)
+* Habitat plan - Plan showing onsite habitats at the relevant date (REQUIRED)
+* Irreplaceable habitat plan - Plan showing onsite irreplaceable habitats (REQUIRED If irreplaceable-habitats = Yes)
+
+**documents**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
 
