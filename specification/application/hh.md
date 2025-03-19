@@ -2,7 +2,35 @@
 
 A simplified process for applications to alter or enlarge a single house (but not a flat), including works within the boundary/garden
 
-## Agent contact details (agent-contact)
+## Contents
+
+Modules
+
+* [Agent contact details](#agent-contact-details-agent-contact)
+* [Agent name and address](#agent-name-and-address-agent-details)
+* [Applicant contact details](#applicant-contact-details-applicant-contact)
+* [Applicant name and address](#applicant-name-and-address-applicant-details)
+* [Authority employee / member](#authority-employee-member-conflict-of-interest)
+* [Biodiversity net gain](#biodiversity-net-gain-bng)
+* [Checklist](#checklist-checklist)
+* [Declaration](#declaration-declaration)
+* [Description of the proposal](#description-of-the-proposal-proposal-details)
+* [Materials](#materials-materials)
+* [Ownership certificates and agricultural land declaration](#ownership-certificates-and-agricultural-land-declaration-ownership-certs)
+* [Parking](#parking-parking)
+* [Pedestrian and vehicle access, roads and rights of way](#pedestrian-and-vehicle-access-roads-and-rights-of-way-access-rights-of-way)
+* [Pre-application advice](#pre-application-advice-pre-app-advice)
+* [Site address details](#site-address-details-site-details)
+* [Site visit](#site-visit-site-visit)
+* [Trees and hedges](#trees-and-hedges-trees-hedges)
+
+---
+
+## Modules
+
+These modules are all required for this application type
+
+### Agent contact details (agent-contact)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -18,7 +46,7 @@ A simplified process for applications to alter or enlarge a single house (but no
 
 ---
 
-## Agent name and address (agent-details)
+### Agent name and address (agent-details)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -41,7 +69,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Applicant contact details (applicant-contact)
+### Applicant contact details (applicant-contact)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -57,7 +85,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Applicant name and address (applicant-details)
+### Applicant name and address (applicant-details)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -80,7 +108,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Authority employee / member (conflict-of-interest)
+### Authority employee / member (conflict-of-interest)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -90,7 +118,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Biodiversity net gain (bng)
+### Biodiversity net gain (bng)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -98,7 +126,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Checklist (checklist)
+### Checklist (checklist)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -106,7 +134,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Declaration (declaration)
+### Declaration (declaration)
 
 | field | description | application-types |
 | --- | --- | --- |
@@ -116,7 +144,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Description of the proposal (proposal-details)
+### Description of the proposal (proposal-details)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -140,7 +168,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Materials (materials)
+### Materials (materials)
 
 **Materials**
 | field | description | application-types | required | notes |
@@ -160,7 +188,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-## Ownership certificates and agricultural land declaration (ownership-certs)
+### Ownership certificates and agricultural land declaration (ownership-certs)
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -192,7 +220,7 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 ---
 
-## Parking (parking)
+### Parking (parking)
 
 | field | description | application-types |
 | --- | --- | --- |
@@ -200,7 +228,7 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 ---
 
-## Pedestrian and vehicle access, roads and rights of way (access-rights-of-way)
+### Pedestrian and vehicle access, roads and rights of way (access-rights-of-way)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -215,7 +243,7 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 ---
 
-## Pre-application advice (pre-app-advice)
+### Pre-application advice (pre-app-advice)
 
 
 | field | description | application-types | required | notes |
@@ -228,7 +256,7 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 ---
 
-## Site address details (site-details)
+### Site address details (site-details)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -248,7 +276,7 @@ Applicant/agent must provide one of:
 
 ---
 
-## Site visit (site-visit)
+### Site visit (site-visit)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -261,7 +289,7 @@ Does the authority primarily need to know who to contact for a site visit or do 
 
 ---
 
-## Trees and hedges (trees-hedges)
+### Trees and hedges (trees-hedges)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
