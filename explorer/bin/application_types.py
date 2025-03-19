@@ -1,7 +1,20 @@
 import os
 import csv
 from collections import defaultdict
+import re
 from bin.modules import get_modules, get_module_discussion_url
+
+def slugify(text):
+    """Convert a string into a URL-friendly slug"""
+    # Convert to lowercase
+    text = text.lower()
+    # Replace spaces with hyphens
+    text = re.sub(r'[\s/]+', '-', text)
+    # Remove all characters that are not alphanumeric or hyphens
+    text = re.sub(r'[^\w\-]', '', text)
+    # Remove leading/trailing hyphens
+    text = text.strip('-')
+    return text
 
 def print_all(app_types):
     print("===")
@@ -130,7 +143,7 @@ def add_modules_to_file(open_file, modules, modules_dir):
                 with open(module_file, "r") as mf:
                     module_content = mf.read()
                 print(f"adding {module['reference']} to application file")
-                open_file.write(f"## {module['name']} ({module['reference']})\n\n")
+                open_file.write(f"### {module['name']} ({module['reference']})\n\n")
                 open_file.write(module_content)
                 open_file.write("\n---\n\n")
             else:
@@ -184,30 +197,58 @@ def add_codelist_content_to_file(open_file, codelist, codelist_dir):
         print(f"can't locate codelist file: {codelist_file}")
 
 
+def generate_contents_section(application, sub_type=None):
+    """Generate a contents section for the markdown file"""
+    contents = ["## Contents\n\nModules\n"]
+    
+    # Add main application modules with slugged anchors
+    for module in sorted(application.get("modules", []), key=lambda x: x['name']):
+        slug = slugify(module['name'])
+        contents.append(f"* [{module['name']}](#{slug}-{module['reference']})")
+    
+    # Add sub-type modules if present
+    if sub_type and sub_type.get("modules"):
+        contents.append("\nSub-type modules\n")
+        for module in sorted(sub_type.get("modules", []), key=lambda x: x['name']):
+            slug = slugify(module['name'])
+            contents.append(f"* [{module['name']}](#{slug}-{module['reference']})")
+    
+    return "\n".join(contents) + "\n\n---\n\n"
+
+
 def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application", codelist_dir="../specification/codelist"):
     os.makedirs(output_dir, exist_ok=True)
     filename = f"{application['reference']}.md"
     if sub_type_ref:
         filename = f"{application['reference']}-{sub_type_ref}.md"
     output_file = os.path.join(output_dir, filename)
+
+    all_modules = get_all_modules_for_application(application, sub_type_ref)
+    codelists = get_codelists_for_modules(all_modules)
     
     with open(output_file, "w") as f:
         f.write(f"# {application['name']}\n")
         f.write(f"\n{application['description']}\n\n")
-        if sub_type_ref:
-            print(f'Generating markdown file for {application["name"]} -> {sub_type_ref}\n')
-        else:
-            print(f'Generating markdown file for {application["name"]}\n')
         
+        # Find sub-type if specified
         sub_type = None
         if sub_type_ref:
+            print(f'Generating markdown file for {application["name"]} -> {sub_type_ref}\n')
             for st in application.get("sub-types", []):
                 if st["reference"] == sub_type_ref:
                     sub_type = st
                     break
-            if sub_type:
-                f.write(f"## Sub-type: {sub_type['name']}\n\n")
+        else:
+            print(f'Generating markdown file for {application["name"]}\n')
         
+        if sub_type:
+            f.write(f"## Sub-type: {sub_type['name']}\n\n")
+        
+        # Add contents section
+        f.write(generate_contents_section(application, sub_type))
+        
+        f.write(f"## Modules\n\n")
+        f.write(f"These modules are all required for this application type\n\n")
         add_modules_to_file(f, application.get("modules", []), modules_dir)
         
         if sub_type_ref and sub_type:
@@ -216,8 +257,6 @@ def generate_application_markdown(application, sub_type_ref=None, modules_dir=".
             add_modules_to_file(f, sub_type.get("modules", []), modules_dir)
 
         # Add codelists section at the end
-        all_modules = get_all_modules_for_application(application, sub_type_ref)
-        codelists = get_codelists_for_modules(all_modules)
         if codelists:
             # Add detailed codelist content
             f.write("\n## Required codelists\n\n")
