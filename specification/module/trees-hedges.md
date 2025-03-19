@@ -1,8 +1,15 @@
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| falling-trees-risk | True or false. Need to know if falling trees on-premises or adjacent premises are a risk to the development | hh | | |
-| falling-trees-document | reference to document showing location of trees | hh | | |
-| tree-removal | True or False. Need to know if plans need trees or hedges to be pruned or removed | hh | | |
-| tree-removal-document | reference of document showing location of trees and hedges | hh | | |
-| trees-on-site | Trees or hedges are on the proposed development site (true / false ) | full;outline-some;extraction-oil-gas | MUST | |
-| trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (true / false) | full;outline-some;extraction-oil-gas | MUST | |
+| falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
+| falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
+| tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
+| tree-removal-document{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
+| trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
+| trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
+
+**documents**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity

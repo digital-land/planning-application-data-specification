@@ -240,18 +240,26 @@ Where applicable details about the materials to be used or changed should be pro
 **Materials**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| building-element[] | Each of the categories listed in the Materials section | | MUST | see building element structure |
-| additional-material-information | True or False | | MUST | |
-| document-reference[] | | | MAY | Rule: complete if `additional-information` is True |
+building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). |  | MUST | See Building element structure. One entry per building element.
+additional-material-information | States whether supporting documents are being provided with further material details. |  | MUST | Boolean: true or false.
+supporting-documents[] | Details for documents providing additional material information. |  | MAY | Required if additional-material-information is true.
+
 
 **Building element**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| building-element-type | one from [building element types lenum](https://github.com/digital-land/planning-application-data-specification/discussions/207) | | MUST | |
-| existing-materials | | | MAY | if applicable |
-| proposed-materials | | | MAY | if applicable |
-| materials-not-applicable | True or False | | MAY | MUST if `existing-materials` and `proposed-materials` not filled out |
-| materials-not-known | True or False | | MAY | MUST if `existing-materials` and `proposed-materials` not filled out |
+building-element-type | Identifies the part of the building the materials relate to, such as walls, roofs, windows, or doors. | MUST | Must use values from the [building element types enum](https://github.com/digital-land/planning-application-data-specification/discussions/207).
+existing-materials | Description of the materials currently used for this building element. | MAY | Complete if known and applicable.
+proposed-materials | Description of the materials proposed for this building element as part of the development. | MAY | Complete if known and applicable.
+materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
+materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
+
+**documents**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
 
@@ -293,9 +301,9 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 Details of how the proposed development will affect the parking are required.
 
-| field | description | application-types |
-| --- | --- | --- |
-| description | A description of how the proposed works will affect existing car parking arrangements | hh |
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| description | A description of how the proposed works will affect existing car parking arrangements | hh | MAY | |
 
 ---
 
@@ -305,14 +313,14 @@ This section asks you to explain any changes to how people or vehicles access th
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| new-altered-vehicle | True or False if a new or altered vehicle access is proposed to or from the public highway | extraction-oil-gas;full;hh;outline | MUST | for outline apps answer can be "unknown" |
-| new-altered-pedestrian | True or False if a new or altered pedestrian access is proposed to or from the public highway | extraction-oil-gas;full;hh;outline | MUST | for outline apps answer can be "unknown" |
-| change-right-of-way | True or False if the proposals require any diversions/extinguishments and/or creation of rights of way | full;hh;outline | MUST | for outline apps answer can be "unknown" |
-| new-right-of-way | True or False if there any new public rights of way to be provided within or adjacent to the site | extraction-oil-gas;full;outline | MUST | for outline apps answer can be "unknown" |
-| new-public-road | True or False if there any new public roads to be provided within the site | extraction-oil-gas;full;outline | MUST | for outline apps answer can be "unknown" |
-| temp-right-of-way | True or False if the proposals require any diversions/extinguishments and/or creation of rights of way whilst the site is being worked | extraction-oil-gas | MUST | for outline apps answer can be "unknown" |
-| future-new-right-of-way | True or False if there any new public rights of way to be provided with or adjacent to the site after extraction | extraction-oil-gas | MUST | for outline apps answer can be "unknown" |
-| document-reference[] | References for associated documents | extraction-oil-gas;full;hh;outline | MAY | MUST if true for any other answer |
+| new-altered-vehicle | Is a new or altered vehicle access proposed to/from the public highway? | extraction-oil-gas;full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| new-altered-pedestrian | Is a new or altered pedestrian access proposed to/from the public highway? | extraction-oil-gas;full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| change-right-of-way | Will the proposal change public rights of way? (diversion/extinguishment/creation) | full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers.|
+| new-right-of-way | Will new public rights of way be provided within or adjacent to the site? | extraction-oil-gas;full;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| new-public-road | Will new public roads be provided within the site? | extraction-oil-gas;full;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| temp-right-of-way | Are temporary changes to rights of way needed while the site is worked? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| future-new-right-of-way | Will new public rights of way be provided after extraction? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| supporting-documents[]{} | List of document supporting the information provided | extraction-oil-gas;full;hh;outline | MAY | Required if any answer is `true`. |
 
 ---
 
@@ -323,11 +331,11 @@ A section for providing details of pre application advice received from the auth
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| advice-sought | a flag indicating if pre-application advice has been sought |  | MUST | is this inferrable from other information provided? |
-| officer-name | name of officer who dealt with pre-app advice | | MAY | |
-| reference | reference for pre-application advice application | | MAY | |
-| advice-date | date applicant received the advice | | MAY | |
-| advice-summary | summary of the advice received | | MAY | is this necessary if they have provided the reference? |
+| advice-sought | Has pre-application advice has been sought | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Boolean (`true`/`false`) |
+| officer-name | Name of officer who dealt with pre-app advice | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | |
+| reference | Reference for pre-application advice application | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | |
+| advice-date | Date applicant received the advice, in `YYYY-MM-DD` format | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | |
+| advice-summary | Summary of the advice received | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | is this necessary if they have provided the reference? |
 
 ---
 
@@ -338,11 +346,12 @@ Details to help locate the site proposed for development
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | site-boundary | Geometry of the site of the development | | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
-| address | address, if available for the site | | MAY | does the address need to be structured data or a blob of text like in some app forms? |
-| easting | grid reference | | MAY | |
-| northing | grid reference | | MAY | |
+| address-text | Text address if available for the site | | MAY | does the address need to be structured data or a blob of text like in some app forms? |
+| easting | Grid reference | | MAY | |
+| northing | Grid reference | | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | | MAY | |
 | longitude | Longitude coordinate in EPSG:4326 (WGS84) | | MAY | |
+| description | Description of the location if `address-text` does not exist for development/site | | MAY | | 
 
 ### Rules
 
@@ -359,12 +368,10 @@ Details needed to support a site visit
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| site-seen-from | Flag if site be seen from a public road  public footpath  bridleway or other public land | | MUST | Indicates whether a site visit can be done without arranging access |
-| contact-name | Name of person to contact | | MUST | |
-| contact-number | Phone number of person to contact | | MUST | |
-| contact-email | Email of person to contact | | MUST | |
-
-Does the authority primarily need to know who to contact for a site visit or do they categorically need to know if the person to contact is neither the applicant or the agent?
+| site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
+| contact-name | Name of person to contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | |
+| contact-number | Phone number of person to contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | |
+| contact-email | Email of person to contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | |
 
 ---
 
@@ -374,12 +381,19 @@ Details of trees and hedges affecting the site or that will be affected by the p
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| falling-trees-risk | True or false. Need to know if falling trees on-premises or adjacent premises are a risk to the development | hh | | |
-| falling-trees-document | reference to document showing location of trees | hh | | |
-| tree-removal | True or False. Need to know if plans need trees or hedges to be pruned or removed | hh | | |
-| tree-removal-document | reference of document showing location of trees and hedges | hh | | |
-| trees-on-site | Trees or hedges are on the proposed development site (true / false ) | full;outline-some;extraction-oil-gas | MUST | |
-| trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (true / false) | full;outline-some;extraction-oil-gas | MUST | |
+| falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
+| falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
+| tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
+| tree-removal-document{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
+| trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
+| trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
+
+**documents**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
 
@@ -436,6 +450,18 @@ _To do: add description for codelist_
 | landscaping | Landscaping | |
 | layout | layout | |
 | scale | Scale | |
+
+---
+
+### Rights of way answer (rights-of-way-answer)
+
+_To do: add description for codelist_
+
+reference | name | application-types | description
+--- | --- | --- | ---
+true | True | extraction-oil-gas;full;hh;outline | The statement is true
+false | False | extraction-oil-gas;full;hh;outline | The statement is false
+unknown | Unknown | outline | The answer is unknown 
 
 ---
 

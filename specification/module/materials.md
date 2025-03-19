@@ -1,36 +1,23 @@
 **Materials**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| building-element[] | Each of the categories listed in the Materials section | | MUST | see building element |
-| additional-material-information | True or False | | MUST | |
-| document-reference[] | | | MAY | Rule: complete if `additional-information` is True |
+building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). |  | MUST | See Building element structure. One entry per building element.
+additional-material-information | States whether supporting documents are being provided with further material details. |  | MUST | Boolean: true or false.
+supporting-documents[] | Details for documents providing additional material information. |  | MAY | Required if additional-material-information is true.
+
 
 **Building element**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| building-element-type | one from building element types list | | MUST | |
-| existing-materials | | | MAY | if applicable |
-| proposed-materials | | | MAY | if applicable |
-| materials-not-applicable | True or False | | MAY | MUST if `existing-materials` and `proposed-materials` not filled out |
-| materials-not-known | True or False | | MAY | MUST if `existing-materials` and `proposed-materials` not filled out |
+building-element-type | Identifies the part of the building the materials relate to, such as walls, roofs, windows, or doors. | MUST | Must use values from the [building element types enum](https://github.com/digital-land/planning-application-data-specification/discussions/207).
+existing-materials | Description of the materials currently used for this building element. | MAY | Complete if known and applicable.
+proposed-materials | Description of the materials proposed for this building element as part of the development. | MAY | Complete if known and applicable.
+materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
+materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 
-**building element types**
-| building-element-type | application-types |
-| --- | --- |
-| Walls | advertising;demolition-con-area;full;hh;outline |
-| Roof | advertising;demolition-con-area;full;hh;outline |
-| Windows | advertising;demolition-con-area;full;hh;outline |
-| Doors | advertising;demolition-con-area;full;hh;outline |
-| Boundary treatments | advertising;demolition-con-area;full;hh;lbc;outline |
-| Vehicle access and hard-standings | advertising;demolition-con-area;full;hh;lbc;outline |
-| Lighting | advertising;demolition-con-area;full;hh;lbc;outline |
-| Other | advertising;demolition-con-area;full;hh;lbc;outline |
-| External walls | lbc |
-| Roof covering | lbc |
-| Chimney | lbc |
-| External doors | lbc |
-| Ceilings | lbc |
-| Internal walls | lbc |
-| Floors | lbc |
-| Internal doors | lbc |
-| Rainwater goods | lbc |
+**documents**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity

@@ -248,6 +248,8 @@ def module(ref, show, make, app_types):
             # print the application types with the module
             for at in app_types_covered['application-types']:
                 print(f"  {at['name']}")
+            print("\nAll module references:")
+            print(";".join([at['reference'] for at in app_types_covered['application-types']]))
             # print the sub types with the module
             for at in app_types_covered['sub-types']:
                 print(f"  {at['application-type']} -> {at['name']}")

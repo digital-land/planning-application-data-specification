@@ -1,7 +1,7 @@
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
 non-residential-change | Does the proposal involve the loss, gain, or change of non-residential floorspace? |   | MUST | Boolean (Yes / No).
-floorspace-details[] | List of non-residential floorspace changes by use class |   | MAY | Required if non-residential-change is Yes.
+floorspace-details[]{} | List of non-residential floorspace changes by use class |   | MAY | Required if non-residential-change is Yes.
 room-details[] | List of room changes for hotels, residential institutions and hostels | | MAY | Required if change to hotels, residential institutions and hostel floorspace |
 
 **Floorspace details**
@@ -10,6 +10,7 @@ room-details[] | List of room changes for hotels, residential institutions and h
 Field | Description | Data Type | Required | Notes
 -- | -- | -- | -- | --
 use-class | Type of non-residential use class | Enum | MUST | See [Use Class Enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
+specified-use | Specify the use that sits outside the lettered use classes | String | MAY | Rule: is a MUST if `use-class` is `other` or `sui generis`
 existing-gross-floorspace | Existing gross internal floorspace (sqm) | Number | MUST | Must be 0 or positive.
 floorspace-lost | Gross floorspace to be lost by change of use (sqm) | Number | MUST | Must be 0 or positive.
 total-gross-proposed | Total gross internal floorspace proposed (sqm) | Number | MUST | Must be 0 or positive.
