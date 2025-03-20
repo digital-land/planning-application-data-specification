@@ -36,9 +36,14 @@ Details needed for contacting the agent
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| email | Email used to contact agent | | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the agent | | MAY | |
+| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact individual | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
+| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -54,18 +59,32 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 Details about the agent
 
-
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| title | Title of individual | | MAY |  |
-| first-name | First name of the individual | | MUST |  |
-| last-name | last name of the individual | | MUST |  |
-| company | company agent works for | | ? | |
-| address-text | The address that can be used to correspond with the agent | | MAY | |
-| post-code | The post code for the address provided | | MAY | |
-| email | Email used to contact agent | pip | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | pip | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | pip | MAY | is this still necessary? |
+| agent{} | Details of the agent | | MUST | |
+
+**Agent object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| Person{} | Detail to help identify a person | MUST | |
+| company | The company the agent works for | | MAY | |
+| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+
+**Person object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| title | Title of individual | MAY |  |
+| first-name | First name of the individual | MUST |  |
+| last-name | last name of the individual | MUST |  |
+| address-text | The address that can be used to correspond with the applicant| MUST | |
+| post-code | The post code for the address provided | MAY | |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact agent | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
+| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -83,9 +102,14 @@ Details needed for contacting the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| email | Email used to contact applicant | | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact applicant | | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | | MAY | |
+| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact individual | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
+| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -103,16 +127,29 @@ Details about the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| title | Title of individual | | MAY |  |
-| first-name | First name of the individual | | MUST |  |
-| last-name | last name of the individual | | MUST |  |
-| address-text | The address that can be used to correspond with the applicant| | MAY | |
-| post-code | The post code for the address provided | | MAY | |
-| email | Email used to contact agent | pip | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | pip | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | pip | MAY | is this still necessary? |
+| applicants[]{} | Details for one or more applicants | | MUST | Rules: must be one or more named applicants |
 
-We should decide if one combined module makes sense for all forms (issue #23)
+**Applicant object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| Person{} | Detail to help identify a person | MUST | |
+| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+
+**Person object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| title | Title of individual | MAY |  |
+| first-name | First name of the individual | MUST |  |
+| last-name | last name of the individual | MUST |  |
+| address-text | The address that can be used to correspond with the applicant| MUST | |
+| post-code | The post code for the address provided | MAY | |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact agent | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
+| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
