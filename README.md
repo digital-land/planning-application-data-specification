@@ -28,7 +28,7 @@ You can download a csv of [planning application types](https://github.com/digita
 | Consent under TPO |  | _Need to confirm the modules required for Consent under TPO (see #1)_ |
 | [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | | _A form of full planning with enough difference to warrant its own type_ |
 | [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) | |  |
-| Hedgerow removal notice | | _Need to know what modules are required (see #177)_ |
+| [Hedgerow removal notice](https://github.com/digital-land/planning-application-data-specification/discussions/218) | | |
 | [Householder planning application](https://github.com/digital-land/planning-application-data-specification/discussions/166) | | |
 | Lawful development certificate | [Existing use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/182) | |
 | Lawful development certificate | [Prospective use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/181) | |
