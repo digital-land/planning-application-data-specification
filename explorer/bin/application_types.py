@@ -220,6 +220,19 @@ def generate_contents_section(application, sub_type=None):
     return "\n".join(contents) + "\n\n---\n\n"
 
 
+def add_specification_content_to_file(open_file, spec_file="../specification/application.md"):
+    """Add the main application specification content to the file"""
+    if os.path.exists(spec_file):
+        with open(spec_file, "r") as sf:
+            spec_content = sf.read()
+        print(f"adding application specification content")
+        open_file.write("## Application data specification\n\n")
+        open_file.write(spec_content)
+        open_file.write("\n---\n\n")
+    else:
+        print(f"can't locate specification file: {spec_file}")
+
+
 def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application", codelist_dir="../specification/codelist"):
     os.makedirs(output_dir, exist_ok=True)
     filename = f"{application['reference']}.md"
@@ -250,6 +263,9 @@ def generate_application_markdown(application, sub_type_ref=None, modules_dir=".
         
         # Add contents section
         f.write(generate_contents_section(application, sub_type))
+        
+        # Add application specification content
+        add_specification_content_to_file(f)
         
         f.write(f"## Modules\n\n")
         f.write(f"These modules are all required for this application type\n\n")
