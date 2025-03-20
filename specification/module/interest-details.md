@@ -1,8 +1,8 @@
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-applicant-interest | Applicant's interest in the listed building (Enum) |   | MUST | One of: see [applicant's interest type enum](https://github.com/digital-land/planning-application-data-specification/discussions/202) or `None`.
-owner-details[] | Details of the owner if the applicant is a lessee or occupier |   | MAY | Rule: Required if `applicant-interest` is Lessee or Occupier.
-interested-persons[] | Details of other interested persons in the listed building |   | MAY | Rule: Required if applicant-interest is None.
+applicant-interest | Applicant's interest in the land/listed building |  | MUST | One of: see [applicant's interest type enum](https://github.com/digital-land/planning-application-data-specification/discussions/202) or `None`.
+owner-details[]{} | Details of the owner if the applicant is a lessee or occupier |   | MAY | Rule: Required if `applicant-interest` is Lessee or Occupier.
+interested-persons[]{} | Details of other interested persons in the listed building |   | MAY | Rule: Required if `applicant-interest` is None.
 
 **Owner(s) model**
 
