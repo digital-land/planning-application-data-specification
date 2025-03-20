@@ -341,9 +341,9 @@ def csv(filename, fieldname, action, col_order, markdown):
 )
 def check(module, codelist):
     if module or codelist:
-        _, _, modules, _, _ = load_all()
+        _, _, modules, app_mod_joins, _ = load_all()
         if module:
-            check_modules(modules, "../specification/module")
+            check_modules(modules, "../specification/module", app_mod_joins)
         if codelist:
             check_codelists(modules)
 

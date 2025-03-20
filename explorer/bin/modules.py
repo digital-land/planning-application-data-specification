@@ -57,7 +57,7 @@ def join_data_maker(expected_joins, all_joins):
     return
 
 
-def check_modules(modules, modules_dir):
+def check_modules(modules, modules_dir, app_mod_joins):
     modules_with_refs = [m for m in modules if m.get("reference")]
     modules_with_end_date = [m for m in modules if m.get("end-date")]
     
@@ -65,6 +65,20 @@ def check_modules(modules, modules_dir):
     print(f"Total modules: {len(modules)}")
     print(f"Modules with references: {len(modules_with_refs)}")
     print(f"Modules with end dates: {len(modules_with_end_date)}")
+    
+    # Check for ended modules still referenced in active joins
+    print(f"\nChecking module joins\n---")
+    ended_module_refs = {m['reference'] for m in modules_with_end_date if m.get('reference')}
+    problematic_joins = [join for join in app_mod_joins 
+                        if not join.get('end-date') and  # Join is still active
+                        join['application-module'] in ended_module_refs]  # References an ended module
+    
+    if problematic_joins:
+        print("\nWARNING: Found active joins referencing ended modules:")
+        for join in problematic_joins:
+            print(f"  {join['reference']}: {join['application-type']} -> {join['application-module']}")
+    else:
+        print("All module joins are valid")
     
     print(f"\nChecking markdown files\n---")
     missing_files = []
