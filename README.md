@@ -25,7 +25,7 @@ You can download a csv of [planning application types](https://github.com/digita
 |---|---|---|
 | [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) |  | |
 | [Approval (discharge) of conditions](https://github.com/digital-land/planning-application-data-specification/discussions/173) |  | |
-| Consent under TPO |  | _Need to confirm the modules required for Consent under TPO (see #1)_ |
+| [Consent under TPO](https://github.com/digital-land/planning-application-data-specification/discussions/220) |  | |
 | [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | | _A form of full planning with enough difference to warrant its own type_ |
 | [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) | |  |
 | [Hedgerow removal notice](https://github.com/digital-land/planning-application-data-specification/discussions/218) | | |
@@ -35,7 +35,7 @@ You can download a csv of [planning application types](https://github.com/digita
 | Lawful development certificate | [Proposed work to a listed building](https://github.com/digital-land/planning-application-data-specification/discussions/180) | |
 | [Listed building consent](https://github.com/digital-land/planning-application-data-specification/discussions/170) | | |
 | [Non-material amendment](https://github.com/digital-land/planning-application-data-specification/discussions/174) | | |
-| Notification of proposed works to trees in a conservation area | | _Need to confirm the modules required for this application type (see #1)_ |
+| [Notification of proposed works to trees in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/220) | | |
 | Outline planning | [All matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/179) | |
 | Outline planning | [Some matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/178) | |
 | [Permission in principle](https://github.com/digital-land/planning-application-data-specification/discussions/175) | | |
