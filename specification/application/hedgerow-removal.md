@@ -1,0 +1,301 @@
+# Hedgerow removal notice
+
+An application for anyone proposing to remove a hedgerow, or part of a hedgerow
+
+## Contents
+
+Modules
+
+* [Agent contact details](#agent-contact-details-agent-contact)
+* [Agent name and address](#agent-name-and-address-agent-details)
+* [Applicant contact details](#applicant-contact-details-applicant-contact)
+* [Applicant name and address](#applicant-name-and-address-applicant-details)
+* [Checklist](#checklist-checklist)
+* [Declaration](#declaration-declaration)
+* [Hedgerow removal notice](#hedgerow-removal-notice-hedgerow-removal)
+* [Pre-application advice](#pre-application-advice-pre-app-advice)
+* [Site address details](#site-address-details-site-details)
+* [Site visit](#site-visit-site-visit)
+
+---
+
+## Application data specification
+
+field	| description	| data-type | required | notes
+--- | --- | --- | --- | ---
+reference | UUID for the application record | UUID | MUST | 
+application-types[] | A list of planning application types | Enum | MUST | See [list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv)
+application-sub-type | Sub-category of the application | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
+planning-authority | The reference of the planning authority the application has been submitted to | Organisation reference | MUST | 
+submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
+modules[] | List of required sections/modules for this application | List |	MUST | List of predefined module references that can be used to validate the application
+documents[]{} | List of submitted documents | List | MUST |	Uses a document model to capture references and details.
+
+**Document structure**
+
+field | description | required | notes
+--- | --- | --- | ---
+reference | A reference for the document | MUST | This should be unique
+name | The name or title of the document | MUST | 
+description | Brief description of what the document contains	| MAY | Optional but useful for context
+document-types[] | List of codelist references that the document covers | MUST | Use the planning requirements enum
+file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
+mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
+
+---
+
+## Modules
+
+These modules are all required for this application type
+
+### Agent contact details (agent-contact)
+
+Details needed for contacting the agent
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact individual | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
+| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
+
+**Phone number structure**
+| field | description | notes |
+| --- | --- | --- | 
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+
+Rule: one phone number provided should have `contact-priority` == `primary`
+
+---
+
+### Agent name and address (agent-details)
+
+Details about the agent
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| agent{} | Details of the agent | | MUST | |
+
+**Agent object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| Person{} | Detail to help identify a person | MUST | |
+| company | The company the agent works for | | MAY | |
+| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+
+**Person object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| title | Title of individual | MAY |  |
+| first-name | First name of the individual | MUST |  |
+| last-name | last name of the individual | MUST |  |
+| address-text | The address that can be used to correspond with the applicant| MUST | |
+| post-code | The post code for the address provided | MAY | |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact agent | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
+| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
+
+**Phone number structure**
+| field | description | notes |
+| --- | --- | --- | 
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+
+Rule: one phone number provided should have `contact-priority` == `primary`
+
+---
+
+### Applicant contact details (applicant-contact)
+
+Details needed for contacting the applicant
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact individual | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
+| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
+
+**Phone number structure**
+| field | description | notes |
+| --- | --- | --- | 
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+
+Rule: one phone number provided should have `contact-priority` == `primary`
+
+---
+
+### Applicant name and address (applicant-details)
+
+Details about the applicant
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| applicants[]{} | Details for one or more applicants | | MUST | Rules: must be one or more named applicants |
+
+**Applicant object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| Person{} | Detail to help identify a person | MUST | |
+| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+
+**Person object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| title | Title of individual | MAY |  |
+| first-name | First name of the individual | MUST |  |
+| last-name | last name of the individual | MUST |  |
+| address-text | The address that can be used to correspond with the applicant| MUST | |
+| post-code | The post code for the address provided | MAY | |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact agent | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
+| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
+
+**Phone number structure**
+| field | description | notes |
+| --- | --- | --- | 
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+
+Rule: one phone number provided should have `contact-priority` == `primary`
+
+---
+
+### Checklist (checklist)
+
+This section provides details of the national planning requirements the applicant is required to submit along with the application
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| national-req-types[] | List of the document types required for the given application type |  | MUST |  |
+
+---
+
+### Declaration (declaration)
+
+Applicants and agents are required to declare information provided is correct
+
+| field | description | application-types | required | notes | 
+| --- | --- | --- | --- | --- |
+| name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
+| declaration-confirmed | The applicant(s) and agent need to confirm the information provided is correct to the best of their knowledge | | MUST | Boolean - `true` / `false`
+| declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
+
+---
+
+### Hedgerow removal notice (hedgerow-removal)
+
+This section is used to provide details about the hedgerows being removed
+
+field | description | application-types |	required | notes
+--- | --- | --- | --- | ---
+removal-reasons | Reasons for the proposed removal of hedgerow(s) | hedgerow-removal | MUST |
+plan-references[] | References to plans showing the stretches of hedgerows to be removed | hedgerow-removal | MUST | References should be document references from `application.documents`
+hedgerow-length | Total length of hedgerow proposed for removal (in metres) | hedgerow-removal | MUST	|Rule: Must be a positive number
+hedgerow-less-than-30-years | Is the hedgerow less than 30 years old? (`true`/`false`) | hedgerow-removal | MUST |	
+planting-evidence-attached | Is evidence of the date of planting attached?	(`true`/`false`) | hedgerow-removal | MAY |	Required if `hedgerow-less-than-30-years` is `true`
+interest-declaration | The applicant's interest or ownership | hedgerow-removal | MUST | See the [hedegerow interest declaration enum](https://github.com/digital-land/planning-application-data-specification/discussions/216)
+
+---
+
+### Pre-application advice (pre-app-advice)
+
+A section for providing details of pre application advice received from the authority
+
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| advice-sought | Has pre-application advice has been sought | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Boolean (`true`/`false`) |
+| officer-name | Name of officer who dealt with pre-app advice | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | |
+| reference | Reference for pre-application advice application | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | |
+| advice-date | Date applicant received the advice, in `YYYY-MM-DD` format | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | |
+| advice-summary | Summary of the advice received | hh;full;outline;demolition-con-area;lbc;ldc;reserved-matters;advertising;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | is this necessary if they have provided the reference? |
+
+---
+
+### Site address details (site-details)
+
+Details to help locate the site proposed for development
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| site-boundary | Geometry of the site of the development | | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
+| address-text | Text address if available for the site | | MAY | does the address need to be structured data or a blob of text like in some app forms? |
+| easting | Grid reference | | MAY | |
+| northing | Grid reference | | MAY | |
+| latitude | Latitude coordinate in EPSG:4326 (WGS84) | | MAY | |
+| longitude | Longitude coordinate in EPSG:4326 (WGS84) | | MAY | |
+| description | Description of the location if `address-text` does not exist for development/site | | MAY | | 
+
+### Rules
+
+Applicant/agent must provide one of:
+* site-boundary
+* address
+* easting + northing
+
+---
+
+### Site visit (site-visit)
+
+Details needed to support a site visit
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
+| contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
+| contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
+| other-contact{} | Details of specifially named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
+
+**Other contact structure**
+| name | Name of person to contact | MUST | |
+| number | Phone number of person to contact | MUST | |
+| email | Email of person to contact | MUST | |
+
+---
+
+
+## Required codelists
+
+The following codelists are required by modules in this application type:
+
+### Contact priority (contact-priority)
+
+_To do: add description for codelist_
+
+| reference | name | description |
+| --- | --- | --- |
+| primary | Primary | The preferred item to use |
+| secondary | Secondary | The option to use if primary is not working |
+
+---
+
+### Site visit contact type (site-visit-contact-type)
+
+_To do: add description for codelist_
+
+reference | name | description
+--- | --- | ---
+applicant | Applicant | The applicant of the application
+agent | Agent | The agent who completed the form
+
+---
+
