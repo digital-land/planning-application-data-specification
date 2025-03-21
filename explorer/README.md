@@ -84,3 +84,15 @@ Check no issues with codelists
 ```
 python pacli.py check --codelist
 ```
+
+## CSV
+
+There are numerous csv files in the repo you may want to interact with
+
+Print out the csv in a markdown table
+```
+python pacli.py csv --filename {path to csv} --markdown --fields {list of fields separated by ,}
+```
+**--filename** is a path to the csv file from the explorer directory
+**--markdown** is needed to print the table out to the terminal
+**--fields** is an option list of the fields, without it all fields will be printed out

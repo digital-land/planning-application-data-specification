@@ -5,6 +5,7 @@ from datetime import datetime
 
 from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types, get_app_types_with_module, generate_application_markdown
 from bin.csv_helpers import read_csv, write_csv
+from bin.markdown_helpers import csv_to_markdown
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
 from bin.modules import get_modules, get_expected_joins, join_data_maker, check_modules, check_codelists
@@ -284,6 +285,11 @@ def module(ref, show, make, app_types):
     help="Fieldname for performing action",
 )
 @click.option(
+    "--fields",
+    type=str,
+    help="Comma-separated list of fields to include in output",
+)
+@click.option(
     "--action",
     type=click.Choice(['sort'], case_sensitive=False),
     help="Action to perform on the CSV file",
@@ -298,7 +304,7 @@ def module(ref, show, make, app_types):
     is_flag=True,
     help="Print the CSV as Markdown to the terminal",
 )
-def csv(filename, fieldname, action, col_order, markdown):
+def csv(filename, fieldname, fields, action, col_order, markdown):
     if not filename:
         print("Please provide a filename")
         return
@@ -307,7 +313,8 @@ def csv(filename, fieldname, action, col_order, markdown):
     data = read_csv(filename, as_dict=True)
 
     if markdown:
-        print(csv_to_markdown(filename))
+        fields_list = fields.split(',') if fields else None
+        print(csv_to_markdown(filename, fields=fields_list))
         return
 
     if not fieldname:
