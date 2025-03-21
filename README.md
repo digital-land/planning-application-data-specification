@@ -24,25 +24,26 @@ You can download a csv of [planning application types](https://github.com/digita
 | Application type | Sub type | Spec | Notes |
 |---|---|---|---|
 | [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/advertising.md) | |
-| [Approval (discharge) of conditions](https://github.com/digital-land/planning-application-data-specification/discussions/173) | | | |
-| [Consent under TPO](https://github.com/digital-land/planning-application-data-specification/discussions/220) | | | |
-| [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | | | _A form of full planning with enough difference to warrant its own type_ |
-| [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) | | | |
-| [Hedgerow removal notice](https://github.com/digital-land/planning-application-data-specification/discussions/218) | | | |
+| [Approval (discharge) of conditions](https://github.com/digital-land/planning-application-data-specification/discussions/173) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/approval-condition.md) | |
+| [Consent under TPO](https://github.com/digital-land/planning-application-data-specification/discussions/220) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/consent-under-tpo.md) | |
+| [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/extraction-oil-gas.md) | _A form of full planning with enough difference to warrant its own type_ |
+| [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/full.md) | |
+| [Hedgerow removal notice](https://github.com/digital-land/planning-application-data-specification/discussions/218) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/hedgerow-removal.md) | |
 | [Householder planning application](https://github.com/digital-land/planning-application-data-specification/discussions/166) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/hh.md) | |
-| Lawful development certificate | [Existing use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/182) | | |
-| Lawful development certificate | [Prospective use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/181) | | |
-| Lawful development certificate | [Proposed work to a listed building](https://github.com/digital-land/planning-application-data-specification/discussions/180) | | |
-| [Listed building consent](https://github.com/digital-land/planning-application-data-specification/discussions/170) | | | |
-| [Non-material amendment](https://github.com/digital-land/planning-application-data-specification/discussions/174) | | | |
-| [Notification of proposed works to trees in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/219) | | | |
-| Outline planning | [All matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/179) | | |
-| Outline planning | [Some matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/178) | | |
-| [Permission in principle](https://github.com/digital-land/planning-application-data-specification/discussions/175) | | | |
+| Lawful development certificate | [Existing use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/182) | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/ldc-ldc-existing-use.md) | |
+| Lawful development certificate | [Prospective use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/181) | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/ldc-ldc-prospective-use.md) | |
+| Lawful development certificate | [Proposed work to a listed building](https://github.com/digital-land/planning-application-data-specification/discussions/180) | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/ldc-ldc-proposed-work-lb.md) | |
+| [Listed building consent](https://github.com/digital-land/planning-application-data-specification/discussions/170) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/lbc.md) | |
+| [Non-material amendment](https://github.com/digital-land/planning-application-data-specification/discussions/174) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/non-material-amendment.md) | |
+| [Notification of proposed works to trees in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/219) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/notice-trees-in-con-area.md) | |
+| Outline planning | [All matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/179) | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/outline-outline-all.md) | |
+| Outline planning | [Some matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/178) | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/outline-outline-some.md) | |
+| [Permission in principle](https://github.com/digital-land/planning-application-data-specification/discussions/175) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/pip.md) | |
 | [Planning permission for relevant demolition in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/169) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/demolition-con-area.md) | |
-| Prior approval | | _Working through how to handle sub-types (see #158)_ |
+| Prior approval | Larger Home Extension | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/prior-approval-pa-extension.md) | |
+| Prior approval | Additional storeys | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/prior-approval-pa-storey.md) | |
 | [Removal/variation of conditions (S73)](https://github.com/digital-land/planning-application-data-specification/discussions/172) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/s73.md) | |
-| [Reserved matters](https://github.com/digital-land/planning-application-data-specification/discussions/168) | | |
+| [Reserved matters](https://github.com/digital-land/planning-application-data-specification/discussions/168) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/reserved-matters.md) | |
 
 
 ## Contributing
