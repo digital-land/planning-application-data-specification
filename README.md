@@ -23,7 +23,7 @@ You can download a csv of [planning application types](https://github.com/digita
 
 | Application type | Sub type | Spec | Notes |
 |---|---|---|---|
-| [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) | | | |
+| [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/advertising.md) | |
 | [Approval (discharge) of conditions](https://github.com/digital-land/planning-application-data-specification/discussions/173) | | | |
 | [Consent under TPO](https://github.com/digital-land/planning-application-data-specification/discussions/220) | | | |
 | [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | | | _A form of full planning with enough difference to warrant its own type_ |
