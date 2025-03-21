@@ -95,7 +95,7 @@ def check_modules(modules, modules_dir, app_mod_joins):
         print("All modules with references have corresponding markdown files")
 
 
-def check_codelists(modules, codelist_file="../data/codelists.csv"):
+def check_codelists(modules, codelist_file="../data/codelists.csv", codelist_dir="../specification/codelist"):
     print("\nChecking codelists\n---")
     
     # Get all module references
@@ -103,6 +103,7 @@ def check_codelists(modules, codelist_file="../data/codelists.csv"):
     
     missing_modules = []
     invalid_module_refs = []
+    missing_markdown = []
     
     with open(codelist_file, 'r') as f:
         reader = csv.DictReader(f)
@@ -110,6 +111,12 @@ def check_codelists(modules, codelist_file="../data/codelists.csv"):
         
         for row in rows:
             if not row.get('end-date'):  # Only check active entries
+                # Check for markdown file
+                if row.get('reference'):
+                    markdown_file = os.path.join(codelist_dir, f"{row['reference']}.md")
+                    if not os.path.exists(markdown_file):
+                        missing_markdown.append(row)
+
                 modules_str = row.get('modules', '').strip()
                 
                 # Check if modules field is empty
@@ -141,5 +148,10 @@ def check_codelists(modules, codelist_file="../data/codelists.csv"):
         for item in invalid_module_refs:
             print(f"  Codelist: {item['codelist']}, Ref: {item['reference']} - Invalid module(s) = {', '.join(item['invalid_refs'])}")
 
-    if not missing_modules and not invalid_module_refs:
+    if missing_markdown:
+        print("\nCodelist(s) missing markdown files:")
+        for item in missing_markdown:
+            print(f"  Codelist: {item['name']}, Ref: {item['reference']}")
+
+    if not missing_modules and not invalid_module_refs and not missing_markdown:
         print("All codelists are valid!")
