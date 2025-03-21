@@ -5,6 +5,8 @@
 | bng-condition-exemption-reason | Reason why BNG does not apply, referencing exemptions or transitional arrangements | full;outline;demolition-con-area | String | MAY | | Rule: Required if `bng-condition-applies` = False |
 | bng-details{} | Biodiversity net gain details | full;outline;demolition-con-area | Object | MAY | Rule: is MUST if bng-condition-applies = True |
 
+Rule: if `application-types` includes `hh` (the householder application) then only the `bng-exempt` field is required
+
 **BNG details** structure
 
 Field | Description | Data Type | Required | Notes
