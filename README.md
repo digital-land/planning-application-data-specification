@@ -35,7 +35,7 @@ You can download a csv of [planning application types](https://github.com/digita
 | Lawful development certificate | [Proposed work to a listed building](https://github.com/digital-land/planning-application-data-specification/discussions/180) | |
 | [Listed building consent](https://github.com/digital-land/planning-application-data-specification/discussions/170) | | |
 | [Non-material amendment](https://github.com/digital-land/planning-application-data-specification/discussions/174) | | |
-| [Notification of proposed works to trees in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/220) | | |
+| [Notification of proposed works to trees in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/219) | | |
 | Outline planning | [All matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/179) | |
 | Outline planning | [Some matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/178) | |
 | [Permission in principle](https://github.com/digital-land/planning-application-data-specification/discussions/175) | | |
