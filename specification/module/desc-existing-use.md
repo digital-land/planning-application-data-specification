@@ -1,10 +1,11 @@
-Field | Description | Application-Types | Required | Notes
+field | description | application-types | required | notes
 -- | -- | -- | -- | --
-existing-use-details[]{} | List of existing site uses and related land areas |   | MUST | At least one use must be provided.
+existing-use-details[]{} | List of existing site uses and related land areas |   | MUST | Rule: At least one use must be provided.
 
-existing use structure
+**existing use structure**
 
-Field | Description | Required | Notes
+field | description | required | notes
 -- | -- | -- | --
-use-class | The Use class for the use | MUST | See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
-use-details | Further detail of the use | MAY | Rule: required if Sui generis or other given
+use | The Use class of the use | MUST | See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189). One of enum or other
+use-details | Further detail of the use | MAY | Rule: required if `use` is `sui` or `other`
+land-part | State which part of the land the `use` relates to | MUST | 
