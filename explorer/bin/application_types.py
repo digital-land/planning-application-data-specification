@@ -233,30 +233,46 @@ def add_specification_content_to_file(open_file, spec_file="../specification/app
         print(f"can't locate specification file: {spec_file}")
 
 
-def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application", codelist_dir="../specification/codelist"):
-    os.makedirs(output_dir, exist_ok=True)
-    filename = f"{application['reference']}.md"
-    if sub_type_ref:
-        filename = f"{application['reference']}-{sub_type_ref}.md"
-    output_file = os.path.join(output_dir, filename)
-
-    all_modules = get_all_modules_for_application(application, sub_type_ref)
-    codelists = get_codelists_for_modules(all_modules)
+def prepare_application_data(application, sub_type_ref=None, app_mod_joins=None, modules=None):
+    """Prepare application data by loading modules and finding sub-types"""
+    # Get modules for application type if not already loaded
+    if app_mod_joins and modules and not application.get("modules"):
+        app_module_refs = [j['application-module'] for j in app_mod_joins 
+                        if j["application-type"] == application['reference'] and not j.get("end-date")]
+        application["modules"] = get_modules(app_module_refs, modules)
     
+    # Find matching sub-type if specified
+    sub_type = None
+    if sub_type_ref:
+        for st in application.get("sub-types", []):
+            if st["reference"] == sub_type_ref:
+                # Get modules for sub-type if not already loaded
+                if app_mod_joins and modules and not st.get("modules"):
+                    st_module_refs = [j['application-module'] for j in app_mod_joins 
+                                    if j["application-sub-type"] == st['reference'] and not j.get("end-date")]
+                    st["modules"] = get_modules(st_module_refs, modules)
+                sub_type = st
+                break
+                
+    return application, sub_type
+
+
+def generate_application_markdown(application, sub_type_ref=None, modules_dir="../specification/module", output_dir="../specification/application", codelist_dir="../specification/codelist", app_mod_joins=None, modules=None):
+    """Generate markdown file for an application type and optionally a sub-type"""
+    # Prepare the data
+    application, sub_type = prepare_application_data(application, sub_type_ref, app_mod_joins, modules)
+
+    # Setup output
+    os.makedirs(output_dir, exist_ok=True)
+    filename = f"{application['reference']}-{sub_type_ref}.md" if sub_type_ref else f"{application['reference']}.md"
+    output_file = os.path.join(output_dir, filename)
+    
+    print(f"\nGenerating markdown for {application['name']}{f' -> {sub_type_ref}' if sub_type_ref else ''}")
+    
+    # Generate the file
     with open(output_file, "w") as f:
         f.write(f"# {application['name']}\n")
         f.write(f"\n{application['description']}\n\n")
-        
-        # Find sub-type if specified
-        sub_type = None
-        if sub_type_ref:
-            print(f'Generating markdown file for {application["name"]} -> {sub_type_ref}\n')
-            for st in application.get("sub-types", []):
-                if st["reference"] == sub_type_ref:
-                    sub_type = st
-                    break
-        else:
-            print(f'Generating markdown file for {application["name"]}\n')
         
         if sub_type:
             f.write(f"## Sub-type: {sub_type['name']}\n\n")
@@ -267,20 +283,57 @@ def generate_application_markdown(application, sub_type_ref=None, modules_dir=".
         # Add application specification content
         add_specification_content_to_file(f)
         
+        # Add modules sections
         f.write(f"## Modules\n\n")
         f.write(f"These modules are all required for this application type\n\n")
         add_modules_to_file(f, application.get("modules", []), modules_dir)
         
-        if sub_type_ref and sub_type:
+        if sub_type:
             f.write("## Sub-type modules\n")
             f.write("The following modules are required for this sub-type.\n\n")
             add_modules_to_file(f, sub_type.get("modules", []), modules_dir)
 
-        # Add codelists section at the end
+        # Add codelists section
+        all_modules = get_all_modules_for_application(application, sub_type_ref)
+        codelists = get_codelists_for_modules(all_modules)
+        print("\nCodelists\n---")
         if codelists:
-            # Add detailed codelist content
             f.write("\n## Required codelists\n\n")
             f.write("The following codelists are required by modules in this application type:\n\n")            
-            print("\n")
             for codelist in codelists:
                 add_codelist_content_to_file(f, codelist, codelist_dir)
+
+    return output_file
+
+
+def prepare_and_generate_application(application, app_mod_joins, modules, sub_types=None):
+    """Prepare and generate markdown for an application and its sub-types"""
+    # Get modules for this application type
+    app_module_refs = [j['application-module'] for j in app_mod_joins 
+                    if j["application-type"] == application['reference'] and not j.get("end-date")]
+    application["modules"] = get_modules(app_module_refs, modules)
+    
+    # Get any sub-types for this application
+    app_sub_types = [s for s in sub_types if s["application-type"] == application['reference']] if sub_types else []
+    application['sub-types'] = []
+    
+    try:
+        if app_sub_types:
+            # If app has sub-types, only generate those
+            print(f"\nGenerating markdown for {application['name']} sub-types")
+            for st in app_sub_types:
+                print(f"  -> {st['name']}")
+                # Get modules for this sub-type
+                st_module_refs = [j['application-module'] for j in app_mod_joins 
+                                if j["application-sub-type"] == st['reference'] and not j.get("end-date")]
+                st["modules"] = get_modules(st_module_refs, modules)
+                application['sub-types'].append(st)
+                generate_application_markdown(application, sub_type_ref=st['reference'])
+        else:
+            # Only generate base application markdown if no sub-types
+            print(f"\nGenerating markdown for {application['name']}")
+            generate_application_markdown(application)
+            
+        return None  # Success
+    except Exception as e:
+        return f"Error processing {application['name']}: {str(e)}"  # Return error message

@@ -73,6 +73,48 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, mar
         if markdown:
             print_app_types_as_markdown_table(application_types)
             return
+            
+        if generate_application:
+            print("\nGenerating markdown files for all application types...")
+            errors = []
+            for app in sorted(application_types, key=lambda x: x['name']):
+                try:
+                    # Get modules for this application type
+                    app_module_refs = [j['application-module'] for j in app_mod_joins 
+                                    if j["application-type"] == app['reference'] and not j.get("end-date")]
+                    app["modules"] = get_modules(app_module_refs, modules)
+                    
+                    # Get any sub-types for this application
+                    app_sub_types = [s for s in sub_types if s["application-type"] == app['reference']]
+                    app['sub-types'] = []
+                    
+                    if app_sub_types:
+                        # If app has sub-types, only generate those
+                        print(f"\nGenerating markdown for {app['name']} sub-types")
+                        for st in app_sub_types:
+                            print(f"  -> {st['name']}")
+                            # Get modules for this sub-type
+                            st_module_refs = [j['application-module'] for j in app_mod_joins 
+                                            if j["application-sub-type"] == st['reference'] and not j.get("end-date")]
+                            st["modules"] = get_modules(st_module_refs, modules)
+                            app['sub-types'].append(st)
+                            generate_application_markdown(app, sub_type_ref=st['reference'])
+                    else:
+                        # Only generate base application markdown if no sub-types
+                        print(f"\nGenerating markdown for {app['name']}")
+                        generate_application_markdown(app)
+                        
+                except Exception as e:
+                    errors.append(f"Error processing {app['name']}: {str(e)}")
+                    
+            if errors:
+                print("\nErrors encountered:")
+                for error in errors:
+                    print(f"  {error}")
+            else:
+                print("\nAll markdown files generated successfully!")
+            return
+            
         refs = sorted(app[sort_by] for app in application_types)
         print("\nAll References:\n---")
         for r in refs:
