@@ -357,23 +357,29 @@ Please state the hours of opening for each non-residential use proposed:
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| hours-of-operation[]{} | State the hours of opening for each non-residential use | | MUST | |
-| additional-information | | extraction-oil-gas | MAY | |
+| hours-of-operation[]{} | List the hours of operation by non-residential use | | MUST | |
+| additional-information | Any additional detail about operational hours | extraction-oil-gas | MAY | |
 
 **hours of operation**
 | field | description | required | notes |
 | --- | --- | --- | --- |
-| non-residential-use | | MUST | Should this be a use class? |
-| opening-times[]{} | Structured data for opening hours by day | MAY | one of `hours-of-operation` or `hours-unknown` must be completed |
-| hours-unknown | Applicant states they do not know the hours of operation | MAY | one of `hours-of-operation` or `hours-unknown` must be completed |
+| use | The use class | MUST | One of the [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189) + other |
+| use-other | Specify use if use is other | MAY	Required if `use` is `other`
+| operational-times[]{} | Structured data for operational hours by day | MAY | Rule: Must be completed if hours-not-known is not provided |
+| hours-not-known | Applicant states they do not know the hours of operation | MAY | Rule: Must be completed if operational-times is not provided |
 
 **Opening times**
 | field | description | notes |
 | --- | --- | --- |
-| day-type | Day of the week | One of [day-type enum](https://github.com/digital-land/planning-application-data-specification/discussions/197) |
-| open-time | | HH:MM |
-| close-time | | HH:MM |
+| day-type | Day or type of day | One of [day-type enum](https://github.com/digital-land/planning-application-data-specification/discussions/197) |
+| time-ranges[]{} | Opening and closing times for the day	| MUST | Can have multiple ranges (e.g., morning and evening opening) |
 | closed | True or False | If True, `open-time` and `close-time` must be empty. Explicitly state when closed |
+
+**time range structure**
+field	| description |	required | notes
+--- | --- | --- | ---
+open-time | Opening time | MUST | Format: `HH:MM`
+close-time | Closing time | MUST | Format: `HH:MM`
 
 ---
 

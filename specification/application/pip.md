@@ -229,12 +229,18 @@ provided-by | Whether the site area was provided by the applicant or system |  
 
 ### Existing Use Structure
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-use-classes[] | List of applicable use classes | Enum | MUST | Mixed-use sites can list multiple classes. See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
+uses[]{} | List of applicable uses | Enum | MUST | Mixed-use sites can list multiple classes. See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
 floorspace | Total floorspace for the use | Number | MUST | Numeric value. Expected in m2
 
-**documents**
+**Use structure**
+field | description | data-type | required | notes
+--- | --- | --- | --- | ---
+use | A non-residential use | Enum+other | MUST | 
+specified-use | A specified use if no applicable use class | String | MAY | Rule: must if `use` is `sui` or `other`
+
+**documents structure**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
@@ -257,6 +263,17 @@ _To do: add description for codelist_
 | --- | --- | --- |
 | primary | Primary | The preferred item to use |
 | secondary | Secondary | The option to use if primary is not working |
+
+---
+
+### Non-residential measurement type (non-res-measurement-type)
+
+_To do: add description for codelist_
+
+| reference | name | description |
+| --- | --- | --- |
+| floorspace | Floorspace | Provided in m2 |
+| site-area | Site area | Provided in hectares |
 
 ---
 

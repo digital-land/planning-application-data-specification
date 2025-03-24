@@ -8,15 +8,12 @@ This applies to  developments with permitted development rights (where developme
 
 Modules
 
-* [Adjoining premises](#adjoining-premises-adj-premises)
 * [Agent contact details](#agent-contact-details-agent-contact)
 * [Agent name and address](#agent-name-and-address-agent-details)
 * [Applicant contact details](#applicant-contact-details-applicant-contact)
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
-* [Description of proposed works](#description-of-proposed-works-desc-proposed-works)
-* [Eligibility - Larger house extension](#eligibility---larger-house-extension-eligibility-extension)
 * [Site address details](#site-address-details-site-details)
 
 Sub-type modules
@@ -229,53 +226,6 @@ Applicant/agent must provide one of:
 * site-boundary
 * address
 * easting + northing
-
----
-
-### Adjoining premises (adj-premises)
-
-_To do: add description for module_
-
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-| addresses[]{} | A list of addressed for the adjoining properties | | MUST |  |
-
-**Address model**
-
-Field | Description | Data Type | Required | Notes
--- | -- | -- | -- | --
-address-test | Address details | String | MUST | 
-postcode | Postcode of address if available | String | MAY | 
-uprn | UPRN if known | UPRN | MAY | 
-
----
-
-### Description of proposed works (desc-proposed-works)
-
-_To do: add description for module_
-
-Field | Description | Data Type | Application Type | Required? | Notes
--- | -- | -- | -- | -- | --
-proposed-works-details | Description of the proposed works | String |  | MUST | Detailed explanation of the work
-extension-depth | How far the extension extends beyond the rear wall | Float | prior-approval | MUST | Measured externally in meters
-max-extension-height | Maximum height of the extension | Float | prior-approval | MUST | Measured externally from natural ground level
-eaves-height | Height at the eaves of the extension | Float | prior-approval | MUST | Measured externally from natural ground level
-
----
-
-### Eligibility - Larger house extension (eligibility-extension)
-
-_To do: add description for module_
-
-Field | Description | Application-Types | Required | Notes
--- | -- | -- | -- | --
-single-storey-extension | Will the extension be a single storey? (True/False) |   | MUST | If False, the application cannot proceed.
-extension-height-over-4m | Will the extension exceed 4 metres in height? (True/False) |   | MUST | If True, the application cannot proceed.
-dwelling-detached | Is the the dwelling detached? (True/False) | | MUST | 
-rear-extension-length | Will the extension extend beyond the rear wall of the original dwelling? |   | MUST | See conditional logic for limits based on attachment type.
-extension-length | Length of rear extension (in metres) |   | MUST | 
-within-site-constraints | Is the dwellinghouse within any restricted area? (True/False) |   | MUST | If True, the application cannot proceed.
-site-constraints[] | List of specific site constraints |   | MAY | Rule: Required if within-site-restrictions is True. See [site constraints enum](https://github.com/digital-land/planning-application-data-specification/discussions/191)
 
 ---
 

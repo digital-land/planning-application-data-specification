@@ -271,6 +271,7 @@ applicant-owns-land | Does the applicant own the land? (`True`/`False`) | advert
 permission-obtained | Has permission of the owner for the display of an advertisement been obtained? | advertising | MAY | Rule is a MUST if `applicant-owns-land` is `False` |
 | permission-not-obtained-details | Details if permission from the owner has not been obtained | advertising | MAY | Rule is a MUST if `applicant-owns-land` is `False` and `permission-obtained` is `False` |
 
+The [legislation](https://www.legislation.gov.uk/uksi/2007/783/schedule/2) states "No advertisement is to be displayed without the permission of the owner of the site or any other person with an interest in the site entitled to grant permission."
 
 **Owner(s) model**
 

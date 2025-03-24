@@ -15,20 +15,29 @@ Modules
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
 * [Assessment of flood risk](#assessment-of-flood-risk-flood-risk-assessment)
 * [Authority employee / member](#authority-employee-member-conflict-of-interest)
+* [Biodiversity and geological conservation](#biodiversity-and-geological-conservation-bio-geo-arch-con)
 * [Biodiversity net gain](#biodiversity-net-gain-bng)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
 * [Description of the proposal](#description-of-the-proposal-proposal-details)
 * [Employment](#employment-employment)
 * [Existing use](#existing-use-existing-use)
+* [Foul sewage](#foul-sewage-foul-sewage)
+* [Hazardous substances](#hazardous-substances-haz-substances)
 * [Hours of operation](#hours-of-operation-hrs-operation)
 * [Industrial or commercial processes and machinery](#industrial-or-commercial-processes-and-machinery-processes-machinery-waste)
+* [Materials](#materials-materials)
 * [Ownership certificates and agricultural land declaration](#ownership-certificates-and-agricultural-land-declaration-ownership-certs)
+* [Pedestrian and vehicle access, roads and rights of way](#pedestrian-and-vehicle-access-roads-and-rights-of-way-access-rights-of-way)
 * [Pre-application advice](#pre-application-advice-pre-app-advice)
 * [Residential units (including conversion)](#residential-units-including-conversion-res-units)
 * [Site address details](#site-address-details-site-details)
 * [Site area](#site-area-site-area)
 * [Site visit](#site-visit-site-visit)
+* [Trade effluent](#trade-effluent-trade-effluent)
+* [Trees and hedges](#trees-and-hedges-trees-hedges)
+* [Vehicle parking](#vehicle-parking-vehicle-parking)
+* [Waste storage and collection](#waste-storage-and-collection-waste-storage-collection)
 
 ---
 
@@ -131,19 +140,19 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 _To do: add description for module_
 
-Field | Description | Application-Types | Required | Notes
+field | description | application-types | required | notes
 -- | -- | -- | -- | --
-non-residential-change | Does the proposal involve the loss, gain, or change of non-residential floorspace? |   | MUST | Boolean (Yes / No).
+non-residential-change | Does the proposal involve the loss, gain, or change of non-residential floorspace? |   | MUST | Boolean (true / false).
 floorspace-details[]{} | List of non-residential floorspace changes by use class |   | MAY | Required if non-residential-change is Yes.
 room-details[] | List of room changes for hotels, residential institutions and hostels | | MAY | Required if change to hotels, residential institutions and hostel floorspace |
 
 **Floorspace details**
 
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 -- | -- | -- | -- | --
-use-class | Type of non-residential use class | Enum | MUST | See [Use Class Enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
-specified-use | Specify the use that sits outside the lettered use classes | String | MAY | Rule: is a MUST if `use-class` is `other` or `sui generis`
+use | Type of non-residential use class | Enum+other | MUST | See [Use Class Enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
+specified-use | Specify the use that sits outside the lettered use classes | String | MAY | Rule: is a MUST if `use` is `other` or `sui generis`
 existing-gross-floorspace | Existing gross internal floorspace (sqm) | Number | MUST | Must be 0 or positive.
 floorspace-lost | Gross floorspace to be lost by change of use (sqm) | Number | MUST | Must be 0 or positive.
 total-gross-proposed | Total gross internal floorspace proposed (sqm) | Number | MUST | Must be 0 or positive.
@@ -154,7 +163,7 @@ net-additional-floorspace | Net additional gross internal floorspace (sqm) | Num
 
 For certain use classes (C1, C2, C2A), applicants must provide room details:
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 -- | -- | -- | -- | --
 use-class | Type of non-residential use class | Enum | MUST | Only required for C1, C2, C2A, or Other.
 existing-rooms-lost | Existing rooms to be lost by change of use | Number | MUST | Must be 0 or positive.
@@ -397,23 +406,29 @@ Please state the hours of opening for each non-residential use proposed:
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| hours-of-operation[]{} | State the hours of opening for each non-residential use | | MUST | |
-| additional-information | | extraction-oil-gas | MAY | |
+| hours-of-operation[]{} | List the hours of operation by non-residential use | | MUST | |
+| additional-information | Any additional detail about operational hours | extraction-oil-gas | MAY | |
 
 **hours of operation**
 | field | description | required | notes |
 | --- | --- | --- | --- |
-| non-residential-use | | MUST | Should this be a use class? |
-| opening-times[]{} | Structured data for opening hours by day | MAY | one of `hours-of-operation` or `hours-unknown` must be completed |
-| hours-unknown | Applicant states they do not know the hours of operation | MAY | one of `hours-of-operation` or `hours-unknown` must be completed |
+| use | The use class | MUST | One of the [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189) + other |
+| use-other | Specify use if use is other | MAY	Required if `use` is `other`
+| operational-times[]{} | Structured data for operational hours by day | MAY | Rule: Must be completed if hours-not-known is not provided |
+| hours-not-known | Applicant states they do not know the hours of operation | MAY | Rule: Must be completed if operational-times is not provided |
 
 **Opening times**
 | field | description | notes |
 | --- | --- | --- |
-| day-type | Day of the week | One of [day-type enum](https://github.com/digital-land/planning-application-data-specification/discussions/197) |
-| open-time | | HH:MM |
-| close-time | | HH:MM |
+| day-type | Day or type of day | One of [day-type enum](https://github.com/digital-land/planning-application-data-specification/discussions/197) |
+| time-ranges[]{} | Opening and closing times for the day	| MUST | Can have multiple ranges (e.g., morning and evening opening) |
 | closed | True or False | If True, `open-time` and `close-time` must be empty. Explicitly state when closed |
+
+**time range structure**
+field	| description |	required | notes
+--- | --- | --- | ---
+open-time | Opening time | MUST | Format: `HH:MM`
+close-time | Closing time | MUST | Format: `HH:MM`
 
 ---
 
@@ -591,6 +606,167 @@ Details needed to support a site visit
 
 ---
 
+### Biodiversity and geological conservation (bio-geo-arch-con)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+protected-species-impact | Is there a likelihood of protected and priority species being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+biodiversity-features-impact | Is there a likelihood of important habitats or biodiversity features being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+geological-features-impact | Is there a likelihood of features of geological conservation importance being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+archaeological-features-impact | Is there a likelihood of features of archaeological conservation importance being affected? | extraction-oil-gas | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+
+---
+
+### Foul sewage (foul-sewage)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+foul-sewage-disposal-types[] | List of ways foul sewage will be disposed of | | MUST | See [foul-sewage-disposal-type ENUM](https://github.com/digital-land/planning-application-data-specification/discussions/165)
+produce-foul-sewage | Proposed development produce any foul sewage (True/False) | extraction-oil-gas | MUST | 
+connect-to-drainage-system | Does the proposal need to connect to the existing drainage system (True/False) | | MUST | 
+drainage-system-details | Details of the drawings/plans that show the existing system | | MAY | Rule, is a MUST if `connect-to-drainage-system` is TRUE or `extraction-oil-gas` application 
+
+---
+
+### Hazardous substances (haz-substances)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+involves-hazardous-substances | Indicates if hazardous substances are involved | full;outline  | MUST | One of Yes, No, Not Applicable.
+substance-types[] | List of hazardous substances and their quantities |  full;outline  | MAY | Required if hazardous-substances-involved is Yes.
+hazardous-sub-consent-req | Does the proposal involve the use or storage of any substances requiring hazardous substances consent? (`true`/`false`) | extraction-oil-gas | MUST | 
+hazardous-sub-consent-details | Details of hazardous substance consent | extraction-oil-gas | MAY | Is a MUST if `hazardous-sub-consent-req` is true
+
+**Hazardous substance types**
+
+Field | Description | Notes
+-- | -- | --
+hazardous-substance-type | Reference of hazardous substance type | Predefined list (see [hazardous-substances enum](https://github.com/digital-land/planning-application-data-specification/discussions/196)) + option for Other.
+name | Name of the hazardous substance | Only required if Other is selected
+amount | Amount of the substance in tonnes | Numeric. Must be greater than 0.
+
+---
+
+### Materials (materials)
+
+Where applicable details about the materials to be used or changed should be provided. Including type, colour and name for each material
+
+**Materials**
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). |  | MUST | See Building element structure. One entry per building element.
+additional-material-information | States whether supporting documents are being provided with further material details. |  | MUST | Boolean: true or false.
+supporting-documents[] | Details for documents providing additional material information. |  | MAY | Required if additional-material-information is true.
+
+
+**Building element**
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+building-element-type | Identifies the part of the building the materials relate to, such as walls, roofs, windows, or doors. | MUST | Must use values from the [building element types enum](https://github.com/digital-land/planning-application-data-specification/discussions/207).
+existing-materials | Description of the materials currently used for this building element. | MAY | Complete if known and applicable.
+proposed-materials | Description of the materials proposed for this building element as part of the development. | MAY | Complete if known and applicable.
+materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
+materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
+
+**documents**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity
+
+---
+
+### Pedestrian and vehicle access, roads and rights of way (access-rights-of-way)
+
+This section asks you to explain any changes to how people or vehicles access the site, including any new or affected roads, footpaths, or public rights of way.
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| new-altered-vehicle | Is a new or altered vehicle access proposed to/from the public highway? | extraction-oil-gas;full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| new-altered-pedestrian | Is a new or altered pedestrian access proposed to/from the public highway? | extraction-oil-gas;full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| change-right-of-way | Will the proposal change public rights of way? (diversion/extinguishment/creation) | full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers.|
+| new-right-of-way | Will new public rights of way be provided within or adjacent to the site? | extraction-oil-gas;full;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| new-public-road | Will new public roads be provided within the site? | extraction-oil-gas;full;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| temp-right-of-way | Are temporary changes to rights of way needed while the site is worked? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| future-new-right-of-way | Will new public rights of way be provided after extraction? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| supporting-documents[]{} | List of document supporting the information provided | extraction-oil-gas;full;hh;outline | MAY | Required if any answer is `true`. |
+
+---
+
+### Trade effluent (trade-effluent)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| `disposal-required` | True or False depending on if proposal involves the disposal of trade effluents or waste | | MUST | | 
+| `description` | Describe the nature, volume and means of disposal of trade effluents or waste | | MAY | Rule: is a MUST if `disposal-required` is True |
+
+---
+
+### Trees and hedges (trees-hedges)
+
+Details of trees and hedges affecting the site or that will be affected by the proposed development
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
+| falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
+| tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
+| tree-removal-document{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
+| trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
+| trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
+
+**documents**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity
+
+---
+
+### Vehicle parking (vehicle-parking)
+
+Please provide information on the existing and proposed number of on-site parking spaces: 
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+parking-spaces[]{} | List of parking spaces by vehicle type |   | MUST | One object per vehicle type, including “Other” if specified.
+
+**Parking space items**
+
+Field | Description | Data Type | Required | Notes
+-- | -- | -- | -- | --
+parking-space-type | Type of vehicle from the codelist | Enum / String | MUST | Select from [parking space type enum](https://github.com/digital-land/planning-application-data-specification/discussions/199), or "other" if user specifies a custom type.
+vehicle-type-other | Custom value if "Other" is selected | String | MAY | Rule: Required only if `vehicle-type` is "other".
+total-existing | Existing on-site parking spaces | Number | MUST | Must be 0 or positive.
+total-proposed | Total proposed spaces, including retained spaces | Number | MUST | Must be 0 or positive.
+unknown-proposed | Is the total proposed number unknown? | Boolean | MUST | If True, total-proposed can be left blank.
+difference-in-spaces | Calculated difference between existing and proposed spaces | Number | MUST | Calculated as total-proposed - total-existing. Could be calculated by applicant or system
+
+---
+
+### Waste storage and collection (waste-storage-collection)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| needs-waste-storage-area | True or False | | MUST | |
+| waste-storage-area-details | | | MAY | Rule, is a MUST if `needs-waste-storage-area` is True |
+| separate-recycling-arrangements | True or False | | MUST | |
+| separate-recycling-arrangements-details | | | MAY | Rule, is a MUST if `separate-recycling-arrangements` is True |
+
+---
+
 ## Sub-type modules
 The following modules are required for this sub-type.
 
@@ -598,6 +774,43 @@ The following modules are required for this sub-type.
 ## Required codelists
 
 The following codelists are required by modules in this application type:
+
+### Affected area type (affected-area-type)
+
+_To do: add description for codelist_
+
+reference | name | description
+--- | --- | ---
+on-development-site | On development site | 
+adjacent-to-site | On adjacent site | 
+
+---
+
+### Building element type (building-element-type)
+
+A set of building elements that applicants are expected to provide material information for
+
+| reference | name | application-types | 
+| --- | --- | -- |
+| walls | Walls | advertising;demolition-con-area;full;hh;outline |
+| roof | Roof | advertising;demolition-con-area;full;hh;outline |
+| windows | Windows | advertising;demolition-con-area;full;hh;outline |
+| doors | Doors | advertising;demolition-con-area;full;hh;outline |
+| boundary-treatments | Boundary treatments | advertising;demolition-con-area;full;hh;lbc;outline |
+| vehicle-access-hard-standings | Vehicle access and hard-standings | advertising;demolition-con-area;full;hh;lbc;outline |
+| lighting | Lighting | advertising;demolition-con-area;full;hh;lbc;outline |
+| external-walls | External walls | lbc |
+| roof-covering | Roof covering | lbc |
+| chimney | Chimney | lbc |
+| external-doors | External doors | lbc |
+| ceilings | Ceilings | lbc |
+| internal-walls | Internal walls | lbc |
+| floors | Floors | lbc |
+| internal-doors | Internal doors | lbc |
+| rainwater-goods | Rainwater goods | lbc |
+| other | Other | advertising;demolition-con-area;full;hh;lbc;outline |
+
+---
 
 ### Contact priority (contact-priority)
 
@@ -620,6 +833,41 @@ _To do: add description for codelist_
 | saturday | Saturday | |
 | sunday | Sunday | |
 | bank-holiday | Bank holiday | |
+
+---
+
+### Foul sewage disposal type (foul-sewage-disposal-type)
+
+_To do: add description for codelist_
+
+| reference | name | description |
+| --- | --- | --- |
+| mains-sewer | Mains sewer | |
+| cess-pit | Cess pit | |
+| septic-tank | Septic tank | |
+| package-treatment | Package treatment plant | |
+| other | Other | |
+
+---
+
+### Hazardous substance type (hazardous-sub-type)
+
+_To do: add description for codelist_
+
+Reference | Name | Notes
+-- | -- | --
+acrylonitrile | Acrylonitrile |  
+ammonia | Ammonia |  
+bromine | Bromine |  
+chlorine | Chlorine |  
+ethylene-oxide | Ethylene oxide |  
+flour | Flour |  
+hydrogen-cyanide | Hydrogen cyanide |  
+liquid-oxygen | Liquid oxygen |  
+liquid-petroleum-gas | Liquid petroleum gas |  
+phosgene | Phosgene |  
+refined-white-sugar | Refined white sugar |  
+sulphur-dioxide | Sulphur dioxide |  
 
 ---
 
@@ -653,6 +901,20 @@ certificate-d | Certificate D | Applicant does not know any of the other owners 
 
 ---
 
+### Parking space type (parking-space-type)
+
+_To do: add description for codelist_
+
+reference | name | description
+-- | -- | --
+car-space | Cars | Standard on-site parking spaces for cars.
+light-goods-vehicle-space | Light Goods/Public Carrier Vehicles | Vans, delivery vehicles, and public carriers.
+motorcycle-space | Motorcycles | Spaces designated for motorbikes.
+disability-space | Disability Space | Accessible parking spaces.
+cycle-space | Cycle Space | Bicycle parking, including racks or shelters.
+
+---
+
 ### Reserved matter type (reserved-matter-type)
 
 _To do: add description for codelist_
@@ -664,6 +926,18 @@ _To do: add description for codelist_
 | landscaping | Landscaping | |
 | layout | layout | |
 | scale | Scale | |
+
+---
+
+### Rights of way answer (rights-of-way-answer)
+
+_To do: add description for codelist_
+
+reference | name | application-types | description
+--- | --- | --- | ---
+true | True | extraction-oil-gas;full;hh;outline | The statement is true
+false | False | extraction-oil-gas;full;hh;outline | The statement is false
+unknown | Unknown | outline | The answer is unknown 
 
 ---
 

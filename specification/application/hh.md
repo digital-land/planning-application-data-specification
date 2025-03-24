@@ -31,7 +31,7 @@ Modules
 field	| description	| data-type | required | notes
 --- | --- | --- | --- | ---
 reference | UUID for the application record | UUID | MUST | 
-application-type | The type of planning application | Enum | MUST | See [list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv)
+application-types[] | A list of planning application types | Enum | MUST | See [list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv)
 application-sub-type | Sub-category of the application | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
 planning-authority | The reference of the planning authority the application has been submitted to | Organisation reference | MUST | 
 submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
@@ -209,6 +209,8 @@ This section asks for information to show how the development will protect or im
 | bng-condition-exemption-reason | Reason why BNG does not apply, referencing exemptions or transitional arrangements | full;outline;demolition-con-area | String | MAY | | Rule: Required if `bng-condition-applies` = False |
 | bng-details{} | Biodiversity net gain details | full;outline;demolition-con-area | Object | MAY | Rule: is MUST if bng-condition-applies = True |
 
+Rule: if `application-types` includes `hh` (the householder application) then only the `bng-exempt` field is required
+
 **BNG details** structure
 
 Field | Description | Data Type | Required | Notes
@@ -336,18 +338,16 @@ agricultural-tenants | Are there any agricultural tenants? (True/False) |   | M
 owners-and-tenants[] | List of known owners and agricultural tenants |   | MAY | Required for Certificate-B or Certificate-C.
 steps-taken | Steps taken to identify unknown owners or tenants |   | MAY | Required for Certificate-C or Certificate-D.
 newspaper-notice | Newspaper notice details for unknown owners/tenants |   | MAY | Required for Certificate-C or Certificate-D.
-ownership-cert-option | Ownership certificate type based on ownership and tenancy |   | MUST | Enum: Certificate-A, Certificate-B, Certificate-C, Certificate-D. Determined by applicant or system?
+ownership-cert-option | Ownership certificate type based on ownership and tenancy |   | MUST | See [ownership certificate type enum](https://github.com/digital-land/planning-application-data-specification/discussions/224)
 applicant-signature | Signature of the applicant |   | MAY |  
 agent-signature | Signature of the agent (if applicable) |   | MAY |  
 signature-date | Date of applicant or agent signature |   | MUST | Format: YYYY-MM-DD.
 
 **Owners and tenants**
 
-Requires the Person model
-
 Field | Description | Data Type | Required | Notes
 -- | -- | -- | -- | --
-person | Owner or tenant details | Person model | MUST | Reuse existing Person model.
+person{} | Owner or tenant details | Person model | MUST | Reuse existing Person model.
 notice-date | Date notice was served | Date | MUST | Format: YYYY-MM-DD.
 
 **Newspaper notice**
@@ -356,6 +356,15 @@ Field | Description | Data Type | Required | Notes
 -- | -- | -- | -- | --
 newspaper-name | Name of the newspaper | String | MUST |  
 publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
+
+**Person object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| title | Title of individual | MAY |  |
+| first-name | First name of the individual | MUST |  |
+| last-name | last name of the individual | MUST |  |
+| address-text | The address that can be used to correspond with the applicant| MUST | |
+| post-code | The post code for the address provided | MAY | |
 
 ---
 
@@ -431,9 +440,14 @@ Details needed to support a site visit
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
-| contact-name | Name of person to contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | |
-| contact-number | Phone number of person to contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | |
-| contact-email | Email of person to contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | |
+| contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
+| contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
+| other-contact{} | Details of specifially named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
+
+**Other contact structure**
+| name | Name of person to contact | MUST | |
+| number | Phone number of person to contact | MUST | |
+| email | Email of person to contact | MUST | |
 
 ---
 
@@ -501,6 +515,19 @@ _To do: add description for codelist_
 
 ---
 
+### Ownership certificate type (ownership-cert-type)
+
+_To do: add description for codelist_
+
+reference | name | description
+--- | --- | ---
+certificate-a | Certificate A | Applicant is the sole owner of the land and there are no agricultural tenants.
+certificate-b | Certificate B | Applicant knows all other owners or agricultural tenants and has notified them.
+certificate-c | Certificate C | Applicant knows some of the other owners or agricultural tenants and has notified those they know.
+certificate-d | Certificate D | Applicant does not know any of the other owners or agricultural tenants.
+
+---
+
 ### Reserved matter type (reserved-matter-type)
 
 _To do: add description for codelist_
@@ -524,6 +551,17 @@ reference | name | application-types | description
 true | True | extraction-oil-gas;full;hh;outline | The statement is true
 false | False | extraction-oil-gas;full;hh;outline | The statement is false
 unknown | Unknown | outline | The answer is unknown 
+
+---
+
+### Site visit contact type (site-visit-contact-type)
+
+_To do: add description for codelist_
+
+reference | name | description
+--- | --- | ---
+applicant | Applicant | The applicant of the application
+agent | Agent | The agent who completed the form
 
 ---
 

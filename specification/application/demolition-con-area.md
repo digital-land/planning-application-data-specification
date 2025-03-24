@@ -533,3 +533,14 @@ _To do: add description for codelist_
 
 ---
 
+### Site visit contact type (site-visit-contact-type)
+
+_To do: add description for codelist_
+
+reference | name | description
+--- | --- | ---
+applicant | Applicant | The applicant of the application
+agent | Agent | The agent who completed the form
+
+---
+

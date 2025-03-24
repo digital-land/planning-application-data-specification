@@ -138,19 +138,19 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 _To do: add description for module_
 
-Field | Description | Application-Types | Required | Notes
+field | description | application-types | required | notes
 -- | -- | -- | -- | --
-non-residential-change | Does the proposal involve the loss, gain, or change of non-residential floorspace? |   | MUST | Boolean (Yes / No).
+non-residential-change | Does the proposal involve the loss, gain, or change of non-residential floorspace? |   | MUST | Boolean (true / false).
 floorspace-details[]{} | List of non-residential floorspace changes by use class |   | MAY | Required if non-residential-change is Yes.
 room-details[] | List of room changes for hotels, residential institutions and hostels | | MAY | Required if change to hotels, residential institutions and hostel floorspace |
 
 **Floorspace details**
 
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 -- | -- | -- | -- | --
-use-class | Type of non-residential use class | Enum | MUST | See [Use Class Enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
-specified-use | Specify the use that sits outside the lettered use classes | String | MAY | Rule: is a MUST if `use-class` is `other` or `sui generis`
+use | Type of non-residential use class | Enum+other | MUST | See [Use Class Enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
+specified-use | Specify the use that sits outside the lettered use classes | String | MAY | Rule: is a MUST if `use` is `other` or `sui generis`
 existing-gross-floorspace | Existing gross internal floorspace (sqm) | Number | MUST | Must be 0 or positive.
 floorspace-lost | Gross floorspace to be lost by change of use (sqm) | Number | MUST | Must be 0 or positive.
 total-gross-proposed | Total gross internal floorspace proposed (sqm) | Number | MUST | Must be 0 or positive.
@@ -161,7 +161,7 @@ net-additional-floorspace | Net additional gross internal floorspace (sqm) | Num
 
 For certain use classes (C1, C2, C2A), applicants must provide room details:
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 -- | -- | -- | -- | --
 use-class | Type of non-residential use class | Enum | MUST | Only required for C1, C2, C2A, or Other.
 existing-rooms-lost | Existing rooms to be lost by change of use | Number | MUST | Must be 0 or positive.
@@ -451,23 +451,29 @@ Please state the hours of opening for each non-residential use proposed:
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| hours-of-operation[]{} | State the hours of opening for each non-residential use | | MUST | |
-| additional-information | | extraction-oil-gas | MAY | |
+| hours-of-operation[]{} | List the hours of operation by non-residential use | | MUST | |
+| additional-information | Any additional detail about operational hours | extraction-oil-gas | MAY | |
 
 **hours of operation**
 | field | description | required | notes |
 | --- | --- | --- | --- |
-| non-residential-use | | MUST | Should this be a use class? |
-| opening-times[]{} | Structured data for opening hours by day | MAY | one of `hours-of-operation` or `hours-unknown` must be completed |
-| hours-unknown | Applicant states they do not know the hours of operation | MAY | one of `hours-of-operation` or `hours-unknown` must be completed |
+| use | The use class | MUST | One of the [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189) + other |
+| use-other | Specify use if use is other | MAY	Required if `use` is `other`
+| operational-times[]{} | Structured data for operational hours by day | MAY | Rule: Must be completed if hours-not-known is not provided |
+| hours-not-known | Applicant states they do not know the hours of operation | MAY | Rule: Must be completed if operational-times is not provided |
 
 **Opening times**
 | field | description | notes |
 | --- | --- | --- |
-| day-type | Day of the week | One of [day-type enum](https://github.com/digital-land/planning-application-data-specification/discussions/197) |
-| open-time | | HH:MM |
-| close-time | | HH:MM |
+| day-type | Day or type of day | One of [day-type enum](https://github.com/digital-land/planning-application-data-specification/discussions/197) |
+| time-ranges[]{} | Opening and closing times for the day	| MUST | Can have multiple ranges (e.g., morning and evening opening) |
 | closed | True or False | If True, `open-time` and `close-time` must be empty. Explicitly state when closed |
+
+**time range structure**
+field	| description |	required | notes
+--- | --- | --- | ---
+open-time | Opening time | MUST | Format: `HH:MM`
+close-time | Closing time | MUST | Format: `HH:MM`
 
 ---
 

@@ -8,16 +8,15 @@ This applies to  developments with permitted development rights (where developme
 
 Modules
 
+* [Adjoining premises](#adjoining-premises-adj-premises)
 * [Agent contact details](#agent-contact-details-agent-contact)
 * [Agent name and address](#agent-name-and-address-agent-details)
 * [Applicant contact details](#applicant-contact-details-applicant-contact)
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
-* [Description of proposed works, impacts and risks](#description-of-proposed-works-impacts-and-risks-desc-work-impacts-risks)
-* [Eligibility - Related operations and works](#eligibility---related-operations-and-works-eligibility-related-works)
-* [Eligibility - The current building and site](#eligibility---the-current-building-and-site-eligibility-current-building)
-* [Eligibility - The proposed development](#eligibility---the-proposed-development-eligibility-proposal)
+* [Description of proposed works](#description-of-proposed-works-desc-proposed-works)
+* [Eligibility - Larger house extension](#eligibility---larger-house-extension-eligibility-extension)
 * [Site address details](#site-address-details-site-details)
 
 Sub-type modules
@@ -234,63 +233,50 @@ Applicant/agent must provide one of:
 
 ---
 
-### Description of proposed works, impacts and risks (desc-work-impacts-risks)
-
-_To do: add description for module_
-
-Field | Description | Application-Types | Required | Notes
--- | -- | -- | -- | --
-description | Description of proposed development including details of proposed work and external appearance |  | MUST | 
-dwellinghouse-height | Height from ground to highest point of roof | | MUST | Should be in metres
-proposed-height | Height once the additional storeys have been added | | MUST | Should be in metres
-impact-on-amenity | Details of the impacts on the amenity of any adjoining premises including overlooking, privacy and the loss of light including how these will be mitigated | | MUST | Should include mitigations
-air-traffic-defence-impacts | Details of any air traffic and defence asset impacts, include how these will be mitigated | | MUST | Should include mitigations
-protected-view-impact | Provide details of the impact on any protected view | | MUST | Form says where relevant
-
----
-
-### Eligibility - Related operations and works (eligibility-related-works)
+### Adjoining premises (adj-premises)
 
 _To do: add description for module_
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| external-support-required | Will the proposed engineering works include external support structures or extend beyond the curtilage for wall or foundation strengthening? | | MUST | Impacts whether prior approval is applicable. True or False |
+| addresses[]{} | A list of addressed for the adjoining properties | | MUST |  |
+
+**Address model**
+
+Field | Description | Data Type | Required | Notes
+-- | -- | -- | -- | --
+address-test | Address details | String | MUST | 
+postcode | Postcode of address if available | String | MAY | 
+uprn | UPRN if known | UPRN | MAY | 
 
 ---
 
-### Eligibility - The current building and site (eligibility-current-building)
+### Description of proposed works (desc-proposed-works)
+
+_To do: add description for module_
+
+Field | Description | Data Type | Application Type | Required? | Notes
+-- | -- | -- | -- | -- | --
+proposed-works-details | Description of the proposed works | String |  | MUST | Detailed explanation of the work
+extension-depth | How far the extension extends beyond the rear wall | Float | prior-approval | MUST | Measured externally in meters
+max-extension-height | Maximum height of the extension | Float | prior-approval | MUST | Measured externally from natural ground level
+eaves-height | Height at the eaves of the extension | Float | prior-approval | MUST | Measured externally from natural ground level
+
+---
+
+### Eligibility - Larger house extension (eligibility-extension)
 
 _To do: add description for module_
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-in-building-construction-period | Was the current building constructed between 1 July 1948 and 28 October 2018? (`True`/`False`) |   | MUST | One of True, False. If False, application cannot proceed.
-additional-storeys-added | Have additional storeys already been added to the original building? (`True`/`False`) |   | MUST | One of True, False. If True, application cannot proceed
-dwelling-permitted-use | Was the current use of the building granted by permitted development rights? (`True`/`False`) |   | MUST | One of True, False. If True, application cannot proceed
-site-location-constraint | Is any part of the land or site located in a restricted area? (`True`/`False`)  |   | MUST | One of True, False. If True, application cannot proceed
-
----
-
-### Eligibility - The proposed development (eligibility-proposal)
-
-_To do: add description for module_
-
-Field | Description | Application-Types | Required | Notes
--- | -- | -- | -- | --
-principal-part-only | Will the additional storeys be constructed only on the principal part of the building? |   | MUST | If No, the application cannot proceed.
-ceiling-height-exceeds-3m | Will the internal floor-to-ceiling height of any additional storey exceed 3 metres? |   | MUST | If Yes, the application cannot proceed.
-existing-ceiling-height-exceeds-3m | Will the internal floor-to-ceiling height of any existing storey exceed 3 metres? |   | MUST | If Yes, the application cannot proceed.
-building-height-exceeds-18m | Will the height of the extended building exceed 18 metres? |   | MUST | If Yes, the application cannot proceed.
-roof-height-exceeds-3-5m | Will the roof exceed 3.5 metres above the highest part of the existing roof? |   | MUST | If Yes, the application cannot proceed.
-roof-height-exceeds-7m | Will the roof exceed 7 metres above the highest part of the existing roof? |   | MUST | If Yes, the application cannot proceed.
+single-storey-extension | Will the extension be a single storey? (True/False) |   | MUST | If False, the application cannot proceed.
+extension-height-over-4m | Will the extension exceed 4 metres in height? (True/False) |   | MUST | If True, the application cannot proceed.
 dwelling-detached | Is the the dwelling detached? (True/False) | | MUST | 
-extension-on-attached-dwelling | Will the extension result in the highest part exceeding 3.5 metres above the attached roof? |   | MAY | Only applicable if the dwelling is not detached.
-extension-below-terrace-roof | Will th extension result in the highest part exceeding 3.5 metres above any roof in the terrace? |   | MAY | Only applicable if the dwelling is not detached.
-roof-pitch-matching | Will the roof pitch of the extended dwelling match the existing roof pitch? |   | MUST | If No, the application cannot proceed.
-window-on-side-elevation | Will the development include a side elevation window or roof slope window? |   | MUST | If Yes, further assessment may be required.
-materials-similar-exterior | Will exterior materials be similar to those of the existing dwelling? |   | MUST | If No, the application cannot proceed.
-dwellinghouse-use | Will the extended dwelling remain as a Class C3 dwellinghouse or ancillary use? |   | MUST | If No, the application cannot proceed.
+rear-extension-length | Will the extension extend beyond the rear wall of the original dwelling? |   | MUST | See conditional logic for limits based on attachment type.
+extension-length | Length of rear extension (in metres) |   | MUST | 
+within-site-constraints | Is the dwellinghouse within any restricted area? (True/False) |   | MUST | If True, the application cannot proceed.
+site-constraints[] | List of specific site constraints |   | MAY | Rule: Required if within-site-restrictions is True. See [site constraints enum](https://github.com/digital-land/planning-application-data-specification/discussions/191)
 
 ---
 
@@ -370,6 +356,22 @@ _To do: add description for codelist_
 | --- | --- | --- |
 | primary | Primary | The preferred item to use |
 | secondary | Secondary | The option to use if primary is not working |
+
+---
+
+### Site constraints (site-constaint)
+
+_To do: add description for codelist_
+
+reference | name | description
+-- | -- | --
+conservation-area | Conservation Area |  
+aona-beauty | Area of Outstanding Natural Beauty |  
+secretary-specified-area | Secretary of State Protected Area |  
+the-broads | The Broads |  
+national-park | National Park |  
+world-heritage-site | World Heritage Site |  
+site-of-special-interest | Site of Special Scientific Interest |  
 
 ---
 

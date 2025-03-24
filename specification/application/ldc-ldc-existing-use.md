@@ -13,16 +13,10 @@ Modules
 * [Applicant contact details](#applicant-contact-details-applicant-contact)
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
 * [Authority employee / member](#authority-employee-member-conflict-of-interest)
-* [Certificate of lawfulness for proposed works - Interest in listed buildings](#certificate-of-lawfulness-for-proposed-works---interest-in-listed-buildings-ldc-interest)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
-* [Description of existing use, building works or activity](#description-of-existing-use-building-works-or-activity-desc-existing-use)
-* [Description of use, building works or activity](#description-of-use-building-works-or-activity-use-works-activity)
-* [Grounds for application for a lawful development certificate](#grounds-for-application-for-a-lawful-development-certificate-grounds-ldc)
-* [Information in support of a lawful development certificate](#information-in-support-of-a-lawful-development-certificate-info-support-ldc)
 * [Interest details](#interest-details-interest-details)
 * [Pre-application advice](#pre-application-advice-pre-app-advice)
-* [Residential units (including conversion)](#residential-units-including-conversion-res-units)
 * [Site address details](#site-address-details-site-details)
 * [Site visit](#site-visit-site-visit)
 
@@ -208,43 +202,6 @@ This section ensures transparency by declaring any connection between the applic
 
 ---
 
-### Certificate of lawfulness for proposed works - Interest in listed buildings (ldc-interest)
-
-_To do: add description for module_
-
-Field | Description | Application-Types | Required | Notes
--- | -- | -- | -- | --
-applicant-interest | Applicant's interest in the listed building (Enum) |   | MUST | One of: see [applicant's interest type enum](https://github.com/digital-land/planning-application-data-specification/discussions/202) or `None`.
-owner-details[] | Details of the owner if the applicant is a lessee or occupier |   | MAY | Rule: Required if `applicant-interest` is Lessee or Occupier.
-interested-persons[] | Details of other interested persons in the listed building |   | MAY | Rule: Required if applicant-interest is None.
-
-**Owner(s) model**
-
-Field | Description | Data Type | Required | Notes
--- | -- | -- | -- | --
-person{} | Details of the interested person | Person Model | MUST | Structured as per [Person model](https://github.com/digital-land/planning-application-data-specification/discussions/147).
-informed-of-application | Have they been informed? | Boolean | MUST | True if they were informed.
-
-**Interested persons model**
-
-Field | Description | Data Type | Required | Notes
--- | -- | -- | -- | --
-person{} | Details of the interested person | Person Model | MUST | Structured as per [Person model](https://github.com/digital-land/planning-application-data-specification/discussions/147).
-nature-of-interest | Nature of the interest in the building | String | MUST | E.g., ownership, tenancy, heritage group.
-informed-of-application | Have they been informed? | Boolean | MUST | True if they were informed.
-reason-not-informed | Reason why they were not informed | String | CONDITIONAL | Rule: Required if informed-of-application is False.
-
-**Person object**
-| field | description | required | notes |
-| --- | --- | --- | --- |
-| title | Title of individual | MAY |  |
-| first-name | First name of the individual | MUST |  |
-| last-name | last name of the individual | MUST |  |
-| address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
-
----
-
 ### Checklist (checklist)
 
 This section provides details of the national planning requirements the applicant is required to submit along with the application
@@ -271,27 +228,32 @@ Applicants and agents are required to declare information provided is correct
 
 This section collects information on who owns the land or building and the applicants interest
 
-Field | Description | Application-Types | Required | Notes
+field | description | application-Types | required | notes
 -- | -- | -- | -- | --
-applicant-interest | Applicant's interest in the land/listed building |  | MUST | One of: see [applicant's interest type enum](https://github.com/digital-land/planning-application-data-specification/discussions/202) or `None`.
-owner-details[]{} | Details of the owner if the applicant is a lessee or occupier |   | MAY | Rule: Required if `applicant-interest` is Lessee or Occupier.
-interested-persons[]{} | Details of other interested persons in the listed building |   | MAY | Rule: Required if `applicant-interest` is None.
+applicant-interest | Applicant's interest in the land/listed building | ldc | MUST | One of: see [applicant's interest type enum](https://github.com/digital-land/planning-application-data-specification/discussions/202) or `None`.
+owner-details[]{} | Details of the owner if the applicant is a lessee or occupier | ldc | MAY | Rule: Required if `applicant-interest` is Lessee or Occupier.
+interested-persons[]{} | Details of other interested persons in the listed building | ldc | MAY | Rule: Required if `applicant-interest` is None.
+applicant-owns-land | Does the applicant own the land? (`True`/`False`) | advertising | MUST |
+permission-obtained | Has permission of the owner for the display of an advertisement been obtained? | advertising | MAY | Rule is a MUST if `applicant-owns-land` is `False` |
+| permission-not-obtained-details | Details if permission from the owner has not been obtained | advertising | MAY | Rule is a MUST if `applicant-owns-land` is `False` and `permission-obtained` is `False` |
+
+The [legislation](https://www.legislation.gov.uk/uksi/2007/783/schedule/2) states "No advertisement is to be displayed without the permission of the owner of the site or any other person with an interest in the site entitled to grant permission."
 
 **Owner(s) model**
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 -- | -- | -- | -- | --
 person{} | Details of the interested person | Person Model | MUST | Structured as per [Person model](https://github.com/digital-land/planning-application-data-specification/discussions/147).
 informed-of-application | Have they been informed? | Boolean | MUST | True if they were informed.
 
 **Interested persons model**
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 -- | -- | -- | -- | --
 person{} | Details of the interested person | Person Model | MUST | Structured as per [Person model](https://github.com/digital-land/planning-application-data-specification/discussions/147).
-nature-of-interest | Nature of the interest in the building | String | MUST | E.g., ownership, tenancy, heritage group.
+nature-of-interest | Nature of the interest in the building | String | MUST | 
 informed-of-application | Have they been informed? | Boolean | MUST | True if they were informed.
-reason-not-informed | Reason why they were not informed | String | CONDITIONAL | Rule: Required if informed-of-application is False.
+reason-not-informed | Reason why they were not informed | String | MAY | Rule: Required if `informed-of-application` is `False`.
 
 **Person object**
 | field | description | required | notes |
@@ -360,106 +322,6 @@ Details needed to support a site visit
 
 ---
 
-### Description of existing use, building works or activity (desc-existing-use)
-
-_To do: add description for module_
-
-Field | Description | Application-Types | Required | Notes
--- | -- | -- | -- | --
-existing-use-details[]{} | List of existing site uses and related land areas |   | MUST | At least one use must be provided.
-
-existing use structure
-
-Field | Description | Required | Notes
--- | -- | -- | --
-use-class | The Use class for the use | MUST | See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
-use-details | Further detail of the use | MAY | Rule: required if Sui generis or other given
-
----
-
-### Description of use, building works or activity (use-works-activity)
-
-Please state for which of these you need a lawful development certificate/building works (you must tick at least one option):
-
-Field | Description | Application-Types | Required | Notes
--- | -- | -- | -- | --
-ldc-need[] | Is the application for an existing use? (True/False) |   | MUST | At least one of [lawful development need enum](https://github.com/digital-land/planning-application-data-specification/discussions/205).
-use-class | If existing-use or use-breach-of-condition is True, state the relevant Use Class |   | MAY | If `existing-use` or `breach-con-existing-use ` in `ldc-need` then applicant needs to provide `use-class` of the use. See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
-
----
-
-### Grounds for application for a lawful development certificate (grounds-ldc)
-
-_To do: add description for module_
-
-Field | Description | Application-type | Required? | Notes
--- | -- | -- | -- | --
-grounds[] | List of grounds under which the certificate is sought | | MUST | At least one ground must be selected. See [Grounds Enum](https://github.com/digital-land/planning-application-data-specification/discussions/204) .
-other-details | Explanation if "Other" ground is selected | | MAY | Required if grounds[] includes other.
-supporting-applications[]{} | List of supporting planning permissions, certificates, or notices affecting the application site. Include its date and the number of any condition being breached | | MAY | Optional, but strengthens the application.
-reason | Reason why the development is considered lawful | | MUST | Applicant’s explanation for granting the certificate.
-
-**Supporting applications / decisions**
-
-_This is similar to other models where supporting or related applications are required. the difference being that this one also needs the condition number._
-
-Field | Description | Data Type | Required? | Notes
--- | -- | -- | -- | --
-reference-number | Reference number of planning permission, certificate, or notice | String | MAY | Optional, strengthens application.
-condition-number | Number of any condition being breached | String | MAY | Relevant if certificate relates to condition breach.
-decision-date | Date of the decision (DD/MM/YYYY) | Date | MAY | Must be before the application submission date.
-
----
-
-### Information in support of a lawful development certificate (info-support-ldc)
-
-_To do: add description for module_
-
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-| existing-use-start-date | YYYY-MM-DD | | MUST | |
-| existing-use-interrupted | True or False | | MUST | |
-| interruption-details | | | MAY | Rule, is a MUST if `existing-use-interrupted` is True |
-| existing-use-change | True or False | | MUST | |
-| existing-use-change-details | | | MAY | Rule, is a MUST if `existing-use-change` is True |
-
----
-
-### Residential units (including conversion) (res-units)
-
-_To do: add description for module_
-
-Field | Description | Application type | Required? | Notes
--- | -- | -- | -- | --
-residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | | MUST | Could be calculated from answers to next parts?
-unit-counts[] | List of unit counts by tenure and housing type | | MAY | Is MUST if `residential-unit-change` is True
-total-proposed-units | | | MUST |
-total-existing-units | | | MUST |
-net-change | Calculated net change in units |  | AUTO | Calculated as proposed-units - existing-units. Format: Integer
-
-**Unit counts**
-
-Field | Description | Data Type | Required? | Notes
--- | -- | -- | -- | --
-tenure-type | Category of housing tenure | Enum | MUST | One of: market-housing, affordable-rent, home-ownership, starter-homes, custom-build.
-housing-type | Type of housing | Enum | MUST | One of: houses, flats-maisonettes, sheltered-housing, bedsit-studio, cluster-flats, other.
-unknown-units | Whether the number of units is unknown  | Boolean | MAY | True if the applicant does not know the unit count.
-existing-units[] | Number of existing units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
-proposed-units[] | Number of proposed units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
-
-**Bedroom count** 
-
-Field | Description | Data Type | Required? | Notes
--- | -- | -- | -- | --
-bedroom-1 | Number of 1-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-2 | Number of 2-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-3 | Number of 3-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-4+ | Number of 4 or more bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-count-unknown | Number units where the bedroom number is unknown | Integer | MAY | Not required if unknown is True.
-total-units | Total number of units | Integer | MAY | Not required if unknown is True. Calculated as the sum of all bedroom counts.
-
----
-
 ## Sub-type modules
 The following modules are required for this sub-type.
 
@@ -467,16 +329,17 @@ The following modules are required for this sub-type.
 
 _To do: add description for module_
 
-Field | Description | Application-Types | Required | Notes
+field | description | application-types | required | notes
 -- | -- | -- | -- | --
-existing-use-details[]{} | List of existing site uses and related land areas |   | MUST | At least one use must be provided.
+existing-use-details[]{} | List of existing site uses and related land areas |   | MUST | Rule: At least one use must be provided.
 
-existing use structure
+**existing use structure**
 
-Field | Description | Required | Notes
+field | description | required | notes
 -- | -- | -- | --
-use-class | The Use class for the use | MUST | See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
-use-details | Further detail of the use | MAY | Rule: required if Sui generis or other given
+use | The Use class of the use | MUST | See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189). One of enum or other
+use-details | Further detail of the use | MAY | Rule: required if `use` is `sui` or `other`
+land-part | State which part of the land the `use` relates to | MUST | 
 
 ---
 
@@ -484,10 +347,11 @@ use-details | Further detail of the use | MAY | Rule: required if Sui generis or
 
 Please state for which of these you need a lawful development certificate/building works (you must tick at least one option):
 
-Field | Description | Application-Types | Required | Notes
+field | description | application-types | required | notes
 -- | -- | -- | -- | --
-ldc-need[] | Is the application for an existing use? (True/False) |   | MUST | At least one of [lawful development need enum](https://github.com/digital-land/planning-application-data-specification/discussions/205).
-use-class | If existing-use or use-breach-of-condition is True, state the relevant Use Class |   | MAY | If `existing-use` or `breach-con-existing-use ` in `ldc-need` then applicant needs to provide `use-class` of the use. See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189)
+ldc-need[] | What is the lawful development certificate needed for? |   | MUST | At least one of [lawful development need enum](https://github.com/digital-land/planning-application-data-specification/discussions/205).
+use | If existing-use or use-breach-of-condition is True, state the relevant Use Class |   | MAY | If `existing-use` or `breach-con-existing-use ` in `ldc-need` then applicant needs to provide `use`. See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189). One of enum or `other`
+specified-use | The specific use if no use class suitable | | MAY | Rule: must be provided if `use` is `sui` or `other`
 
 ---
 
