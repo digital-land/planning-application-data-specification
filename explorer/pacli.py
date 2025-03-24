@@ -109,7 +109,7 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, mar
         
         # need to restructure this so that ALL modules are added to app and sub type obj
         # match all joins with app type
-        app_module_refs = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref]
+        app_module_refs = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref and not j.get("end-date")]
         app_type["modules"] = get_modules(app_module_refs, modules)
 
         # check if app type has any sub-types
