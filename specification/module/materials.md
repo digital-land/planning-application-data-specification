@@ -2,7 +2,7 @@
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). |  | MUST | See Building element structure. One entry per building element.
-additional-material-information | States whether supporting documents are being provided with further material details. |  | MUST | Boolean: true or false.
+additional-material-information | Indicates whether additional documents are provided to supplement the materials description |  | MUST | (`true` or `false`).
 supporting-documents[] | Details for documents providing additional material information. |  | MAY | Required if additional-material-information is true.
 
 

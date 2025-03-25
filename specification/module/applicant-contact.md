@@ -1,6 +1,6 @@
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Contact details object**
 | field | description | required | notes |

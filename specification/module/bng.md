@@ -9,7 +9,7 @@ Rule: if `application-types` includes `hh` (the householder application) then on
 
 **BNG details** structure
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 --- | --- | --- | --- | ---
 pre-development-date | Date of pre-development biodiversity value calculation | Date | MUST | Rule: Must align with application or justified earlier date
 pre-development-biodiversity-value | Calculated biodiversity value | Number | MUST | In Habitat Biodiversity Units
@@ -24,7 +24,7 @@ supporting-documents[]{} | A list of documents supporting the information provid
 
 **Habitat loss details** structure
 
-Field | Description | Data Type | Required
+field | description | data type | required
 --- | --- | --- | ---
 loss-date | Date the activity causing the loss occurred | Date | MUST
 pre-loss-biodiversity-value | Biodiversity value immediately before the activity | Number | MUST
@@ -38,7 +38,7 @@ supporting-evidence | Description or reference to supporting documents | String 
 
 **documents**
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
-name | Name of the document | String | MUST | Descriptive name for clarity
+reference | Unique identifier for the document | String | MUST | Must be provided for each document
+document-name | Name of the document | String | MUST | Descriptive name for clarity

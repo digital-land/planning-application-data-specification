@@ -32,11 +32,12 @@ field	| description	| data-type | required | notes
 --- | --- | --- | --- | ---
 reference | UUID for the application record | UUID | MUST | 
 application-types[] | A list of planning application types | Enum | MUST | See [list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv)
-application-sub-type | Sub-category of the application | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
+application-sub-type | Further classification of the application type for specific variations | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
 planning-authority | The reference of the planning authority the application has been submitted to | Organisation reference | MUST | 
 submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
 modules[] | List of required sections/modules for this application | List |	MUST | List of predefined module references that can be used to validate the application
 documents[]{} | List of submitted documents | List | MUST |	Uses a document model to capture references and details.
+fee{} | The fee payable for the application | Object | MUST | 
 
 **Document structure**
 
@@ -48,6 +49,14 @@ description | Brief description of what the document contains	| MAY | Optional b
 document-types[] | List of codelist references that the document covers | MUST | Use the planning requirements enum
 file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
 mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
+
+**Fee structure**
+
+field | description | required | notes
+--- | --- | --- | ---
+amount | The total amount due | MUST | 
+amount-paid | The amount paid | MUST |
+transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
 
 ---
 
@@ -61,7 +70,7 @@ Details needed for contacting the agent
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Contact details object**
 | field | description | required | notes |
@@ -93,7 +102,7 @@ Details about the agent
 | --- | --- | --- | --- |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | | MAY | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -127,7 +136,7 @@ Details needed for contacting the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Contact details object**
 | field | description | required | notes |
@@ -158,7 +167,7 @@ Details about the applicant
 | field | description | required | notes |
 | --- | --- | --- | --- |
 | Person{} | Detail to help identify a person | MUST | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -192,7 +201,7 @@ This section ensures transparency by declaring any connection between the applic
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member  | | MUST | answer may be different depending on the parties involved |
+| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
 | name | Name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
 | details | Details including name, role and how individual is related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
@@ -213,7 +222,7 @@ Rule: if `application-types` includes `hh` (the householder application) then on
 
 **BNG details** structure
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 --- | --- | --- | --- | ---
 pre-development-date | Date of pre-development biodiversity value calculation | Date | MUST | Rule: Must align with application or justified earlier date
 pre-development-biodiversity-value | Calculated biodiversity value | Number | MUST | In Habitat Biodiversity Units
@@ -228,7 +237,7 @@ supporting-documents[]{} | A list of documents supporting the information provid
 
 **Habitat loss details** structure
 
-Field | Description | Data Type | Required
+field | description | data type | required
 --- | --- | --- | ---
 loss-date | Date the activity causing the loss occurred | Date | MUST
 pre-loss-biodiversity-value | Biodiversity value immediately before the activity | Number | MUST
@@ -242,10 +251,10 @@ supporting-evidence | Description or reference to supporting documents | String 
 
 **documents**
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
-name | Name of the document | String | MUST | Descriptive name for clarity
+reference | Unique identifier for the document | String | MUST | Must be provided for each document
+document-name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
 
@@ -266,7 +275,7 @@ Applicants and agents are required to declare information provided is correct
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
 | name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
-| declaration-confirmed | The applicant(s) and agent need to confirm the information provided is correct to the best of their knowledge | | MUST | Boolean - `true` / `false`
+| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | | MUST | (`true` / `false`)
 | declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
@@ -277,14 +286,14 @@ Details about the proposal
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| reserved-matters-for-approval[] | Identifies which reserved matters are being submitted for approval as part of this application. | outline;reserved-matters | MUST | See [reserved matter type enum](https://github.com/digital-land/planning-application-data-specification/discussions/209)  |
-| related-proposal | Details about the approved development, as shown in the decision letter | reserved-matters | MUST | See related proposal structure below
+| reserved-matters[] | Identifies which reserved matters are being submitted for approval as part of this application. | outline;reserved-matters | MUST | See [reserved matter type enum](https://github.com/digital-land/planning-application-data-specification/discussions/209)  |
+| related-application | Details about the approved development, as shown in the decision letter | reserved-matters | MUST | See related proposal structure below
 | proposal-description | A description of what is being proposed, including the development, works, or change of use. | advertising;demolition-con-area;full;hh;lbc;outline | MUST | can be about development or change of use |
 | proposal-started | Has any work on the proposal has already started. (`true`/`false`) | advertising;demolition-con-area;full;hh;lbc;outline | MUST | |
 | proposal-started-date | The date when work on the proposal started. In `YYYY-MM-DD` format. | advertising;demolition-con-area;full;hh;lbc;outline | MAY | Rules: only required if work started, date must be pre-application submission, blank means not started |
 | proposal-completed | Has the development or works have already been completed (`true`/`false`) | advertising;demolition-con-area;full;hh;lbc;outline | MUST | |
 | proposal-completed-date | The date when the development or works were completed. In `YYYY-MM-DD` format. | advertising;demolition-con-area;full;hh;lbc;outline | MAY | Rules: only required if work completed, date must be pre-application submission, blank means not completed |
-| is-psi | (`true`/`false`)| full;outline | MUST | |
+| is-psi | For applications made on or after 1 August 2021, is the proposal for public service infrastructure development (`true`/`false`)| full;outline | MUST | |
 | pip-reference | Reference for related permission in principle application | full | MUST | |
 
 **Related proposal**
@@ -305,7 +314,7 @@ Where applicable details about the materials to be used or changed should be pro
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). |  | MUST | See Building element structure. One entry per building element.
-additional-material-information | States whether supporting documents are being provided with further material details. |  | MUST | Boolean: true or false.
+additional-material-information | Indicates whether additional documents are provided to supplement the materials description |  | MUST | (`true` or `false`).
 supporting-documents[] | Details for documents providing additional material information. |  | MAY | Required if additional-material-information is true.
 
 
@@ -460,15 +469,15 @@ Details of trees and hedges affecting the site or that will be affected by the p
 | falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
 | falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
 | tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
-| tree-removal-document{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
+| tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
 | trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
 | trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
 
-**documents**
+**tree removal plan**
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+document-reference | Unique identifier for the document | String | MUST | Must be provided for each document
 name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
