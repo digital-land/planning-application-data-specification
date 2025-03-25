@@ -7,6 +7,7 @@ planning-authority | The reference of the planning authority the application has
 submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
 modules[] | List of required sections/modules for this application | List |	MUST | List of predefined module references that can be used to validate the application
 documents[]{} | List of submitted documents | List | MUST |	Uses a document model to capture references and details.
+fee{} | The fee payable for the application | Object | MUST | 
 
 **Document structure**
 
@@ -18,3 +19,11 @@ description | Brief description of what the document contains	| MAY | Optional b
 document-types[] | List of codelist references that the document covers | MUST | Use the planning requirements enum
 file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
 mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
+
+**Fee structure**
+
+field | description | required | notes
+--- | --- | --- | ---
+amount | The total amount due | MUST | 
+amount-paid | The amount paid | MUST |
+transactions[] | A list of the transaction references | MAY | 
