@@ -4,7 +4,7 @@
 
 **Address model**
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 -- | -- | -- | -- | --
 address-test | Address details | String | MUST | 
 postcode | Postcode of address if available | String | MAY | 
