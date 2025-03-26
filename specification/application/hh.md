@@ -70,7 +70,8 @@ Details needed for contacting the agent
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| agent-reference | Use a reference from the agent details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Contact details object**
 | field | description | required | notes |
@@ -95,11 +96,12 @@ Details about the agent
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| agent{} | Details of the agent | | MUST | |
+| agent{} | Details of the agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Agent object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | | MAY | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
@@ -136,7 +138,8 @@ Details needed for contacting the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| applicant-reference | Use a reference from the applicant details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Contact details object**
 | field | description | required | notes |
@@ -161,11 +164,12 @@ Details about the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| applicants[]{} | Details for one or more applicants | | MUST | Rules: must be one or more named applicants |
+| applicants[]{} | Details for one or more applicants | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Rules: must be one or more named applicants |
 
 **Applicant object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
@@ -422,6 +426,12 @@ A section for providing details of pre application advice received from the auth
 ### Site address details (site-details)
 
 Details to help locate the site proposed for development
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| site-locations[]{} | Details of the sites on which the tree(s) are located | notice-trees-in-con-area;consent-under-tpo | MAY | Rule: only required if the site is different from the applicant's address | 
+
+**site-location/details structure**
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
