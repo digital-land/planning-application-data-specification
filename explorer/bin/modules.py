@@ -109,6 +109,16 @@ def check_codelists(modules, codelist_file="../data/codelists.csv", codelist_dir
         reader = csv.DictReader(f)
         rows = list(reader)
         
+        # Count statistics
+        total_codelists = len(rows)
+        ended_codelists = len([row for row in rows if row.get('end-date')])
+        active_codelists = total_codelists - ended_codelists
+        
+        print(f"Statistics:")
+        print(f"  Total codelists: {total_codelists}")
+        print(f"  Active codelists: {active_codelists}")
+        print(f"  Ended codelists: {ended_codelists}\n")
+        
         for row in rows:
             if not row.get('end-date'):  # Only check active entries
                 # Check for markdown file
