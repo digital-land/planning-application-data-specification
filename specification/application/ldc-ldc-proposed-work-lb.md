@@ -6,33 +6,54 @@ A legal document stating the lawfulness of past, present or future building use,
 
 ## Contents
 
-Modules
+* [Application data specification](#application-data-specification)
+
+### Modules
 
 * [Agent contact details](#agent-contact-details-agent-contact)
 * [Agent name and address](#agent-name-and-address-agent-details)
 * [Applicant contact details](#applicant-contact-details-applicant-contact)
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
-* [Authority employee / member](#authority-employee-member-conflict-of-interest)
+* [Authority employee/member](#authority-employee-member-conflict-of-interest)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
 * [Description of existing use, building works or activity](#description-of-existing-use-building-works-or-activity-desc-existing-use)
+* [Description of existing use, building works or activity](#description-of-existing-use-building-works-or-activity-desc-existing-use)
+* [Description of the proposal](#description-of-the-proposal-proposal-details-ldc)
 * [Description of the proposal](#description-of-the-proposal-proposal-details-ldc)
 * [Description of use, building works or activity](#description-of-use-building-works-or-activity-use-works-activity)
+* [Description of use, building works or activity](#description-of-use-building-works-or-activity-use-works-activity)
+* [Grounds for application (information about the existing use(s))](#grounds-for-application-information-about-the-existing-uses-grounds-existing-use)
 * [Grounds for application (information about the existing use(s))](#grounds-for-application-information-about-the-existing-uses-grounds-existing-use)
 * [Grounds for application (information about the proposed use(s))](#grounds-for-application-information-about-the-proposed-uses-grounds-proposed-use)
+* [Grounds for application (information about the proposed use(s))](#grounds-for-application-information-about-the-proposed-uses-grounds-proposed-use)
 * [Grounds for application for a lawful development certificate](#grounds-for-application-for-a-lawful-development-certificate-grounds-ldc)
+* [Grounds for application for a lawful development certificate](#grounds-for-application-for-a-lawful-development-certificate-grounds-ldc)
+* [Information in support of a lawful development certificate](#information-in-support-of-a-lawful-development-certificate-info-support-ldc)
 * [Information in support of a lawful development certificate](#information-in-support-of-a-lawful-development-certificate-info-support-ldc)
 * [Interest details](#interest-details-interest-details)
 * [Pre-application advice](#pre-application-advice-pre-app-advice)
 * [Residential units (including conversion)](#residential-units-including-conversion-res-units)
+* [Residential units (including conversion)](#residential-units-including-conversion-res-units)
 * [Site address details](#site-address-details-site-details)
 * [Site visit](#site-visit-site-visit)
 
-Sub-type modules
+### Sub-type modules
 
 * [Description of proposed works](#description-of-proposed-works-desc-proposed-works)
 * [Grounds for application](#grounds-for-application-grounds-for-application)
 * [Listed building grading](#listed-building-grading-lb-grade)
+
+### Required codelists
+
+* [Applicant interest type](#applicant-interest-type-applicant-interest-type)
+* [Contact priority](#contact-priority-contact-priority)
+* [Housing type](#housing-type-housing-type)
+* [Lawful development certificate need](#lawful-development-certificate-need-lawful-dev-cert-need)
+* [Operation type](#operation-type-operation-type)
+* [Site visit contact type](#site-visit-contact-type-site-visit-contact-type)
+* [Tenure type](#tenure-type-tenure-type)
+* [Use class](#use-class-use-class)
 
 ---
 
@@ -42,11 +63,12 @@ field	| description	| data-type | required | notes
 --- | --- | --- | --- | ---
 reference | UUID for the application record | UUID | MUST | 
 application-types[] | A list of planning application types | Enum | MUST | See [list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv)
-application-sub-type | Sub-category of the application | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
+application-sub-type | Further classification of the application type for specific variations | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
 planning-authority | The reference of the planning authority the application has been submitted to | Organisation reference | MUST | 
 submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
 modules[] | List of required sections/modules for this application | List |	MUST | List of predefined module references that can be used to validate the application
 documents[]{} | List of submitted documents | List | MUST |	Uses a document model to capture references and details.
+fee{} | The fee payable for the application | Object | MUST | 
 
 **Document structure**
 
@@ -59,6 +81,14 @@ document-types[] | List of codelist references that the document covers | MUST |
 file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
 mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
 
+**Fee structure**
+
+field | description | required | notes
+--- | --- | --- | ---
+amount | The total amount due | MUST | 
+amount-paid | The amount paid | MUST |
+transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
+
 ---
 
 ## Modules
@@ -67,11 +97,12 @@ These modules are all required for this application type
 
 ### Agent contact details (agent-contact)
 
-Details needed for contacting the agent
+Details needed for contacting the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| agent-reference | Use a reference from the agent details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Contact details object**
 | field | description | required | notes |
@@ -92,18 +123,19 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Agent name and address (agent-details)
 
-Details about the agent
+Details about the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| agent{} | Details of the agent | | MUST | |
+| agent{} | Details of the agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Agent object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | | MAY | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -137,7 +169,8 @@ Details needed for contacting the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| applicant-reference | Use a reference from the applicant details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Contact details object**
 | field | description | required | notes |
@@ -162,13 +195,14 @@ Details about the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| applicants[]{} | Details for one or more applicants | | MUST | Rules: must be one or more named applicants |
+| applicants[]{} | Details for one or more applicants | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Rules: must be one or more named applicants |
 
 **Applicant object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -196,13 +230,13 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-### Authority employee / member (conflict-of-interest)
+### Authority employee/member (conflict-of-interest)
 
-This section ensures transparency by declaring any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest.
+Any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member  | | MUST | answer may be different depending on the parties involved |
+| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
 | name | Name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
 | details | Details including name, role and how individual is related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
@@ -210,7 +244,7 @@ This section ensures transparency by declaring any connection between the applic
 
 ### Checklist (checklist)
 
-This section provides details of the national planning requirements the applicant is required to submit along with the application
+Details of the national planning requirements the applicant should submit along with the application
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -220,12 +254,12 @@ This section provides details of the national planning requirements the applican
 
 ### Declaration (declaration)
 
-Applicants and agents are required to declare information provided is correct
+Applicants and agents must declare information provided is correct
 
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
 | name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
-| declaration-confirmed | The applicant(s) and agent need to confirm the information provided is correct to the best of their knowledge | | MUST | Boolean - `true` / `false`
+| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | | MUST | (`true` / `false`)
 | declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
@@ -274,7 +308,7 @@ reason-not-informed | Reason why they were not informed | String | MAY | Rule: R
 
 ### Pre-application advice (pre-app-advice)
 
-A section for providing details of pre application advice received from the authority
+Details of pre-application advice received from the local planning authority
 
 
 | field | description | application-types | required | notes |
@@ -289,7 +323,13 @@ A section for providing details of pre application advice received from the auth
 
 ### Site address details (site-details)
 
-Details to help locate the site proposed for development
+Details to locate the site proposed for development
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| site-locations[]{} | Details of the sites on which the tree(s) are located | notice-trees-in-con-area;consent-under-tpo | MAY | Rule: only required if the site is different from the applicant's address | 
+
+**site-location/details structure**
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -325,6 +365,108 @@ Details needed to support a site visit
 | name | Name of person to contact | MUST | |
 | number | Phone number of person to contact | MUST | |
 | email | Email of person to contact | MUST | |
+
+---
+
+### Description of existing use, building works or activity (desc-existing-use)
+
+_To do: add description for module_
+
+field | description | application-types | required | notes
+-- | -- | -- | -- | --
+existing-use-details[]{} | List of existing site uses and related land areas |   | MUST | Rule: At least one use must be provided.
+
+**existing use structure**
+
+field | description | required | notes
+-- | -- | -- | --
+use | The Use class of the use | MUST | See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189). One of enum or other
+use-details | Further detail of the use | MAY | Rule: required if `use` is `sui` or `other`
+land-part | State which part of the land the `use` relates to | MUST | 
+
+---
+
+### Description of use, building works or activity (use-works-activity)
+
+Please state for which of these you need a lawful development certificate/building works (you must tick at least one option):
+
+field | description | application-types | required | notes
+-- | -- | -- | -- | --
+ldc-need[] | What is the lawful development certificate needed for? |   | MUST | At least one of [lawful development need enum](https://github.com/digital-land/planning-application-data-specification/discussions/205).
+use | If existing-use or use-breach-of-condition is True, state the relevant Use Class |   | MAY | If `existing-use` or `breach-con-existing-use ` in `ldc-need` then applicant needs to provide `use`. See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189). One of enum or `other`
+specified-use | The specific use if no use class suitable | | MAY | Rule: must be provided if `use` is `sui` or `other`
+
+---
+
+### Grounds for application for a lawful development certificate (grounds-ldc)
+
+_To do: add description for module_
+
+Field | Description | Application-type | Required? | Notes
+-- | -- | -- | -- | --
+grounds[] | List of grounds under which the certificate is sought | | MUST | At least one ground must be selected. See [Grounds Enum](https://github.com/digital-land/planning-application-data-specification/discussions/204) .
+other-details | Explanation if "Other" ground is selected | | MAY | Required if grounds[] includes other.
+supporting-applications[]{} | List of supporting planning permissions, certificates, or notices affecting the application site. Include its date and the number of any condition being breached | | MAY | Optional, but strengthens the application.
+reason | Reason why the development is considered lawful | | MUST | Applicant’s explanation for granting the certificate.
+
+**Supporting applications / decisions**
+
+_This is similar to other models where supporting or related applications are required. the difference being that this one also needs the condition number._
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Reference number of planning permission, certificate, or notice | String | MAY | Optional, strengthens application.
+condition-number | Number of any condition being breached | String | MAY | Relevant if certificate relates to condition breach.
+decision-date | Date of the decision (DD/MM/YYYY) | Date | MAY | Must be before the application submission date.
+
+---
+
+### Information in support of a lawful development certificate (info-support-ldc)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| existing-use-start-date | YYYY-MM-DD | | MUST | |
+| existing-use-interrupted | True or False | | MUST | |
+| interruption-details | | | MAY | Rule, is a MUST if `existing-use-interrupted` is True |
+| existing-use-change | True or False | | MUST | |
+| existing-use-change-details | | | MAY | Rule, is a MUST if `existing-use-change` is True |
+
+---
+
+### Residential units (including conversion) (res-units)
+
+_To do: add description for module_
+
+Field | Description | Application type | Required? | Notes
+-- | -- | -- | -- | --
+residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | | MUST | Could be calculated from answers to next parts?
+unit-counts[] | List of unit counts by tenure and housing type | | MAY | Is MUST if `residential-unit-change` is True
+total-proposed-units | | | MUST |
+total-existing-units | | | MUST |
+net-change | Calculated net change in units |  | AUTO | Calculated as proposed-units - existing-units. Format: Integer
+
+**Unit counts**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+tenure-type | Category of housing tenure | Enum | MUST | One of: market-housing, affordable-rent, home-ownership, starter-homes, custom-build.
+housing-type | Type of housing | Enum | MUST | One of: houses, flats-maisonettes, sheltered-housing, bedsit-studio, cluster-flats, other.
+unknown-units | Whether the number of units is unknown  | Boolean | MAY | True if the applicant does not know the unit count.
+existing-units[] | Number of existing units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
+proposed-units[] | Number of proposed units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
+
+**Bedroom count** 
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+bedroom-1 | Number of 1-bedroom units | Integer | MAY | Not required if unknown is True.
+bedroom-2 | Number of 2-bedroom units | Integer | MAY | Not required if unknown is True.
+bedroom-3 | Number of 3-bedroom units | Integer | MAY | Not required if unknown is True.
+bedroom-4+ | Number of 4 or more bedroom units | Integer | MAY | Not required if unknown is True.
+bedroom-count-unknown | Number units where the bedroom number is unknown | Integer | MAY | Not required if unknown is True.
+total-units | Total number of units | Integer | MAY | Not required if unknown is True. Calculated as the sum of all bedroom counts.
 
 ---
 
@@ -470,6 +612,85 @@ specified-use | Specify the use if no applicable use class | | MAY | Rule: must 
 operation-type | Whether the proposed use is temporary or permanent | | MUST | Uses [operation type enum](https://github.com/digital-land/planning-application-data-specification/discussions/203).
 temporary-details | Details of temporary use | | MAY | Required if operation-type is temporary.
 reason | Reason why the development is considered lawful | | MUST | Explanation supporting the certificate application.
+
+---
+
+### Description of the proposal (proposal-details-ldc)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| proposal-incl-building-operations | True or False | ldc | MUST | Is this only for lawful development certificate for proposed work |
+| proposal-building-operations-description | | ldc | MAY | If `proposal-incl-building-operations` is True then this must be filled in |
+| proposal-incl-change-of-use | True or False | ldc | MUST | |
+| proposal-change-of-use-description | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
+| proposal-existing-use-description | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
+| proposal-existing-use-stop-date | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
+| proposal-started | True or False | ldc | MUST | |
+
+---
+
+### Grounds for application (information about the existing use(s)) (grounds-existing-use)
+
+_To do: add description for module_
+
+field | description | application-types | required | notes
+-- | -- | -- | -- | --
+use-lawful-reason | Explanation of why the existing or last use is lawful |   | MUST | 
+documents[] | List of supporting documentary evidence |   | MAY | Optional unless evidence is needed to support the justification.
+use | Stated use class of the existing or last use (if applicable) |   | MAY | Use [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189) (e.g., C3, B1, E).
+specified-use | Specify the use if no applicable use class | | MAY | Rule: must if `use` is `sui` or `other`
+
+---
+
+### Grounds for application (information about the proposed use(s)) (grounds-proposed-use)
+
+_To do: add description for module_
+
+field | description | application-type | required? | notes
+-- | -- | -- | -- | --
+use | State proposed use class | | MAY | Applicant's view of the relevant Use Class, if applicable. (see [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189))
+specified-use | Specify the use if no applicable use class | | MAY | Rule: must if `use` is `sui` or `other`
+operation-type | Whether the proposed use is temporary or permanent | | MUST | Uses [operation type enum](https://github.com/digital-land/planning-application-data-specification/discussions/203).
+temporary-details | Details of temporary use | | MAY | Required if operation-type is temporary.
+reason | Reason why the development is considered lawful | | MUST | Explanation supporting the certificate application.
+
+---
+
+### Description of proposed works (desc-proposed-works)
+
+_To do: add description for module_
+
+Field | Description | Data Type | Application Type | Required? | Notes
+-- | -- | -- | -- | -- | --
+proposed-works-details | Description of the proposed works | String |  | MUST | Detailed explanation of the work
+extension-depth | How far the extension extends beyond the rear wall | Float | prior-approval | MUST | Measured externally in meters
+max-extension-height | Maximum height of the extension | Float | prior-approval | MUST | Measured externally from natural ground level
+eaves-height | Height at the eaves of the extension | Float | prior-approval | MUST | Measured externally from natural ground level
+
+---
+
+### Grounds for application (grounds-for-application)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| grounds-for-application | Reason(s) why Certificate of Lawfulness of Proposed Works should be granted including why listed building consent is not required |  | MUST | |
+| documents[] | Reference(s) to any supporting documentary evidence| | MUST |  |
+
+---
+
+### Listed building grading (lb-grade)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| listed-building-grade | Selected from [listed-building-grade](https://dluhc-datasets.planning-data.dev/dataset/listed-building-grade) or "don't know" |  | MUST | Note the certificate of lawfulness apps do not ask about ecclesiastical grades |
+| listed-building | Provide the listed building reference | | MAY | Would make it easier to cross-reference with the official listing |
+| provided-by | Details of source of the data. `Applicant` or `System/Service` | | MAY | This can be used by authority to determine if they need to check the data they have been provided |
 
 ---
 

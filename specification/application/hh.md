@@ -12,7 +12,7 @@ A simplified process for applications to alter or enlarge a single house (but no
 * [Agent name and address](#agent-name-and-address-agent-details)
 * [Applicant contact details](#applicant-contact-details-applicant-contact)
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
-* [Authority employee / member](#authority-employee-member-conflict-of-interest)
+* [Authority employee/member](#authority-employee-member-conflict-of-interest)
 * [Biodiversity net gain](#biodiversity-net-gain-bng)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
@@ -77,7 +77,7 @@ These modules are all required for this application type
 
 ### Agent contact details (agent-contact)
 
-Details needed for contacting the agent
+Details needed for contacting the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -103,7 +103,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Agent name and address (agent-details)
 
-Details about the agent
+Details about the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -210,9 +210,9 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-### Authority employee / member (conflict-of-interest)
+### Authority employee/member (conflict-of-interest)
 
-This section ensures transparency by declaring any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest.
+Any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -224,7 +224,7 @@ This section ensures transparency by declaring any connection between the applic
 
 ### Biodiversity net gain (bng)
 
-This section asks for information to show how the development will protect or improve wildlife habitats on the site, and whether any exemptions or special rules apply.
+Information to show how the development will protect or improve wildlife habitats on the site, and whether any exemptions or special rules apply
 
 | field | description | application-types | data-type | required | notes |
 | --- | --- | --- | --- | --- | --- |
@@ -275,7 +275,7 @@ document-name | Name of the document | String | MUST | Descriptive name for clar
 
 ### Checklist (checklist)
 
-This section provides details of the national planning requirements the applicant is required to submit along with the application
+Details of the national planning requirements the applicant should submit along with the application
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -285,7 +285,7 @@ This section provides details of the national planning requirements the applican
 
 ### Declaration (declaration)
 
-Applicants and agents are required to declare information provided is correct
+Applicants and agents must declare information provided is correct
 
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
@@ -323,7 +323,7 @@ Details about the proposal
 
 ### Materials (materials)
 
-Where applicable details about the materials to be used or changed should be provided. Including type, colour and name for each material
+Where details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 **Materials**
 | field | description | application-types | required | notes |
@@ -394,7 +394,7 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 ### Parking (parking)
 
-Details of how the proposed development will affect the parking are required.
+Details of how the proposed development will affect the parking area required
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -404,7 +404,7 @@ Details of how the proposed development will affect the parking are required.
 
 ### Pedestrian and vehicle access, roads and rights of way (access-rights-of-way)
 
-This section asks you to explain any changes to how people or vehicles access the site, including any new or affected roads, footpaths, or public rights of way.
+Any changes to how people or vehicles access the site, including any new or affected roads, footpaths, or public rights of way
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -421,7 +421,7 @@ This section asks you to explain any changes to how people or vehicles access th
 
 ### Pre-application advice (pre-app-advice)
 
-A section for providing details of pre application advice received from the authority
+Details of pre-application advice received from the local planning authority
 
 
 | field | description | application-types | required | notes |
@@ -436,7 +436,7 @@ A section for providing details of pre application advice received from the auth
 
 ### Site address details (site-details)
 
-Details to help locate the site proposed for development
+Details to locate the site proposed for development
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

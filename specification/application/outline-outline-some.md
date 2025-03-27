@@ -6,7 +6,9 @@ Applications that are used to understand whether the basic nature of a developme
 
 ## Contents
 
-Modules
+* [Application data specification](#application-data-specification)
+
+### Modules
 
 * [Agent contact details](#agent-contact-details-agent-contact)
 * [Agent name and address](#agent-name-and-address-agent-details)
@@ -14,7 +16,7 @@ Modules
 * [Applicant contact details](#applicant-contact-details-applicant-contact)
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
 * [Assessment of flood risk](#assessment-of-flood-risk-flood-risk-assessment)
-* [Authority employee / member](#authority-employee-member-conflict-of-interest)
+* [Authority employee/member](#authority-employee-member-conflict-of-interest)
 * [Biodiversity net gain](#biodiversity-net-gain-bng)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
@@ -30,7 +32,7 @@ Modules
 * [Site area](#site-area-site-area)
 * [Site visit](#site-visit-site-visit)
 
-Sub-type modules
+### Sub-type modules
 
 * [Biodiversity and geological conservation](#biodiversity-and-geological-conservation-bio-geo-arch-con)
 * [Foul sewage](#foul-sewage-foul-sewage)
@@ -42,6 +44,25 @@ Sub-type modules
 * [Vehicle parking](#vehicle-parking-vehicle-parking)
 * [Waste storage and collection](#waste-storage-and-collection-waste-storage-collection)
 
+### Required codelists
+
+* [Affected area type](#affected-area-type-affected-area-type)
+* [Building element type](#building-element-type-building-element-type)
+* [Contact priority](#contact-priority-contact-priority)
+* [Day type](#day-type-day-type)
+* [Foul sewage disposal type](#foul-sewage-disposal-type-foul-sewage-disposal-type)
+* [Hazardous substance type](#hazardous-substance-type-hazardous-sub-type)
+* [Housing type](#housing-type-housing-type)
+* [Ownership certificate type](#ownership-certificate-type-ownership-cert-type)
+* [Parking space type](#parking-space-type-parking-space-type)
+* [Reserved matter type](#reserved-matter-type-reserved-matter-type)
+* [Rights of way answer](#rights-of-way-answer-rights-of-way-answer)
+* [Site visit contact type](#site-visit-contact-type-site-visit-contact-type)
+* [Surface water disposal type](#surface-water-disposal-type-surface-water-disposal-type)
+* [Tenure type](#tenure-type-tenure-type)
+* [Use class](#use-class-use-class)
+* [Waste management type](#waste-management-type-waste-management-type)
+
 ---
 
 ## Application data specification
@@ -50,11 +71,12 @@ field	| description	| data-type | required | notes
 --- | --- | --- | --- | ---
 reference | UUID for the application record | UUID | MUST | 
 application-types[] | A list of planning application types | Enum | MUST | See [list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv)
-application-sub-type | Sub-category of the application | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
+application-sub-type | Further classification of the application type for specific variations | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
 planning-authority | The reference of the planning authority the application has been submitted to | Organisation reference | MUST | 
 submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
 modules[] | List of required sections/modules for this application | List |	MUST | List of predefined module references that can be used to validate the application
 documents[]{} | List of submitted documents | List | MUST |	Uses a document model to capture references and details.
+fee{} | The fee payable for the application | Object | MUST | 
 
 **Document structure**
 
@@ -67,6 +89,14 @@ document-types[] | List of codelist references that the document covers | MUST |
 file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
 mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
 
+**Fee structure**
+
+field | description | required | notes
+--- | --- | --- | ---
+amount | The total amount due | MUST | 
+amount-paid | The amount paid | MUST |
+transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
+
 ---
 
 ## Modules
@@ -75,11 +105,12 @@ These modules are all required for this application type
 
 ### Agent contact details (agent-contact)
 
-Details needed for contacting the agent
+Details needed for contacting the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| agent-reference | Use a reference from the agent details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Contact details object**
 | field | description | required | notes |
@@ -100,18 +131,19 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Agent name and address (agent-details)
 
-Details about the agent
+Details about the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| agent{} | Details of the agent | | MUST | |
+| agent{} | Details of the agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Agent object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | | MAY | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -181,7 +213,8 @@ Details needed for contacting the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| applicant-reference | Use a reference from the applicant details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Contact details object**
 | field | description | required | notes |
@@ -206,13 +239,14 @@ Details about the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| applicants[]{} | Details for one or more applicants | | MUST | Rules: must be one or more named applicants |
+| applicants[]{} | Details for one or more applicants | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Rules: must be one or more named applicants |
 
 **Applicant object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -256,13 +290,13 @@ surface-water-disposal[] | How will surface water be disposed of? |   | MUST | 
 
 ---
 
-### Authority employee / member (conflict-of-interest)
+### Authority employee/member (conflict-of-interest)
 
-This section ensures transparency by declaring any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest.
+Any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member  | | MUST | answer may be different depending on the parties involved |
+| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
 | name | Name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
 | details | Details including name, role and how individual is related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
@@ -270,7 +304,7 @@ This section ensures transparency by declaring any connection between the applic
 
 ### Biodiversity net gain (bng)
 
-This section asks for information to show how the development will protect or improve wildlife habitats on the site, and whether any exemptions or special rules apply.
+Information to show how the development will protect or improve wildlife habitats on the site, and whether any exemptions or special rules apply
 
 | field | description | application-types | data-type | required | notes |
 | --- | --- | --- | --- | --- | --- |
@@ -283,7 +317,7 @@ Rule: if `application-types` includes `hh` (the householder application) then on
 
 **BNG details** structure
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 --- | --- | --- | --- | ---
 pre-development-date | Date of pre-development biodiversity value calculation | Date | MUST | Rule: Must align with application or justified earlier date
 pre-development-biodiversity-value | Calculated biodiversity value | Number | MUST | In Habitat Biodiversity Units
@@ -298,7 +332,7 @@ supporting-documents[]{} | A list of documents supporting the information provid
 
 **Habitat loss details** structure
 
-Field | Description | Data Type | Required
+field | description | data type | required
 --- | --- | --- | ---
 loss-date | Date the activity causing the loss occurred | Date | MUST
 pre-loss-biodiversity-value | Biodiversity value immediately before the activity | Number | MUST
@@ -312,16 +346,16 @@ supporting-evidence | Description or reference to supporting documents | String 
 
 **documents**
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
-name | Name of the document | String | MUST | Descriptive name for clarity
+reference | Unique identifier for the document | String | MUST | Must be provided for each document
+document-name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
 
 ### Checklist (checklist)
 
-This section provides details of the national planning requirements the applicant is required to submit along with the application
+Details of the national planning requirements the applicant should submit along with the application
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -331,12 +365,12 @@ This section provides details of the national planning requirements the applican
 
 ### Declaration (declaration)
 
-Applicants and agents are required to declare information provided is correct
+Applicants and agents must declare information provided is correct
 
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
 | name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
-| declaration-confirmed | The applicant(s) and agent need to confirm the information provided is correct to the best of their knowledge | | MUST | Boolean - `true` / `false`
+| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | | MUST | (`true` / `false`)
 | declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
@@ -347,14 +381,14 @@ Details about the proposal
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| reserved-matters-for-approval[] | Identifies which reserved matters are being submitted for approval as part of this application. | outline;reserved-matters | MUST | See [reserved matter type enum](https://github.com/digital-land/planning-application-data-specification/discussions/209)  |
-| related-proposal | Details about the approved development, as shown in the decision letter | reserved-matters | MUST | See related proposal structure below
+| reserved-matters[] | Identifies which reserved matters are being submitted for approval as part of this application. | outline;reserved-matters | MUST | See [reserved matter type enum](https://github.com/digital-land/planning-application-data-specification/discussions/209)  |
+| related-application | Details about the approved development, as shown in the decision letter | reserved-matters | MUST | See related proposal structure below
 | proposal-description | A description of what is being proposed, including the development, works, or change of use. | advertising;demolition-con-area;full;hh;lbc;outline | MUST | can be about development or change of use |
 | proposal-started | Has any work on the proposal has already started. (`true`/`false`) | advertising;demolition-con-area;full;hh;lbc;outline | MUST | |
 | proposal-started-date | The date when work on the proposal started. In `YYYY-MM-DD` format. | advertising;demolition-con-area;full;hh;lbc;outline | MAY | Rules: only required if work started, date must be pre-application submission, blank means not started |
 | proposal-completed | Has the development or works have already been completed (`true`/`false`) | advertising;demolition-con-area;full;hh;lbc;outline | MUST | |
 | proposal-completed-date | The date when the development or works were completed. In `YYYY-MM-DD` format. | advertising;demolition-con-area;full;hh;lbc;outline | MAY | Rules: only required if work completed, date must be pre-application submission, blank means not completed |
-| is-psi | (`true`/`false`)| full;outline | MUST | |
+| is-psi | For applications made on or after 1 August 2021, is the proposal for public service infrastructure development (`true`/`false`)| full;outline | MUST | |
 | pip-reference | Reference for related permission in principle application | full | MUST | |
 
 **Related proposal**
@@ -509,7 +543,7 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 
 ### Pre-application advice (pre-app-advice)
 
-A section for providing details of pre application advice received from the authority
+Details of pre-application advice received from the local planning authority
 
 
 | field | description | application-types | required | notes |
@@ -559,7 +593,13 @@ total-units | Total number of units | Integer | MAY | Not required if unknown is
 
 ### Site address details (site-details)
 
-Details to help locate the site proposed for development
+Details to locate the site proposed for development
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| site-locations[]{} | Details of the sites on which the tree(s) are located | notice-trees-in-con-area;consent-under-tpo | MAY | Rule: only required if the site is different from the applicant's address | 
+
+**site-location/details structure**
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -606,6 +646,167 @@ Details needed to support a site visit
 | name | Name of person to contact | MUST | |
 | number | Phone number of person to contact | MUST | |
 | email | Email of person to contact | MUST | |
+
+---
+
+### Biodiversity and geological conservation (bio-geo-arch-con)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+protected-species-impact | Is there a likelihood of protected and priority species being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+biodiversity-features-impact | Is there a likelihood of important habitats or biodiversity features being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+geological-features-impact | Is there a likelihood of features of geological conservation importance being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+archaeological-features-impact | Is there a likelihood of features of archaeological conservation importance being affected? | extraction-oil-gas | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+
+---
+
+### Foul sewage (foul-sewage)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+foul-sewage-disposal-types[] | List of ways foul sewage will be disposed of | | MUST | See [foul-sewage-disposal-type ENUM](https://github.com/digital-land/planning-application-data-specification/discussions/165)
+produce-foul-sewage | Proposed development produce any foul sewage (True/False) | extraction-oil-gas | MUST | 
+connect-to-drainage-system | Does the proposal need to connect to the existing drainage system (True/False) | | MUST | 
+drainage-system-details | Details of the drawings/plans that show the existing system | | MAY | Rule, is a MUST if `connect-to-drainage-system` is TRUE or `extraction-oil-gas` application 
+
+---
+
+### Hazardous substances (haz-substances)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+involves-hazardous-substances | Indicates if hazardous substances are involved | full;outline  | MUST | One of Yes, No, Not Applicable.
+substance-types[] | List of hazardous substances and their quantities |  full;outline  | MAY | Required if hazardous-substances-involved is Yes.
+hazardous-sub-consent-req | Does the proposal involve the use or storage of any substances requiring hazardous substances consent? (`true`/`false`) | extraction-oil-gas | MUST | 
+hazardous-sub-consent-details | Details of hazardous substance consent | extraction-oil-gas | MAY | Is a MUST if `hazardous-sub-consent-req` is true
+
+**Hazardous substance types**
+
+Field | Description | Notes
+-- | -- | --
+hazardous-substance-type | Reference of hazardous substance type | Predefined list (see [hazardous-substances enum](https://github.com/digital-land/planning-application-data-specification/discussions/196)) + option for Other.
+name | Name of the hazardous substance | Only required if Other is selected
+amount | Amount of the substance in tonnes | Numeric. Must be greater than 0.
+
+---
+
+### Materials (materials)
+
+Where details about the materials to be used or changed should be provided, including type, colour and name for each material
+
+**Materials**
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). |  | MUST | See Building element structure. One entry per building element.
+additional-material-information | Indicates whether additional documents are provided to supplement the materials description |  | MUST | (`true` or `false`).
+supporting-documents[] | Details for documents providing additional material information. |  | MAY | Required if additional-material-information is true.
+
+
+**Building element**
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+building-element-type | Identifies the part of the building the materials relate to, such as walls, roofs, windows, or doors. | MUST | Must use values from the [building element types enum](https://github.com/digital-land/planning-application-data-specification/discussions/207).
+existing-materials | Description of the materials currently used for this building element. | MAY | Complete if known and applicable.
+proposed-materials | Description of the materials proposed for this building element as part of the development. | MAY | Complete if known and applicable.
+materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
+materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
+
+**documents**
+
+Field | Description | Data Type | Required? | Notes
+-- | -- | -- | -- | --
+reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity
+
+---
+
+### Pedestrian and vehicle access, roads and rights of way (access-rights-of-way)
+
+Any changes to how people or vehicles access the site, including any new or affected roads, footpaths, or public rights of way
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| new-altered-vehicle | Is a new or altered vehicle access proposed to/from the public highway? | extraction-oil-gas;full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| new-altered-pedestrian | Is a new or altered pedestrian access proposed to/from the public highway? | extraction-oil-gas;full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| change-right-of-way | Will the proposal change public rights of way? (diversion/extinguishment/creation) | full;hh;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers.|
+| new-right-of-way | Will new public rights of way be provided within or adjacent to the site? | extraction-oil-gas;full;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| new-public-road | Will new public roads be provided within the site? | extraction-oil-gas;full;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| temp-right-of-way | Are temporary changes to rights of way needed while the site is worked? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| future-new-right-of-way | Will new public rights of way be provided after extraction? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
+| supporting-documents[]{} | List of document supporting the information provided | extraction-oil-gas;full;hh;outline | MAY | Required if any answer is `true`. |
+
+---
+
+### Trade effluent (trade-effluent)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| `disposal-required` | True or False depending on if proposal involves the disposal of trade effluents or waste | | MUST | | 
+| `description` | Describe the nature, volume and means of disposal of trade effluents or waste | | MAY | Rule: is a MUST if `disposal-required` is True |
+
+---
+
+### Trees and hedges (trees-hedges)
+
+Details of trees and hedges affecting the site or that will be affected by the proposed development
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
+| falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
+| tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
+| tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
+| trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
+| trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
+
+**tree removal plan**
+
+field | description | data type | required? | notes
+-- | -- | -- | -- | --
+document-reference | Unique identifier for the document | String | MUST | Must be provided for each document
+name | Name of the document | String | MUST | Descriptive name for clarity
+
+---
+
+### Vehicle parking (vehicle-parking)
+
+Please provide information on the existing and proposed number of on-site parking spaces: 
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+parking-spaces[]{} | List of parking spaces by vehicle type |   | MUST | One object per vehicle type, including “Other” if specified.
+
+**Parking space items**
+
+Field | Description | Data Type | Required | Notes
+-- | -- | -- | -- | --
+parking-space-type | Type of vehicle from the codelist | Enum / String | MUST | Select from [parking space type enum](https://github.com/digital-land/planning-application-data-specification/discussions/199), or "other" if user specifies a custom type.
+vehicle-type-other | Custom value if "Other" is selected | String | MAY | Rule: Required only if `vehicle-type` is "other".
+total-existing | Existing on-site parking spaces | Number | MUST | Must be 0 or positive.
+total-proposed | Total proposed spaces, including retained spaces | Number | MUST | Must be 0 or positive.
+unknown-proposed | Is the total proposed number unknown? | Boolean | MUST | If True, total-proposed can be left blank.
+difference-in-spaces | Calculated difference between existing and proposed spaces | Number | MUST | Calculated as total-proposed - total-existing. Could be calculated by applicant or system
+
+---
+
+### Waste storage and collection (waste-storage-collection)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| needs-waste-storage-area | True or False | | MUST | |
+| waste-storage-area-details | | | MAY | Rule, is a MUST if `needs-waste-storage-area` is True |
+| separate-recycling-arrangements | True or False | | MUST | |
+| separate-recycling-arrangements-details | | | MAY | Rule, is a MUST if `separate-recycling-arrangements` is True |
 
 ---
 
@@ -661,13 +862,13 @@ amount | Amount of the substance in tonnes | Numeric. Must be greater than 0.
 
 ### Materials (materials)
 
-Where applicable details about the materials to be used or changed should be provided. Including type, colour and name for each material
+Where details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 **Materials**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). |  | MUST | See Building element structure. One entry per building element.
-additional-material-information | States whether supporting documents are being provided with further material details. |  | MUST | Boolean: true or false.
+additional-material-information | Indicates whether additional documents are provided to supplement the materials description |  | MUST | (`true` or `false`).
 supporting-documents[] | Details for documents providing additional material information. |  | MAY | Required if additional-material-information is true.
 
 
@@ -691,7 +892,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Pedestrian and vehicle access, roads and rights of way (access-rights-of-way)
 
-This section asks you to explain any changes to how people or vehicles access the site, including any new or affected roads, footpaths, or public rights of way.
+Any changes to how people or vehicles access the site, including any new or affected roads, footpaths, or public rights of way
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -726,15 +927,15 @@ Details of trees and hedges affecting the site or that will be affected by the p
 | falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
 | falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
 | tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
-| tree-removal-document{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
+| tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
 | trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
 | trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
 
-**documents**
+**tree removal plan**
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+document-reference | Unique identifier for the document | String | MUST | Must be provided for each document
 name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---

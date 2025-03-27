@@ -4,16 +4,24 @@ An alternative way of getting planning permission for housing-led development wh
 
 ## Contents
 
-Modules
+* [Application data specification](#application-data-specification)
+
+### Modules
 
 * [Agent name and address](#agent-name-and-address-agent-details)
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
-* [Authority employee / member](#authority-employee-member-conflict-of-interest)
+* [Authority employee/member](#authority-employee-member-conflict-of-interest)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
 * [Description of the proposed development including any non-residential development](#description-of-the-proposed-development-including-any-non-residential-development-proposal-details-inc-non-residential)
 * [Site address details](#site-address-details-site-details)
 * [Site information](#site-information-site-info)
+
+### Required codelists
+
+* [Contact priority](#contact-priority-contact-priority)
+* [Non-residential measurement type](#non-residential-measurement-type-non-res-measurement-type)
+* [Use class](#use-class-use-class)
 
 ---
 
@@ -23,11 +31,12 @@ field	| description	| data-type | required | notes
 --- | --- | --- | --- | ---
 reference | UUID for the application record | UUID | MUST | 
 application-types[] | A list of planning application types | Enum | MUST | See [list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv)
-application-sub-type | Sub-category of the application | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
+application-sub-type | Further classification of the application type for specific variations | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
 planning-authority | The reference of the planning authority the application has been submitted to | Organisation reference | MUST | 
 submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
 modules[] | List of required sections/modules for this application | List |	MUST | List of predefined module references that can be used to validate the application
 documents[]{} | List of submitted documents | List | MUST |	Uses a document model to capture references and details.
+fee{} | The fee payable for the application | Object | MUST | 
 
 **Document structure**
 
@@ -40,6 +49,14 @@ document-types[] | List of codelist references that the document covers | MUST |
 file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
 mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
 
+**Fee structure**
+
+field | description | required | notes
+--- | --- | --- | ---
+amount | The total amount due | MUST | 
+amount-paid | The amount paid | MUST |
+transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
+
 ---
 
 ## Modules
@@ -48,18 +65,19 @@ These modules are all required for this application type
 
 ### Agent name and address (agent-details)
 
-Details about the agent
+Details about the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| agent{} | Details of the agent | | MUST | |
+| agent{} | Details of the agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Agent object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | | MAY | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -93,13 +111,14 @@ Details about the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| applicants[]{} | Details for one or more applicants | | MUST | Rules: must be one or more named applicants |
+| applicants[]{} | Details for one or more applicants | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Rules: must be one or more named applicants |
 
 **Applicant object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -127,13 +146,13 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
-### Authority employee / member (conflict-of-interest)
+### Authority employee/member (conflict-of-interest)
 
-This section ensures transparency by declaring any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest.
+Any connection between the applicant or agent and the local authority’s staff or elected members that could present a conflict of interest
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member  | | MUST | answer may be different depending on the parties involved |
+| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
 | name | Name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
 | details | Details including name, role and how individual is related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
@@ -141,7 +160,7 @@ This section ensures transparency by declaring any connection between the applic
 
 ### Checklist (checklist)
 
-This section provides details of the national planning requirements the applicant is required to submit along with the application
+Details of the national planning requirements the applicant should submit along with the application
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -151,12 +170,12 @@ This section provides details of the national planning requirements the applican
 
 ### Declaration (declaration)
 
-Applicants and agents are required to declare information provided is correct
+Applicants and agents must declare information provided is correct
 
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
 | name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
-| declaration-confirmed | The applicant(s) and agent need to confirm the information provided is correct to the best of their knowledge | | MUST | Boolean - `true` / `false`
+| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | | MUST | (`true` / `false`)
 | declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
@@ -185,7 +204,13 @@ _To do: add description for module_
 
 ### Site address details (site-details)
 
-Details to help locate the site proposed for development
+Details to locate the site proposed for development
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| site-locations[]{} | Details of the sites on which the tree(s) are located | notice-trees-in-con-area;consent-under-tpo | MAY | Rule: only required if the site is different from the applicant's address | 
+
+**site-location/details structure**
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

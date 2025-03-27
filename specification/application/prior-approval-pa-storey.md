@@ -6,8 +6,11 @@ This applies to  developments with permitted development rights (where developme
 
 ## Contents
 
-Modules
+* [Application data specification](#application-data-specification)
 
+### Modules
+
+* [Adjoining premises](#adjoining-premises-adj-premises)
 * [Adjoining premises](#adjoining-premises-adj-premises)
 * [Agent contact details](#agent-contact-details-agent-contact)
 * [Agent name and address](#agent-name-and-address-agent-details)
@@ -16,15 +19,22 @@ Modules
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
 * [Description of proposed works](#description-of-proposed-works-desc-proposed-works)
+* [Description of proposed works](#description-of-proposed-works-desc-proposed-works)
+* [Eligibility - Larger house extension](#eligibility---larger-house-extension-eligibility-extension)
 * [Eligibility - Larger house extension](#eligibility---larger-house-extension-eligibility-extension)
 * [Site address details](#site-address-details-site-details)
 
-Sub-type modules
+### Sub-type modules
 
 * [Description of proposed works, impacts and risks](#description-of-proposed-works-impacts-and-risks-desc-work-impacts-risks)
 * [Eligibility - Related operations and works](#eligibility---related-operations-and-works-eligibility-related-works)
 * [Eligibility - The current building and site](#eligibility---the-current-building-and-site-eligibility-current-building)
 * [Eligibility - The proposed development](#eligibility---the-proposed-development-eligibility-proposal)
+
+### Required codelists
+
+* [Contact priority](#contact-priority-contact-priority)
+* [Site constraints](#site-constraints-site-constaint)
 
 ---
 
@@ -34,11 +44,12 @@ field	| description	| data-type | required | notes
 --- | --- | --- | --- | ---
 reference | UUID for the application record | UUID | MUST | 
 application-types[] | A list of planning application types | Enum | MUST | See [list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv)
-application-sub-type | Sub-category of the application | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
+application-sub-type | Further classification of the application type for specific variations | Enum | See [list of application sub-types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv)
 planning-authority | The reference of the planning authority the application has been submitted to | Organisation reference | MUST | 
 submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
 modules[] | List of required sections/modules for this application | List |	MUST | List of predefined module references that can be used to validate the application
 documents[]{} | List of submitted documents | List | MUST |	Uses a document model to capture references and details.
+fee{} | The fee payable for the application | Object | MUST | 
 
 **Document structure**
 
@@ -51,6 +62,14 @@ document-types[] | List of codelist references that the document covers | MUST |
 file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
 mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
 
+**Fee structure**
+
+field | description | required | notes
+--- | --- | --- | ---
+amount | The total amount due | MUST | 
+amount-paid | The amount paid | MUST |
+transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
+
 ---
 
 ## Modules
@@ -59,11 +78,12 @@ These modules are all required for this application type
 
 ### Agent contact details (agent-contact)
 
-Details needed for contacting the agent
+Details needed for contacting the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| agent-reference | Use a reference from the agent details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Contact details object**
 | field | description | required | notes |
@@ -84,18 +104,19 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Agent name and address (agent-details)
 
-Details about the agent
+Details about the person representing the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| agent{} | Details of the agent | | MUST | |
+| agent{} | Details of the agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Agent object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | | MAY | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -129,7 +150,8 @@ Details needed for contacting the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| Contact-details{} | Details of how to contact the individual | | MAY | Rule: is a MUST if `application-type` is `pip` |
+| applicant-reference | Use a reference from the applicant details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
 
 **Contact details object**
 | field | description | required | notes |
@@ -154,13 +176,14 @@ Details about the applicant
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| applicants[]{} | Details for one or more applicants | | MUST | Rules: must be one or more named applicants |
+| applicants[]{} | Details for one or more applicants | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Rules: must be one or more named applicants |
 
 **Applicant object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
+| reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| Contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -190,7 +213,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Checklist (checklist)
 
-This section provides details of the national planning requirements the applicant is required to submit along with the application
+Details of the national planning requirements the applicant should submit along with the application
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -200,19 +223,25 @@ This section provides details of the national planning requirements the applican
 
 ### Declaration (declaration)
 
-Applicants and agents are required to declare information provided is correct
+Applicants and agents must declare information provided is correct
 
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
 | name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
-| declaration-confirmed | The applicant(s) and agent need to confirm the information provided is correct to the best of their knowledge | | MUST | Boolean - `true` / `false`
+| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | | MUST | (`true` / `false`)
 | declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
 
 ### Site address details (site-details)
 
-Details to help locate the site proposed for development
+Details to locate the site proposed for development
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| site-locations[]{} | Details of the sites on which the tree(s) are located | notice-trees-in-con-area;consent-under-tpo | MAY | Rule: only required if the site is different from the applicant's address | 
+
+**site-location/details structure**
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -243,7 +272,7 @@ _To do: add description for module_
 
 **Address model**
 
-Field | Description | Data Type | Required | Notes
+field | description | data type | required | notes
 -- | -- | -- | -- | --
 address-test | Address details | String | MUST | 
 postcode | Postcode of address if available | String | MAY | 
@@ -277,6 +306,113 @@ rear-extension-length | Will the extension extend beyond the rear wall of the or
 extension-length | Length of rear extension (in metres) |   | MUST | 
 within-site-constraints | Is the dwellinghouse within any restricted area? (True/False) |   | MUST | If True, the application cannot proceed.
 site-constraints[] | List of specific site constraints |   | MAY | Rule: Required if within-site-restrictions is True. See [site constraints enum](https://github.com/digital-land/planning-application-data-specification/discussions/191)
+
+---
+
+### Adjoining premises (adj-premises)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| addresses[]{} | A list of addressed for the adjoining properties | | MUST |  |
+
+**Address model**
+
+field | description | data type | required | notes
+-- | -- | -- | -- | --
+address-test | Address details | String | MUST | 
+postcode | Postcode of address if available | String | MAY | 
+uprn | UPRN if known | UPRN | MAY | 
+
+---
+
+### Description of proposed works (desc-proposed-works)
+
+_To do: add description for module_
+
+Field | Description | Data Type | Application Type | Required? | Notes
+-- | -- | -- | -- | -- | --
+proposed-works-details | Description of the proposed works | String |  | MUST | Detailed explanation of the work
+extension-depth | How far the extension extends beyond the rear wall | Float | prior-approval | MUST | Measured externally in meters
+max-extension-height | Maximum height of the extension | Float | prior-approval | MUST | Measured externally from natural ground level
+eaves-height | Height at the eaves of the extension | Float | prior-approval | MUST | Measured externally from natural ground level
+
+---
+
+### Eligibility - Larger house extension (eligibility-extension)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+single-storey-extension | Will the extension be a single storey? (True/False) |   | MUST | If False, the application cannot proceed.
+extension-height-over-4m | Will the extension exceed 4 metres in height? (True/False) |   | MUST | If True, the application cannot proceed.
+dwelling-detached | Is the the dwelling detached? (True/False) | | MUST | 
+rear-extension-length | Will the extension extend beyond the rear wall of the original dwelling? |   | MUST | See conditional logic for limits based on attachment type.
+extension-length | Length of rear extension (in metres) |   | MUST | 
+within-site-constraints | Is the dwellinghouse within any restricted area? (True/False) |   | MUST | If True, the application cannot proceed.
+site-constraints[] | List of specific site constraints |   | MAY | Rule: Required if within-site-restrictions is True. See [site constraints enum](https://github.com/digital-land/planning-application-data-specification/discussions/191)
+
+---
+
+### Description of proposed works, impacts and risks (desc-work-impacts-risks)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+description | Description of proposed development including details of proposed work and external appearance |  | MUST | 
+dwellinghouse-height | Height from ground to highest point of roof | | MUST | Should be in metres
+proposed-height | Height once the additional storeys have been added | | MUST | Should be in metres
+impact-on-amenity | Details of the impacts on the amenity of any adjoining premises including overlooking, privacy and the loss of light including how these will be mitigated | | MUST | Should include mitigations
+air-traffic-defence-impacts | Details of any air traffic and defence asset impacts, include how these will be mitigated | | MUST | Should include mitigations
+protected-view-impact | Provide details of the impact on any protected view | | MUST | Form says where relevant
+
+---
+
+### Eligibility - Related operations and works (eligibility-related-works)
+
+_To do: add description for module_
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| external-support-required | Will the proposed engineering works include external support structures or extend beyond the curtilage for wall or foundation strengthening? | | MUST | Impacts whether prior approval is applicable. True or False |
+
+---
+
+### Eligibility - The current building and site (eligibility-current-building)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+in-building-construction-period | Was the current building constructed between 1 July 1948 and 28 October 2018? (`True`/`False`) |   | MUST | One of True, False. If False, application cannot proceed.
+additional-storeys-added | Have additional storeys already been added to the original building? (`True`/`False`) |   | MUST | One of True, False. If True, application cannot proceed
+dwelling-permitted-use | Was the current use of the building granted by permitted development rights? (`True`/`False`) |   | MUST | One of True, False. If True, application cannot proceed
+site-location-constraint | Is any part of the land or site located in a restricted area? (`True`/`False`)  |   | MUST | One of True, False. If True, application cannot proceed
+
+---
+
+### Eligibility - The proposed development (eligibility-proposal)
+
+_To do: add description for module_
+
+Field | Description | Application-Types | Required | Notes
+-- | -- | -- | -- | --
+principal-part-only | Will the additional storeys be constructed only on the principal part of the building? |   | MUST | If No, the application cannot proceed.
+ceiling-height-exceeds-3m | Will the internal floor-to-ceiling height of any additional storey exceed 3 metres? |   | MUST | If Yes, the application cannot proceed.
+existing-ceiling-height-exceeds-3m | Will the internal floor-to-ceiling height of any existing storey exceed 3 metres? |   | MUST | If Yes, the application cannot proceed.
+building-height-exceeds-18m | Will the height of the extended building exceed 18 metres? |   | MUST | If Yes, the application cannot proceed.
+roof-height-exceeds-3-5m | Will the roof exceed 3.5 metres above the highest part of the existing roof? |   | MUST | If Yes, the application cannot proceed.
+roof-height-exceeds-7m | Will the roof exceed 7 metres above the highest part of the existing roof? |   | MUST | If Yes, the application cannot proceed.
+dwelling-detached | Is the the dwelling detached? (True/False) | | MUST | 
+extension-on-attached-dwelling | Will the extension result in the highest part exceeding 3.5 metres above the attached roof? |   | MAY | Only applicable if the dwelling is not detached.
+extension-below-terrace-roof | Will th extension result in the highest part exceeding 3.5 metres above any roof in the terrace? |   | MAY | Only applicable if the dwelling is not detached.
+roof-pitch-matching | Will the roof pitch of the extended dwelling match the existing roof pitch? |   | MUST | If No, the application cannot proceed.
+window-on-side-elevation | Will the development include a side elevation window or roof slope window? |   | MUST | If Yes, further assessment may be required.
+materials-similar-exterior | Will exterior materials be similar to those of the existing dwelling? |   | MUST | If No, the application cannot proceed.
+dwellinghouse-use | Will the extended dwelling remain as a Class C3 dwellinghouse or ancillary use? |   | MUST | If No, the application cannot proceed.
 
 ---
 
