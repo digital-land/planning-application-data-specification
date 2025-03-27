@@ -4,7 +4,9 @@ A simplified process for applications to alter or enlarge a single house (but no
 
 ## Contents
 
-Modules
+* [Application data specification](#application-data-specification)
+
+### Modules
 
 * [Agent contact details](#agent-contact-details-agent-contact)
 * [Agent name and address](#agent-name-and-address-agent-details)
@@ -23,6 +25,15 @@ Modules
 * [Site address details](#site-address-details-site-details)
 * [Site visit](#site-visit-site-visit)
 * [Trees and hedges](#trees-and-hedges-trees-hedges)
+
+### Required codelists
+
+* [Building element type](#building-element-type-building-element-type)
+* [Contact priority](#contact-priority-contact-priority)
+* [Ownership certificate type](#ownership-certificate-type-ownership-cert-type)
+* [Reserved matter type](#reserved-matter-type-reserved-matter-type)
+* [Rights of way answer](#rights-of-way-answer-rights-of-way-answer)
+* [Site visit contact type](#site-visit-contact-type-site-visit-contact-type)
 
 ---
 
