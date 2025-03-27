@@ -19,6 +19,38 @@ def cli():
     pass
 
 
+def prepare_and_generate_application(app, app_mod_joins, modules, sub_types):
+    try:
+        # Get modules for this application type
+        app_module_refs = [j['application-module'] for j in app_mod_joins 
+                        if j["application-type"] == app['reference'] and not j.get("end-date")]
+        app["modules"] = get_modules(app_module_refs, modules)
+        
+        # Get any sub-types for this application
+        app_sub_types = [s for s in sub_types if s["application-type"] == app['reference']]
+        app['sub-types'] = []
+        
+        if app_sub_types:
+            # If app has sub-types, only generate those
+            print(f"\nGenerating markdown for {app['name']} sub-types")
+            for st in app_sub_types:
+                print(f"  -> {st['name']}")
+                # Get modules for this sub-type
+                st_module_refs = [j['application-module'] for j in app_mod_joins 
+                                if j["application-sub-type"] == st['reference'] and not j.get("end-date")]
+                st["modules"] = get_modules(st_module_refs, modules)
+                app['sub-types'].append(st)
+                generate_application_markdown(app, sub_type_ref=st['reference'])
+        else:
+            # Only generate base application markdown if no sub-types
+            print(f"\nGenerating markdown for {app['name']}")
+            generate_application_markdown(app)
+            
+    except Exception as e:
+        return f"Error processing {app['name']}: {str(e)}"
+    return None
+
+
 @cli.command(name="app-type")
 @click.option(
     "--ref",
@@ -77,35 +109,11 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, mar
         if generate_application:
             print("\nGenerating markdown files for all application types...")
             errors = []
+            
             for app in sorted(application_types, key=lambda x: x['name']):
-                try:
-                    # Get modules for this application type
-                    app_module_refs = [j['application-module'] for j in app_mod_joins 
-                                    if j["application-type"] == app['reference'] and not j.get("end-date")]
-                    app["modules"] = get_modules(app_module_refs, modules)
-                    
-                    # Get any sub-types for this application
-                    app_sub_types = [s for s in sub_types if s["application-type"] == app['reference']]
-                    app['sub-types'] = []
-                    
-                    if app_sub_types:
-                        # If app has sub-types, only generate those
-                        print(f"\nGenerating markdown for {app['name']} sub-types")
-                        for st in app_sub_types:
-                            print(f"  -> {st['name']}")
-                            # Get modules for this sub-type
-                            st_module_refs = [j['application-module'] for j in app_mod_joins 
-                                            if j["application-sub-type"] == st['reference'] and not j.get("end-date")]
-                            st["modules"] = get_modules(st_module_refs, modules)
-                            app['sub-types'].append(st)
-                            generate_application_markdown(app, sub_type_ref=st['reference'])
-                    else:
-                        # Only generate base application markdown if no sub-types
-                        print(f"\nGenerating markdown for {app['name']}")
-                        generate_application_markdown(app)
-                        
-                except Exception as e:
-                    errors.append(f"Error processing {app['name']}: {str(e)}")
+                error = prepare_and_generate_application(app, app_mod_joins, modules, sub_types)
+                if error:
+                    errors.append(error)
                     
             if errors:
                 print("\nErrors encountered:")
@@ -149,24 +157,21 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, mar
             print(f"Application type {ref} not found")
             return
         
-        # need to restructure this so that ALL modules are added to app and sub type obj
-        # match all joins with app type
+        if generate_application:
+            error = prepare_and_generate_application(app_type, app_mod_joins, modules, sub_types)
+            if error:
+                print(error)
+            return
+            
+        # For display only - prepare the data
         app_module_refs = [j['application-module'] for j in app_mod_joins if j["application-type"] == ref and not j.get("end-date")]
         app_type["modules"] = get_modules(app_module_refs, modules)
-
-        # check if app type has any sub-types
-        sub_types = [j for j in sub_types if j["application-type"] == ref]
-        
         app_type['sub-types'] = []
-        for sub_type in sub_types:
+        for sub_type in [j for j in sub_types if j["application-type"] == ref]:
             matched_modules = [j['application-module'] for j in app_mod_joins if j["application-sub-type"] == sub_type['reference']]
             sub_type["modules"] = get_modules(matched_modules, modules)
             app_type['sub-types'].append(sub_type)
-        
-        if generate_application:
-            generate_application_markdown(app_type, sub_type_ref=sub_type_ref)
-            return
-
+            
         app_type_overview(app_type, sub_type_ref=sub_type_ref, markdown=markdown)
     else:
         print_all(application_types)

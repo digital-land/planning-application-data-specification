@@ -203,7 +203,13 @@ def add_codelist_content_to_file(open_file, codelist, codelist_dir):
 
 def generate_contents_section(application, sub_type=None):
     """Generate a contents section for the markdown file"""
-    contents = ["## Contents\n\nModules\n"]
+    contents = ["## Contents\n"]
+    
+    # Add link to application model
+    contents.append("* [Application data specification](#application-data-specification)\n")
+    
+    # Add modules section
+    contents.append("### Modules\n")
     
     # Add main application modules with slugged anchors
     for module in sorted(application.get("modules", []), key=lambda x: x['name']):
@@ -212,10 +218,20 @@ def generate_contents_section(application, sub_type=None):
     
     # Add sub-type modules if present
     if sub_type and sub_type.get("modules"):
-        contents.append("\nSub-type modules\n")
+        contents.append("\n### Sub-type modules\n")
         for module in sorted(sub_type.get("modules", []), key=lambda x: x['name']):
             slug = slugify(module['name'])
             contents.append(f"* [{module['name']}](#{slug}-{module['reference']})")
+            
+    # Get codelists for this application/sub-type
+    all_modules = get_all_modules_for_application(application, sub_type_ref=sub_type['reference'] if sub_type else None)
+    codelists = get_codelists_for_modules(all_modules)
+    
+    if codelists:
+        contents.append("\n### Required codelists\n")
+        for codelist in sorted(codelists, key=lambda x: x['name']):
+            slug = slugify(codelist['name'])
+            contents.append(f"* [{codelist['name']}](#{slug}-{codelist['reference']})")
     
     return "\n".join(contents) + "\n\n---\n\n"
 
