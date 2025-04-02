@@ -190,6 +190,16 @@ def add_codelist_content_to_file(open_file, codelist, codelist_dir):
         print(f"can't locate codelist file: {codelist_file}")
 
 
+def generate_list_for_contents(_list, item_start="* "):
+    # output markdown list from list of dictionaries
+    # dicts need `name` and `reference` keys
+    md_str = []
+    for i in sorted(_list, key=lambda x: x['name']):
+        slug = slugify(i['name'])
+        md_str.append(f"{item_start}[{i['name']}](#{slug}-{i['reference']})")
+    return md_str
+
+
 def generate_contents_section(application, sub_type=None):
     """Generate a contents section for the markdown file"""
     contents = ["## Contents\n"]
@@ -342,3 +352,58 @@ def prepare_and_generate_application(application, app_mod_joins, modules, sub_ty
         return None  # Success
     except Exception as e:
         return f"Error processing {application['name']}: {str(e)}"  # Return error message
+
+
+def generate_specification_index_file(modules):
+    print("\nGenerating specification index markdown file...")
+    active_modules = [m for m in sorted(modules, key=lambda x: x['name']) if not m.get('end-date')]
+    
+    output_dir = "../specification"
+    os.makedirs(output_dir, exist_ok=True)
+    output_file = os.path.join(output_dir, "index.md")
+    
+    try:
+        with open(output_file, "w") as f:
+            # Title and introduction
+            f.write("# Planning Application Data Model\n\n")
+            f.write("This specification sets out how to structure and share planning application data.\n\n")
+            
+            f.write("## Contents\n\n")
+            f.write("* [Application model](#application-model)\n\n")
+            f.write("* [Modules](#modules)\n\n")
+            f.write("\n".join(generate_list_for_contents(active_modules, item_start="\t* ")))
+            f.write("---\n\n")
+            
+            # Add application model section
+            f.write("## Application model\n\n")
+            app_spec_file = os.path.join(output_dir, "application.md")
+            if os.path.exists(app_spec_file):
+                with open(app_spec_file, "r") as af:
+                    f.write(af.read())
+            f.write("\n---\n\n")
+            
+            # Add modules section
+            f.write("## Modules\n\n")
+            f.write("These are all the modules that can be used across application types.\n\n")
+            
+            # Add module listing with links
+            for module in active_modules:
+                slug = slugify(module['name'])
+                f.write(f"### {module['name']}\n\n")
+                if module.get('description'):
+                    f.write(f"{module['description']}\n\n")
+                f.write(f"* Reference: `{module['reference']}`\n")
+                f.write(f"* [Discussion #{module['discussion-number'].lstrip('#')}]({get_module_discussion_url(module)})\n\n")
+                
+                # Add module markdown content if it exists
+                module_file = os.path.join(output_dir, "module", f"{module['reference']}.md")
+                if os.path.exists(module_file):
+                    with open(module_file, "r") as mf:
+                        f.write(mf.read())
+                f.write("\n---\n\n")
+                
+        print(f"Successfully generated index at {output_file}")
+        return
+    except Exception as e:
+        print(f"Error generating specification index: {str(e)}")
+        return

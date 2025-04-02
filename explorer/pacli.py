@@ -4,13 +4,13 @@ import click
 from datetime import datetime
 import os
 
-from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types, get_app_types_with_module, generate_application_markdown
+from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types, get_app_types_with_module, generate_application_markdown, generate_specification_index_file
 from bin.csv_helpers import read_csv, write_csv
 from bin.markdown_helpers import csv_to_markdown
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all
 from bin.modules import get_modules, get_expected_joins, join_data_maker, check_modules, check_codelists, get_module_discussion_url
-from bin.utils import slugify
+
 
 # these are taken from data/planning-application-sub-type.csv
 SUB_TYPES = "ldc-existing-use", "ldc-prospective-use", "ldc-proposed-work-lb", "outline-some", "outline-all", "pa-extension", "pa-storey"
@@ -109,57 +109,8 @@ def app_type(ref, refs, all, combine, sort_by, show_sub_types, sub_type_ref, mar
     application_types, forms, modules, app_mod_joins, sub_types = load_all()
 
     if generate_specification_index:
-        print("\nGenerating specification index markdown file...")
-        active_modules = [m for m in sorted(modules, key=lambda x: x['name']) if not m.get('end-date')]
-        
-        output_dir = "../specification"
-        os.makedirs(output_dir, exist_ok=True)
-        output_file = os.path.join(output_dir, "index.md")
-        
-        try:
-            with open(output_file, "w") as f:
-                # Title and introduction
-                f.write("# Planning Application Data Model\n\n")
-                f.write("This specification sets out how to structure and share planning application data.\n\n")
-                
-                f.write("## Contents\n\n")
-                f.write("* [Application model](#application-model)\n")
-                f.write("* [Modules](#modules)\n\n")
-                f.write("---\n\n")
-                
-                # Add application model section
-                f.write("## Application model\n\n")
-                app_spec_file = os.path.join(output_dir, "application.md")
-                if os.path.exists(app_spec_file):
-                    with open(app_spec_file, "r") as af:
-                        f.write(af.read())
-                f.write("\n---\n\n")
-                
-                # Add modules section
-                f.write("## Modules\n\n")
-                f.write("These are all the modules that can be used across application types.\n\n")
-                
-                # Add module listing with links
-                for module in active_modules:
-                    slug = slugify(module['name'])
-                    f.write(f"### {module['name']}\n\n")
-                    if module.get('description'):
-                        f.write(f"{module['description']}\n\n")
-                    f.write(f"* Reference: `{module['reference']}`\n")
-                    f.write(f"* [Discussion #{module['discussion-number'].lstrip('#')}]({get_module_discussion_url(module)})\n\n")
-                    
-                    # Add module markdown content if it exists
-                    module_file = os.path.join(output_dir, "module", f"{module['reference']}.md")
-                    if os.path.exists(module_file):
-                        with open(module_file, "r") as mf:
-                            f.write(mf.read())
-                    f.write("\n---\n\n")
-                    
-            print(f"Successfully generated index at {output_file}")
-            return
-        except Exception as e:
-            print(f"Error generating specification index: {str(e)}")
-            return
+        generate_specification_index_file(modules)
+        return
 
     if all:
         if markdown:
