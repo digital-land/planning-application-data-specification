@@ -82,7 +82,7 @@ planning-authority | The reference of the planning authority the application has
 submission-date | Date the application is submitted. In `YYYY-MM-DD` format |	Date | MUST |	
 modules[] | List of required sections/modules for this application | List |	MUST | List of predefined module references that can be used to validate the application
 documents[]{} | List of submitted documents | List | MUST |	Uses a document model to capture references and details.
-fee{} | The fee payable for the application | Object | MUST | 
+fee{} | The fee payable for the application | Object | MAY | 
 
 **Document structure**
 
