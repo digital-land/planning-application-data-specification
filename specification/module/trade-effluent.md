@@ -1,4 +1,4 @@
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| `disposal-required` | True or False depending on if proposal involves the disposal of trade effluents or waste | | MUST | | 
-| `description` | Describe the nature, volume and means of disposal of trade effluents or waste | | MAY | Rule: is a MUST if `disposal-required` is True |
+| `disposal-required` | Does the proposal involve the disposal of trade effluents or waste (`true`/`false`) | full;extraction-oil-gas;outline | MUST | | 
+| `description` | Describe the nature, volume and means of disposal of trade effluents or waste | full;extraction-oil-gas;outline | MAY | Rule: is a MUST if `disposal-required` is True |

@@ -221,9 +221,9 @@ Any connection between the applicant or agent and the local authority’s staff 
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
-| name | Name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
-| details | Details including name, role and how individual is related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
+| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
+| name | Name of the individual with the conflict | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
+| details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
 ---
 
@@ -233,7 +233,7 @@ Details of the national planning requirements the applicant should submit along 
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| national-req-types[] | List of the document types required for the given application type |  | MUST |  |
+| national-req-types[] | List of the document types required for the given application type | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST |  |
 
 ---
 
@@ -243,9 +243,9 @@ Applicants and agents must declare information provided is correct
 
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
-| name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
-| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | | MUST | (`true` / `false`)
-| declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
+| name | A name of the person making the declaration |  hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST |  Rule: `name` should match one of the names of the named individuals |
+| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | (`true` / `false`)
+| declaration-date | The date, in YYYY-MM-DD format, the declaration was made | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
 
@@ -316,15 +316,15 @@ Details to locate the site proposed for development
 
 **site-location/details structure**
 
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-| site-boundary | Geometry of the site of the development | | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
-| address-text | Text address if available for the site | | MAY | does the address need to be structured data or a blob of text like in some app forms? |
-| easting | Grid reference | | MAY | |
-| northing | Grid reference | | MAY | |
-| latitude | Latitude coordinate in EPSG:4326 (WGS84) | | MAY | |
-| longitude | Longitude coordinate in EPSG:4326 (WGS84) | | MAY | |
-| description | Description of the location if `address-text` does not exist for development/site | | MAY | | 
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
+| address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
+| easting | Grid reference | MAY | |
+| northing | Grid reference | MAY | |
+| latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
+| longitude | Longitude coordinate in EPSG:4326 (WGS84) | MAY | |
+| description | Description of the location if `address-text` does not exist for development/site | MAY | | 
 
 ### Rules
 
@@ -422,23 +422,23 @@ _To do: add description for module_
 
 ### Residential units (including conversion) (res-units)
 
-_To do: add description for module_
+Details of the number of residential units added or removed by the proposal
 
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --
-residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | | MUST | Could be calculated from answers to next parts?
-unit-counts[] | List of unit counts by tenure and housing type | | MAY | Is MUST if `residential-unit-change` is True
-total-proposed-units | | | MUST |
-total-existing-units | | | MUST |
-net-change | Calculated net change in units |  | AUTO | Calculated as proposed-units - existing-units. Format: Integer
+residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | full;outline;ldc | MUST | Could be calculated from answers to next parts?
+unit-counts[] | List of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
+total-existing-units | The total number of existing units | full;outline;ldc | MUST |
+total-proposed-units | The total number of proposed units | full;outline;ldc | MUST |
+net-change | Calculated net change in units | full;outline;ldc | MUST | Calculated as proposed-units - existing-units. Format: Integer
 
 **Unit counts**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-tenure-type | Category of housing tenure | Enum | MUST | One of: market-housing, affordable-rent, home-ownership, starter-homes, custom-build.
-housing-type | Type of housing | Enum | MUST | One of: houses, flats-maisonettes, sheltered-housing, bedsit-studio, cluster-flats, other.
-unknown-units | Whether the number of units is unknown  | Boolean | MAY | True if the applicant does not know the unit count.
+tenure-type | Category of housing tenure | Enum | MUST | See [tenure type enum](https://github.com/digital-land/planning-application-data-specification/discussions/162)
+housing-type | Type of housing | Enum | MUST | See [housing type enum](https://github.com/digital-land/planning-application-data-specification/discussions/163)
+unknown-units | Whether the number of units is unknown (`true`/`false`) | Boolean | MAY | True if the applicant does not know the unit count.
 existing-units[] | Number of existing units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
 proposed-units[] | Number of proposed units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
 
@@ -527,23 +527,23 @@ _To do: add description for module_
 
 ### Residential units (including conversion) (res-units)
 
-_To do: add description for module_
+Details of the number of residential units added or removed by the proposal
 
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --
-residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | | MUST | Could be calculated from answers to next parts?
-unit-counts[] | List of unit counts by tenure and housing type | | MAY | Is MUST if `residential-unit-change` is True
-total-proposed-units | | | MUST |
-total-existing-units | | | MUST |
-net-change | Calculated net change in units |  | AUTO | Calculated as proposed-units - existing-units. Format: Integer
+residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | full;outline;ldc | MUST | Could be calculated from answers to next parts?
+unit-counts[] | List of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
+total-existing-units | The total number of existing units | full;outline;ldc | MUST |
+total-proposed-units | The total number of proposed units | full;outline;ldc | MUST |
+net-change | Calculated net change in units | full;outline;ldc | MUST | Calculated as proposed-units - existing-units. Format: Integer
 
 **Unit counts**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-tenure-type | Category of housing tenure | Enum | MUST | One of: market-housing, affordable-rent, home-ownership, starter-homes, custom-build.
-housing-type | Type of housing | Enum | MUST | One of: houses, flats-maisonettes, sheltered-housing, bedsit-studio, cluster-flats, other.
-unknown-units | Whether the number of units is unknown  | Boolean | MAY | True if the applicant does not know the unit count.
+tenure-type | Category of housing tenure | Enum | MUST | See [tenure type enum](https://github.com/digital-land/planning-application-data-specification/discussions/162)
+housing-type | Type of housing | Enum | MUST | See [housing type enum](https://github.com/digital-land/planning-application-data-specification/discussions/163)
+unknown-units | Whether the number of units is unknown (`true`/`false`) | Boolean | MAY | True if the applicant does not know the unit count.
 existing-units[] | Number of existing units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
 proposed-units[] | Number of proposed units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
 

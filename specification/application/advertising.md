@@ -226,9 +226,9 @@ Any connection between the applicant or agent and the local authority’s staff 
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
-| name | Name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
-| details | Details including name, role and how individual is related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
+| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
+| name | Name of the individual with the conflict | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
+| details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
 ---
 
@@ -238,7 +238,7 @@ Details of the national planning requirements the applicant should submit along 
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| national-req-types[] | List of the document types required for the given application type |  | MUST |  |
+| national-req-types[] | List of the document types required for the given application type | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST |  |
 
 ---
 
@@ -248,9 +248,9 @@ Applicants and agents must declare information provided is correct
 
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
-| name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
-| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | | MUST | (`true` / `false`)
-| declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
+| name | A name of the person making the declaration |  hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST |  Rule: `name` should match one of the names of the named individuals |
+| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | (`true` / `false`)
+| declaration-date | The date, in YYYY-MM-DD format, the declaration was made | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
 
@@ -344,9 +344,9 @@ Where details about the materials to be used or changed should be provided, incl
 **Materials**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). |  | MUST | See Building element structure. One entry per building element.
-additional-material-information | Indicates whether additional documents are provided to supplement the materials description |  | MUST | (`true` or `false`).
-supporting-documents[] | Details for documents providing additional material information. |  | MAY | Required if additional-material-information is true.
+building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). | hh;full;demolition-con-area;lbc;advertising;outline | MUST | See Building element structure. One entry per building element.
+additional-material-information | Indicates whether additional documents are provided to supplement the materials description | hh;full;demolition-con-area;lbc;advertising;outline | MUST | (`true` or `false`).
+supporting-documents[] | Details for documents providing additional material information. | hh;full;demolition-con-area;lbc;advertising;outline | MAY | Required if additional-material-information is true.
 
 
 **Building element**
@@ -403,15 +403,15 @@ Details to locate the site proposed for development
 
 **site-location/details structure**
 
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-| site-boundary | Geometry of the site of the development | | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
-| address-text | Text address if available for the site | | MAY | does the address need to be structured data or a blob of text like in some app forms? |
-| easting | Grid reference | | MAY | |
-| northing | Grid reference | | MAY | |
-| latitude | Latitude coordinate in EPSG:4326 (WGS84) | | MAY | |
-| longitude | Longitude coordinate in EPSG:4326 (WGS84) | | MAY | |
-| description | Description of the location if `address-text` does not exist for development/site | | MAY | | 
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
+| address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
+| easting | Grid reference | MAY | |
+| northing | Grid reference | MAY | |
+| latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
+| longitude | Longitude coordinate in EPSG:4326 (WGS84) | MAY | |
+| description | Description of the location if `address-text` does not exist for development/site | MAY | | 
 
 ### Rules
 

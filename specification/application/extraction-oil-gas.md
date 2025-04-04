@@ -235,12 +235,12 @@ _To do: add description for module_
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-flood-risk-area | Is the site within an area at risk of flooding? |   | MUST | Boolean True or False
-data-provided-by | Who provided the data: Applicant or System/Service? |   | MAY | Enum (Applicant / System/Service).
-flood-risk-assessment | Reference of the flood risk assessment document |   | MAY | Required if flood-risk-area is True.
-within-20m-watercourse | Is the proposal within 20 metres of a watercourse? |   | MUST | Boolean True or False.
-increases-flood-risk | Will the proposal increase the flood risk elsewhere? |   | MUST | Boolean True or False.
-surface-water-disposal[] | How will surface water be disposed of? |   | MUST | Multiple options allowed (see [surface water disposal type enum](https://github.com/digital-land/planning-application-data-specification/discussions/195)).
+flood-risk-area | Is the site within an area at risk of flooding? | full;outline;extraction-oil-gas | MUST | Boolean True or False
+data-provided-by | Who provided the data: Applicant or System/Service? | full;outline;extraction-oil-gas | MAY | Enum (Applicant / System/Service).
+flood-risk-assessment | Reference of the flood risk assessment document | full;outline;extraction-oil-gas | MAY | Required if flood-risk-area is True.
+within-20m-watercourse | Is the proposal within 20 metres of a watercourse? | full;outline;extraction-oil-gas | MUST | Boolean True or False.
+increases-flood-risk | Will the proposal increase the flood risk elsewhere? | full;outline;extraction-oil-gas | MUST | Boolean True or False.
+surface-water-disposal[] | How will surface water be disposed of? | full;outline;extraction-oil-gas | MUST | Multiple options allowed (see [surface water disposal type enum](https://github.com/digital-land/planning-application-data-specification/discussions/195)).
 
 
 ---
@@ -251,9 +251,9 @@ Any connection between the applicant or agent and the local authority’s staff 
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
-| name | Name of the individual with the conflict | | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
-| details | Details including name, role and how individual is related to them | | MUST, MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
+| conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
+| name | Name of the individual with the conflict | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
+| details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
 ---
 
@@ -276,7 +276,7 @@ Details of the national planning requirements the applicant should submit along 
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| national-req-types[] | List of the document types required for the given application type |  | MUST |  |
+| national-req-types[] | List of the document types required for the given application type | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST |  |
 
 ---
 
@@ -286,9 +286,9 @@ Applicants and agents must declare information provided is correct
 
 | field | description | application-types | required | notes | 
 | --- | --- | --- | --- | --- |
-| name | A name of the person making the declaration |  | MUST |  Rule: `name` should match one of the names of the named individuals |
-| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | | MUST | (`true` / `false`)
-| declaration-date | The date, in YYYY-MM-DD format, the declaration was made | | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
+| name | A name of the person making the declaration |  hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST |  Rule: `name` should match one of the names of the named individuals |
+| declaration-confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | (`true` / `false`)
+| declaration-date | The date, in YYYY-MM-DD format, the declaration was made | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Rule: date must be complete and in `YYYY-MM-DD` format |
 
 ---
 
@@ -308,9 +308,9 @@ Please complete the following information regarding employees
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-existing-employees{} | Counts of existing employees |   | MUST | Required for all non-residential applications.
-proposed-employees | Counts of proposed employees |   | MUST | Required if the proposal affects employment capacity.
-employment-impact | Summary of net employment change (gain/loss) |   | MAY | Calculated based on existing and proposed values.
+existing-employees{} | Counts of existing employees | full;outline;extraction-oil-gas | MUST | Required for all non-residential applications.
+proposed-employees | Counts of proposed employees | full;outline;extraction-oil-gas | MUST | Required if the proposal affects employment capacity.
+employment-impact | Summary of net employment change (gain/loss) | full;outline;extraction-oil-gas | MAY | Calculated based on existing and proposed values.
 
 **Employees**
 Field | Description | Notes
@@ -335,16 +335,16 @@ _To do: add description for module_
 
 _To do: add description for module_
 
-Field | Description | Application-Types | Required | Notes
+field | description | application-types | required | notes
 -- | -- | -- | -- | --
-existing-use-details | Describe the current use of the site |   | MUST | 
+existing-use-details | Describe the current use of the site | full;outline;extraction-oil-gas | MUST | 
 site-vacant | True or False | | MUST | 
-last-use-details | Describe the last use of the site | | MAY | Rule, is a MUST if `site-vacant` is True 
-last-use-end-date | Date the last use ended (YYYY-MM-DD format) | | MAY | Rule, is a MUST if `site-vacant` is True 
-is-contaminated-land | Is the site known to be contaminated? (True/False) | | MUST | 
-is-suspected-contaminated-land | Is the site suspected of contamination? (True/False) | | MUST | 
-proposed-use-contamination-risk | Is the proposed use vulnerable to the presence of contamination? (True/False) | | MUST |
-contamination-assessment | Reference to contamination assessment document | | MAY | Is a MUST if `is-contaminated-land`, `is-suspected-contaminated-land` or `proposed-use-contamination-risk` is True
+last-use-details | Describe the last use of the site | full;outline;extraction-oil-gas | MAY | Rule, is a MUST if `site-vacant` is True 
+last-use-end-date | Date the last use ended (YYYY-MM-DD format) | full;outline;extraction-oil-gas | MAY | Rule, is a MUST if `site-vacant` is True 
+is-contaminated-land | Is the site known to be contaminated? (True/False) | full;outline;extraction-oil-gas | MUST | 
+is-suspected-contaminated-land | Is the site suspected of contamination? (True/False) | full;outline;extraction-oil-gas | MUST | 
+proposed-use-contamination-risk | Is the proposed use vulnerable to the presence of contamination? (True/False) | full;outline;extraction-oil-gas | MUST |
+contamination-assessment | Reference to contamination assessment document | full;outline;extraction-oil-gas | MAY | Is a MUST if `is-contaminated-land`, `is-suspected-contaminated-land` or `proposed-use-contamination-risk` is True
 
 ---
 
@@ -354,10 +354,10 @@ _To do: add description for module_
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-foul-sewage-disposal-types[] | List of ways foul sewage will be disposed of | | MUST | See [foul-sewage-disposal-type ENUM](https://github.com/digital-land/planning-application-data-specification/discussions/165)
+foul-sewage-disposal-types[] | List of ways foul sewage will be disposed of | full;extraction-oil-gas;outline | MUST | See [foul-sewage-disposal-type ENUM](https://github.com/digital-land/planning-application-data-specification/discussions/165)
 produce-foul-sewage | Proposed development produce any foul sewage (True/False) | extraction-oil-gas | MUST | 
-connect-to-drainage-system | Does the proposal need to connect to the existing drainage system (True/False) | | MUST | 
-drainage-system-details | Details of the drawings/plans that show the existing system | | MAY | Rule, is a MUST if `connect-to-drainage-system` is TRUE or `extraction-oil-gas` application 
+connect-to-drainage-system | Does the proposal need to connect to the existing drainage system (True/False) | full;extraction-oil-gas;outline | MUST | 
+drainage-system-details | Details of the drawings/plans that show the existing system | full;extraction-oil-gas;outline | MAY | Rule, is a MUST if `connect-to-drainage-system` is TRUE or `extraction-oil-gas` application 
 
 ---
 
@@ -420,15 +420,15 @@ Ownership of the site and/or property for development needs to be understood
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-sole-owner | Is the applicant the sole owner of the land? (True/False) |   | MUST | If True, ownership-cert-option is Certificate-A.
-agricultural-tenants | Are there any agricultural tenants? (True/False) |   | MUST | If True, Certificate-A cannot apply.
-owners-and-tenants[] | List of known owners and agricultural tenants |   | MAY | Required for Certificate-B or Certificate-C.
-steps-taken | Steps taken to identify unknown owners or tenants |   | MAY | Required for Certificate-C or Certificate-D.
-newspaper-notice | Newspaper notice details for unknown owners/tenants |   | MAY | Required for Certificate-C or Certificate-D.
-ownership-cert-option | Ownership certificate type based on ownership and tenancy |   | MUST | See [ownership certificate type enum](https://github.com/digital-land/planning-application-data-specification/discussions/224)
-applicant-signature | Signature of the applicant |   | MAY |  
-agent-signature | Signature of the agent (if applicable) |   | MAY |  
-signature-date | Date of applicant or agent signature |   | MUST | Format: YYYY-MM-DD.
+sole-owner | Is the applicant the sole owner of the land? (True/False) | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MUST | If True, ownership-cert-option is Certificate-A.
+agricultural-tenants | Are there any agricultural tenants? (True/False) |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MUST | If True, Certificate-A cannot apply.
+owners-and-tenants[] | List of known owners and agricultural tenants | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY | Required for Certificate-B or Certificate-C.
+steps-taken | Steps taken to identify unknown owners or tenants | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY | Required for Certificate-C or Certificate-D.
+newspaper-notice | Newspaper notice details for unknown owners/tenants |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MAY | Required for Certificate-C or Certificate-D.
+ownership-cert-option | Ownership certificate type based on ownership and tenancy | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MUST | See [ownership certificate type enum](https://github.com/digital-land/planning-application-data-specification/discussions/224)
+applicant-signature | Signature of the applicant | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY |  
+agent-signature | Signature of the agent (if applicable) |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MAY |  
+signature-date | Date of applicant or agent signature | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MUST | Format: YYYY-MM-DD.
 
 **Owners and tenants**
 
@@ -515,15 +515,15 @@ Details to locate the site proposed for development
 
 **site-location/details structure**
 
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-| site-boundary | Geometry of the site of the development | | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
-| address-text | Text address if available for the site | | MAY | does the address need to be structured data or a blob of text like in some app forms? |
-| easting | Grid reference | | MAY | |
-| northing | Grid reference | | MAY | |
-| latitude | Latitude coordinate in EPSG:4326 (WGS84) | | MAY | |
-| longitude | Longitude coordinate in EPSG:4326 (WGS84) | | MAY | |
-| description | Description of the location if `address-text` does not exist for development/site | | MAY | | 
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
+| address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
+| easting | Grid reference | MAY | |
+| northing | Grid reference | MAY | |
+| latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
+| longitude | Longitude coordinate in EPSG:4326 (WGS84) | MAY | |
+| description | Description of the location if `address-text` does not exist for development/site | MAY | | 
 
 ### Rules
 
@@ -582,12 +582,12 @@ _To do: add description for module_
 
 ### Trade effluent (trade-effluent)
 
-_To do: add description for module_
+Details of trade effluent disposal
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| `disposal-required` | True or False depending on if proposal involves the disposal of trade effluents or waste | | MUST | | 
-| `description` | Describe the nature, volume and means of disposal of trade effluents or waste | | MAY | Rule: is a MUST if `disposal-required` is True |
+| `disposal-required` | Does the proposal involve the disposal of trade effluents or waste (`true`/`false`) | full;extraction-oil-gas;outline | MUST | | 
+| `description` | Describe the nature, volume and means of disposal of trade effluents or waste | full;extraction-oil-gas;outline | MAY | Rule: is a MUST if `disposal-required` is True |
 
 ---
 

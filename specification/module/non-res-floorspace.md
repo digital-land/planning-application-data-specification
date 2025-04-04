@@ -1,8 +1,8 @@
 field | description | application-types | required | notes
 -- | -- | -- | -- | --
-non-residential-change | Does the proposal involve the loss, gain, or change of non-residential floorspace? |   | MUST | Boolean (true / false).
-floorspace-details[]{} | List of non-residential floorspace changes by use class |   | MAY | Required if non-residential-change is Yes.
-room-details[] | List of room changes for hotels, residential institutions and hostels | | MAY | Required if change to hotels, residential institutions and hostel floorspace |
+non-residential-change | Does the proposal involve the loss, gain, or change of non-residential floorspace? | full;outline | MUST | Boolean (true / false).
+floorspace-details[]{} | List of non-residential floorspace changes by use class | full;outline | MAY | Required if non-residential-change is Yes.
+room-details[] | List of room changes for hotels, residential institutions and hostels | full;outline | MAY | Required if change to hotels, residential institutions and hostel floorspace |
 
 **Floorspace details**
 

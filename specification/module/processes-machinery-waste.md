@@ -1,9 +1,9 @@
 Field | Description | application-type | Required? | Notes
 -- | -- | -- | -- | --
-site-activity-details | Description of activities, processes, and end products | | MUST | Describe site operations, including plant, ventilation, and machinery.
-proposal-waste-management | Whether the proposal involves waste management development | | MUST | True if the proposal includes waste management.
-waste-management[] | List of waste management facilities involved | | MAY | MUST if proposal-waste-management is True.
-waste-streams{} | Annual throughput for waste streams | | MAY | MUST if proposal-waste-management is True.
+site-activity-details | Description of activities, processes, and end products | full;outline | MUST | Describe site operations, including plant, ventilation, and machinery.
+proposal-waste-management | Whether the proposal involves waste management development | full;outline | MUST | True if the proposal includes waste management.
+waste-management[] | List of waste management facilities involved | full;outline | MAY | MUST if proposal-waste-management is True.
+waste-streams{} | Annual throughput for waste streams | full;outline | MAY | MUST if proposal-waste-management is True.
 
 **Waste management**
 
