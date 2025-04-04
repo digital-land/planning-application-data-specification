@@ -32,6 +32,16 @@ Generate a complete 'spec' file based on app and sub type provided
 python pacli.py app-type --ref prior-approval --sub-type-ref pa-storey --generate-application
 ```
 
+Generate the specification index file with:
+```
+python pacli.py app-type --generate-specification-index
+```
+
+Generate all app type specifications files with
+```
+python pacli.py app-type --all --generate-application
+```
+
 
 ## Form
 
@@ -96,3 +106,4 @@ python pacli.py csv --filename {path to csv} --markdown --fields {list of fields
 **--filename** is a path to the csv file from the explorer directory
 **--markdown** is needed to print the table out to the terminal
 **--fields** is an option list of the fields, without it all fields will be printed out
+
