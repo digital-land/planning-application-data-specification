@@ -358,6 +358,13 @@ def generate_specification_index_file(modules):
     print("\nGenerating specification index markdown file...")
     active_modules = [m for m in sorted(modules, key=lambda x: x['name']) if not m.get('end-date')]
     
+    # Get all active codelists
+    codelists = []
+    with open("../data/codelists.csv", 'r') as f:
+        reader = csv.DictReader(f)
+        codelists = [row for row in reader if not row.get('end-date')]
+    active_codelists = sorted(codelists, key=lambda x: x['name'])
+    
     output_dir = "../specification"
     os.makedirs(output_dir, exist_ok=True)
     output_file = os.path.join(output_dir, "index.md")
@@ -369,10 +376,12 @@ def generate_specification_index_file(modules):
             f.write("This specification sets out how to structure and share planning application data.\n\n")
             
             f.write("## Contents\n\n")
-            f.write("* [Application model](#application-model)\n\n")
-            f.write("* [Modules](#modules)\n\n")
+            f.write("* [Application model](#application-model)\n")
+            f.write("* [Modules](#modules)\n")
             f.write("\n".join(generate_list_for_contents(active_modules, item_start="\t* ")))
-            f.write("---\n\n")
+            f.write("\n* [Codelists](#codelists)\n")
+            f.write("\n".join(generate_list_for_contents(active_codelists, item_start="\t* ")))
+            f.write("\n---\n\n")
             
             # Add application model section
             f.write("## Application model\n\n")
@@ -400,6 +409,25 @@ def generate_specification_index_file(modules):
                 if os.path.exists(module_file):
                     with open(module_file, "r") as mf:
                         f.write(mf.read())
+                f.write("\n---\n\n")
+                
+            # Add codelists section
+            f.write("## Codelists\n\n")
+            f.write("These are all the codelists used by the modules.\n\n")
+            
+            # Add codelist listing with content
+            for codelist in active_codelists:
+                slug = slugify(codelist['name'])
+                f.write(f"### {codelist['name']}\n\n")
+                if codelist.get('description'):
+                    f.write(f"{codelist['description']}\n\n")
+                f.write(f"* Reference: `{codelist['reference']}`\n")
+                
+                # Add codelist markdown content if it exists
+                codelist_file = os.path.join(output_dir, "codelist", f"{codelist['reference']}.md")
+                if os.path.exists(codelist_file):
+                    with open(codelist_file, "r") as cf:
+                        f.write(cf.read())
                 f.write("\n---\n\n")
                 
         print(f"Successfully generated index at {output_file}")

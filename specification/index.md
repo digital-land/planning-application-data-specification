@@ -5,9 +5,7 @@ This specification sets out how to structure and share planning application data
 ## Contents
 
 * [Application model](#application-model)
-
 * [Modules](#modules)
-
 	* [Adjoining premises](#adjoining-premises-adj-premises)
 	* [Advertisement period](#advertisement-period-advert-period)
 	* [Agent contact details](#agent-contact-details-agent-contact)
@@ -88,7 +86,38 @@ This specification sets out how to structure and share planning application data
 	* [Types of application](#types-of-application-types-application)
 	* [Vehicle parking](#vehicle-parking-vehicle-parking)
 	* [Voluntary agreements / planning obligations](#voluntary-agreements-planning-obligations-vol-agreement)
-	* [Waste storage and collection](#waste-storage-and-collection-waste-storage-collection)---
+	* [Waste storage and collection](#waste-storage-and-collection-waste-storage-collection)
+* [Codelists](#codelists)
+	* [Advertisement type](#advertisement-type-advertisement-type)
+	* [Affected area type](#affected-area-type-affected-area-type)
+	* [Applicant interest type](#applicant-interest-type-applicant-interest-type)
+	* [Building element type](#building-element-type-building-element-type)
+	* [Contact priority](#contact-priority-contact-priority)
+	* [Day type](#day-type-day-type)
+	* [Designations](#designations-designation)
+	* [Development phases](#development-phases-development-phases)
+	* [Foul sewage disposal type](#foul-sewage-disposal-type-foul-sewage-disposal-type)
+	* [Grounds type](#grounds-type-grounds-type)
+	* [Hazardous substance type](#hazardous-substance-type-hazardous-sub-type)
+	* [Hedgerow interest declaration](#hedgerow-interest-declaration-hedgerow-interest-dec)
+	* [Housing type](#housing-type-housing-type)
+	* [Lawful development certificate need](#lawful-development-certificate-need-lawful-dev-cert-need)
+	* [Listed building alteration type](#listed-building-alteration-type-lb-alteration-type)
+	* [Non-residential measurement type](#non-residential-measurement-type-non-res-measurement-type)
+	* [Operation type](#operation-type-operation-type)
+	* [Ownership certificate type](#ownership-certificate-type-ownership-cert-type)
+	* [Parking space type](#parking-space-type-parking-space-type)
+	* [Permission type](#permission-type-permission-type)
+	* [Planning application type](#planning-application-type-application-type)
+	* [Reserved matter type](#reserved-matter-type-reserved-matter-type)
+	* [Rights of way answer](#rights-of-way-answer-rights-of-way-answer)
+	* [Site constraints](#site-constraints-site-constaint)
+	* [Site visit contact type](#site-visit-contact-type-site-visit-contact-type)
+	* [Surface water disposal type](#surface-water-disposal-type-surface-water-disposal-type)
+	* [Tenure type](#tenure-type-tenure-type)
+	* [Use class](#use-class-use-class)
+	* [Waste management type](#waste-management-type-waste-management-type)
+---
 
 ## Application model
 
@@ -111,8 +140,7 @@ reference | A reference for the document | MUST | This should be unique
 name | The name or title of the document | MUST | 
 description | Brief description of what the document contains	| MAY | Optional but useful for context
 document-types[] | List of codelist references that the document covers | MUST | Use the planning requirements enum
-file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
-mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
+file{} | The digital file or a reference to where the file is stored | MUST | Must contain either `url` or `base64`, but not both.
 
 **Fee structure**
 
@@ -121,6 +149,17 @@ field | description | required | notes
 amount | The total amount due | MUST | 
 amount-paid | The amount paid | MUST |
 transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
+
+**File data struture**
+
+field | description | required | notes
+--- | --- | --- | ---
+url | A URL pointing to the stored file | MAY | For previously uploaded or hosted files
+base64 | Base64-encoded content of the file | MAY | For inline file uploads
+filename | Name of the file being uploaded | MUST | Useful for identifying and preserving the file
+mime-type | The file's MIME type | MAY | e.g., `application/pdf`, `image/jpeg`
+checksum | Hash of the file contents (e.g., SHA-256) | MAY      | Used for file validation and checking files have not been tampered with
+file-size | Size of the file in bytes | MAY | Can be used to enforce limits
 
 ---
 
@@ -1850,6 +1889,413 @@ difference-in-spaces | Calculated difference between existing and proposed space
 | waste-storage-area-details | Details of the waste storage area | full;outline | MAY | Rule, is a MUST if `needs-waste-storage-area` is True |
 | separate-recycling-arrangements | Does the proposal include spearate recycling arrangements? (`true`/`false`) | full;outline | MUST | |
 | separate-recycling-arrangements-details | Provide details of the recycling arrangements | full;outline | MAY | Rule, is a MUST if `separate-recycling-arrangements` is True |
+
+---
+
+## Codelists
+
+These are all the codelists used by the modules.
+
+### Advertisement type
+
+* Reference: `advertisement-type`
+| reference | name | description |
+| --- | --- | --- |
+| fascia | Fascia | |
+| projecting-hanging | Projecting or hanging sign | |
+| hoarding | Hoarding | |
+| other | Other | |
+
+---
+
+### Affected area type
+
+* Reference: `affected-area-type`
+reference | name | description
+--- | --- | ---
+on-development-site | On development site | 
+adjacent-to-site | On adjacent site | 
+
+---
+
+### Applicant interest type
+
+* Reference: `applicant-interest-type`
+reference | name | description
+--- | --- | ---
+owner | Owner |
+lessee | Lessee | 
+occupier | Occupier | 
+
+---
+
+### Building element type
+
+A set of building elements that applicants are expected to provide material information for
+
+* Reference: `building-element-type`
+| reference | name | application-types | 
+| --- | --- | -- |
+| walls | Walls | advertising;demolition-con-area;full;hh;outline |
+| roof | Roof | advertising;demolition-con-area;full;hh;outline |
+| windows | Windows | advertising;demolition-con-area;full;hh;outline |
+| doors | Doors | advertising;demolition-con-area;full;hh;outline |
+| boundary-treatments | Boundary treatments | advertising;demolition-con-area;full;hh;lbc;outline |
+| vehicle-access-hard-standings | Vehicle access and hard-standings | advertising;demolition-con-area;full;hh;lbc;outline |
+| lighting | Lighting | advertising;demolition-con-area;full;hh;lbc;outline |
+| external-walls | External walls | lbc |
+| roof-covering | Roof covering | lbc |
+| chimney | Chimney | lbc |
+| external-doors | External doors | lbc |
+| ceilings | Ceilings | lbc |
+| internal-walls | Internal walls | lbc |
+| floors | Floors | lbc |
+| internal-doors | Internal doors | lbc |
+| rainwater-goods | Rainwater goods | lbc |
+| other | Other | advertising;demolition-con-area;full;hh;lbc;outline |
+
+---
+
+### Contact priority
+
+* Reference: `contact-priority`
+| reference | name | description |
+| --- | --- | --- |
+| primary | Primary | The preferred item to use |
+| secondary | Secondary | The option to use if primary is not working |
+
+---
+
+### Day type
+
+* Reference: `day-type`
+| reference | name | description |
+| --- | --- | --- |
+| monday-friday | Monday to Friday | |
+| saturday | Saturday | |
+| sunday | Sunday | |
+| bank-holiday | Bank holiday | |
+
+---
+
+### Designations
+
+* Reference: `designation`
+reference | name | notes
+-- | -- | --
+world-heritage-site | World Heritage Site | Site of global cultural or natural importance.
+national-park | National Park (including The Broads and The New Forest) | Protected area for natural beauty and recreation.
+area-outstanding-natural-beauty | Area of Outstanding Natural Beauty (AONB) | Designated for distinctive landscape value.
+site-special-scientific-interest | Site of Special Scientific Interest (SSSI) | Protected for wildlife, geology, or landform.
+national-nature-reserve | National Nature Reserve | Important area for wildlife and conservation.
+conservation-area | Conservation Area | Area designated for historical or architectural significance.
+special-area-conservation | Special Area of Conservation | Designated under the EU Habitats Directive.
+special-protection-area | Special Protection Area/Ramsar site | Protected for bird species under the EU Birds Directive.
+green-belt | Green Belt | Area designated to prevent urban sprawl.
+
+---
+
+### Development phases
+
+* Reference: `development-phases`
+reference | name | description
+-- | -- | --
+exploratory | Exploratory Phase | Initial drilling and testing for hydrocarbons.
+appraisal | Appraisal Phase | Further testing to determine viability.
+production | Production Phase | Full-scale extraction and production operations.
+
+---
+
+### Foul sewage disposal type
+
+* Reference: `foul-sewage-disposal-type`
+| reference | name | description |
+| --- | --- | --- |
+| mains-sewer | Mains sewer | |
+| cess-pit | Cess pit | |
+| septic-tank | Septic tank | |
+| package-treatment | Package treatment plant | |
+| other | Other | |
+
+---
+
+### Grounds type
+
+* Reference: `grounds-type`
+
+---
+
+### Hazardous substance type
+
+* Reference: `hazardous-sub-type`
+Reference | Name | Notes
+-- | -- | --
+acrylonitrile | Acrylonitrile |  
+ammonia | Ammonia |  
+bromine | Bromine |  
+chlorine | Chlorine |  
+ethylene-oxide | Ethylene oxide |  
+flour | Flour |  
+hydrogen-cyanide | Hydrogen cyanide |  
+liquid-oxygen | Liquid oxygen |  
+liquid-petroleum-gas | Liquid petroleum gas |  
+phosgene | Phosgene |  
+refined-white-sugar | Refined white sugar |  
+sulphur-dioxide | Sulphur dioxide |  
+
+---
+
+### Hedgerow interest declaration
+
+* Reference: `hedgerow-interest-dec`
+reference | name | description
+-- | -- | --
+owner | Owner |The applicant is the freehold owner of the land concerned
+agricultural-tenant | Agricultural tenant | The applicant is the tenant of the agricultural holding concerned
+farm-business-tenant | Farm business tenant | The applicant is the tenant under the farm business tenancy concerned
+utility-operator | Utility operator | The applicant is acting for the utility operator concerned
+
+---
+
+### Housing type
+
+* Reference: `housing-type`
+reference | name | description | application-types
+-- | -- | -- | --
+houses | Houses | Detached, semi-detached, or terraced houses. |  
+flats-maisonettes | Flats/Maisonettes | Self-contained apartments or maisonettes. |  
+sheltered-housing | Sheltered Housing | Housing with support for older or disabled people. |  
+bedsit-studio | Bedsit/Studio | Single-room living spaces. |  
+cluster-flats | Cluster Flats | Flats with shared communal areas. |  
+other | Other | Any other housing type not listed. |  
+live-work-units | Live-Work Units | Properties combining residential and workspace. | ldc
+unknown | Unknown | When the type of housing is uncertain. | ldc
+
+---
+
+### Lawful development certificate need
+
+* Reference: `lawful-dev-cert-need`
+reference | name | description
+--- | --- | ---
+existing-use | Existing use | 
+existing-building-work | Existing building work |
+breach-con-existing-use | Existing use in breach of condition | 
+breach-con-building-work | Building work in breach of condition | 
+breach-con-activity | Activity in breach of condition | 
+
+---
+
+### Listed building alteration type
+
+* Reference: `lb-alteration-type`
+| reference | name | description |
+| --- | --- | --- |
+| interior | Interior of building | Works to the interior of the building |
+| exterior | Exterior of building | Works to the exterior of the building |
+| fixed | Fixed structure or object | Works to any structure or object fixed to the property (or buildings with the curtilage) internally or externally |
+| stripping | Stripping out | Stripping out of any internal wall, ceiling or floor finishes |
+
+---
+
+### Non-residential measurement type
+
+* Reference: `non-res-measurement-type`
+| reference | name | description |
+| --- | --- | --- |
+| floorspace | Floorspace | Provided in m2 |
+| site-area | Site area | Provided in hectares |
+
+---
+
+### Operation type
+
+* Reference: `operation-type`
+reference | name | description 
+--- | --- | ---
+permanent | Permanent | 
+temporary | Temporary | 
+
+---
+
+### Ownership certificate type
+
+* Reference: `ownership-cert-type`
+reference | name | description
+--- | --- | ---
+certificate-a | Certificate A | Applicant is the sole owner of the land and there are no agricultural tenants.
+certificate-b | Certificate B | Applicant knows all other owners or agricultural tenants and has notified them.
+certificate-c | Certificate C | Applicant knows some of the other owners or agricultural tenants and has notified those they know.
+certificate-d | Certificate D | Applicant does not know any of the other owners or agricultural tenants.
+
+---
+
+### Parking space type
+
+* Reference: `parking-space-type`
+reference | name | description
+-- | -- | --
+car-space | Cars | Standard on-site parking spaces for cars.
+light-goods-vehicle-space | Light Goods/Public Carrier Vehicles | Vans, delivery vehicles, and public carriers.
+motorcycle-space | Motorcycles | Spaces designated for motorbikes.
+disability-space | Disability Space | Accessible parking spaces.
+cycle-space | Cycle Space | Bicycle parking, including racks or shelters.
+
+---
+
+### Permission type
+
+* Reference: `permission-type`
+reference | name | requires related proposal?
+-- | -- | --
+oil-gas-full-permission | Full planning permission for oil and gas working | No
+waste-full-permission | Full planning permission for controlled waste | No
+renewal-unimplemented | Renewal of unimplemented permission | Yes
+renewal-temporary | Renewal of temporary permission | Yes
+extension-existing-site | Extension to an existing site | Yes
+variation-condition | Variation of condition(s) | Yes
+romp-review | Review of conditions for Mineral Permissions (ROMPs) | Yes
+minerals-development | Previous permissions for minerals development on the site | Yes
+
+---
+
+### Planning application type
+
+A list of all the main application types
+
+* Reference: `application-type`
+| reference | name | description |
+| --- | --- | --- |
+| hh | Householder planning application | A simplified process for applications to alter or enlarge a single house (but not a flat), including works within the boundary/garden |
+| full | Full planning permission | This application is needed when making detailed proposals for developments which are not covered by a householder application or permitted development rights |
+| outline | Outline planning | Applications that are used to understand whether the basic nature of a development is viable |
+| reserved-matters | Reserved matters | This application is only required when the applicant has already been granted outline planning permission. Reserved matters can include appearance, means of access, landscaping, layout and scale |
+| demolition-con-area | Planning permission for relevant demolition in a conservation area | An application for proposals involving substantial demolition of any unlisted building or structure in a conservation area |
+| lbc | Listed building consent | An application for any alteration, extension, or demolition of a listed building |
+| advertising | Advertising |  An application for all types of advertisements and signs |
+| ldc | Lawful development certificate | A legal document stating the lawfulness of past, present or future building use, operation or other matters, signifying that enforcement action cannot be carried out against the development |
+| prior-approval | Prior approval | This applies to  developments with permitted development rights (where developments are granted planning permission by national legislation without the need to submit a planning application) |
+| s73 | Removal/variation of conditions (S73) | Applications for a removal or variation of a condition after planning permission has been granted |
+| approval-condition | Approval (discharge) of conditions | An application to have conditions approved which have been applied at the time of granting a planning permission to limit and control the way in which the planning permission has been implemented |
+| consent-under-tpo | Consent under TPO | An application that will affect a protected tree including those covered by a Tree Preservation Order (TPO) or those which grow in a conservation area |
+| non-material-amendment | Non-material amendment | An application for any minor changes to proposals that have already been approved |
+| pip | Permission in principle | An alternative way of getting planning permission for housing-led development which separates the consideration of matters of principle from the technical detail of the development |
+| extraction-oil-gas | Development relating to the onshore extraction of oil and gas |  |
+| hedgerow-removal | Hedgerow removal notice | An application for anyone proposing to remove a hedgerow, or part of a hedgerow |
+| notice-trees-in-con-area | Notification of proposed works to trees in a conservation area |  An application for work to trees in conservation areas that are not under a tree preservation order |
+
+---
+
+### Reserved matter type
+
+* Reference: `reserved-matter-type`
+| reference | name | description |
+| --- | --- | --- |
+| access | Access | |
+| appearance | appearance | |
+| landscaping | Landscaping | |
+| layout | layout | |
+| scale | Scale | |
+
+---
+
+### Rights of way answer
+
+* Reference: `rights-of-way-answer`
+reference | name | application-types | description
+--- | --- | --- | ---
+true | True | extraction-oil-gas;full;hh;outline | The statement is true
+false | False | extraction-oil-gas;full;hh;outline | The statement is false
+unknown | Unknown | outline | The answer is unknown 
+
+---
+
+### Site constraints
+
+* Reference: `site-constaint`
+reference | name | description
+-- | -- | --
+conservation-area | Conservation Area |  
+aona-beauty | Area of Outstanding Natural Beauty |  
+secretary-specified-area | Secretary of State Protected Area |  
+the-broads | The Broads |  
+national-park | National Park |  
+world-heritage-site | World Heritage Site |  
+site-of-special-interest | Site of Special Scientific Interest |  
+
+---
+
+### Site visit contact type
+
+* Reference: `site-visit-contact-type`
+reference | name | description
+--- | --- | ---
+applicant | Applicant | The applicant of the application
+agent | Agent | The agent who completed the form
+
+---
+
+### Surface water disposal type
+
+* Reference: `surface-water-disposal-type`
+reference | name | description
+-- | -- | --
+sustainable-drainage | Sustainable drainage system | System designed to manage surface water sustainably.
+soakaway | Soakaway | Underground pit allowing water to drain naturally.
+main-sewer | Main sewer | Surface water directed into the main sewer system.
+existing-watercourse | Existing watercourse | Water discharged into an existing river, stream, or canal.
+pond-lake | Pond/lake | Surface water discharged into a pond or lake.
+
+---
+
+### Tenure type
+
+* Reference: `tenure-type`
+reference | name | description | application-types
+-- | -- | -- | --
+market-housing | Market Housing | Private housing for sale or rent. |  ldc;full;outline
+social-rented | Social Rented Housing | Public/social housing at below-market rents. | ldc
+intermediate-housing | Intermediate Housing | Housing with rents or ownership costs between social housing and market housing. | ldc
+key-worker-housing | Key Worker Housing | Housing for essential workers (e.g. teachers, NHS staff). | ldc
+affordable-rent | Social, Affordable, or Intermediate Rent | Housing for below-market rent. | full;outline
+home-ownership | Affordable Home Ownership | Shared ownership or similar schemes. | full;outline
+starter-homes | Starter Homes | Discounted homes for first-time buyers. | full;outline
+custom-build | Self-Build and Custom Build | Homes built or commissioned by individuals. | full;outline
+
+---
+
+### Use class
+
+* Reference: `use-class`
+
+---
+
+### Waste management type
+
+* Reference: `waste-management-type`
+reference | name | description
+-- | -- | --
+inert-landfill | Inert Landfill | Disposal site for inert waste materials.
+non-hazardous-landfill | Non-Hazardous Landfill | Landfill for non-hazardous waste.
+hazardous-landfill | Hazardous Landfill | Landfill site for hazardous waste.
+energy-waste-incineration | Energy from Waste Incineration | Incineration facility generating energy from waste.
+other-incineration | Other Incineration | Non-energy-producing incineration sites.
+landfill-gas-plant | Landfill Gas Generation Plant | Plant generating energy from landfill gas.
+pyrolysis-gasification | Pyrolysis/Gasification | Facilities using pyrolysis or gasification processes.
+metal-recycling | Metal Recycling Site | Site for recycling metals.
+transfer-stations | Transfer Stations | Facilities for sorting and transferring waste.
+mrf | Material Recovery Facility (MRF) | Facility for sorting recyclable materials.
+household-amenity-site | Household Civic Amenity Sites | Public waste disposal sites for households.
+open-windrow-composting | Open Windrow Composting | Outdoor composting of biodegradable waste.
+in-vessel-composting | In-Vessel Composting | Enclosed composting for controlled conditions.
+anaerobic-digestion | Anaerobic Digestion | Plant for organic waste decomposition without oxygen.
+mbt | Mechanical, Biological, or Thermal (MBT) | Combined waste treatment facility.
+sewage-treatment | Sewage Treatment Works | Plant for treating wastewater.
+other-treatment | Other Treatment | Any other waste treatment not listed.
+construction-recycling | Recycling Facilities for Construction Waste | Sites recycling construction and demolition waste.
+waste-storage | Storage of Waste | Facilities for storing waste before processing.
+other-waste-management | Other Waste Management | Any other waste management facility not listed.
+other-developments | Other Developments | Any other related developments.
 
 ---
 
