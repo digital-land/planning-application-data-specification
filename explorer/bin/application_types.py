@@ -398,7 +398,7 @@ def generate_specification_index_file(modules):
             # Add module listing with links
             for module in active_modules:
                 slug = slugify(module['name'])
-                f.write(f"### {module['name']}\n\n")
+                f.write(f"### {module['name']} ({module['reference']})\n\n")
                 if module.get('description'):
                     f.write(f"{module['description']}\n\n")
                 f.write(f"* Reference: `{module['reference']}`\n")
@@ -418,7 +418,7 @@ def generate_specification_index_file(modules):
             # Add codelist listing with content
             for codelist in active_codelists:
                 slug = slugify(codelist['name'])
-                f.write(f"### {codelist['name']}\n\n")
+                f.write(f"### {codelist['name']} ({codelist['reference']})\n\n")
                 if codelist.get('description'):
                     f.write(f"{codelist['description']}\n\n")
                 f.write(f"* Reference: `{codelist['reference']}`\n")
