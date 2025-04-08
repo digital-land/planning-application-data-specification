@@ -47,8 +47,7 @@ reference | A reference for the document | MUST | This should be unique
 name | The name or title of the document | MUST | 
 description | Brief description of what the document contains	| MAY | Optional but useful for context
 document-types[] | List of codelist references that the document covers | MUST | Use the planning requirements enum
-file | The digital file or a reference to where the file is stored | MUST | Object / URL / Blob
-mime-type | The document's MIME type | MAY | e.g., application/pdf, image/jpeg
+file{} | The digital file or a reference to where the file is stored | MUST | Must contain either `url` or `base64`, but not both.
 
 **Fee structure**
 
@@ -57,6 +56,17 @@ field | description | required | notes
 amount | The total amount due | MUST | 
 amount-paid | The amount paid | MUST |
 transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
+
+**File data struture**
+
+field | description | required | notes
+--- | --- | --- | ---
+url | A URL pointing to the stored file | MAY | For previously uploaded or hosted files
+base64 | Base64-encoded content of the file | MAY | For inline file uploads
+filename | Name of the file being uploaded | MUST | Useful for identifying and preserving the file
+mime-type | The file's MIME type | MAY | e.g., `application/pdf`, `image/jpeg`
+checksum | Hash of the file contents (e.g., SHA-256) | MAY      | Used for file validation and checking files have not been tampered with
+file-size | Size of the file in bytes | MAY | Can be used to enforce limits
 
 ---
 
