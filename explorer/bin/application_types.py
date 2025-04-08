@@ -421,7 +421,7 @@ def generate_specification_index_file(modules):
                 f.write(f"### {codelist['name']} ({codelist['reference']})\n\n")
                 if codelist.get('description'):
                     f.write(f"{codelist['description']}\n\n")
-                f.write(f"* Reference: `{codelist['reference']}`\n")
+                f.write(f"* Reference: `{codelist['reference']}`\n\n")
                 
                 # Add codelist markdown content if it exists
                 codelist_file = os.path.join(output_dir, "codelist", f"{codelist['reference']}.md")

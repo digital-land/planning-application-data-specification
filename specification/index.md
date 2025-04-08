@@ -1899,6 +1899,7 @@ These are all the codelists used by the modules.
 ### Advertisement type (advertisement-type)
 
 * Reference: `advertisement-type`
+
 | reference | name | description |
 | --- | --- | --- |
 | fascia | Fascia | |
@@ -1911,6 +1912,7 @@ These are all the codelists used by the modules.
 ### Affected area type (affected-area-type)
 
 * Reference: `affected-area-type`
+
 reference | name | description
 --- | --- | ---
 on-development-site | On development site | 
@@ -1921,6 +1923,7 @@ adjacent-to-site | On adjacent site |
 ### Applicant interest type (applicant-interest-type)
 
 * Reference: `applicant-interest-type`
+
 reference | name | description
 --- | --- | ---
 owner | Owner |
@@ -1934,6 +1937,7 @@ occupier | Occupier |
 A set of building elements that applicants are expected to provide material information for
 
 * Reference: `building-element-type`
+
 | reference | name | application-types | 
 | --- | --- | -- |
 | walls | Walls | advertising;demolition-con-area;full;hh;outline |
@@ -1959,6 +1963,7 @@ A set of building elements that applicants are expected to provide material info
 ### Contact priority (contact-priority)
 
 * Reference: `contact-priority`
+
 | reference | name | description |
 | --- | --- | --- |
 | primary | Primary | The preferred item to use |
@@ -1969,6 +1974,7 @@ A set of building elements that applicants are expected to provide material info
 ### Day type (day-type)
 
 * Reference: `day-type`
+
 | reference | name | description |
 | --- | --- | --- |
 | monday-friday | Monday to Friday | |
@@ -1981,6 +1987,7 @@ A set of building elements that applicants are expected to provide material info
 ### Designations (designation)
 
 * Reference: `designation`
+
 reference | name | notes
 -- | -- | --
 world-heritage-site | World Heritage Site | Site of global cultural or natural importance.
@@ -1998,6 +2005,7 @@ green-belt | Green Belt | Area designated to prevent urban sprawl.
 ### Development phases (development-phases)
 
 * Reference: `development-phases`
+
 reference | name | description
 -- | -- | --
 exploratory | Exploratory Phase | Initial drilling and testing for hydrocarbons.
@@ -2009,6 +2017,7 @@ production | Production Phase | Full-scale extraction and production operations.
 ### Foul sewage disposal type (foul-sewage-disposal-type)
 
 * Reference: `foul-sewage-disposal-type`
+
 | reference | name | description |
 | --- | --- | --- |
 | mains-sewer | Mains sewer | |
@@ -2023,11 +2032,13 @@ production | Production Phase | Full-scale extraction and production operations.
 
 * Reference: `grounds-type`
 
+
 ---
 
 ### Hazardous substance type (hazardous-sub-type)
 
 * Reference: `hazardous-sub-type`
+
 Reference | Name | Notes
 -- | -- | --
 acrylonitrile | Acrylonitrile |  
@@ -2048,6 +2059,7 @@ sulphur-dioxide | Sulphur dioxide |  
 ### Hedgerow interest declaration (hedgerow-interest-dec)
 
 * Reference: `hedgerow-interest-dec`
+
 reference | name | description
 -- | -- | --
 owner | Owner |The applicant is the freehold owner of the land concerned
@@ -2060,6 +2072,7 @@ utility-operator | Utility operator | The applicant is acting for the utility op
 ### Housing type (housing-type)
 
 * Reference: `housing-type`
+
 reference | name | description | application-types
 -- | -- | -- | --
 houses | Houses | Detached, semi-detached, or terraced houses. |  
@@ -2076,6 +2089,7 @@ unknown | Unknown | When the type of housing is uncertain. | ldc
 ### Lawful development certificate need (lawful-dev-cert-need)
 
 * Reference: `lawful-dev-cert-need`
+
 reference | name | description
 --- | --- | ---
 existing-use | Existing use | 
@@ -2089,6 +2103,7 @@ breach-con-activity | Activity in breach of condition |
 ### Listed building alteration type (lb-alteration-type)
 
 * Reference: `lb-alteration-type`
+
 | reference | name | description |
 | --- | --- | --- |
 | interior | Interior of building | Works to the interior of the building |
@@ -2101,6 +2116,7 @@ breach-con-activity | Activity in breach of condition |
 ### Non-residential measurement type (non-res-measurement-type)
 
 * Reference: `non-res-measurement-type`
+
 | reference | name | description |
 | --- | --- | --- |
 | floorspace | Floorspace | Provided in m2 |
@@ -2111,6 +2127,7 @@ breach-con-activity | Activity in breach of condition |
 ### Operation type (operation-type)
 
 * Reference: `operation-type`
+
 reference | name | description 
 --- | --- | ---
 permanent | Permanent | 
@@ -2121,6 +2138,7 @@ temporary | Temporary |
 ### Ownership certificate type (ownership-cert-type)
 
 * Reference: `ownership-cert-type`
+
 reference | name | description
 --- | --- | ---
 certificate-a | Certificate A | Applicant is the sole owner of the land and there are no agricultural tenants.
@@ -2133,6 +2151,7 @@ certificate-d | Certificate D | Applicant does not know any of the other owners 
 ### Parking space type (parking-space-type)
 
 * Reference: `parking-space-type`
+
 reference | name | description
 -- | -- | --
 car-space | Cars | Standard on-site parking spaces for cars.
@@ -2146,6 +2165,7 @@ cycle-space | Cycle Space | Bicycle parking, including racks or shelters.
 ### Permission type (permission-type)
 
 * Reference: `permission-type`
+
 reference | name | requires related proposal?
 -- | -- | --
 oil-gas-full-permission | Full planning permission for oil and gas working | No
@@ -2164,6 +2184,7 @@ minerals-development | Previous permissions for minerals development on the site
 A list of all the main application types
 
 * Reference: `application-type`
+
 | reference | name | description |
 | --- | --- | --- |
 | hh | Householder planning application | A simplified process for applications to alter or enlarge a single house (but not a flat), including works within the boundary/garden |
@@ -2189,6 +2210,7 @@ A list of all the main application types
 ### Reserved matter type (reserved-matter-type)
 
 * Reference: `reserved-matter-type`
+
 | reference | name | description |
 | --- | --- | --- |
 | access | Access | |
@@ -2202,6 +2224,7 @@ A list of all the main application types
 ### Rights of way answer (rights-of-way-answer)
 
 * Reference: `rights-of-way-answer`
+
 reference | name | application-types | description
 --- | --- | --- | ---
 true | True | extraction-oil-gas;full;hh;outline | The statement is true
@@ -2213,6 +2236,7 @@ unknown | Unknown | outline | The answer is unknown
 ### Site constraints (site-constaint)
 
 * Reference: `site-constaint`
+
 reference | name | description
 -- | -- | --
 conservation-area | Conservation Area |  
@@ -2228,6 +2252,7 @@ site-of-special-interest | Site of Special Scientific Interest |  
 ### Site visit contact type (site-visit-contact-type)
 
 * Reference: `site-visit-contact-type`
+
 reference | name | description
 --- | --- | ---
 applicant | Applicant | The applicant of the application
@@ -2238,6 +2263,7 @@ agent | Agent | The agent who completed the form
 ### Surface water disposal type (surface-water-disposal-type)
 
 * Reference: `surface-water-disposal-type`
+
 reference | name | description
 -- | -- | --
 sustainable-drainage | Sustainable drainage system | System designed to manage surface water sustainably.
@@ -2251,6 +2277,7 @@ pond-lake | Pond/lake | Surface water discharged into a pond or lake.
 ### Tenure type (tenure-type)
 
 * Reference: `tenure-type`
+
 reference | name | description | application-types
 -- | -- | -- | --
 market-housing | Market Housing | Private housing for sale or rent. |  ldc;full;outline
@@ -2268,11 +2295,13 @@ custom-build | Self-Build and Custom Build | Homes built or commissioned by indi
 
 * Reference: `use-class`
 
+
 ---
 
 ### Waste management type (waste-management-type)
 
 * Reference: `waste-management-type`
+
 reference | name | description
 -- | -- | --
 inert-landfill | Inert Landfill | Disposal site for inert waste materials.
