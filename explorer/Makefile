@@ -4,3 +4,8 @@ init::
 	python -m piptools compile requirements/dev-requirements.in
 	python -m piptools compile requirements/requirements.in
 	python -m piptools sync requirements/dev-requirements.txt requirements/requirements.txt
+
+
+specifications:
+	python pacli.py app-type --generate-specification-index  
+	python pacli.py app-type --all --generate-application
