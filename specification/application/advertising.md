@@ -134,7 +134,7 @@ Details about the person representing the applicant
 | --- | --- | --- | --- |
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| company | The company the agent works for | | MAY | |
+| company | The company the agent works for | MAY | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
@@ -421,7 +421,8 @@ Details to locate the site proposed for development
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
 | longitude | Longitude coordinate in EPSG:4326 (WGS84) | MAY | |
-| description | Description of the location if `address-text` does not exist for development/site | MAY | | 
+| description | Description of the location if `address-text` does not exist for development/site | MAY | |
+| uprns[] | Where known, list the UPRNs affected by the proposal | MAY | UPRN data can support clearer tracking, analysis, and integration across systems. We recommend that the list of uprns is derived where possible |
 
 ### Rules
 
@@ -444,6 +445,9 @@ Details needed to support a site visit
 | other-contact{} | Details of specifially named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
+
+| field | description | requirement-level | notes |
+| --- | --- | --- | --- |
 | name | Name of person to contact | MUST | |
 | number | Phone number of person to contact | MUST | |
 | email | Email of person to contact | MUST | |
@@ -503,25 +507,25 @@ occupier | Occupier |
 
 A set of building elements that applicants are expected to provide material information for
 
-| reference | name | application-types | 
-| --- | --- | -- |
-| walls | Walls | advertising;demolition-con-area;full;hh;outline |
-| roof | Roof | advertising;demolition-con-area;full;hh;outline |
-| windows | Windows | advertising;demolition-con-area;full;hh;outline |
-| doors | Doors | advertising;demolition-con-area;full;hh;outline |
-| boundary-treatments | Boundary treatments | advertising;demolition-con-area;full;hh;lbc;outline |
-| vehicle-access-hard-standings | Vehicle access and hard-standings | advertising;demolition-con-area;full;hh;lbc;outline |
-| lighting | Lighting | advertising;demolition-con-area;full;hh;lbc;outline |
-| external-walls | External walls | lbc |
-| roof-covering | Roof covering | lbc |
-| chimney | Chimney | lbc |
-| external-doors | External doors | lbc |
-| ceilings | Ceilings | lbc |
-| internal-walls | Internal walls | lbc |
-| floors | Floors | lbc |
-| internal-doors | Internal doors | lbc |
-| rainwater-goods | Rainwater goods | lbc |
-| other | Other | advertising;demolition-con-area;full;hh;lbc;outline |
+| reference | name | description | application-types | notes |
+| --- | --- | --- | --- | --- |
+| walls | Walls | A vertical construction that bounds or subdivides spaces | advertising;demolition-con-area;full;hh;outline | Referring to same thing as [IfcWall](https://standards.buildingsmart.org/IFC/RELEASE/IFC4/ADD1/HTML/link/ifcbuildingelement.htm) |
+| roof | Roof | A covering of the top part of a building, it protects the building against the effects of wheather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
+| windows | Windows | | advertising;demolition-con-area;full;hh;outline | |
+| doors | Doors | | advertising;demolition-con-area;full;hh;outline | |
+| boundary-treatments | Boundary treatments | | advertising;demolition-con-area;full;hh;lbc;outline | |
+| vehicle-access-hard-standings | Vehicle access and hard-standings | | advertising;demolition-con-area;full;hh;lbc;outline | |
+| lighting | Lighting | | advertising;demolition-con-area;full;hh;lbc;outline | |
+| external-walls | External walls | | lbc | |
+| roof-covering | Roof covering | | lbc | |
+| chimney | Chimney | | lbc | |
+| external-doors | External doors | | lbc | |
+| ceilings | Ceilings | | lbc | |
+| internal-walls | Internal walls | | lbc | |
+| floors | Floors | | lbc | |
+| internal-doors | Internal doors | | lbc | |
+| rainwater-goods | Rainwater goods | | lbc | |
+| other | Other | | advertising;demolition-con-area;full;hh;lbc;outline | |
 
 ---
 

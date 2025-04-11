@@ -1,7 +1,7 @@
 Field | Description | application-type | Required? | Notes
 -- | -- | -- | -- | --
-documents[]{} | List of plans, drawings, and supporting documents |  | MUST | See Document Structure below.
-inspection-address | Address where supporting material can be inspected |  | MUST | Full postal address for document inspection.
+documents[]{} | List of plans, drawings, and supporting documents | extraction-oil-gas | MUST | See Document Structure below.
+inspection-address | Address where supporting material can be inspected | extraction-oil-gas | MUST | Full postal address for document inspection.
 
 **documents**
 

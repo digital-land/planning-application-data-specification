@@ -243,7 +243,7 @@ Details about the person representing the applicant
 | --- | --- | --- | --- |
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| company | The company the agent works for | | MAY | |
+| company | The company the agent works for | MAY | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
@@ -421,9 +421,9 @@ Any connection between the applicant or agent and the local authority’s staff 
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-protected-species-impact | Is there a likelihood of protected and priority species being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
-biodiversity-features-impact | Is there a likelihood of important habitats or biodiversity features being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
-geological-features-impact | Is there a likelihood of features of geological conservation importance being affected? |   | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+protected-species-impact | Is there a likelihood of protected and priority species being affected? | full;extraction-oil-gas;outline-some | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+biodiversity-features-impact | Is there a likelihood of important habitats or biodiversity features being affected? | full;extraction-oil-gas;outline-some | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
+geological-features-impact | Is there a likelihood of features of geological conservation importance being affected? | full;extraction-oil-gas;outline-some | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
 archaeological-features-impact | Is there a likelihood of features of archaeological conservation importance being affected? | extraction-oil-gas | MUST | One of [affect area enum](https://github.com/digital-land/planning-application-data-specification/discussions/201) or no
 
 ---
@@ -502,8 +502,8 @@ Details of the national planning requirements the applicant should submit along 
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| reason | Why applicant wishes condition(s) to be removed or changed | | MUST |  |
-| condition-change | State how the condition should vary | | MAY | |
+| reason | Why applicant wishes condition(s) to be removed or changed | s73 | MUST |  |
+| condition-change | State how the condition should vary | s73 | MAY | |
 
 ---
 
@@ -708,7 +708,7 @@ decision-date | Date of the planning decision | MUST | Must be before the applic
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-designations[] | List of designated areas that apply to the site |   | MUST | Multiple selections allowed. If None of the above is selected, no other options can be chosen. Leave blank if none. See [designations enum](https://github.com/digital-land/planning-application-data-specification/discussions/193)
+designations[] | List of designated areas that apply to the site | extraction-oil-gas | MUST | Multiple selections allowed. If None of the above is selected, no other options can be chosen. Leave blank if none. See [designations enum](https://github.com/digital-land/planning-application-data-specification/discussions/193)
 
 ---
 
@@ -1027,7 +1027,7 @@ Please state the hours of opening for each non-residential use proposed:
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| hours-of-operation[]{} | List the hours of operation by non-residential use | | MUST | |
+| hours-of-operation[]{} | List the hours of operation by non-residential use | full;outline;extraction-oil-gas | MUST | |
 | additional-information | Any additional detail about operational hours | extraction-oil-gas | MAY | |
 
 **hours of operation**
@@ -1384,8 +1384,8 @@ Any changes to how people or vehicles access the site, including any new or affe
 
 Field | Description | application-type | Required? | Notes
 -- | -- | -- | -- | --
-documents[]{} | List of plans, drawings, and supporting documents |  | MUST | See Document Structure below.
-inspection-address | Address where supporting material can be inspected |  | MUST | Full postal address for document inspection.
+documents[]{} | List of plans, drawings, and supporting documents | extraction-oil-gas | MUST | See Document Structure below.
+inspection-address | Address where supporting material can be inspected | extraction-oil-gas | MUST | Full postal address for document inspection.
 
 **documents**
 
@@ -1493,7 +1493,8 @@ Details to locate the site proposed for development
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
 | longitude | Longitude coordinate in EPSG:4326 (WGS84) | MAY | |
-| description | Description of the location if `address-text` does not exist for development/site | MAY | | 
+| description | Description of the location if `address-text` does not exist for development/site | MAY | |
+| uprns[] | Where known, list the UPRNs affected by the proposal | MAY | UPRN data can support clearer tracking, analysis, and integration across systems. We recommend that the list of uprns is derived where possible |
 
 ### Rules
 
@@ -1568,9 +1569,9 @@ details | Additional details about the document, for example, details about the 
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| site-owner{} | | | MUST |  |
-| applicant-interest | Description of applicant's interest in the land | | MUST |  |
-| applicant-interest-adjoining-land | Description of applicant's interest in the adjacent land | | MUST |  |
+| site-owner{} | | extraction-oil-gas | MUST |  |
+| applicant-interest | Description of applicant's interest in the land | extraction-oil-gas | MUST |  |
+| applicant-interest-adjoining-land | Description of applicant's interest in the adjacent land | extraction-oil-gas | MUST |  |
 
 **Site-owner** 
 | field | description | required | notes |
@@ -1595,6 +1596,9 @@ Details needed to support a site visit
 | other-contact{} | Details of specifially named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
+
+| field | description | requirement-level | notes |
+| --- | --- | --- | --- |
 | name | Name of person to contact | MUST | |
 | number | Phone number of person to contact | MUST | |
 | email | Email of person to contact | MUST | |
@@ -1608,7 +1612,7 @@ Details needed to support a site visit
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| `storage-facilities-description` | Details and proposed facilities for the storage of oil, fuel and chemicals and the proposed means of their protection | | MUST | | 
+| `storage-facilities-description` | Details and proposed facilities for the storage of oil, fuel and chemicals and the proposed means of their protection | extraction-oil-gas | MUST | | 
 
 ---
 
@@ -1824,13 +1828,13 @@ environmental-statement-reference | Reference of the environmental statement doc
 * Reference: `types-application`
 * [Discussion #73](https://github.com/digital-land/planning-application-data-specification/discussions/73)
 
-Field | Description | Data Type | Required | Notes
--- | -- | -- | -- | --
-permission-types[] | List of permission types being applied for | Array | MUST | One or more from the [permission types enum](https://github.com/digital-land/planning-application-data-specification/discussions/198).
-related-proposals[]{} | List of related proposals with reference and decision dates | Array | MAY | Required if any application type involves prior permissions.
-other-details | | String | MAY |  If there are other details not covered by the application types 
-consolidate-permissions | Is the applicant willing to consolidate or update existing permissions? | Boolean | MUST | Yes / No. If Yes, further details are required.
-consolidate-details | Details about the consolidation or update of permissions | String | CONDITIONAL | Required if consolidate-permissions is Yes.
+field | description | data type | application-types | required | notes
+-- | -- | -- | -- | -- | --
+permission-types[] | List of permission types being applied for | Array | extraction-oil-gas | MUST | One or more from the [permission types enum](https://github.com/digital-land/planning-application-data-specification/discussions/198).
+related-proposals[]{} | List of related proposals with reference and decision dates | Array | extraction-oil-gas | MAY | Required if any application type involves prior permissions.
+other-details | | String | extraction-oil-gas | MAY |  If there are other details not covered by the application types 
+consolidate-permissions | Is the applicant willing to consolidate or update existing permissions? | Boolean | extraction-oil-gas | MUST | Yes / No. If Yes, further details are required.
+consolidate-details | Details about the consolidation or update of permissions | String | extraction-oil-gas | CONDITIONAL | Required if consolidate-permissions is Yes.
 
 **Related proposals** 
 
@@ -1873,8 +1877,8 @@ difference-in-spaces | Calculated difference between existing and proposed space
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| draft-agreement-included | outline or draft agreement included? (True / False) | | MUST | |
-| agreement-summary | Summary of the agreement | | MAY | Rule: is a MUST if `draft-agreement-included` is True |
+| draft-agreement-included | outline or draft agreement included? (True / False) | extraction-oil-gas | MUST | |
+| agreement-summary | Summary of the agreement |extraction-oil-gas | MAY | Rule: is a MUST if `draft-agreement-included` is True |
 
 ---
 
@@ -1938,25 +1942,25 @@ A set of building elements that applicants are expected to provide material info
 
 * Reference: `building-element-type`
 
-| reference | name | application-types | 
-| --- | --- | -- |
-| walls | Walls | advertising;demolition-con-area;full;hh;outline |
-| roof | Roof | advertising;demolition-con-area;full;hh;outline |
-| windows | Windows | advertising;demolition-con-area;full;hh;outline |
-| doors | Doors | advertising;demolition-con-area;full;hh;outline |
-| boundary-treatments | Boundary treatments | advertising;demolition-con-area;full;hh;lbc;outline |
-| vehicle-access-hard-standings | Vehicle access and hard-standings | advertising;demolition-con-area;full;hh;lbc;outline |
-| lighting | Lighting | advertising;demolition-con-area;full;hh;lbc;outline |
-| external-walls | External walls | lbc |
-| roof-covering | Roof covering | lbc |
-| chimney | Chimney | lbc |
-| external-doors | External doors | lbc |
-| ceilings | Ceilings | lbc |
-| internal-walls | Internal walls | lbc |
-| floors | Floors | lbc |
-| internal-doors | Internal doors | lbc |
-| rainwater-goods | Rainwater goods | lbc |
-| other | Other | advertising;demolition-con-area;full;hh;lbc;outline |
+| reference | name | description | application-types | notes |
+| --- | --- | --- | --- | --- |
+| walls | Walls | A vertical construction that bounds or subdivides spaces | advertising;demolition-con-area;full;hh;outline | Referring to same thing as [IfcWall](https://standards.buildingsmart.org/IFC/RELEASE/IFC4/ADD1/HTML/link/ifcbuildingelement.htm) |
+| roof | Roof | A covering of the top part of a building, it protects the building against the effects of wheather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
+| windows | Windows | | advertising;demolition-con-area;full;hh;outline | |
+| doors | Doors | | advertising;demolition-con-area;full;hh;outline | |
+| boundary-treatments | Boundary treatments | | advertising;demolition-con-area;full;hh;lbc;outline | |
+| vehicle-access-hard-standings | Vehicle access and hard-standings | | advertising;demolition-con-area;full;hh;lbc;outline | |
+| lighting | Lighting | | advertising;demolition-con-area;full;hh;lbc;outline | |
+| external-walls | External walls | | lbc | |
+| roof-covering | Roof covering | | lbc | |
+| chimney | Chimney | | lbc | |
+| external-doors | External doors | | lbc | |
+| ceilings | Ceilings | | lbc | |
+| internal-walls | Internal walls | | lbc | |
+| floors | Floors | | lbc | |
+| internal-doors | Internal doors | | lbc | |
+| rainwater-goods | Rainwater goods | | lbc | |
+| other | Other | | advertising;demolition-con-area;full;hh;lbc;outline | |
 
 ---
 

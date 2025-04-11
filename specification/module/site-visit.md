@@ -6,6 +6,9 @@
 | other-contact{} | Details of specifially named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
+
+| field | description | requirement-level | notes |
+| --- | --- | --- | --- |
 | name | Name of person to contact | MUST | |
 | number | Phone number of person to contact | MUST | |
 | email | Email of person to contact | MUST | |

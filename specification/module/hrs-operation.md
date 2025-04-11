@@ -1,6 +1,6 @@
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| hours-of-operation[]{} | List the hours of operation by non-residential use | | MUST | |
+| hours-of-operation[]{} | List the hours of operation by non-residential use | full;outline;extraction-oil-gas | MUST | |
 | additional-information | Any additional detail about operational hours | extraction-oil-gas | MAY | |
 
 **hours of operation**

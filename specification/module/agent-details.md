@@ -7,7 +7,7 @@
 | --- | --- | --- | --- |
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| company | The company the agent works for | | MAY | |
+| company | The company the agent works for | MAY | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
