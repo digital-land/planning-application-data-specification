@@ -12,7 +12,8 @@
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
 | longitude | Longitude coordinate in EPSG:4326 (WGS84) | MAY | |
-| description | Description of the location if `address-text` does not exist for development/site | MAY | | 
+| description | Description of the location if `address-text` does not exist for development/site | MAY | |
+| uprns[] | Where known, list the UPRNs affected by the proposal | MAY | UPRN data can support clearer tracking, analysis, and integration across systems. We recommend that the list of uprns is derived where possible |
 
 ### Rules
 
