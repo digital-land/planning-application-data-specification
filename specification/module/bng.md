@@ -36,9 +36,9 @@ supporting-evidence | Description or reference to supporting documents | String 
 * Habitat plan - Plan showing onsite habitats at the relevant date (REQUIRED)
 * Irreplaceable habitat plan - Plan showing onsite irreplaceable habitats (REQUIRED If irreplaceable-habitats = Yes)
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference | Unique identifier for the document | String | MUST | Must be provided for each document
-document-name | Name of the document | String | MUST | Descriptive name for clarity
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
+name | Name of the document | String | MUST | Descriptive name for clarity

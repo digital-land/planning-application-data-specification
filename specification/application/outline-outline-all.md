@@ -360,12 +360,12 @@ supporting-evidence | Description or reference to supporting documents | String 
 * Habitat plan - Plan showing onsite habitats at the relevant date (REQUIRED)
 * Irreplaceable habitat plan - Plan showing onsite irreplaceable habitats (REQUIRED If irreplaceable-habitats = Yes)
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference | Unique identifier for the document | String | MUST | Must be provided for each document
-document-name | Name of the document | String | MUST | Descriptive name for clarity
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
+name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
 
@@ -739,9 +739,9 @@ materials-not-known | Indicates that the materials are unknown for this building
 
 **documents**
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
 name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
@@ -759,8 +759,14 @@ Any changes to how people or vehicles access the site, including any new or affe
 | new-public-road | Will new public roads be provided within the site? | extraction-oil-gas;full;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
 | temp-right-of-way | Are temporary changes to rights of way needed while the site is worked? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
 | future-new-right-of-way | Will new public rights of way be provided after extraction? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
-| supporting-documents[]{} | List of document supporting the information provided | extraction-oil-gas;full;hh;outline | MAY | Required if any answer is `true`. |
+| supporting-documents[]{} | List of documents supporting the information provided | extraction-oil-gas;full;hh;outline | MAY | Required if any answer is `true`. |
 
+**supporting documents**
+
+field | description | data type | required? | notes
+-- | -- | -- | -- | --
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
+name | Name of the document | String | MUST | Descriptive name for clarity
 ---
 
 ### Trade effluent (trade-effluent)
@@ -783,17 +789,18 @@ Details of trees and hedges affecting the site or that will be affected by the p
 | falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
 | falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
 | tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
-| tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
+| tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true`. See supporting document structure below |
 | trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
 | trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
 
-**tree removal plan**
+**supporting documents**
+
+_Used for tree-removal-plan_
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
-document-reference | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
 name | Name of the document | String | MUST | Descriptive name for clarity
-
 ---
 
 ### Vehicle parking (vehicle-parking)
@@ -900,9 +907,9 @@ materials-not-known | Indicates that the materials are unknown for this building
 
 **documents**
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
 name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
@@ -920,8 +927,14 @@ Any changes to how people or vehicles access the site, including any new or affe
 | new-public-road | Will new public roads be provided within the site? | extraction-oil-gas;full;outline | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
 | temp-right-of-way | Are temporary changes to rights of way needed while the site is worked? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
 | future-new-right-of-way | Will new public rights of way be provided after extraction? | extraction-oil-gas | MUST | See [rights of way answers enum](https://github.com/digital-land/planning-application-data-specification/discussions/210) for possible answers. |
-| supporting-documents[]{} | List of document supporting the information provided | extraction-oil-gas;full;hh;outline | MAY | Required if any answer is `true`. |
+| supporting-documents[]{} | List of documents supporting the information provided | extraction-oil-gas;full;hh;outline | MAY | Required if any answer is `true`. |
 
+**supporting documents**
+
+field | description | data type | required? | notes
+-- | -- | -- | -- | --
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
+name | Name of the document | String | MUST | Descriptive name for clarity
 ---
 
 ### Trade effluent (trade-effluent)
@@ -944,17 +957,18 @@ Details of trees and hedges affecting the site or that will be affected by the p
 | falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
 | falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
 | tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
-| tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true` |
+| tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true`. See supporting document structure below |
 | trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
 | trees-on-adj-land | Trees or hedges on land adjacent to the proposed development site that could influence the development or might be important as part of the local landscape character (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
 
-**tree removal plan**
+**supporting documents**
+
+_Used for tree-removal-plan_
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
-document-reference | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
 name | Name of the document | String | MUST | Descriptive name for clarity
-
 ---
 
 ### Vehicle parking (vehicle-parking)

@@ -370,9 +370,9 @@ materials-not-known | Indicates that the materials are unknown for this building
 
 **documents**
 
-Field | Description | Data Type | Required? | Notes
+field | description | data type | required? | notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
 name | Name of the document | String | MUST | Descriptive name for clarity
 
 ---
