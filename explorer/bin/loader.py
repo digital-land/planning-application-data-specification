@@ -24,5 +24,10 @@ def load_app_modules():
     return joins
 
 
+def load_requirements():
+    planning_requirements = read_csv("../data/planning-requirement.csv", as_dict=True)
+    return planning_requirements
+
+
 def load_all():
     return load_app_types(), load_forms(), load_modules(), load_app_modules(), load_sub_types()

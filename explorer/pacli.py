@@ -8,7 +8,7 @@ from bin.application_types import print_all, app_type_overview, get_app_type_fro
 from bin.csv_helpers import read_csv, write_csv
 from bin.markdown_helpers import csv_to_markdown
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
-from bin.loader import load_all
+from bin.loader import load_all, load_requirements
 from bin.modules import get_modules, get_expected_joins, join_data_maker, check_modules, check_codelists, get_module_discussion_url
 
 
@@ -393,6 +393,26 @@ def csv(filename, fieldname, fields, action, col_order, markdown):
         print(f"Action {action} is not supported")
 
 
+def check_requirements():
+    planning_requirements = load_requirements()
+    # Check for duplicates in reference column
+    references = [row['reference'] for row in planning_requirements]
+    seen = set()
+    duplicates = set()
+    
+    for ref in references:
+        if ref in seen:
+            duplicates.add(ref)
+        seen.add(ref)
+    
+    if duplicates:
+        print("\nFound duplicate references in planning-requirement.csv:")
+        for dup in sorted(duplicates):
+            print(f"  - {dup}")
+    else:
+        print("\nNo duplicate references found in planning-requirement.csv")
+
+
 @cli.command(name="check")
 @click.option(
     "--module",
@@ -404,13 +424,21 @@ def csv(filename, fieldname, fields, action, col_order, markdown):
     is_flag=True,
     help="Check codelists for module references",
 )
-def check(module, codelist):
+@click.option(
+    "--requirements",
+    is_flag=True,
+    help="Check planning requirements for duplicate references",
+)
+def check(module, codelist, requirements):
     if module or codelist:
         _, _, modules, app_mod_joins, _ = load_all()
         if module:
             check_modules(modules, "../specification/module", app_mod_joins)
         if codelist:
             check_codelists(modules)
+
+    if requirements:
+        check_requirements()
 
 
 if __name__ == "__main__":

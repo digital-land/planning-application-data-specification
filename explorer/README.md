@@ -95,6 +95,11 @@ Check no issues with codelists
 python pacli.py check --codelist
 ```
 
+Check for duplicates in planning requirements
+```
+python pacli.py check --requirements
+```
+
 ## CSV
 
 There are numerous csv files in the repo you may want to interact with
