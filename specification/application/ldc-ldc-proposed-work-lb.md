@@ -88,7 +88,7 @@ amount | The total amount due | MUST |
 amount-paid | The amount paid | MUST |
 transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
 
-**File data struture**
+**File data structure**
 
 field | description | required | notes
 --- | --- | --- | ---
