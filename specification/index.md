@@ -111,7 +111,7 @@ This specification sets out how to structure and share planning application data
 	* [Planning application type](#planning-application-type-application-type)
 	* [Reserved matter type](#reserved-matter-type-reserved-matter-type)
 	* [Rights of way answer](#rights-of-way-answer-rights-of-way-answer)
-	* [Site constraints](#site-constraints-site-constaint)
+	* [Site constraints](#site-constraints-site-constraint)
 	* [Site visit contact type](#site-visit-contact-type-site-visit-contact-type)
 	* [Surface water disposal type](#surface-water-disposal-type-surface-water-disposal-type)
 	* [Tenure type](#tenure-type-tenure-type)
@@ -2244,9 +2244,9 @@ unknown | Unknown | outline | The answer is unknown
 
 ---
 
-### Site constraints (site-constaint)
+### Site constraints (site-constraint)
 
-* Reference: `site-constaint`
+* Reference: `site-constraint`
 
 reference | name | description
 -- | -- | --
