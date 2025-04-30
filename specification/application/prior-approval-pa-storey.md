@@ -34,7 +34,7 @@ This applies to  developments with permitted development rights (where developme
 ### Required codelists
 
 * [Contact priority](#contact-priority-contact-priority)
-* [Site constraints](#site-constraints-site-constaint)
+* [Site constraints](#site-constraints-site-constraint)
 
 ---
 
@@ -69,7 +69,7 @@ amount | The total amount due | MUST |
 amount-paid | The amount paid | MUST |
 transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
 
-**File data struture**
+**File data structure**
 
 field | description | required | notes
 --- | --- | --- | ---
@@ -506,7 +506,7 @@ _To do: add description for codelist_
 
 ---
 
-### Site constraints (site-constaint)
+### Site constraints (site-constraint)
 
 _To do: add description for codelist_
 

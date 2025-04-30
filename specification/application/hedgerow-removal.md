@@ -58,7 +58,7 @@ amount | The total amount due | MUST |
 amount-paid | The amount paid | MUST |
 transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
 
-**File data struture**
+**File data structure**
 
 field | description | required | notes
 --- | --- | --- | ---
@@ -243,7 +243,7 @@ plan-references[] | References to plans showing the stretches of hedgerows to be
 hedgerow-length | Total length of hedgerow proposed for removal (in metres) | hedgerow-removal | MUST	|Rule: Must be a positive number
 hedgerow-less-than-30-years | Is the hedgerow less than 30 years old? (`true`/`false`) | hedgerow-removal | MUST |	
 planting-evidence-attached | Is evidence of the date of planting attached?	(`true`/`false`) | hedgerow-removal | MAY |	Required if `hedgerow-less-than-30-years` is `true`
-interest-declaration | The applicant's interest or ownership | hedgerow-removal | MUST | See the [hedegerow interest declaration enum](https://github.com/digital-land/planning-application-data-specification/discussions/216)
+interest-declaration | The applicant's interest or ownership | hedgerow-removal | MUST | See the [hedgerow interest declaration enum](https://github.com/digital-land/planning-application-data-specification/discussions/216)
 
 ---
 
@@ -301,7 +301,7 @@ Details needed to support a site visit
 | site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
 | contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
 | contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
-| other-contact{} | Details of specifially named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
+| other-contact{} | Details of specifically named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
 

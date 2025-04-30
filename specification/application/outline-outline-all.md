@@ -102,7 +102,7 @@ amount | The total amount due | MUST |
 amount-paid | The amount paid | MUST |
 transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
 
-**File data struture**
+**File data structure**
 
 field | description | required | notes
 --- | --- | --- | ---
@@ -657,7 +657,7 @@ Details needed to support a site visit
 | site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
 | contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
 | contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
-| other-contact{} | Details of specifially named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
+| other-contact{} | Details of specifically named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
 
@@ -832,7 +832,7 @@ _To do: add description for module_
 | --- | --- | --- | --- | --- |
 | needs-waste-storage-area | Does the proposal require a waste storage area (`true`/`false`) | full;outline | MUST | |
 | waste-storage-area-details | Details of the waste storage area | full;outline | MAY | Rule, is a MUST if `needs-waste-storage-area` is True |
-| separate-recycling-arrangements | Does the proposal include spearate recycling arrangements? (`true`/`false`) | full;outline | MUST | |
+| separate-recycling-arrangements | Does the proposal include separate recycling arrangements? (`true`/`false`) | full;outline | MUST | |
 | separate-recycling-arrangements-details | Provide details of the recycling arrangements | full;outline | MAY | Rule, is a MUST if `separate-recycling-arrangements` is True |
 
 ---
@@ -1000,7 +1000,7 @@ _To do: add description for module_
 | --- | --- | --- | --- | --- |
 | needs-waste-storage-area | Does the proposal require a waste storage area (`true`/`false`) | full;outline | MUST | |
 | waste-storage-area-details | Details of the waste storage area | full;outline | MAY | Rule, is a MUST if `needs-waste-storage-area` is True |
-| separate-recycling-arrangements | Does the proposal include spearate recycling arrangements? (`true`/`false`) | full;outline | MUST | |
+| separate-recycling-arrangements | Does the proposal include separate recycling arrangements? (`true`/`false`) | full;outline | MUST | |
 | separate-recycling-arrangements-details | Provide details of the recycling arrangements | full;outline | MAY | Rule, is a MUST if `separate-recycling-arrangements` is True |
 
 ---
@@ -1031,7 +1031,7 @@ A set of building elements that applicants are expected to provide material info
 | reference | name | description | application-types | notes |
 | --- | --- | --- | --- | --- |
 | walls | Walls | A vertical construction that bounds or subdivides spaces | advertising;demolition-con-area;full;hh;outline | Referring to same thing as [IfcWall](https://standards.buildingsmart.org/IFC/RELEASE/IFC4/ADD1/HTML/link/ifcbuildingelement.htm) |
-| roof | Roof | A covering of the top part of a building, it protects the building against the effects of wheather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
+| roof | Roof | A covering of the top part of a building, it protects the building against the effects of weather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
 | windows | Windows | | advertising;demolition-con-area;full;hh;outline | |
 | doors | Doors | | advertising;demolition-con-area;full;hh;outline | |
 | boundary-treatments | Boundary treatments | | advertising;demolition-con-area;full;hh;lbc;outline | |

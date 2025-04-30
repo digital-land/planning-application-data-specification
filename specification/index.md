@@ -111,7 +111,7 @@ This specification sets out how to structure and share planning application data
 	* [Planning application type](#planning-application-type-application-type)
 	* [Reserved matter type](#reserved-matter-type-reserved-matter-type)
 	* [Rights of way answer](#rights-of-way-answer-rights-of-way-answer)
-	* [Site constraints](#site-constraints-site-constaint)
+	* [Site constraints](#site-constraints-site-constraint)
 	* [Site visit contact type](#site-visit-contact-type-site-visit-contact-type)
 	* [Surface water disposal type](#surface-water-disposal-type-surface-water-disposal-type)
 	* [Tenure type](#tenure-type-tenure-type)
@@ -150,7 +150,7 @@ amount | The total amount due | MUST |
 amount-paid | The amount paid | MUST |
 transactions[] | References to payments or financial transactions related to this application. | MAY | Useful for audit and reconciliation.
 
-**File data struture**
+**File data structure**
 
 field | description | required | notes
 --- | --- | --- | ---
@@ -1014,7 +1014,7 @@ plan-references[] | References to plans showing the stretches of hedgerows to be
 hedgerow-length | Total length of hedgerow proposed for removal (in metres) | hedgerow-removal | MUST	|Rule: Must be a positive number
 hedgerow-less-than-30-years | Is the hedgerow less than 30 years old? (`true`/`false`) | hedgerow-removal | MUST |	
 planting-evidence-attached | Is evidence of the date of planting attached?	(`true`/`false`) | hedgerow-removal | MAY |	Required if `hedgerow-less-than-30-years` is `true`
-interest-declaration | The applicant's interest or ownership | hedgerow-removal | MUST | See the [hedegerow interest declaration enum](https://github.com/digital-land/planning-application-data-specification/discussions/216)
+interest-declaration | The applicant's interest or ownership | hedgerow-removal | MUST | See the [hedgerow interest declaration enum](https://github.com/digital-land/planning-application-data-specification/discussions/216)
 
 ---
 
@@ -1535,7 +1535,7 @@ Field | Description | Application-Types | Required? | Notes
 site-area{} | The total area of the site |   | MUST | See "Site Area Structure" below
 existing-use[]{} | Structured information on the current use of the site |   | MUST | An array, as there may be multiple uses (see "Existing Use Structure")
 known-constraints[] | A list of the known constraints affecting the site |   | MUST | See the [Site constraints enum](https://github.com/digital-land/planning-application-data-specification/discussions/191)
-supporting-documents[]{} | A list of documents with the supporting information for the idenitifed site constraints | MAY | Rule: a MUST if `known-constraints` is not empty
+supporting-documents[]{} | A list of documents with the supporting information for the identified site constraints | MAY | Rule: a MUST if `known-constraints` is not empty
 
 ### Site Area Structure
 
@@ -1599,7 +1599,7 @@ Details needed to support a site visit
 | site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
 | contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
 | contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
-| other-contact{} | Details of specifially named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
+| other-contact{} | Details of specifically named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
 
@@ -1898,7 +1898,7 @@ difference-in-spaces | Calculated difference between existing and proposed space
 | --- | --- | --- | --- | --- |
 | needs-waste-storage-area | Does the proposal require a waste storage area (`true`/`false`) | full;outline | MUST | |
 | waste-storage-area-details | Details of the waste storage area | full;outline | MAY | Rule, is a MUST if `needs-waste-storage-area` is True |
-| separate-recycling-arrangements | Does the proposal include spearate recycling arrangements? (`true`/`false`) | full;outline | MUST | |
+| separate-recycling-arrangements | Does the proposal include separate recycling arrangements? (`true`/`false`) | full;outline | MUST | |
 | separate-recycling-arrangements-details | Provide details of the recycling arrangements | full;outline | MAY | Rule, is a MUST if `separate-recycling-arrangements` is True |
 
 ---
@@ -1952,7 +1952,7 @@ A set of building elements that applicants are expected to provide material info
 | reference | name | description | application-types | notes |
 | --- | --- | --- | --- | --- |
 | walls | Walls | A vertical construction that bounds or subdivides spaces | advertising;demolition-con-area;full;hh;outline | Referring to same thing as [IfcWall](https://standards.buildingsmart.org/IFC/RELEASE/IFC4/ADD1/HTML/link/ifcbuildingelement.htm) |
-| roof | Roof | A covering of the top part of a building, it protects the building against the effects of wheather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
+| roof | Roof | A covering of the top part of a building, it protects the building against the effects of weather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
 | windows | Windows | | advertising;demolition-con-area;full;hh;outline | |
 | doors | Doors | | advertising;demolition-con-area;full;hh;outline | |
 | boundary-treatments | Boundary treatments | | advertising;demolition-con-area;full;hh;lbc;outline | |
@@ -2244,9 +2244,9 @@ unknown | Unknown | outline | The answer is unknown
 
 ---
 
-### Site constraints (site-constaint)
+### Site constraints (site-constraint)
 
-* Reference: `site-constaint`
+* Reference: `site-constraint`
 
 reference | name | description
 -- | -- | --
