@@ -418,6 +418,7 @@ def requirements(app_type, sub_type):
         app_type = app_type.lower()
         matched_reqs = [req for req in data['national-requirements'] if match_on(app_type, 'application-type', req)]
     
+    # To do: should check app type and sub type are a valid pair
     if sub_type:
         sub_type = sub_type.lower()
         matched_reqs += [req for req in data['national-requirements'] if match_on(sub_type, 'application-sub-type', req)]

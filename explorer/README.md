@@ -82,6 +82,18 @@ python pacli.py module --ref {module-ref} --make
 ```
 _We will eventually remove this command_
 
+## Requirements
+
+Print planning requirements for a given application type
+```
+python pacli.py requirements --app-type full
+```
+
+Print planning requirements for a given application type and sub-type
+```
+python pacli.py requirements --app-type ldc --sub-type ldc-existing-use
+```
+
 
 ## Check
 
@@ -95,7 +107,7 @@ Check no issues with codelists
 python pacli.py check --codelist
 ```
 
-Check for duplicates in planning requirements
+Check for duplicates in planning requirements, and check integrity of national planning requirements data
 ```
 python pacli.py check --requirements
 ```
