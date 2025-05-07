@@ -9,8 +9,9 @@ from bin.csv_helpers import read_csv, write_csv
 from bin.markdown_helpers import csv_to_markdown
 from bin.checks import check_requirements
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
-from bin.loader import load_all, load_requirements
+from bin.loader import load_all, load_requirements, load_data
 from bin.modules import get_modules, get_expected_joins, join_data_maker, check_modules, check_codelists, get_module_discussion_url
+from bin.requirements import display_requirements, get_requirements
 
 
 # these are taken from data/planning-application-sub-type.csv
@@ -392,6 +393,41 @@ def csv(filename, fieldname, fields, action, col_order, markdown):
         write_csv(sorted_data, output_file=filename, final_headers=[])
     else:
         print(f"Action {action} is not supported")
+
+
+@cli.command(name="requirements")
+@click.option(
+    "--app-type",
+    type=str,
+    help="Reference of application type",
+)
+@click.option(
+    "--sub-type",
+    type=str,
+    help="Reference of application sub-type",
+)
+def requirements(app_type, sub_type):
+    """List national planning requirements for an application type or sub-type."""
+    data = load_data()
+    matched_reqs = []
+
+    def match_on(term, fieldname, row):
+        return term.lower() in row[fieldname].lower() if row.get(fieldname) else False
+    
+    if app_type:
+        app_type = app_type.lower()
+        matched_reqs = [req for req in data['national-requirements'] if match_on(app_type, 'application-type', req)]
+    
+    if sub_type:
+        sub_type = sub_type.lower()
+        matched_reqs += [req for req in data['national-requirements'] if match_on(sub_type, 'application-sub-type', req)]
+        
+    # Get full requirement details
+    planning_req_refs = [req['planning-requirement'] for req in matched_reqs]
+    reqs_with_details = get_requirements(planning_req_refs, data['requirements'])
+            
+    # Print results
+    display_requirements(reqs_with_details, app_type, sub_type)
 
 
 @cli.command(name="check")
