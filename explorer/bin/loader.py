@@ -29,5 +29,22 @@ def load_requirements():
     return planning_requirements
 
 
+def load_national_requirements():
+    national_requirements = read_csv("../data/national-planning-requirement.csv", as_dict=True)
+    return national_requirements
+
+
 def load_all():
     return load_app_types(), load_forms(), load_modules(), load_app_modules(), load_sub_types()
+
+
+def load_data():
+    return {
+        "app-types": load_app_types(),
+        "forms": load_forms(),
+        "modules": load_modules(),
+        "app-modules": load_app_modules(),
+        "sub-types": load_sub_types(),
+        "requirements": load_requirements(),
+        "national-requirements": load_national_requirements(),
+    }

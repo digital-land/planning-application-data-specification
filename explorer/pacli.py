@@ -7,6 +7,7 @@ import os
 from bin.application_types import print_all, app_type_overview, get_app_type_from_ref, add_modules, print_app_types_as_markdown_table, print_sub_types, get_app_types_with_module, generate_application_markdown, generate_specification_index_file
 from bin.csv_helpers import read_csv, write_csv
 from bin.markdown_helpers import csv_to_markdown
+from bin.checks import check_requirements
 from bin.forms import print_all_forms, form_details, get_forms_by_app_type, get_form, get_forms, get_app_types_covered
 from bin.loader import load_all, load_requirements
 from bin.modules import get_modules, get_expected_joins, join_data_maker, check_modules, check_codelists, get_module_discussion_url
@@ -393,26 +394,6 @@ def csv(filename, fieldname, fields, action, col_order, markdown):
         print(f"Action {action} is not supported")
 
 
-def check_requirements():
-    planning_requirements = load_requirements()
-    # Check for duplicates in reference column
-    references = [row['reference'] for row in planning_requirements]
-    seen = set()
-    duplicates = set()
-    
-    for ref in references:
-        if ref in seen:
-            duplicates.add(ref)
-        seen.add(ref)
-    
-    if duplicates:
-        print("\nFound duplicate references in planning-requirement.csv:")
-        for dup in sorted(duplicates):
-            print(f"  - {dup}")
-    else:
-        print("\nNo duplicate references found in planning-requirement.csv")
-
-
 @cli.command(name="check")
 @click.option(
     "--module",
@@ -427,7 +408,7 @@ def check_requirements():
 @click.option(
     "--requirements",
     is_flag=True,
-    help="Check planning requirements for duplicate references",
+    help="Check planning requirements",
 )
 def check(module, codelist, requirements):
     if module or codelist:
