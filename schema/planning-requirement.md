@@ -12,6 +12,8 @@ fields:
   description: Alternative names or terms for the requirement, separated by semicolons.
 - field: document-type
   description: Classification or grouping of the requirement (e.g. report, statement). Groupings tbc
+- field: source
+  description: the origin of a planning requirement
 - field: notes
   description: Any additional notes or context
 - field: entry-date
