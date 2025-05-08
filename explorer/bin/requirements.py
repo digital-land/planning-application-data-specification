@@ -8,21 +8,21 @@ def display_requirements(requirements, app_type=None, sub_type=None):
     else:
         print(f"\nRequirements for {sub_type}:")
     print("---")
-    
+
     if not requirements:
         print("\nNo requirements found")
         return
-        
-    for req in sorted(requirements, key=lambda x: x['name']):
+
+    for req in sorted(requirements, key=lambda x: x["name"]):
         print(f"\n{req['name']}")
-        if req.get('description'):
+        if req.get("description"):
             print(f"  {req['description']}")
         print(f"  Reference: {req['reference']}")
 
 
 def get_requirement(ref, requirements):
     """Get a single requirement by its reference"""
-    return next((req for req in requirements if req['reference'] == ref), None)
+    return next((req for req in requirements if req["reference"] == ref), None)
 
 
 def get_requirements(refs, requirements, sort_by="name"):
