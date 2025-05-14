@@ -19,7 +19,6 @@
 * [Details about the proposed advertisement](#details-about-the-proposed-advertisement-proposed-advert-details)
 * [Interest details](#interest-details-interest-details)
 * [Location of advertisement(s)](#location-of-advertisements-advert-location)
-* [Materials](#materials-materials)
 * [Neighbour and community consultation](#neighbour-and-community-consultation-community-consultation)
 * [Pre-application advice](#pre-application-advice-pre-app-advice)
 * [Site address details](#site-address-details-site-details)
@@ -30,7 +29,6 @@
 
 * [Advertisement type](#advertisement-type-advertisement-type)
 * [Applicant interest type](#applicant-interest-type-applicant-interest-type)
-* [Building element type](#building-element-type-building-element-type)
 * [Contact priority](#contact-priority-contact-priority)
 * [Site visit contact type](#site-visit-contact-type-site-visit-contact-type)
 
@@ -347,36 +345,6 @@ Where your advert will be situated
 
 ---
 
-### Materials (materials)
-
-Details about the materials to be used or changed should be provided, including type, colour and name for each material
-
-**Materials**
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). | hh;full;demolition-con-area;lbc;advertising;outline | MUST | See Building element structure. One entry per building element.
-additional-material-information | Indicates whether additional documents are provided to supplement the materials description | hh;full;demolition-con-area;lbc;advertising;outline | MUST | (`true` or `false`).
-supporting-documents[] | Details for documents providing additional material information. | hh;full;demolition-con-area;lbc;advertising;outline | MAY | Required if additional-material-information is true.
-
-
-**Building element**
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-building-element-type | Identifies the part of the building the materials relate to, such as walls, roofs, windows, or doors. | MUST | Must use values from the [building element types enum](https://github.com/digital-land/planning-application-data-specification/discussions/207).
-existing-materials | Description of the materials currently used for this building element. | MAY | Complete if known and applicable.
-proposed-materials | Description of the materials proposed for this building element as part of the development. | MAY | Complete if known and applicable.
-materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
-materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
-
-**supporting documents**
-
-field | description | data type | required? | notes
--- | -- | -- | -- | --
-reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
-name | Name of the document | String | MUST | Descriptive name for clarity
-
----
-
 ### Neighbour and community consultation (community-consultation)
 
 Neighbours should be informed about development proposals and seek feedback
@@ -500,32 +468,6 @@ reference | name | description
 owner | Owner |
 lessee | Lessee | 
 occupier | Occupier | 
-
----
-
-### Building element type (building-element-type)
-
-A set of building elements that applicants are expected to provide material information for
-
-| reference | name | description | application-types | notes |
-| --- | --- | --- | --- | --- |
-| walls | Walls | A vertical construction that bounds or subdivides spaces | advertising;demolition-con-area;full;hh;outline | Referring to same thing as [IfcWall](https://standards.buildingsmart.org/IFC/RELEASE/IFC4/ADD1/HTML/link/ifcbuildingelement.htm) |
-| roof | Roof | A covering of the top part of a building, it protects the building against the effects of weather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
-| windows | Windows | | advertising;demolition-con-area;full;hh;outline | |
-| doors | Doors | | advertising;demolition-con-area;full;hh;outline | |
-| boundary-treatments | Boundary treatments | | advertising;demolition-con-area;full;hh;lbc;outline | |
-| vehicle-access-hard-standings | Vehicle access and hard-standings | | advertising;demolition-con-area;full;hh;lbc;outline | |
-| lighting | Lighting | | advertising;demolition-con-area;full;hh;lbc;outline | |
-| external-walls | External walls | | lbc | |
-| roof-covering | Roof covering | | lbc | |
-| chimney | Chimney | | lbc | |
-| external-doors | External doors | | lbc | |
-| ceilings | Ceilings | | lbc | |
-| internal-walls | Internal walls | | lbc | |
-| floors | Floors | | lbc | |
-| internal-doors | Internal doors | | lbc | |
-| rainwater-goods | Rainwater goods | | lbc | |
-| other | Other | | advertising;demolition-con-area;full;hh;lbc;outline | |
 
 ---
 
