@@ -241,7 +241,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Assessment of flood risk (flood-risk-assessment)
 
-_To do: add description for module_
+An assessment needed for any developments within any flood risk zones
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -269,7 +269,7 @@ Any connection between the applicant or agent and the local authority’s staff 
 
 ### Biodiversity and geological conservation (bio-geo-arch-con)
 
-_To do: add description for module_
+Details of any impact to biodiversity or geological convservation
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -304,7 +304,7 @@ Applicants and agents must declare information provided is correct
 
 ### Designated areas (designated-areas)
 
-_To do: add description for module_
+Areas that are protected because of their natural and cultural importance
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -314,7 +314,7 @@ designations[] | List of designated areas that apply to the site | extraction-oi
 
 ### Employment (employment)
 
-Please complete the following information regarding employees
+Information about employees
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -333,7 +333,7 @@ fte | Total full-time equivalent (FTE) | Calculated as full-time + (part-time ÷
 
 ### Equipment and method used (equip-method)
 
-_To do: add description for module_
+Information about the equipment and methods proposed
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -343,7 +343,7 @@ _To do: add description for module_
 
 ### Existing use (existing-use)
 
-_To do: add description for module_
+Application for development that doesn't change the existing use of the building
 
 field | description | application-types | required | notes
 -- | -- | -- | -- | --
@@ -360,7 +360,7 @@ contamination-assessment | Reference to contamination assessment document | full
 
 ### Foul sewage (foul-sewage)
 
-_To do: add description for module_
+Description of how sewage will be dealt with for the development
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -373,7 +373,7 @@ drainage-system-details | Details of the drawings/plans that show the existing s
 
 ### Hazardous substances (haz-substances)
 
-_To do: add description for module_
+Does proposal include use or storage of hazardous substances
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -394,7 +394,7 @@ amount | Amount of the substance in tonnes | Numeric. Must be greater than 0.
 
 ### Hours of operation (hrs-operation)
 
-Please state the hours of opening for each non-residential use proposed:
+Hours of opening for each non-residential use proposed
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -553,7 +553,7 @@ Applicant/agent must provide one of:
 
 ### Site ownership (site-ownership)
 
-_To do: add description for module_
+Who currently owns the site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -592,7 +592,7 @@ Details needed to support a site visit
 
 ### Storage (storage-facilities)
 
-_To do: add description for module_
+Any storage of materials proposed during construction
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -602,7 +602,7 @@ _To do: add description for module_
 
 ### Trade effluent (trade-effluent)
 
-Details of trade effluent disposal
+Effluents that will be produced from a process or activity undertaken on the site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -636,7 +636,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Type of development (dev-type)
 
-_To do: add description for module_
+Type of development
 
 Field | Description | Data Type | Required | Notes
 -- | -- | -- | -- | --
@@ -654,7 +654,7 @@ environmental-statement-reference | Reference of the environmental statement doc
 
 ### Types of application (types-application)
 
-_To do: add description for module_
+Type of application
 
 field | description | data type | application-types | required | notes
 -- | -- | -- | -- | -- | --
@@ -676,7 +676,7 @@ decision-date | Decision date of the related proposal | Date | MUST | Format: YY
 
 ### Voluntary agreements / planning obligations (vol-agreement)
 
-_To do: add description for module_
+Any voluntary agreements or planning obligations
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

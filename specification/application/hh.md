@@ -333,7 +333,7 @@ Details about the proposal
 
 ### Materials (materials)
 
-Where details about the materials to be used or changed should be provided, including type, colour and name for each material
+Details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 **Materials**
 | field | description | application-types | required | notes |
@@ -352,7 +352,7 @@ proposed-materials | Description of the materials proposed for this building ele
 materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --

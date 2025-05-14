@@ -258,7 +258,7 @@ Applicants and agents must declare information provided is correct
 
 ### Demolition (demolition)
 
-_To do: add description for module_
+Permission or prior approval that may be required to demolish a building
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -302,7 +302,7 @@ Details about the proposal
 
 ### Immunity from listing (immunity-from-listing)
 
-_To do: add description for module_
+Whether you have an immunity from listing
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -313,7 +313,7 @@ _To do: add description for module_
 
 ### Listed building alterations (lb-alter)
 
-_To do: add description for module_
+What you're proposing to do to a listed building
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -327,11 +327,11 @@ See [listed building alteration types enum](https://github.com/digital-land/plan
 
 ### Listed building grading (lb-grade)
 
-_To do: add description for module_
+What grade the listed building is
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| listed-building-grade | Selected from [listed-building-grade](https://dluhc-datasets.planning-data.dev/dataset/listed-building-grade) or "don't know" |  | MUST | Note the certificate of lawfulness apps do not ask about ecclesiastical grades |
+| listed-building-grade | Selected from [listed-building-grade](https://dataset-editor.planning.data.gov.uk/dataset/listed-building-grade) or "don't know" |  | MUST | Note the certificate of lawfulness apps do not ask about ecclesiastical grades |
 | listed-building | Provide the listed building reference | | MAY | Would make it easier to cross-reference with the official listing |
 | provided-by | Details of source of the data. `Applicant` or `System/Service` | | MAY | This can be used by authority to determine if they need to check the data they have been provided |
 
@@ -339,7 +339,7 @@ _To do: add description for module_
 
 ### Materials (materials)
 
-Where details about the materials to be used or changed should be provided, including type, colour and name for each material
+Details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 **Materials**
 | field | description | application-types | required | notes |
@@ -358,7 +358,7 @@ proposed-materials | Description of the materials proposed for this building ele
 materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
@@ -369,7 +369,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Neighbour and community consultation (community-consultation)
 
-_To do: add description for module_
+Neighbours should be informed about development proposals and seek feedback
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -436,7 +436,7 @@ Details of pre-application advice received from the local planning authority
 
 ### Related proposals (related-proposals)
 
-_To do: add description for module_
+Other applications related to the same site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

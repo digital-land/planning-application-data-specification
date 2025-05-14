@@ -244,7 +244,7 @@ Applicant/agent must provide one of:
 
 ### Site information (site-info)
 
-_To do: add description for module_
+Additional information about the site
 
 ## Site information 
 

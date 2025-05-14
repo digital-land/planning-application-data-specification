@@ -275,7 +275,7 @@ Applicant/agent must provide one of:
 
 ### Adjoining premises (adj-premises)
 
-_To do: add description for module_
+The addresses of any adjoining properties
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -306,7 +306,7 @@ eaves-height | Height at the eaves of the extension | Float | prior-approval | M
 
 ### Eligibility - Larger house extension (eligibility-extension)
 
-_To do: add description for module_
+Checking eligibility for prior approval
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -322,7 +322,7 @@ site-constraints[] | List of specific site constraints |   | MAY | Rule: Requir
 
 ### Adjoining premises (adj-premises)
 
-_To do: add description for module_
+The addresses of any adjoining properties
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -353,7 +353,7 @@ eaves-height | Height at the eaves of the extension | Float | prior-approval | M
 
 ### Eligibility - Larger house extension (eligibility-extension)
 
-_To do: add description for module_
+Checking eligibility for prior approval
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -384,7 +384,7 @@ protected-view-impact | Provide details of the impact on any protected view | | 
 
 ### Eligibility - Related operations and works (eligibility-related-works)
 
-_To do: add description for module_
+Checking eligibility for prior approval
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -394,7 +394,7 @@ _To do: add description for module_
 
 ### Eligibility - The current building and site (eligibility-current-building)
 
-_To do: add description for module_
+Checking eligibility for prior approval
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -407,7 +407,7 @@ site-location-constraint | Is any part of the land or site located in a restrict
 
 ### Eligibility - The proposed development (eligibility-proposal)
 
-_To do: add description for module_
+Checking eligibility for prior approval
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -447,7 +447,7 @@ protected-view-impact | Provide details of the impact on any protected view | | 
 
 ### Eligibility - Related operations and works (eligibility-related-works)
 
-_To do: add description for module_
+Checking eligibility for prior approval
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -457,7 +457,7 @@ _To do: add description for module_
 
 ### Eligibility - The current building and site (eligibility-current-building)
 
-_To do: add description for module_
+Checking eligibility for prior approval
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -470,7 +470,7 @@ site-location-constraint | Is any part of the land or site located in a restrict
 
 ### Eligibility - The proposed development (eligibility-proposal)
 
-_To do: add description for module_
+Checking eligibility for prior approval
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -503,22 +503,6 @@ _To do: add description for codelist_
 | --- | --- | --- |
 | primary | Primary | The preferred item to use |
 | secondary | Secondary | The option to use if primary is not working |
-
----
-
-### Site constraints (site-constraint)
-
-_To do: add description for codelist_
-
-reference | name | description
--- | -- | --
-conservation-area | Conservation Area |  
-aona-beauty | Area of Outstanding Natural Beauty |  
-secretary-specified-area | Secretary of State Protected Area |  
-the-broads | The Broads |  
-national-park | National Park |  
-world-heritage-site | World Heritage Site |  
-site-of-special-interest | Site of Special Scientific Interest |  
 
 ---
 

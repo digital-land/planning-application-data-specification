@@ -16,7 +16,7 @@
 * [Authority employee/member](#authority-employee-member-conflict-of-interest)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
-* [Details of proposed advertisement(s)](#details-of-proposed-advertisements-proposed-advert-details)
+* [Details about the proposed advertisement](#details-about-the-proposed-advertisement-proposed-advert-details)
 * [Interest details](#interest-details-interest-details)
 * [Location of advertisement(s)](#location-of-advertisements-advert-location)
 * [Materials](#materials-materials)
@@ -86,7 +86,7 @@ These modules are all required for this application type
 
 ### Advertisement period (advert-period)
 
-_To do: add description for module_
+The amount of time you're planning for your advert to be on display
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -264,7 +264,7 @@ Applicants and agents must declare information provided is correct
 
 ---
 
-### Details of proposed advertisement(s) (proposed-advert-details)
+### Details about the proposed advertisement (proposed-advert-details)
 
 _To do: add description for module_
 
@@ -293,7 +293,7 @@ _To do: add description for module_
 
 ### Interest details (interest-details)
 
-This section collects information on who owns the land or building and the applicants interest
+Who owns the land or building and the applicant's interest
 
 field | description | application-Types | required | notes
 -- | -- | -- | -- | --
@@ -335,7 +335,7 @@ reason-not-informed | Reason why they were not informed | String | MAY | Rule: R
 
 ### Location of advertisement(s) (advert-location)
 
-_To do: add description for module_
+Where your advert will be situated
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -349,7 +349,7 @@ _To do: add description for module_
 
 ### Materials (materials)
 
-Where details about the materials to be used or changed should be provided, including type, colour and name for each material
+Details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 **Materials**
 | field | description | application-types | required | notes |
@@ -368,7 +368,7 @@ proposed-materials | Description of the materials proposed for this building ele
 materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
@@ -379,7 +379,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Neighbour and community consultation (community-consultation)
 
-_To do: add description for module_
+Neighbours should be informed about development proposals and seek feedback
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -456,7 +456,7 @@ Details needed to support a site visit
 
 ### Type of proposed advertisement(s) (advertisement-types)
 
-_To do: add description for module_
+Type of proposed advertisement
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

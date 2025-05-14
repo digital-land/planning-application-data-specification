@@ -246,7 +246,7 @@ Applicants and agents must declare information provided is correct
 
 ### Identification of tree(s) and description of works (tree-work-details)
 
-_To do: add description for module_
+Details of trees and proposed work to them
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -267,7 +267,7 @@ replanting-description | Details of replanting | tpo
 
 ### Tree preservation order details (tpo)
 
-_To do: add description for module_
+Details of a tree preservation order
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -278,7 +278,7 @@ _To do: add description for module_
 
 ### Trees - additional information (trees-additional)
 
-_To do: add description for module_
+Additional information about trees on the site
 
 field | description | application-types | required | notes
 --- | --- | --- | --- | ---
@@ -300,7 +300,7 @@ description | Description of the document | String | MAY | Optional description 
 
 ### Trees location (trees-location)
 
-_To do: add description for module_
+Location of trees on the site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -331,7 +331,7 @@ Applicant only needs to provide this if the site is different from their address
 
 ### Trees ownership (trees-ownership)
 
-_To do: add description for module_
+Ownership of trees on the site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

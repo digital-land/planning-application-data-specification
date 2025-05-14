@@ -15,7 +15,7 @@ An application for any minor changes to proposals that have already been approve
 * [Authority employee/member](#authority-employee-member-conflict-of-interest)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
-* [Description of your proposal](#description-of-your-proposal-desc-your-proposal)
+* [Details about the proposal](#details-about-the-proposal-desc-your-proposal)
 * [Eligibility](#eligibility-eligibility)
 * [Non-material amendment(s) sought](#non-material-amendments-sought-nm-amendment-details)
 * [Pre-application advice](#pre-application-advice-pre-app-advice)
@@ -247,7 +247,7 @@ Applicants and agents must declare information provided is correct
 
 ---
 
-### Description of your proposal (desc-your-proposal)
+### Details about the proposal (desc-your-proposal)
 
 _To do: add description for module_
 
@@ -275,7 +275,7 @@ decision-date | Date of the planning decision | MUST | Must be before the applic
 
 ### Eligibility (eligibility)
 
-_To do: add description for module_
+Details of the applicant's eligibility to make an application
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -295,7 +295,7 @@ date-of-notification | Date notification was sent | Date | MUST | Format: YYYY-M
 
 ### Non-material amendment(s) sought (nm-amendment-details)
 
-_To do: add description for module_
+Description of proposed development
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

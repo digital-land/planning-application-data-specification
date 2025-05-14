@@ -189,7 +189,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### All types of development: Non-residential floorspace (non-res-floorspace)
 
-_To do: add description for module_
+Details of any new non-residential development involved in the proposal
 
 field | description | application-types | required | notes
 -- | -- | -- | -- | --
@@ -292,7 +292,7 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Assessment of flood risk (flood-risk-assessment)
 
-_To do: add description for module_
+An assessment needed for any developments within any flood risk zones
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -419,7 +419,7 @@ Details about the proposal
 
 ### Employment (employment)
 
-Please complete the following information regarding employees
+Information about employees
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -438,7 +438,7 @@ fte | Total full-time equivalent (FTE) | Calculated as full-time + (part-time ÷
 
 ### Existing use (existing-use)
 
-_To do: add description for module_
+Application for development that doesn't change the existing use of the building
 
 field | description | application-types | required | notes
 -- | -- | -- | -- | --
@@ -455,7 +455,7 @@ contamination-assessment | Reference to contamination assessment document | full
 
 ### Hours of operation (hrs-operation)
 
-Please state the hours of opening for each non-residential use proposed:
+Hours of opening for each non-residential use proposed
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -487,7 +487,7 @@ close-time | Closing time | MUST | Format: `HH:MM`
 
 ### Industrial or commercial processes and machinery (processes-machinery-waste)
 
-_To do: add description for module_
+Activities and processes which would be carried out on the site and the end products including plant, ventilation, or air conditioning
 
 Field | Description | application-type | Required? | Notes
 -- | -- | -- | -- | --
@@ -574,7 +574,7 @@ Details of pre-application advice received from the local planning authority
 
 ### Residential units (including conversion) (res-units)
 
-Details of the number of residential units added or removed by the proposal
+The amount of residential units included as part of your proposal
 
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --
@@ -639,7 +639,7 @@ Applicant/agent must provide one of:
 
 ### Site area (site-area)
 
-_To do: add description for module_
+Size of the site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -671,7 +671,7 @@ Details needed to support a site visit
 
 ### Biodiversity and geological conservation (bio-geo-arch-con)
 
-_To do: add description for module_
+Details of any impact to biodiversity or geological convservation
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -684,7 +684,7 @@ archaeological-features-impact | Is there a likelihood of features of archaeolog
 
 ### Foul sewage (foul-sewage)
 
-_To do: add description for module_
+Description of how sewage will be dealt with for the development
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -697,7 +697,7 @@ drainage-system-details | Details of the drawings/plans that show the existing s
 
 ### Hazardous substances (haz-substances)
 
-_To do: add description for module_
+Does proposal include use or storage of hazardous substances
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -718,7 +718,7 @@ amount | Amount of the substance in tonnes | Numeric. Must be greater than 0.
 
 ### Materials (materials)
 
-Where details about the materials to be used or changed should be provided, including type, colour and name for each material
+Details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 **Materials**
 | field | description | application-types | required | notes |
@@ -737,7 +737,7 @@ proposed-materials | Description of the materials proposed for this building ele
 materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
@@ -771,7 +771,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Trade effluent (trade-effluent)
 
-Details of trade effluent disposal
+Effluents that will be produced from a process or activity undertaken on the site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -805,7 +805,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Vehicle parking (vehicle-parking)
 
-Please provide information on the existing and proposed number of on-site parking spaces: 
+Existing and proposed number of on-site parking spaces
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -826,7 +826,7 @@ difference-in-spaces | Calculated difference between existing and proposed space
 
 ### Waste storage and collection (waste-storage-collection)
 
-_To do: add description for module_
+Proposed waste storage and collection
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -839,7 +839,7 @@ _To do: add description for module_
 
 ### Biodiversity and geological conservation (bio-geo-arch-con)
 
-_To do: add description for module_
+Details of any impact to biodiversity or geological convservation
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -852,7 +852,7 @@ archaeological-features-impact | Is there a likelihood of features of archaeolog
 
 ### Foul sewage (foul-sewage)
 
-_To do: add description for module_
+Description of how sewage will be dealt with for the development
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -865,7 +865,7 @@ drainage-system-details | Details of the drawings/plans that show the existing s
 
 ### Hazardous substances (haz-substances)
 
-_To do: add description for module_
+Does proposal include use or storage of hazardous substances
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -886,7 +886,7 @@ amount | Amount of the substance in tonnes | Numeric. Must be greater than 0.
 
 ### Materials (materials)
 
-Where details about the materials to be used or changed should be provided, including type, colour and name for each material
+Details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 **Materials**
 | field | description | application-types | required | notes |
@@ -905,7 +905,7 @@ proposed-materials | Description of the materials proposed for this building ele
 materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
@@ -939,7 +939,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Trade effluent (trade-effluent)
 
-Details of trade effluent disposal
+Effluents that will be produced from a process or activity undertaken on the site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -973,7 +973,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Vehicle parking (vehicle-parking)
 
-Please provide information on the existing and proposed number of on-site parking spaces: 
+Existing and proposed number of on-site parking spaces
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -994,7 +994,7 @@ difference-in-spaces | Calculated difference between existing and proposed space
 
 ### Waste storage and collection (waste-storage-collection)
 
-_To do: add description for module_
+Proposed waste storage and collection
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

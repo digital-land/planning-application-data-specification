@@ -332,7 +332,7 @@ Details about the proposal
 
 ### Explanation for proposed demolition work (demolition-reason)
 
-_To do: add description for module_
+Justification for proposed demolition work
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -342,7 +342,7 @@ demolition-reason | Explanation of why demolition is necessary | | MUST |
 
 ### Materials (materials)
 
-Where details about the materials to be used or changed should be provided, including type, colour and name for each material
+Details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 **Materials**
 | field | description | application-types | required | notes |
@@ -361,7 +361,7 @@ proposed-materials | Description of the materials proposed for this building ele
 materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
@@ -372,7 +372,7 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Neighbour and community consultation (community-consultation)
 
-_To do: add description for module_
+Neighbours should be informed about development proposals and seek feedback
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -439,7 +439,7 @@ Details of pre-application advice received from the local planning authority
 
 ### Related proposals (related-proposals)
 
-_To do: add description for module_
+Other applications related to the same site
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

@@ -234,7 +234,7 @@ Applicants and agents must declare information provided is correct
 
 ### Hedgerow removal notice (hedgerow-removal)
 
-This section is used to provide details about the hedgerows being removed
+Details about the hedgerows being removed
 
 field | description | application-types |	required | notes
 --- | --- | --- | --- | ---

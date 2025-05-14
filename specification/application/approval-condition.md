@@ -14,7 +14,7 @@ An application to have conditions approved which have been applied at the time o
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
 * [Checklist](#checklist-checklist)
 * [Declaration](#declaration-declaration)
-* [Description of your proposal](#description-of-your-proposal-desc-your-proposal)
+* [Details about the proposal](#details-about-the-proposal-desc-your-proposal)
 * [Discharge of condition](#discharge-of-condition-discharge-con)
 * [Part discharge of condition(s)](#part-discharge-of-conditions-part-discharge)
 * [Pre-application advice](#pre-application-advice-pre-app-advice)
@@ -234,7 +234,7 @@ Applicants and agents must declare information provided is correct
 
 ---
 
-### Description of your proposal (desc-your-proposal)
+### Details about the proposal (desc-your-proposal)
 
 _To do: add description for module_
 
@@ -262,7 +262,7 @@ decision-date | Date of the planning decision | MUST | Must be before the applic
 
 ### Discharge of condition (discharge-con)
 
-_To do: add description for module_
+Application to have conditions removed
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -272,7 +272,7 @@ _To do: add description for module_
 
 ### Part discharge of condition(s) (part-discharge)
 
-_To do: add description for module_
+Submitting information to discharge part of a condition
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |

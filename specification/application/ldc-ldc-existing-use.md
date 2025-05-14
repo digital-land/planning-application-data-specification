@@ -24,8 +24,8 @@ A legal document stating the lawfulness of past, present or future building use,
 
 ### Sub-type modules
 
-* [Description of existing use, building works or activity](#description-of-existing-use-building-works-or-activity-desc-existing-use)
-* [Description of use, building works or activity](#description-of-use-building-works-or-activity-use-works-activity)
+* [Describing what is on the site at the time of application](#describing-what-is-on-the-site-at-the-time-of-application-desc-existing-use)
+* [Description of current use, building works or activity](#description-of-current-use-building-works-or-activity-use-works-activity)
 * [Grounds for application for a lawful development certificate](#grounds-for-application-for-a-lawful-development-certificate-grounds-ldc)
 * [Information in support of a lawful development certificate](#information-in-support-of-a-lawful-development-certificate-info-support-ldc)
 * [Residential units (including conversion)](#residential-units-including-conversion-res-units)
@@ -261,7 +261,7 @@ Applicants and agents must declare information provided is correct
 
 ### Interest details (interest-details)
 
-This section collects information on who owns the land or building and the applicants interest
+Who owns the land or building and the applicant's interest
 
 field | description | application-Types | required | notes
 -- | -- | -- | -- | --
@@ -367,7 +367,7 @@ Details needed to support a site visit
 
 ---
 
-### Description of existing use, building works or activity (desc-existing-use)
+### Describing what is on the site at the time of application (desc-existing-use)
 
 _To do: add description for module_
 
@@ -385,7 +385,7 @@ land-part | State which part of the land the `use` relates to | MUST |
 
 ---
 
-### Description of use, building works or activity (use-works-activity)
+### Description of current use, building works or activity (use-works-activity)
 
 Please state for which of these you need a lawful development certificate/building works (you must tick at least one option):
 
@@ -399,7 +399,7 @@ specified-use | The specific use if no use class suitable | | MAY | Rule: must b
 
 ### Grounds for application for a lawful development certificate (grounds-ldc)
 
-_To do: add description for module_
+Description of development
 
 Field | Description | Application-type | Required? | Notes
 -- | -- | -- | -- | --
@@ -422,7 +422,7 @@ decision-date | Date of the decision (DD/MM/YYYY) | Date | MAY | Must be before 
 
 ### Information in support of a lawful development certificate (info-support-ldc)
 
-_To do: add description for module_
+Information in support of a lawful development certificate
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -436,7 +436,7 @@ _To do: add description for module_
 
 ### Residential units (including conversion) (res-units)
 
-Details of the number of residential units added or removed by the proposal
+The amount of residential units included as part of your proposal
 
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --
@@ -472,7 +472,7 @@ total-units | Total number of units | Integer | MAY | Not required if unknown is
 ## Sub-type modules
 The following modules are required for this sub-type.
 
-### Description of existing use, building works or activity (desc-existing-use)
+### Describing what is on the site at the time of application (desc-existing-use)
 
 _To do: add description for module_
 
@@ -490,7 +490,7 @@ land-part | State which part of the land the `use` relates to | MUST |
 
 ---
 
-### Description of use, building works or activity (use-works-activity)
+### Description of current use, building works or activity (use-works-activity)
 
 Please state for which of these you need a lawful development certificate/building works (you must tick at least one option):
 
@@ -504,7 +504,7 @@ specified-use | The specific use if no use class suitable | | MAY | Rule: must b
 
 ### Grounds for application for a lawful development certificate (grounds-ldc)
 
-_To do: add description for module_
+Description of development
 
 Field | Description | Application-type | Required? | Notes
 -- | -- | -- | -- | --
@@ -527,7 +527,7 @@ decision-date | Date of the decision (DD/MM/YYYY) | Date | MAY | Must be before 
 
 ### Information in support of a lawful development certificate (info-support-ldc)
 
-_To do: add description for module_
+Information in support of a lawful development certificate
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
@@ -541,7 +541,7 @@ _To do: add description for module_
 
 ### Residential units (including conversion) (res-units)
 
-Details of the number of residential units added or removed by the proposal
+The amount of residential units included as part of your proposal
 
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --

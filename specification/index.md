@@ -21,16 +21,16 @@ This specification sets out how to structure and share planning application data
 	* [Condition(s) - removal](#conditions---removal-con-remove-vary)
 	* [Declaration](#declaration-declaration)
 	* [Demolition](#demolition-demolition)
-	* [Description of existing use, building works or activity](#description-of-existing-use-building-works-or-activity-desc-existing-use)
+	* [Describing what is on the site at the time of application](#describing-what-is-on-the-site-at-the-time-of-application-desc-existing-use)
+	* [Description of current use, building works or activity](#description-of-current-use-building-works-or-activity-use-works-activity)
 	* [Description of proposed works](#description-of-proposed-works-desc-proposed-works)
 	* [Description of proposed works, impacts and risks](#description-of-proposed-works-impacts-and-risks-desc-work-impacts-risks)
 	* [Description of the proposal](#description-of-the-proposal-proposal-details)
-	* [Description of the proposal](#description-of-the-proposal-proposal-details-ldc)
 	* [Description of the proposed development including any non-residential development](#description-of-the-proposed-development-including-any-non-residential-development-proposal-details-inc-non-residential)
-	* [Description of use, building works or activity](#description-of-use-building-works-or-activity-use-works-activity)
-	* [Description of your proposal](#description-of-your-proposal-desc-your-proposal)
 	* [Designated areas](#designated-areas-designated-areas)
-	* [Details of proposed advertisement(s)](#details-of-proposed-advertisements-proposed-advert-details)
+	* [Details about the proposal](#details-about-the-proposal-proposal-details-ldc)
+	* [Details about the proposal](#details-about-the-proposal-desc-your-proposal)
+	* [Details about the proposed advertisement](#details-about-the-proposed-advertisement-proposed-advert-details)
 	* [Discharge of condition](#discharge-of-condition-discharge-con)
 	* [Eligibility](#eligibility-eligibility)
 	* [Eligibility - Larger house extension](#eligibility---larger-house-extension-eligibility-extension)
@@ -169,6 +169,8 @@ These are all the modules that can be used across application types.
 
 ### Adjoining premises (adj-premises)
 
+The addresses of any adjoining properties
+
 * Reference: `adj-premises`
 * [Discussion #25](https://github.com/digital-land/planning-application-data-specification/discussions/25)
 
@@ -187,6 +189,8 @@ uprn | UPRN if known | UPRN | MAY |
 ---
 
 ### Advertisement period (advert-period)
+
+The amount of time you're planning for your advert to be on display
 
 * Reference: `advert-period`
 * [Discussion #27](https://github.com/digital-land/planning-application-data-specification/discussions/27)
@@ -273,6 +277,8 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 ---
 
 ### All types of development: Non-residential floorspace (non-res-floorspace)
+
+Details of any new non-residential development involved in the proposal
 
 * Reference: `non-res-floorspace`
 * [Discussion #46](https://github.com/digital-land/planning-application-data-specification/discussions/46)
@@ -384,6 +390,8 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Assessment of flood risk (flood-risk-assessment)
 
+An assessment needed for any developments within any flood risk zones
+
 * Reference: `flood-risk-assessment`
 * [Discussion #49](https://github.com/digital-land/planning-application-data-specification/discussions/49)
 
@@ -415,6 +423,8 @@ Any connection between the applicant or agent and the local authority’s staff 
 ---
 
 ### Biodiversity and geological conservation (bio-geo-arch-con)
+
+Details of any impact to biodiversity or geological convservation
 
 * Reference: `bio-geo-arch-con`
 * [Discussion #51](https://github.com/digital-land/planning-application-data-specification/discussions/51)
@@ -497,6 +507,8 @@ Details of the national planning requirements the applicant should submit along 
 
 ### Condition(s) - removal (con-remove-vary)
 
+An application to change or remove conditions which can be proved are no longer relevant or reasonable
+
 * Reference: `con-remove-vary`
 * [Discussion #56](https://github.com/digital-land/planning-application-data-specification/discussions/56)
 
@@ -524,6 +536,8 @@ Applicants and agents must declare information provided is correct
 
 ### Demolition (demolition)
 
+Permission or prior approval that may be required to demolish a building
+
 * Reference: `demolition`
 * [Discussion #60](https://github.com/digital-land/planning-application-data-specification/discussions/60)
 
@@ -541,7 +555,7 @@ Applicants and agents must declare information provided is correct
 
 ---
 
-### Description of existing use, building works or activity (desc-existing-use)
+### Describing what is on the site at the time of application (desc-existing-use)
 
 * Reference: `desc-existing-use`
 * [Discussion #61](https://github.com/digital-land/planning-application-data-specification/discussions/61)
@@ -557,6 +571,21 @@ field | description | required | notes
 use | The Use class of the use | MUST | See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189). One of enum or other
 use-details | Further detail of the use | MAY | Rule: required if `use` is `sui` or `other`
 land-part | State which part of the land the `use` relates to | MUST | 
+
+---
+
+### Description of current use, building works or activity (use-works-activity)
+
+Please state for which of these you need a lawful development certificate/building works (you must tick at least one option):
+
+* Reference: `use-works-activity`
+* [Discussion #62](https://github.com/digital-land/planning-application-data-specification/discussions/62)
+
+field | description | application-types | required | notes
+-- | -- | -- | -- | --
+ldc-need[] | What is the lawful development certificate needed for? |   | MUST | At least one of [lawful development need enum](https://github.com/digital-land/planning-application-data-specification/discussions/205).
+use | If existing-use or use-breach-of-condition is True, state the relevant Use Class |   | MAY | If `existing-use` or `breach-con-existing-use ` in `ldc-need` then applicant needs to provide `use`. See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189). One of enum or `other`
+specified-use | The specific use if no use class suitable | | MAY | Rule: must be provided if `use` is `sui` or `other`
 
 ---
 
@@ -619,23 +648,6 @@ Details about the proposal
 
 ---
 
-### Description of the proposal (proposal-details-ldc)
-
-* Reference: `proposal-details-ldc`
-* [Discussion #206](https://github.com/digital-land/planning-application-data-specification/discussions/206)
-
-| field | description | application-types | required | notes |
-| --- | --- | --- | --- | --- |
-| proposal-incl-building-operations | True or False | ldc | MUST | Is this only for lawful development certificate for proposed work |
-| proposal-building-operations-description | | ldc | MAY | If `proposal-incl-building-operations` is True then this must be filled in |
-| proposal-incl-change-of-use | True or False | ldc | MUST | |
-| proposal-change-of-use-description | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
-| proposal-existing-use-description | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
-| proposal-existing-use-stop-date | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
-| proposal-started | True or False | ldc | MUST | |
-
----
-
 ### Description of the proposed development including any non-residential development (proposal-details-inc-non-residential)
 
 * Reference: `proposal-details-inc-non-residential`
@@ -659,22 +671,37 @@ Details about the proposal
 
 ---
 
-### Description of use, building works or activity (use-works-activity)
+### Designated areas (designated-areas)
 
-Please state for which of these you need a lawful development certificate/building works (you must tick at least one option):
+Areas that are protected because of their natural and cultural importance
 
-* Reference: `use-works-activity`
-* [Discussion #62](https://github.com/digital-land/planning-application-data-specification/discussions/62)
+* Reference: `designated-areas`
+* [Discussion #59](https://github.com/digital-land/planning-application-data-specification/discussions/59)
 
-field | description | application-types | required | notes
+Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-ldc-need[] | What is the lawful development certificate needed for? |   | MUST | At least one of [lawful development need enum](https://github.com/digital-land/planning-application-data-specification/discussions/205).
-use | If existing-use or use-breach-of-condition is True, state the relevant Use Class |   | MAY | If `existing-use` or `breach-con-existing-use ` in `ldc-need` then applicant needs to provide `use`. See [use class enum](https://github.com/digital-land/planning-application-data-specification/discussions/189). One of enum or `other`
-specified-use | The specific use if no use class suitable | | MAY | Rule: must be provided if `use` is `sui` or `other`
+designations[] | List of designated areas that apply to the site | extraction-oil-gas | MUST | Multiple selections allowed. If None of the above is selected, no other options can be chosen. Leave blank if none. See [designations enum](https://github.com/digital-land/planning-application-data-specification/discussions/193)
 
 ---
 
-### Description of your proposal (desc-your-proposal)
+### Details about the proposal (proposal-details-ldc)
+
+* Reference: `proposal-details-ldc`
+* [Discussion #206](https://github.com/digital-land/planning-application-data-specification/discussions/206)
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| proposal-incl-building-operations | True or False | ldc | MUST | Is this only for lawful development certificate for proposed work |
+| proposal-building-operations-description | | ldc | MAY | If `proposal-incl-building-operations` is True then this must be filled in |
+| proposal-incl-change-of-use | True or False | ldc | MUST | |
+| proposal-change-of-use-description | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
+| proposal-existing-use-description | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
+| proposal-existing-use-stop-date | | ldc | MAY | If `proposal-incl-change-of-use` is True then this must be filled in |
+| proposal-started | True or False | ldc | MUST | |
+
+---
+
+### Details about the proposal (desc-your-proposal)
 
 * Reference: `desc-your-proposal`
 * [Discussion #63](https://github.com/digital-land/planning-application-data-specification/discussions/63)
@@ -701,18 +728,7 @@ decision-date | Date of the planning decision | MUST | Must be before the applic
 
 ---
 
-### Designated areas (designated-areas)
-
-* Reference: `designated-areas`
-* [Discussion #59](https://github.com/digital-land/planning-application-data-specification/discussions/59)
-
-Field | Description | Application-Types | Required | Notes
--- | -- | -- | -- | --
-designations[] | List of designated areas that apply to the site | extraction-oil-gas | MUST | Multiple selections allowed. If None of the above is selected, no other options can be chosen. Leave blank if none. See [designations enum](https://github.com/digital-land/planning-application-data-specification/discussions/193)
-
----
-
-### Details of proposed advertisement(s) (proposed-advert-details)
+### Details about the proposed advertisement (proposed-advert-details)
 
 * Reference: `proposed-advert-details`
 * [Discussion #82](https://github.com/digital-land/planning-application-data-specification/discussions/82)
@@ -742,6 +758,8 @@ designations[] | List of designated areas that apply to the site | extraction-oi
 
 ### Discharge of condition (discharge-con)
 
+Application to have conditions removed
+
 * Reference: `discharge-con`
 * [Discussion #149](https://github.com/digital-land/planning-application-data-specification/discussions/149)
 
@@ -752,6 +770,8 @@ designations[] | List of designated areas that apply to the site | extraction-oi
 ---
 
 ### Eligibility (eligibility)
+
+Details of the applicant's eligibility to make an application
 
 * Reference: `eligibility`
 * [Discussion #44](https://github.com/digital-land/planning-application-data-specification/discussions/44)
@@ -774,6 +794,8 @@ date-of-notification | Date notification was sent | Date | MUST | Format: YYYY-M
 
 ### Eligibility - Larger house extension (eligibility-extension)
 
+Checking eligibility for prior approval
+
 * Reference: `eligibility-extension`
 * [Discussion #192](https://github.com/digital-land/planning-application-data-specification/discussions/192)
 
@@ -791,6 +813,8 @@ site-constraints[] | List of specific site constraints |   | MAY | Rule: Requir
 
 ### Eligibility - Related operations and works (eligibility-related-works)
 
+Checking eligibility for prior approval
+
 * Reference: `eligibility-related-works`
 * [Discussion #87](https://github.com/digital-land/planning-application-data-specification/discussions/87)
 
@@ -801,6 +825,8 @@ site-constraints[] | List of specific site constraints |   | MAY | Rule: Requir
 ---
 
 ### Eligibility - The current building and site (eligibility-current-building)
+
+Checking eligibility for prior approval
 
 * Reference: `eligibility-current-building`
 * [Discussion #88](https://github.com/digital-land/planning-application-data-specification/discussions/88)
@@ -815,6 +841,8 @@ site-location-constraint | Is any part of the land or site located in a restrict
 ---
 
 ### Eligibility - The proposed development (eligibility-proposal)
+
+Checking eligibility for prior approval
 
 * Reference: `eligibility-proposal`
 * [Discussion #89](https://github.com/digital-land/planning-application-data-specification/discussions/89)
@@ -839,7 +867,7 @@ dwellinghouse-use | Will the extended dwelling remain as a Class C3 dwellinghous
 
 ### Employment (employment)
 
-Please complete the following information regarding employees
+Information about employees
 
 * Reference: `employment`
 * [Discussion #43](https://github.com/digital-land/planning-application-data-specification/discussions/43)
@@ -861,6 +889,8 @@ fte | Total full-time equivalent (FTE) | Calculated as full-time + (part-time ÷
 
 ### Equipment and method used (equip-method)
 
+Information about the equipment and methods proposed
+
 * Reference: `equip-method`
 * [Discussion #85](https://github.com/digital-land/planning-application-data-specification/discussions/85)
 
@@ -871,6 +901,8 @@ fte | Total full-time equivalent (FTE) | Calculated as full-time + (part-time ÷
 ---
 
 ### Existing use (existing-use)
+
+Application for development that doesn't change the existing use of the building
 
 * Reference: `existing-use`
 * [Discussion #42](https://github.com/digital-land/planning-application-data-specification/discussions/42)
@@ -890,6 +922,8 @@ contamination-assessment | Reference to contamination assessment document | full
 
 ### Explanation for proposed demolition work (demolition-reason)
 
+Justification for proposed demolition work
+
 * Reference: `demolition-reason`
 * [Discussion #86](https://github.com/digital-land/planning-application-data-specification/discussions/86)
 
@@ -900,6 +934,8 @@ demolition-reason | Explanation of why demolition is necessary | | MUST |
 ---
 
 ### Foul sewage (foul-sewage)
+
+Description of how sewage will be dealt with for the development
 
 * Reference: `foul-sewage`
 * [Discussion #41](https://github.com/digital-land/planning-application-data-specification/discussions/41)
@@ -915,6 +951,8 @@ drainage-system-details | Details of the drawings/plans that show the existing s
 
 ### Grounds for application (grounds-for-application)
 
+Description of development
+
 * Reference: `grounds-for-application`
 * [Discussion #90](https://github.com/digital-land/planning-application-data-specification/discussions/90)
 
@@ -926,6 +964,8 @@ drainage-system-details | Details of the drawings/plans that show the existing s
 ---
 
 ### Grounds for application (information about the existing use(s)) (grounds-existing-use)
+
+Current use of the site
 
 * Reference: `grounds-existing-use`
 * [Discussion #92](https://github.com/digital-land/planning-application-data-specification/discussions/92)
@@ -941,6 +981,8 @@ specified-use | Specify the use if no applicable use class | | MAY | Rule: must 
 
 ### Grounds for application (information about the proposed use(s)) (grounds-proposed-use)
 
+Proposed use of development
+
 * Reference: `grounds-proposed-use`
 * [Discussion #93](https://github.com/digital-land/planning-application-data-specification/discussions/93)
 
@@ -955,6 +997,8 @@ reason | Reason why the development is considered lawful | | MUST | Explanation 
 ---
 
 ### Grounds for application for a lawful development certificate (grounds-ldc)
+
+Description of development
 
 * Reference: `grounds-ldc`
 * [Discussion #91](https://github.com/digital-land/planning-application-data-specification/discussions/91)
@@ -980,6 +1024,8 @@ decision-date | Date of the decision (DD/MM/YYYY) | Date | MAY | Must be before 
 
 ### Hazardous substances (haz-substances)
 
+Does proposal include use or storage of hazardous substances
+
 * Reference: `haz-substances`
 * [Discussion #40](https://github.com/digital-land/planning-application-data-specification/discussions/40)
 
@@ -1002,7 +1048,7 @@ amount | Amount of the substance in tonnes | Numeric. Must be greater than 0.
 
 ### Hedgerow removal notice (hedgerow-removal)
 
-This section is used to provide details about the hedgerows being removed
+Details about the hedgerows being removed
 
 * Reference: `hedgerow-removal`
 * [Discussion #217](https://github.com/digital-land/planning-application-data-specification/discussions/217)
@@ -1020,7 +1066,7 @@ interest-declaration | The applicant's interest or ownership | hedgerow-removal 
 
 ### Hours of operation (hrs-operation)
 
-Please state the hours of opening for each non-residential use proposed:
+Hours of opening for each non-residential use proposed
 
 * Reference: `hrs-operation`
 * [Discussion #39](https://github.com/digital-land/planning-application-data-specification/discussions/39)
@@ -1055,6 +1101,8 @@ close-time | Closing time | MUST | Format: `HH:MM`
 
 ### Identification of tree(s) and description of works (tree-work-details)
 
+Details of trees and proposed work to them
+
 * Reference: `tree-work-details`
 * [Discussion #94](https://github.com/digital-land/planning-application-data-specification/discussions/94)
 
@@ -1077,6 +1125,8 @@ replanting-description | Details of replanting | tpo
 
 ### Immunity from listing (immunity-from-listing)
 
+Whether you have an immunity from listing
+
 * Reference: `immunity-from-listing`
 * [Discussion #38](https://github.com/digital-land/planning-application-data-specification/discussions/38)
 
@@ -1088,6 +1138,8 @@ replanting-description | Details of replanting | tpo
 ---
 
 ### Industrial or commercial processes and machinery (processes-machinery-waste)
+
+Activities and processes which would be carried out on the site and the end products including plant, ventilation, or air conditioning
 
 * Reference: `processes-machinery-waste`
 * [Discussion #95](https://github.com/digital-land/planning-application-data-specification/discussions/95)
@@ -1121,6 +1173,8 @@ hazardous | Maximum throughput for hazardous waste | Integer | MAY | Annual thro
 
 ### Information in support of a lawful development certificate (info-support-ldc)
 
+Information in support of a lawful development certificate
+
 * Reference: `info-support-ldc`
 * [Discussion #96](https://github.com/digital-land/planning-application-data-specification/discussions/96)
 
@@ -1136,7 +1190,7 @@ hazardous | Maximum throughput for hazardous waste | Integer | MAY | Annual thro
 
 ### Interest details (interest-details)
 
-This section collects information on who owns the land or building and the applicants interest
+Who owns the land or building and the applicant's interest
 
 * Reference: `interest-details`
 * [Discussion #212](https://github.com/digital-land/planning-application-data-specification/discussions/212)
@@ -1181,6 +1235,8 @@ reason-not-informed | Reason why they were not informed | String | MAY | Rule: R
 
 ### Listed building alterations (lb-alter)
 
+What you're proposing to do to a listed building
+
 * Reference: `lb-alter`
 * [Discussion #99](https://github.com/digital-land/planning-application-data-specification/discussions/99)
 
@@ -1196,18 +1252,22 @@ See [listed building alteration types enum](https://github.com/digital-land/plan
 
 ### Listed building grading (lb-grade)
 
+What grade the listed building is
+
 * Reference: `lb-grade`
 * [Discussion #36](https://github.com/digital-land/planning-application-data-specification/discussions/36)
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| listed-building-grade | Selected from [listed-building-grade](https://dluhc-datasets.planning-data.dev/dataset/listed-building-grade) or "don't know" |  | MUST | Note the certificate of lawfulness apps do not ask about ecclesiastical grades |
+| listed-building-grade | Selected from [listed-building-grade](https://dataset-editor.planning.data.gov.uk/dataset/listed-building-grade) or "don't know" |  | MUST | Note the certificate of lawfulness apps do not ask about ecclesiastical grades |
 | listed-building | Provide the listed building reference | | MAY | Would make it easier to cross-reference with the official listing |
 | provided-by | Details of source of the data. `Applicant` or `System/Service` | | MAY | This can be used by authority to determine if they need to check the data they have been provided |
 
 ---
 
 ### Location of advertisement(s) (advert-location)
+
+Where your advert will be situated
 
 * Reference: `advert-location`
 * [Discussion #64](https://github.com/digital-land/planning-application-data-specification/discussions/64)
@@ -1224,7 +1284,7 @@ See [listed building alteration types enum](https://github.com/digital-land/plan
 
 ### Materials (materials)
 
-Where details about the materials to be used or changed should be provided, including type, colour and name for each material
+Details about the materials to be used or changed should be provided, including type, colour and name for each material
 
 * Reference: `materials`
 * [Discussion #26](https://github.com/digital-land/planning-application-data-specification/discussions/26)
@@ -1246,7 +1306,7 @@ proposed-materials | Description of the materials proposed for this building ele
 materials-not-applicable | Indicates that material details are not applicable for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 materials-not-known | Indicates that the materials are unknown for this building element. | MAY | Boolean: true or false. Required if both existing-materials and proposed-materials are left blank.
 
-**documents**
+**supporting documents**
 
 field | description | data type | required? | notes
 -- | -- | -- | -- | --
@@ -1256,6 +1316,8 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 ---
 
 ### Neighbour and community consultation (community-consultation)
+
+Neighbours should be informed about development proposals and seek feedback
 
 * Reference: `community-consultation`
 * [Discussion #65](https://github.com/digital-land/planning-application-data-specification/discussions/65)
@@ -1268,6 +1330,8 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 ---
 
 ### Non-material amendment(s) sought (nm-amendment-details)
+
+Description of proposed development
 
 * Reference: `nm-amendment-details`
 * [Discussion #76](https://github.com/digital-land/planning-application-data-specification/discussions/76)
@@ -1347,6 +1411,8 @@ Details of how the proposed development will affect the parking area required
 
 ### Part discharge of condition(s) (part-discharge)
 
+Submitting information to discharge part of a condition
+
 * Reference: `part-discharge`
 * [Discussion #140](https://github.com/digital-land/planning-application-data-specification/discussions/140)
 
@@ -1422,6 +1488,8 @@ Details of pre-application advice received from the local planning authority
 
 ### Related proposals (related-proposals)
 
+Other applications related to the same site
+
 * Reference: `related-proposals`
 * [Discussion #34](https://github.com/digital-land/planning-application-data-specification/discussions/34)
 
@@ -1442,7 +1510,7 @@ Details of pre-application advice received from the local planning authority
 
 ### Residential units (including conversion) (res-units)
 
-Details of the number of residential units added or removed by the proposal
+The amount of residential units included as part of your proposal
 
 * Reference: `res-units`
 * [Discussion #33](https://github.com/digital-land/planning-application-data-specification/discussions/33)
@@ -1513,6 +1581,8 @@ Applicant/agent must provide one of:
 
 ### Site area (site-area)
 
+Size of the site
+
 * Reference: `site-area`
 * [Discussion #103](https://github.com/digital-land/planning-application-data-specification/discussions/103)
 
@@ -1524,6 +1594,8 @@ Applicant/agent must provide one of:
 ---
 
 ### Site information (site-info)
+
+Additional information about the site
 
 * Reference: `site-info`
 * [Discussion #104](https://github.com/digital-land/planning-application-data-specification/discussions/104)
@@ -1570,6 +1642,8 @@ details | Additional details about the document, for example, details about the 
 
 ### Site ownership (site-ownership)
 
+Who currently owns the site
+
 * Reference: `site-ownership`
 * [Discussion #105](https://github.com/digital-land/planning-application-data-specification/discussions/105)
 
@@ -1613,6 +1687,8 @@ Details needed to support a site visit
 
 ### Storage (storage-facilities)
 
+Any storage of materials proposed during construction
+
 * Reference: `storage-facilities`
 * [Discussion #67](https://github.com/digital-land/planning-application-data-specification/discussions/67)
 
@@ -1623,6 +1699,8 @@ Details needed to support a site visit
 ---
 
 ### Supporting information (supporting-info)
+
+Information to support the application
 
 * Reference: `supporting-info`
 * [Discussion #107](https://github.com/digital-land/planning-application-data-specification/discussions/107)
@@ -1643,7 +1721,7 @@ Details needed to support a site visit
 
 ### Trade effluent (trade-effluent)
 
-Details of trade effluent disposal
+Effluents that will be produced from a process or activity undertaken on the site
 
 * Reference: `trade-effluent`
 * [Discussion #74](https://github.com/digital-land/planning-application-data-specification/discussions/74)
@@ -1657,6 +1735,8 @@ Details of trade effluent disposal
 
 ### Tree preservation order details (tpo)
 
+Details of a tree preservation order
+
 * Reference: `tpo`
 * [Discussion #108](https://github.com/digital-land/planning-application-data-specification/discussions/108)
 
@@ -1668,6 +1748,8 @@ Details of trade effluent disposal
 ---
 
 ### Trees - additional information (trees-additional)
+
+Additional information about trees on the site
 
 * Reference: `trees-additional`
 * [Discussion #109](https://github.com/digital-land/planning-application-data-specification/discussions/109)
@@ -1718,6 +1800,8 @@ name | Name of the document | String | MUST | Descriptive name for clarity
 
 ### Trees location (trees-location)
 
+Location of trees on the site
+
 * Reference: `trees-location`
 * [Discussion #111](https://github.com/digital-land/planning-application-data-specification/discussions/111)
 
@@ -1749,6 +1833,8 @@ Applicant only needs to provide this if the site is different from their address
 ---
 
 ### Trees ownership (trees-ownership)
+
+Ownership of trees on the site
 
 * Reference: `trees-ownership`
 * [Discussion #112](https://github.com/digital-land/planning-application-data-specification/discussions/112)
@@ -1793,6 +1879,8 @@ Rule: one phone number provided should have `contact-priority` == `primary`
 
 ### Type of development (dev-type)
 
+Type of development
+
 * Reference: `dev-type`
 * [Discussion #113](https://github.com/digital-land/planning-application-data-specification/discussions/113)
 
@@ -1811,6 +1899,8 @@ environmental-statement-reference | Reference of the environmental statement doc
 ---
 
 ### Type of proposed advertisement(s) (advertisement-types)
+
+Type of proposed advertisement
 
 * Reference: `advertisement-types`
 * [Discussion #114](https://github.com/digital-land/planning-application-data-specification/discussions/114)
@@ -1831,6 +1921,8 @@ environmental-statement-reference | Reference of the environmental statement doc
 ---
 
 ### Types of application (types-application)
+
+Type of application
 
 * Reference: `types-application`
 * [Discussion #73](https://github.com/digital-land/planning-application-data-specification/discussions/73)
@@ -1855,7 +1947,7 @@ decision-date | Decision date of the related proposal | Date | MUST | Format: YY
 
 ### Vehicle parking (vehicle-parking)
 
-Please provide information on the existing and proposed number of on-site parking spaces: 
+Existing and proposed number of on-site parking spaces
 
 * Reference: `vehicle-parking`
 * [Discussion #72](https://github.com/digital-land/planning-application-data-specification/discussions/72)
@@ -1879,6 +1971,8 @@ difference-in-spaces | Calculated difference between existing and proposed space
 
 ### Voluntary agreements / planning obligations (vol-agreement)
 
+Any voluntary agreements or planning obligations
+
 * Reference: `vol-agreement`
 * [Discussion #115](https://github.com/digital-land/planning-application-data-specification/discussions/115)
 
@@ -1890,6 +1984,8 @@ difference-in-spaces | Calculated difference between existing and proposed space
 ---
 
 ### Waste storage and collection (waste-storage-collection)
+
+Proposed waste storage and collection
 
 * Reference: `waste-storage-collection`
 * [Discussion #84](https://github.com/digital-land/planning-application-data-specification/discussions/84)
@@ -2248,15 +2344,6 @@ unknown | Unknown | outline | The answer is unknown
 
 * Reference: `site-constraint`
 
-reference | name | description
--- | -- | --
-conservation-area | Conservation Area |  
-aona-beauty | Area of Outstanding Natural Beauty |  
-secretary-specified-area | Secretary of State Protected Area |  
-the-broads | The Broads |  
-national-park | National Park |  
-world-heritage-site | World Heritage Site |  
-site-of-special-interest | Site of Special Scientific Interest |  
 
 ---
 

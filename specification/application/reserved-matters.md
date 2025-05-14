@@ -340,7 +340,7 @@ Details needed to support a site visit
 
 ### Supporting information (supporting-info)
 
-_To do: add description for module_
+Information to support the application
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
