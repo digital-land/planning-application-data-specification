@@ -32,7 +32,7 @@ For suppliers and community:
 * reduces the need for hardcoded integration assumptions
 * helps everyone "speak the same language" when it comes to data
 
-### Decisions
+## Decisions
 
 **Modules should be defined centrally**
 Each module has a canonical definition in a shared repository.
