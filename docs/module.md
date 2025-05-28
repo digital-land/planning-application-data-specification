@@ -1,6 +1,6 @@
 # Modules
 
-_how we define modules is still being decided_
+_Note: Exactly how we define modules is still being decided_
 
 As we move from narrative specifications to declarative models, we need a consistent way to describe modules. 
 
