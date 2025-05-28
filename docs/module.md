@@ -43,7 +43,7 @@ Each module has a canonical definition in a shared repository.
 * `name`
 * `description`
 * `fields[]` - List of field references
-* `applies-if` - A condition or expression that determines when the module is used
+* `applies-if` - A condition or expression that determines when the module is used (not sure if this is the right place for it)
 * `entry-date`
 * `end-date` - for deprecating fields
 
