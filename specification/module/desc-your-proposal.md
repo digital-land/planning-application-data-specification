@@ -1,7 +1,7 @@
 Field | Description | Data Type | Application Type | Required? | Notes
 -- | -- | -- | -- | -- | --
 related-proposal{} | Details of the related planning permission | Object | s73, approval-condition, non-material-amendment | MUST | See Related Proposal Structure below.
-condition-numbers[] | List of condition numbers related to this application | Array (String) | s73, approval-condition | MAY | Up to 10 condition numbers.
+condition-numbers[] | List of condition numbers related to this application | Array (String) | s73, approval-condition | MAY | The paper forms limit this to 10 conditions but a digital offering does not need to set a limit
 original-application-type | Type of original planning application | Enum | non-material-amendment | MAY | Example: 'Full', 'Householder and Listed Building'.
 householder-development | Is the development to an existing dwelling-house or development within its curtilage (`true`/`false`) | Boolean | non-material-amendment | MAY | Use to calculate the fee
 development-started | Whether the development has already started | Boolean | s73, approval-condition | MUST | True/False
