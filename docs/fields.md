@@ -81,3 +81,9 @@ name: Applicants
 component: Applicant
 ---
 ```
+
+### Validation rules for field definitions
+
+* every field of datatype `object` must have a `component` attribute
+* every field of datatype `enum` must have a `codelist` attribute
+* cardinality must be `1` or `n`

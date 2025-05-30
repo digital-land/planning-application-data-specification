@@ -66,3 +66,10 @@ Use of `applies-if` allows conditional inclusion without bloating the model.
 * What is missing? For example, field ordering?
   Model should be minimal so reluctant to introduce too much. No looking to encode UI layout reqs, data transfer methods, etc
 * Should we include what is redactable at the model or field level?
+* is a `rules` attribute enough to handle the validation rules for components and modules?
+
+
+### Validation rules for module (or component) definitions
+
+* `fields` attribute must have 1 or more entries
+* each `field` of `fields` must be defined in the set of specification fields
