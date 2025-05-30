@@ -9,4 +9,4 @@
 | --- | --- | --- |
 | reference | reference for the related proposal | |
 | description | description of the related proposal | |
-| decision-data | date of the decision | If decided | |
+| decision-date | date of the decision | If decided | |
