@@ -1,8 +1,5 @@
 #!/usr/bin/env python3
 
-import os
-from datetime import datetime
-
 import click
 from bin.application_types import (
     add_modules,
@@ -16,20 +13,12 @@ from bin.application_types import (
     print_sub_types,
 )
 from bin.checks import check_requirements
-from bin.forms import (
-    form_details,
-    get_app_types_covered,
-    get_form,
-    get_forms,
-    get_forms_by_app_type,
-    print_all_forms,
-)
-from bin.loader import load_all, load_data, load_requirements
+from bin.forms import form_details, get_form, get_forms_by_app_type, print_all_forms
+from bin.loader import load_data
 from bin.modules import (
     check_codelists,
     check_modules,
     get_expected_joins,
-    get_module_discussion_url,
     get_modules,
     join_data_maker,
 )
@@ -157,7 +146,12 @@ def app_type(
     generate_application,
     generate_specification_index,
 ):
-    application_types, forms, modules, app_mod_joins, sub_types = load_all()
+    data = load_data()
+    application_types = data["app-types"]
+    forms = data["forms"]
+    modules = data["modules"]
+    app_mod_joins = data["app-modules"]
+    sub_types = data["sub-types"]
 
     if generate_specification_index:
         generate_specification_index_file(modules)
@@ -298,7 +292,10 @@ def app_type(
     help="Print as Markdown text to the terminal",
 )
 def form(app_type, form_ref, module_name, not_in, markdown):
-    application_types, forms, modules, app_mod_joins, sub_types = load_all()
+    data = load_data()
+    forms = data["forms"]
+    modules = data["modules"]
+    app_mod_joins = data["app-modules"]
 
     if app_type:
         print("===")
@@ -377,7 +374,9 @@ def form(app_type, form_ref, module_name, not_in, markdown):
     help="List of application types separated by ';' to use instead of app_types_covered",
 )
 def module(ref, show, make, app_types):
-    application_types, forms, modules, app_mod_joins, sub_types = load_all()
+    data = load_data()
+    modules = data["modules"]
+    app_mod_joins = data["app-modules"]
 
     if not show and not make:
         print("Please provide either --show or --make option")
@@ -393,13 +392,13 @@ def module(ref, show, make, app_types):
         print(f"\nModule: {module['name']} (ref: {module['reference']})")
 
         app_types_covered = get_app_types_with_module(
-            ref, app_mod_joins, application_types, sub_types
+            ref, app_mod_joins, data["app-types"], data["sub-types"]
         )
 
         if show == "form":
             print(f"Forms: {module['application-forms']}")
         elif show == "app-types":
-            print(f"Application types with module:")
+            print("Application types with module:")
             # print the application types with the module
             for at in app_types_covered["application-types"]:
                 print(f"  {at['name']}")
@@ -505,7 +504,9 @@ def requirements(app_type, sub_type):
 )
 def check(module, codelist, requirements):
     if module or codelist:
-        _, _, modules, app_mod_joins, _ = load_all()
+        data = load_data()
+        modules = data["modules"]
+        app_mod_joins = data["app-modules"]
         if module:
             check_modules(modules, "../specification/module", app_mod_joins)
         if codelist:
