@@ -5,8 +5,14 @@ description: |
   Details of the agent acting on behalf of the applicant, including name and organisation if applicable
 fields:
   - field: reference
+    required: true
   - field: person
+    required: true
   - field: company
+  - field: contact-details
+    required-if:
+      - application-type:
+          in: [pip]
 entry-date: 2025-05-28
 end-date: ''
 ---
