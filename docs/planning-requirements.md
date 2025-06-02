@@ -14,6 +14,7 @@ Each file includes:
 * `name` – human-readable title
 * `description` – explanation of the requirement
 * `synonyms` – list of alternative names (if applicable)
+* `requirement-type` - the type of requirement (for example, a document or a data requirement)
 * `document-type` – category of document (e.g. statement, report)
 * `source` – legal or policy source, such as legislation or NPPF paragraph references
 * `entry-date` – when this requirement was introduced

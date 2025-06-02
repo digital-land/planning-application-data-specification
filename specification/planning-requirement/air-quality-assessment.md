@@ -4,6 +4,7 @@ name: Air Quality Assessment
 description: >
   An assessment of the impact on air quality around the development and during the construction phase.
 synonyms: []
+requirement-type: document
 source: "National Planning Policy Framework (NPPF), paras 110, 119"
 entry-date: 2025-03-30
 end-date: ''
