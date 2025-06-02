@@ -9,3 +9,6 @@ init::
 specifications:
 	python pacli.py app-type --generate-specification-index  
 	python pacli.py app-type --all --generate-application
+
+schema-docs:
+	python -m bin.schema_to_md specification/module/agent-details.schema.md
