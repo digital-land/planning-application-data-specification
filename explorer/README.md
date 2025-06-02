@@ -112,13 +112,15 @@ Check for duplicates in planning requirements, and check integrity of national p
 python pacli.py check --requirements
 ```
 
+---
+
 ## CSV
 
 There are numerous csv files in the repo you may want to interact with
 
 Print out the csv in a markdown table
 ```
-python pacli.py csv --filename {path to csv} --markdown --fields {list of fields separated by ,}
+python csvcli.py csv --filename {path to csv} --markdown --fields {list of fields separated by ,}
 ```
 **--filename** is a path to the csv file from the explorer directory
 **--markdown** is needed to print the table out to the terminal
