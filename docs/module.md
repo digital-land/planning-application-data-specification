@@ -46,6 +46,7 @@ Each module has a canonical definition in a shared repository.
 * `applies-if` - A condition or expression that determines when the module is used (not sure if this is the right place for it)
 * `entry-date`
 * `end-date` - for deprecating fields
+* `rules`
 
 Each field item will need include the requirement level and, probably, a level of conditionality (for example, required if field X is Y)
 
@@ -68,6 +69,47 @@ Use of `applies-if` allows conditional inclusion without bloating the model.
 * Should we include what is redactable at the model or field level?
 * is a `rules` attribute enough to handle the validation rules for components and modules?
 
+### Examples
+
+The `agent-contact` module
+```yaml
+module: agent-contact
+name: Agent contact details
+description: |
+  Contact details of the agent acting on behalf of the applicant
+fields:
+  - field: agent-reference
+    required: true
+  - field: contact-details
+    required: true
+entry-date: 2025-05-30
+end-date: ''
+```
+
+The `contact-details` component
+```yaml
+module: contact-details
+name: Contact details
+description: |
+  A substructure for recording contact details
+fields:
+  - field: email
+    required: true
+  - field: phone-numbers
+    required: true
+  - field: fax-number
+rules:
+  - rule: At least one phone number must have `contact-priority` set to `primary`
+    applies-to: phone-numbers
+    condition:
+      field: contact-priority
+      equals: primary
+      minimum-occurrences: 1
+entry-date: 2025-05-30
+end-date: ''
+```
+
+Components and modules are defined the same but modules are used in application specifications whereas the components are the reusable substructures used in modules.
 
 ### Validation rules for module (or component) definitions
 
