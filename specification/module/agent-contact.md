@@ -8,7 +8,6 @@
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
