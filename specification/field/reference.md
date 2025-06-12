@@ -1,7 +1,7 @@
 ---
 cardinality: '1'
 datatype: string
-description: A reference for the data item
+description: A unique reference for the data item
 entry-date: '2025-06-02'
 end-date: ''
 field: reference
