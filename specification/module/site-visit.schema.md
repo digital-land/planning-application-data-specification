@@ -14,8 +14,8 @@ fields:
         in: [applicant, agent]
   - field: other-contact
     required-if:
-      - contact-type:
-          equals: other
+      - field: contact-type
+        value: other
 rules:
   - rule: "contact must match agent name details if contact-type is agent"
   - rule: "contact must match applicant name if contact-type is applicant"
