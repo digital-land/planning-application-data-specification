@@ -15,3 +15,79 @@ Shows a site visit where:
 - Full contact details are provided in the other-contact structure
 
 Note that when contact-type is "other", the other-contact structure must include all required fields (fullname, phone-number, and email).
+
+# Example JSON Files
+
+These examples show valid JSON structures for different modules under different scenarios.
+
+## Parking Module Examples
+
+### parking-no-changes.json
+Shows a parking submission where:
+- No changes are being made to existing parking arrangements
+- Minimal response required (just boolean flag)
+
+### parking-with-changes.json
+Shows a parking submission where:
+- Existing parking arrangements are being modified
+- Includes required description of the changes
+- Example shows common scenario of garage conversion
+
+Notes:
+- Description should be specific about the impact on parking spaces
+- Both on-street and off-street parking changes should be described
+- Local authority may need to validate against parking standards
+
+## Pre-application Advice Examples
+
+### pre-app-advice-none.json
+Shows a submission where:
+- No pre-application advice was sought
+- Only requires boolean flag
+
+### pre-app-advice-with-reference.json
+Shows a submission where:
+- Formal pre-application advice was received
+- Reference number provided
+- No summary needed as reference links to formal advice
+
+### pre-app-advice-informal.json
+Shows a submission where:
+- Informal pre-application advice was received
+- No formal reference number available
+- Detailed summary of advice provided instead
+
+Key points demonstrated:
+- Conditional field requirements based on advice-sought
+- Alternative between reference and summary
+- Date format requirements
+- Proper summary formatting
+
+## Trees and Hedges Examples
+
+### trees-hedges-none.json
+Shows a submission where:
+- No trees/hedges on site or adjacent land
+- No falling trees risk
+- No tree removal needed
+- Minimal response with all boolean flags false
+
+### trees-hedges-removal.json
+Shows a submission where:
+- Trees present on development site
+- Tree removal/pruning required
+- Includes tree removal plan document reference
+- No falling trees risk identified
+
+### trees-hedges-risk.json
+Shows a submission where:
+- Trees present on both site and adjacent land
+- Falling trees risk identified
+- Includes risk assessment document reference
+- No tree removal needed
+
+Key points demonstrated:
+- Conditional document requirements
+- Document reference structure
+- Boolean flag combinations
+- Proper document naming
