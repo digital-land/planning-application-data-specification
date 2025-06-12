@@ -91,3 +91,23 @@ Key points demonstrated:
 - Document reference structure
 - Boolean flag combinations
 - Proper document naming
+
+## Declaration Examples
+
+### declaration-applicant.json
+Shows a declaration where:
+- Declaration made by the applicant directly
+- All required fields provided (name, confirmation, date)
+- Date is in correct YYYY-MM-DD format
+
+### declaration-agent.json
+Shows a declaration where:
+- Declaration made by the agent on behalf of applicant
+- Name matches agent details from application
+- Current date used for declaration
+
+Key points demonstrated:
+- Module wrapping with "declaration" key
+- Date format requirements
+- Name matching requirements
+- Boolean confirmation flag
