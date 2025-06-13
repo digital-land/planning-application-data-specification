@@ -1,7 +1,7 @@
 ---
 cardinality: '1'
 datatype: string
-description: The correspondence address for the individual
+description: Flexible field for capturing addresses
 entry-date: '2025-06-02'
 end-date: ''
 field: address-text
