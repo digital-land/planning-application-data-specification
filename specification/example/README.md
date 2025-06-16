@@ -111,3 +111,32 @@ Key points demonstrated:
 - Date format requirements
 - Name matching requirements
 - Boolean confirmation flag
+
+## Description of Proposal Examples
+
+### description-of-proposal-hh.json
+Shows a basic householder application where:
+- Simple proposal description for extension
+- Work has not started or completed
+- No related applications or reserved matters needed
+
+### description-of-proposal-reserved.json
+Shows a reserved matters application where:
+- Multiple reserved matters being approved
+- Links to previous outline permission
+- Includes full related application details
+- Work not yet started
+
+### description-of-proposal-retrospective.json
+Shows a retrospective application where:
+- Work has already been completed
+- Includes both start and completion dates
+- Description indicates retrospective nature
+- Dates are in valid sequence
+
+Key points demonstrated:
+- Module wrapping with "description-of-proposal" key
+- Conditional field inclusion based on application type
+- Date format requirements
+- Related application structure
+- Reserved matters array format
