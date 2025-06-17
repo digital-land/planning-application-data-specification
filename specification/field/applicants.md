@@ -6,5 +6,5 @@ entry-date: ''
 end-date: ''
 field: applicants
 name: Applicants
-component: Applicant
+component: applicant
 ---

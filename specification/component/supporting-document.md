@@ -1,5 +1,5 @@
 ---
-module: supporting-document
+component: supporting-document
 name: Supporting document
 description: |
   Document to support information provided

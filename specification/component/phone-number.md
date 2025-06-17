@@ -1,5 +1,5 @@
 ---
-module: phone-number
+component: phone-number
 name: Phone number
 description: |
   A substructure for recording a phone number

@@ -1,5 +1,5 @@
 ---
-module: applicant
+component: applicant
 name: Applicant
 description: |
   Details of an individual applicant for the planning application,

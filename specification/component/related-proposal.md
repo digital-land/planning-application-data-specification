@@ -1,5 +1,5 @@
 ---
-module: related-proposal
+component: related-proposal
 name: Related proposal
 description: |
   Details about a related proposal including its reference, description and decision date

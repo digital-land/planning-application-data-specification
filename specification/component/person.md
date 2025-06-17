@@ -1,5 +1,5 @@
 ---
-module: person
+component: person
 name: Person obj
 description: |
   Details of an individual

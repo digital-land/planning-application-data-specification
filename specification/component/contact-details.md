@@ -1,5 +1,5 @@
 ---
-module: contact-details
+component: contact-details
 name: Contact details
 description: |
   A substructure for recording contact details

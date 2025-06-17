@@ -1,5 +1,5 @@
 ---
-module: other-contact
+component: other-contact
 name: Other contact
 description: |
   Details of another contact person for site visits when not using the applicant or agent
