@@ -9,4 +9,5 @@ fields:
   - field: name
     required: true
 entry-date: 2025-06-12
+end-date: ''
 ---

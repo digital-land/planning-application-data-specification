@@ -10,4 +10,5 @@ fields:
     required: true
   - field: decision-date
 entry-date: 2025-06-12
+end-date: ''
 ---
