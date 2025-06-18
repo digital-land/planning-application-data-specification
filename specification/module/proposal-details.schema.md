@@ -62,4 +62,5 @@ rules:
   - rule: "pip-reference must match an existing Planning in Principle application"
   - rule: "PSI projects must be checked against infrastructure improvement plans"
 entry-date: 2025-06-12
+end-date: ''
 ---

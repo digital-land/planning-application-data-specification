@@ -42,4 +42,5 @@ rules:
   - rule: "falling-trees-document reference must match a document in application.documents"
   - rule: "tree-removal-plan reference must match a document in application.documents"
 entry-date: 2025-06-12
+end-date: ''
 ---

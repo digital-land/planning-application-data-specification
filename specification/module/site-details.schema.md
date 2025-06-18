@@ -16,4 +16,5 @@ rules:
   - rule: "UPRNs must be valid format"
   - rule: "Post code must be valid UK format"
 entry-date: 2025-06-13
+end-date: ''
 ---

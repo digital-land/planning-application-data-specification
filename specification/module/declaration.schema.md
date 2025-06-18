@@ -15,4 +15,5 @@ rules:
   - rule: "declaration-date must be in YYYY-MM-DD format"
   - rule: "declaration-date must not be in the future"
 entry-date: 2025-06-12
+end-date: ''
 ---

@@ -36,6 +36,7 @@ application-types:
   - non-material-amendment
   - extraction-oil-gas
 entry-date: 2025-06-12
+end-date: ''
 ---
 
 Is `advice-summary` required if the applicant provides a reference to a document they have uploaded?

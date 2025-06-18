@@ -22,4 +22,5 @@ rules:
   - rule: "When contact-type is other, full contact details must be provided"
 
 entry-date: 2025-06-12
+end-date: ''
 ---

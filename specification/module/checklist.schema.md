@@ -10,4 +10,5 @@ rules:
   - rule: "All values must be from the national-requirement-type codelist"
   - rule: "Values must be valid for the current application type"
 entry-date: 2025-06-12
+end-date: ''
 ---

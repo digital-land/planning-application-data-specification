@@ -43,4 +43,5 @@ rules:
   - rule: "If change-right-of-way is yes, separate rights of way order may be needed"
   - rule: "If temp-right-of-way is yes, details of temporary diversions must be provided"
 entry-date: 2025-06-13
+end-date: ''
 ---
