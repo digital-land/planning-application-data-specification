@@ -4,7 +4,7 @@ name: Materials
 description: |
   Information about the materials used in the development, including both existing and proposed materials
 fields:
-  - field: building-element
+  - field: building-elements
     required: true
   - field: additional-material-information
     required: true
