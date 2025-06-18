@@ -1,5 +1,5 @@
 ---
-field: falling-trees-risk
+field: has-falling-trees-risk
 name: Falling trees risk
 description: Whether there are falling trees on-premises or adjacent premises that are a risk to the development
 datatype: boolean

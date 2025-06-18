@@ -14,7 +14,7 @@ fields:
       application-type:
         in: [full;outline-some;extraction-oil-gas]
     required: true
-  - field: falling-trees-risk
+  - field: has-falling-trees-risk
     applies-if:
       application-type:
         in: [hh]
@@ -24,7 +24,7 @@ fields:
       application-type:
         in: [hh]
     required-if:
-      - field: falling-trees-risk
+      - field: has-falling-trees-risk
         value: true
   - field: tree-removal
     applies-if:
