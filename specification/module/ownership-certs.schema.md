@@ -23,7 +23,7 @@ fields:
     applies-if:
       application-type:
         in: ["hh", "full", "outline", "demolition-con-area", "lbc", "s73", "extraction-oil-gas"]
-  - field: newspaper-notice
+  - field: newspaper-notices
     notes: Required for Certificate-C or Certificate-D
     applies-if:
       application-type:
