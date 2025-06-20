@@ -91,7 +91,6 @@ Details needed for contacting the person representing the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -118,6 +117,7 @@ Details about the person representing the applicant
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | MAY | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| user-role | A specific of the user, either agent or proxy | MAY | used to determine if the details should be redacted
 
 **Person object**
 | field | description | required | notes |
@@ -133,7 +133,6 @@ Details about the person representing the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact agent | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -159,7 +158,6 @@ Details needed for contacting the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -200,7 +198,6 @@ Details about the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact agent | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -220,7 +217,7 @@ Any connection between the applicant or agent and the local authority’s staff 
 | --- | --- | --- | --- | --- |
 | conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
 | name | Name of the individual with the conflict | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
-| details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
+| conflict-details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
 ---
 
@@ -268,7 +265,7 @@ Details about the proposal
 | --- | --- | --- |
 | reference | reference for the related proposal | |
 | description | description of the related proposal | |
-| decision-data | date of the decision | If decided | |
+| decision-date | date of the decision | If decided | |
 
 ---
 
@@ -301,6 +298,7 @@ Details to locate the site proposed for development
 | --- | --- | --- | --- |
 | site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
 | address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
+| post-code | The post code for the address provided | MAY | |
 | easting | Grid reference | MAY | |
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
@@ -323,7 +321,7 @@ Details needed to support a site visit
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
+| can-be-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
 | contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
 | contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
 | other-contact{} | Details of specifically named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
@@ -332,7 +330,7 @@ Details needed to support a site visit
 
 | field | description | requirement-level | notes |
 | --- | --- | --- | --- |
-| name | Name of person to contact | MUST | |
+| fullname | Name of person to contact | MUST | |
 | number | Phone number of person to contact | MUST | |
 | email | Email of person to contact | MUST | |
 

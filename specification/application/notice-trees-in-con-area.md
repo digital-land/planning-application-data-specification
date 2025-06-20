@@ -1,6 +1,6 @@
 # Notification of proposed works to trees in a conservation area
 
- An application for work to trees in conservation areas that are not under a tree preservation order
+Notification, 6 weeks prior to works being carried out, of proposed works to a tree in a conservation area that is not subject to a Tree Preservation order
 
 ## Contents
 
@@ -88,7 +88,6 @@ Details needed for contacting the person representing the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -115,6 +114,7 @@ Details about the person representing the applicant
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | MAY | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| user-role | A specific of the user, either agent or proxy | MAY | used to determine if the details should be redacted
 
 **Person object**
 | field | description | required | notes |
@@ -130,7 +130,6 @@ Details about the person representing the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact agent | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -156,7 +155,6 @@ Details needed for contacting the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -197,7 +195,6 @@ Details about the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact agent | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -217,7 +214,7 @@ Any connection between the applicant or agent and the local authority’s staff 
 | --- | --- | --- | --- | --- |
 | conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
 | name | Name of the individual with the conflict | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
-| details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
+| conflict-details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
 ---
 
@@ -346,7 +343,6 @@ Ownership of trees on the site
 | --- | --- | --- | --- |
 | email | Email used to contact agent | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |

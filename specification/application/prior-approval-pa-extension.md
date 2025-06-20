@@ -120,6 +120,7 @@ Details about the person representing the applicant
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | MAY | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| user-role | A specific of the user, either agent or proxy | MAY | used to determine if the details should be redacted
 
 **Person object**
 | field | description | required | notes |

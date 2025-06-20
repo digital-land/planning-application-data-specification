@@ -127,7 +127,6 @@ Details needed for contacting the person representing the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -154,6 +153,7 @@ Details about the person representing the applicant
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | MAY | |
 | contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| user-role | A specific of the user, either agent or proxy | MAY | used to determine if the details should be redacted
 
 **Person object**
 | field | description | required | notes |
@@ -169,7 +169,6 @@ Details about the person representing the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact agent | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -231,7 +230,6 @@ Details needed for contacting the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -272,7 +270,6 @@ Details about the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact agent | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -308,7 +305,7 @@ Any connection between the applicant or agent and the local authority’s staff 
 | --- | --- | --- | --- | --- |
 | conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
 | name | Name of the individual with the conflict | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
-| details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
+| conflict-details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
 ---
 
@@ -407,7 +404,7 @@ Details about the proposal
 | --- | --- | --- |
 | reference | reference for the related proposal | |
 | description | description of the related proposal | |
-| decision-data | date of the decision | If decided | |
+| decision-date | date of the decision | If decided | |
 
 ---
 
@@ -454,7 +451,7 @@ Hours of opening for each non-residential use proposed
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | hours-of-operation[]{} | List the hours of operation by non-residential use | full;outline;extraction-oil-gas | MUST | |
-| additional-information | Any additional detail about operational hours | extraction-oil-gas | MAY | |
+| additional-information | Any additional information (such as hours of use of other machinery within the site-generators, pumps, etc) | extraction-oil-gas | MAY | |
 
 **hours of operation**
 | field | description | required | notes |
@@ -518,9 +515,9 @@ Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
 sole-owner | Is the applicant the sole owner of the land? (True/False) | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MUST | If True, ownership-cert-option is Certificate-A.
 agricultural-tenants | Are there any agricultural tenants? (True/False) |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MUST | If True, Certificate-A cannot apply.
-owners-and-tenants[] | List of known owners and agricultural tenants | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY | Required for Certificate-B or Certificate-C.
+owners-and-tenants[]{} | List of known owners and agricultural tenants | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY | Required for Certificate-B or Certificate-C.
 steps-taken | Steps taken to identify unknown owners or tenants | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY | Required for Certificate-C or Certificate-D.
-newspaper-notice | Newspaper notice details for unknown owners/tenants |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MAY | Required for Certificate-C or Certificate-D.
+newspaper-notice[]{} | Newspaper notice details for unknown owners/tenants |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MAY | Required for Certificate-C or Certificate-D.
 ownership-cert-option | Ownership certificate type based on ownership and tenancy | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MUST | See [ownership certificate type enum](https://github.com/digital-land/planning-application-data-specification/discussions/224)
 applicant-signature | Signature of the applicant | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY |  
 agent-signature | Signature of the agent (if applicable) |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MAY |  
@@ -615,6 +612,7 @@ Details to locate the site proposed for development
 | --- | --- | --- | --- |
 | site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
 | address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
+| post-code | The post code for the address provided | MAY | |
 | easting | Grid reference | MAY | |
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
@@ -648,7 +646,7 @@ Details needed to support a site visit
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
+| can-be-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
 | contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
 | contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
 | other-contact{} | Details of specifically named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
@@ -657,7 +655,7 @@ Details needed to support a site visit
 
 | field | description | requirement-level | notes |
 | --- | --- | --- | --- |
-| name | Name of person to contact | MUST | |
+| fullname | Name of person to contact | MUST | |
 | number | Phone number of person to contact | MUST | |
 | email | Email of person to contact | MUST | |
 
@@ -691,7 +689,7 @@ drainage-system-details | Details of the drawings/plans that show the existing s
 
 ### Hazardous substances (haz-substances)
 
-Does proposal include use or storage of hazardous substances
+Does proposal include use or storage of hazardous substances? This module is used to determine if hazardous substances consent would also be required
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -717,7 +715,7 @@ Details about the materials to be used or changed should be provided, including 
 **Materials**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). | hh;full;demolition-con-area;lbc;advertising;outline | MUST | See Building element structure. One entry per building element.
+building-elements[]{} | List of building elements where materials are being described (e.g., walls, roof). | hh;full;demolition-con-area;lbc;advertising;outline | MUST | See Building element structure. One entry per building element.
 additional-material-information | Indicates whether additional documents are provided to supplement the materials description | hh;full;demolition-con-area;lbc;advertising;outline | MUST | (`true` or `false`).
 supporting-documents[] | Details for documents providing additional material information. | hh;full;demolition-con-area;lbc;advertising;outline | MAY | Required if additional-material-information is true.
 
@@ -780,8 +778,8 @@ Details of trees and hedges affecting the site or that will be affected by the p
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
-| falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
+| has-falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
+| falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `has-falling-trees-risk` is `true` |
 | tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
 | tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true`. See supporting document structure below |
 | trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
@@ -795,6 +793,7 @@ field | description | data type | required? | notes
 -- | -- | -- | -- | --
 reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
 name | Name of the document | String | MUST | Descriptive name for clarity
+
 ---
 
 ### Vehicle parking (vehicle-parking)
@@ -862,7 +861,7 @@ drainage-system-details | Details of the drawings/plans that show the existing s
 
 ### Hazardous substances (haz-substances)
 
-Does proposal include use or storage of hazardous substances
+Does proposal include use or storage of hazardous substances? This module is used to determine if hazardous substances consent would also be required
 
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
@@ -888,7 +887,7 @@ Details about the materials to be used or changed should be provided, including 
 **Materials**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). | hh;full;demolition-con-area;lbc;advertising;outline | MUST | See Building element structure. One entry per building element.
+building-elements[]{} | List of building elements where materials are being described (e.g., walls, roof). | hh;full;demolition-con-area;lbc;advertising;outline | MUST | See Building element structure. One entry per building element.
 additional-material-information | Indicates whether additional documents are provided to supplement the materials description | hh;full;demolition-con-area;lbc;advertising;outline | MUST | (`true` or `false`).
 supporting-documents[] | Details for documents providing additional material information. | hh;full;demolition-con-area;lbc;advertising;outline | MAY | Required if additional-material-information is true.
 
@@ -951,8 +950,8 @@ Details of trees and hedges affecting the site or that will be affected by the p
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
-| falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `falling-trees-risk` is `true` |
+| has-falling-trees-risk | There are falling trees on-premises or adjacent premises that are a risk to the development. (`true`/`false`) | hh | MUST | |
+| falling-trees-document{} | Details of document showing location of trees | hh | MAY | Rule: is a MUST if `has-falling-trees-risk` is `true` |
 | tree-removal | Do trees or hedges need to be pruned or removed (`true`/`false`) | hh | MUST | |
 | tree-removal-plan{} | Details of document showing location of trees and hedges | hh | MAY | Rule: is a MUST of ` tree-removal` is `true`. See supporting document structure below |
 | trees-on-site | Trees or hedges are on the proposed development site (`true`/`false`) | full;outline-some;extraction-oil-gas | MUST | |
@@ -966,6 +965,7 @@ field | description | data type | required? | notes
 -- | -- | -- | -- | --
 reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
 name | Name of the document | String | MUST | Descriptive name for clarity
+
 ---
 
 ### Vehicle parking (vehicle-parking)
@@ -1009,7 +1009,7 @@ The following codelists are required by modules in this application type:
 
 ### Affected area type (affected-area-type)
 
-_To do: add description for codelist_
+Specifies whether a biodiversity or geological feature is on the development site or on land directly next to it.
 
 reference | name | description
 --- | --- | ---
