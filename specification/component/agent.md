@@ -13,6 +13,7 @@ fields:
     required-if:
       - application-type:
           in: [pip]
+  - field: user-role
 entry-date: 2025-05-28
 end-date: ''
 ---
