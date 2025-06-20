@@ -11,7 +11,7 @@
 ### {{ .Title }}
 
 {{ range .Commits -}}
-* {{ .Subject }}
+* {{ .Subject }} (commit [{{ .Hash.Short }}]({{ $.Info.RepositoryURL }}/commit/{{ .Hash.Long }}))
 {{ end }}
 {{ end -}}
 
