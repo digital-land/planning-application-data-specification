@@ -49,3 +49,20 @@ For service builders and the wider community
 ## Next steps
 
 This model is being introduced gradually, and we’re keeping it lightweight by design. We’ll publish it alongside the existing human-readable specs and welcome input on versioning, extension, and validation patterns as it evolves.
+
+--
+
+## Parts of the declarative model
+
+
+* fields - are the small elements of the model, they define individual data points
+  * fields can reference a component
+* components are reusable substructures or data shapes made up of, for example, an address or a person
+  * they group fields into logical, structured units
+* modules are a collection of fields and/or components that appear together as a section of an application form.
+  * they define which data is required in a given context
+* applications - the different types of planning applications that people can submit to ask for permission to do something
+  * each application specifies the modules that must be completed to allow a planning authority to assess the proposal
+
+If **fields** are the building blocks (bricks), and **components** are grouped blocks (walls), then **modules** are the rooms – they determine where and how those walls are arranged.  
+**Applications** are the full building – the complete structure made from those rooms, shaped according to purpose.

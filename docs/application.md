@@ -4,15 +4,16 @@ _Note: how we define applications is still being worked on_
 
 As we move from narrative specifications to declarative models, we need a consistent way to describe applications. 
 
-The pplication interface defines the application, what legislation underpins it and what is required to submit an application of that type - including any specific fields for that application and the required modules.
+The application interface defines the application, what legislation underpins it and what is required to submit an application of that type - including any specific fields for that application and the required modules.
 
+A declarative definition of application types supports programmatic conformance checking, dynamic form generation, and structured communication between systems, while remaining implementation-agnostic.
 
 ## Benefits
 
 Like [modules](module.md), applications benefit from being:
 
 * **Explicit** it clearly states what is required
-* **Reuse** of modules across applications types make the data mmore consistent
+* **Reuse** of modules across applications types make the data more consistent
 * **Testable** can drive conformance checks and interface expectations
 * **Supports validation and guidance** generation for applicants and services
 
@@ -43,7 +44,7 @@ Each application is defined in legislation and MHCLG should use that to define w
 * `name`
 * `description`
 * `synonyms` - other names used for the application type
-* `legislation` - a link to the legislation that defines the application type
+* `legislation` - provides a link for legal context
 * `fields[]` - list of field references
 * `modules` - a list of modules an applicant needs to complete
 * `entry-date`
@@ -55,8 +56,12 @@ With the field and modules definitions defined elsewhere.
 
 ### Still to decide
 
-* If we need `fields` and `modules` need to be separate lists. The `fields` list is always going to reference the `application` field. And arguably the `modules` are top-level fields that break down into substructures
+* If we need `fields` and `modules` need to be separate lists. The `fields` list is always going to reference the `application` field. And arguably the `modules` are top-level fields that break down into substructures. Out current thinking is:
+  * Field components describe reusable data shapes — what structured data looks like.
+  * Modules define reusable form sections — where and when that data is collected in an application.
+  * The two work together: fields define structure, modules define context.
 * Should the definition include other details that could be useful for submission and back-office systems, such as, details of the expected turn around times, so that these are also codified?
+* how to handle `sub-types`. One option to handle them the same as applications. So for outline applications we'd have 2 application definitions: outline-all and outline-some that define the modules required for each. An alternative is to define an outline application  and use `extend` or `inheritance` to define the application
 
 ### Examples
 
