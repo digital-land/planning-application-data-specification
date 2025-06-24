@@ -16,7 +16,7 @@ To support this work, we set up [an advisory group](https://design.planning.data
 
 We are currently working through a set of issues from the community. Our aim is to work through the issues that affect the specifications as they need to be now, things for improvements we are putting on a [backlog](https://github.com/digital-land/planning-application-data-specification/issues?q=is%3Aissue%20state%3Aopen%20label%3ABacklog) for future iterations.
 
-You can follow our progress with this [issue tracker](issue-tracker/index.md).
+You can follow our progress with this [issue tracker](issue-tracking/index.md).
 
 ## Application types
 
