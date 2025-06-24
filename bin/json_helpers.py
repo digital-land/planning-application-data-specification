@@ -18,19 +18,9 @@ def load_json(
 ) -> tuple[Dict[str, Any]]:
     """Load issues from JSON file and return issues + timestamp."""
     if not os.path.exists(filename):
-        return {}
+        return None
 
     with open(filename, "r", encoding="utf-8") as f:
         data = json.load(f)
 
     return data
-
-    # Handle old format (just a list) vs new format (dict with metadata)
-    if isinstance(data, list):
-        issues = data
-        timestamp = "Unknown (old format)"
-    else:
-        issues = data.get("issues", [])
-        timestamp = data.get("fetch_timestamp_human", "Unknown")
-
-    print(f"Loaded {len(issues)} issues from {filename} (last fetched: {timestamp})")
