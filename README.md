@@ -14,6 +14,9 @@ We started this initiative to create baseline planning application specification
 
 To support this work, we set up [an advisory group](https://design.planning.data.gov.uk/advisory-group) and have been sharing high-level updates through a [GitHub discussion](https://github.com/digital-land/data-standards-backlog/discussions/98). However, as the discussion has grown quite lengthy, we’ve decided to create this repository to help manage the issues more effectively, allow contributors to focus on them one at a time.
 
+We are currently working through a set of issues from the community. Our aim is to work through the issues that affect the specifications as they need to be now, things for improvements we are putting on a [backlog](https://github.com/digital-land/planning-application-data-specification/issues?q=is%3Aissue%20state%3Aopen%20label%3ABacklog) for future iterations.
+
+You can follow our progress with this [issue tracker](issue-tracker/index.md).
 
 ## Application types
 
