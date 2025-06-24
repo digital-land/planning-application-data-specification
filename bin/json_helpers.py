@@ -6,6 +6,9 @@ from typing import Any, Dict
 def save_json(data: Dict[str, Any], filename: str = "cache/github_issues_cache.json"):
     """Save issues to JSON file with fetch timestamp."""
 
+    # Ensure the directory exists
+    os.makedirs(os.path.dirname(filename), exist_ok=True)
+
     with open(filename, "w", encoding="utf-8") as f:
         json.dump(data, f, indent=2, ensure_ascii=False)
 
