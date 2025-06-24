@@ -13,8 +13,17 @@ checks:
 	python3 bin/check.py
 
 
+issue-tracking-data:
+	python3 bin/issue_tracking.py
+
+
+issue-tracking-report:
+	python3 bin/issue_tracking_output.py
+
+
 status:
 	git status --ignored
+
 
 commit-issue-tracking::
 	git add .
