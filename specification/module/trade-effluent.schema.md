@@ -17,4 +17,5 @@ rules:
   - rule: "Module applies to full, extraction-oil-gas, and outline application types"
 entry-date: 2025-06-26
 end-date: ''
+note: This module should be included in all applications including full permission. For example, full and full+lbc
 ---
