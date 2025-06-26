@@ -28,10 +28,10 @@ field | description | data-type | required | notes
 use | A non-residential use | Enum+other | MUST | 
 specified-use | A specified use if no applicable use class | String | MAY | Rule: must if `use` is `sui` or `other`
 
-**documents structure**
+**Supporting documents structure**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document | String | MUST | Must be provided for each document
 name | Name of the document | String | MUST | Descriptive name for clarity
 details | Additional details about the document, for example, details about the constraint it references | String | MAY | 
