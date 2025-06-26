@@ -13,7 +13,7 @@ completion-date | Date when development was completed | Date | s73, approval-con
 
 Field | Description | Required? | Notes
 -- | --  | -- | --
-proposal-description | Detailed description of the approved development | MUST | As shown in the decision letter.
-reference-number | Reference number of the planning permission | MUST | Must match the decision letter.
+description | Detailed description of the approved development | MUST | As shown in the decision letter.
+reference | Reference for the original application for the approved development | MUST | Must match the decision letter.
 decision-date | Date of the planning decision | MUST | Must be before the application submission date.
 
