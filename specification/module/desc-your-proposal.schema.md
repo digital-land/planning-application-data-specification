@@ -34,7 +34,7 @@ fields:
     required-if:
       - field: development-started
         value: true
-  - field: development-completed
+  - field: has-development-completed
     applies-if:
       application-type:
         in: ["s73", "approval-condition"]
@@ -44,7 +44,7 @@ fields:
       application-type:
         in: ["s73", "approval-condition"]
     required-if:
-      - field: development-completed
+      - field: has-development-completed
         value: true
 rules:
   - rule: "start-date is required when development-started is true"

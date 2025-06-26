@@ -6,7 +6,7 @@ original-application-type | Type of original planning application | Enum | non-m
 householder-development | Is the development to an existing dwelling-house or development within its curtilage (`true`/`false`) | Boolean | non-material-amendment | MAY | Use to calculate the fee
 development-started | Whether the development has already started | Boolean | s73, approval-condition | MUST | True/False
 development-start-date | Date when development started | Date | s73, approval-condition | MAY | Required if development-started is True.
-development-completed | Whether the development has been completed | Boolean | s73, approval-condition | MUST | True/False
+has-development-completed | Whether the development has been completed | Boolean | s73, approval-condition | MUST | True/False
 development-completed-date | Date when development was completed | Date | s73, approval-condition | MAY | Required if development-completed is True.
 
 **Related proposal structure**

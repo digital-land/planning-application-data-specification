@@ -1,6 +1,6 @@
 ---
-field: development-completed
-name: Development completed
+field: has-development-completed
+name: Has development completed
 description: Whether the development has been completed
 datatype: boolean
 cardinality: 1
