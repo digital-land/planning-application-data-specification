@@ -8,7 +8,9 @@ An alternative way of getting planning permission for housing-led development wh
 
 ### Modules
 
+* [Agent contact details](#agent-contact-details-agent-contact)
 * [Agent name and address](#agent-name-and-address-agent-details)
+* [Applicant contact details](#applicant-contact-details-applicant-contact)
 * [Applicant name and address](#applicant-name-and-address-applicant-details)
 * [Authority employee/member](#authority-employee-member-conflict-of-interest)
 * [Checklist](#checklist-checklist)
@@ -73,6 +75,31 @@ file-size | Size of the file in bytes | MAY | Can be used to enforce limits
 
 These modules are all required for this application type
 
+### Agent contact details (agent-contact)
+
+Details needed for contacting the person representing the applicant
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| agent-reference | Use a reference from the agent details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
+
+**Contact details object**
+| field | description | required | notes |
+| --- | --- | --- | --- |
+| email | Email used to contact individual | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
+
+**Phone number structure**
+| field | description | notes |
+| --- | --- | --- | 
+| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
+| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
+
+Rule: one phone number provided should have `contact-priority` == `primary`
+
+---
+
 ### Agent name and address (agent-details)
 
 Details about the person representing the applicant
@@ -87,7 +114,6 @@ Details about the person representing the applicant
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | MAY | |
-| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 | user-role | A specific of the user, either agent or proxy | MAY | used to determine if the details should be redacted
 
 **Person object**
@@ -99,11 +125,22 @@ Details about the person representing the applicant
 | address-text | The address that can be used to correspond with the applicant| MUST | |
 | post-code | The post code for the address provided | MAY | |
 
+---
+
+### Applicant contact details (applicant-contact)
+
+Details needed for contacting the applicant
+
+| field | description | application-types | required | notes |
+| --- | --- | --- | --- | --- |
+| applicant-reference | Use a reference from the applicant details component | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | Required to match contact details to a named individual | 
+| contact-details{} | Details of how to contact the individual | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;prior-approval;s73;approval-condition;consent-under-tpo;non-material-amendment;extraction-oil-gas;hedgerow-removal;notice-trees-in-con-area | MUST | |
+
 **Contact details object**
 | field | description | required | notes |
 | --- | --- | --- | --- |
-| email | Email used to contact agent | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
+| email | Email used to contact individual | MUST |  |
+| phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
 
 **Phone number structure**
 | field | description | notes |
@@ -128,7 +165,6 @@ Details about the applicant
 | --- | --- | --- | --- |
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -138,20 +174,6 @@ Details about the applicant
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
 | post-code | The post code for the address provided | MAY | |
-
-**Contact details object**
-| field | description | required | notes |
-| --- | --- | --- | --- |
-| email | Email used to contact agent | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-
-**Phone number structure**
-| field | description | notes |
-| --- | --- | --- | 
-| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
-
-Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
@@ -276,11 +298,11 @@ field | description | data-type | required | notes
 use | A non-residential use | Enum+other | MUST | 
 specified-use | A specified use if no applicable use class | String | MAY | Rule: must if `use` is `sui` or `other`
 
-**documents structure**
+**Supporting documents structure**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document | String | MUST | Must be provided for each document
 name | Name of the document | String | MUST | Descriptive name for clarity
 details | Additional details about the document, for example, details about the constraint it references | String | MAY | 
 
