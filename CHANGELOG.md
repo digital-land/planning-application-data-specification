@@ -1,4 +1,27 @@
 
+<a name="v0.1.13"></a>
+## [v0.1.13](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.12...v0.1.13) (2025-06-26)
+
+Resolving consistency of contact-details for PIP applications
+
+### 𝌭 Model changes
+
+* regenerate compiled spec for PIP applications (commit [ff7f01e](https://github.com/digital-land/planning-application-data-specification/commit/ff7f01e3a425ee7b830278fe7a31ed7c7c6a1aa6))
+* keep contact details separate from details modules in PiP applications, see issue [#294](https://github.com/digital-land/planning-application-data-specification/issues/294) (commit [e4166ec](https://github.com/digital-land/planning-application-data-specification/commit/e4166ecd844b354a73ab6740915cc2f68eb3be98))
+* add declarative version of proposal-details-inc-non-residential module (commit [663cb20](https://github.com/digital-land/planning-application-data-specification/commit/663cb20c3f9cf8b9b273b363ebab648c132fbc90))
+* add declarative version of site-info module (commit [779e29c](https://github.com/digital-land/planning-application-data-specification/commit/779e29c5a64d0a64d48b915001e3241ca3a7f3c7))
+* update supporting document part of site-info to be consistent with other instances (commit [d411aed](https://github.com/digital-land/planning-application-data-specification/commit/d411aed4187bd5f64980099dc129ecd4079e6704))
+
+### 👷‍♀️ Application changes
+
+* add agent and applicant contact modules to pip application (commit [fd40df3](https://github.com/digital-land/planning-application-data-specification/commit/fd40df33f4073e2ea016c625dadc18c1b9dbc6aa))
+* add declarative version of pip application (commit [d963d5c](https://github.com/digital-land/planning-application-data-specification/commit/d963d5c0c2292db981140e0adec780258cd33d98))
+
+### 📚 Documentation
+
+* regenerate a single file with all modules (commit [ed29c12](https://github.com/digital-land/planning-application-data-specification/commit/ed29c12875ded51634fa3896b99ea38007715333))
+
+
 <a name="v0.1.12"></a>
 ## [v0.1.12](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.11...v0.1.12) (2025-06-26)
 
