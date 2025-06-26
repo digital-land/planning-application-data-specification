@@ -1,6 +1,6 @@
 ---
-field: development-started
-name: Development started
+field: has-development-started
+name: Has development started
 description: Whether the development has already started
 datatype: boolean
 cardinality: 1

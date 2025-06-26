@@ -22,7 +22,7 @@ fields:
     applies-if:
       application-type:
         in: ["non-material-amendment"]
-  - field: development-started
+  - field: has-development-started
     applies-if:
       application-type:
         in: ["s73", "approval-condition"]
@@ -32,7 +32,7 @@ fields:
       application-type:
         in: ["s73", "approval-condition"]
     required-if:
-      - field: development-started
+      - field: has-development-started
         value: true
   - field: has-development-completed
     applies-if:
