@@ -6,6 +6,6 @@
 
 | field | description | required | notes |
 | --- | --- | --- | --- |
-| old-drawing | Reference of the old drawing | MUST | |
-| new-drawing | Reference for the new drawing | MUST | |
-| reason | Reason for replacing the drawing | | MAY |  |
+| old-drawing-reference | Reference of the old drawing | MUST | |
+| new-drawing-reference | Reference for the new drawing | MUST | |
+| reason | Reason for replacing the drawing | MAY |  |
