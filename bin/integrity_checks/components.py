@@ -92,12 +92,45 @@ def check_field_condition_references(
     """Check rule 4: field in required-if must reference valid field."""
     has_errors = False
     for component_name, component in components.items():
-
         component_fields = component.get("fields", [])
         for field_def in component_fields:
             required_if = field_def.get("required-if", [])
+
+            # Check if required_if is a list
+            if not isinstance(required_if, list):
+                print_error(
+                    component_name,
+                    f"required-if must be a list of conditions, got {type(required_if).__name__}",
+                )
+                has_errors = True
+                continue
+
             for condition in required_if:
-                field_name = condition.get("field")
+                # Check if condition is a dictionary
+                if not isinstance(condition, dict):
+                    print_error(
+                        component_name,
+                        f"required-if condition must be a dictionary, got {type(condition).__name__}",
+                    )
+                    has_errors = True
+                    continue
+
+                # First check if condition has any valid condition keys
+                valid_condition_keys = ["field", "application-type"]
+                has_valid_condition = any(
+                    key in condition for key in valid_condition_keys
+                )
+
+                if not has_valid_condition:
+                    print_error(
+                        component_name,
+                        f"required-if condition must contain at least one of: {', '.join(valid_condition_keys)}",
+                    )
+                    has_errors = True
+                    continue
+
+                # Check field references if present
+                field_name = condition.get("field", None)
                 if field_name and field_name not in fields:
                     print_error(
                         component_name, f"field '{field_name}' in required-if not found"
@@ -150,5 +183,17 @@ def check_all(
 
 
 if __name__ == "__main__":
+    # Load data for standalone testing
+    import os
+    import sys
+
+    sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from loader import load_content
+
+    specification = load_content()
+    components = specification["component"]
+    fields = specification["field"]
+    valid_types = []  # TODO: load valid application types
+
     success = check_all(components, fields, valid_types)
     exit(0 if success else 1)
