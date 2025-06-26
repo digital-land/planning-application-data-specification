@@ -18,7 +18,7 @@ fields:
     applies-if:
       application-type:
         in: ["non-material-amendment"]
-  - field: householder-development
+  - field: is-householder-development
     applies-if:
       application-type:
         in: ["non-material-amendment"]
