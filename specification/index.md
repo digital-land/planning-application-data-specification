@@ -219,7 +219,6 @@ Details needed for contacting the person representing the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -248,7 +247,7 @@ Details about the person representing the applicant
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | MAY | |
-| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
+| user-role | A specific of the user, either agent or proxy | MAY | used to determine if the details should be redacted
 
 **Person object**
 | field | description | required | notes |
@@ -258,21 +257,6 @@ Details about the person representing the applicant
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
 | post-code | The post code for the address provided | MAY | |
-
-**Contact details object**
-| field | description | required | notes |
-| --- | --- | --- | --- |
-| email | Email used to contact agent | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
-
-**Phone number structure**
-| field | description | notes |
-| --- | --- | --- | 
-| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
-
-Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
@@ -332,7 +316,6 @@ Details needed for contacting the applicant
 | --- | --- | --- | --- |
 | email | Email used to contact individual | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact individual | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the individual | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -360,7 +343,6 @@ Details about the applicant
 | --- | --- | --- | --- |
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -370,21 +352,6 @@ Details about the applicant
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
 | post-code | The post code for the address provided | MAY | |
-
-**Contact details object**
-| field | description | required | notes |
-| --- | --- | --- | --- |
-| email | Email used to contact agent | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
-
-**Phone number structure**
-| field | description | notes |
-| --- | --- | --- | 
-| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
-
-Rule: one phone number provided should have `contact-priority` == `primary`
 
 ---
 
@@ -418,7 +385,7 @@ Any connection between the applicant or agent and the local authority’s staff 
 | --- | --- | --- | --- | --- |
 | conflict-to-declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared. | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MUST | Answer may be different depending on the parties involved. "With respect to the Authority, is any named individual a member of staff, an elected member, related to a member of staff or related to an elected member" |
 | name | Name of the individual with the conflict | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true, name who has the conflict. Rule: `name` should match one of the names provided in applicants/agent section. Should this be structured data (first-name, surname)? |
-| details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
+| conflict-details | Details including name, role and how individual is related to them | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;consent-under-tpo;non-material-amendment;pip;extraction-oil-gas;notice-trees-in-con-area | MAY | Rule: if `conflict-to-declare` is true then this is a MUST |
 
 ---
 
@@ -644,7 +611,7 @@ Details about the proposal
 | --- | --- | --- |
 | reference | reference for the related proposal | |
 | description | description of the related proposal | |
-| decision-data | date of the decision | If decided | |
+| decision-date | date of the decision | If decided | |
 
 ---
 
@@ -709,20 +676,20 @@ designations[] | List of designated areas that apply to the site | extraction-oi
 Field | Description | Data Type | Application Type | Required? | Notes
 -- | -- | -- | -- | -- | --
 related-proposal{} | Details of the related planning permission | Object | s73, approval-condition, non-material-amendment | MUST | See Related Proposal Structure below.
-condition-numbers[] | List of condition numbers related to this application | Array (String) | s73, approval-condition | MAY | Up to 10 condition numbers.
+condition-numbers[] | List of condition numbers related to this application | Array (String) | s73, approval-condition | MAY | The paper forms limit this to 10 conditions but a digital offering does not need to set a limit
 original-application-type | Type of original planning application | Enum | non-material-amendment | MAY | Example: 'Full', 'Householder and Listed Building'.
-householder-development | Is the development to an existing dwelling-house or development within its curtilage (`true`/`false`) | Boolean | non-material-amendment | MAY | Use to calculate the fee
-development-started | Whether the development has already started | Boolean | s73, approval-condition | MUST | True/False
-start-date | Date when development started | Date | s73, approval-condition | MAY | Required if development-started is True.
-development-completed | Whether the development has been completed | Boolean | s73, approval-condition | MUST | True/False
-completion-date | Date when development was completed | Date | s73, approval-condition | MAY | Required if development-completed is True.
+is-householder-development | Is the development to an existing dwelling-house or development within its curtilage (`true`/`false`) | Boolean | non-material-amendment | MAY | Use to calculate the fee
+has-development-started | Whether the development has already started | Boolean | s73, approval-condition | MUST | True/False
+development-start-date | Date when development started | Date | s73, approval-condition | MAY | Required if development-started is True.
+has-development-completed | Whether the development has been completed | Boolean | s73, approval-condition | MUST | True/False
+development-completed-date | Date when development was completed | Date | s73, approval-condition | MAY | Required if development-completed is True.
 
 **Related proposal structure**
 
 Field | Description | Required? | Notes
 -- | --  | -- | --
-proposal-description | Detailed description of the approved development | MUST | As shown in the decision letter.
-reference-number | Reference number of the planning permission | MUST | Must match the decision letter.
+description | Detailed description of the approved development | MUST | As shown in the decision letter.
+reference | Reference for the original application for the approved development | MUST | Must match the decision letter.
 decision-date | Date of the planning decision | MUST | Must be before the application submission date.
 
 
@@ -1024,7 +991,7 @@ decision-date | Date of the decision (DD/MM/YYYY) | Date | MAY | Must be before 
 
 ### Hazardous substances (haz-substances)
 
-Does proposal include use or storage of hazardous substances
+Does proposal include use or storage of hazardous substances? This module is used to determine if hazardous substances consent would also be required
 
 * Reference: `haz-substances`
 * [Discussion #40](https://github.com/digital-land/planning-application-data-specification/discussions/40)
@@ -1074,7 +1041,7 @@ Hours of opening for each non-residential use proposed
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | hours-of-operation[]{} | List the hours of operation by non-residential use | full;outline;extraction-oil-gas | MUST | |
-| additional-information | Any additional detail about operational hours | extraction-oil-gas | MAY | |
+| additional-information | Any additional information (such as hours of use of other machinery within the site-generators, pumps, etc) | extraction-oil-gas | MAY | |
 
 **hours of operation**
 | field | description | required | notes |
@@ -1292,7 +1259,7 @@ Details about the materials to be used or changed should be provided, including 
 **Materials**
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-building-element[]{} | List of building elements where materials are being described (e.g., walls, roof). | hh;full;demolition-con-area;lbc;advertising;outline | MUST | See Building element structure. One entry per building element.
+building-elements[]{} | List of building elements where materials are being described (e.g., walls, roof). | hh;full;demolition-con-area;lbc;advertising;outline | MUST | See Building element structure. One entry per building element.
 additional-material-information | Indicates whether additional documents are provided to supplement the materials description | hh;full;demolition-con-area;lbc;advertising;outline | MUST | (`true` or `false`).
 supporting-documents[] | Details for documents providing additional material information. | hh;full;demolition-con-area;lbc;advertising;outline | MAY | Required if additional-material-information is true.
 
@@ -1363,9 +1330,9 @@ Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
 sole-owner | Is the applicant the sole owner of the land? (True/False) | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MUST | If True, ownership-cert-option is Certificate-A.
 agricultural-tenants | Are there any agricultural tenants? (True/False) |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MUST | If True, Certificate-A cannot apply.
-owners-and-tenants[] | List of known owners and agricultural tenants | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY | Required for Certificate-B or Certificate-C.
+owners-and-tenants[]{} | List of known owners and agricultural tenants | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY | Required for Certificate-B or Certificate-C.
 steps-taken | Steps taken to identify unknown owners or tenants | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY | Required for Certificate-C or Certificate-D.
-newspaper-notice | Newspaper notice details for unknown owners/tenants |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MAY | Required for Certificate-C or Certificate-D.
+newspaper-notice[]{} | Newspaper notice details for unknown owners/tenants |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MAY | Required for Certificate-C or Certificate-D.
 ownership-cert-option | Ownership certificate type based on ownership and tenancy | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MUST | See [ownership certificate type enum](https://github.com/digital-land/planning-application-data-specification/discussions/224)
 applicant-signature | Signature of the applicant | hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas  | MAY |  
 agent-signature | Signature of the agent (if applicable) |  hh;full;outline;demolition-con-area;lbc;s73;extraction-oil-gas | MAY |  
@@ -1405,7 +1372,8 @@ Details of how the proposed development will affect the parking area required
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| description | A description of how the proposed works will affect existing car parking arrangements | hh | MAY | |
+| is-existing-parking-affected | Will the proposed works affect existing car parking arrangements? | hh | MUST | True or false
+| description | A description of how the proposed works will affect existing car parking arrangements | hh | MAY | Rule: Is a MUST if `is-existing-parking-affected` is true |
 
 ---
 
@@ -1504,7 +1472,7 @@ Other applications related to the same site
 | --- | --- | --- |
 | reference | reference for the related proposal | |
 | description | description of the related proposal | |
-| decision-data | date of the decision | If decided | |
+| decision-date | date of the decision | If decided | |
 
 ---
 
@@ -1563,6 +1531,7 @@ Details to locate the site proposed for development
 | --- | --- | --- | --- |
 | site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
 | address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
+| post-code | The post code for the address provided | MAY | |
 | easting | Grid reference | MAY | |
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
@@ -1630,11 +1599,11 @@ field | description | data-type | required | notes
 use | A non-residential use | Enum+other | MUST | 
 specified-use | A specified use if no applicable use class | String | MAY | Rule: must if `use` is `sui` or `other`
 
-**documents structure**
+**Supporting documents structure**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document | String | MUST | Must be provided for each document
 name | Name of the document | String | MUST | Descriptive name for clarity
 details | Additional details about the document, for example, details about the constraint it references | String | MAY | 
 
@@ -1670,16 +1639,16 @@ Details needed to support a site visit
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| site-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
+| can-be-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
 | contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
-| contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
+| contact-reference | A reference for the applicant or agent who is the contact point for the site visit | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
 | other-contact{} | Details of specifically named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
 
 | field | description | requirement-level | notes |
 | --- | --- | --- | --- |
-| name | Name of person to contact | MUST | |
+| fullname | Name of person to contact | MUST | |
 | number | Phone number of person to contact | MUST | |
 | email | Email of person to contact | MUST | |
 
@@ -1713,9 +1682,9 @@ Information to support the application
 
 | field | description | required | notes |
 | --- | --- | --- | --- |
-| old-drawing | Reference of the old drawing | MUST | |
-| new-drawing | Reference for the new drawing | MUST | |
-| reason | Reason for replacing the drawing | | MAY |  |
+| old-drawing-reference | Reference of the old drawing | MUST | |
+| new-drawing-reference | Reference for the new drawing | MUST | |
+| reason | Reason for replacing the drawing | MAY |  |
 
 ---
 
@@ -1728,7 +1697,7 @@ Effluents that will be produced from a process or activity undertaken on the sit
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| `disposal-required` | Does the proposal involve the disposal of trade effluents or waste (`true`/`false`) | full;extraction-oil-gas;outline | MUST | | 
+| `is-disposal-required` | Does the proposal involve the disposal of trade effluents or waste (`true`/`false`) | full;extraction-oil-gas;outline | MUST | | 
 | `description` | Describe the nature, volume and means of disposal of trade effluents or waste | full;extraction-oil-gas;outline | MAY | Rule: is a MUST if `disposal-required` is True |
 
 ---
@@ -1796,6 +1765,7 @@ field | description | data type | required? | notes
 -- | -- | -- | -- | --
 reference | Unique identifier for the document. It should match a document attached to the application | String | MUST | Must be provided for each document. Rule: must match a reference in `application.documents`
 name | Name of the document | String | MUST | Descriptive name for clarity
+
 ---
 
 ### Trees location (trees-location)
@@ -1864,7 +1834,6 @@ Ownership of trees on the site
 | --- | --- | --- | --- |
 | email | Email used to contact agent | MUST |  |
 | phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-| fax-number | Fax number used to contact the applicant | MAY | is this still necessary? |
 
 **Phone number structure**
 | field | description | notes |
@@ -1979,7 +1948,7 @@ Any voluntary agreements or planning obligations
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | draft-agreement-included | outline or draft agreement included? (True / False) | extraction-oil-gas | MUST | |
-| agreement-summary | Summary of the agreement |extraction-oil-gas | MAY | Rule: is a MUST if `draft-agreement-included` is True |
+| agreement-summary | Summary of the agreement | extraction-oil-gas | MAY | Rule: is a MUST if `draft-agreement-included` is True |
 
 ---
 
@@ -2017,6 +1986,8 @@ These are all the codelists used by the modules.
 ---
 
 ### Affected area type (affected-area-type)
+
+Specifies whether a biodiversity or geological feature is on the development site or on land directly next to it.
 
 * Reference: `affected-area-type`
 
