@@ -7,7 +7,7 @@ householder-development | Is the development to an existing dwelling-house or de
 development-started | Whether the development has already started | Boolean | s73, approval-condition | MUST | True/False
 development-start-date | Date when development started | Date | s73, approval-condition | MAY | Required if development-started is True.
 development-completed | Whether the development has been completed | Boolean | s73, approval-condition | MUST | True/False
-completion-date | Date when development was completed | Date | s73, approval-condition | MAY | Required if development-completed is True.
+development-completed-date | Date when development was completed | Date | s73, approval-condition | MAY | Required if development-completed is True.
 
 **Related proposal structure**
 

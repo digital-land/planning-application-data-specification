@@ -1,6 +1,6 @@
 ---
-field: completion-date
-name: Completion date
+field: development-completion-date
+name: Development completion date
 description: Date when development was completed
 datatype: string
 cardinality: 1

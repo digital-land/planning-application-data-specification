@@ -39,7 +39,7 @@ fields:
       application-type:
         in: ["s73", "approval-condition"]
     required: true
-  - field: completion-date
+  - field: development-completed-date
     applies-if:
       application-type:
         in: ["s73", "approval-condition"]
