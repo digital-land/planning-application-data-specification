@@ -1,6 +1,6 @@
 ---
-field: start-date
-name: Start date
+field: development-start-date
+name: Development start date
 description: Date when development started
 datatype: string
 cardinality: 1

@@ -27,7 +27,7 @@ fields:
       application-type:
         in: ["s73", "approval-condition"]
     required: true
-  - field: start-date
+  - field: development-start-date
     applies-if:
       application-type:
         in: ["s73", "approval-condition"]
