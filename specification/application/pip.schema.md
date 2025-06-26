@@ -15,7 +15,9 @@ fields:
     required: true
 modules:
   - module: agent-details
+  - module: agent-contact
   - module: applicant-details
+  - module: applicant-contact
   - module: checklist
   - module: conflict-of-interest
   - module: declaration
