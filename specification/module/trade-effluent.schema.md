@@ -5,7 +5,7 @@ description: |
   Information about the disposal of trade effluents or waste, including whether 
   disposal is required and details about the nature, volume and means of disposal
 fields:
-  - field: disposal-required
+  - field: is-disposal-required
     required: true
   - field: description
     description: describe the nature, volume and means of disposal of trade effluents or waste

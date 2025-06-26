@@ -1,5 +1,5 @@
 ---
-field: disposal-required
+field: is-disposal-required
 name: Disposal required
 description: Does the proposal involve the disposal of trade effluents or waste (true/false)
 datatype: boolean
