@@ -14,7 +14,7 @@ name: Full application with multiple applicants
           "first-name": "Jane",
           "last-name": "Smith",
           "address-text": "123 Main Street, London",
-          "post-code": "SW1A 1AA"
+          "postcode": "SW1A 1AA"
         },
         "contact-details": {
           "email": "jane.smith@example.com",

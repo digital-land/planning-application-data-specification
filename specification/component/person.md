@@ -11,7 +11,7 @@ fields:
     required: true
   - field: address-text
     required: true
-  - field: post-code
+  - field: postcode
 entry-date: 2025-05-28
 end-date: ''
 ---

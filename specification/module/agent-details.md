@@ -17,4 +17,4 @@
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |

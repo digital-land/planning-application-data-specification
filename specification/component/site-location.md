@@ -7,7 +7,7 @@ description: |
 fields:
   - field: site-boundary
   - field: address-text
-  - field: post-code
+  - field: postcode
   - field: easting
   - field: northing
   - field: latitude
