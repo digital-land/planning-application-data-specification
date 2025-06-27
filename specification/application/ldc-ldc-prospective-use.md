@@ -138,7 +138,6 @@ Details about the person representing the applicant
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | MAY | |
-| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 | user-role | A specific of the user, either agent or proxy | MAY | used to determine if the details should be redacted
 
 **Person object**
@@ -148,21 +147,7 @@ Details about the person representing the applicant
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
-
-**Contact details object**
-| field | description | required | notes |
-| --- | --- | --- | --- |
-| email | Email used to contact agent | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-
-**Phone number structure**
-| field | description | notes |
-| --- | --- | --- | 
-| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
-
-Rule: one phone number provided should have `contact-priority` == `primary`
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -204,7 +189,6 @@ Details about the applicant
 | --- | --- | --- | --- |
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -213,21 +197,7 @@ Details about the applicant
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
-
-**Contact details object**
-| field | description | required | notes |
-| --- | --- | --- | --- |
-| email | Email used to contact agent | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-
-**Phone number structure**
-| field | description | notes |
-| --- | --- | --- | 
-| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
-
-Rule: one phone number provided should have `contact-priority` == `primary`
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -303,7 +273,7 @@ reason-not-informed | Reason why they were not informed | String | MAY | Rule: R
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -336,7 +306,7 @@ Details to locate the site proposed for development
 | --- | --- | --- | --- |
 | site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
 | address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 | easting | Grid reference | MAY | |
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
@@ -361,7 +331,7 @@ Details needed to support a site visit
 | --- | --- | --- | --- | --- |
 | can-be-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
 | contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
-| contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
+| contact-reference | A reference for the applicant or agent who is the contact point for the site visit | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
 | other-contact{} | Details of specifically named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
@@ -448,31 +418,40 @@ The amount of residential units included as part of your proposal
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --
 residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | full;outline;ldc | MUST | Could be calculated from answers to next parts?
-unit-counts[] | List of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
+residential-unit-summary[]{} | Breakdown of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
 total-existing-units | The total number of existing units | full;outline;ldc | MUST |
 total-proposed-units | The total number of proposed units | full;outline;ldc | MUST |
 net-change | Calculated net change in units | full;outline;ldc | MUST | Calculated as proposed-units - existing-units. Format: Integer
 
-**Unit counts**
+**residential-unit-summary**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
 tenure-type | Category of housing tenure | Enum | MUST | See [tenure type enum](https://github.com/digital-land/planning-application-data-specification/discussions/162)
 housing-type | Type of housing | Enum | MUST | See [housing type enum](https://github.com/digital-land/planning-application-data-specification/discussions/163)
-unknown-units | Whether the number of units is unknown (`true`/`false`) | Boolean | MAY | True if the applicant does not know the unit count.
-existing-units[] | Number of existing units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
-proposed-units[] | Number of proposed units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
+existing-unit-breakdown[]{} | Number of existing units by bedroom count | Object | MAY | See "Unit quantities Structure" below.
+proposed-unit-breakdown[]{} | Number of proposed units by bedroom count | Object | MAY | See "Unit quantities Structure" below.
 
-**Bedroom count** 
+**Unit quantities** 
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-bedroom-1 | Number of 1-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-2 | Number of 2-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-3 | Number of 3-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-4+ | Number of 4 or more bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-count-unknown | Number units where the bedroom number is unknown | Integer | MAY | Not required if unknown is True.
-total-units | Total number of units | Integer | MAY | Not required if unknown is True. Calculated as the sum of all bedroom counts.
+units-unknown | Whether the number of units is unknown (`true`/`false`) | Boolean | MUST | 
+units-per-bedroom-no[]{} | For this tenure and unit type | Object | MAY | MUST if `units-unknown` is False. See bedroom count
+total-units | Total number of units | Integer | MAY | Not required if `units-unknown` is True. Calculated as the sum of all bedroom counts.
+
+
+**bedroom count**
+
+field | description | data-type | required | notes
+-- | -- | -- | -- | --
+no-bedrooms-unknown | Set to true when counting units where bedroom number is unknown | Boolean | MUST || Default is false
+no-of-bedrooms | The number of bedrooms in unit | integer | MAY | MUST if no-bedrooms-unknown is true
+units | the number of units of that bedroom count | integer | MUST | 0 or above
+
+
+
+rule: if residential-unit-change = true, at least one breakdown for existing and proposed is required (count could be unknown).
 
 ---
 
@@ -550,31 +529,40 @@ The amount of residential units included as part of your proposal
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --
 residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | full;outline;ldc | MUST | Could be calculated from answers to next parts?
-unit-counts[] | List of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
+residential-unit-summary[]{} | Breakdown of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
 total-existing-units | The total number of existing units | full;outline;ldc | MUST |
 total-proposed-units | The total number of proposed units | full;outline;ldc | MUST |
 net-change | Calculated net change in units | full;outline;ldc | MUST | Calculated as proposed-units - existing-units. Format: Integer
 
-**Unit counts**
+**residential-unit-summary**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
 tenure-type | Category of housing tenure | Enum | MUST | See [tenure type enum](https://github.com/digital-land/planning-application-data-specification/discussions/162)
 housing-type | Type of housing | Enum | MUST | See [housing type enum](https://github.com/digital-land/planning-application-data-specification/discussions/163)
-unknown-units | Whether the number of units is unknown (`true`/`false`) | Boolean | MAY | True if the applicant does not know the unit count.
-existing-units[] | Number of existing units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
-proposed-units[] | Number of proposed units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
+existing-unit-breakdown[]{} | Number of existing units by bedroom count | Object | MAY | See "Unit quantities Structure" below.
+proposed-unit-breakdown[]{} | Number of proposed units by bedroom count | Object | MAY | See "Unit quantities Structure" below.
 
-**Bedroom count** 
+**Unit quantities** 
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-bedroom-1 | Number of 1-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-2 | Number of 2-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-3 | Number of 3-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-4+ | Number of 4 or more bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-count-unknown | Number units where the bedroom number is unknown | Integer | MAY | Not required if unknown is True.
-total-units | Total number of units | Integer | MAY | Not required if unknown is True. Calculated as the sum of all bedroom counts.
+units-unknown | Whether the number of units is unknown (`true`/`false`) | Boolean | MUST | 
+units-per-bedroom-no[]{} | For this tenure and unit type | Object | MAY | MUST if `units-unknown` is False. See bedroom count
+total-units | Total number of units | Integer | MAY | Not required if `units-unknown` is True. Calculated as the sum of all bedroom counts.
+
+
+**bedroom count**
+
+field | description | data-type | required | notes
+-- | -- | -- | -- | --
+no-bedrooms-unknown | Set to true when counting units where bedroom number is unknown | Boolean | MUST || Default is false
+no-of-bedrooms | The number of bedrooms in unit | integer | MAY | MUST if no-bedrooms-unknown is true
+units | the number of units of that bedroom count | integer | MUST | 0 or above
+
+
+
+rule: if residential-unit-change = true, at least one breakdown for existing and proposed is required (count could be unknown).
 
 ---
 

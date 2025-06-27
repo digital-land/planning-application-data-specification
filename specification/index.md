@@ -256,7 +256,7 @@ Details about the person representing the applicant
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -351,7 +351,7 @@ Details about the applicant
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -1196,7 +1196,7 @@ reason-not-informed | Reason why they were not informed | String | MAY | Rule: R
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -1359,7 +1359,7 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -1486,31 +1486,40 @@ The amount of residential units included as part of your proposal
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --
 residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | full;outline;ldc | MUST | Could be calculated from answers to next parts?
-unit-counts[] | List of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
+residential-unit-summary[]{} | Breakdown of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
 total-existing-units | The total number of existing units | full;outline;ldc | MUST |
 total-proposed-units | The total number of proposed units | full;outline;ldc | MUST |
 net-change | Calculated net change in units | full;outline;ldc | MUST | Calculated as proposed-units - existing-units. Format: Integer
 
-**Unit counts**
+**residential-unit-summary**
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
 tenure-type | Category of housing tenure | Enum | MUST | See [tenure type enum](https://github.com/digital-land/planning-application-data-specification/discussions/162)
 housing-type | Type of housing | Enum | MUST | See [housing type enum](https://github.com/digital-land/planning-application-data-specification/discussions/163)
-unknown-units | Whether the number of units is unknown (`true`/`false`) | Boolean | MAY | True if the applicant does not know the unit count.
-existing-units[] | Number of existing units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
-proposed-units[] | Number of proposed units by bedroom count | Object | MAY | See "Bedroom Count Structure" below.
+existing-unit-breakdown[]{} | Number of existing units by bedroom count | Object | MAY | See "Unit quantities Structure" below.
+proposed-unit-breakdown[]{} | Number of proposed units by bedroom count | Object | MAY | See "Unit quantities Structure" below.
 
-**Bedroom count** 
+**Unit quantities** 
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-bedroom-1 | Number of 1-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-2 | Number of 2-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-3 | Number of 3-bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-4+ | Number of 4 or more bedroom units | Integer | MAY | Not required if unknown is True.
-bedroom-count-unknown | Number units where the bedroom number is unknown | Integer | MAY | Not required if unknown is True.
-total-units | Total number of units | Integer | MAY | Not required if unknown is True. Calculated as the sum of all bedroom counts.
+units-unknown | Whether the number of units is unknown (`true`/`false`) | Boolean | MUST | 
+units-per-bedroom-no[]{} | For this tenure and unit type | Object | MAY | MUST if `units-unknown` is False. See bedroom count
+total-units | Total number of units | Integer | MAY | Not required if `units-unknown` is True. Calculated as the sum of all bedroom counts.
+
+
+**bedroom count**
+
+field | description | data-type | required | notes
+-- | -- | -- | -- | --
+no-bedrooms-unknown | Set to true when counting units where bedroom number is unknown | Boolean | MUST || Default is false
+no-of-bedrooms | The number of bedrooms in unit | integer | MAY | MUST if no-bedrooms-unknown is true
+units | the number of units of that bedroom count | integer | MUST | 0 or above
+
+
+
+rule: if residential-unit-change = true, at least one breakdown for existing and proposed is required (count could be unknown).
 
 ---
 
@@ -1531,7 +1540,7 @@ Details to locate the site proposed for development
 | --- | --- | --- | --- |
 | site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
 | address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 | easting | Grid reference | MAY | |
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
@@ -1827,7 +1836,7 @@ Ownership of trees on the site
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 **Contact details object**
 | field | description | required | notes |

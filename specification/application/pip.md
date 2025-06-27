@@ -123,7 +123,7 @@ Details about the person representing the applicant
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -173,7 +173,7 @@ Details about the applicant
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -247,7 +247,7 @@ Details to locate the site proposed for development
 | --- | --- | --- | --- |
 | site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
 | address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 | easting | Grid reference | MAY | |
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |

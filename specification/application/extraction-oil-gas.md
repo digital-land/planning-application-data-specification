@@ -143,7 +143,6 @@ Details about the person representing the applicant
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
 | company | The company the agent works for | MAY | |
-| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 | user-role | A specific of the user, either agent or proxy | MAY | used to determine if the details should be redacted
 
 **Person object**
@@ -153,21 +152,7 @@ Details about the person representing the applicant
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
-
-**Contact details object**
-| field | description | required | notes |
-| --- | --- | --- | --- |
-| email | Email used to contact agent | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-
-**Phone number structure**
-| field | description | notes |
-| --- | --- | --- | 
-| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
-
-Rule: one phone number provided should have `contact-priority` == `primary`
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -209,7 +194,6 @@ Details about the applicant
 | --- | --- | --- | --- |
 | reference | A reference for the person | MUST | This can be used to refer to person again elsewhere in the application |
 | Person{} | Detail to help identify a person | MUST | |
-| contact-details{} | Details of how to contact the individual | MAY | Rule: is a MUST if `application-type` is `pip` |
 
 **Person object**
 | field | description | required | notes |
@@ -218,21 +202,7 @@ Details about the applicant
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
-
-**Contact details object**
-| field | description | required | notes |
-| --- | --- | --- | --- |
-| email | Email used to contact agent | MUST |  |
-| phone-number[]{} | 1 or more telephone numbers to contact agent | MUST | see Phone number below. Only one number can be set as the primary number |
-
-**Phone number structure**
-| field | description | notes |
-| --- | --- | --- | 
-| number | A phone number | see [phone-numbers pattern](https://design-system.service.gov.uk/patterns/phone-numbers/) |
-| contact-priority | Set the priority of this number. Only one should be `primary` | See [contact priority enum](https://github.com/digital-land/planning-application-data-specification/discussions/200) |
-
-Rule: one phone number provided should have `contact-priority` == `primary`
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -458,7 +428,7 @@ publication-date | Date of publication | Date | MUST | Format: YYYY-MM-DD.
 | first-name | First name of the individual | MUST |  |
 | last-name | last name of the individual | MUST |  |
 | address-text | The address that can be used to correspond with the applicant| MUST | |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 
 ---
 
@@ -532,7 +502,7 @@ Details to locate the site proposed for development
 | --- | --- | --- | --- |
 | site-boundary | Geometry of the site of the development | MUST | online services can send the boundary supplied by the applicant/agent. Paper forms would need one of the other fields translated into this |
 | address-text | Text address if available for the site | MAY | does the address need to be structured data or a blob of text like in some app forms? |
-| post-code | The post code for the address provided | MAY | |
+| postcode | The post code for the address provided | MAY | |
 | easting | Grid reference | MAY | |
 | northing | Grid reference | MAY | |
 | latitude | Latitude coordinate in EPSG:4326 (WGS84) | MAY | |
@@ -575,7 +545,7 @@ Details needed to support a site visit
 | --- | --- | --- | --- | --- |
 | can-be-seen-from | Can site be seen from a public road  public footpath  bridleway or other public land (`true`/`false`) | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | Indicates whether a site visit can be done without arranging access |
 | contact-type | Indicate who the authority should be contacting | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MUST | See [site visit contact type enum](https://github.com/digital-land/planning-application-data-specification/discussions/222). Enum + other |
-| contact | The name of the applicant or agent | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
+| contact-reference | A reference for the applicant or agent who is the contact point for the site visit | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `applicant` or `agent`. Rule: name must match agent if `contact-type` is `agent`. Rule: name must match applicant name if `contact-type` is `applicant` |
 | other-contact{} | Details of specifically named contact | hh;full;outline;reserved-matters;demolition-con-area;lbc;advertising;ldc;s73;approval-condition;non-material-amendment;extraction-oil-gas | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 **Other contact structure**
@@ -604,7 +574,7 @@ Effluents that will be produced from a process or activity undertaken on the sit
 
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| `disposal-required` | Does the proposal involve the disposal of trade effluents or waste (`true`/`false`) | full;extraction-oil-gas;outline | MUST | | 
+| `is-disposal-required` | Does the proposal involve the disposal of trade effluents or waste (`true`/`false`) | full;extraction-oil-gas;outline | MUST | | 
 | `description` | Describe the nature, volume and means of disposal of trade effluents or waste | full;extraction-oil-gas;outline | MAY | Rule: is a MUST if `disposal-required` is True |
 
 ---
@@ -680,7 +650,7 @@ Any voluntary agreements or planning obligations
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | draft-agreement-included | outline or draft agreement included? (True / False) | extraction-oil-gas | MUST | |
-| agreement-summary | Summary of the agreement |extraction-oil-gas | MAY | Rule: is a MUST if `draft-agreement-included` is True |
+| agreement-summary | Summary of the agreement | extraction-oil-gas | MAY | Rule: is a MUST if `draft-agreement-included` is True |
 
 ---
 
