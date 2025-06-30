@@ -7,7 +7,7 @@
 
 field | description | application-type
 -- | -- | --
-reference | Identifier for the tree, use the TPO identifier is applicable |  
+reference | Identifier for the tree, use the TPO identifier if applicable |  
 species | The species of the tree  |  
 description-of-works | Describe the nature of the work to this tree  |  
 reason | Explain the reason for the work | tpo
