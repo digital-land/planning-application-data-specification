@@ -1,3 +1,3 @@
-Field | Description | Application-Types | Required | Notes
+field | description | application-types | required | notes
 -- | -- | -- | -- | --
-demolition-reason | Explanation of why demolition is necessary | | MUST | 
+reason | Explanation of why demolition is necessary | | MUST | 
