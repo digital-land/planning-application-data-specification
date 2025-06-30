@@ -4,20 +4,20 @@ name: Demolition
 description: |
   Permission or prior approval that may be required to demolish a building, specifically for listed building consent applications
 fields:
-  - field: demolition
+  - field: is-proposing-demolition
     description: Does the proposal include partial or total demolition of a listed building?
     required: true
   - field: demolition-total
     required-if:
-      - field: demolition
+      - field: is-proposing-demolition
         value: true
   - field: demolition-building-in-curtilage
     required-if:
-      - field: demolition
+      - field: is-proposing-demolition
         value: true
   - field: demolition-part
     required-if:
-      - field: demolition
+      - field: is-proposing-demolition
         value: true
   - field: listed-building-volume
     required-if:
