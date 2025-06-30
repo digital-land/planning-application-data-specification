@@ -11,7 +11,7 @@ fields:
     required-if:
       - field: is-proposing-demolition
         value: true
-  - field: demolition-building-in-curtilage
+  - field: is-demolishing-building-in-curtilage
     required-if:
       - field: is-proposing-demolition
         value: true

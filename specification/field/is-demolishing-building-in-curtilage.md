@@ -1,5 +1,5 @@
 ---
-field: demolition-building-in-curtilage
+field: is-demolishing-building-in-curtilage
 name: Demolition building in curtilage
 description: True or False indicating whether the proposal involves demolition of a building in the curtilage of a listed building
 datatype: boolean
