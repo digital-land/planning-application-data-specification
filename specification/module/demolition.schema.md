@@ -15,21 +15,21 @@ fields:
     required-if:
       - field: is-proposing-demolition
         value: true
-  - field: demolition-part
+  - field: is-partial-demolition
     required-if:
       - field: is-proposing-demolition
         value: true
   - field: listed-building-volume
     required-if:
-      - field: demolition-part
+      - field: is-partial-demolition
         value: true
   - field: demolition-volume
     required-if:
-      - field: demolition-part
+      - field: is-partial-demolition
         value: true
   - field: part-built-date
     required-if:
-      - field: demolition-part
+      - field: is-partial-demolition
         value: true
   - field: description
     description: Description of the building or part you are proposing to demolish

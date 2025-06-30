@@ -1,5 +1,5 @@
 ---
-field: demolition-part
+field: is-partial-demolition
 name: Demolition part
 description: True or False indicating whether the proposal involves partial demolition of a listed building
 datatype: boolean
