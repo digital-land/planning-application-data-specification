@@ -1,7 +1,7 @@
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
 | is-proposing-demolition | True or False based on whether proposal includes partial or total demolition of a listed building | lbc | MUST |  |
-| demolition-total | True or False | lbc | MAY | Rule: is a MUST if `demolition` is True |
+| is-total-demolition | True or False | lbc | MAY | Rule: is a MUST if `demolition` is True |
 | demolition-building-in-curtilage | True or False | lbc | MAY | Rule: is a MUST if `demolition` is True |
 | demolition-part | True or False | lbc | MAY | Rule: is a MUST if `demolition` is True |
 | listed-building-volume | Volume of listed building in cubic metres | lbc | MAY | Rule: if `demolition-part` is true then this is a MUST |

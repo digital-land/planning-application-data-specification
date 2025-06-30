@@ -7,7 +7,7 @@ fields:
   - field: is-proposing-demolition
     description: Does the proposal include partial or total demolition of a listed building?
     required: true
-  - field: demolition-total
+  - field: is-total-demolition
     required-if:
       - field: is-proposing-demolition
         value: true
