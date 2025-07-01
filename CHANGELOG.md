@@ -1,4 +1,32 @@
 
+<a name="v0.1.14"></a>
+## [v0.1.14](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.13...v0.1.14) (2025-07-01)
+
+Define the consent-under-tpo application
+
+### 𝌭 Model changes
+
+* add declarative version of trees-additional module (commit [239d38b](https://github.com/digital-land/planning-application-data-specification/commit/239d38be4ba9897183316a1bc28786a1abb66ae7))
+* add is-site-different field for clarity (commit [e20cc09](https://github.com/digital-land/planning-application-data-specification/commit/e20cc097c53e1191fbcc6b785408d0eeb2268ed3))
+* add declarative version of trees-location module (commit [3857490](https://github.com/digital-land/planning-application-data-specification/commit/3857490e07d0ac88e85a665672103b8fca28d901))
+* add declarative version of trees-ownership module (commit [ce19354](https://github.com/digital-land/planning-application-data-specification/commit/ce193541c801347a3a8cac7f6992212eba1763a3))
+* add declarative version of tree-work-details module (commit [92fefcb](https://github.com/digital-land/planning-application-data-specification/commit/92fefcb96c08764ec4d7085b98754b59de2018a6))
+* add declarative version of tpo module (commit [01334f6](https://github.com/digital-land/planning-application-data-specification/commit/01334f6ab71ca43ff370d65538768221a4d798d2))
+* rename field from demolition-part to is-partial-demolition (commit [6a12076](https://github.com/digital-land/planning-application-data-specification/commit/6a12076705915edf74a3322e374e9b2dd47623ed))
+* rename field from demolition-building-in-curtilage to is-demolishing-building-in-curtilage (commit [ddad61a](https://github.com/digital-land/planning-application-data-specification/commit/ddad61a27f48d2768f0479c44498cfc5f5af812e))
+* rename field from demolition-total to is-total-demolition (commit [50578c0](https://github.com/digital-land/planning-application-data-specification/commit/50578c0b6c94cec2a2570eb46f0f39911870e7ee))
+* rename field from demolition to is-proposing-demolition (commit [2bfd30a](https://github.com/digital-land/planning-application-data-specification/commit/2bfd30a6cb1b2c06760d0d3f4d8bbd01033aaab2))
+* add declarative version of demolition module (commit [3508417](https://github.com/digital-land/planning-application-data-specification/commit/3508417df02f124a234a6e6f0583708f38018b66))
+* add declarative version of demolition-reason module (commit [de83ef8](https://github.com/digital-land/planning-application-data-specification/commit/de83ef8c922c6fcd666deb95e24b58d21f0b04dc))
+* field in demolition-reason should be called reason (commit [12368ec](https://github.com/digital-land/planning-application-data-specification/commit/12368ec532023ab823fc1f407ad30a11888bc776))
+* rename field, post-code to postcode (commit [9d7d709](https://github.com/digital-land/planning-application-data-specification/commit/9d7d7091ebb42f4a7405d472c9d897034688b391))
+
+### 👷‍♀️ Application changes
+
+* remove trees-location module from consent-under-tpo applications (commit [3559c12](https://github.com/digital-land/planning-application-data-specification/commit/3559c129a5c1756c716ef020dde23b32460c94be))
+* define the consent-under-tpo application (commit [06b3721](https://github.com/digital-land/planning-application-data-specification/commit/06b37216f5811431c2f463bf728381ab7f2c440b))
+
+
 <a name="v0.1.13"></a>
 ## [v0.1.13](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.12...v0.1.13) (2025-06-26)
 
