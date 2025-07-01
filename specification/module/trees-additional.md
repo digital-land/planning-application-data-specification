@@ -10,6 +10,6 @@ supporting-documents[]{} | A list of the documents supporting the work required 
 
 Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
-reference-number | Unique identifier for the document | String | MUST | Must be provided for each document
+reference | Unique identifier for the document | String | MUST | Must be provided for each document
 name | Name of the document | String | MUST | Descriptive name for clarity
 description | Description of the document | String | MAY | Optional description of the document
