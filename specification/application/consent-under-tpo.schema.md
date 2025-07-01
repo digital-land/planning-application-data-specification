@@ -23,6 +23,5 @@ modules:
   - module: tpo
   - module: tree-work-details
   - module: trees-additional
-  - module: trees-location
   - module: trees-ownership
 ---
