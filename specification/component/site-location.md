@@ -14,6 +14,7 @@ fields:
   - field: longitude
   - field: description
   - field: uprns
+    notes: uprns are not needed in case of notification for work to trees in conservation area
 entry-date: 2025-06-13
 end-date: ''
 ---
