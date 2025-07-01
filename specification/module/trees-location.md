@@ -1,6 +1,7 @@
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| site-locations[]{} | Details of the sites on which the tree(s) are located | notice-trees-in-con-area;consent-under-tpo | MAY | Rule: only required if the site is different from the applicant's address | 
+| is-site-different | Confirm whether site is different from applicant address | | MUST | |
+| site-locations[]{} | Details of the sites on which the tree(s) are located | notice-trees-in-con-area;consent-under-tpo | MAY | Rule: MUST if `is-site-different` is true | 
 
 **site-location/details structure**
 
