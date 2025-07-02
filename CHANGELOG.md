@@ -1,4 +1,33 @@
 
+<a name="v0.1.15"></a>
+## [v0.1.15](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.14...v0.1.15) (2025-07-02)
+
+More issues resolved and declarative versions added
+
+### ⚒️ Tooling
+
+* add integrity check for enum fields (commit [ad30076](https://github.com/digital-land/planning-application-data-specification/commit/ad30076085f1ca59191e0be0e8c899f06f14d024))
+
+### 𝌭 Model changes
+
+* add declarative version of site-area module (commit [725aec7](https://github.com/digital-land/planning-application-data-specification/commit/725aec792f48ce6073759d6678aacdb151c73b4e))
+* rename field site-area in site-area module to site-area-in-hectares (commit [abd3c46](https://github.com/digital-land/planning-application-data-specification/commit/abd3c464f465fdd880716de7df8da21ddcde89e8))
+* update development-phase, only looking for a single phase of development (commit [00e3de6](https://github.com/digital-land/planning-application-data-specification/commit/00e3de662de278e44198637b4e1243f4603e66b8))
+* add declarative version of dev-type module (commit [39ef287](https://github.com/digital-land/planning-application-data-specification/commit/39ef287c9592fc49145509e28112eae1de8aabe8))
+* add declarative version of lb-grade module (commit [dd305af](https://github.com/digital-land/planning-application-data-specification/commit/dd305af89962b96f2a03c8823cd356bbc088fafb))
+* add declarative version of immunity-from-listing (commit [2b54832](https://github.com/digital-land/planning-application-data-specification/commit/2b54832f0201760d318d6a58be93041d8ff7fe5d))
+* add yes-no-unknown codelist (commit [9f3a382](https://github.com/digital-land/planning-application-data-specification/commit/9f3a3827347b97f401b2dc3dcd4f9c70786e923f))
+
+### 🐛 Bug Fixes
+
+* add missing declarative version of lb-grade module (commit [53afd5b](https://github.com/digital-land/planning-application-data-specification/commit/53afd5b167661d8c8b0409f74c34f7768ce1910c))
+* all failing field checks (commit [bf9bc11](https://github.com/digital-land/planning-application-data-specification/commit/bf9bc11146d9184cd11be0640402932e9b76ecf9))
+
+### 📚 Documentation
+
+* decided to use enum instead of nullable boolean field (commit [ea12e96](https://github.com/digital-land/planning-application-data-specification/commit/ea12e9630a2738f5534a1fa7b32f3f1f5712ab67))
+
+
 <a name="v0.1.14"></a>
 ## [v0.1.14](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.13...v0.1.14) (2025-07-01)
 
