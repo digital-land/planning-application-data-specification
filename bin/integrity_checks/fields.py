@@ -15,7 +15,7 @@ def print_error(field_name: str, message: str):
 # 3. check the data types TODO
 # 4. if datatype is object then must have component attr
 # 5. component attr must a component reference in /components
-# 6. datatype is enum then must have codelist attr
+# 6. if datatype is enum then must have codelist attr, and if has codelist then datatype must be enum
 # 7. codelist must be in codelist definitions TODO
 # 8. every field must have entry-date and end-date attrs
 
@@ -80,6 +80,33 @@ def check_object_components(fields, components):
     return not has_errors
 
 
+def check_enum_codelist(fields):
+    """
+    Check rule 6: if datatype is enum then must have codelist attr,
+    and if has codelist attr then datatype must be enum
+    """
+    has_errors = False
+
+    for field_name, field in fields.items():
+        datatype = field.get("datatype")
+        codelist = field.get("codelist")
+        field_name = field.get("field", "unknown")
+
+        # If datatype is enum, must have codelist
+        if datatype == "enum" and not codelist:
+            print_error(field_name, "enum datatype must have codelist attribute")
+            has_errors = True
+
+        # If has codelist, datatype must be enum
+        if codelist and datatype != "enum":
+            print_error(
+                field_name, f"codelist attribute requires enum datatype, got {datatype}"
+            )
+            has_errors = True
+
+    return not has_errors
+
+
 def check_dates(fields):
     """
     Check rule 8: every field must have entry-date and end-date attrs
@@ -109,6 +136,7 @@ def check_all(fields, components):
         (check_field_names, [fields]),
         (check_cardinality, [fields]),
         (check_object_components, [fields, components]),
+        (check_enum_codelist, [fields]),
         (check_dates, [fields]),
     ]
 
