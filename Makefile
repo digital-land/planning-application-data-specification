@@ -17,7 +17,7 @@ issue-tracking-data:
 	python3 bin/issue_tracking.py
 
 
-issue-tracking-report:
+issue-tracking-reports:
 	python3 bin/issue_tracking_output.py
 
 
