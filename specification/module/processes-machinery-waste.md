@@ -13,7 +13,8 @@ type | Type of waste management facility | Enum | MUST | See [Waste Management T
 not-applicable | Whether the facility is not applicable | Boolean | MAY | If True, capacity and throughput are not required.
 is-total-capacity-known | Confirming whether the total capacity is known | Boolean | MUST | Only applicable for Outline applications.
 total-capacity | Total capacity of void in cubic metres (or tonnes/litres) | Integer | MAY | MUST if not-applicable is False. MUST if application-type == outline and is-total-capacity-known is TRUE
-annual-throughput | Maximum annual operational throughput in tonnes/litres | Integer | MAY | MUST if not-applicable is False.
+is-annual-throughput-known | Confirming whether the annual throughput is known | Boolean | MUST | Only applicable for Outline applications.
+annual-throughput | Maximum annual operational throughput in tonnes/litres | Integer | MAY | MUST if not-applicable is False. MUST if application-type == outline and is-annual-throughput-known is TRUE
 
 **Waste streams**
 
