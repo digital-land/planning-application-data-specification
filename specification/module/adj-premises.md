@@ -6,6 +6,6 @@
 
 field | description | data type | required | notes
 -- | -- | -- | -- | --
-address-test | Address details | String | MUST | 
+address-text | Address details | String | MUST | 
 postcode | Postcode of address if available | String | MAY | 
 uprn | UPRN if known | UPRN | MAY | 
