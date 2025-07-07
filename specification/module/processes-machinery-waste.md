@@ -11,7 +11,8 @@ Field | Description | Data Type | Required? | Notes
 -- | -- | -- | -- | --
 type | Type of waste management facility | Enum | MUST | See [Waste Management Type Enum](https://github.com/digital-land/planning-application-data-specification/discussions/164)
 not-applicable | Whether the facility is not applicable | Boolean | MAY | If True, capacity and throughput are not required.
-total-capacity | Total capacity of void in cubic metres (or tonnes/litres) | Integer | MAY | MUST if not-applicable is False.
+is-total-capacity-known | Confirming whether the total capacity is known | Boolean | MUST | Only applicable for Outline applications.
+total-capacity | Total capacity of void in cubic metres (or tonnes/litres) | Integer | MAY | MUST if not-applicable is False. MUST if application-type == outline and is-total-capacity-known is TRUE
 annual-throughput | Maximum annual operational throughput in tonnes/litres | Integer | MAY | MUST if not-applicable is False.
 
 **Waste streams**
