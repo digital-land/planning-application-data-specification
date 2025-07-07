@@ -36,24 +36,44 @@ def make_issues_url(label):
     return f"{filtered_issues_base_url}{label_to_url(label)}"
 
 
-def get_modules_with_zero_issues(issue_tracking_data):
+def get_modules_without_current_issues(modules, issue_tracking_data):
     """
-    Get a list of modules that have zero current issues.
+    Get a list of modules that have zero current issues by filtering the full modules list.
 
     Args:
+        modules: List of dicts with all module information
         issue_tracking_data: List of dicts with module issue data
 
     Returns:
         List of dicts containing modules with 0 current_issues
     """
-    zero_issue_modules = []
+    # Create a lookup dict for issue tracking data by module reference
+    issue_lookup = {row.get("module", ""): row for row in issue_tracking_data}
 
-    for row in issue_tracking_data:
-        current_issues = int(row.get("current_issues", "0"))
-        if current_issues == 0:
-            zero_issue_modules.append(row)
+    modules_without_issues = []
 
-    return zero_issue_modules
+    # Filter out modules with an end-date
+    # Sort modules by "name"
+    sorted_modules = sorted(modules, key=lambda m: m.get("name", ""))
+
+    for module in sorted_modules:
+        if module.get("end-date"):
+            continue
+        module_ref = module.get("reference", "")
+
+        # Check if this module has issue tracking data
+        issue_data = issue_lookup.get(module_ref)
+
+        if issue_data:
+            # Module has issue tracking data - check current_issues
+            current_issues = int(issue_data.get("current_issues", "0"))
+            if current_issues == 0:
+                modules_without_issues.append(module)
+        else:
+            # Module has no issue tracking data - assume zero issues
+            modules_without_issues.append(module)
+
+    return modules_without_issues
 
 
 def create_module_link(module_ref, module_name, module_lookup):
@@ -191,9 +211,9 @@ def generate_no_issues_file(
     ]
 
     for row in zero_issue_modules:
-        module_name = row.get("module_name", row.get("module", "Unknown Module"))
+        module_name = row.get("name", row.get("module", "Unknown Module"))
         markdown_lines.append(
-            f"* {create_module_link(row.get('module', ''), module_name, module_lookup)}"
+            f"* {create_module_link(row.get('reference', ''), module_name, module_lookup)}"
         )
 
     # Join all lines and write to file
@@ -222,7 +242,9 @@ def generate_issue_tracking_index():
     write_markdown_to_file(markdown_output)
 
     # generate file with list of modules with zero issues
-    zero_issue_modules = get_modules_with_zero_issues(issue_tracking_data)
+    zero_issue_modules = get_modules_without_current_issues(
+        modules, issue_tracking_data
+    )
     generate_no_issues_file(zero_issue_modules, modules)
 
 
