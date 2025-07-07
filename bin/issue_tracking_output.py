@@ -210,10 +210,10 @@ def generate_no_issues_file(
         "",
     ]
 
-    for row in zero_issue_modules:
+    for idx, row in enumerate(zero_issue_modules, start=1):
         module_name = row.get("name", row.get("module", "Unknown Module"))
         markdown_lines.append(
-            f"* {create_module_link(row.get('reference', ''), module_name, module_lookup)}"
+            f"{idx}. {create_module_link(row.get('reference', ''), module_name, module_lookup)} (ref: {row.get('reference', 'N/A')})"
         )
 
     # Join all lines and write to file
