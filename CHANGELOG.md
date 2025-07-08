@@ -1,4 +1,52 @@
 
+<a name="v0.1.16"></a>
+## [v0.1.16](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.15...v0.1.16) (2025-07-08)
+
+More issues resolved and declarative versions added
+
+### ⚒️ Tooling
+
+* summarise progress towards declarative model (commit [79d5d45](https://github.com/digital-land/planning-application-data-specification/commit/79d5d45ebb8991a2a586670f25f3d94da1afab5d))
+* func to output list of modules with no current issues (commit [4925e9b](https://github.com/digital-land/planning-application-data-specification/commit/4925e9b6aba2d79d5105af1710fffd0276ba8df9))
+
+### 𝌭 Model changes
+
+* unknown-proposed only applicable in outline-some applications (commit [eb59fea](https://github.com/digital-land/planning-application-data-specification/commit/eb59fea2d826abe5d8f8520d6f62848bce7161b2))
+* add declarative version of vehicle-parking module (commit [30694ec](https://github.com/digital-land/planning-application-data-specification/commit/30694ecc1d632904f95bb734466d4297a7c98eb5))
+* add declarative version of interest-in-land module (commit [5b56930](https://github.com/digital-land/planning-application-data-specification/commit/5b56930b057d199d2cde3e708d1b0e98031a1f43))
+* add declarative version of waste-storage-collection module (commit [0d471c4](https://github.com/digital-land/planning-application-data-specification/commit/0d471c416bda5b5008324628e68f5cd23d4eb4ba))
+* add declarative version of storage-facilities module (commit [8af2586](https://github.com/digital-land/planning-application-data-specification/commit/8af258667fb3ecb59188f45c50c9643504e7b665))
+* add declarative version of related-proposals module (commit [ea581a7](https://github.com/digital-land/planning-application-data-specification/commit/ea581a713e3dff9a7a8277d59ddfdd406c7f596f))
+* add declarative version of lb-alter module (commit [3d22d9c](https://github.com/digital-land/planning-application-data-specification/commit/3d22d9cb32a4350cbdd2c5db9e3cbffac48c2eb4))
+* add declarative version of equip-mentod module (commit [064663a](https://github.com/digital-land/planning-application-data-specification/commit/064663a5854782b28ecae33821cb91ff7f4b2e74))
+* rename fte to total-fte for clarity (commit [f2ee6d1](https://github.com/digital-land/planning-application-data-specification/commit/f2ee6d193ee3f80ecda00ff6b6c063beab531859))
+* add declarative version of employment module (commit [350d564](https://github.com/digital-land/planning-application-data-specification/commit/350d5644228bc91e9eeaf975bf514dc7b11460fe))
+* proposed-employees of employment module is sub-structure (commit [6a34ec0](https://github.com/digital-land/planning-application-data-specification/commit/6a34ec0507ca3b814472b98386867bb278342873))
+* add declarative version of discharge-con module (commit [107826f](https://github.com/digital-land/planning-application-data-specification/commit/107826f9bd0fec8c7db0e5e28a79db9abef1c699))
+* add declarative version of advertisement-types module (commit [7cefbe3](https://github.com/digital-land/planning-application-data-specification/commit/7cefbe3d84ca3ffb887fa1d387b27d08bb9174e5))
+* add declarative version of designated-areas module (commit [a3a963f](https://github.com/digital-land/planning-application-data-specification/commit/a3a963f6a8ab95444d80a8bbc78ae546a7841fac))
+* add declarative version of con-remove-vary module (commit [7586608](https://github.com/digital-land/planning-application-data-specification/commit/758660841ed924b4fe11f229a8ea8ac51347b171))
+* add declarative version of community-consultation module (commit [c1cec61](https://github.com/digital-land/planning-application-data-specification/commit/c1cec61c3fca2add45b77c8d519ef1a3ac868e92))
+* add declarative version of bio-geo-arch-con module (commit [6f5bdbc](https://github.com/digital-land/planning-application-data-specification/commit/6f5bdbcf3a121ff0ef5487b014f8efa66e5be914))
+* add declarative version of advert-period module (commit [4648047](https://github.com/digital-land/planning-application-data-specification/commit/46480473fbb5d5c757625e09f9eb46da6caad2f0))
+* add declarative version of adj-premises module (commit [ea22e94](https://github.com/digital-land/planning-application-data-specification/commit/ea22e94b7fa39fdd24a7d1fe76c73ac59892c139))
+* rename field from discharging-part to is-discharging-part (commit [869f1e0](https://github.com/digital-land/planning-application-data-specification/commit/869f1e0e09c1bf503591bdf7aa6b051ba7ed9b4d))
+* add declarative version of part-discharge module (commit [fa0a6a5](https://github.com/digital-land/planning-application-data-specification/commit/fa0a6a5497f7ce075176d2f5b4ac7a13f6f0cf6a))
+* add is-annual-throughput-known field to processed-machinery-waste module (commit [3e527ca](https://github.com/digital-land/planning-application-data-specification/commit/3e527ca5d6dfc50c736bf9faa1631590aecf531a))
+* add is-total-capacity-known field to processed-machinery-waste module (commit [b12d93a](https://github.com/digital-land/planning-application-data-specification/commit/b12d93a6c5215acea5b06e189ec2604f4c0e785f))
+
+### 🐛 Bug Fixes
+
+* correct declarative model errors (commit [5f84de4](https://github.com/digital-land/planning-application-data-specification/commit/5f84de4b3be9d74d86052ed01b42567046e22813))
+* also include all modules with no issues (commit [63835f8](https://github.com/digital-land/planning-application-data-specification/commit/63835f8e6eae5714510b7cd4f9e9f4d7c862b030))
+* add missing address component (commit [f25fa2d](https://github.com/digital-land/planning-application-data-specification/commit/f25fa2d8158e2f628bcc4a6fc8d52f4f46a615f1))
+* fieldname typo" (commit [53152bd](https://github.com/digital-land/planning-application-data-specification/commit/53152bdc1d200fd3d7c87ff02b1f57907072d1c2))
+
+### 📚 Documentation
+
+* add row counts to module tracking pages (commit [6b4608a](https://github.com/digital-land/planning-application-data-specification/commit/6b4608a2672b1539998f7ab100cc323d8a4522f0))
+
+
 <a name="v0.1.15"></a>
 ## [v0.1.15](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.14...v0.1.15) (2025-07-02)
 
