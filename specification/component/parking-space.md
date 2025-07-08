@@ -18,7 +18,7 @@ fields:
   - field: unknown-proposed
     applies-if:
       application-type:
-        in: [outline]
+        in: [outline-some]
   - field: difference-in-spaces
     required: true
 entry-date: 2025-07-08

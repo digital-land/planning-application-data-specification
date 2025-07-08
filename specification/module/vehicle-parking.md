@@ -10,5 +10,5 @@ parking-space-type | Type of vehicle from the codelist | Enum / String | MUST | 
 vehicle-type-other | Custom value if "Other" is selected | String | MAY | Rule: Required only if `vehicle-type` is "other".
 total-existing | Existing on-site parking spaces | Number | MUST | Must be 0 or positive.
 total-proposed | Total proposed spaces, including retained spaces | Number | MUST | Must be 0 or positive.
-unknown-proposed | Is the total proposed number unknown? | Boolean | MUST | If True, total-proposed can be left blank.
+unknown-proposed | Is the total proposed number unknown? | Boolean | MUST | If True, total-proposed can be left blank. Only applicable in outline-some applications
 difference-in-spaces | Calculated difference between existing and proposed spaces | Number | MUST | Calculated as total-proposed - total-existing. Could be calculated by applicant or system
