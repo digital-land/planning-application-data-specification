@@ -1,5 +1,5 @@
 # Modules with Zero Current Issues
-The following modules currently have no open issues.
+The following modules currently have no open issues ([see modules with issues](https://github.com/digital-land/planning-application-data-specification/blob/main/issue-tracking/index.md)).
 
 1. [Adjoining premises](https://github.com/digital-land/planning-application-data-specification/discussions/25) (ref: adj-premises)
 2. [Advertisement period](https://github.com/digital-land/planning-application-data-specification/discussions/27) (ref: advert-period)

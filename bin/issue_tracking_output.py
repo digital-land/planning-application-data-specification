@@ -106,11 +106,12 @@ def make_markdown_output(issue_tracking_data, modules):
 
     # Start building the markdown table
     markdown_lines = [
-        "| Module | Current Issues | Backlog Issues | GitHub Labels |",
-        "|--------|----------------|----------------|---------------|",
+        "| # | Module | Current Issues | Backlog Issues | GitHub Labels |",
+        "|---|--------|----------------|----------------|---------------|",
     ]
 
     # Process each row in the issue tracking data
+    row_number = 1
     for row in issue_tracking_data:
         module_ref = row.get("module", "")
         module_name = row.get("module_name", module_ref)
@@ -147,10 +148,9 @@ def make_markdown_output(issue_tracking_data, modules):
         labels_column = "<br>".join(label_links) if label_links else ""
 
         # Create the table row
-        row_content = (
-            f"| {module_link} | {current_issues} | {backlog_issues} | {labels_column} |"
-        )
+        row_content = f"| {row_number} | {module_link} | {current_issues} | {backlog_issues} | {labels_column} |"
         markdown_lines.append(row_content)
+        row_number += 1
 
     return "\n".join(markdown_lines)
 
@@ -174,7 +174,7 @@ We have been collecting feedback, triaging and working through that feedback.
 
 Below is a list of the modules we still have open issues for. It also includes the number of issues for that module that we've parked and added to a [backlog](https://github.com/digital-land/planning-application-data-specification/issues?q=is%3Aissue%20state%3Aopen%20label%3ABacklog).
 
-When there are no more current issues for a module the module will disappear from the list.
+When there are no more current issues for a module the module will disappear from the list ([see modules with zero issues](https://github.com/digital-land/planning-application-data-specification/blob/main/issue-tracking/no-issues.md)).
 """
         + markdown_content
     )
@@ -206,7 +206,7 @@ def generate_no_issues_file(
     # Start building the markdown content
     markdown_lines = [
         "# Modules with Zero Current Issues",
-        "The following modules currently have no open issues.",
+        "The following modules currently have no open issues ([see modules with issues](https://github.com/digital-land/planning-application-data-specification/blob/main/issue-tracking/index.md)).",
         "",
     ]
 
