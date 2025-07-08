@@ -9,7 +9,7 @@ fields:
     required: true
   - field: part-time
     required: true
-  - field: fte
+  - field: total-fte
     required: true
 entry-date: 2025-07-08
 end-date: ''

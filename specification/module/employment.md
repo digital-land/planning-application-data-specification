@@ -9,4 +9,4 @@ Field | Description | Notes
 -- | -- | --
 full-time | Number of full-time employees | Must be a positive integer or 0.
 part-time | Number of part-time employees | Must be a positive integer or 0.
-fte | Total full-time equivalent (FTE) | Calculated as full-time + (part-time ÷ 2).
+total-fte | Total full-time equivalent (FTE) | Calculated as full-time + (part-time ÷ 2).

@@ -1,6 +1,6 @@
 ---
-field: fte
-name: FTE
+field: total-fte
+name: Total FTE
 description: Total full-time equivalent (FTE)
 datatype: number
 cardinality: '1'
