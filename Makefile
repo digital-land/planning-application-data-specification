@@ -21,6 +21,10 @@ issue-tracking-reports:
 	python3 bin/issue_tracking_output.py
 
 
+declarative-progress:
+	python3 bin/declarative_tracking.py
+
+
 status:
 	git status --ignored
 
