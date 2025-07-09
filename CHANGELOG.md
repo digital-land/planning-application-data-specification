@@ -1,4 +1,22 @@
 
+<a name="v0.1.17"></a>
+## [v0.1.17](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.16...v0.1.17) (2025-07-09)
+
+More declarative versions added
+
+### 𝌭 Model changes
+
+* add proposal-waste-management-outline field to handle variance between application types (commit [83718a9](https://github.com/digital-land/planning-application-data-specification/commit/83718a950843ee9d91a165aed925d1c2061f0879))
+* is-annual-throughput-known and is-total-capacity-known fields only applicable in outline applications (commit [a08dfbd](https://github.com/digital-land/planning-application-data-specification/commit/a08dfbdc0fb915ef8e750fbfb803ce2382ff0224))
+* add declarative version of processes-machinery-waste module (commit [3fd5e22](https://github.com/digital-land/planning-application-data-specification/commit/3fd5e22251f66fb0c9f123f6f2e022e800247e12))
+* add declarative version of site-ownership module (commit [72e4853](https://github.com/digital-land/planning-application-data-specification/commit/72e485307746da3f9951e79d26095e86054b1b8d))
+* add declarative version of foul-sewage module (commit [69d1e6c](https://github.com/digital-land/planning-application-data-specification/commit/69d1e6c0b7e16f188e8b6de8a51582f03e61aaef))
+* add declarative version of hazardous-substance module (commit [e6ebf79](https://github.com/digital-land/planning-application-data-specification/commit/e6ebf79f95b693712394b0ccf82d0c3499935eae))
+* add yes-no-not-applicable codelist (commit [ee40ffd](https://github.com/digital-land/planning-application-data-specification/commit/ee40ffdeabfc5cb84204434d773343e550b2e149))
+* add declarative version of desc-existing-use module (commit [b3f6e37](https://github.com/digital-land/planning-application-data-specification/commit/b3f6e370c8c70477ef9edf59168400c8bdd6c4e1))
+* add declarative version of advert-location module (commit [da16807](https://github.com/digital-land/planning-application-data-specification/commit/da16807397cbda89a090059ec0a871ca8af7bca0))
+
+
 <a name="v0.1.16"></a>
 ## [v0.1.16](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.15...v0.1.16) (2025-07-08)
 
