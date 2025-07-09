@@ -91,7 +91,7 @@ def write_summary_to_markdown():
                 line = f"- **{key.replace('_', ' ').capitalize()}**: {value}"
             f.write(line + "\n")
         total = sum(summary.values())
-        f.write(f"\n**Total files**: {total}\n")
+        f.write(f"\n**Total elements**: {total}\n")
 
 
 if __name__ == "__main__":
