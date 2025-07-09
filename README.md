@@ -4,19 +4,19 @@ This repository contains data specifications used to exchange planning applicati
 
 It is an initiative lead by the Ministry of Housing, Communities and Local Government (MHCLG) aiming to standardise what data is exchanged when a planning application is submitted.
 
-The specification will consist of a number of "modules", one data specification per module, and will set out which modules are required for each application type.
-
-This initiatives aims to improve the use, interoperability and consistency of planning application data that moves through the UK planning system.
+The specification will consist of a number of "modules" and will set out which modules are required for each application type.
 
 #### Background
 
-We started this initiative to create baseline planning application specifications that can be evolved over time, and to improve the use, interoperability and consistency of planning application data that flows through the UK planning system. For some background, you can check out our[ initial blog post](https://mhclgdigital.blog.gov.uk/2024/10/18/using-data-design-to-transform-the-planning-application-process-get-involved/) and a follow up blog post about the [first 2 events we held](https://mhclgdigital.blog.gov.uk/2024/12/06/digital-planning-developing-planning-applications-specifications-in-the-open/).
+We started this initiative to create baseline planning application specifications that can be evolved over time, and to improve the use, interoperability and consistency of planning application data that flows through the UK planning system. 
 
-To support this work, we set up [an advisory group](https://design.planning.data.gov.uk/advisory-group) and have been sharing high-level updates through a [GitHub discussion](https://github.com/digital-land/data-standards-backlog/discussions/98). However, as the discussion has grown quite lengthy, we’ve decided to create this repository to help manage the issues more effectively, allow contributors to focus on them one at a time.
+More background can be found on the [planning application project page](https://design.planning.data.gov.uk/project/planning-applications).
 
-We are currently working through a set of issues from the community. Our aim is to work through the issues that affect the specifications as they need to be now, things for improvements we are putting on a [backlog](https://github.com/digital-land/planning-application-data-specification/issues?q=is%3Aissue%20state%3Aopen%20label%3ABacklog) for future iterations.
+## Current focus
 
-You can follow our progress with this [issue tracker](issue-tracking/index.md).
+We asked for feedback on the initial set of specifications. We collated this feedback and have been working through the issues. You can see the [modules with active issues](issue-tracking/index.md) and the [modules without issues](https://github.com/digital-land/planning-application-data-specification/blob/main/issue-tracking/no-issues.md). 
+
+We are also moving towards a more declarative version of the specifications. We have documented [what we mean what we say declarative model](https://github.com/digital-land/planning-application-data-specification/blob/main/docs/declarative-model.md) and [track the output of this work](https://github.com/digital-land/planning-application-data-specification/blob/main/issue-tracking/declarative-model-progress.md).
 
 ## Application types
 
