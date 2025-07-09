@@ -9,6 +9,14 @@ fields:
     required: true
   - field: proposal-waste-management
     required: true
+    applies-if:
+      - application-type:
+          in: [full, extraction-oil-gas]
+  - field: proposal-waste-management-outline
+    required: true
+    applies-if:
+      - application-type:
+          in: [outline]
   - field: waste-management
   - field: waste-streams
 validation:
