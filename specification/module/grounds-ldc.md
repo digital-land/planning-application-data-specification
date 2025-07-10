@@ -1,7 +1,8 @@
 Field | Description | Application-type | Required? | Notes
 -- | -- | -- | -- | --
-grounds[] | List of grounds under which the certificate is sought | | MUST | At least one ground must be selected. See [Grounds Enum](https://github.com/digital-land/planning-application-data-specification/discussions/204) .
-other-details | Explanation if "Other" ground is selected | | MAY | Required if grounds[] includes other.
+grounds-pre-2024[] | List of grounds pre 2024-04-25 under which the certificate is sought | | MUST | At least one ground must be selected. See [Grounds Enum](https://github.com/digital-land/planning-application-data-specification/discussions/204)
+grounds-post-2024[] | List of grounds post 2024-04-25 under which the certificate is sought | | MUST | At least one ground must be selected. See [Grounds Enum](https://github.com/digital-land/planning-application-data-specification/discussions/204) .
+other-details | Explanation if "Other" ground is selected | | MAY | Required if grounds-pre-2024 or grounds-post-2024 includes other.
 supporting-applications[]{} | List of supporting planning permissions, certificates, or notices affecting the application site. Include its date and the number of any condition being breached | | MAY | Optional, but strengthens the application.
 reason | Reason why the development is considered lawful | | MUST | Applicant’s explanation for granting the certificate.
 
