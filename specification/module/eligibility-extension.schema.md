@@ -5,7 +5,7 @@ description: |
   Eligibility criteria for extension applications to determine if the proposal
   meets the requirements for the application type
 fields:
-  - field: single-storey-extension
+  - field: is-single-storey-extension
     required: true
   - field: extension-height-over-4m
     required: true
@@ -23,7 +23,7 @@ fields:
         equals: true
 validation:
   - description: "Application cannot proceed if extension is not single storey"
-    rule: "if single-storey-extension == false then application is ineligible"
+    rule: "if is-single-storey-extension == false then application is ineligible"
   - description: "Application cannot proceed if extension exceeds 4 metres in height"
     rule: "if extension-height-over-4m == true then application is ineligible"
   - description: "Application cannot proceed if dwelling is within restricted areas"

@@ -1,5 +1,5 @@
 ---
-field: single-storey-extension
+field: is-single-storey-extension
 name: Single storey extension
 description: Will the extension be a single storey
 datatype: boolean

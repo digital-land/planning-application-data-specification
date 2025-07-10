@@ -1,6 +1,6 @@
 Field | Description | Application-Types | Required | Notes
 -- | -- | -- | -- | --
-single-storey-extension | Will the extension be a single storey? (True/False) |   | MUST | If False, the application cannot proceed.
+is-single-storey-extension | Will the extension be a single storey? (True/False) |   | MUST | If False, the application cannot proceed.
 extension-height-over-4m | Will the extension exceed 4 metres in height? (True/False) |   | MUST | If True, the application cannot proceed.
 dwelling-detached | Is the the dwelling detached? (True/False) | | MUST | 
 rear-extension-length | Will the extension extend beyond the rear wall of the original dwelling? |   | MUST | See conditional logic for limits based on attachment type.
