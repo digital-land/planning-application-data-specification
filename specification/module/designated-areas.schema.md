@@ -6,9 +6,6 @@ description: |
 fields:
   - field: designations
     required: true
-    applies-if:
-      - application-type:
-          in: [extraction-oil-gas]
 rules:
   - "Multiple selections allowed from the designation codelist"
   - "If none of the designated areas apply to the site, the array should be empty"
