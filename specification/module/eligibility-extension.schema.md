@@ -7,7 +7,7 @@ description: |
 fields:
   - field: is-single-storey-extension
     required: true
-  - field: extension-height-over-4m
+  - field: is-extension-height-over-4m
     required: true
   - field: dwelling-detached
     required: true
@@ -25,7 +25,7 @@ validation:
   - description: "Application cannot proceed if extension is not single storey"
     rule: "if is-single-storey-extension == false then application is ineligible"
   - description: "Application cannot proceed if extension exceeds 4 metres in height"
-    rule: "if extension-height-over-4m == true then application is ineligible"
+    rule: "if is-extension-height-over-4m == true then application is ineligible"
   - description: "Application cannot proceed if dwelling is within restricted areas"
     rule: "if within-site-constraints == true then application is ineligible"
   - description: "site-constraints is required when within-site-constraints is true"
