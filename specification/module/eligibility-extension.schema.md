@@ -11,7 +11,7 @@ fields:
     required: true
   - field: is-dwelling-detached
     required: true
-  - field: rear-extension-length
+  - field: is-extension-beyond-rear-wall
     required: true
   - field: extension-length
     required: true

@@ -1,6 +1,6 @@
 ---
-field: rear-extension-length
-name: Rear extension length
+field: is-extension-beyond-rear-wall
+name: Extension beyond rear wall
 description: Will the extension extend beyond the rear wall of the original dwelling
 datatype: boolean
 cardinality: 1
