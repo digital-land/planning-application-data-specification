@@ -1,5 +1,5 @@
 ---
-field: dwelling-detached
+field: is-dwelling-detached
 name: Dwelling detached
 description: Is the dwelling detached
 datatype: boolean
