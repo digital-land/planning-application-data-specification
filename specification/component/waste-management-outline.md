@@ -4,7 +4,7 @@ name: Waste management
 description: |
   Details of waste management facilities including type, capacity, and throughput information. Specifically for outline applications
 fields:
-  - field: type
+  - field: waste-management-facility-type
     required: true
   - field: not-applicable
   - field: is-total-capacity-known
