@@ -1,5 +1,5 @@
 ---
-field: within-site-constraints
+field: is-within-site-constraints
 name: Within site constraints
 description: Is the dwellinghouse within any restricted area
 datatype: boolean
