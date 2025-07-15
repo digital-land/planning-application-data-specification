@@ -11,7 +11,7 @@ fields:
     required: true
   - field: was-use-granted-by-pdr
     required: true
-  - field: site-location-constraint
+  - field: is-site-in-restricted-area
     required: true
 validation:
   - description: "Building must be constructed in eligible construction period"
@@ -21,9 +21,9 @@ validation:
   - description: "Current use must not be from permitted development rights"
     rule: "was-use-granted-by-pdr == false (required for application to proceed)"
   - description: "Site must not be in restricted area"
-    rule: "site-location-constraint == false (required for application to proceed)"
+    rule: "is-site-in-restricted-area == false (required for application to proceed)"
   - description: "All eligibility criteria must be met for application to proceed"
-    rule: "in-building-construction-period == true AND has-additional-storeys == false AND was-use-granted-by-pdr == false AND site-location-constraint == false"
+    rule: "in-building-construction-period == true AND has-additional-storeys == false AND was-use-granted-by-pdr == false AND is-site-in-restricted-area == false"
 entry-date: 2025-07-15
 end-date: ''
 ---
