@@ -13,11 +13,15 @@ fields:
     required: true
     applies-if:
       application-type:
-        in: ["hh", "full", "outline", "demolition-con-area", "lbc", "s73", "extraction-oil-gas"]
+        in: ["hh", "full", "outline", "demolition-con-area", "s73", "extraction-oil-gas"]
   - field: owners-and-tenants
     applies-if:
       application-type:
-        in: ["hh", "full", "outline", "demolition-con-area", "lbc", "s73", "extraction-oil-gas"]
+        in: ["hh", "full", "outline", "demolition-con-area", "s73", "extraction-oil-gas"]
+  - field: lbc-owners
+    applies-if:
+      application-type:
+        in: ["lbc"]
   - field: steps-taken
     notes: Required for Certificate-C or Certificate-D
     applies-if:
