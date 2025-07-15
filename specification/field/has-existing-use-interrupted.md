@@ -1,5 +1,5 @@
 ---
-field: existing-use-interrupted
+field: has-existing-use-interrupted
 name: Existing use interrupted
 description: Indicating whether the existing use has been interrupted since it commenced
 datatype: boolean

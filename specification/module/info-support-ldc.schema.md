@@ -7,11 +7,11 @@ description: |
 fields:
   - field: existing-use-start-date
     required: true
-  - field: existing-use-interrupted
+  - field: has-existing-use-interrupted
     required: true
   - field: interruption-details
     required-if:
-      - field: existing-use-interrupted
+      - field: has-existing-use-interrupted
         value: true
   - field: existing-use-change
     required: true
@@ -25,7 +25,7 @@ validation:
   - description: "Start date must be in the past"
     rule: "existing-use-start-date <= current_date"
   - description: "Interruption details must be provided when use has been interrupted"
-    rule: "existing-use-interrupted == true REQUIRES interruption-details.length > 0"
+    rule: "has-existing-use-interrupted == true REQUIRES interruption-details.length > 0"
   - description: "Use change details must be provided when use has changed"
     rule: "existing-use-change == true REQUIRES existing-use-change-details.length > 0"
   - description: "Interruption details must include relevant dates and circumstances"
