@@ -1,4 +1,34 @@
 
+<a name="v0.1.18"></a>
+## [v0.1.18](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.17...v0.1.18) (2025-07-15)
+
+More declarative versions added and issues resolved
+
+### 𝌭 Model changes
+
+* add declarative version of desc-proposed-works module (commit [a925d32](https://github.com/digital-land/planning-application-data-specification/commit/a925d326e03b64bb05e03b8699b13fd2bdbf4035))
+* add declarative version of plans-drawings-supporting-materials module (commit [3002aa5](https://github.com/digital-land/planning-application-data-specification/commit/3002aa5733482bca54aee1eae7037e33230d4b27))
+* rename type field to waste-management-facility-type (commit [eae9560](https://github.com/digital-land/planning-application-data-specification/commit/eae956046ccbfd425c7e376367b928bbaeda6089))
+* add specification processes-machinery-waste module for outline applications (commit [9b05a03](https://github.com/digital-land/planning-application-data-specification/commit/9b05a03f9a701348424b55732a96444a5f4ba832))
+* add declarative version of desc-work-impacts-risks module (commit [d8dac9a](https://github.com/digital-land/planning-application-data-specification/commit/d8dac9a27a386ccd62d46e48959af8fbf26ae721))
+* reanme within-site-constraints field to is-within-site-constraints (commit [51d27af](https://github.com/digital-land/planning-application-data-specification/commit/51d27af4a4e571347ce29454b24c5343ab30332b))
+* rename rear-extension-length field to is-extension-beyond-rear-wall (commit [d85023c](https://github.com/digital-land/planning-application-data-specification/commit/d85023c7070dcbc6d9b723b916ef5dadf925ac2d))
+* field in eligibility-proposal should be is-dwelling-detached (commit [02fd137](https://github.com/digital-land/planning-application-data-specification/commit/02fd137b7fb5bb1ed8d48599e6b1f5729307f2d2))
+* rename dwelling-detached field to is-dwelling-detached (commit [1ca6280](https://github.com/digital-land/planning-application-data-specification/commit/1ca6280ef48eea63888fc9720565eef2ce6e0807))
+* rename extension-height-over-4m field to is-extension-height-over-4m (commit [d6092ba](https://github.com/digital-land/planning-application-data-specification/commit/d6092ba3e02b0aac9855dbc44053d525f04ef5b1))
+* rename single-storey-extension to is-single-storey-extension (commit [d0ae1bd](https://github.com/digital-land/planning-application-data-specification/commit/d0ae1bda3ed7555f17c731db2ba5bbdcff4f7807))
+* add declarative version of eligibility-extension module (commit [78fab5b](https://github.com/digital-land/planning-application-data-specification/commit/78fab5b3d897c199eb29d57f0636378c32d570ea))
+* designations and site-constraints fields should both use designations enum (commit [045697a](https://github.com/digital-land/planning-application-data-specification/commit/045697a3c7973c9ecc57d2c863d90ded46470073))
+* combine designation and sigte-constraint codelists (commit [23a42e5](https://github.com/digital-land/planning-application-data-specification/commit/23a42e57510bafec1cb485c6292fd9424e466eef))
+* add declarative version of grounds-ldc module (commit [5f72b7f](https://github.com/digital-land/planning-application-data-specification/commit/5f72b7ffa13e5f221f76dbd92dac5f5f93f4043e))
+* grounds for ldc is now in 2 parts, pre and post 2025-04-25 (commit [41bcb70](https://github.com/digital-land/planning-application-data-specification/commit/41bcb70683ed986d0a67a2e02d0683051c159f45))
+* add codelists needed for grounds for ldc module (commit [b79067d](https://github.com/digital-land/planning-application-data-specification/commit/b79067d19801f691bdd6d98c0b8a2257f47cc7b3))
+
+### 🐛 Bug Fixes
+
+* update csv field to application-types (commit [d836c96](https://github.com/digital-land/planning-application-data-specification/commit/d836c962cafbb9908b49901beda4288613fccdde))
+
+
 <a name="v0.1.17"></a>
 ## [v0.1.17](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.16...v0.1.17) (2025-07-09)
 
