@@ -9,7 +9,7 @@ fields:
     required: true
   - field: has-additional-storeys
     required: true
-  - field: dwelling-permitted-use
+  - field: was-use-granted-by-pdr
     required: true
   - field: site-location-constraint
     required: true
@@ -19,11 +19,11 @@ validation:
   - description: "No additional storeys should have been previously added"
     rule: "has-additional-storeys == false (required for application to proceed)"
   - description: "Current use must not be from permitted development rights"
-    rule: "dwelling-permitted-use == false (required for application to proceed)"
+    rule: "was-use-granted-by-pdr == false (required for application to proceed)"
   - description: "Site must not be in restricted area"
     rule: "site-location-constraint == false (required for application to proceed)"
   - description: "All eligibility criteria must be met for application to proceed"
-    rule: "in-building-construction-period == true AND has-additional-storeys == false AND dwelling-permitted-use == false AND site-location-constraint == false"
+    rule: "in-building-construction-period == true AND has-additional-storeys == false AND was-use-granted-by-pdr == false AND site-location-constraint == false"
 entry-date: 2025-07-15
 end-date: ''
 ---
