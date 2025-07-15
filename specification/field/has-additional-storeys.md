@@ -1,5 +1,5 @@
 ---
-field: additional-storeys-added
+field: has-additional-storeys
 name: Additional storeys added
 description: Have additional storeys already been added to the original building? If True, application cannot proceed.
 datatype: boolean
