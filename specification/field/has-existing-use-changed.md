@@ -1,5 +1,5 @@
 ---
-field: existing-use-change
+field: has-existing-use-changed
 name: Existing use change
 description: Indicate whether there has been any change in the existing use since it commenced
 datatype: boolean

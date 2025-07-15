@@ -13,11 +13,11 @@ fields:
     required-if:
       - field: has-existing-use-interrupted
         value: true
-  - field: existing-use-change
+  - field: has-existing-use-changed
     required: true
   - field: existing-use-change-details
     required-if:
-      - field: existing-use-change
+      - field: has-existing-use-changed
         value: true
 validation:
   - description: "Start date must be a valid date in YYYY-MM-DD format"
@@ -27,7 +27,7 @@ validation:
   - description: "Interruption details must be provided when use has been interrupted"
     rule: "has-existing-use-interrupted == true REQUIRES interruption-details.length > 0"
   - description: "Use change details must be provided when use has changed"
-    rule: "existing-use-change == true REQUIRES existing-use-change-details.length > 0"
+    rule: "has-existing-use-changed== true REQUIRES existing-use-change-details.length > 0"
   - description: "Interruption details must include relevant dates and circumstances"
     rule: "interruption-details must specify dates and nature of interruption when provided"
   - description: "Use change details must include relevant dates and nature of changes"
