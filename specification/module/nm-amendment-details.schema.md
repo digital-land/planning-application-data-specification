@@ -8,18 +8,18 @@ fields:
   - field: description
     description: Description of the non-material amendments the applicant seeks to make
     required: true
-  - field: substituting-document
+  - field: is-substituting-document
     required: true
   - field: replacement-documents
     required-if:
-      - field: substituting-document
+      - field: is-substituting-document
         value: true
   - field: reason
     description: Reason why applicant wants to make the amendment
     required: true
 validation:
   - description: "Replacement documents must be provided when substituting documents"
-    rule: "substituting-document == true REQUIRES replacement-documents.length >= 1"
+    rule: "is-substituting-document == true REQUIRES replacement-documents.length >= 1"
   - description: "Each replacement document must have valid old and new document references"
     rule: "replacement-documents[].old-document.length > 0 AND replacement-documents[].new-document.length > 0"
   - description: "Old and new document references must be different"

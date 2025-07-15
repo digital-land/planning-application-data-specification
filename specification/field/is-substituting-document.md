@@ -1,5 +1,5 @@
 ---
-field: substituting-document
+field: is-substituting-document
 name: Substituting document
 description: True or False indicating whether the amendment involves substituting documents
 datatype: boolean
