@@ -1,4 +1,33 @@
 
+<a name="v0.1.19"></a>
+## [v0.1.19](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.18...v0.1.19) (2025-07-16)
+
+BNG and declarative modules
+
+### 𝌭 Model changes
+
+* add declarative version of grounds-for-application module (commit [d096caa](https://github.com/digital-land/planning-application-data-specification/commit/d096caac505c1abab8eb9fa9221ccaf4b13b18ad))
+* add declarative version of grounds-existing-use module (commit [c0bf0d5](https://github.com/digital-land/planning-application-data-specification/commit/c0bf0d52b12137a1330f5d45006b74ee617b470c))
+* rename in-building-construction-period field to was-constructed-btw-1948-2018 (commit [30394f2](https://github.com/digital-land/planning-application-data-specification/commit/30394f20cb3dc7a512c9c2cfbc61206bb048c65d))
+* rename site-location-constraint field to is-site-in-restricted-area (commit [35b8202](https://github.com/digital-land/planning-application-data-specification/commit/35b82026bff4bb659d14d1d6a4ddfe9475ea1c57))
+* rename dwelling-permitted-use field to was-use-granted-by-pdr (commit [92e2813](https://github.com/digital-land/planning-application-data-specification/commit/92e2813366e92c893eca478a1497d680b4e0e105))
+* rename additional-storeys-added field to has-additional-storeys (commit [a51e97f](https://github.com/digital-land/planning-application-data-specification/commit/a51e97f4cbd15229f8e42479b3a4212de94e2ac1))
+* add declarative version of eligibility-current-building module (commit [ff5a68b](https://github.com/digital-land/planning-application-data-specification/commit/ff5a68bd44c2b419b44e1a506fc48337f52a50a6))
+* update declarative version of bng module with bng-condition-exemption-reasons substructure (commit [3fb2492](https://github.com/digital-land/planning-application-data-specification/commit/3fb2492175e7eee28fcfaee8184854132272966b))
+* add sub-structure to BNG module to capture specific exemptions cited (commit [30136eb](https://github.com/digital-land/planning-application-data-specification/commit/30136ebac717452d3b6a1621739f6f705b0b5b8d))
+* add bng-exemption-reason codelist (commit [90e727c](https://github.com/digital-land/planning-application-data-specification/commit/90e727cf1aef37dde21957f944714438a843f3d8))
+* rename existing-use-change field to has-existing-use-changed (commit [c57b63a](https://github.com/digital-land/planning-application-data-specification/commit/c57b63a43e45380fb880887be84b6f93b84bf879))
+* rename existing-use-interrupted field to has-existing-use-interrupted (commit [8c28e6d](https://github.com/digital-land/planning-application-data-specification/commit/8c28e6dbe3008dcd32d4c6a1dc66c6e9b02b0423))
+* add declarative version of info-support-ldc module (commit [7a59d3a](https://github.com/digital-land/planning-application-data-specification/commit/7a59d3a1a0eff9f7ea6a7747609bee2cf4cc688c))
+* rename substituting-document field to is-substituting-document (commit [4e6cecd](https://github.com/digital-land/planning-application-data-specification/commit/4e6cecd559e0ad0ffd6b1f2b3d6ef05b91d1b14c))
+* add declarative version of nm-amendment-details module (commit [b0109e3](https://github.com/digital-land/planning-application-data-specification/commit/b0109e392f9ca332014e79dd0cc5e4b139f8d992))
+* handle variance in ownership certificates module between lbc and other applications (commit [4552d7d](https://github.com/digital-land/planning-application-data-specification/commit/4552d7d4715e1731d01420ea106e9b170f9e72c4))
+* rename owners-and-tenants component to notified-person (commit [71c631f](https://github.com/digital-land/planning-application-data-specification/commit/71c631f142d8bb6e15856acc27f3e16ec50bfd8d))
+* add a combined parking-space-type enum (commit [07ea250](https://github.com/digital-land/planning-application-data-specification/commit/07ea2508ec7d63af8d60e277c68080db11bdacda))
+* add declarative version of desc-proposed-works module (commit [514ca9b](https://github.com/digital-land/planning-application-data-specification/commit/514ca9bc496323fce3d25113f189781d3064b099))
+* add declarative version of plans-drawings-supporting-materials module (commit [e3b20ff](https://github.com/digital-land/planning-application-data-specification/commit/e3b20ff82bb9398138b4b44629f55a0c271cd9c2))
+
+
 <a name="v0.1.18"></a>
 ## [v0.1.18](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.17...v0.1.18) (2025-07-15)
 
