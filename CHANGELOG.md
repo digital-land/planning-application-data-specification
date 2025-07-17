@@ -1,4 +1,29 @@
 
+<a name="v0.1.20"></a>
+## [v0.1.20](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.19...v0.1.20) (2025-07-17)
+
+Declarative versions of modules
+
+### 𝌭 Model changes
+
+* handle variance with Outline app by allowing unknown (commit [75a0b5b](https://github.com/digital-land/planning-application-data-specification/commit/75a0b5b8c44ee14006a454a4fa7c1ee9a0f16f99))
+* add declarative version of flood-risk-assessment module (commit [71fde7a](https://github.com/digital-land/planning-application-data-specification/commit/71fde7a9ca6ad9a166624950822e20129bdd29ca))
+* add declarative version of grounds-proposed-use module (commit [eb469e6](https://github.com/digital-land/planning-application-data-specification/commit/eb469e6235cdd386045f5c9d9c5f3190ec644d2f))
+* add declarative version of the hedgerow-removal module (commit [10cb0be](https://github.com/digital-land/planning-application-data-specification/commit/10cb0be641c5eda31a447598004d1fedf5e0d79a))
+* add declarative version of ldc-interest module (commit [4687322](https://github.com/digital-land/planning-application-data-specification/commit/4687322e60046843b69bc008a5cc10691abe1d2e))
+* add declarative version of the non-res-floorspace module (commit [b17a03d](https://github.com/digital-land/planning-application-data-specification/commit/b17a03d41ef448e4a456b771b4b34d91116b7a72))
+* add declarative version of proposal-details-ldc module (commit [a74feec](https://github.com/digital-land/planning-application-data-specification/commit/a74feecc4ad0f6b3125476b16b8c5569ae4b10ea))
+* add declarative version of proposed-advert-details module (commit [9961d1a](https://github.com/digital-land/planning-application-data-specification/commit/9961d1afa7e6df240fd30d03da26411681f73a62))
+* add declarative version of use-works-activity module (commit [7382719](https://github.com/digital-land/planning-application-data-specification/commit/738271922c2635609e68977846fe8c7a806a837c))
+* add new has-new-disposal-arrangements field to foul-sewage module (commit [870d08e](https://github.com/digital-land/planning-application-data-specification/commit/870d08e38a7f26c79ba05011b91b0ac0993df43e))
+* consolidate related-proposals and related-applications into single related-applications approach (commit [1662e27](https://github.com/digital-land/planning-application-data-specification/commit/1662e277b05fa1f424122d95e99c639941939e62))
+* add declarative version of hrs-operation module (commit [9d378af](https://github.com/digital-land/planning-application-data-specification/commit/9d378af12ad7ea4bd26c998662c2e48a54b3a7f9))
+
+### 🐛 Bug Fixes
+
+* add the missing applies-if conditions to the original fields in waste-storage-collection module (commit [44fbcc1](https://github.com/digital-land/planning-application-data-specification/commit/44fbcc12b87465884b72e8fdf75a0bec8af3898f))
+
+
 <a name="v0.1.19"></a>
 ## [v0.1.19](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.18...v0.1.19) (2025-07-16)
 
