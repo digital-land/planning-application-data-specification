@@ -175,3 +175,44 @@ Notes:
 - Person objects must include required fields: first-name, last-name, address-text
 - reason-not-informed is only provided when informed-of-application is false
 - Nature of interest should describe the person's specific connection to the property
+
+## Hedgerow Removal Module Examples
+
+### hedgerow-removal-owner.json
+Shows a hedgerow removal notice where:
+- Applicant is the owner of the land
+- Hedgerow is older than 30 years (no planting evidence required)
+- Agricultural access improvements for machinery
+- Multiple plan references showing removal areas
+- Standard numeric length specification
+
+### hedgerow-removal-utility.json
+Shows a hedgerow removal notice where:
+- Utility operator is removing hedgerow for infrastructure
+- Broadband network expansion project
+- Multiple technical plan references
+- Applicant has utility operator interest declaration
+- Hedgerow is established (over 30 years old)
+
+### hedgerow-removal-young-hedge.json
+Shows a hedgerow removal notice where:
+- Agricultural tenant is replacing old hedgerow
+- Hedgerow is less than 30 years old
+- Planting evidence is attached as required
+- Farm modernization with native species replacement
+- Demonstrates conditional requirement fulfillment
+
+### hedgerow-removal-no-evidence.json
+Shows a hedgerow removal notice where:
+- Farm business tenant expanding existing buildings
+- Hedgerow is less than 30 years old
+- No planting evidence is attached (potential compliance issue)
+- Business expansion for livestock housing
+- Demonstrates scenario where conditional requirement may not be met
+
+Notes:
+- When hedgerow-less-than-30-years is true, planting-evidence-attached should be true
+- hedgerow-length must be a positive number (in metres)
+- plan-references should correspond to documents in application.documents
+- interest-declaration must use values from hedgerow-interest-dec codelist
+- removal-reasons should provide clear justification for the proposed removal
