@@ -1,6 +1,6 @@
 | field | description | application-types | required | notes |
 | --- | --- | --- | --- | --- |
-| advertisement[] | Structured data about each proposed advertisement |  | MUST | Rule: must be one or more entries |
+| advertisements[]{} | Structured data about each proposed advertisement |  | MUST | Rule: must be one or more entries |
 
 **Advertisement**
 
