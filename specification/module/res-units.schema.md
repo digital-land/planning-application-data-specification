@@ -23,4 +23,5 @@ validation:
   - rule: "if will-residential-units-change is true, at least one breakdown for existing and proposed is required (count could be unknown)"
 entry-date: 2025-07-17
 end-date: ''
+implementation-notes: For the paper forms, for space reasons, we need to limit the bedroom counts to 1, 2, 3, 4+
 ---
