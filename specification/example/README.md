@@ -216,3 +216,40 @@ Notes:
 - plan-references should correspond to documents in application.documents
 - interest-declaration must use values from hedgerow-interest-dec codelist
 - removal-reasons should provide clear justification for the proposed removal
+
+## Grounds for Proposed Use Module Examples
+
+### grounds-proposed-use-permanent.json
+Shows a grounds for proposed use submission where:
+- Standard use class (B1 - Business) is specified
+- Permanent operation type
+- Reason based on established use through time
+- No additional details required for permanent use
+
+### grounds-proposed-use-temporary.json
+Shows a grounds for proposed use submission where:
+- Standard use class (A3 - Restaurants and cafes) is specified
+- Temporary operation type requiring additional details
+- Comprehensive temporary-details explaining duration and restrictions
+- Reason covering temporary use provisions
+
+### grounds-proposed-use-sui-generis.json
+Shows a grounds for proposed use submission where:
+- Sui generis use class requiring specification
+- Specified-use provides detailed description of unique use
+- Permanent operation with specialized requirements
+- Reason explaining why the use is considered sui generis
+
+### grounds-proposed-use-other.json
+Shows a grounds for proposed use submission where:
+- "Other" use class requiring specification
+- Mixed-use development not fitting standard classes
+- Specified-use describes the combination of uses
+- Reason referencing permitted development provisions
+
+Notes:
+- When use is "sui" or "other", specified-use is required
+- When operation-type is "temporary", temporary-details is required
+- Reason should provide legal justification for lawful development
+- Use class should reference the use-class codelist values
+- Operation-type uses values from operation-type codelist (permanent/temporary)
