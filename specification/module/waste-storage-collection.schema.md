@@ -7,12 +7,22 @@ description: |
 fields:
   - field: needs-waste-storage-area
     required: true
+  - field: needs-waste-storage-area-outline
+    required: true
+    applies-if:
+      application-type:
+        in: ['outline']
   - field: waste-storage-area-details
     applies-if:
       field: needs-waste-storage-area
       value: true
   - field: separate-recycling-arrangements
     required: true
+  - field: separate-recycling-arrangements
+    required: true
+    applies-if:
+      application-type:
+        in: ['outline']
   - field: separate-recycling-arrangements-details
     applies-if:
       field: separate-recycling-arrangements
