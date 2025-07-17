@@ -5,8 +5,12 @@ description: |
   Information about foul sewage disposal methods and connection to existing 
   drainage systems for development proposals
 fields:
-  - field: foul-sewage-disposal-types
+  - field: has-new-disposal-arrangements
     required: true
+  - field: foul-sewage-disposal-types
+    required-if:
+      field: has-new-disposal-arrangements
+      value: true
   - field: produce-foul-sewage
     required: true
     applies-if:
