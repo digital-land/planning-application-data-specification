@@ -1,7 +1,7 @@
 Field | Description | Application type | Required? | Notes
 -- | -- | -- | -- | --
-residential-unit-change | Proposal includes the gain, loss or change of use of residential units (True/False) | full;outline;ldc | MUST | Could be calculated from answers to next parts?
-residential-unit-summary[]{} | Breakdown of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `residential-unit-change` is True
+will-residential-units-change | Proposal includes the gain, loss or change of use of residential units (True/False) | full;outline;ldc | MUST | Could be calculated from answers to next parts?
+residential-unit-summary[]{} | Breakdown of unit counts by tenure and housing type | full;outline;ldc | MAY | Is MUST if `will-residential-units-change` is True
 total-existing-units | The total number of existing units | full;outline;ldc | MUST |
 total-proposed-units | The total number of proposed units | full;outline;ldc | MUST |
 net-change | Calculated net change in units | full;outline;ldc | MUST | Calculated as proposed-units - existing-units. Format: Integer
@@ -34,4 +34,4 @@ units | the number of units of that bedroom count | integer | MUST | 0 or above
 
 
 
-rule: if residential-unit-change = true, at least one breakdown for existing and proposed is required (count could be unknown).
+rule: if will-residential-units-change = true, at least one breakdown for existing and proposed is required (count could be unknown).

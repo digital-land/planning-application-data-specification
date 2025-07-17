@@ -1,5 +1,5 @@
 ---
-field: residential-unit-change
+field: will-residential-units-change
 name: Residential unit change
 description: Proposal includes the gain, loss or change of use of residential units
 datatype: boolean
