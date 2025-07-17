@@ -1,0 +1,26 @@
+---
+module: res-units
+name: Residential units
+description: |
+  Information about residential units including existing and proposed unit counts, 
+  with detailed breakdowns by tenure and housing type
+fields:
+  - field: residential-unit-change
+    required: true
+  - field: residential-unit-summary
+    required-if:
+      - field: residential-unit-change
+        value: true
+  - field: total-existing-units
+    required: true
+  - field: total-proposed-units
+    required: true
+  - field: net-change
+    required: true
+validation:
+  - rule: "residential-unit-summary is required when residential-unit-change is true"
+  - rule: "net-change is calculated as total-proposed-units minus total-existing-units"
+  - rule: "if residential-unit-change is true, at least one breakdown for existing and proposed is required (count could be unknown)"
+entry-date: 2025-07-17
+end-date: ''
+---
