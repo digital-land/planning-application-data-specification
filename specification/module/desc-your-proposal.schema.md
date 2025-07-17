@@ -5,7 +5,8 @@ description: |
   Details about your proposal including related planning permissions, 
   development status, and condition information
 fields:
-  - field: related-proposal
+  - field: related-application
+    description: Details of the related planning permission
     applies-if:
       application-type:
         in: ["s73", "approval-condition", "non-material-amendment"]

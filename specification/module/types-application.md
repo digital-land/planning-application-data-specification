@@ -1,7 +1,7 @@
 field | description | data type | application-types | required | notes
 -- | -- | -- | -- | -- | --
 permission-types[] | List of permission types being applied for | Array | extraction-oil-gas | MUST | One or more from the [permission types enum](https://github.com/digital-land/planning-application-data-specification/discussions/198).
-related-proposals[]{} | List of related proposals with reference and decision dates | Array | extraction-oil-gas | MAY | Required if any application type involves prior permissions.
+related-applications[]{} | List of related proposals with reference and decision dates | Array | extraction-oil-gas | MAY | Required if any application type involves prior permissions.
 other-details | | String | extraction-oil-gas | MAY |  If there are other details not covered by the application types 
 consolidate-permissions | Is the applicant willing to consolidate or update existing permissions? | Boolean | extraction-oil-gas | MUST | Yes / No. If Yes, further details are required.
 consolidate-details | Details about the consolidation or update of permissions | String | extraction-oil-gas | CONDITIONAL | Required if consolidate-permissions is Yes.
