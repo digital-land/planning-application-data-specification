@@ -140,3 +140,38 @@ Key points demonstrated:
 - Date format requirements
 - Related application structure
 - Reserved matters array format
+
+## LDC Interest Module Examples
+
+### ldc-interest-owner.json
+Shows a submission where:
+- Applicant is the owner of the listed building
+- No additional owner details or interested persons required
+- Simplest case for Listed Building Consent applications
+
+### ldc-interest-lessee.json
+Shows a submission where:
+- Applicant is a lessee of the listed building
+- Owner details must be provided including notification status
+- Single owner with complete person details and confirmation they were informed
+
+### ldc-interest-interested-persons.json
+Shows a submission where:
+- Applicant has no direct interest in the property
+- Multiple interested persons with different notification scenarios
+- Includes both informed and not-informed persons with reasons
+- Shows various types of interest (heritage group, adjacent owner)
+
+### ldc-interest-complex.json
+Shows a comprehensive submission where:
+- Applicant is an occupier requiring owner details
+- Multiple owners including corporate entities
+- Additional interested persons with academic interest
+- Demonstrates complex ownership and interest scenarios
+
+Notes:
+- When applicant-interest is "lessee" or "occupier", owner-details is required
+- When applicant-interest is "none", interested-persons is required
+- Person objects must include required fields: first-name, last-name, address-text
+- reason-not-informed is only provided when informed-of-application is false
+- Nature of interest should describe the person's specific connection to the property

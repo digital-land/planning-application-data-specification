@@ -2,4 +2,5 @@ reference | name | description
 --- | --- | ---
 owner | Owner |
 lessee | Lessee | 
-occupier | Occupier | 
+occupier | Occupier |
+none | None | Applicant has no direct interest in the property 
