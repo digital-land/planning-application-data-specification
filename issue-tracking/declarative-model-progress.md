@@ -1,9 +1,9 @@
 # Declarative Specification Tracking Summary
 
 - **Application schemas**: 3
-- **Fields**: 313
-- **Module schemas**: 68
-- **Substructures (objects/components)**: 39
-- **Example files**: 212
+- **Fields**: 323
+- **Module schemas**: 69
+- **Substructures (objects/components)**: 42
+- **Example files**: 218
 
-**Total elements**: 635
+**Total elements**: 655
