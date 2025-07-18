@@ -25,6 +25,10 @@ declarative-progress:
 	python3 bin/declarative_tracking.py
 
 
+specification::
+	python3 bin/specification_data.py
+
+
 status:
 	git status --ignored
 
