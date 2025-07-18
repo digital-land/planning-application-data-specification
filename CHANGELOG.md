@@ -1,4 +1,28 @@
 
+<a name="v0.1.21"></a>
+## [v0.1.21](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.20...v0.1.21) (2025-07-18)
+
+Reworking the residential units module
+
+### ⚒️ Tooling
+
+* generate field dataset (commit [99f1cba](https://github.com/digital-land/planning-application-data-specification/commit/99f1cba72adb27a81735b8e98e8c32d273d0986d))
+
+### 𝌭 Model changes
+
+* rename field from residential-unit-change to will-residential-units-change (commit [72cdf87](https://github.com/digital-land/planning-application-data-specification/commit/72cdf872f8a371b8cff75baba72e16f200751e4f))
+* add declarative version of the res-units module (commit [78a602e](https://github.com/digital-land/planning-application-data-specification/commit/78a602e67908ca31b5acb0c666962aad0a643687))
+* update the res-unit module to handle houses of any bedroom number (commit [5ab7aa4](https://github.com/digital-land/planning-application-data-specification/commit/5ab7aa41b23c5edcc21ab42d229564fb26e25798))
+
+### 🐛 Bug Fixes
+
+* field description needed to be in quotes (commit [31128dd](https://github.com/digital-land/planning-application-data-specification/commit/31128dd67501f25da797f968d45f635c58507c8e))
+
+### 📚 Documentation
+
+* added implementation note about how res-units module should be interpreted for paper forms (commit [03c7e36](https://github.com/digital-land/planning-application-data-specification/commit/03c7e36760f25386023ae10f4e11b2ca94be2e20))
+
+
 <a name="v0.1.20"></a>
 ## [v0.1.20](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.19...v0.1.20) (2025-07-17)
 
