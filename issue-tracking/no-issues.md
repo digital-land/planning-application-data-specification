@@ -78,3 +78,4 @@ The following modules currently have no open issues ([see modules with issues](h
 75. [Types of application](https://github.com/digital-land/planning-application-data-specification/discussions/73) (ref: types-application)
 76. [Vehicle parking](https://github.com/digital-land/planning-application-data-specification/discussions/72) (ref: vehicle-parking)
 77. [Voluntary agreements / planning obligations](https://github.com/digital-land/planning-application-data-specification/discussions/115) (ref: vol-agreement)
+78. [Waste storage and collection](https://github.com/digital-land/planning-application-data-specification/discussions/84) (ref: waste-storage-collection)
