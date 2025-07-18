@@ -1,9 +1,10 @@
 ---
+cardinality: '1'
+datatype: number
+description: Total number of existing parking spaces
+end-date: ''
+entry-date: '2025-07-08'
 field: total-existing
 name: Total existing
-description: Total number of existing parking spaces
-datatype: number
-cardinality: '1'
-entry-date: '2025-07-08'
-end-date: ''
+notes: ''
 ---

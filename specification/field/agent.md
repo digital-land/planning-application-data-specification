@@ -1,12 +1,13 @@
 ---
 cardinality: '1'
+component: agent
 datatype: object
 description: Details of the agent
-entry-date: '2025-06-02'
 end-date: ''
+entry-date: '2025-06-02'
 field: agent
 name: agent
-component: agent
+notes: ''
 ---
 
 A structured object containing details about the planning application agent. Required for most planning application types including:

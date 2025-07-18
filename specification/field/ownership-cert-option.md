@@ -1,10 +1,11 @@
 ---
-field: ownership-cert-option
-name: Ownership certificate type
-description: The type of ownership certificate based on ownership and tenancy status
-datatype: enum
 cardinality: 1
 codelist: ownership-cert-type
-entry-date: 2025-06-13
+datatype: enum
+description: The type of ownership certificate based on ownership and tenancy status
 end-date: ''
+entry-date: 2025-06-13
+field: ownership-cert-option
+name: Ownership certificate type
+notes: ''
 ---

@@ -1,9 +1,10 @@
 ---
+cardinality: 1
+datatype: string
+description: State how the condition should vary
+end-date: ''
+entry-date: 2025-07-08
 field: condition-change
 name: Condition change
-description: State how the condition should vary
-datatype: string
-cardinality: 1
-entry-date: 2025-07-08
-end-date: ''
+notes: ''
 ---

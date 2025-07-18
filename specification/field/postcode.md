@@ -1,11 +1,12 @@
 ---
-field: postcode
 cardinality: '1'
 datatype: string
 description: The postal code
-entry-date: '2025-06-02'
 end-date: ''
+entry-date: '2025-06-02'
+field: postcode
 name: Postcode
+notes: ''
 ---
 
 The UK postal code associated with the correspondence address or site location. 

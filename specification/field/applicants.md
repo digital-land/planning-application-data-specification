@@ -1,10 +1,11 @@
 ---
-cardinality: 'n'
+cardinality: n
+component: applicant
 datatype: object
 description: ''
-entry-date: ''
 end-date: ''
+entry-date: ''
 field: applicants
 name: Applicants
-component: applicant
+notes: ''
 ---

@@ -1,10 +1,12 @@
 ---
-field: application-types
-name: Application types
-description: A list of planning application types that define the nature of the planning application
-datatype: enum
 cardinality: n
 codelist: application-type
-entry-date: 2025-06-20
+datatype: enum
+description: A list of planning application types that define the nature of the planning
+  application
 end-date: ''
+entry-date: 2025-06-20
+field: application-types
+name: Application types
+notes: ''
 ---

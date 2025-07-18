@@ -1,9 +1,10 @@
 ---
+cardinality: 1
+datatype: string
+description: Unique Property Reference Number
+end-date: ''
+entry-date: 2025-07-07
 field: uprn
 name: UPRN
-description: Unique Property Reference Number
-datatype: string
-cardinality: 1
-entry-date: 2025-07-07
-end-date: ''
+notes: ''
 ---

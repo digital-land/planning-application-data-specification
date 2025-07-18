@@ -1,10 +1,11 @@
 ---
+cardinality: '1'
+codelist: parking-space-type
+datatype: enum
+description: Type of parking space or vehicle type
+end-date: ''
+entry-date: '2025-07-08'
 field: parking-space-type
 name: Parking space type
-description: Type of parking space or vehicle type
-datatype: enum
-cardinality: '1'
-entry-date: '2025-07-08'
-end-date: ''
-codelist: parking-space-type
+notes: ''
 ---

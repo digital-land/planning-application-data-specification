@@ -1,12 +1,13 @@
 ---
+cardinality: '1'
+codelist: contact-priority
+datatype: enum
+description: The priority of a number
+end-date: ''
+entry-date: '2025-05-30'
 field: contact-priority
 name: Contact priority
-description: The priority of a number
-datatype: enum
-cardinality: '1'
-entry-date: '2025-05-30'
-end-date: ''
-codelist: contact-priority
+notes: ''
 ---
 
 Only one should be `primary`

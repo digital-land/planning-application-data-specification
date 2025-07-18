@@ -1,11 +1,11 @@
 ---
+cardinality: many
+codelist: lawful-development-need
+datatype: enum
+description: What is the lawful development certificate needed for?
+end-date: ''
+entry-date: 2025-07-17
 field: ldc-need
 name: LDC need
-description: What is the lawful development certificate needed for?
-datatype: enum
-codelist: lawful-development-need
-cardinality: many
-entry-date: 2025-07-17
-end-date: ''
-note: 'At least one value must be provided'
+notes: At least one value must be provided
 ---

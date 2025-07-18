@@ -1,10 +1,11 @@
 ---
-field: contact-type
-name: Site visit contact type
-description: Indicates who the authority should contact to arrange a site visit
-datatype: enum
 cardinality: 1
 codelist: site-visit-contact-type
-entry-date: 2025-06-12
+datatype: enum
+description: Indicates who the authority should contact to arrange a site visit
 end-date: ''
+entry-date: 2025-06-12
+field: contact-type
+name: Site visit contact type
+notes: ''
 ---

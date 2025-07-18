@@ -1,10 +1,11 @@
 ---
+cardinality: '1'
+codelist: advertisement-type
+datatype: enum
+description: One of the advertisement-types or other
+end-date: ''
+entry-date: '2025-07-08'
 field: advertisement-type
 name: Advertisement type
-description: One of the advertisement-types or other
-datatype: enum
-cardinality: '1'
-entry-date: '2025-07-08'
-end-date: ''
-codelist: advertisement-type
+notes: ''
 ---

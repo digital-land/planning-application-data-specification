@@ -1,9 +1,10 @@
 ---
+cardinality: 1
+datatype: string
+description: Date when development started
+end-date: ''
+entry-date: 2025-06-26
 field: development-start-date
 name: Development start date
-description: Date when development started
-datatype: string
-cardinality: 1
-entry-date: 2025-06-26
-end-date: ''
+notes: ''
 ---

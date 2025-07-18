@@ -1,11 +1,12 @@
 ---
-field: data-provided-by
-name: Data provided by
-description: Who provided the data: Applicant or System/Service?
-datatype: enum
 cardinality: 1
 codelist: provided-by
-entry-date: 2025-07-17
+datatype: enum
+description: 'Who provided the data: Applicant or System/Service?'
 end-date: ''
-notes: 'open possibility for services to work it out and not rely on the applicant to know'
+entry-date: 2025-07-17
+field: data-provided-by
+name: Data provided by
+notes: open possibility for services to work it out and not rely on the applicant
+  to know
 ---

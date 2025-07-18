@@ -1,10 +1,12 @@
 ---
+cardinality: 1
+codelist: building-element-type
+datatype: enum
+description: The part of building the materials relate to, such as walls, roofs, windows,
+  or doors
+end-date: ''
+entry-date: 2025-06-13
 field: building-element-type
 name: Building element type
-description: The part of building the materials relate to, such as walls, roofs, windows, or doors
-datatype: enum
-codelist: building-element-type
-cardinality: 1
-entry-date: 2025-06-13
-end-date: ''
+notes: ''
 ---

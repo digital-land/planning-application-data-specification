@@ -1,9 +1,10 @@
 ---
+cardinality: 1
+datatype: string
+description: Type of original planning application
+end-date: ''
+entry-date: 2025-06-26
 field: original-application-type
 name: Original application type
-description: Type of original planning application
-datatype: string
-cardinality: 1
-entry-date: 2025-06-26
-end-date: ''
+notes: ''
 ---

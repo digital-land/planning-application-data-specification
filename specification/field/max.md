@@ -1,9 +1,11 @@
 ---
+cardinality: 1
+datatype: number
+description: Upper bound of non-residential use, measured in square metres for floorspace
+  or hectares for site area
+end-date: ''
+entry-date: 2025-06-26
 field: max
 name: Maximum value
-description: Upper bound of non-residential use, measured in square metres for floorspace or hectares for site area
-datatype: number
-cardinality: 1
-entry-date: 2025-06-26
-end-date: ''
+notes: ''
 ---

@@ -1,9 +1,10 @@
 ---
+cardinality: 1
+datatype: string
+description: The species of the tree
+end-date: ''
+entry-date: 2025-06-30
 field: species
 name: Species
-description: The species of the tree
-datatype: string
-cardinality: 1
-entry-date: 2025-06-30
-end-date: ''
+notes: ''
 ---
