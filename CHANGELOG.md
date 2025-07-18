@@ -1,4 +1,17 @@
 
+<a name="v0.1.22"></a>
+## [v0.1.22](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.21...v0.1.22) (2025-07-18)
+
+Final set of declarative versions of modules
+
+### 𝌭 Model changes
+
+* add declarative version of interest-details module (commit [3893fc3](https://github.com/digital-land/planning-application-data-specification/commit/3893fc3f2031a2dca13679ba650e4db6f8d11650))
+* add declarative version of eligibility-related-works module (commit [6a456dd](https://github.com/digital-land/planning-application-data-specification/commit/6a456dd9d55d706b464665044953778d50a4d1bd))
+* add declarative version of eligibility module (commit [4b1639a](https://github.com/digital-land/planning-application-data-specification/commit/4b1639a027dd1bb13de203ede28faa44c749c4d2))
+* add declarative version of eligibility-proposal module (commit [71db37b](https://github.com/digital-land/planning-application-data-specification/commit/71db37b9f936d7b7cce0f7be57f3bda5bed9af8b))
+
+
 <a name="v0.1.21"></a>
 ## [v0.1.21](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.20...v0.1.21) (2025-07-18)
 
