@@ -7,6 +7,6 @@ end-date: ''
 entry-date: 2025-07-17
 field: data-provided-by
 name: Data provided by
-notes: open possibility for services to work it out and not rely on the applicant
+notes: opens possibility for services to work it out and not rely on the applicant
   to know
 ---
