@@ -4,7 +4,7 @@ name: Use works activity
 description: Information about what the lawful development certificate is needed for and related use details
 entry-date: 2025-07-17
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: ldc-need
     required: true

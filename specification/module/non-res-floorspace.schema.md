@@ -4,7 +4,7 @@ name: Non residential floorspace
 description: Information about non-residential floorspace changes including use class details and room counts for specific accommodation types
 entry-date: 2025-07-17
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: non-residential-change
     required: true

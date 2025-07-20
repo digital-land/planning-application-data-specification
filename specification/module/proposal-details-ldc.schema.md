@@ -4,7 +4,7 @@ name: Proposal details LDC
 description: Details of the proposal for lawful development certificate applications
 entry-date: 2025-07-17
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: proposal-incl-building-operations
     required: true

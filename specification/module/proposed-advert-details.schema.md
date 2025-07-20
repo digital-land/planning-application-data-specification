@@ -4,7 +4,7 @@ name: Proposed advert details
 description: Details of proposed advertisements including dimensions, materials, and illumination specifications
 entry-date: 2025-07-17
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: advertisements
     required: true

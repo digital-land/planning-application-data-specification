@@ -4,7 +4,7 @@ name: Hours of operation
 description: Hours of opening for each non-residential use proposed
 entry-date: 2025-07-16
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: hours-of-operation
     required: true
