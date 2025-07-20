@@ -87,6 +87,7 @@ def check_attrs(modules):
         "end-date",
         "rules",
         "notes",
+        "implementation",
     ]
 
     for module_name, module in modules.items():

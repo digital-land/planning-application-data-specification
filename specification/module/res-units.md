@@ -36,4 +36,4 @@ units | the number of units of that bedroom count | integer | MUST | 0 or above
 
 rule: if will-residential-units-change = true, at least one breakdown for existing and proposed is required (count could be unknown).
 
-implementation-note: For the paper forms, for space reasons, we need to limit the bedroom counts to 1, 2, 3, 4+
+implementation: For the paper forms, for space reasons, we need to limit the bedroom counts to 1, 2, 3, 4+
