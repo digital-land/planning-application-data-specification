@@ -1,5 +1,7 @@
 from collections import OrderedDict, deque
 
+from fields import get_applicable_app_types
+
 
 def get_module(modules, ref):
     """
@@ -39,9 +41,12 @@ def get_field_metadata(field_def):
         return {}
 
 
-def enqueue_object_type_fields(field_entries, components, fields, already_enqueued):
+def enqueue_object_type_fields(
+    field_entries, components, fields, already_enqueued, app_type=None
+):
     """
     Helper to enqueue component references for object-type fields.
+    If app_type is set, only enqueue fields whose applies-if matches the app_type (if present).
     """
     refs = []
     for field_entry in field_entries:
@@ -52,6 +57,13 @@ def enqueue_object_type_fields(field_entries, components, fields, already_enqueu
         if not field_def:
             continue
         field_metadata = get_field_metadata(field_def)
+        # Check applies-if logic if app_type is set
+        applies_if = field_entry.get("applies-if")
+        if app_type and applies_if:
+            app_types = get_applicable_app_types(field_entry)
+            if app_types and app_type not in app_types:
+                continue  # skip this field for this app_type
+        # If no applies-if or app_type not set, proceed as before
         if field_metadata.get("datatype") == "object":
             component_ref = field_metadata.get("component")
             if (
@@ -64,7 +76,7 @@ def enqueue_object_type_fields(field_entries, components, fields, already_enqueu
     return refs
 
 
-def collect_related_components_bfs(module_fields, components, fields):
+def collect_related_components_bfs(module_fields, components, fields, app_type=None):
     """
     Collect related components in breadth-first order (by nesting level).
     Returns an OrderedDict of component_ref: component_data.
@@ -75,7 +87,7 @@ def collect_related_components_bfs(module_fields, components, fields):
 
     # Enqueue all directly referenced components from module fields
     for ref in enqueue_object_type_fields(
-        module_fields, components, fields, already_enqueued
+        module_fields, components, fields, already_enqueued, app_type=app_type
     ):
         queue.append(ref)
 
@@ -90,14 +102,18 @@ def collect_related_components_bfs(module_fields, components, fields):
         related_components[component_ref] = component
         # Enqueue nested components from this component's fields
         for ref in enqueue_object_type_fields(
-            component.get("fields", []), components, fields, already_enqueued
+            component.get("fields", []),
+            components,
+            fields,
+            already_enqueued,
+            app_type=app_type,
         ):
             queue.append(ref)
     return related_components
 
 
 # take a module and return a dictionary of module, list of related-components and validation rules
-def get_module_parts(specification, ref):
+def get_module_parts(specification, ref, app_type=None):
     modules = specification["module"]
     fields = specification["field"]
     components = specification["component"]
@@ -111,7 +127,7 @@ def get_module_parts(specification, ref):
 
     # Use breadth-first collection for related components
     related_components = collect_related_components_bfs(
-        module_fields, components, fields
+        module_fields, components, fields, app_type=app_type
     )
 
     # Get validation rules
@@ -133,8 +149,10 @@ if __name__ == "__main__":
         print("Specification loaded successfully")
 
         # Test the function
-        result = get_module_parts(specification, "res-units")
+        # result = get_module_parts(specification, "res-units")
         # result = get_module_parts(specification, "interest-details")
+        result = get_module_parts(specification, "proposal-details")
+        # result = get_module_parts(specification, "access-rights-of-way")
         print("Function called successfully")
 
         if result:
