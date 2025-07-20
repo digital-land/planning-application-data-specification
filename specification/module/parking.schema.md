@@ -11,8 +11,6 @@ fields:
     required-if:
       - field: is-existing-parking-affected
         value: true
-application-types:
-  - hh
 entry-date: 2025-06-12
 end-date: ''
 ---

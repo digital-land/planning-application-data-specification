@@ -22,19 +22,6 @@ fields:
     required-if:
       - field: advice-sought
         value: true
-application-types:
-  - hh
-  - full
-  - outline
-  - demolition-con-area
-  - lbc
-  - ldc
-  - reserved-matters
-  - advertising
-  - s73
-  - approval-condition
-  - non-material-amendment
-  - extraction-oil-gas
 entry-date: 2025-06-12
 end-date: ''
 ---
