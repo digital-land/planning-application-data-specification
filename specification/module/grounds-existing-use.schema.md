@@ -18,7 +18,7 @@ fields:
         value: "sui"
       - field: use
         value: "other"
-validation:
+rules:
   - description: "Use lawful reason must be provided to justify the existing use"
     rule: "use-lawful-reason.length > 0"
   - description: "Specified use must be provided when use is 'sui' or 'other'"

@@ -21,7 +21,7 @@ fields:
         value: true
   - field: is-advert-overhanging
     required: true
-validation:
+rules:
   - description: "advert-placed-date is required when is-advert-in-place is true"
     rule: "if is-advert-in-place == true then advert-placed-date is required"
   - description: "document-reference is required when is-advert-in-place OR is-replacement-advert is true"

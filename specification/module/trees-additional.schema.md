@@ -24,7 +24,7 @@ fields:
   - field: supporting-documents
     description: Documents supporting the work required to trees
     required: true
-validation:
+rules:
   - rule: "If condition-concerns is true then Arboricultural impact assessment document is required"
   - rule: "If causing-subsidence is true then Subsidence Report is required" 
   - rule: "If causing-structural-damage is true then a Structural damage report is required"

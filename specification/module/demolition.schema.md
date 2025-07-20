@@ -37,6 +37,7 @@ fields:
   - field: reason
     description: Reason for demolition
     required: true
+rules:
 entry-date: 2025-06-30
 end-date: ''
 ---

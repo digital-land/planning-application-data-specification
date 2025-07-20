@@ -13,7 +13,7 @@ fields:
     required: true
   - field: is-site-in-restricted-area
     required: true
-validation:
+rules:
   - description: "Building must be constructed in eligible construction period"
     rule: "was-constructed-btw-1948-2018 == true (required for application to proceed)"
   - description: "No additional storeys should have been previously added"

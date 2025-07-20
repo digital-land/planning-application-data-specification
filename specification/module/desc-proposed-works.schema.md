@@ -13,7 +13,7 @@ fields:
     required: true
   - field: eaves-height
     required: true
-validation:
+rules:
   - description: "All measurements must be positive values in metres"
     rule: "extension-depth > 0 AND max-extension-height > 0 AND eaves-height > 0"
   - description: "Eaves height should typically be less than maximum height"

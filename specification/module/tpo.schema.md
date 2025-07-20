@@ -6,7 +6,7 @@ description: |
 fields:
   - field: tpo-reference
   - field: tpo-provided-by
-validation:
+rules:
   - rule: "TPO references should be verified by the authority if provided by applicant"
   - rule: "Authority can use tpo-provided-by to determine validation requirements"
 entry-date: 2025-06-30

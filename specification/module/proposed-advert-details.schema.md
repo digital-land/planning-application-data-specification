@@ -8,7 +8,7 @@ note: ''
 fields:
   - field: advertisements
     required: true
-validation:
+rules:
   - rule: "At least one advertisement entry must be provided"
     condition: "advertisements is not empty"
   - rule: "illumination-method is required when illuminated is true"

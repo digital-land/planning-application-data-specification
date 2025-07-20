@@ -17,7 +17,7 @@ fields:
       value: false
       field: permission-obtained
       value: false
-validation:
+rules:
   - rule: "permission-obtained must be provided when applicant-owns-land is false"
   - rule: "permission-not-obtained-details must be provided when applicant-owns-land is false and permission-obtained is false"
 entry-date: 2025-07-08

@@ -35,7 +35,7 @@ fields:
     required: true
   - field: dwellinghouse-use
     required: true
-validation:
+rules:
   - description: "Additional storeys must be on principal part only"
     rule: "principal-part-only == true (required for application to proceed)"
   - description: "Ceiling height of additional storeys must not exceed 3m"

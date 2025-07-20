@@ -8,7 +8,7 @@ fields:
   - field: applicants
     required: true
     minimum-items: 1
-validation:
+rules:
   - rule: "At least one applicant must be provided"
   - rule: "Each applicant reference must be unique within the application"
 entry-date: 2025-06-16

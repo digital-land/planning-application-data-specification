@@ -18,7 +18,7 @@ fields:
     required: true
   - field: protected-view-impact
     required: true
-validation:
+rules:
   - description: "Height measurements must be in metres and positive values"
     rule: "dwellinghouse-height > 0 AND proposed-height > 0"
   - description: "Proposed height should typically be greater than existing height for additional storeys"

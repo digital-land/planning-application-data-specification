@@ -16,7 +16,7 @@ fields:
   - field: supporting-applications
   - field: reason
     required: true
-validation:
+rules:
   - description: "At least one ground must be selected from either pre-2024 or post-2024 lists"
     rule: "grounds-pre-2024 is not empty OR grounds-post-2024 is not empty"
   - description: "other-details is required when 'other' is selected in any grounds list"

@@ -33,7 +33,7 @@ fields:
           value: false
         - field: permission-obtained
           value: false
-validation:
+rules:
   - description: "Owner details required for lessee or occupier interests"
     rule: "if applicant-interest is 'lessee' or 'occupier', then owner-details is required"
   - description: "Interested persons required when applicant has no interest"

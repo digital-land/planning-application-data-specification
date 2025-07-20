@@ -17,7 +17,7 @@ fields:
     required: true
   - field: net-change
     required: true
-validation:
+rules:
   - rule: "residential-unit-summary is required when will-residential-units-change is true"
   - rule: "net-change is calculated as total-proposed-units minus total-existing-units"
   - rule: "if will-residential-units-change is true, at least one breakdown for existing and proposed is required (count could be unknown)"

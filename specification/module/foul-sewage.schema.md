@@ -19,7 +19,7 @@ fields:
   - field: connect-to-drainage-system
     required: true
   - field: drainage-system-details
-validation:
+rules:
   - description: "drainage-system-details is required when connect-to-drainage-system is true"
     rule: "if connect-to-drainage-system == true then drainage-system-details is required"
   - description: "drainage-system-details is required for extraction-oil-gas applications"

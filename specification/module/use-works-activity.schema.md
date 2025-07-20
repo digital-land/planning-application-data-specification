@@ -22,7 +22,7 @@ fields:
           value: sui
         - field: use
           value: other
-validation:
+rules:
   - rule: "At least one ldc-need value must be provided"
     condition: "ldc-need is not empty"
   - rule: "use is required when ldc-need contains existing-use or breach-con-existing-use"

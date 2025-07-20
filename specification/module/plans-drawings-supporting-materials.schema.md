@@ -9,7 +9,7 @@ fields:
     required: true
   - field: inspection-address
     required: true
-validation:
+rules:
   - description: "At least one document must be provided"
     rule: "plans-documents.length >= 1"
   - description: "Each document must have a unique reference number within the application"

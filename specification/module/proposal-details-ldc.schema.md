@@ -28,7 +28,7 @@ fields:
         value: true
   - field: proposal-started
     required: true
-validation:
+rules:
   - rule: "proposal-building-operations-description is required when proposal-incl-building-operations is true"
     condition: "proposal-incl-building-operations != true OR proposal-building-operations-description is not empty"
   - rule: "proposal-change-of-use-description is required when proposal-incl-change-of-use is true"

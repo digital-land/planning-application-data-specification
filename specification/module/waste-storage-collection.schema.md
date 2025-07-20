@@ -33,7 +33,7 @@ fields:
     applies-if:
       field: separate-recycling-arrangements
       value: true
-validation:
+rules:
   - rule: "waste-storage-area-details must be provided when needs-waste-storage-area is true"
   - rule: "separate-recycling-arrangements-details must be provided when separate-recycling-arrangements is true"
 entry-date: 2025-07-08

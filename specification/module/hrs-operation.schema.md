@@ -15,7 +15,7 @@ fields:
     applies-if:
       - application-type:
           in: ['extraction-oil-gas']
-validation:
+rules:
   - rule: "At least one hours-of-operation entry must be provided"
     condition: "hours-of-operation is not empty"
   - rule: "Either operational-times or hours-not-known must be provided within each hours-of-operation entry"

@@ -10,7 +10,7 @@ fields:
     required: true
   - field: tree-details
     description: Details of each tree that is part of the proposal
-validation:
+rules:
   - rule: "Tree identifiers should use TPO reference numbers where applicable"
   - rule: "Description must include tree identification, species and work details"
 entry-date: 2025-06-30

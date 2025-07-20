@@ -21,7 +21,7 @@ fields:
     required-if:
       - field: is-within-site-constraints
         equals: true
-validation:
+rules:
   - description: "Application cannot proceed if extension is not single storey"
     rule: "if is-single-storey-extension == false then application is ineligible"
   - description: "Application cannot proceed if extension exceeds 4 metres in height"

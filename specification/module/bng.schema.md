@@ -30,7 +30,7 @@ fields:
     applies-if:
       - application-type:
           in: [full, outline, demolition-con-area]
-validation:
+rules:
   - description: "For householder applications, only bng-exempt field is required"
     rule: "application-type == 'hh' REQUIRES only bng-exempt field"
   - description: "Exemption reasons must be provided when BNG condition does not apply"

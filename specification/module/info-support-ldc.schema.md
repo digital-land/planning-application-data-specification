@@ -19,7 +19,7 @@ fields:
     required-if:
       - field: has-existing-use-changed
         value: true
-validation:
+rules:
   - description: "Start date must be a valid date in YYYY-MM-DD format"
     rule: "existing-use-start-date matches YYYY-MM-DD format"
   - description: "Start date must be in the past"

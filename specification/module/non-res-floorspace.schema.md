@@ -15,7 +15,7 @@ fields:
   - field: room-details
     required-if:
       condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
-validation:
+rules:
   - rule: "floorspace-details is required when non-residential-change is true"
     condition: "non-residential-change != true OR floorspace-details is not empty"
   - rule: "room-details is required when floorspace involves C1, C2, C2A, or other use classes"

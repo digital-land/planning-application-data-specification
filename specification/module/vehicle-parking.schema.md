@@ -9,7 +9,7 @@ fields:
     required: true
 entry-date: 2025-07-08
 end-date: ''
-validation:
+rules:
   - description: "vehicle-type-other is required when parking-space-type is 'other'"
     rule: "if parking-space-type == 'other' then vehicle-type-other is required"
   - description: "Numeric fields must be 0 or positive"

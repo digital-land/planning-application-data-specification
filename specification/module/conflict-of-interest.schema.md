@@ -24,7 +24,7 @@ fields:
     applies-if:
       - application-type:
           in: [hh, full, outline, reserved-matters, demolition-con-area, lbc, advertising, ldc, consent-under-tpo, non-material-amendment, pip, extraction-oil-gas, notice-trees-in-con-area]
-validation:
+rules:
   - rule: "conflict-person-name must match a name provided in applicants or agent sections"
 entry-date: 2025-06-16
 end-date: ''

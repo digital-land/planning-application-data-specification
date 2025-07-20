@@ -18,7 +18,7 @@ fields:
     required: true
   - field: surface-water-disposal
     required: true
-validation:
+rules:
   - rule: "flood-risk-assessment document reference is required when flood-risk-area is true"
   - rule: "surface-water-disposal must contain at least one disposal method"
 entry-date: 2025-07-17

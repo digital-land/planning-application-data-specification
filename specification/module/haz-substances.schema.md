@@ -17,7 +17,7 @@ fields:
     required-if:
       - field: hazardous-sub-consent-req
         value: true
-validation:
+rules:
   - description: "substance-types is required when involves-hazardous-substances is 'yes'"
     rule: "if involves-hazardous-substances == 'yes' then substance-types is required"
   - description: "hazardous-sub-consent-details is required when hazardous-sub-consent-req is true"

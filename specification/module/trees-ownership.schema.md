@@ -18,7 +18,7 @@ fields:
     required-if:
       - field: is-applicant-owner
         value: false
-validation:
+rules:
   - rule: "owner details required when is-applicant-owner is false"
 entry-date: 2025-06-30
 end-date: ''

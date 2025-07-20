@@ -10,7 +10,7 @@ fields:
     required: true
   - field: documents
     required: true
-validation:
+rules:
   - description: "Grounds for application must be provided with clear reasoning"
     rule: "grounds-for-application.length > 0"
   - description: "At least one supporting document must be provided"

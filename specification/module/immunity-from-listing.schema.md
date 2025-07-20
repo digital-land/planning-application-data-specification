@@ -10,7 +10,7 @@ fields:
     required-if:
       - field: cert-of-immunity-sought
         equals: "yes"
-validation:
+rules:
   - rule: "application-result is required when cert-of-immunity-sought is 'yes'"
 entry-date: 2025-07-01
 end-date: ''

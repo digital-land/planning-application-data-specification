@@ -17,7 +17,7 @@ fields:
   - field: reason
     description: Reason why applicant wants to make the amendment
     required: true
-validation:
+rules:
   - description: "Replacement documents must be provided when substituting documents"
     rule: "is-substituting-document == true REQUIRES replacement-documents.length >= 1"
   - description: "Each replacement document must have valid old and new document references"

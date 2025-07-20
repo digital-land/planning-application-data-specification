@@ -10,7 +10,7 @@ fields:
     applies-if:
       field: has-related-applications
       value: true
-validation:
+rules:
   - rule: "related-applications must be provided when has-related-applications is true"
   - rule: "decision-date is optional and only relevant if the related proposal has been decided"
 entry-date: 2025-07-08

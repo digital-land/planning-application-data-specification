@@ -11,7 +11,7 @@ fields:
     required-if:
       - field: is-site-different
         value: true
-validation:
+rules:
   - rule: "site-locations only required if the site is different from the applicant's address"
   - rule: "At least one location method must be provided per site: site-boundary, address-text, or easting+northing"
   - rule: "If easting is provided, northing must also be provided and vice versa"

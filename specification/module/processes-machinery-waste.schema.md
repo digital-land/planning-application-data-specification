@@ -11,7 +11,7 @@ fields:
     required: true
   - field: waste-management
   - field: waste-streams
-validation:
+rules:
   - description: "waste-management is required when proposal-waste-management is true"
     rule: "if proposal-waste-management == true then waste-management is required"
   - description: "waste-streams is required when proposal-waste-management is true"

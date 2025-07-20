@@ -12,7 +12,7 @@ fields:
     required-if:
       - field: ownership-notification
         value: yes
-validation:
+rules:
   - description: "Applicant must have land interest to proceed"
     rule: "applicant-land-interest == true (required for application to proceed)"
   - description: "Ownership notification required for partial land interest"

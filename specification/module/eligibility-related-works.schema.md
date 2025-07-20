@@ -7,7 +7,7 @@ description: |
 fields:
   - field: external-support-required
     required: true
-validation:
+rules:
   - description: "External support impacts prior approval applicability"
     rule: "external-support-required == true may affect prior approval eligibility"
 entry-date: 2025-07-18
