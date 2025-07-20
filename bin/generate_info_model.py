@@ -9,11 +9,17 @@ from modules import get_module_parts
 
 
 def format_main_module_table(module, fields_spec, app_type=None):
-    # field_entry = the field attr in the module
-    lines = [
-        "| reference | name | description | only for application | requirement | notes |",
-        "| --- | --- | --- | --- | --- | --- |",
-    ]
+    # Determine columns based on app_type
+    if app_type:
+        lines = [
+            "| reference | name | description | requirement | notes |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+    else:
+        lines = [
+            "| reference | name | description | only for application | requirement | notes |",
+            "| --- | --- | --- | --- | --- | --- |",
+        ]
     for field_entry in module.get("fields", []):
         if app_type:
             # Skip fields not applicable to the given app_type
@@ -28,9 +34,14 @@ def format_main_module_table(module, fields_spec, app_type=None):
         requirement = get_requirement_str(field_entry)
         notes = get_notes_for_info_model(field_entry, field_def)
         notes_md_str = ". ".join(notes)
-        lines.append(
-            f"| {ref} | {name} | {description} | {only_for_md_str} | {requirement} | {notes_md_str} |"
-        )
+        if app_type:
+            lines.append(
+                f"| {ref} | {name} | {description} | {requirement} | {notes_md_str} |"
+            )
+        else:
+            lines.append(
+                f"| {ref} | {name} | {description} | {only_for_md_str} | {requirement} | {notes_md_str} |"
+            )
     return "\n".join(lines)
 
 
@@ -107,8 +118,8 @@ if __name__ == "__main__":
         print("Specification loaded successfully")
 
         # Test the function
-        # result = generate_module("interest-details", specification)
-        result = generate_module("res-units", specification, app_type="full")
+        result = generate_module("interest-details", specification)
+        # result = generate_module("res-units", specification, app_type="full")
         # result = generate_module("demolition-reason", specification)
         # result = generate_module(
         #     "tree-work-details", specification, app_type="notice-trees-in-con-area"
