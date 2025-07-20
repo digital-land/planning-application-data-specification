@@ -72,6 +72,39 @@ def check_dates(modules):
     return not has_errors
 
 
+def check_attrs(modules):
+    """
+    Check rule 4: each module only has the permitted attributes
+    """
+    has_errors = False
+
+    attrs = [
+        "module",
+        "name",
+        "description",
+        "fields",
+        "entry-date",
+        "end-date",
+        "rules",
+        "notes",
+    ]
+
+    for module_name, module in modules.items():
+        # Robustly get keys from dict or frontmatter.Post
+        if hasattr(module, "keys"):
+            keys = module.keys()
+        elif hasattr(module, "metadata"):
+            keys = module.metadata.keys()
+        else:
+            keys = []
+        for attr in keys:
+            if attr not in attrs:
+                print_error("module", module_name, f"unexpected attribute '{attr}'")
+                has_errors = True
+
+    return not has_errors
+
+
 def check_all(modules, fields):
     """Run all module integrity checks.
 
@@ -84,6 +117,7 @@ def check_all(modules, fields):
         (check_module_names, [modules]),
         (check_field_references, [modules, fields]),
         (check_dates, [modules]),
+        (check_attrs, [modules]),
     ]
 
     all_passed = True
