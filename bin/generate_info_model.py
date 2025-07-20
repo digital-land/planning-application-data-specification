@@ -1,54 +1,11 @@
-from fields import get_applicable_app_types, is_field_applicable_to_app_type
+from fields import (
+    format_field_display_name,
+    get_applicable_app_types,
+    get_notes_for_info_model,
+    get_requirement_str,
+    is_field_applicable_to_app_type,
+)
 from modules import get_module_parts
-
-
-def format_field_name(field, field_def):
-    name = field_def.get("name", field["field"])
-    # Append [] for cardinality n
-    if field_def.get("cardinality") == "n":
-        name += "[]"
-    # Append {} for object type
-    if field_def.get("datatype") == "object":
-        name += "{}"
-    return name
-
-
-def get_requirement(field):
-    if field.get("required") is True:
-        return "MUST"
-    return "MAY"
-
-
-def get_only_for_application(field):
-    applies = field.get("applies-if")
-    if applies:
-        # Try to extract application-type(s)
-        for cond in applies:
-            if "application-type" in cond:
-                app_types = cond["application-type"].get("in")
-                if app_types:
-                    return app_types
-        return "Yes"
-    return ""
-
-
-def get_notes(field, field_def):
-    notes = []
-    # Add codelist enum note
-    if field_def.get("codelist"):
-        notes.append(f"Select from the {field_def['codelist']} enum")
-    # Add required-if rules
-    if "required-if" in field:
-        for cond in field["required-if"]:
-            if "field" in cond and "value" in cond:
-                notes.append(
-                    f"Rule: is a MUST if `{cond['field']}` is `{cond['value']}`"
-                )
-    # Add extra notes from description if present
-    desc = field_def.get("notes") or ""
-    if desc:
-        notes.append(desc)
-    return notes
 
 
 def format_main_module_table(module, fields_spec, app_type=None):
@@ -64,14 +21,12 @@ def format_main_module_table(module, fields_spec, app_type=None):
                 continue
         ref = field_entry["field"]
         field_def = fields_spec.get(ref, {})
-        name = format_field_name(field_entry, field_def)
+        name = format_field_display_name(field_entry, field_def)
         description = field_entry.get("description") or field_def.get("description", "")
-        only_for = get_only_for_application(field_entry)
-        only_for_md_str = (
-            ", ".join(only_for) if isinstance(only_for, list) else only_for
-        )
-        requirement = get_requirement(field_entry)
-        notes = get_notes(field_entry, field_def)
+        only_for = get_applicable_app_types(field_entry)
+        only_for_md_str = ", ".join(only_for) if isinstance(only_for, list) else ""
+        requirement = get_requirement_str(field_entry)
+        notes = get_notes_for_info_model(field_entry, field_def)
         notes_md_str = ". ".join(notes)
         lines.append(
             f"| {ref} | {name} | {description} | {only_for_md_str} | {requirement} | {notes_md_str} |"
@@ -80,7 +35,7 @@ def format_main_module_table(module, fields_spec, app_type=None):
 
 
 def format_component_table(component, fields_spec, app_type=None):
-    lines = ["field | description | required | notes", "-- | -- | -- | --"]
+    lines = ["field | name | description | required | notes", "-- | -- | -- | -- | --"]
     # field_entry = the field attr in the module
     for field_entry in component.get("fields", []):
         if app_type:
@@ -89,11 +44,12 @@ def format_component_table(component, fields_spec, app_type=None):
                 continue
         ref = field_entry["field"]
         field_def = fields_spec.get(ref, {})
+        name = format_field_display_name(field_entry, field_def)
         description = field_def.get("description", "")
-        requirement = get_requirement(field_entry)
-        notes = get_notes(field_entry, field_def)
+        requirement = get_requirement_str(field_entry)
+        notes = get_notes_for_info_model(field_entry, field_def)
         notes_md_str = ". ".join(notes)
-        lines.append(f"{ref} | {description} | {requirement} | {notes_md_str}")
+        lines.append(f"{ref} | {name} | {description} | {requirement} | {notes_md_str}")
     return "\n".join(lines)
 
 
@@ -152,11 +108,11 @@ if __name__ == "__main__":
 
         # Test the function
         # result = generate_module("interest-details", specification)
-        # result = generate_module("res-units", specification, app_type="full")
+        result = generate_module("res-units", specification, app_type="full")
         # result = generate_module("demolition-reason", specification)
-        result = generate_module(
-            "tree-work-details", specification, app_type="notice-trees-in-con-area"
-        )
+        # result = generate_module(
+        #     "tree-work-details", specification, app_type="notice-trees-in-con-area"
+        # )
         print("Function called successfully")
         print(result)
 
