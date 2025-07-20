@@ -44,7 +44,7 @@ fields:
       - field: proposal-completed
         value: true
   - field: pip-reference
-    required-if:
+    applies-if:
       - application-type:
           in: ["full"]
   - field: is-psi
