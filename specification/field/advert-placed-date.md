@@ -1,6 +1,6 @@
 ---
 cardinality: '1'
-datatype: string
+datatype: date
 description: Date when the advertisement was placed (YYYY-MM-DD format)
 end-date: ''
 entry-date: '2025-07-09'
