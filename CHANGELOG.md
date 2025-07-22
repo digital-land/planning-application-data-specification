@@ -1,4 +1,26 @@
 
+<a name="v0.1.23"></a>
+## [v0.1.23](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.22...v0.1.23) (2025-07-22)
+
+Bit of tidying things up
+
+### ⚒️ Tooling
+
+* alter table format if generating for specific app type (commit [94efdfa](https://github.com/digital-land/planning-application-data-specification/commit/94efdfa3924d03568031ccecc7fa9327c1a9f0ee))
+* refactor generate info model script (commit [84842d2](https://github.com/digital-land/planning-application-data-specification/commit/84842d251a0e1fcfc967fb55864bb6f5d2490ab5))
+* generate module markdown filtering fields that are not applicable (commit [cf72d84](https://github.com/digital-land/planning-application-data-specification/commit/cf72d84e07354b6f8d56b5da43525b474241747a))
+* generate the markdown for a module (commit [63a62a7](https://github.com/digital-land/planning-application-data-specification/commit/63a62a7e79bbc3809f85f6eb6ad753d638f2ec00))
+* check only expected attrs are included in module definitions (commit [e94920a](https://github.com/digital-land/planning-application-data-specification/commit/e94920a05317dd9b8993b4828bd3e350f1894348))
+
+### 🐛 Bug Fixes
+
+* pip-reference should have an applies-if condition not required-if condition (commit [daab0a7](https://github.com/digital-land/planning-application-data-specification/commit/daab0a7bfed8f29e5aded16449b4fef4a032e072))
+* remove unneccessay attrs from module definitions (commit [102afc3](https://github.com/digital-land/planning-application-data-specification/commit/102afc31563ddd03a15b2bfef93e15144ee2694f))
+* implementation is an allowable attr for module definitions (commit [c9b075e](https://github.com/digital-land/planning-application-data-specification/commit/c9b075ef67882248b65855217ca8fbb5f60adafa))
+* module attribute should be notes not note (commit [8a50b22](https://github.com/digital-land/planning-application-data-specification/commit/8a50b22e39ad8fb2ef8c9815da54981b1296d5a6))
+* module attribute should be rules not validation (commit [75c02d8](https://github.com/digital-land/planning-application-data-specification/commit/75c02d8b82a4974fccd25243af691ca5a0977980))
+
+
 <a name="v0.1.22"></a>
 ## [v0.1.22](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.21...v0.1.22) (2025-07-18)
 
