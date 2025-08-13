@@ -1,5 +1,5 @@
 ---
-codelist: hedgerow-interest-dec
+codelist: hedgerow-interest-type
 description: |
   Declaration of applicant's interest in the land for hedgerow removal notice applications.
 end-date:
@@ -11,9 +11,9 @@ fields:
 github-discussion: 216
 key-field: reference
 licence: ogl3
-name: Hedgerow interest declaration
+name: Hedgerow interest type
 notes:
 organisation: government-organisation:D1342
-plural: Hedgerow interest declarations
+plural: Hedgerow interest types
 source: 
 ---
