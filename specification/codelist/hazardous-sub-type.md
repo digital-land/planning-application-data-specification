@@ -1,4 +1,4 @@
-Reference | Name | Notes
+reference | name | description
 -- | -- | --
 acrylonitrile | Acrylonitrile |  
 ammonia | Ammonia |  
