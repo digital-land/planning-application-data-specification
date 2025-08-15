@@ -1,4 +1,85 @@
 
+<a name="v0.1.25"></a>
+## [v0.1.25](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.24...v0.1.25) (2025-08-15)
+
+Add codelist and codelist definitions
+
+### 𝌭 Model changes
+
+* add source attr for codelists (commit [bac5be9](https://github.com/digital-land/planning-application-data-specification/commit/bac5be9641a5a80cc28c8a22587d8ab64a0f7a49))
+* define rights-of-way-answer codelist (commit [86b02c0](https://github.com/digital-land/planning-application-data-specification/commit/86b02c0643c57365bfe099a4c83aab04deea983d))
+* define parking-space-type codelist (commit [2fa6d77](https://github.com/digital-land/planning-application-data-specification/commit/2fa6d770768c4ea98d79f888feb6989f86bdb7e9))
+* define listed-building-grade codelist (commit [795bb58](https://github.com/digital-land/planning-application-data-specification/commit/795bb584f17c77f1b655ecccefbf5a90613cc668))
+* define grounds-ldc-pre-apr-2024 codelist (commit [80a2125](https://github.com/digital-land/planning-application-data-specification/commit/80a212544a9a01fe96f3c97924665bdde48488a4))
+* define ground-ldc-post-apr-2024 codelist (commit [c4b3aa7](https://github.com/digital-land/planning-application-data-specification/commit/c4b3aa70194f3a220f44f785a5210dd13920a92e))
+* define building-element-type codelist (commit [bd99241](https://github.com/digital-land/planning-application-data-specification/commit/bd99241b75e72a156ef3a914099aeec117c49539))
+* define bng-exemptions codelist (commit [521f765](https://github.com/digital-land/planning-application-data-specification/commit/521f7653cdfa3ac904403a4e9ddf609cf7c1da8d))
+* define designations codelist (commit [30e33d8](https://github.com/digital-land/planning-application-data-specification/commit/30e33d82636d861a009c389c128b07a5d261558d))
+* define yes-no-unknown codelist (commit [6f79516](https://github.com/digital-land/planning-application-data-specification/commit/6f795169ff196bee0a7c69160be51d372afec2cb))
+* define yes-no-not-applicable codelist (commit [c802ee0](https://github.com/digital-land/planning-application-data-specification/commit/c802ee00880d87fad73ab794ae20c13bac3f332e))
+* define waste-management-type codelist (commit [49b282e](https://github.com/digital-land/planning-application-data-specification/commit/49b282ec129b10076054208b133c097087b0ca4c))
+* define user-role-type codelist (commit [372fe56](https://github.com/digital-land/planning-application-data-specification/commit/372fe561bec8c0c6b1dc997d8c368ff7cfe2703d))
+* define tenure-type codelist (commit [7823425](https://github.com/digital-land/planning-application-data-specification/commit/7823425fdbbd9c30922b8d65da200f1fc81a4dff))
+* define surface-water-disposal-type codelist (commit [2cb3797](https://github.com/digital-land/planning-application-data-specification/commit/2cb37974a842aa7c2132a7d0e76ab287fc16a126))
+* define site-visit-contact-type codelist (commit [16f4327](https://github.com/digital-land/planning-application-data-specification/commit/16f43272c84615e0c683f0abfcb59c0ca872ece6))
+* define site-constraints codelist (commit [6a02e2e](https://github.com/digital-land/planning-application-data-specification/commit/6a02e2e33411dc2316e541da22b6c815768a0b19))
+* define reserved-matter-type codelist (commit [bd4d1a4](https://github.com/digital-land/planning-application-data-specification/commit/bd4d1a420c4b8628bce422de573f37eebe4e8dc1))
+* define provided-by codelist (commit [4411ec2](https://github.com/digital-land/planning-application-data-specification/commit/4411ec2318787c057de405dd297ab2fdb44b4f98))
+* define permission-type codelist (commit [45176b2](https://github.com/digital-land/planning-application-data-specification/commit/45176b26277ccdb433366d717d9dd1e5ccfe7547))
+* define ownership-cert-type codelist (commit [a0a58e3](https://github.com/digital-land/planning-application-data-specification/commit/a0a58e394b6536e6201edd11ad8eed555d140933))
+* define operation-type codelist (commit [9d63aa7](https://github.com/digital-land/planning-application-data-specification/commit/9d63aa76297aa0ed065d7f0b9f1d60c074f0cc3e))
+* define non-res-measurement-type codelist (commit [690da25](https://github.com/digital-land/planning-application-data-specification/commit/690da25e264e689de3d2ef05dd4f449664b30f14))
+* define lb-alertation-type codelist (commit [3118cea](https://github.com/digital-land/planning-application-data-specification/commit/3118cea7a28b45dbc14826878273943f68f1f872))
+* define lawful-dev-cert-need codelist (commit [57cd087](https://github.com/digital-land/planning-application-data-specification/commit/57cd087f88296fac4917aa074807994d494b1629))
+* define housing-type codelist (commit [85f0cf3](https://github.com/digital-land/planning-application-data-specification/commit/85f0cf35ad115d53c41f73a9a413063e8f769cdc))
+* rename codelist to hedgerow-interest-type (commit [38a15dd](https://github.com/digital-land/planning-application-data-specification/commit/38a15dd5a643fd110275b94ebf3e107f5eb63a6c))
+* define hedgerow-interest-dec codelist (commit [4f98936](https://github.com/digital-land/planning-application-data-specification/commit/4f9893614c1d5e1469914554edf0e8979b76dbe6))
+* define hazardous-sub-type codelist (commit [439ced8](https://github.com/digital-land/planning-application-data-specification/commit/439ced8dbc707811fdf837910db6c0f0acc385c3))
+* define foul-sewage-disposal-type codelist (commit [f4177c1](https://github.com/digital-land/planning-application-data-specification/commit/f4177c147fce694f4458a1ca3c6131d0c240fb79))
+* define day-type codelist (commit [a1f6bbb](https://github.com/digital-land/planning-application-data-specification/commit/a1f6bbbe6d337d42329d3b7c074308c67025e697))
+* define contact-priority codelist (commit [70cebdd](https://github.com/digital-land/planning-application-data-specification/commit/70cebdd13355d96c22d2d233d06e6683888a8bc8))
+* define applicant-interest-type codelist (commit [2899d07](https://github.com/digital-land/planning-application-data-specification/commit/2899d07c3db576cf39b924c6c5d446da49b14cf2))
+* define affected-area-type codelist (commit [ee65d4a](https://github.com/digital-land/planning-application-data-specification/commit/ee65d4aaa4f141437f9387c88ae100028f7cccac))
+* define advertisement-type codelist (commit [39ebe98](https://github.com/digital-land/planning-application-data-specification/commit/39ebe980a8cc5e332723c3557e3a6f270cf82624))
+* move source of development phase codelist (commit [2f0ec89](https://github.com/digital-land/planning-application-data-specification/commit/2f0ec899140fb6bac2f4ccf57fb3fd53b520ed23))
+* define development-phase codelist (commit [892cdf2](https://github.com/digital-land/planning-application-data-specification/commit/892cdf2c7b016c13c01d5a57d7468f1d35ebdc94))
+
+### 🐛 Bug Fixes
+
+* remove replaced codelists (commit [24f008a](https://github.com/digital-land/planning-application-data-specification/commit/24f008a727683e86493e8d2ee601badaf08e1668))
+* remove duplicate codelist (commit [d688802](https://github.com/digital-land/planning-application-data-specification/commit/d6888020edb2b564e185844489fee1018c6fbce9))
+
+### 📚 Documentation
+
+* write up current structure for defining codelists for the specification (commit [c4e4e8f](https://github.com/digital-land/planning-application-data-specification/commit/c4e4e8fdf9ee70b09a47a9486eabaf396d951956))
+
+
+<a name="v0.1.24"></a>
+## [v0.1.24](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.23...v0.1.24) (2025-08-12)
+
+Add all remaining application type definitions
+
+### 🐛 Bug Fixes
+
+* fix datatype for advert-placed-date field (commit [b5ae0ce](https://github.com/digital-land/planning-application-data-specification/commit/b5ae0ce6488748364a749543d2462106b285beda))
+
+### 👷‍♀️ Application changes
+
+* define app structures for ldc applications (commit [57fb5ce](https://github.com/digital-land/planning-application-data-specification/commit/57fb5cec5b0e0b5b86c3a4d6aeb657f015e4883d))
+* define app structures for prior-approval applications (commit [003c94b](https://github.com/digital-land/planning-application-data-specification/commit/003c94b5d47174ccc8f0d4f5ba32d2166fe65ba1))
+* define app structures for outline applications (commit [ed59288](https://github.com/digital-land/planning-application-data-specification/commit/ed59288b5d959ed7be2b147b3ffaf3e770e3221e))
+* define the structure for full application (commit [2331b6f](https://github.com/digital-land/planning-application-data-specification/commit/2331b6f9e4d613e979146b2c234bfeef8a6e5532))
+* define the structure for lbc application (commit [fa4e9d1](https://github.com/digital-land/planning-application-data-specification/commit/fa4e9d13abe7473b61ac1d0ef6df10ed0fa94424))
+* define the structure for notice-trees-in-con-area application (commit [2112a44](https://github.com/digital-land/planning-application-data-specification/commit/2112a44b07e63d6301b23ea9d104b93ada99739b))
+* define the structure for reserved-matters application (commit [8619467](https://github.com/digital-land/planning-application-data-specification/commit/86194678e163417f7e31e46fd7a04eb9d5a7cbe8))
+* define the structure for s73 application (commit [ddb57c3](https://github.com/digital-land/planning-application-data-specification/commit/ddb57c3e1ce20f749851573ecfb9b896c7914eb6))
+* define the structure for non-material-amendment application (commit [099c70b](https://github.com/digital-land/planning-application-data-specification/commit/099c70bf3faf74824a72eb53d2c1086d7947ba34))
+* define the structure for hedgerow-removal application (commit [df0aab3](https://github.com/digital-land/planning-application-data-specification/commit/df0aab3e456e0180c892b2e5adfee7bad5c69cf7))
+* define the structure for demolition-con-area application (commit [72f9bd2](https://github.com/digital-land/planning-application-data-specification/commit/72f9bd2322c46d377890d000d939dafebde5f8ac))
+* add declarative version of approval-condition application (commit [3be761a](https://github.com/digital-land/planning-application-data-specification/commit/3be761ab287065a3c79af783157e77d3c30082a4))
+* add declarative version of advertising application (commit [b473330](https://github.com/digital-land/planning-application-data-specification/commit/b473330411531cd3bb966b084deb10994e267fca))
+
+
 <a name="v0.1.23"></a>
 ## [v0.1.23](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.22...v0.1.23) (2025-07-22)
 
