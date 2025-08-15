@@ -15,5 +15,5 @@ name: Ownership certificate type
 notes:
 organisation: government-organisation:D1342
 plural: Ownership certificate types
-source: 
+source: data/codelist/ownership-cert-type.csv
 ---

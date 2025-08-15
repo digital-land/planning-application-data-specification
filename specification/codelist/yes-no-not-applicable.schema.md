@@ -15,5 +15,5 @@ name: Yes, no, na
 notes:
 organisation: government-organisation:D1342
 plural: Yes, no, na
-source: 
+source: data/codelist/yes-no-not-applicable.csv
 ---

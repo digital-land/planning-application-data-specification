@@ -15,5 +15,5 @@ name: Operation type
 notes:
 organisation: government-organisation:D1342
 plural: Operation types
-source: 
+source: data/codelist/operation-type.csv
 ---

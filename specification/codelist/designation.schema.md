@@ -16,5 +16,5 @@ name: Designation
 notes:
 organisation: government-organisation:D1342
 plural: Designations
-source: 
+source: data/codelist/designation.csv
 ---

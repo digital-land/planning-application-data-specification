@@ -15,5 +15,5 @@ name: Day type
 notes:
 organisation: government-organisation:D1342
 plural: Day types
-source: 
+source: data/codelist/day-type.csv
 ---

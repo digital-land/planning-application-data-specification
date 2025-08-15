@@ -15,5 +15,5 @@ name: Surface water disposal type
 notes:
 organisation: government-organisation:D1342
 plural: Surface water disposal types
-source: 
+source: data/codelist/surface-water-disposal-type.csv
 ---

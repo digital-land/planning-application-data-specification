@@ -15,5 +15,5 @@ name: Advertisement type
 notes:
 organisation: government-organisation:D1342
 plural: Advertisement types
-source: 
+source: data/codelist/advertisement-type.csv
 ---

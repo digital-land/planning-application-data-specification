@@ -15,5 +15,5 @@ name: Site constraint
 notes:
 organisation: government-organisation:D1342
 plural: Site constraints
-source: 
+source: data/codelist/site-constraint.csv
 ---

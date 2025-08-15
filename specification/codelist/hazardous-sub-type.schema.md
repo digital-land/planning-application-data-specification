@@ -15,5 +15,5 @@ name: Hazardous substance type
 notes:
 organisation: government-organisation:D1342
 plural: Hazardous substance types
-source: 
+source: data/codelist/hazardous-sub-type.csv
 ---

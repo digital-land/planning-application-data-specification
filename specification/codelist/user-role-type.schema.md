@@ -15,5 +15,5 @@ name: User role type
 notes:
 organisation: government-organisation:D1342
 plural: User role types
-source: 
+source: data/codelist/user-role-type.csv
 ---

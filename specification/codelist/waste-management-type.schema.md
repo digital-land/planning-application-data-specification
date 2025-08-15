@@ -15,5 +15,5 @@ name: Waste management type
 notes:
 organisation: government-organisation:D1342
 plural: Waste management types
-source: 
+source: data/codelist/waste-management-type.csv
 ---

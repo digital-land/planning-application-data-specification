@@ -15,5 +15,5 @@ name: Foul sewage disposal type
 notes:
 organisation: government-organisation:D1342
 plural: Foul sewage disposal types
-source: 
+source: data/codelist/foul-sewage-disposal-type.csv
 ---

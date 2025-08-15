@@ -18,5 +18,5 @@ name: Parking space type
 notes:
 organisation: government-organisation:D1342
 plural: Parking space types
-source: 
+source: data/codelist/parking-space-type.csv
 ---

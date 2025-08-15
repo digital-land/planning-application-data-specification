@@ -16,5 +16,5 @@ name: Rights of way answer
 notes:
 organisation: government-organisation:D1342
 plural: Rights of way answers
-source: 
+source: data/codelist/rights-of-way-answer.csv
 ---

@@ -16,5 +16,5 @@ name: Non-residential measurement type
 notes:
 organisation: government-organisation:D1342
 plural: Non-residential measurement types
-source: 
+source: data/codelist/non-residential-measurement-type.csv
 ---

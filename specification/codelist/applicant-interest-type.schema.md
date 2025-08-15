@@ -15,5 +15,5 @@ name: Applicant interest type
 notes:
 organisation: government-organisation:D1342
 plural: Applicant interest types
-source: 
+source: data/codelist/applicant-interest-type.csv
 ---

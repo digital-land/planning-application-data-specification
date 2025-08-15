@@ -15,5 +15,5 @@ name: Hedgerow interest type
 notes:
 organisation: government-organisation:D1342
 plural: Hedgerow interest types
-source: 
+source: data/codelist/hedgerow-interest-type.csv
 ---

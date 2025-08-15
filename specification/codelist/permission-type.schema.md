@@ -16,5 +16,5 @@ name: Permission type
 notes:
 organisation: government-organisation:D1342
 plural: Permission types
-source: 
+source: data/codelist/permission-type.csv
 ---

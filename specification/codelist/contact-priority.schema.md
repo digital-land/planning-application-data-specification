@@ -15,5 +15,5 @@ name: Contact priority
 notes:
 organisation: government-organisation:D1342
 plural: Contact priorities
-source: 
+source: data/codelist/contact-priority.csv
 ---

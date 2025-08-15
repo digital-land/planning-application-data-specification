@@ -15,5 +15,5 @@ name: Housing type
 notes:
 organisation: government-organisation:D1342
 plural: Housing types
-source: 
+source: data/codelist/housing-type.csv
 ---

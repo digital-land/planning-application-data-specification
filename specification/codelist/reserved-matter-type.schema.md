@@ -15,5 +15,5 @@ name: Reserved matter type
 notes:
 organisation: government-organisation:D1342
 plural: Reserved matter types
-source: 
+source: data/codelist/reserved-matter-type.csv
 ---

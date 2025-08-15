@@ -15,5 +15,5 @@ name: Affected area type
 notes:
 organisation: government-organisation:D1342
 plural: Affected area types
-source: 
+source: data/codelist/affected-area-type.csv
 ---

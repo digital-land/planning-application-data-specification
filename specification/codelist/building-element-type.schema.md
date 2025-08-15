@@ -17,5 +17,5 @@ name: Building element type
 notes:
 organisation: government-organisation:D1342
 plural: Building element types
-source: 
+source: data/codelist/building-element-type.csv
 ---

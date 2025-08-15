@@ -15,5 +15,5 @@ name: Site visit contact type
 notes:
 organisation: government-organisation:D1342
 plural: Site visit contact types
-source: 
+source: data/codelist/site-visit-contact-type.csv
 ---

@@ -15,5 +15,5 @@ name: Listed building alteration type
 notes:
 organisation: government-organisation:D1342
 plural: Listed building alteration types
-source: 
+source: data/codelist/lb-alteration-type.csv
 ---

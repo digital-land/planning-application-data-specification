@@ -17,5 +17,5 @@ name: BNG exemption type
 notes:
 organisation: government-organisation:D1342
 plural: BNG exemption types
-source: 
+source: data/codelist/bng-exemption-type.csv
 ---
