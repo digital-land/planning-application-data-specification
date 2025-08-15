@@ -9,6 +9,13 @@ from integrity_checks.utils import has_reference_error, print_error
 # 4. each module in modules list must have a module_name.schema.md file in specification/module/
 
 
+# TODO
+# 5. base-type is allowable field
+# 6. if extends then must be a valid application reference in application schemas
+# 7. define which fields are overridden and which are added to
+# 8. listing app types should list base types and their 'children' applications
+
+
 def check_application_names(applications):
     """
     Check rule 1: application must be a string, kebab-case and unique

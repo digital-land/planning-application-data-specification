@@ -5,6 +5,7 @@ from loader import load_content
 
 def perform_checks():
     from integrity_checks.applications import check_all as check_applications
+    from integrity_checks.codelists import check_all as check_codelists
     from integrity_checks.components import check_all as check_components
     from integrity_checks.fields import check_all as check_fields
     from integrity_checks.modules import check_all as check_modules
@@ -12,6 +13,7 @@ def perform_checks():
     # Load from specification files
     specification = load_content()
     fields = specification["field"]
+    codelists = specification["codelist"]
     components = specification["component"]
     modules = specification["module"]
     applications = specification["application"]
@@ -27,8 +29,17 @@ def perform_checks():
     print("\nChecking applications\n===========")
     applications_valid = check_applications(applications, fields, modules)
 
+    print("\nChecking codelists\n===========")
+    codelists_valid = check_codelists(codelists)
+
     print("------------------------------------")
-    if fields_valid and components_valid and modules_valid and applications_valid:
+    if (
+        fields_valid
+        and components_valid
+        and modules_valid
+        and applications_valid
+        and codelists_valid
+    ):
         print("All integrity checks passed.")
     else:
         print("Integrity checks failed.")

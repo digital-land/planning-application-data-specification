@@ -4,7 +4,7 @@ import frontmatter
 
 tables = {
     "application": {},
-    # "codelist": {},
+    "codelist": {},
     "component": {},
     "field": {},
     "module": {},
