@@ -41,6 +41,25 @@ def get_field_metadata(field_def):
         return {}
 
 
+def get_codelists_for_module(module, fields):
+    """
+    Get a list of codelists used in the module's fields.
+    Returns a set of unique codelist names.
+    """
+    codelists = set()
+    for field_entry in module.get("fields", []):
+        field_ref = field_entry.get("field")
+        if not field_ref:
+            continue
+        field_def = get_field(fields, field_ref)
+        if not field_def:
+            continue
+        codelist = field_def.get("codelist")
+        if codelist:
+            codelists.add(codelist)
+    return codelists
+
+
 def enqueue_object_type_fields(
     field_entries, components, fields, already_enqueued, app_type=None
 ):

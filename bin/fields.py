@@ -13,6 +13,7 @@ def get_applicable_app_types(field_entry):
     """
     Get the applicable application types for a field entry.
     """
+    app_types = None
     applies_if = field_entry.get("applies-if")
     if applies_if:
         # Try to extract application-type(s)
@@ -64,3 +65,7 @@ def is_field_applicable_to_app_type(field_entry, app_type):
     if applicable_app_types:
         return app_type in applicable_app_types
     return True  # If no applies-if, assume applicable to all types
+
+
+def get_codelist(field_def):
+    return field_def.get("codelist", None)
