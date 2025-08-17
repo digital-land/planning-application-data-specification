@@ -35,7 +35,7 @@ def get_notes_for_info_model(field_entry, field_def):
     notes = []
     # Add codelist enum note
     if field_def.get("codelist"):
-        notes.append(f"Select from the {field_def['codelist']} enum")
+        notes.append(f"Select from the **{field_def['codelist']}** enum")
     # Add required-if rules
     if "required-if" in field_entry:
         for cond in field_entry["required-if"]:
