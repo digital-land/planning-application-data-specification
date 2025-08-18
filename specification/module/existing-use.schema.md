@@ -34,7 +34,7 @@ fields:
           value: true
         - field: proposed-use-contamination-risk
           value: true
-validation:
+rules:
   - rule: "last-use-details and last-use-end-date are required if site-vacant is true"
   - rule: "contamination-assessment is required if any of is-contaminated-land, is-suspected-contaminated-land, or proposed-use-contamination-risk is true"
 entry-date: 2025-08-18
