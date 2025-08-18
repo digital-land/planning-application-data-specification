@@ -1,5 +1,5 @@
 ---
-cardinality: many
+cardinality: n
 codelist: lawful-development-need
 datatype: enum
 description: What is the lawful development certificate needed for?
