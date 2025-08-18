@@ -14,7 +14,7 @@ tables = {
 
 def load_table_content(table):
     file_path = "*.md"
-    if table in ["application", "module"]:
+    if table in ["application", "module", "codelist"]:
         file_path = "*.schema.md"
 
     for path in glob(f"specification/{table}/{file_path}"):

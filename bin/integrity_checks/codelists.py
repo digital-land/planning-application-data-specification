@@ -15,10 +15,12 @@ def check_codelist_names(codelists):
     for path, meta in codelists.items():
         codelist = meta.get("codelist")
         if not isinstance(codelist, str) or not check_kebab_case(codelist):
-            print_error(path, f"codelist '{codelist}' must be kebab-case string")
+            print_error(
+                "codelist", path, f"codelist '{codelist}' must be kebab-case string"
+            )
             has_errors = True
         if codelist in seen:
-            print_error(path, f"duplicate codelist '{codelist}'")
+            print_error("codelist", path, f"duplicate codelist '{codelist}'")
             has_errors = True
         seen.add(codelist)
     return not has_errors
@@ -37,7 +39,9 @@ def check_codelist_source(codelists):
             and (source.startswith("http") or source.startswith("data/codelist/"))
         )
         if not valid_source:
-            print_error(path, f"source is missing or not a valid url/path: '{source}'")
+            print_error(
+                "codelist", path, f"source is missing or not a valid url/path: {source}"
+            )
             has_errors = True
     return not has_errors
 
@@ -58,7 +62,7 @@ def check_codelist_entry_date(codelists):
     has_errors = False
     for path, meta in codelists.items():
         if not meta.get("entry-date"):
-            print_error(path, "entry-date is missing or blank")
+            print_error("codelist", path, "entry-date is missing or blank")
             has_errors = True
     return not has_errors
 
