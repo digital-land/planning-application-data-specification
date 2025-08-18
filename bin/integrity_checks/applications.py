@@ -40,28 +40,36 @@ def check_application_field_present(applications, fields):
 
     for app_name, application in applications.items():
         app_fields = application.get("fields", [])
+        has_extends = "extends" in application
 
-        # Check if 'application' field is present in the fields list
-        application_field_found = False
-        for field_def in app_fields:
-            if field_def.get("field") == "application":
-                application_field_found = True
-                break
+        # If 'extends' is not present, 'application' field must be present in fields list
+        if not has_extends:
+            # Check if 'application' field is present in the fields list
+            application_field_found = False
+            for field_def in app_fields:
+                if field_def.get("field") == "application":
+                    application_field_found = True
+                    break
 
-        if not application_field_found:
-            print_error(
-                "application", app_name, "missing 'application' field in fields list"
-            )
-            has_errors = True
+            if not application_field_found:
+                print_error(
+                    "application",
+                    app_name,
+                    "missing 'application' field in fields list",
+                )
+                has_errors = True
 
-        # Also check that the application field exists in field definitions
-        if "application" not in fields:
-            print_error(
-                "application",
-                app_name,
-                "referenced 'application' field not found in field definitions",
-            )
-            has_errors = True
+        # If fields are present, check that all referenced fields exist in field definitions
+        if app_fields:
+            for field_def in app_fields:
+                field_name = field_def.get("field")
+                if field_name and field_name not in fields:
+                    print_error(
+                        "application",
+                        app_name,
+                        f"referenced field '{field_name}' not found in field definitions",
+                    )
+                    has_errors = True
 
     return not has_errors
 
@@ -70,9 +78,13 @@ def check_modules_attr_present(applications):
     """
     Check rule 3: each application schema must have a modules attr
     """
+
     has_errors = False
 
     for app_name, application in applications.items():
+        # If 'extends' is present, modules attr is not required
+        if "extends" in application:
+            continue
         if "modules" not in application:
             print_error("application", app_name, "missing 'modules' attribute")
             has_errors = True
