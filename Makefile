@@ -29,6 +29,15 @@ specification::
 	python3 bin/specification_data.py
 
 
+clean::
+	rm -r generated
+
+
+build: clean
+	mkdir -p generated
+	python3 bin/build.py
+
+
 status:
 	git status --ignored
 
