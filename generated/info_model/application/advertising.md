@@ -1,0 +1,461 @@
+# Advertising
+
+An application for all types of advertisements and signs
+
+## Contents
+
+* [Application data specification](#application-data-specification)
+
+### Modules
+
+* [Advertisement location](#advertisement-location)
+* [Advert period](#advert-period)
+* [Advertisement types](#advertisement-types)
+* [Agent contact details](#agent-contact-details)
+* [Agent details](#agent-details)
+* [Applicant contact details](#applicant-contact-details)
+* [Applicant details](#applicant-details)
+* [Checklist](#checklist)
+* [Community consultation](#community-consultation)
+* [Conflict of interest](#conflict-of-interest)
+* [Interest details](#interest-details)
+* [Declaration](#declaration)
+* [Pre-application advice](#pre-application-advice)
+* [Proposed advert details](#proposed-advert-details)
+* [Site details](#site-details)
+* [Site Visit Details](#site-visit-details)
+
+## Application data specification
+
+| field | description | data-type | required | notes |
+| --- | --- | --- | --- | --- |
+| application | The details of the application payload to be submitted | object | MUST |  |
+
+## Advertisement location
+
+Information about advertisement placement including whether it's already in place,
+replacement status, and potential overhang over public areas
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| is-advert-in-place | Is advert in place | Whether the advertisement is already in place | MUST |  |
+| advert-placed-date | Advert placed date | Date when the advertisement was placed (YYYY-MM-DD format) | MAY | Rule: is a MUST if `is-advert-in-place` is `True` |
+| is-replacement-advert | Is replacement advert | Whether this is a replacement advertisement | MUST |  |
+| document-reference | Document reference[]{} | References to documents detailing the proposed alterations | MAY | Rule: is a MUST if `is-advert-in-place` is `True`. Rule: is a MUST if `is-replacement-advert` is `True` |
+| is-advert-overhanging | Is advert overhanging | Whether the advertisement will project over a footpath or other public highway | MUST |  |
+
+
+**Supporting document model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+name | Name | A name of a person | MUST | 
+
+**Validation rules**
+
+- if is-advert-in-place == true then advert-placed-date is required
+- if (is-advert-in-place == true OR is-replacement-advert == true) then document-reference is required
+
+## Advert period
+
+Module for capturing the time period that consent to advertisement is sought
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| advert-start-date | Advert start date | The start of the time period that consent to advertisement is sought | MUST |  |
+| advert-end-date | Advert end date | The end of the time period that consent to advertisement is sought | MUST |  |
+
+**Validation rules**
+
+- advert-start-date must be a valid date in YYYY-MM-DD format
+- advert-end-date must be a valid date in YYYY-MM-DD format
+- advert-end-date must be after advert-start-date
+
+## Advertisement types
+
+Module for capturing information about different types of advertisements 
+proposed, including their counts and descriptions
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| advertisement-proposal-description | Advertisement proposal description | Description of the advertisement proposal | MUST |  |
+| advertisement-proposal-type | Advertisement proposal type[]{} | Expected to provide counts for each advertisement type | MUST |  |
+
+
+**Advertisement proposal type model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+advertisement-type | Advertisement type | One of the advertisement-types or other | MUST | Select from the **advertisement-type** enum
+advertisement-count | Advertisement count | Number of this type of advertisement | MUST | 
+advertisement-other-description | Advertisement other description | Details required if other advertisement type is selected | MAY | Rule: is a MUST if `advertisement-type` is `other`
+
+**Validation rules**
+
+- At least one advertisement-proposal-type entry must be provided
+- advertisement-other-description is required when advertisement-type is 'other'
+- advertisement-count must be a positive integer
+
+## Agent contact details
+
+Contact details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| agent-reference | Agent reference | A reference to an agent object | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+
+
+## Agent details
+
+Details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| agent | agent{} | Details of the agent | MAY |  |
+
+
+**Agent obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+company | Company | The name of a company (that the agent works for) | MAY | 
+user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+
+
+## Applicant contact details
+
+Contact details for the applicant or applicants, including email and phone numbers
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+**Validation rules**
+
+- applicant-reference must match a reference from the applicant details component
+- At least one phone number must have contact-priority set to primary
+
+## Applicant details
+
+Details about the applicants for the planning application,
+including their personal information and contact details
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| applicants | Applicants[]{} |  | MUST |  |
+
+
+**Applicant model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+**Validation rules**
+
+- At least one applicant must be provided
+- Each applicant reference must be unique within the application
+
+## Checklist
+
+Identifies the national requirement types that apply to this application type
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
+
+**Validation rules**
+
+- All values must be from the national-requirement-type codelist
+- Values must be valid for the current application type
+
+## Community consultation
+
+Information about community consultation activities carried out in relation to the planning application
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| have-consulted | Have consulted | Whether community consultation has been carried out | MUST |  |
+| description | Description | Provide details of the community consultation | MAY | Rule: is a MUST if `have-consulted` is `True` |
+
+**Validation rules**
+
+- Description is required when have-consulted is true
+- Description should provide details of the consultation activities undertaken
+
+## Conflict of interest
+
+Information about any conflicts of interest between the applicant/agent and the planning authority,
+including relationships with staff or elected members
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
+| conflict-person-name | Conflict person name | Name of the individual with the conflict of interest that matches one of the names provided in applicants/agent section | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
+| conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
+
+**Validation rules**
+
+- conflict-person-name must match a name provided in applicants or agent sections
+
+## Interest details
+
+Details of the applicant's interest in land or listed buildings and information about
+other interested parties including owners and persons with interests in the property
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| applicant-interest | Applicant interest | Description of the applicant's interest in the land | MUST |  |
+| owner-details | Owner details[]{} | Details of property owners including their personal information and notification status | MAY |  |
+| interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status | MAY | Rule: is a MUST if `applicant-interest` is `none` |
+| applicant-owns-land | Applicant owns land | True or False indicating whether the applicant owns the land where the advertisement will be displayed | MUST |  |
+| permission-obtained | Permission obtained | True or False indicating whether permission of the owner for the display of an advertisement has been obtained | MAY | Rule: is a MUST if `applicant-owns-land` is `False` |
+| permission-not-obtained-details | Permission not obtained details | Details explaining why permission from the land owner has not been obtained for the advertisement display | MAY |  |
+
+
+**LDC Owner Details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+person | Person{} | Detail to help identify a person | MUST | 
+informed-of-application | Informed of application | Whether the person has been informed of the application | MUST | 
+
+
+**LDC Interested Person model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+person | Person{} | Detail to help identify a person | MUST | 
+nature-of-interest | Nature of interest | Description of the nature of a person's interest in the property | MUST | 
+informed-of-application | Informed of application | Whether the person has been informed of the application | MUST | 
+reason-not-informed | Reason not informed | Reason why a person was not informed of the application | MAY | 
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+**Validation rules**
+
+- if applicant-interest is 'lessee' or 'occupier', then owner-details is required
+- if applicant-interest is 'none', then interested-persons is required
+- if applicant-owns-land is false, then permission-obtained is required
+- if applicant-owns-land is false and permission-obtained is false, then permission-not-obtained-details is required
+- No advertisement to be displayed without permission of owner or person with interest entitled to grant permission
+
+## Declaration
+
+Declaration by the applicant or agent confirming the accuracy of the information provided
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| name | Name | A name of a person | MUST |  |
+| declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
+| declaration-date | Declaration date | The date the declaration was made | MUST |  |
+
+**Validation rules**
+
+- name must match one of the named individuals in the application
+- declaration-date must be in YYYY-MM-DD format
+- declaration-date must not be in the future
+
+## Pre-application advice
+
+Information about any pre-application advice sought from the planning authority
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| advice-sought | Pre-application advice sought | Whether pre-application advice has been sought from the planning authority | MUST |  |
+| officer-name | Officer name | Name of the planning officer who provided the pre-application advice | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| reference | Reference | A unique reference for the data item | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| advice-date | Advice date | Date when pre-application advice was received, in YYYY-MM-DD format | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| advice-summary | Advice summary | Summary of the pre-application advice received from the planning authority | MAY | Rule: is a MUST if `advice-sought` is `True` |
+
+
+
+## Proposed advert details
+
+Details of proposed advertisements including dimensions, materials, and illumination specifications
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| advertisements | Advertisements[]{} | Structured data about each proposed advertisement | MUST |  |
+
+
+**Advertisement model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+height-from-ground | Height from ground | Height, in metres, from ground to the base of the advertisement | MAY | in metres
+height | Height | Height, in metres, of dimensions of advertisement | MAY | in metres
+width | Width | Width of dimensions of advertisement | MAY | in metres
+depth | Depth | Depth, in metres, of dimensions of advertisement | MAY | in metres
+symbol-height-max | Symbol height max | Maximum height, in metres, of any individual letters or symbols | MAY | 
+colour | Colour | Colour of proposed sign | MAY | 
+materials | Materials | Materials of proposed sign | MAY | 
+max-projection | Max projection | Maximum projection, in metres, of the advertisement from the face of the building | MAY | 
+illuminated | Illuminated | Will the sign(s) be illuminated? | MAY | 
+illumination-method | Illumination method | Method of illumination for the advertisement | MAY | Rule: is a MUST if `illuminated` is `True`
+illuminance-level | Illuminance level | Level of illuminance for the advertisement | MAY | Rule: is a MUST if `illuminated` is `True`. Unit: cd/m2
+illumination-type | Illumination type | Type of illumination (static or intermittent) | MAY | Select from the **illumination-type** enum. Rule: is a MUST if `illuminated` is `True`
+
+**Validation rules**
+
+- At least one advertisement entry must be provided
+- illumination-method is required when illuminated is true
+- illuminance-level is required when illuminated is true
+- illumination-type is required when illuminated is true
+- Dimensional values must be positive numbers
+- illuminance-level must be positive when provided
+
+## Site details
+
+Information about the location and extent of the site where development 
+or works are proposed
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
+
+
+**Site location model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+site-boundary | Site boundary | Geometry of the site of the development, typically in GeoJSON format | MAY | 
+address-text | Address Text | Flexible field for capturing addresses | MAY | 
+postcode | Postcode | The postal code | MAY | 
+easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | MAY | 
+northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
+latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
+longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
+description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | 
+
+**Validation rules**
+
+- At least one site-location must be provided for tree works applications
+- Exactly one site-location for all other applications types
+- If easting is provided, northing must also be provided and vice versa
+- If latitude is provided, longitude must also be provided and vice versa
+- Site boundary must be valid GeoJSON
+- UPRNs must be valid format
+- Post code must be valid UK format
+
+## Site Visit Details
+
+Details needed to support a site visit by the planning authority
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| can-be-seen-from | Site seen from public area | Can site be seen from a public road, public footpath, bridleway or other public land | MUST |  |
+| contact-type | Site visit contact type | Indicates who the authority should contact to arrange a site visit | MUST | Select from the **site-visit-contact-type** enum |
+| contact-reference | Contact reference | The reference of the applicant or agent who should be contacted for site visits | MAY |  |
+| other-contact | Other site visit contact{} | Details of specifically named contact for site visits | MAY | Rule: is a MUST if `contact-type` is `other` |
+
+
+**Other contact model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+fullname | Full name | The complete name of a person | MUST | 
+number | Phone number | A phone number | MUST | 
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+
+**Validation rules**
+
+- contact-reference must match agent-details.agent.reference details if contact-type is agent
+- contact-reference must match one of the references in applicant-details.applicants if contact-type is applicant
+- When contact-type is other, full contact details must be provided
+
+## Required codelists
+
+This are the codelist required to support this specification:
+
+- user-role-type
+- illumination-type
+- contact-priority
+- advertisement-type

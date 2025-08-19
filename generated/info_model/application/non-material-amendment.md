@@ -1,0 +1,382 @@
+# Non-material amendment
+
+An application for any minor changes to proposals that have already been approved
+
+## Contents
+
+* [Application data specification](#application-data-specification)
+
+### Modules
+
+* [Agent contact details](#agent-contact-details)
+* [Agent details](#agent-details)
+* [Applicant contact details](#applicant-contact-details)
+* [Applicant details](#applicant-details)
+* [Checklist](#checklist)
+* [Conflict of interest](#conflict-of-interest)
+* [Declaration](#declaration)
+* [Description of your proposal](#description-of-your-proposal)
+* [Eligibility](#eligibility)
+* [Non-material amendment details](#non-material-amendment-details)
+* [Pre-application advice](#pre-application-advice)
+* [Site details](#site-details)
+* [Site Visit Details](#site-visit-details)
+
+## Application data specification
+
+| field | description | data-type | required | notes |
+| --- | --- | --- | --- | --- |
+| application | The details of the application payload to be submitted | object | MUST |  |
+
+## Agent contact details
+
+Contact details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| agent-reference | Agent reference | A reference to an agent object | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+
+
+## Agent details
+
+Details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| agent | agent{} | Details of the agent | MAY |  |
+
+
+**Agent obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+company | Company | The name of a company (that the agent works for) | MAY | 
+user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+
+
+## Applicant contact details
+
+Contact details for the applicant or applicants, including email and phone numbers
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+**Validation rules**
+
+- applicant-reference must match a reference from the applicant details component
+- At least one phone number must have contact-priority set to primary
+
+## Applicant details
+
+Details about the applicants for the planning application,
+including their personal information and contact details
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| applicants | Applicants[]{} |  | MUST |  |
+
+
+**Applicant model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+**Validation rules**
+
+- At least one applicant must be provided
+- Each applicant reference must be unique within the application
+
+## Checklist
+
+Identifies the national requirement types that apply to this application type
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
+
+**Validation rules**
+
+- All values must be from the national-requirement-type codelist
+- Values must be valid for the current application type
+
+## Conflict of interest
+
+Information about any conflicts of interest between the applicant/agent and the planning authority,
+including relationships with staff or elected members
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
+| conflict-person-name | Conflict person name | Name of the individual with the conflict of interest that matches one of the names provided in applicants/agent section | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
+| conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
+
+**Validation rules**
+
+- conflict-person-name must match a name provided in applicants or agent sections
+
+## Declaration
+
+Declaration by the applicant or agent confirming the accuracy of the information provided
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| name | Name | A name of a person | MUST |  |
+| declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
+| declaration-date | Declaration date | The date the declaration was made | MUST |  |
+
+**Validation rules**
+
+- name must match one of the named individuals in the application
+- declaration-date must be in YYYY-MM-DD format
+- declaration-date must not be in the future
+
+## Description of your proposal
+
+Details about your proposal including related planning permissions, 
+development status, and condition information
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| related-application | Related application{} | Details of the related planning permission | MUST |  |
+| original-application-type | Original application type | Type of original planning application | MAY |  |
+| is-householder-development | Is householder development | Is the development to an existing dwelling-house or development within its curtilage (true/false) | MAY |  |
+
+
+**Related application details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MUST | 
+decision-date | Decision date | The date when the decision was made, in YYYY-MM-DD format | MAY | 
+
+**Validation rules**
+
+- start-date is required when development-started is true
+- completion-date is required when development-completed is true
+- decision-date must be before the application submission date
+- reference-number must match the decision letter
+- proposal-description must match the decision letter
+- Module applies to s73, approval-condition, and non-material-amendment application types
+
+## Eligibility
+
+Complete eligibility assessment for planning applications including applicant land interest,
+ownership notifications, and proposal-specific eligibility criteria
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| applicant-land-interest | Applicant land interest | Does the applicant have an interest in the land | MUST |  |
+| ownership-notification | Ownership notification | If not the sole owner, has notification been given under Article 10 | MAY | Select from the **yes-no-not-applicable** enum |
+| notified-persons | Notified persons[]{} | List of persons notified, including address and date | MAY | Rule: is a MUST if `ownership-notification` is `True` |
+
+
+**Notified person model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+person | Person{} | Detail to help identify a person | MAY | 
+notice-date | Notice date | Date when notice was served to an owner or tenant | MAY | 
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+**Validation rules**
+
+- applicant-land-interest == true (required for application to proceed)
+- if applicant-land-interest == 'partial', then ownership-notification is required
+- if ownership-notification == 'yes', then notified-persons must be provided
+- if ownership-notification == 'no', application cannot proceed without valid justification
+
+## Non-material amendment details
+
+Details of non-material amendments to planning applications including
+description of changes, document substitutions, and reasons for amendments
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| description | Description | Description of the non-material amendments the applicant seeks to make | MUST |  |
+| is-substituting-document | Substituting document | True or False indicating whether the amendment involves substituting documents | MUST |  |
+| replacement-documents | Replacement documents[]{} | List of documents being replaced in the amendment with old and new document references | MAY | Rule: is a MUST if `is-substituting-document` is `True` |
+| reason | Reason | Reason why applicant wants to make the amendment | MUST |  |
+
+
+**Replacement document model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+old-document | Old document | Reference of the old document being replaced in the amendment | MUST | 
+new-document | New document | Reference for the new document replacing the old document in the amendment | MUST | 
+
+**Validation rules**
+
+- is-substituting-document == true REQUIRES replacement-documents.length >= 1
+- replacement-documents[].old-document.length > 0 AND replacement-documents[].new-document.length > 0
+- replacement-documents[].old-document != replacement-documents[].new-document
+- description.length > 10
+- reason.length > 5
+
+## Pre-application advice
+
+Information about any pre-application advice sought from the planning authority
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| advice-sought | Pre-application advice sought | Whether pre-application advice has been sought from the planning authority | MUST |  |
+| officer-name | Officer name | Name of the planning officer who provided the pre-application advice | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| reference | Reference | A unique reference for the data item | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| advice-date | Advice date | Date when pre-application advice was received, in YYYY-MM-DD format | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| advice-summary | Advice summary | Summary of the pre-application advice received from the planning authority | MAY | Rule: is a MUST if `advice-sought` is `True` |
+
+
+
+## Site details
+
+Information about the location and extent of the site where development 
+or works are proposed
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
+
+
+**Site location model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+site-boundary | Site boundary | Geometry of the site of the development, typically in GeoJSON format | MAY | 
+address-text | Address Text | Flexible field for capturing addresses | MAY | 
+postcode | Postcode | The postal code | MAY | 
+easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | MAY | 
+northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
+latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
+longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
+description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | 
+
+**Validation rules**
+
+- At least one site-location must be provided for tree works applications
+- Exactly one site-location for all other applications types
+- If easting is provided, northing must also be provided and vice versa
+- If latitude is provided, longitude must also be provided and vice versa
+- Site boundary must be valid GeoJSON
+- UPRNs must be valid format
+- Post code must be valid UK format
+
+## Site Visit Details
+
+Details needed to support a site visit by the planning authority
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| can-be-seen-from | Site seen from public area | Can site be seen from a public road, public footpath, bridleway or other public land | MUST |  |
+| contact-type | Site visit contact type | Indicates who the authority should contact to arrange a site visit | MUST | Select from the **site-visit-contact-type** enum |
+| contact-reference | Contact reference | The reference of the applicant or agent who should be contacted for site visits | MAY |  |
+| other-contact | Other site visit contact{} | Details of specifically named contact for site visits | MAY | Rule: is a MUST if `contact-type` is `other` |
+
+
+**Other contact model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+fullname | Full name | The complete name of a person | MUST | 
+number | Phone number | A phone number | MUST | 
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+
+**Validation rules**
+
+- contact-reference must match agent-details.agent.reference details if contact-type is agent
+- contact-reference must match one of the references in applicant-details.applicants if contact-type is applicant
+- When contact-type is other, full contact details must be provided
+
+## Required codelists
+
+This are the codelist required to support this specification:
+
+- contact-priority
+- user-role-type

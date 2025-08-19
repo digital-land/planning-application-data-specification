@@ -1,0 +1,235 @@
+# Prior approval
+
+This applies to developments with permitted development rights (where developments are granted planning permission by national legislation without the need to submit a planning application)
+
+## Contents
+
+* [Application data specification](#application-data-specification)
+
+### Modules
+
+* [Agent contact details](#agent-contact-details)
+* [Agent details](#agent-details)
+* [Applicant contact details](#applicant-contact-details)
+* [Applicant details](#applicant-details)
+* [Conflict of interest](#conflict-of-interest)
+* [Checklist](#checklist)
+* [Declaration](#declaration)
+* [Site details](#site-details)
+
+## Application data specification
+
+| field | description | data-type | required | notes |
+| --- | --- | --- | --- | --- |
+| application | The details of the application payload to be submitted | object | MUST |  |
+
+## Agent contact details
+
+Contact details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| agent-reference | Agent reference | A reference to an agent object | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+
+
+## Agent details
+
+Details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| agent | agent{} | Details of the agent | MAY |  |
+
+
+**Agent obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+company | Company | The name of a company (that the agent works for) | MAY | 
+user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+
+
+## Applicant contact details
+
+Contact details for the applicant or applicants, including email and phone numbers
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+**Validation rules**
+
+- applicant-reference must match a reference from the applicant details component
+- At least one phone number must have contact-priority set to primary
+
+## Applicant details
+
+Details about the applicants for the planning application,
+including their personal information and contact details
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| applicants | Applicants[]{} |  | MUST |  |
+
+
+**Applicant model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+**Validation rules**
+
+- At least one applicant must be provided
+- Each applicant reference must be unique within the application
+
+## Conflict of interest
+
+Information about any conflicts of interest between the applicant/agent and the planning authority,
+including relationships with staff or elected members
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+
+**Validation rules**
+
+- conflict-person-name must match a name provided in applicants or agent sections
+
+## Checklist
+
+Identifies the national requirement types that apply to this application type
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
+
+**Validation rules**
+
+- All values must be from the national-requirement-type codelist
+- Values must be valid for the current application type
+
+## Declaration
+
+Declaration by the applicant or agent confirming the accuracy of the information provided
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| name | Name | A name of a person | MUST |  |
+| declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
+| declaration-date | Declaration date | The date the declaration was made | MUST |  |
+
+**Validation rules**
+
+- name must match one of the named individuals in the application
+- declaration-date must be in YYYY-MM-DD format
+- declaration-date must not be in the future
+
+## Site details
+
+Information about the location and extent of the site where development 
+or works are proposed
+
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
+
+
+**Site location model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+site-boundary | Site boundary | Geometry of the site of the development, typically in GeoJSON format | MAY | 
+address-text | Address Text | Flexible field for capturing addresses | MAY | 
+postcode | Postcode | The postal code | MAY | 
+easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | MAY | 
+northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
+latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
+longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
+description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | 
+
+**Validation rules**
+
+- At least one site-location must be provided for tree works applications
+- Exactly one site-location for all other applications types
+- If easting is provided, northing must also be provided and vice versa
+- If latitude is provided, longitude must also be provided and vice versa
+- Site boundary must be valid GeoJSON
+- UPRNs must be valid format
+- Post code must be valid UK format
+
+## Required codelists
+
+This are the codelist required to support this specification:
+
+- contact-priority
+- user-role-type
