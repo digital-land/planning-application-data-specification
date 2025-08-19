@@ -86,8 +86,79 @@ def check_application_type_references(
     return not has_errors
 
 
+def check_condition(cond, fields, field, component_name, application_types):
+    """Return True if an error is found, but always continue to check all conditions."""
+    error_found = False
+    if isinstance(cond, dict):
+        # when a dictionary
+        # check keys for any or all keywords
+        # loop over conditions
+        # check for field in keys
+        # check for application-type in keys
+        # if none of those present its an error
+        if not any(key in cond for key in ("any", "all", "field", "application-type")):
+            print_error(
+                component_name,
+                f"Condition in field '{field.get('field')}' must contain 'any', 'all', 'field', or 'application-type'",
+            )
+            error_found = True
+        for key, value in cond.items():
+            if key in ("any", "all"):
+                if isinstance(value, list):
+                    for subcond in value:
+                        if check_condition(
+                            subcond, fields, field, component_name, application_types
+                        ):
+                            error_found = True
+                else:
+                    print_error(
+                        component_name,
+                        f"Condition for '{key}' must be a list in field '{field.get('field')}'",
+                    )
+                    error_found = True
+            elif key == "field":
+                if value not in fields:
+                    print_error(
+                        component_name,
+                        f"Field reference '{value}' in condition not found in field definitions",
+                    )
+                    error_found = True
+            elif key == "application-type":
+                # check if application-type is a valid type
+                if not isinstance(value, dict) or "in" not in value.keys():
+                    print_error(
+                        component_name,
+                        f"'application-type' condition must be a dictionary with 'in' key in field '{field.get('field')}'",
+                    )
+                    error_found = True
+                else:
+                    app_types = value["in"]
+                    if not isinstance(app_types, list):
+                        print_error(
+                            component_name,
+                            f"'application-type' condition must have a list of types in field '{field.get('field')}'",
+                        )
+                        error_found = True
+                    # loop over app_types and check against valid types
+                    for app_type in app_types:
+                        if app_type not in application_types:
+                            print_error(
+                                component_name,
+                                f"Invalid application type '{app_type}' in field '{field.get('field')}'",
+                            )
+                            error_found = True
+                continue
+    elif isinstance(cond, list):
+        for item in cond:
+            if check_condition(item, fields, field, component_name, application_types):
+                error_found = True
+    return error_found
+
+
 def check_field_condition_references(
-    components: List[Dict[str, Any]], fields: Dict[str, Any]
+    components: List[Dict[str, Any]],
+    fields: Dict[str, Any],
+    application_types: Dict[str, Any],
 ) -> bool:
     """Check rule 4: field in required-if must reference valid field."""
     has_errors = False
@@ -96,46 +167,11 @@ def check_field_condition_references(
         for field_def in component_fields:
             required_if = field_def.get("required-if", [])
 
-            # Check if required_if is a list
-            if not isinstance(required_if, list):
-                print_error(
-                    component_name,
-                    f"required-if must be a list of conditions, got {type(required_if).__name__}",
-                )
+            if check_condition(
+                required_if, fields, field_def, component_name, application_types
+            ):
                 has_errors = True
-                continue
 
-            for condition in required_if:
-                # Check if condition is a dictionary
-                if not isinstance(condition, dict):
-                    print_error(
-                        component_name,
-                        f"required-if condition must be a dictionary, got {type(condition).__name__}",
-                    )
-                    has_errors = True
-                    continue
-
-                # First check if condition has any valid condition keys
-                valid_condition_keys = ["field", "application-type"]
-                has_valid_condition = any(
-                    key in condition for key in valid_condition_keys
-                )
-
-                if not has_valid_condition:
-                    print_error(
-                        component_name,
-                        f"required-if condition must contain at least one of: {', '.join(valid_condition_keys)}",
-                    )
-                    has_errors = True
-                    continue
-
-                # Check field references if present
-                field_name = condition.get("field", None)
-                if field_name and field_name not in fields:
-                    print_error(
-                        component_name, f"field '{field_name}' in required-if not found"
-                    )
-                    has_errors = True
     return not has_errors
 
 
@@ -170,7 +206,7 @@ def check_all(
         (check_component_names, [components]),
         (check_field_references, [components, fields]),
         # (check_application_type_references, [components, valid_types]),
-        (check_field_condition_references, [components, fields]),
+        (check_field_condition_references, [components, fields, valid_types]),
         (check_dates, [components]),
     ]
 
@@ -193,7 +229,9 @@ if __name__ == "__main__":
     specification = load_content()
     components = specification["component"]
     fields = specification["field"]
-    valid_types = []  # TODO: load valid application types
+    valid_types = specification["application"]
+
+    print(valid_types)
 
     success = check_all(components, fields, valid_types)
     exit(0 if success else 1)
