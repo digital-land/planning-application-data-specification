@@ -10,17 +10,18 @@ fields:
     required: true
   - field: use-other
     required-if:
-      - condition: 
-          field: use
-          other: other
+      - field: use
+        other: other
+        description: required if `use` field is other
   - field: operational-times
     required-if:
-      - condition: 
-          field: hours-not-known
-          value: true
+      - field: hours-not-known
+        value: true
+        description: required if `hours-not-known` field is true
   - field: hours-not-known
     required-if:
-      - condition: 
-          field: operational-times
-          is: empty
+      - field: operational-times
+        is: empty
+        description: required if `operational-times` field is empty
+          
 ---

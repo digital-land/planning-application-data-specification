@@ -12,7 +12,7 @@ fields:
     default: true
   - field: time-ranges
     required-if:
-      - condition: 
-          field: closed
-          value: false
+      - field: closed
+        value: false
+        description: required if field `closed` is false
 ---

@@ -13,7 +13,7 @@ fields:
   - field: decision-date
     required-if:
       - application-type:
-          in: [non-material-amendment]
+          in: ['non-material-amendment']
 entry-date: 2025-06-12
 end-date: ''
 ---
