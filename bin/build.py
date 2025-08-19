@@ -5,7 +5,7 @@ from loader import load_content
 from utils import save_string_to_file
 
 OUTPUT_DIR = "generated"
-INFO_MODULE_OUTPUT_DIR = f"{OUTPUT_DIR}/info_modules"
+INFO_MODULE_OUTPUT_DIR = f"{OUTPUT_DIR}/info_model"
 
 
 def build():
