@@ -1,0 +1,38 @@
+# Materials
+
+Information about the materials used in the development, including both existing and proposed materials
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| building-elements | Building elements[]{} | Details of materials for a specific building element such as walls, roof, windows or doors |  | MUST |  |
+| additional-material-information | Additional material information | Additional context or details about the materials to be used in the development |  | MUST |  |
+| supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used |  | MAY | Rule: is a MUST if `additional-material-information` is `True` |
+
+
+**Building element model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+building-element-type | Building element type | The part of building the materials relate to, such as walls, roofs, windows, or doors | MUST | Select from the **building-element-type** enum
+existing-materials | Existing materials | Description of the materials currently used for this building element | MAY | 
+proposed-materials | Proposed materials | Description of the materials proposed for this building element as part of the development | MAY | 
+materials-not-applicable | Materials not applicable | Indicates this building element is not relevant to the application | MAY | 
+materials-not-known | Materials not known | Indicates the materials for this building element are not yet known | MAY | 
+
+
+**Supporting document model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+name | Name | A name of a person | MUST | 
+details | Details | Additional details or information about an item | MAY | 
+
+**Validation rules**
+
+- Each building-element must have a unique building-element-type
+- At least one of: existing-materials, proposed-materials, materials-not-applicable or materials-not-known must be provided for each building-element
+- materials-not-applicable cannot be true if existing-materials or proposed-materials is provided
+- materials-not-known cannot be true if existing-materials or proposed-materials is provided
+- supporting-documents must reference valid documents in the application

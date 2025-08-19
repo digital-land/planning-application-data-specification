@@ -1,0 +1,45 @@
+# Ownership certificates and agricultural land declaration
+
+Information about ownership of the site and/or property for development, including agricultural tenants and notification requirements.
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| sole-owner | Sole owner | Is the applicant the sole owner of the land? | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MUST |  |
+| agricultural-tenants | Agricultural tenants | Are there any agricultural tenants on the land? | hh, full, outline, demolition-con-area, s73, extraction-oil-gas | MUST |  |
+| owners-and-tenants | Owners and tenants[]{} | List of known owners and agricultural tenants | hh, full, outline, demolition-con-area, s73, extraction-oil-gas | MAY |  |
+| lbc-owners | Owners of listed building[]{} | List of known owners | lbc | MAY |  |
+| steps-taken | Steps taken | Description of steps taken to identify unknown owners or tenants | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
+| newspaper-notices | Newspaper notices[]{} | Details of notices published in papers | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
+| ownership-cert-option | Ownership certificate type | The type of ownership certificate based on ownership and tenancy status | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY | Select from the **ownership-cert-type** enum |
+| applicant-signature | Applicant signature | Digital signature of the applicant | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
+| agent-signature | Agent signature | Digital signature of the agent (if applicable) | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
+| signature-date | Signature date | Date when the ownership certificate was signed | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
+
+
+**Notified person model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+person | Person{} | Detail to help identify a person | MAY | 
+notice-date | Notice date | Date when notice was served to an owner or tenant | MAY | 
+
+
+**Newspaper notice model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+newspaper-name | Newspaper name | Name of the newspaper where the ownership notice was published | MUST | 
+publication-date | Publication date | Date when the ownership notice was published in the newspaper | MUST | 
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+

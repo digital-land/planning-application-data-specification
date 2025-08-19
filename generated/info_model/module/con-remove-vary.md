@@ -1,0 +1,15 @@
+# Condition removal or variation
+
+Information about why applicant wishes planning condition(s) to be removed or changed,
+and how the condition should vary for s73 applications
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| reason | Reason | The reason why the applicant wishes condition(s) to be removed or changed |  | MUST |  |
+| condition-change | Condition change | State how the condition should vary |  | MAY |  |
+
+**Validation rules**
+
+- Reason must explain why the applicant wishes condition(s) to be removed or changed
+- Condition change should specify how the condition should vary if modification is sought
