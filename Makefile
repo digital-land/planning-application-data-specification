@@ -30,7 +30,7 @@ specification::
 
 
 clean::
-	rm -r generated
+	rm -rf generated
 
 
 build: clean
