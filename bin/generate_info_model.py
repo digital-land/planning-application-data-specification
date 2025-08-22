@@ -172,17 +172,10 @@ def generate_application(app_ref, specification):
     out.append("")
 
     # 4. Application Data Specification
-    out.append("## Application data specification\n")
-    out.append("| field | description | data-type | required | notes |")
-    out.append("| --- | --- | --- | --- | --- |")
-    for field_entry in app.get("fields", []):
-        ref = field_entry["field"]
-        field_def = specification.get("field", {}).get(ref, {})
-        description = field_def.get("description", "")
-        datatype = field_def.get("datatype", "")
-        required = "MUST" if field_entry.get("required") else "MAY"
-        notes = field_def.get("notes", "")
-        out.append(f"| {ref} | {description} | {datatype} | {required} | {notes} |")
+    application_fields_section = generate_module(
+        "application", specification, app_type=app_ref
+    )
+    out.append(application_fields_section)
     out.append("")
 
     # 5. Module Sections
@@ -224,7 +217,8 @@ if __name__ == "__main__":
         # )
 
         result = save_string_to_file(
-            generate_application("full", specification), "tmp/test-gen-app.md"
+            generate_application("advertising", specification),
+            "generated/info_model/application/advertising.md",
         )
         print("Function called successfully")
         print(result)
