@@ -45,3 +45,8 @@ status:
 commit-issue-tracking::
 	git add .
 	git diff --quiet && git diff --staged --quiet || (git commit -m "Latest issue tracking updates $(shell date +%F)"; git push origin $(BRANCH))
+
+
+commit-outputs:
+	git add generated/
+	git diff --quiet && git diff --staged --quiet || (git commit -m "Latest generated outputs $(shell date +%F)"; git push origin $(BRANCH))

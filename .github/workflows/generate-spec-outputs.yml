@@ -1,0 +1,51 @@
+name: Generate outputs from the specification(s)
+
+on:
+  workflow_dispatch:  # Allow manual triggering
+  push:
+    paths:
+      - 'specification/**'
+
+jobs:
+  update-issue-tracking:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        make init
+        
+    - name: Set up environment variables
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        echo "GITHUB_TOKEN=$GITHUB_TOKEN" > .env
+        
+    - name: Clean output directory
+      run: |
+        make clean
+        
+    - name: Build outputs from specification
+      run: |
+        make build
+
+    - name: Generate declarative progress
+      run: |
+        make declarative-progress
+      
+    - name: Commit and push changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        make commit-outputs
