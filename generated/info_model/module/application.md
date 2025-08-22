@@ -1,4 +1,4 @@
-# Planning application
+# Application fields
 
 Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
