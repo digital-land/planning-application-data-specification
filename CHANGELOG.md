@@ -1,4 +1,39 @@
 
+<a name="v0.1.26"></a>
+## [v0.1.26](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.25...v0.1.26) (2025-08-27)
+
+Tooling: integrity checks and generating information models
+
+### ⚒️ Tooling
+
+* automate generation of information model when declarative model changes (commit [3560fbe](https://github.com/digital-land/planning-application-data-specification/commit/3560fbecf1ec5342d00136a3fbfcc8b506881f04))
+* output whole application module and substructures when generating compiled spec (commit [90217e1](https://github.com/digital-land/planning-application-data-specification/commit/90217e1281833e950949433403080e68d5a4a866))
+* generate all application info models (commit [e8e02e9](https://github.com/digital-land/planning-application-data-specification/commit/e8e02e9520a9feb828d2ebe0bc1c3a04bd418859))
+* script to regenerate all module info models (commit [18e6f1d](https://github.com/digital-land/planning-application-data-specification/commit/18e6f1df768884bfc3f5576f52889094888dd10c))
+* update checking required-if conditions in components (commit [c631583](https://github.com/digital-land/planning-application-data-specification/commit/c631583c4134a556bbcfaa27fa053de7a7416abb))
+* handle applications that extend base application (commit [f8b8fca](https://github.com/digital-land/planning-application-data-specification/commit/f8b8fca3fac71fe83cfc5420e2d03f9079ae24f7))
+* func to generate whole info model for given app type (commit [c4ac54f](https://github.com/digital-land/planning-application-data-specification/commit/c4ac54f590b60ec9a732cd29d89d5956f9ca5b33))
+* add util func to save string to file (commit [4c735bb](https://github.com/digital-land/planning-application-data-specification/commit/4c735bb02dfb4403dcdbb06207b167abdfcc782c))
+* make sure reference to enum is bold (commit [d0afd98](https://github.com/digital-land/planning-application-data-specification/commit/d0afd98b440abd5f3280df1f20e8ba58711272de))
+* add integrity checks for codelists (commit [782c513](https://github.com/digital-land/planning-application-data-specification/commit/782c513088b9903c7f368b388753a7333b2fae11))
+
+### 𝌭 Model changes
+
+* tweak name of application module (commit [e981b7e](https://github.com/digital-land/planning-application-data-specification/commit/e981b7eefc06932558748caf2e249bf47cb04f1c))
+* all application info models now in generated/info_model/application (commit [18e472a](https://github.com/digital-land/planning-application-data-specification/commit/18e472aa47105c01a618160df5e210240c46417e))
+* generated info models now in generated/info_model directory (commit [bb17e05](https://github.com/digital-land/planning-application-data-specification/commit/bb17e05b9c9c2dcd69478c00f412ebec0fbad3b2))
+* define application-type codelist (commit [42ee3cf](https://github.com/digital-land/planning-application-data-specification/commit/42ee3cfd4d0c212629a0c11141db67ab6251f7c3))
+* add declarative version of existing-use module (commit [c4bf273](https://github.com/digital-land/planning-application-data-specification/commit/c4bf273f4627ce41a43353f3d7872e1a7781a83c))
+
+### 🐛 Bug Fixes
+
+* typo in output path (commit [e573abc](https://github.com/digital-land/planning-application-data-specification/commit/e573abce2d2892aa746d4211a1af2e45227603fe))
+* errors with conditions in components (commit [5d1bfce](https://github.com/digital-land/planning-application-data-specification/commit/5d1bfce5fedff418277854a2371172e85fc862d6))
+* cardinality must be 1 or n (commit [64784b5](https://github.com/digital-land/planning-application-data-specification/commit/64784b5d01a103f142940873646a714944e67e25))
+* codelist checks, only read *.schema.md files (commit [956adb3](https://github.com/digital-land/planning-application-data-specification/commit/956adb30a6f222d651a6000e4ae4d16d52cfd099))
+* validation attr should be rules (commit [025cdaf](https://github.com/digital-land/planning-application-data-specification/commit/025cdaf26fb08f81886c89240715e770d5833334))
+
+
 <a name="v0.1.25"></a>
 ## [v0.1.25](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.24...v0.1.25) (2025-08-15)
 
