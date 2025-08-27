@@ -9,21 +9,32 @@ from modules import get_codelists_for_module, get_module_parts
 from utils import save_string_to_file
 
 
-def format_main_module_table(module, fields_spec, app_type=None):
-    # Determine columns based on app_type
-    if app_type:
-        lines = [
-            "| reference | name | description | requirement | notes |",
-            "| --- | --- | --- | --- | --- |",
-        ]
-    else:
-        lines = [
-            "| reference | name | description | only for application | requirement | notes |",
-            "| --- | --- | --- | --- | --- | --- |",
-        ]
-    for field_entry in module.get("fields", []):
+def format_fields_table(field_entries, fields_spec, table_type="main", app_type=None):
+    """
+    Generic formatter for field tables.
+    table_type: "main" or "component"
+    field_entries: list of field entry dicts (module or component fields)
+    """
+    lines = []
+    if table_type == "main":
         if app_type:
-            # Skip fields not applicable to the given app_type
+            lines = [
+                "| reference | name | description | requirement | notes |",
+                "| --- | --- | --- | --- | --- |",
+            ]
+        else:
+            lines = [
+                "| reference | name | description | only for application | requirement | notes |",
+                "| --- | --- | --- | --- | --- | --- |",
+            ]
+    else:  # component table
+        lines = [
+            "field | name | description | required | notes",
+            "-- | -- | -- | -- | --",
+        ]
+
+    for field_entry in field_entries:
+        if app_type:
             if not is_field_applicable_to_app_type(field_entry, app_type):
                 continue
         ref = field_entry["field"]
@@ -34,35 +45,42 @@ def format_main_module_table(module, fields_spec, app_type=None):
         only_for_md_str = ", ".join(only_for) if isinstance(only_for, list) else ""
         requirement = get_requirement_str(field_entry)
         notes = get_notes_for_info_model(field_entry, field_def)
-        notes_md_str = ". ".join(notes)
-        if app_type:
-            lines.append(
-                f"| {ref} | {name} | {description} | {requirement} | {notes_md_str} |"
-            )
+        # ensure notes is a string for joining
+        if isinstance(notes, (list, tuple)):
+            notes_md_str = ". ".join(str(n) for n in notes)
+        else:
+            notes_md_str = str(notes or "")
+
+        if table_type == "main":
+            if app_type:
+                lines.append(
+                    f"| {ref} | {name} | {description} | {requirement} | {notes_md_str} |"
+                )
+            else:
+                lines.append(
+                    f"| {ref} | {name} | {description} | {only_for_md_str} | {requirement} | {notes_md_str} |"
+                )
         else:
             lines.append(
-                f"| {ref} | {name} | {description} | {only_for_md_str} | {requirement} | {notes_md_str} |"
+                f"{ref} | {name} | {description} | {requirement} | {notes_md_str}"
             )
+
     return "\n".join(lines)
+
+
+def format_main_module_table(module, fields_spec, app_type=None):
+    return format_fields_table(
+        module.get("fields", []), fields_spec, table_type="main", app_type=app_type
+    )
 
 
 def format_component_table(component, fields_spec, app_type=None):
-    lines = ["field | name | description | required | notes", "-- | -- | -- | -- | --"]
-    # field_entry = the field attr in the module
-    for field_entry in component.get("fields", []):
-        if app_type:
-            # Skip fields not applicable to the given app_type
-            if not is_field_applicable_to_app_type(field_entry, app_type):
-                continue
-        ref = field_entry["field"]
-        field_def = fields_spec.get(ref, {})
-        name = format_field_display_name(field_entry, field_def)
-        description = field_def.get("description", "")
-        requirement = get_requirement_str(field_entry)
-        notes = get_notes_for_info_model(field_entry, field_def)
-        notes_md_str = ". ".join(notes)
-        lines.append(f"{ref} | {name} | {description} | {requirement} | {notes_md_str}")
-    return "\n".join(lines)
+    return format_fields_table(
+        component.get("fields", []),
+        fields_spec,
+        table_type="component",
+        app_type=app_type,
+    )
 
 
 def format_rules_md_str(rules):
