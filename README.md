@@ -4,19 +4,23 @@ This repository contains data specifications used to exchange planning applicati
 
 It is an initiative lead by the Ministry of Housing, Communities and Local Government (MHCLG) aiming to standardise what data is exchanged when a planning application is submitted.
 
-The specification will consist of a number of "modules" and will set out which modules are required for each application type.
+The specification is made up of these elements:
+
+* [Applications](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/application) - these define what is required for a given application type, for example, [Householder](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/hh.schema.md?plain=1)
+* [Modules](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/module) - groupings of fields focused on a specific subject. For example, [agent details](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/module/agent-details.schema.md?plain=1)
+* [Components](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/component) - resuable groups of fields, or substructures that are used by multiple modules. For example, [supporting documents](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/component/supporting-document.md?plain=1)
+* [Fields](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/field) - these deine the specific fields, setting expectations for the field. For example, [decision date](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/field/decision-date.md?plain=1)
+* [Codelists](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/codelist) - these set the allowable values for a given field, for example, [parking space type](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/codelist/parking-space-type.schema.md?plain=1)
+
+
+You can get involved by:
+
+* raising and commenting on [issues](https://github.com/digital-land/planning-application-data-specification/issues)
+* participating in [discussions](https://github.com/digital-land/planning-application-data-specification/discussions) around applications, modules and codelists
 
 #### Background
 
-We started this initiative to create baseline planning application specifications that can be evolved over time, and to improve the use, interoperability and consistency of planning application data that flows through the UK planning system. 
-
 More background can be found on the [planning application project page](https://design.planning.data.gov.uk/project/planning-applications).
-
-## Current focus
-
-We asked for feedback on the initial set of specifications. We collated this feedback and have been working through the issues. You can see the [modules with active issues](issue-tracking/index.md) and the [modules without issues](https://github.com/digital-land/planning-application-data-specification/blob/main/issue-tracking/no-issues.md). 
-
-We are also moving towards a more declarative version of the specifications. We have documented [what we mean what we say declarative model](https://github.com/digital-land/planning-application-data-specification/blob/main/docs/declarative-model.md) and [track the output of this work](https://github.com/digital-land/planning-application-data-specification/blob/main/issue-tracking/declarative-model-progress.md).
 
 ## Application types
 
