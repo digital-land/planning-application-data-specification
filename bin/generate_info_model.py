@@ -1,4 +1,7 @@
+import os
+
 from applications import get_application_module_refs
+from csv_helpers import csv_to_markdown
 from fields import (
     format_field_display_name,
     get_applicable_app_types,
@@ -23,7 +26,6 @@ def format_fields_table(field_entries, fields_spec, table_type="main", app_type=
                 "| reference | name | description | requirement | notes |",
                 "| --- | --- | --- | --- | --- |",
             ]
-        else:
             lines = [
                 "| reference | name | description | only for application | requirement | notes |",
                 "| --- | --- | --- | --- | --- | --- |",
@@ -141,13 +143,67 @@ def get_codelists_for_app(module_refs, fields, specification):
     return codelists
 
 
+def create_codelist_table(codelist_obj):
+    lines = []
+    name = codelist_obj.get("name", "Unknown")
+
+    source = codelist_obj.get("source", "")
+
+    # Heading
+    heading = f"### {name}"
+    lines.append(heading)
+
+    # Source information
+    if not source:
+        lines.append("\n_codelist source not provided_\n")
+    else:
+        if isinstance(source, str) and (
+            source.startswith("http://") or source.startswith("https://")
+        ):
+            lines.append(f"\nThis codelist is sourced from [{source}]({source})\n")
+        else:
+            path = source
+            if not os.path.isabs(path):
+                repo_root = os.getcwd()
+                path = os.path.join(repo_root, path)
+
+            if not os.path.exists(path):
+                lines.append(f"\nSource file not found: {source}\n")
+                return "\n".join(lines)
+
+            try:
+                md_table = csv_to_markdown(path)
+                lines.append("")
+                lines.append(md_table)
+            except Exception as e:
+                lines.append(f"\nError reading source file {source}: {e}\n")
+
+    return "\n".join(lines) if lines else ""
+
+
 def generate_codelist_md_str(codelists):
+    """
+    Generates a Markdown-formatted string with the codelists required for the
+    specification.
+
+    Args:
+        codelists (list): A list of objects representing codelists. Each
+            object should be convertible to a string or be a dict-like object.
+
+    Returns:
+        str: A Markdown-formatted string enumerating the codelist names, or an
+        empty string if no codelists are provided.
+    """
     # list out the codelist names
     if not codelists:
         return ""
-    lines = ["This are the codelist required to support this specification:\n"]
-    for codelist in codelists:
-        lines.append(f"- {codelist}")
+
+    lines = []
+    lines.append("Below are the codelists required to support this specification:\n")
+    # Sort codelists by their 'name' attribute
+    sorted_codelists = sorted(codelists, key=lambda c: c.get("name", ""))
+    for codelist in sorted_codelists:
+        lines.append(create_codelist_table(codelist))
     return "\n".join(lines)
 
 
@@ -157,6 +213,8 @@ def generate_application(app_ref, specification):
     """
     applications = specification.get("application", {})
     fields = specification.get("field", {})
+    codelists = specification.get("codelist", {})
+
     app = applications.get(app_ref)
     if not app:
         print(f"Application '{app_ref}' not found in specification.")
@@ -210,7 +268,10 @@ def generate_application(app_ref, specification):
     # 6. Required Codelists
     if inc_codelists:
         out.append("## Required codelists\n")
-        out.append(generate_codelist_md_str(inc_codelists))
+        inc_codelist_objs = [
+            codelists.get(ref) for ref in inc_codelists if codelists.get(ref)
+        ]
+        out.append(generate_codelist_md_str(inc_codelist_objs))
 
     return "\n".join(out)
 
