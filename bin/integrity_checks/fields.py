@@ -107,6 +107,41 @@ def check_enum_codelist(fields):
     return not has_errors
 
 
+def check_codelist_exists(fields, codelists):
+    """
+    Check rule 7: any field that has a codelist attribute must reference an
+    existing codelist definition.
+    Args:
+        fields: dict of field definitions
+        codelists: iterable or dict of available codelist names
+    """
+    has_errors = False
+
+    # Normalize codelists to a set of names for lookup
+    if isinstance(codelists, dict):
+        available = set(codelists.keys())
+    else:
+        try:
+            available = set(codelists)
+        except Exception:
+            available = set()
+
+    for field_name, field in fields.items():
+        codelist = field.get("codelist")
+        field_name = field.get("field", "unknown")
+        if codelist:
+            # codelists in other checks are kebab-case ids; allow either the
+            # codelist key or the codelist value to be used as lookup.
+            if codelist not in available:
+                print_error(
+                    field_name,
+                    f"codelist '{codelist}' not found in codelist definitions",
+                )
+                has_errors = True
+
+    return not has_errors
+
+
 def check_dates(fields):
     """
     Check rule 8: every field must have entry-date and end-date attrs
@@ -137,6 +172,13 @@ def check_all(fields, components):
         (check_cardinality, [fields]),
         (check_object_components, [fields, components]),
         (check_enum_codelist, [fields]),
+        (
+            check_codelist_exists,
+            [
+                fields,
+                components.get("codelists", []) if isinstance(components, dict) else [],
+            ],
+        ),
         (check_dates, [fields]),
     ]
 
