@@ -200,9 +200,7 @@ def generate_codelist_md_str(codelists):
 
     lines = []
     lines.append("Below are the codelists required to support this specification:\n")
-    # Sort codelists by their 'name' attribute
-    sorted_codelists = sorted(codelists, key=lambda c: c.get("name", ""))
-    for codelist in sorted_codelists:
+    for codelist in codelists:
         lines.append(create_codelist_table(codelist))
     return "\n".join(lines)
 
@@ -224,6 +222,11 @@ def generate_application(app_ref, specification):
     modules = app.get("modules", [])
     module_refs = [m["module"] if isinstance(m, dict) else m for m in modules]
     inc_codelists = get_codelists_for_app(module_refs, fields, specification)
+    # Sort codelists by their 'name' attribute
+    inc_codelist_objs = sorted(
+        [codelists.get(ref) for ref in inc_codelists if codelists.get(ref)],
+        key=lambda c: c.get("name", ""),
+    )
 
     # generate output
     # 1. Heading and Description
@@ -247,14 +250,22 @@ def generate_application(app_ref, specification):
         out.append(f"* [{mod_name}](#{anchor})")
     out.append("")
 
-    # 4. Application Data Specification
+    # 4. Codelists (contents)
+    out.append("### Codelists\n")
+    for codelist in inc_codelist_objs:
+        codelist_name = codelist.get("name", "Name unknown")
+        anchor = codelist_name.lower().replace(" ", "-")
+        out.append(f"* [{codelist_name}](#{anchor})")
+    out.append("")
+
+    # 5. Application Data Specification
     application_fields_section = generate_module(
         "application", specification, app_type=app_ref
     )
     out.append(application_fields_section)
     out.append("")
 
-    # 5. Module Sections
+    # 6. Module Sections
     for mod in module_refs:
         module_md = generate_module(mod, specification, app_type=app_ref)
         if module_md:
@@ -265,12 +276,9 @@ def generate_application(app_ref, specification):
         else:
             print(f"Module '{mod}' could not be generated.")
 
-    # 6. Required Codelists
+    # 7. Required Codelists
     if inc_codelists:
         out.append("## Required codelists\n")
-        inc_codelist_objs = [
-            codelists.get(ref) for ref in inc_codelists if codelists.get(ref)
-        ]
         out.append(generate_codelist_md_str(inc_codelist_objs))
 
     return "\n".join(out)
