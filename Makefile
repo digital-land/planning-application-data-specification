@@ -4,9 +4,9 @@ BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 init::
 	python -m pip install --upgrade pip
 	python -m pip install pip-tools
-	python -m piptools compile explorer/requirements/dev-requirements.in
-	python -m piptools compile explorer/requirements/requirements.in
-	python -m piptools sync explorer/requirements/dev-requirements.txt explorer/requirements/requirements.txt
+	python -m piptools compile requirements/dev-requirements.in
+	python -m piptools compile requirements/requirements.in
+	python -m piptools sync requirements/dev-requirements.txt requirements/requirements.txt
 
 
 checks:
