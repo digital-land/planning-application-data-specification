@@ -5,8 +5,6 @@ including pre-development biodiversity value, habitat loss details, and
 supporting documentation
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | bng-exempt | Biodiversity gain exemption | Statement whether the biodiversity gain condition will apply if permission is granted. Householder applicants need to confirm the biodiversity gain condition does not apply. | hh | MUST |  |
 | bng-condition-applies | Biodiversity gain condition applies | Does the applicant believe the Biodiversity Gain Condition applies to this application | full, outline, demolition-con-area | MUST |  |
 | bng-condition-exemption-reasons | Biodiversity gain condition exemption reason[]{} | Reasons why BNG does not apply, referencing exemptions or transitional arrangements | full, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `False` |
@@ -18,7 +16,7 @@ supporting documentation
 field | name | description | required | notes
 -- | -- | -- | -- | --
 exemption-type | Exemption type | The type of biodiversity gain exemption from the bng-exemption-type enum | MUST | Select from the **bng-exemption-type** enum
-reason | Reason | A textual reason | MUST | 
+reason | Reason | The reason the exemption applies to this proposal | MUST | 
 
 
 **Biodiversity net gain details model**

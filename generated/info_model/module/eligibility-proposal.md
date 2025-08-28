@@ -4,8 +4,6 @@ Eligibility criteria related to proposal design and construction including store
 height restrictions, roof specifications, and material requirements
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | principal-part-only | Principal part only | Will the additional storeys be constructed only on the principal part of the building |  | MUST |  |
 | ceiling-height-exceeds-3m | Ceiling height exceeds 3m | Will the internal floor-to-ceiling height of any additional storey exceed 3 metres |  | MUST |  |
 | existing-ceiling-height-exceeds-3m | Existing ceiling height exceeds 3m | Will the internal floor-to-ceiling height of any existing storey exceed 3 metres |  | MUST |  |

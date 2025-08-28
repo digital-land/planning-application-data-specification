@@ -4,8 +4,6 @@ Information to support the application, including details of approved
 drawings being replaced by new drawings
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | replacement-drawings | Replacement drawings[]{} | List of approved drawings being replaced by new drawings |  | MUST |  |
 
 

@@ -4,8 +4,6 @@ Module for capturing information about different types of advertisements
 proposed, including their counts and descriptions
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | advertisement-proposal-description | Advertisement proposal description | Description of the advertisement proposal |  | MUST |  |
 | advertisement-proposal-type | Advertisement proposal type[]{} | Expected to provide counts for each advertisement type |  | MUST |  |
 

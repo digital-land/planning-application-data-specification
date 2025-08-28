@@ -4,8 +4,6 @@ Information about whether the applicant is trying to discharge part of a conditi
 and details about which part of the condition is being addressed
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | is-discharging-part | Is discharging part | Is applicant trying to discharge part of condition? |  | MUST |  |
 | discharging-part-details | Discharging part details | Indicate which part of the condition the application relates to |  | MAY | Rule: is a MUST if `discharging-part` is `True` |
 

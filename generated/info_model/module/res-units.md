@@ -4,8 +4,6 @@ Information about residential units including existing and proposed unit counts,
 with detailed breakdowns by tenure and housing type
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | will-residential-units-change | Residential unit change | Proposal includes the gain, loss or change of use of residential units |  | MUST |  |
 | residential-unit-summary | Residential unit summary[]{} | Breakdown of unit counts by tenure and housing type |  | MAY | Rule: is a MUST if `will-residential-units-change` is `True` |
 | total-existing-units | Total existing units | The total number of existing units |  | MUST |  |

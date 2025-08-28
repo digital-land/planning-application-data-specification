@@ -4,8 +4,6 @@ Information about the location and extent of the site where development
 or works are proposed
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | site-locations | Site locations[]{} | Details of the sites where development or works are proposed |  | MUST |  |
 
 

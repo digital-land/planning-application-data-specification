@@ -4,8 +4,6 @@ Description of proposed development works including extension measurements
 and detailed work specifications for planning applications
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | proposed-works-details | Proposed works details | Description of the proposed works including detailed explanation of the work |  | MUST |  |
 | extension-depth | Extension depth | How far the extension extends beyond the rear wall, measured externally in metres |  | MUST |  |
 | max-extension-height | Maximum extension height | Maximum height of the extension, measured externally from natural ground level in metres |  | MUST |  |

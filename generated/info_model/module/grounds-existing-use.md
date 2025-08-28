@@ -5,8 +5,6 @@ a lawful development certificate application, including lawful justification,
 use classification, and supporting documentary evidence
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | use-lawful-reason | Use lawful reason | Explanation of why the existing or last use is considered lawful, 
 providing justification for a lawful development certificate application
  |  | MUST |  |
@@ -19,9 +17,9 @@ providing justification for a lawful development certificate application
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+reference | Reference | A reference for the document | MUST | 
 name | Name | A name of a person | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
@@ -30,9 +28,9 @@ file | File{} | The digital file or a reference to where the file is stored | MU
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-url | URL | A URL pointing to the stored file for previously uploaded or hosted files | MAY | 
+url | URL | A URL pointing to the stored file | MAY | 
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
-filename | Filename | Name of the file being uploaded useful for identifying and preserving the file | MUST | 
+filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
 checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 

@@ -26,8 +26,8 @@ Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
 | application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-sub-type** enum |
@@ -42,9 +42,9 @@ application types, submission details, modules, documents, and fees
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+reference | Reference | A reference for the document | MUST | 
 name | Name | A name of a person | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
@@ -62,9 +62,9 @@ transactions | Transactions[] | References to payments or financial transactions
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-url | URL | A URL pointing to the stored file for previously uploaded or hosted files | MAY | 
+url | URL | A URL pointing to the stored file | MAY | 
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
-filename | Filename | Name of the file being uploaded useful for identifying and preserving the file | MUST | 
+filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
 checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
@@ -85,8 +85,8 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 Contact details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | agent-reference | Agent reference | A reference to an agent object | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
@@ -113,8 +113,8 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 Details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | agent | agent{} | Details of the agent | MAY |  |
 
 
@@ -145,8 +145,8 @@ postcode | Postcode | The postal code | MAY |
 Contact details for the applicant or applicants, including email and phone numbers
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
@@ -177,8 +177,8 @@ Details about the applicants for the planning application,
 including their personal information and contact details
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicants | Applicants[]{} |  | MUST |  |
 
 
@@ -210,8 +210,8 @@ postcode | Postcode | The postal code | MAY |
 Identifies the national requirement types that apply to this application type
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
 
 **Validation rules**
@@ -225,8 +225,8 @@ Information about any conflicts of interest between the applicant/agent and the 
 including relationships with staff or elected members
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
 | conflict-person-name | Conflict person name | Name of the individual with the conflict of interest that matches one of the names provided in applicants/agent section | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
 | conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
@@ -240,8 +240,8 @@ including relationships with staff or elected members
 Declaration by the applicant or agent confirming the accuracy of the information provided
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | name | Name | A name of a person | MUST |  |
 | declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
 | declaration-date | Declaration date | The date the declaration was made | MUST |  |
@@ -257,8 +257,8 @@ Declaration by the applicant or agent confirming the accuracy of the information
 Information about Tree Preservation Orders (TPOs) covering trees affected by the proposed works
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | tpo-reference | TPO reference[] | Reference for a Tree Preservation Order covering affected trees | MAY |  |
 | tpo-provided-by | TPO provided by | How was the list of TPO references generated - by the applicant or system/service | MAY | Select from the **provided-by** enum |
 
@@ -273,8 +273,8 @@ Details of trees and proposed work to them, including identification,
 species and work descriptions
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | description | Description | Description of work applicant wishes to carry out, including identifying the trees, species and setting out the work | MUST |  |
 | tree-details | Tree details[]{} | Details of each tree that is part of the proposal | MAY |  |
 
@@ -283,10 +283,10 @@ species and work descriptions
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+reference | Reference | Identifier for the tree, use the TPO identifier if applicable | MUST | 
 species | Species | The species of the tree | MAY | 
 description-of-works | Description of works | Description of the nature of the work to be carried out on this tree | MAY | 
-reason | Reason | A textual reason | MAY | 
+reason | Reason | Explain the reason for the work | MAY | 
 replanting-description | Replanting description | Details of replanting arrangements if applicable | MAY | 
 
 **Validation rules**
@@ -300,8 +300,8 @@ Additional information about trees on the site, including condition concerns,
 damage reports, and supporting documentation
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | advice-from-authority | Advice from authority | Any advice provided on-site by a Local Planning Authority (LPA) officer | MAY |  |
 | condition-concerns | Condition concerns | Whether there are concerns the tree(s) are diseased or might break or fall | MUST |  |
 | causing-subsidence | Causing subsidence | Whether subsidence damage is being caused by the tree(s) | MUST |  |
@@ -329,8 +329,8 @@ name | Name | A name of a person | MUST |
 Information about ownership of trees affected by the proposed works
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | is-applicant-owner | Is applicant owner | Whether the applicant owns the trees affected by the proposed works | MUST |  |
 | owner | Tree owner[]{} | Details of the tree owner when applicant is not the owner | MAY | Rule: is a MUST if `is-applicant-owner` is `False` |
 
@@ -339,8 +339,8 @@ Information about ownership of trees affected by the proposed works
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-person | Person{} | Detail to help identify a person | MUST | 
-contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MAY | 
+person | Person{} | Personal identification details of the tree owner | MUST | 
+contact-details | Contact details{} | Contact information for the tree owner | MAY | 
 
 
 **Person obj model**
@@ -375,7 +375,18 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Required codelists
 
-This are the codelist required to support this specification:
+Below are the codelists required to support this specification:
 
-- user-role-type
-- contact-priority
+### Contact priority
+
+| reference | name | description |
+| --- | --- | --- |
+| primary | Primary | The preferred item to use |
+| secondary | Secondary | The option to use if primary is not working |
+
+### User role type
+
+| reference | name | description |
+| --- | --- | --- |
+| agent | Agent | A professional agent working for the applicant |
+| proxy | Proxy | An individual working on behalf of the applicant but not in a professional capacity |

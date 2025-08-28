@@ -4,8 +4,6 @@ Information about advertisement placement including whether it's already in plac
 replacement status, and potential overhang over public areas
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | is-advert-in-place | Is advert in place | Whether the advertisement is already in place |  | MUST |  |
 | advert-placed-date | Advert placed date | Date when the advertisement was placed (YYYY-MM-DD format) |  | MAY | Rule: is a MUST if `is-advert-in-place` is `True` |
 | is-replacement-advert | Is replacement advert | Whether this is a replacement advertisement |  | MUST |  |

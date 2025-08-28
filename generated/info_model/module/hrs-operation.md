@@ -2,8 +2,6 @@
 
 Hours of opening for each non-residential use proposed
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | hours-of-operation | Hours of operation[]{} | List the hours of operation by non-residential use | full, outline, extraction-oil-gas | MUST |  |
 | additional-information | Additional information | Any additional information (such as hours of use of other machinery within the site-generators, pumps, etc) | extraction-oil-gas | MAY |  |
 

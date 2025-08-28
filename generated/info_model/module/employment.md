@@ -4,8 +4,6 @@ Module for capturing information about employment impacts of a development
 proposal, including existing and proposed employee counts
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | existing-employees | Existing employees{} | Counts of existing employees |  | MUST |  |
 | proposed-employees | Proposed employees{} | Counts of proposed employees |  | MUST |  |
 | employment-impact | Employment impact | Summary of net employment change (gain/loss) |  | MAY |  |

@@ -12,8 +12,8 @@ This applies to developments with permitted development rights (where developmen
 * [Agent details](#agent-details)
 * [Applicant contact details](#applicant-contact-details)
 * [Applicant details](#applicant-details)
-* [Conflict of interest](#conflict-of-interest)
 * [Checklist](#checklist)
+* [Conflict of interest](#conflict-of-interest)
 * [Declaration](#declaration)
 * [Site details](#site-details)
 
@@ -23,8 +23,8 @@ Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
 | application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-sub-type** enum |
@@ -39,9 +39,9 @@ application types, submission details, modules, documents, and fees
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+reference | Reference | A reference for the document | MUST | 
 name | Name | A name of a person | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
@@ -59,9 +59,9 @@ transactions | Transactions[] | References to payments or financial transactions
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-url | URL | A URL pointing to the stored file for previously uploaded or hosted files | MAY | 
+url | URL | A URL pointing to the stored file | MAY | 
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
-filename | Filename | Name of the file being uploaded useful for identifying and preserving the file | MUST | 
+filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
 checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
@@ -82,8 +82,8 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 Contact details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | agent-reference | Agent reference | A reference to an agent object | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
@@ -110,8 +110,8 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 Details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | agent | agent{} | Details of the agent | MAY |  |
 
 
@@ -142,8 +142,8 @@ postcode | Postcode | The postal code | MAY |
 Contact details for the applicant or applicants, including email and phone numbers
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
@@ -174,8 +174,8 @@ Details about the applicants for the planning application,
 including their personal information and contact details
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicants | Applicants[]{} |  | MUST |  |
 
 
@@ -202,26 +202,13 @@ postcode | Postcode | The postal code | MAY |
 - At least one applicant must be provided
 - Each applicant reference must be unique within the application
 
-## Conflict of interest
-
-Information about any conflicts of interest between the applicant/agent and the planning authority,
-including relationships with staff or elected members
-
-
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-
-**Validation rules**
-
-- conflict-person-name must match a name provided in applicants or agent sections
-
 ## Checklist
 
 Identifies the national requirement types that apply to this application type
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
 
 **Validation rules**
@@ -229,13 +216,26 @@ Identifies the national requirement types that apply to this application type
 - All values must be from the national-requirement-type codelist
 - Values must be valid for the current application type
 
+## Conflict of interest
+
+Information about any conflicts of interest between the applicant/agent and the planning authority,
+including relationships with staff or elected members
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+
+**Validation rules**
+
+- conflict-person-name must match a name provided in applicants or agent sections
+
 ## Declaration
 
 Declaration by the applicant or agent confirming the accuracy of the information provided
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | name | Name | A name of a person | MUST |  |
 | declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
 | declaration-date | Declaration date | The date the declaration was made | MUST |  |
@@ -252,8 +252,8 @@ Information about the location and extent of the site where development
 or works are proposed
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
 
 
@@ -283,7 +283,18 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 ## Required codelists
 
-This are the codelist required to support this specification:
+Below are the codelists required to support this specification:
 
-- user-role-type
-- contact-priority
+### Contact priority
+
+| reference | name | description |
+| --- | --- | --- |
+| primary | Primary | The preferred item to use |
+| secondary | Secondary | The option to use if primary is not working |
+
+### User role type
+
+| reference | name | description |
+| --- | --- | --- |
+| agent | Agent | A professional agent working for the applicant |
+| proxy | Proxy | An individual working on behalf of the applicant but not in a professional capacity |

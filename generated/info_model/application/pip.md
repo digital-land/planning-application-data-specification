@@ -8,10 +8,10 @@ An alternative way of getting planning permission for housing-led development wh
 
 ### Modules
 
-* [Agent details](#agent-details)
 * [Agent contact details](#agent-contact-details)
-* [Applicant details](#applicant-details)
+* [Agent details](#agent-details)
 * [Applicant contact details](#applicant-contact-details)
+* [Applicant details](#applicant-details)
 * [Checklist](#checklist)
 * [Conflict of interest](#conflict-of-interest)
 * [Declaration](#declaration)
@@ -25,8 +25,8 @@ Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
 | application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-sub-type** enum |
@@ -41,9 +41,9 @@ application types, submission details, modules, documents, and fees
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+reference | Reference | A reference for the document | MUST | 
 name | Name | A name of a person | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
@@ -61,9 +61,9 @@ transactions | Transactions[] | References to payments or financial transactions
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-url | URL | A URL pointing to the stored file for previously uploaded or hosted files | MAY | 
+url | URL | A URL pointing to the stored file | MAY | 
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
-filename | Filename | Name of the file being uploaded useful for identifying and preserving the file | MUST | 
+filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
 checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
@@ -79,13 +79,41 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 - file must contain either url or base64, but not both
 - document-types must reference valid planning requirement codelist values
 
+## Agent contact details
+
+Contact details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| agent-reference | Agent reference | A reference to an agent object | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+
+
 ## Agent details
 
 Details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | agent | agent{} | Details of the agent | MAY |  |
 
 
@@ -111,14 +139,14 @@ postcode | Postcode | The postal code | MAY |
 
 
 
-## Agent contact details
+## Applicant contact details
 
-Contact details of the agent acting on behalf of the applicant
+Contact details for the applicant or applicants, including email and phone numbers
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| agent-reference | Agent reference | A reference to an agent object | MUST |  |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
 
@@ -137,7 +165,10 @@ field | name | description | required | notes
 number | Phone number | A phone number | MAY | 
 contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
 
+**Validation rules**
 
+- applicant-reference must match a reference from the applicant details component
+- At least one phone number must have contact-priority set to primary
 
 ## Applicant details
 
@@ -145,8 +176,8 @@ Details about the applicants for the planning application,
 including their personal information and contact details
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicants | Applicants[]{} |  | MUST |  |
 
 
@@ -173,44 +204,13 @@ postcode | Postcode | The postal code | MAY |
 - At least one applicant must be provided
 - Each applicant reference must be unique within the application
 
-## Applicant contact details
-
-Contact details for the applicant or applicants, including email and phone numbers
-
-
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
-| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
-
-
-**Contact details model**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
-phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
-
-
-**Phone number model**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-number | Phone number | A phone number | MAY | 
-contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
-
-**Validation rules**
-
-- applicant-reference must match a reference from the applicant details component
-- At least one phone number must have contact-priority set to primary
-
 ## Checklist
 
 Identifies the national requirement types that apply to this application type
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
 
 **Validation rules**
@@ -224,8 +224,8 @@ Information about any conflicts of interest between the applicant/agent and the 
 including relationships with staff or elected members
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
 | conflict-person-name | Conflict person name | Name of the individual with the conflict of interest that matches one of the names provided in applicants/agent section | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
 | conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
@@ -239,8 +239,8 @@ including relationships with staff or elected members
 Declaration by the applicant or agent confirming the accuracy of the information provided
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | name | Name | A name of a person | MUST |  |
 | declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
 | declaration-date | Declaration date | The date the declaration was made | MUST |  |
@@ -257,8 +257,8 @@ Details of proposed development with specific provision for capturing both resid
 and non-residential elements, including dwelling numbers and non-residential use amounts
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | description | Description | Description of proposed development including non-residential development | MUST |  |
 | net-dwellings-min | Net dwellings minimum | The minimum number of net additional dwellings proposed as part of the development, accounting for any existing dwellings lost and new dwellings created | MUST |  |
 | net-dwellings-max | Net dwellings maximum | The maximum number of net additional dwellings proposed as part of the development, allowing for flexibility in the final housing numbers | MUST |  |
@@ -269,10 +269,10 @@ and non-residential elements, including dwelling numbers and non-residential use
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-non-residential-measurement-type | Non-residential measurement type | The type of value being provided for non-residential use - either floorspace or site-area | MUST | Select from the **non-res-measurement-type** enum
-exact-value | Exact value | Exact figure of non-residential use, measured in square metres for floorspace or hectares for site area | MAY | 
-min | Minimum value | Lower bound of non-residential use, measured in square metres for floorspace or hectares for site area | MAY | 
-max | Maximum value | Upper bound of non-residential use, measured in square metres for floorspace or hectares for site area | MAY | 
+non-residential-measurement-type | Non-residential measurement type | Type of measurement being provided (floorspace or site-area) | MUST | Select from the **non-residential-measurement-type** enum
+exact-value | Exact value | Exact figure of non-residential use | MAY | 
+min | Minimum value | Lower bound of non-residential use for ranges | MAY | 
+max | Maximum value | Upper bound of non-residential use for ranges | MAY | 
 
 **Validation rules**
 
@@ -287,8 +287,8 @@ Information about the location and extent of the site where development
 or works are proposed
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
 
 
@@ -322,8 +322,8 @@ Additional information about the development site including area,
 existing use, constraints, and supporting documentation
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | site-area | Site area{} | The total area of the site where development is proposed | MUST |  |
 | existing-use | Existing use[]{} | Structured information on the current use of the site | MUST |  |
 | known-constraints | Known constraints[] | A list of the known constraints affecting the site | MUST | Select from the **site-constraint** enum |
@@ -375,10 +375,29 @@ specified-use | Specified use | A specified use if no applicable use class is av
 
 ## Required codelists
 
-This are the codelist required to support this specification:
+Below are the codelists required to support this specification:
 
-- user-role-type
-- provided-by
-- non-res-measurement-type
-- use-class
-- contact-priority
+### Contact priority
+
+| reference | name | description |
+| --- | --- | --- |
+| primary | Primary | The preferred item to use |
+| secondary | Secondary | The option to use if primary is not working |
+
+### Non-residential measurement type
+
+Source file not found: data/codelist/non-residential-measurement-type.csv
+
+### Provided by
+
+| reference | name | description |
+| --- | --- | --- |
+| applicant | Applicant | Information provided by the applicant |
+| system | System/Service | Information calculated or determined by the system or external service |
+
+### User role type
+
+| reference | name | description |
+| --- | --- | --- |
+| agent | Agent | A professional agent working for the applicant |
+| proxy | Proxy | An individual working on behalf of the applicant but not in a professional capacity |

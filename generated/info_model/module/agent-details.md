@@ -3,8 +3,6 @@
 Details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | agent | agent{} | Details of the agent |  | MAY |  |
 
 

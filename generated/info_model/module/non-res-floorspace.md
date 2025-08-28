@@ -2,8 +2,6 @@
 
 Information about non-residential floorspace changes including use class details and room counts for specific accommodation types
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | non-residential-change | Non residential change | Does the proposal involve the loss, gain, or change of non-residential floorspace? |  | MUST |  |
 | floorspace-details | Floorspace details[]{} | List of non-residential floorspace changes by use class |  | MAY | Rule: is a MUST if `non-residential-change` is `True` |
 | room-details | Room details[]{} | List of room changes for hotels, residential institutions and hostels |  | MAY | Required if change to hotels, residential institutions and hostel floorspace (C1, C2, C2A use classes) |

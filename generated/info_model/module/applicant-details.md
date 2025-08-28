@@ -4,8 +4,6 @@ Details about the applicants for the planning application,
 including their personal information and contact details
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | applicants | Applicants[]{} |  |  | MUST |  |
 
 

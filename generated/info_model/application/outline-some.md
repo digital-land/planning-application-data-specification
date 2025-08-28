@@ -9,10 +9,31 @@ Outline planning permission with some matters reserved
 ### Modules
 
 * [Access and rights of way](#access-and-rights-of-way)
+* [Agent contact details](#agent-contact-details)
+* [Agent details](#agent-details)
+* [Applicant contact details](#applicant-contact-details)
+* [Applicant details](#applicant-details)
 * [Biodiversity, geological and archaeological conservation](#biodiversity,-geological-and-archaeological-conservation)
+* [Biodiversity net gain](#biodiversity-net-gain)
+* [Checklist](#checklist)
+* [Conflict of interest](#conflict-of-interest)
+* [Declaration](#declaration)
+* [Employment](#employment)
+* [Existing use](#existing-use)
+* [Flood risk assessment](#flood-risk-assessment)
 * [Foul sewage disposal](#foul-sewage-disposal)
 * [Hazardous substances](#hazardous-substances)
+* [Hours of operation](#hours-of-operation)
 * [Materials](#materials)
+* [Non residential floorspace](#non-residential-floorspace)
+* [Ownership certificates and agricultural land declaration](#ownership-certificates-and-agricultural-land-declaration)
+* [Pre-application advice](#pre-application-advice)
+* [Processes machinery waste](#processes-machinery-waste)
+* [Description of the proposal](#description-of-the-proposal)
+* [Residential units](#residential-units)
+* [Site area](#site-area)
+* [Site details](#site-details)
+* [Site Visit Details](#site-visit-details)
 * [Trade effluent](#trade-effluent)
 * [Trees and hedges information](#trees-and-hedges-information)
 * [Vehicle parking](#vehicle-parking)
@@ -24,8 +45,8 @@ Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
 | application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-sub-type** enum |
@@ -40,9 +61,9 @@ application types, submission details, modules, documents, and fees
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+reference | Reference | A reference for the document | MUST | 
 name | Name | A name of a person | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
@@ -60,9 +81,9 @@ transactions | Transactions[] | References to payments or financial transactions
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-url | URL | A URL pointing to the stored file for previously uploaded or hosted files | MAY | 
+url | URL | A URL pointing to the stored file | MAY | 
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
-filename | Filename | Name of the file being uploaded useful for identifying and preserving the file | MUST | 
+filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
 checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
@@ -83,10 +104,10 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 Information about changes to access arrangements and public rights of way
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| new-altered-vehicle | New or altered vehicle access | Is a new or altered vehicle access proposed to/from the public highway | MUST | Select from the **rights-of-way-answers** enum |
-| new-altered-pedestrian | New or altered pedestrian access | Is a new or altered pedestrian access proposed to/from the public highway | MUST | Select from the **rights-of-way-answers** enum |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| new-altered-vehicle | New or altered vehicle access | Is a new or altered vehicle access proposed to/from the public highway | MUST | Select from the **rights-of-way-answer** enum |
+| new-altered-pedestrian | New or altered pedestrian access | Is a new or altered pedestrian access proposed to/from the public highway | MUST | Select from the **rights-of-way-answer** enum |
 | supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MAY |  |
 
 
@@ -104,17 +125,142 @@ name | Name | A name of a person | MUST |
 - If change-right-of-way is yes, separate rights of way order may be needed
 - If temp-right-of-way is yes, details of temporary diversions must be provided
 
+## Agent contact details
+
+Contact details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| agent-reference | Agent reference | A reference to an agent object | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+
+
+## Agent details
+
+Details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| agent | agent{} | Details of the agent | MAY |  |
+
+
+**Agent obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+company | Company | The name of a company (that the agent works for) | MAY | 
+user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+
+
+## Applicant contact details
+
+Contact details for the applicant or applicants, including email and phone numbers
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+**Validation rules**
+
+- applicant-reference must match a reference from the applicant details component
+- At least one phone number must have contact-priority set to primary
+
+## Applicant details
+
+Details about the applicants for the planning application,
+including their personal information and contact details
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| applicants | Applicants[]{} |  | MUST |  |
+
+
+**Applicant model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+**Validation rules**
+
+- At least one applicant must be provided
+- Each applicant reference must be unique within the application
+
 ## Biodiversity, geological and archaeological conservation
 
 Assessment of potential impacts on protected species, important habitats, 
 biodiversity features, geological features, and archaeological features
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| protected-species-impact | Protected species impact | Where is there a likelihood of protected and priority species being affected? | MUST | Select from the **affect-area** enum |
-| biodiversity-features-impact | Biodiversity features impact | Where is there a likelihood of important habitats or biodiversity features being affected? | MUST | Select from the **affect-area** enum |
-| geological-features-impact | Geological features impact | Where is there a likelihood of features of geological conservation importance being affected? | MUST | Select from the **affect-area** enum |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| protected-species-impact | Protected species impact | Where is there a likelihood of protected and priority species being affected? | MUST | Select from the **affected-area-type** enum |
+| biodiversity-features-impact | Biodiversity features impact | Where is there a likelihood of important habitats or biodiversity features being affected? | MUST | Select from the **affected-area-type** enum |
+| geological-features-impact | Geological features impact | Where is there a likelihood of features of geological conservation importance being affected? | MUST | Select from the **affected-area-type** enum |
 
 **Validation rules**
 
@@ -122,14 +268,158 @@ biodiversity features, geological features, and archaeological features
 - Archaeological features impact is only required for extraction-oil-gas applications
 - Impact assessments should be based on ecological surveys and site assessments
 
+## Biodiversity net gain
+
+Information about biodiversity net gain requirements for the development,
+including pre-development biodiversity value, habitat loss details, and
+supporting documentation
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+
+**Validation rules**
+
+- application-type == 'hh' REQUIRES only bng-exempt field
+- bng-condition-applies == false REQUIRES bng-condition-exemption-reasons.length >= 1
+- bng-condition-applies == true REQUIRES bng-details
+- application-type == 'hh' RECOMMENDS bng-exempt == false
+- bng-condition-exemption-reasons[].exemption-type must be from bng-exemption-type codelist
+- bng-details.pre-development-date <= application-submission-date OR earlier-date-reason provided
+- bng-details.habitat-loss-after-2020 == true REQUIRES bng-details.habitat-loss-details
+- bng-details.irreplaceable-habitats == true REQUIRES bng-details.irreplaceable-habitats-details
+
+## Checklist
+
+Identifies the national requirement types that apply to this application type
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
+
+**Validation rules**
+
+- All values must be from the national-requirement-type codelist
+- Values must be valid for the current application type
+
+## Conflict of interest
+
+Information about any conflicts of interest between the applicant/agent and the planning authority,
+including relationships with staff or elected members
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+
+**Validation rules**
+
+- conflict-person-name must match a name provided in applicants or agent sections
+
+## Declaration
+
+Declaration by the applicant or agent confirming the accuracy of the information provided
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| name | Name | A name of a person | MUST |  |
+| declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
+| declaration-date | Declaration date | The date the declaration was made | MUST |  |
+
+**Validation rules**
+
+- name must match one of the named individuals in the application
+- declaration-date must be in YYYY-MM-DD format
+- declaration-date must not be in the future
+
+## Employment
+
+Module for capturing information about employment impacts of a development 
+proposal, including existing and proposed employee counts
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| existing-employees | Existing employees{} | Counts of existing employees | MUST |  |
+| proposed-employees | Proposed employees{} | Counts of proposed employees | MUST |  |
+| employment-impact | Employment impact | Summary of net employment change (gain/loss) | MAY |  |
+
+
+**Employees model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+full-time | Full-time | Number of full-time employees | MUST | 
+part-time | Part-time | Number of part-time employees | MUST | 
+total-fte | Total FTE | Total full-time equivalent (FTE) | MUST | 
+
+**Validation rules**
+
+- Existing-employees is required for all non-residential applications
+- Proposed-employees is required if the proposal affects employment capacity
+- Employment-impact is calculated based on existing and proposed values
+- Full-time and part-time employee counts must be positive integers or 0
+- FTE is calculated as full-time + (part-time ÷ 2)
+
+## Existing use
+
+Information about the current and previous use of the site, including contamination status and supporting documents.
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| existing-use-details | Existing use details[]{} | List of existing site uses and related land areas | MUST |  |
+| site-vacant | Site vacant | Is the site currently vacant | MUST |  |
+| last-use-details | Last use details | Description of the last use of the site | MAY | Rule: is a MUST if `site-vacant` is `True` |
+| last-use-end-date | Last use end date | Date the last use ended (YYYY-MM-DD format) | MAY | Rule: is a MUST if `site-vacant` is `True` |
+| is-contaminated-land | Is contaminated land | Is the site known to be contaminated? | MUST |  |
+| is-suspected-contaminated-land | Is suspected contaminated land | Is the site suspected of contamination? | MUST |  |
+| proposed-use-contamination-risk | Proposed use contamination risk | Is the proposed use vulnerable to the presence of contamination? | MUST |  |
+| contamination-assessment | Contamination assessment | Reference to contamination assessment document | MAY |  |
+
+
+**Existing use detail model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
+use-details | Use details | Further detail of the use | MAY | Rule: is a MUST if `use` is `sui`. Rule: is a MUST if `use` is `other`
+land-part | Land part | Which part of the land the use relates to | MUST | 
+
+**Validation rules**
+
+- last-use-details and last-use-end-date are required if site-vacant is true
+- contamination-assessment is required if any of is-contaminated-land, is-suspected-contaminated-land, or proposed-use-contamination-risk is true
+
+## Flood risk assessment
+
+Information about flood risk assessments for planning applications including flood risk area status, 
+data sources, assessment documents, watercourse proximity, flood risk impacts, and surface water disposal methods
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| flood-risk-area | Flood risk area | Is the site within an area at risk of flooding? | MUST |  |
+| data-provided-by | Data provided by | Who provided the data: Applicant or System/Service? | MAY | Select from the **provided-by** enum. opens possibility for services to work it out and not rely on the applicant to know |
+| flood-risk-assessment | Flood risk assessment | Reference of the flood risk assessment document | MAY | Rule: is a MUST if `flood-risk-area` is `True` |
+| within-20m-watercourse | Within 20m watercourse | Whether the development is within 20 metres of a watercourse | MUST |  |
+| increases-flood-risk | Increases flood risk | Whether the development increases flood risk | MUST |  |
+| surface-water-disposal | Surface water disposal[] | Method for disposing of surface water | MUST | Select from the **surface-water-disposal-type** enum |
+
+**Validation rules**
+
+- flood-risk-assessment document reference is required when flood-risk-area is true
+- surface-water-disposal must contain at least one disposal method
+
 ## Foul sewage disposal
 
 Information about foul sewage disposal methods and connection to existing 
 drainage systems for development proposals
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | has-new-disposal-arrangements | Has new disposal arrangements | Does the proposal include any new foul sewage disposal arrangments | MUST |  |
 | foul-sewage-disposal-types | Foul sewage disposal types[] | List of ways foul sewage will be disposed of | MAY | Select from the **foul-sewage-disposal-type** enum |
 | produce-foul-sewage | Produce foul sewage | Whether the proposed development will produce any foul sewage | MUST |  |
@@ -147,8 +437,8 @@ Information about hazardous substances involved in the proposal,
 including substance types, quantities, and consent requirements
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | involves-hazardous-substances | Involves hazardous substances | Indicates if hazardous substances are involved in the proposal | MUST | Select from the **yes-no-not-applicable** enum |
 | substance-types | Substance types[]{} | List of hazardous substances and their quantities | MAY | Rule: is a MUST if `involves-hazardous-substances` is `yes` |
 | hazardous-sub-consent-req | Hazardous substance consent required | Does the proposal involve the use or storage of any substances requiring hazardous substances consent | MUST |  |
@@ -170,13 +460,29 @@ amount | Amount | The total amount due for the application fee | MUST |
 - if hazardous-substance-type == 'other' then name is required
 - amount > 0
 
+## Hours of operation
+
+Hours of opening for each non-residential use proposed
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+
+**Validation rules**
+
+- At least one hours-of-operation entry must be provided
+- Either operational-times or hours-not-known must be provided within each hours-of-operation entry
+- use-other is required when use is 'other'
+- time-ranges is required when not closed
+- open-time and close-time must be in HH:MM format
+- close-time must be after open-time within same time range
+
 ## Materials
 
 Information about the materials used in the development, including both existing and proposed materials
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | building-elements | Building elements[]{} | Details of materials for a specific building element such as walls, roof, windows or doors | MUST |  |
 | additional-material-information | Additional material information | Additional context or details about the materials to be used in the development | MUST |  |
 | supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MAY | Rule: is a MUST if `additional-material-information` is `True` |
@@ -208,14 +514,267 @@ name | Name | A name of a person | MUST |
 - materials-not-known cannot be true if existing-materials or proposed-materials is provided
 - supporting-documents must reference valid documents in the application
 
+## Non residential floorspace
+
+Information about non-residential floorspace changes including use class details and room counts for specific accommodation types
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| non-residential-change | Non residential change | Does the proposal involve the loss, gain, or change of non-residential floorspace? | MUST |  |
+| floorspace-details | Floorspace details[]{} | List of non-residential floorspace changes by use class | MAY | Rule: is a MUST if `non-residential-change` is `True` |
+| room-details | Room details[]{} | List of room changes for hotels, residential institutions and hostels | MAY | Required if change to hotels, residential institutions and hostel floorspace (C1, C2, C2A use classes) |
+
+
+**Floorspace details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
+specified-use | Specified use | A specified use if no applicable use class is available | MAY | 
+existing-gross-floorspace | Existing gross floorspace | Existing gross internal floorspace, in sqm | MUST | 
+floorspace-lost | Floorspace lost | Gross floorspace to be lost by change of use, in sqm | MUST | 
+total-gross-proposed | Total gross proposed | Total gross internal floorspace proposed, in sqm | MUST | 
+net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace
+
+
+**Room details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+use-class | Use class | Type of non-residential use class | MUST | Select from the **use-class** enum. Only required for C1, C2, C2A, or Other use classes
+existing-rooms-lost | Existing rooms lost | Existing rooms to be lost by change of use | MUST | Must be 0 or positive
+total-rooms-proposed | Total rooms proposed | Total rooms proposed (including change of use) | MUST | Must be 0 or positive
+net-additional-rooms | Net additional rooms | Net additional rooms following development | MUST | Calculated as total-rooms-proposed - existing-rooms-lost
+
+**Validation rules**
+
+- floorspace-details is required when non-residential-change is true
+- room-details is required when floorspace involves C1, C2, C2A, or other use classes
+- specified-use is required when use is other or sui generis
+- All floorspace values must be 0 or positive
+- All room values must be 0 or positive
+- net-additional-floorspace must equal total-gross-proposed minus existing-gross-floorspace
+- net-additional-rooms must equal total-rooms-proposed minus existing-rooms-lost
+
+## Ownership certificates and agricultural land declaration
+
+Information about ownership of the site and/or property for development, including agricultural tenants and notification requirements.
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+
+
+
+## Pre-application advice
+
+Information about any pre-application advice sought from the planning authority
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| advice-sought | Pre-application advice sought | Whether pre-application advice has been sought from the planning authority | MUST |  |
+| officer-name | Officer name | Name of the planning officer who provided the pre-application advice | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| reference | Reference | A unique reference for the data item | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| advice-date | Advice date | Date when pre-application advice was received, in YYYY-MM-DD format | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| advice-summary | Advice summary | Summary of the pre-application advice received from the planning authority | MAY | Rule: is a MUST if `advice-sought` is `True` |
+
+
+
+## Processes machinery waste
+
+Information about site activities, processes, and waste management development
+including facility types, capacities, and throughput details
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| site-activity-details | Site activity details | Description of activities, processes, and end products including site operations, plant, ventilation, and machinery | MUST |  |
+| proposal-waste-management | Proposal waste management | Whether the proposal involves waste management development | MUST |  |
+| waste-management | Waste management[]{} | List of waste management facilities involved in the proposal | MAY |  |
+| waste-streams | Waste streams throughput{} | Annual throughput for waste streams by waste type | MAY |  |
+
+
+**Waste management model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+waste-management-facility-type | Waste management facility type | Type of waste management facility | MUST | Select from the **waste-management-type** enum
+not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
+total-capacity | Total capacity | Total capacity of void in cubic metres (or tonnes/litres) | MAY | Rule: is a MUST if `not-applicable` is `False`
+annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MAY | Rule: is a MUST if `not-applicable` is `False`
+
+
+**Waste streams model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+municipal | Municipal | Maximum throughput for municipal waste (annual throughput in tonnes/litres) | MAY | 
+construction-demolition | Construction demolition | Maximum throughput for construction and demolition waste (annual throughput in tonnes/litres) | MAY | 
+commercial-industrial | Commercial industrial | Maximum throughput for commercial and industrial waste (annual throughput in tonnes/litres) | MAY | 
+hazardous | Hazardous | Maximum throughput for hazardous waste (annual throughput in tonnes/litres) | MAY | 
+
+**Validation rules**
+
+- if proposal-waste-management == true then waste-management is required
+- if proposal-waste-management == true then waste-streams is required
+- if not-applicable == false then total-capacity is required
+- if not-applicable == false then annual-throughput is required
+- is-total-capacity-known and is-annual-throughput-known only apply to outline applications
+
+## Description of the proposal
+
+Information about what development, works or change of use is being proposed
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+
+**Validation rules**
+
+- proposal-description must be clear and concise
+- proposal-started-date must not be in the future
+- proposal-completed-date must be after proposal-started-date if both provided
+- reserved-matters must be valid types from the codelist
+- related-application reference must exist in authority records
+- pip-reference must match an existing Planning in Principle application
+- PSI projects must be checked against infrastructure improvement plans
+
+## Residential units
+
+Information about residential units including existing and proposed unit counts, 
+with detailed breakdowns by tenure and housing type
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| will-residential-units-change | Residential unit change | Proposal includes the gain, loss or change of use of residential units | MUST |  |
+| residential-unit-summary | Residential unit summary[]{} | Breakdown of unit counts by tenure and housing type | MAY | Rule: is a MUST if `will-residential-units-change` is `True` |
+| total-existing-units | Total existing units | The total number of existing units | MUST |  |
+| total-proposed-units | Total proposed units | The total number of proposed units | MUST |  |
+| net-change | Net change | Calculated net change in units | MUST |  |
+
+
+**Residential unit summary model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+tenure-type | Tenure type | Category of housing tenure | MUST | Select from the **tenure-type** enum
+housing-type | Housing type | Type of housing | MUST | Select from the **housing-type** enum
+existing-unit-breakdown | Existing unit breakdown[]{} | Number of existing units by bedroom count | MAY | 
+proposed-unit-breakdown | Proposed unit breakdown[]{} | Number of proposed units by bedroom count | MAY | 
+
+
+**Unit quantities model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+units-unknown | Units unknown | Whether the number of units is unknown | MUST | 
+units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | Rule: is a MUST if `units-unknown` is `False`
+total-units | Total units | Total number of units | MAY | 
+
+
+**Bedroom count model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+no-bedrooms-unknown | No bedrooms unknown | Set to true when counting units where bedroom number is unknown | MUST | 
+no-of-bedrooms | Number of bedrooms | The number of bedrooms in unit | MAY | Rule: is a MUST if `no-bedrooms-unknown` is `False`
+units | Units | The number of units of that bedroom count | MUST | 
+
+**Validation rules**
+
+- residential-unit-summary is required when will-residential-units-change is true
+- net-change is calculated as total-proposed-units minus total-existing-units
+- if will-residential-units-change is true, at least one breakdown for existing and proposed is required (count could be unknown)
+
+## Site area
+
+Information about the size of the development site, including 
+the area measurement and source of the measurement
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| site-area-in-hectares | Site area in hectares | The size of the site in hectares | MUST |  |
+| site-area-provided-by | Site area provided by | Who provided the site area value | MAY | Select from the **provided-by** enum |
+
+**Validation rules**
+
+- site-area-in-hectares must be a positive number
+- Authority can use site-area-provided-by to determine if calculation verification is needed
+- site-area-in-hectares is measured in hectares
+
+## Site details
+
+Information about the location and extent of the site where development 
+or works are proposed
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
+
+
+**Site location model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+site-boundary | Site boundary | Geometry of the site of the development, typically in GeoJSON format | MAY | 
+address-text | Address Text | Flexible field for capturing addresses | MAY | 
+postcode | Postcode | The postal code | MAY | 
+easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | MAY | 
+northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
+latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
+longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
+description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | 
+
+**Validation rules**
+
+- At least one site-location must be provided for tree works applications
+- Exactly one site-location for all other applications types
+- If easting is provided, northing must also be provided and vice versa
+- If latitude is provided, longitude must also be provided and vice versa
+- Site boundary must be valid GeoJSON
+- UPRNs must be valid format
+- Post code must be valid UK format
+
+## Site Visit Details
+
+Details needed to support a site visit by the planning authority
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| can-be-seen-from | Site seen from public area | Can site be seen from a public road, public footpath, bridleway or other public land | MUST |  |
+| contact-type | Site visit contact type | Indicates who the authority should contact to arrange a site visit | MUST | Select from the **site-visit-contact-type** enum |
+| contact-reference | Contact reference | The reference of the applicant or agent who should be contacted for site visits | MAY |  |
+| other-contact | Other site visit contact{} | Details of specifically named contact for site visits | MAY | Rule: is a MUST if `contact-type` is `other` |
+
+
+**Other contact model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+fullname | Full name | The complete name of a person | MUST | 
+number | Phone number | A phone number | MUST | 
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+
+**Validation rules**
+
+- contact-reference must match agent-details.agent.reference details if contact-type is agent
+- contact-reference must match one of the references in applicant-details.applicants if contact-type is applicant
+- When contact-type is other, full contact details must be provided
+
 ## Trade effluent
 
 Information about the disposal of trade effluents or waste, including whether 
 disposal is required and details about the nature, volume and means of disposal
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | is-disposal-required | Disposal required | Does the proposal involve the disposal of trade effluents or waste (true/false) | MUST |  |
 | description | Description | describe the nature, volume and means of disposal of trade effluents or waste | MAY | Rule: is a MUST if `disposal-required` is `True` |
 
@@ -229,8 +788,8 @@ disposal is required and details about the nature, volume and means of disposal
 Information about trees and hedges on or adjacent to the development site, including any that pose risks or need to be removed
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 
 **Validation rules**
 
@@ -243,8 +802,8 @@ Detailed information about parking spaces by vehicle type, including existing
 and proposed counts with net change calculations
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | parking-spaces | Parking spaces[]{} | Array of parking space information by vehicle type | MUST |  |
 
 
@@ -271,8 +830,8 @@ Information about waste storage and recycling arrangements for developments,
 including whether waste storage areas are needed and details of recycling provisions
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | waste-storage-area-details | Waste storage area details | Details of the waste storage area including location, size, design and access arrangements | MAY |  |
 | separate-recycling-arrangements-details | Separate recycling arrangements details | Details of the recycling arrangements including types of materials, collection methods and storage facilities | MAY |  |
 
@@ -283,8 +842,58 @@ including whether waste storage areas are needed and details of recycling provis
 
 ## Required codelists
 
-This are the codelist required to support this specification:
+Below are the codelists required to support this specification:
 
-- hazardous-sub-type
-- building-element-type
-- parking-space-type
+### Building element type
+
+| reference | name | description | application-types | notes |
+| --- | --- | --- | --- | --- |
+| walls | Walls | A vertical construction that bounds or subdivides spaces | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
+| roof | Roof | A covering of the top part of a building, it protects the building against the effects of weather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcRoof |
+| windows | Windows |  | advertising;demolition-con-area;full;hh;outline |  |
+| doors | Doors |  | advertising;demolition-con-area;full;hh;outline |  |
+| boundary-treatments | Boundary treatments |  | advertising;demolition-con-area;full;hh;lbc;outline |  |
+| vehicle-access-hard-standings | Vehicle access and hard-standings |  | advertising;demolition-con-area;full;hh;lbc;outline |  |
+| lighting | Lighting |  | advertising;demolition-con-area;full;hh;lbc;outline |  |
+| external-walls | External walls |  | lbc |  |
+| roof-covering | Roof covering |  | lbc |  |
+| chimney | Chimney |  | lbc |  |
+| external-doors | External doors |  | lbc |  |
+| ceilings | Ceilings |  | lbc |  |
+| internal-walls | Internal walls |  | lbc |  |
+| floors | Floors |  | lbc |  |
+| internal-doors | Internal doors |  | lbc |  |
+| rainwater-goods | Rainwater goods |  | lbc |  |
+| other | Other |  | lbc |  |
+
+### Hazardous substance type
+
+| reference | name | description |
+| --- | --- | --- |
+| acrylonitrile | Acrylonitrile |  |
+| ammonia | Ammonia |  |
+| bromine | Bromine |  |
+| chlorine | Chlorine |  |
+| ethylene-oxide | Ethylene oxide |  |
+| flour | Flour |  |
+| hydrogen-cyanide | Hydrogen cyanide |  |
+| liquid-oxygen | Liquid oxygen |  |
+| liquid-petroleum-gas | Liquid petroleum gas |  |
+| phosgene | Phosgene |  |
+| refined-white-sugar | Refined white sugar |  |
+| sulphur-dioxide | Sulphur dioxide |  |
+
+### Parking space type
+
+| reference | name | description | used-by | entry-date | end-date |
+| --- | --- | --- | --- | --- | --- |
+| car-space | Cars | Standard on-site parking spaces for cars. | MHCLG;GLA | 2025-07-15 |  |
+| light-goods-vehicle-space | Light Goods/Public Carrier Vehicles | Vans, delivery vehicles, and public carriers. | MHCLG;GLA | 2025-07-15 |  |
+| motorcycle-space | Motorcycles | Spaces designated for motorbikes. | MHCLG;GLA | 2025-07-15 |  |
+| disability-space | Disability Space | Accessible parking spaces. | MHCLG;GLA | 2025-07-15 |  |
+| cycle-space | Cycle Space | Bicycle parking, including racks or shelters. | MHCLG;GLA | 2025-07-15 |  |
+| blue-badge-space | Blue Badge Spaces | Parking spaces reserved for blue badge holders. | GLA | 2025-07-15 |  |
+| bus | Bus | Parking bays or laybys for buses. | GLA | 2025-07-15 |  |
+| car-club | Car Club | Parking spaces allocated for car club vehicles. | GLA | 2025-07-15 |  |
+| resi-off-street | Resi Only Off Street Parking | Private off-street parking for residents only. | GLA | 2025-07-15 |  |
+| other | Other | Other parking types not covered by the defined categories. | MHCLG;GLA | 2025-07-15 |  |

@@ -4,8 +4,6 @@ Details of non-material amendments to planning applications including
 description of changes, document substitutions, and reasons for amendments
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | description | Description | Description of the non-material amendments the applicant seeks to make |  | MUST |  |
 | is-substituting-document | Substituting document | True or False indicating whether the amendment involves substituting documents |  | MUST |  |
 | replacement-documents | Replacement documents[]{} | List of documents being replaced in the amendment with old and new document references |  | MAY | Rule: is a MUST if `is-substituting-document` is `True` |

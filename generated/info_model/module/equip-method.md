@@ -4,8 +4,6 @@ Module for capturing information about equipment and methods to be used
 in extraction operations, particularly for oil and gas applications
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | equipment-plan | Equipment plan | Details of equipment to be used as part of the application including the maximum height and type of drilling rig to be used |  | MUST |  |
 
 **Validation rules**

@@ -2,8 +2,6 @@
 
 Details of proposed advertisements including dimensions, materials, and illumination specifications
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | advertisements | Advertisements[]{} | Structured data about each proposed advertisement |  | MUST |  |
 
 

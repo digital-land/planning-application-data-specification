@@ -4,8 +4,6 @@ Information about site activities, processes, and waste management development
 including facility types, capacities, and throughput details. Specifically for outline applications
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | site-activity-details | Site activity details | Description of activities, processes, and end products including site operations, plant, ventilation, and machinery |  | MUST |  |
 | proposal-waste-management-outline | Proposal waste management outline variant | Whether the proposal involves waste management development (yes/no/unknown) |  | MUST | Select from the **yes-no-unknown** enum |
 | waste-management-outline | Waste management[]{} | List of waste management facilities involved in the proposal. Specifically for outline applications |  | MAY |  |

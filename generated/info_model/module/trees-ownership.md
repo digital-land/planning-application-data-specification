@@ -3,8 +3,6 @@
 Information about ownership of trees affected by the proposed works
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | is-applicant-owner | Is applicant owner | Whether the applicant owns the trees affected by the proposed works | notice-trees-in-con-area, consent-under-tpo | MUST |  |
 | owner | Tree owner[]{} | Details of the tree owner when applicant is not the owner | notice-trees-in-con-area, consent-under-tpo | MAY | Rule: is a MUST if `is-applicant-owner` is `False` |
 
@@ -13,8 +11,8 @@ Information about ownership of trees affected by the proposed works
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-person | Person{} | Detail to help identify a person | MUST | 
-contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MAY | 
+person | Person{} | Personal identification details of the tree owner | MUST | 
+contact-details | Contact details{} | Contact information for the tree owner | MAY | 
 
 
 **Person obj model**

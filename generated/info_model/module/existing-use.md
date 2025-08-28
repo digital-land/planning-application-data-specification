@@ -3,8 +3,6 @@
 Information about the current and previous use of the site, including contamination status and supporting documents.
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | existing-use-details | Existing use details[]{} | List of existing site uses and related land areas |  | MUST |  |
 | site-vacant | Site vacant | Is the site currently vacant |  | MUST |  |
 | last-use-details | Last use details | Description of the last use of the site |  | MAY | Rule: is a MUST if `site-vacant` is `True` |

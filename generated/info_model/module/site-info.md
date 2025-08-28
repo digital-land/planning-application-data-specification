@@ -4,8 +4,6 @@ Additional information about the development site including area,
 existing use, constraints, and supporting documentation
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | site-area | Site area{} | The total area of the site where development is proposed |  | MUST |  |
 | existing-use | Existing use[]{} | Structured information on the current use of the site |  | MUST |  |
 | known-constraints | Known constraints[] | A list of the known constraints affecting the site |  | MUST | Select from the **site-constraint** enum |

@@ -4,8 +4,6 @@ Information about site activities, processes, and waste management development
 including facility types, capacities, and throughput details
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | site-activity-details | Site activity details | Description of activities, processes, and end products including site operations, plant, ventilation, and machinery |  | MUST |  |
 | proposal-waste-management | Proposal waste management | Whether the proposal involves waste management development |  | MUST |  |
 | waste-management | Waste management[]{} | List of waste management facilities involved in the proposal |  | MAY |  |

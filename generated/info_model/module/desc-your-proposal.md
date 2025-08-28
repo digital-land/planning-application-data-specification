@@ -4,8 +4,6 @@ Details about your proposal including related planning permissions,
 development status, and condition information
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | related-application | Related application{} | Details of the related planning permission | s73, approval-condition, non-material-amendment | MUST |  |
 | condition-numbers | Condition numbers[] | List of condition numbers related to this application | s73, approval-condition | MAY |  |
 | original-application-type | Original application type | Type of original planning application | non-material-amendment | MAY |  |
@@ -20,8 +18,8 @@ development status, and condition information
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MUST | 
+reference | Reference | The reference for the related application | MUST | 
+description | Description | A description of the related application | MUST | 
 decision-date | Decision date | The date when the decision was made, in YYYY-MM-DD format | MAY | 
 
 **Validation rules**

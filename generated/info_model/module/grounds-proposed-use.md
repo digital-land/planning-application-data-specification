@@ -3,8 +3,6 @@
 Information about the proposed use class, operation type, and supporting reasoning for lawful development certificate applications
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | use | Use | State proposed use class |  | MAY | Select from the **use-class** enum. an option needs to be "other" |
 | specified-use | Specified use | A specified use if no applicable use class is available |  | MAY |  |
 | operation-type | Operation type | Whether the proposed use is temporary or permanent |  | MUST | Select from the **operation-type** enum |

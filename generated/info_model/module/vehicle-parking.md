@@ -4,8 +4,6 @@ Detailed information about parking spaces by vehicle type, including existing
 and proposed counts with net change calculations
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | parking-spaces | Parking spaces[]{} | Array of parking space information by vehicle type |  | MUST |  |
 
 

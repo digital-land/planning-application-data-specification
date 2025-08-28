@@ -4,8 +4,6 @@ Additional information about trees on the site, including condition concerns,
 damage reports, and supporting documentation
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | advice-from-authority | Advice from authority | Any advice provided on-site by a Local Planning Authority (LPA) officer |  | MAY |  |
 | condition-concerns | Condition concerns | Whether there are concerns the tree(s) are diseased or might break or fall | consent-under-tpo | MUST |  |
 | causing-subsidence | Causing subsidence | Whether subsidence damage is being caused by the tree(s) | consent-under-tpo | MUST |  |

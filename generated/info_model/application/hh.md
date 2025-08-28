@@ -32,8 +32,8 @@ Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
 | application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-sub-type** enum |
@@ -48,9 +48,9 @@ application types, submission details, modules, documents, and fees
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+reference | Reference | A reference for the document | MUST | 
 name | Name | A name of a person | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
@@ -68,9 +68,9 @@ transactions | Transactions[] | References to payments or financial transactions
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-url | URL | A URL pointing to the stored file for previously uploaded or hosted files | MAY | 
+url | URL | A URL pointing to the stored file | MAY | 
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
-filename | Filename | Name of the file being uploaded useful for identifying and preserving the file | MUST | 
+filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
 checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
@@ -91,11 +91,11 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 Information about changes to access arrangements and public rights of way
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| new-altered-vehicle | New or altered vehicle access | Is a new or altered vehicle access proposed to/from the public highway | MUST | Select from the **rights-of-way-answers** enum |
-| new-altered-pedestrian | New or altered pedestrian access | Is a new or altered pedestrian access proposed to/from the public highway | MUST | Select from the **rights-of-way-answers** enum |
-| change-right-of-way | Change to right of way | Will the proposal change public rights of way (diversion/extinguishment/creation) | MUST | Select from the **rights-of-way-answers** enum |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| new-altered-vehicle | New or altered vehicle access | Is a new or altered vehicle access proposed to/from the public highway | MUST | Select from the **rights-of-way-answer** enum |
+| new-altered-pedestrian | New or altered pedestrian access | Is a new or altered pedestrian access proposed to/from the public highway | MUST | Select from the **rights-of-way-answer** enum |
+| change-right-of-way | Change to right of way | Will the proposal change public rights of way (diversion/extinguishment/creation) | MUST | Select from the **rights-of-way-answer** enum |
 | supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MAY |  |
 
 
@@ -118,8 +118,8 @@ name | Name | A name of a person | MUST |
 Contact details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | agent-reference | Agent reference | A reference to an agent object | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
@@ -146,8 +146,8 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 Details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | agent | agent{} | Details of the agent | MAY |  |
 
 
@@ -178,8 +178,8 @@ postcode | Postcode | The postal code | MAY |
 Contact details for the applicant or applicants, including email and phone numbers
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
@@ -210,8 +210,8 @@ Details about the applicants for the planning application,
 including their personal information and contact details
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicants | Applicants[]{} |  | MUST |  |
 
 
@@ -245,8 +245,8 @@ including pre-development biodiversity value, habitat loss details, and
 supporting documentation
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | bng-exempt | Biodiversity gain exemption | Statement whether the biodiversity gain condition will apply if permission is granted. Householder applicants need to confirm the biodiversity gain condition does not apply. | MUST |  |
 
 **Validation rules**
@@ -265,8 +265,8 @@ supporting documentation
 Identifies the national requirement types that apply to this application type
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
 
 **Validation rules**
@@ -280,8 +280,8 @@ Information about any conflicts of interest between the applicant/agent and the 
 including relationships with staff or elected members
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
 | conflict-person-name | Conflict person name | Name of the individual with the conflict of interest that matches one of the names provided in applicants/agent section | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
 | conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
@@ -295,8 +295,8 @@ including relationships with staff or elected members
 Declaration by the applicant or agent confirming the accuracy of the information provided
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | name | Name | A name of a person | MUST |  |
 | declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
 | declaration-date | Declaration date | The date the declaration was made | MUST |  |
@@ -312,8 +312,8 @@ Declaration by the applicant or agent confirming the accuracy of the information
 Information about the materials used in the development, including both existing and proposed materials
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | building-elements | Building elements[]{} | Details of materials for a specific building element such as walls, roof, windows or doors | MUST |  |
 | additional-material-information | Additional material information | Additional context or details about the materials to be used in the development | MUST |  |
 | supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MAY | Rule: is a MUST if `additional-material-information` is `True` |
@@ -350,8 +350,8 @@ name | Name | A name of a person | MUST |
 Information about ownership of the site and/or property for development, including agricultural tenants and notification requirements.
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | sole-owner | Sole owner | Is the applicant the sole owner of the land? | MUST |  |
 | agricultural-tenants | Agricultural tenants | Are there any agricultural tenants on the land? | MUST |  |
 | owners-and-tenants | Owners and tenants[]{} | List of known owners and agricultural tenants | MAY |  |
@@ -367,16 +367,16 @@ Information about ownership of the site and/or property for development, includi
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-person | Person{} | Detail to help identify a person | MAY | 
-notice-date | Notice date | Date when notice was served to an owner or tenant | MAY | 
+person | Person{} | details of the owner (or tenant when not a listed building consent application) | MAY | 
+notice-date | Notice date | Date when notice was served | MAY | 
 
 
 **Newspaper notice model**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-newspaper-name | Newspaper name | Name of the newspaper where the ownership notice was published | MUST | 
-publication-date | Publication date | Date when the ownership notice was published in the newspaper | MUST | 
+newspaper-name | Newspaper name | Name of the newspaper where notice was published | MUST | 
+publication-date | Publication date | Date when the notice was published | MUST | 
 
 
 **Person obj model**
@@ -396,8 +396,8 @@ postcode | Postcode | The postal code | MAY |
 Information about how the proposed development affects existing parking arrangements
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | is-existing-parking-affected | Existing parking affected | Will the proposed works affect existing car parking arrangements | MUST |  |
 | description | Description | A description of how the proposed works will affect existing car parking arrangements | MAY | Rule: is a MUST if `is-existing-parking-affected` is `True` |
 
@@ -408,8 +408,8 @@ Information about how the proposed development affects existing parking arrangem
 Information about any pre-application advice sought from the planning authority
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | advice-sought | Pre-application advice sought | Whether pre-application advice has been sought from the planning authority | MUST |  |
 | officer-name | Officer name | Name of the planning officer who provided the pre-application advice | MAY | Rule: is a MUST if `advice-sought` is `True` |
 | reference | Reference | A unique reference for the data item | MAY | Rule: is a MUST if `advice-sought` is `True` |
@@ -423,8 +423,8 @@ Information about any pre-application advice sought from the planning authority
 Information about what development, works or change of use is being proposed
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | proposal-description | Proposal description | A description of what is being proposed, including the development, works, or change of use | MUST |  |
 | proposal-started | Proposal started | Has any work on the proposal already been started | MUST |  |
 | proposal-started-date | Proposal start date | The date when work on the proposal started, in YYYY-MM-DD format | MAY | Rule: is a MUST if `proposal-started` is `True` |
@@ -447,8 +447,8 @@ Information about the location and extent of the site where development
 or works are proposed
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
 
 
@@ -481,8 +481,8 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 Details needed to support a site visit by the planning authority
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | can-be-seen-from | Site seen from public area | Can site be seen from a public road, public footpath, bridleway or other public land | MUST |  |
 | contact-type | Site visit contact type | Indicates who the authority should contact to arrange a site visit | MUST | Select from the **site-visit-contact-type** enum |
 | contact-reference | Contact reference | The reference of the applicant or agent who should be contacted for site visits | MAY |  |
@@ -508,8 +508,8 @@ email | Email | The email address that can be used for electronic correspondence
 Information about trees and hedges on or adjacent to the development site, including any that pose risks or need to be removed
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | has-falling-trees-risk | Falling trees risk | Whether there are falling trees on-premises or adjacent premises that are a risk to the development | MUST |  |
 | falling-trees-document | Falling trees document{} | Details of document showing location of trees that pose a risk to the development | MAY | Rule: is a MUST if `has-falling-trees-risk` is `True` |
 | tree-removal | Tree removal | Whether trees or hedges need to be pruned or removed | MUST |  |
@@ -530,9 +530,52 @@ name | Name | A name of a person | MUST |
 
 ## Required codelists
 
-This are the codelist required to support this specification:
+Below are the codelists required to support this specification:
 
-- building-element-type
-- user-role-type
-- bng-exemption-type
-- contact-priority
+### BNG exemption type
+
+| reference | name | description | entry-date | end-date |
+| --- | --- | --- | --- | --- |
+| pre-commencement | Submitted before BNG commencement | Planning applications submitted before the Biodiversity Net Gain rules took effect (need to add the effective date) | 2025-07-15 |  |
+| small-sites | Small sites exemption | Temporary exemption for non-major developments. | 2025-07-15 |  |
+| de-minimis | De minimis exemption | Development below the minimum threshold for BNG requirements. | 2025-07-15 |  |
+| self-build | Self-build and custom build | Self-build or custom build development projects. | 2025-07-15 |  |
+| gain-site | Biodiversity gain site | Development of a registered biodiversity gain site. | 2025-07-15 |  |
+| retrospective | Retrospective planning permission | Applications for retrospective planning permission. | 2025-07-15 |  |
+| hs2 | High Speed Railway development | Development related to the High Speed Railway (HS2). | 2025-07-15 |  |
+
+### Building element type
+
+| reference | name | description | application-types | notes |
+| --- | --- | --- | --- | --- |
+| walls | Walls | A vertical construction that bounds or subdivides spaces | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcWall |
+| roof | Roof | A covering of the top part of a building, it protects the building against the effects of weather | advertising;demolition-con-area;full;hh;outline | Referring to same thing as IfcRoof |
+| windows | Windows |  | advertising;demolition-con-area;full;hh;outline |  |
+| doors | Doors |  | advertising;demolition-con-area;full;hh;outline |  |
+| boundary-treatments | Boundary treatments |  | advertising;demolition-con-area;full;hh;lbc;outline |  |
+| vehicle-access-hard-standings | Vehicle access and hard-standings |  | advertising;demolition-con-area;full;hh;lbc;outline |  |
+| lighting | Lighting |  | advertising;demolition-con-area;full;hh;lbc;outline |  |
+| external-walls | External walls |  | lbc |  |
+| roof-covering | Roof covering |  | lbc |  |
+| chimney | Chimney |  | lbc |  |
+| external-doors | External doors |  | lbc |  |
+| ceilings | Ceilings |  | lbc |  |
+| internal-walls | Internal walls |  | lbc |  |
+| floors | Floors |  | lbc |  |
+| internal-doors | Internal doors |  | lbc |  |
+| rainwater-goods | Rainwater goods |  | lbc |  |
+| other | Other |  | lbc |  |
+
+### Contact priority
+
+| reference | name | description |
+| --- | --- | --- |
+| primary | Primary | The preferred item to use |
+| secondary | Secondary | The option to use if primary is not working |
+
+### User role type
+
+| reference | name | description |
+| --- | --- | --- |
+| agent | Agent | A professional agent working for the applicant |
+| proxy | Proxy | An individual working on behalf of the applicant but not in a professional capacity |

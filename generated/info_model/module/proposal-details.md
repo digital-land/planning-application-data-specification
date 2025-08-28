@@ -3,8 +3,6 @@
 Information about what development, works or change of use is being proposed
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | proposal-description | Proposal description | A description of what is being proposed, including the development, works, or change of use | advertising, demolition-con-area, full, hh, lbc, outline | MUST |  |
 | reserved-matters | Reserved matters[] | Identifies which reserved matters are being submitted for approval as part of this application | outline, reserved-matters | MUST | Select from the **reserved-matter-type** enum |
 | related-application | Related application{} | Details about the approved development, as shown in the decision letter | reserved-matters | MUST |  |
@@ -20,8 +18,8 @@ Information about what development, works or change of use is being proposed
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MUST | 
+reference | Reference | The reference for the related application | MUST | 
+description | Description | A description of the related application | MUST | 
 decision-date | Decision date | The date when the decision was made, in YYYY-MM-DD format | MAY | 
 
 **Validation rules**

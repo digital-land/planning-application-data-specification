@@ -8,10 +8,18 @@ Enlargement of a dwellinghouse by construction of additional storeys
 
 ### Modules
 
+* [Agent contact details](#agent-contact-details)
+* [Agent details](#agent-details)
+* [Applicant contact details](#applicant-contact-details)
+* [Applicant details](#applicant-details)
+* [Checklist](#checklist)
+* [Conflict of interest](#conflict-of-interest)
+* [Declaration](#declaration)
 * [Description of work impacts and risks](#description-of-work-impacts-and-risks)
-* [Eligibility related works](#eligibility-related-works)
 * [Eligibility current building](#eligibility-current-building)
 * [Eligibility proposal](#eligibility-proposal)
+* [Eligibility related works](#eligibility-related-works)
+* [Site details](#site-details)
 
 # Application fields
 
@@ -19,8 +27,8 @@ Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
 | application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-sub-type** enum |
@@ -35,9 +43,9 @@ application types, submission details, modules, documents, and fees
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+reference | Reference | A reference for the document | MUST | 
 name | Name | A name of a person | MUST | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
@@ -55,9 +63,9 @@ transactions | Transactions[] | References to payments or financial transactions
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-url | URL | A URL pointing to the stored file for previously uploaded or hosted files | MAY | 
+url | URL | A URL pointing to the stored file | MAY | 
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
-filename | Filename | Name of the file being uploaded useful for identifying and preserving the file | MUST | 
+filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
 checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
@@ -73,14 +81,183 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 - file must contain either url or base64, but not both
 - document-types must reference valid planning requirement codelist values
 
+## Agent contact details
+
+Contact details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| agent-reference | Agent reference | A reference to an agent object | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+
+
+## Agent details
+
+Details of the agent acting on behalf of the applicant
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| agent | agent{} | Details of the agent | MAY |  |
+
+
+**Agent obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+company | Company | The name of a company (that the agent works for) | MAY | 
+user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+
+
+## Applicant contact details
+
+Contact details for the applicant or applicants, including email and phone numbers
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+
+
+**Contact details model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
+phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Phone number model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+number | Phone number | A phone number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+
+**Validation rules**
+
+- applicant-reference must match a reference from the applicant details component
+- At least one phone number must have contact-priority set to primary
+
+## Applicant details
+
+Details about the applicants for the planning application,
+including their personal information and contact details
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| applicants | Applicants[]{} |  | MUST |  |
+
+
+**Applicant model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+person | Person{} | Detail to help identify a person | MUST | 
+
+
+**Person obj model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+title | Title | The title of the individual | MAY | 
+first-name | First Name | The first name of the individual | MUST | 
+last-name | Last Name | The last name of the individual | MUST | 
+address-text | Address Text | Flexible field for capturing addresses | MUST | 
+postcode | Postcode | The postal code | MAY | 
+
+**Validation rules**
+
+- At least one applicant must be provided
+- Each applicant reference must be unique within the application
+
+## Checklist
+
+Identifies the national requirement types that apply to this application type
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
+
+**Validation rules**
+
+- All values must be from the national-requirement-type codelist
+- Values must be valid for the current application type
+
+## Conflict of interest
+
+Information about any conflicts of interest between the applicant/agent and the planning authority,
+including relationships with staff or elected members
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+
+**Validation rules**
+
+- conflict-person-name must match a name provided in applicants or agent sections
+
+## Declaration
+
+Declaration by the applicant or agent confirming the accuracy of the information provided
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| name | Name | A name of a person | MUST |  |
+| declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
+| declaration-date | Declaration date | The date the declaration was made | MUST |  |
+
+**Validation rules**
+
+- name must match one of the named individuals in the application
+- declaration-date must be in YYYY-MM-DD format
+- declaration-date must not be in the future
+
 ## Description of work impacts and risks
 
 Description of proposed development and assessment of impacts on
 amenity, air traffic, defence assets, and protected views
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | description | Description | Description of proposed development including details of proposed work and external appearance | MUST |  |
 | dwellinghouse-height | Dwellinghouse height | Height from ground to highest point of roof in metres | MUST |  |
 | proposed-height | Proposed height | Height once the additional storeys have been added in metres | MUST |  |
@@ -95,28 +272,14 @@ amenity, air traffic, defence assets, and protected views
 - impact-on-amenity must include mitigation details where impacts identified
 - air-traffic-defence-impacts must include mitigation details where impacts identified
 
-## Eligibility related works
-
-Eligibility criteria for engineering works related to prior approval applications,
-specifically relating to external support structures and curtilage extensions
-
-
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| external-support-required | External support required | Will the proposed engineering works include external support structures or extend beyond the curtilage for wall or foundation strengthening | MUST |  |
-
-**Validation rules**
-
-- external-support-required == true may affect prior approval eligibility
-
 ## Eligibility current building
 
 Eligibility criteria related to current building status including construction period,
 storey additions, permitted development use, and site location constraints
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | was-constructed-btw-1948-2018 | Was constructed between 1948 and 2018 | Was the current building constructed between 1 July 1948 and 28 October 2018? If False, application cannot proceed. | MUST |  |
 | has-additional-storeys | Additional storeys added | Have additional storeys already been added to the original building? If True, application cannot proceed. | MUST |  |
 | was-use-granted-by-pdr | Use granted by permitted development right | Was the current use of the building granted by permitted development rights? If True, application cannot proceed. | MUST |  |
@@ -136,8 +299,8 @@ Eligibility criteria related to proposal design and construction including store
 height restrictions, roof specifications, and material requirements
 
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | principal-part-only | Principal part only | Will the additional storeys be constructed only on the principal part of the building | MUST |  |
 | ceiling-height-exceeds-3m | Ceiling height exceeds 3m | Will the internal floor-to-ceiling height of any additional storey exceed 3 metres | MUST |  |
 | existing-ceiling-height-exceeds-3m | Existing ceiling height exceeds 3m | Will the internal floor-to-ceiling height of any existing storey exceed 3 metres | MUST |  |
@@ -166,3 +329,52 @@ height restrictions, roof specifications, and material requirements
 - dwellinghouse-use == true (required for application to proceed)
 - if is-dwelling-detached == false, then extension-on-attached-dwelling should be considered
 - if is-dwelling-detached == false, then extension-below-terrace-roof should be considered
+
+## Eligibility related works
+
+Eligibility criteria for engineering works related to prior approval applications,
+specifically relating to external support structures and curtilage extensions
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| external-support-required | External support required | Will the proposed engineering works include external support structures or extend beyond the curtilage for wall or foundation strengthening | MUST |  |
+
+**Validation rules**
+
+- external-support-required == true may affect prior approval eligibility
+
+## Site details
+
+Information about the location and extent of the site where development 
+or works are proposed
+
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
+
+
+**Site location model**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+site-boundary | Site boundary | Geometry of the site of the development, typically in GeoJSON format | MAY | 
+address-text | Address Text | Flexible field for capturing addresses | MAY | 
+postcode | Postcode | The postal code | MAY | 
+easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | MAY | 
+northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
+latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
+longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
+description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | 
+
+**Validation rules**
+
+- At least one site-location must be provided for tree works applications
+- Exactly one site-location for all other applications types
+- If easting is provided, northing must also be provided and vice versa
+- If latitude is provided, longitude must also be provided and vice versa
+- Site boundary must be valid GeoJSON
+- UPRNs must be valid format
+- Post code must be valid UK format

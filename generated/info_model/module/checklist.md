@@ -3,8 +3,6 @@
 Identifies the national requirement types that apply to this application type
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | national-req-types | National requirement types[] | List of the document types required for the given application type |  | MUST |  |
 
 **Validation rules**

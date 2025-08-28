@@ -4,8 +4,6 @@ Module for capturing information about materials and details being submitted
 for approval as part of discharging planning conditions
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
 | description-list | Description list | Description or list of materials/details that are being submitted for approval | approval-condition | MUST |  |
 
 **Validation rules**
