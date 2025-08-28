@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: rights-of-way-answers
+codelist: rights-of-way-answer
 datatype: enum
 description: Will new public rights of way be provided within or adjacent to the site
 end-date: ''

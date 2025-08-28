@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: affect-area
+codelist: affected-area-type
 datatype: enum
 description: Where is there a likelihood of protected and priority species being affected?
 end-date: ''

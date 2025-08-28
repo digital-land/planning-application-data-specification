@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: rights-of-way-answers
+codelist: rights-of-way-answer
 datatype: enum
 description: Is a new or altered vehicle access proposed to/from the public highway
 end-date: ''

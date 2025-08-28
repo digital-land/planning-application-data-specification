@@ -1,6 +1,6 @@
 ---
 cardinality: n
-codelist: lawful-development-need
+codelist: lawful-dev-cert-need
 datatype: enum
 description: What is the lawful development certificate needed for?
 end-date: ''

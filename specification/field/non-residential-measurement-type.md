@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: non-res-measurement-type
+codelist: non-residential-measurement-type
 datatype: enum
 description: The type of value being provided for non-residential use - either floorspace
   or site-area

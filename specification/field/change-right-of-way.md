@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: rights-of-way-answers
+codelist: rights-of-way-answer
 datatype: enum
 description: Will the proposal change public rights of way (diversion/extinguishment/creation)
 end-date: ''

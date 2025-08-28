@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: development-phases
+codelist: development-phase
 datatype: enum
 description: Phases of oil and gas development the application covers
 end-date: ''

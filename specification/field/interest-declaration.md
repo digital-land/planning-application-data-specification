@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: hedgerow-interest-dec
+codelist: hedgerow-interest-type
 datatype: enum
 description: The applicant's interest or ownership in the hedgerow
 end-date: ''

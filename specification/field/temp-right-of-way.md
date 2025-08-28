@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: rights-of-way-answers
+codelist: rights-of-way-answer
 datatype: enum
 description: Are temporary changes to rights of way needed while the site is worked
 end-date: ''
