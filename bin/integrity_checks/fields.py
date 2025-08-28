@@ -16,7 +16,7 @@ def print_error(field_name: str, message: str):
 # 4. if datatype is object then must have component attr
 # 5. component attr must a component reference in /components
 # 6. if datatype is enum then must have codelist attr, and if has codelist then datatype must be enum
-# 7. codelist must be in codelist definitions TODO
+# 7. codelist must be in codelist definitions
 # 8. every field must have entry-date and end-date attrs
 
 
@@ -159,7 +159,7 @@ def check_dates(fields):
     return not has_errors
 
 
-def check_all(fields, components):
+def check_all(fields, components, codelists):
     """Run all field integrity checks.
 
     Args:
@@ -176,7 +176,7 @@ def check_all(fields, components):
             check_codelist_exists,
             [
                 fields,
-                components.get("codelists", []) if isinstance(components, dict) else [],
+                codelists,
             ],
         ),
         (check_dates, [fields]),

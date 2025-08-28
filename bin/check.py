@@ -20,7 +20,7 @@ def perform_checks():
 
     # Perform checks
     print("\nChecking fields\n===========")
-    fields_valid = check_fields(fields, components)
+    fields_valid = check_fields(fields, components, codelists)
     print("\nChecking components\n===========")
     components_valid = check_components(components, fields, applications)
     print("\nChecking modules\n===========")
