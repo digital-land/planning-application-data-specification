@@ -1,3 +1,4 @@
+from applications import get_application_module_refs
 from fields import (
     format_field_display_name,
     get_applicable_app_types,
@@ -175,9 +176,8 @@ def generate_application(app_ref, specification):
     # 2. Contents
     out.append("## Contents\n")
     out.append("* [Application data specification](#application-data-specification)")
-    module_refs = [
-        m["module"] if isinstance(m, dict) else m for m in app.get("modules", [])
-    ]
+    # get full list of applicable modules
+    module_refs = get_application_module_refs(app, specification)
     out.append("")
 
     # 3. Modules List (contents)
