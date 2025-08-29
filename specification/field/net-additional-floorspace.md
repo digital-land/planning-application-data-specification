@@ -6,5 +6,5 @@ end-date: ''
 entry-date: 2025-07-17
 field: net-additional-floorspace
 name: Net additional floorspace
-notes: Calculated as total-gross-proposed - existing-gross-floorspace
+notes: Calculated as total-gross-proposed - existing-gross-floorspace. This should be calculated automatically
 ---
