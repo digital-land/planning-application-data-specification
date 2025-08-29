@@ -8,10 +8,21 @@ notes: ''
 fields:
   - field: non-residential-change
     required: true
+    applies-if:
+      application-type:
+        in: ['full']
+  - field: non-residential-change-outline
+    required: true
+    applies-if:
+      application-type:
+        in: ['outline']
   - field: floorspace-details
     required-if:
-      - field: non-residential-change
-        value: true
+      any:
+        - field: non-residential-change
+          value: true
+        - field: non-residential-change-outline
+          value: true
   - field: room-details
     required-if:
       condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
