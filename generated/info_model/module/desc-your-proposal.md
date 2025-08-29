@@ -4,6 +4,10 @@ Details about your proposal including related planning permissions,
 development status, and condition information
 
 
+**Description of your proposal module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | related-application | Related application{} | Details of the related planning permission | s73, approval-condition, non-material-amendment | MUST |  |
 | condition-numbers | Condition numbers[] | List of condition numbers related to this application | s73, approval-condition | MAY |  |
 | original-application-type | Original application type | Type of original planning application | non-material-amendment | MAY |  |
@@ -14,7 +18,7 @@ development status, and condition information
 | development-completed-date | Development completed date | Date when development was completed | s73, approval-condition | MAY | Rule: is a MUST if `has-development-completed` is `True` |
 
 
-**Related application details model**
+**Related application details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

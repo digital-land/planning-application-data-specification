@@ -4,10 +4,14 @@ Information about the location and extent of the site where development
 or works are proposed
 
 
+**Site details module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | site-locations | Site locations[]{} | Details of the sites where development or works are proposed |  | MUST |  |
 
 
-**Site location model**
+**Site location component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -23,8 +27,8 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 **Validation rules**
 
-- At least one site-location must be provided for tree works applications
-- Exactly one site-location for all other applications types
+- {'description': 'At least one site-location must be provided for tree works applications', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'in': ['tree-works']}}, 'require': {'min': 1}}
+- {'description': 'Exactly one site-location for all other applications types', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'not': ['tree-works']}}, 'require': {'exact': 1}}
 - If easting is provided, northing must also be provided and vice versa
 - If latitude is provided, longitude must also be provided and vice versa
 - Site boundary must be valid GeoJSON

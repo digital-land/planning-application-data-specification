@@ -3,6 +3,10 @@
 Details about certificate of immunity applications and their results
 
 
+**Immunity from listing module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | cert-of-immunity-sought | Certificate of immunity sought | Has a certificate of immunity been sought |  | MUST | Select from the **yes-no-unknown** enum |
 | application-result | Application result | Provide the result of the application for a certificate of immunity |  | MAY |  |
 

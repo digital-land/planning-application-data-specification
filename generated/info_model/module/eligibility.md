@@ -4,12 +4,16 @@ Complete eligibility assessment for planning applications including applicant la
 ownership notifications, and proposal-specific eligibility criteria
 
 
+**Eligibility module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicant-land-interest | Applicant land interest | Does the applicant have an interest in the land |  | MUST |  |
 | ownership-notification | Ownership notification | If not the sole owner, has notification been given under Article 10 |  | MAY | Select from the **yes-no-not-applicable** enum |
 | notified-persons | Notified persons[]{} | List of persons notified, including address and date |  | MAY | Rule: is a MUST if `ownership-notification` is `True` |
 
 
-**Notified person model**
+**Notified person component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -17,7 +21,7 @@ person | Person{} | details of the owner (or tenant when not a listed building c
 notice-date | Notice date | Date when notice was served | MAY | 
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

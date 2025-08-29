@@ -4,10 +4,14 @@ Information about the existing uses of the development site, including
 use classes and which parts of the land they relate to
 
 
+**Description of existing use module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | existing-use-details | Existing use details[]{} | List of existing site uses and related land areas |  | MUST |  |
 
 
-**Existing use detail model**
+**Existing use detail component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

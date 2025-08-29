@@ -3,6 +3,10 @@
 Information about community consultation activities carried out in relation to the planning application
 
 
+**Community consultation module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | have-consulted | Have consulted | Whether community consultation has been carried out |  | MUST |  |
 | description | Description | Provide details of the community consultation |  | MAY | Rule: is a MUST if `have-consulted` is `True` |
 

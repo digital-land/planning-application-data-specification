@@ -5,6 +5,10 @@ a lawful development certificate application, including lawful justification,
 use classification, and supporting documentary evidence
 
 
+**Grounds for application (information about the existing use(s)) module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | use-lawful-reason | Use lawful reason | Explanation of why the existing or last use is considered lawful, 
 providing justification for a lawful development certificate application
  |  | MUST |  |
@@ -13,7 +17,7 @@ providing justification for a lawful development certificate application
 | specified-use | Specified use | A specified use if no applicable use class is available |  | MAY | Rule: is a MUST if `use` is `sui`. Rule: is a MUST if `use` is `other` |
 
 
-**Document model**
+**Document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -24,7 +28,7 @@ document-types | Document types[] | List of codelist references that the documen
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
-**File model**
+**File component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

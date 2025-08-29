@@ -2,11 +2,15 @@
 
 Hours of opening for each non-residential use proposed
 
+**Hours of operation module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | hours-of-operation | Hours of operation[]{} | List the hours of operation by non-residential use | full, outline, extraction-oil-gas | MUST |  |
 | additional-information | Additional information | Any additional information (such as hours of use of other machinery within the site-generators, pumps, etc) | extraction-oil-gas | MAY |  |
 
 
-**Hours of operation model**
+**Hours of operation component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -16,7 +20,7 @@ operational-times | Operational times[]{} | Structured data for operational hour
 hours-not-known | Hours not known | Applicant states they do not know the hours of operation | MAY | 
 
 
-**Operational times model**
+**Operational times component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -25,7 +29,7 @@ closed | Closed | True or False - explicitly state when closed | MAY | If True, 
 time-ranges | Time ranges[]{} | Opening and closing times for the day | MAY | Rule: is a MUST if `closed` is `False`. Can have multiple ranges (e.g., morning and evening opening)
 
 
-**Time range model**
+**Time range component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

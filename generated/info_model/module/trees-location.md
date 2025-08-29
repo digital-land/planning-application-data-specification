@@ -3,11 +3,15 @@
 Location information for trees affected by the proposed works, required when the site is different from the applicant's address
 
 
+**Trees location module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | is-site-different | Is site different | Whether the site where trees are located is different from the applicant's address |  | MUST |  |
 | site-locations | Site locations[]{} | Details of the sites on which the tree(s) are located |  | MAY | Rule: is a MUST if `is-site-different` is `True` |
 
 
-**Site location model**
+**Site location component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

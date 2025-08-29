@@ -2,10 +2,14 @@
 
 Details of proposed advertisements including dimensions, materials, and illumination specifications
 
+**Proposed advert details module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | advertisements | Advertisements[]{} | Structured data about each proposed advertisement |  | MUST |  |
 
 
-**Advertisement model**
+**Advertisement component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

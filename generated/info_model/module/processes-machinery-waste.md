@@ -4,13 +4,17 @@ Information about site activities, processes, and waste management development
 including facility types, capacities, and throughput details
 
 
+**Processes machinery waste module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | site-activity-details | Site activity details | Description of activities, processes, and end products including site operations, plant, ventilation, and machinery |  | MUST |  |
 | proposal-waste-management | Proposal waste management | Whether the proposal involves waste management development |  | MUST |  |
 | waste-management | Waste management[]{} | List of waste management facilities involved in the proposal |  | MAY |  |
 | waste-streams | Waste streams throughput{} | Annual throughput for waste streams by waste type |  | MAY |  |
 
 
-**Waste management model**
+**Waste management component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -20,7 +24,7 @@ total-capacity | Total capacity | Total capacity of void in cubic metres (or ton
 annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MAY | Rule: is a MUST if `not-applicable` is `False`
 
 
-**Waste streams model**
+**Waste streams component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

@@ -3,6 +3,10 @@
 Permission or prior approval that may be required to demolish a building, specifically for listed building consent applications
 
 
+**Demolition module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | is-proposing-demolition | Is propsing demolition | Does the proposal include partial or total demolition of a listed building? |  | MUST |  |
 | is-total-demolition | Is total demolition | Indicating whether the proposal involves total demolition of a listed building |  | MAY | Rule: is a MUST if `is-proposing-demolition` is `True` |
 | is-demolishing-building-in-curtilage | Demolition building in curtilage | True or False indicating whether the proposal involves demolition of a building in the curtilage of a listed building |  | MAY | Rule: is a MUST if `is-proposing-demolition` is `True` |

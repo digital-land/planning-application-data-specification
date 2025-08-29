@@ -3,10 +3,14 @@
 Details of the agent acting on behalf of the applicant
 
 
+**Agent details module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | agent | agent{} | Details of the agent |  | MAY |  |
 
 
-**Agent obj model**
+**Agent obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -16,7 +20,7 @@ company | Company | The name of a company (that the agent works for) | MAY |
 user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

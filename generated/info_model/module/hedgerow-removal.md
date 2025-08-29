@@ -3,6 +3,10 @@
 Information required for hedgerow removal notices including removal reasons, plans, length details, age considerations, and interest declarations
 
 
+**Hedgerow removal notice module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | removal-reasons | Removal reasons | Reasons for the proposed removal of hedgerow(s) |  | MUST |  |
 | plan-references | Plan references[] | References to plans showing the stretches of hedgerows to be removed |  | MUST |  |
 | hedgerow-length | Hedgerow length | Total length, in metres, of hedgerow proposed for removal |  | MUST |  |

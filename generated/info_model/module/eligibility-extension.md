@@ -4,6 +4,10 @@ Eligibility criteria for extension applications to determine if the proposal
 meets the requirements for the application type
 
 
+**Eligibility extension module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | is-single-storey-extension | Single storey extension | Will the extension be a single storey |  | MUST |  |
 | is-extension-height-over-4m | Extension height over 4m | Will the extension exceed 4 metres in height |  | MUST |  |
 | is-dwelling-detached | Dwelling detached | Is the dwelling detached |  | MUST |  |

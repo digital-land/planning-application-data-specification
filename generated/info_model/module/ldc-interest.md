@@ -3,12 +3,16 @@
 Information about the applicant's interest in the listed building and details of other interested parties including owners and interested persons
 
 
+**LDC Interest module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicant-interest | Applicant interest | Applicant's interest in the listed building |  | MUST |  |
 | owner-details | Owner details[]{} | Details of the owner if the applicant is a lessee or occupier |  | MAY |  |
 | interested-persons | Interested persons[]{} | Details of other interested persons in the listed building |  | MAY |  |
 
 
-**LDC Owner Details model**
+**LDC Owner Details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -16,7 +20,7 @@ person | Person{} | Personal details of the property owner | MUST |
 informed-of-application | Informed of application | Whether the owner has been informed of the application | MUST | 
 
 
-**LDC Interested Person model**
+**LDC Interested Person component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -26,7 +30,7 @@ informed-of-application | Informed of application | Whether the person has been 
 reason-not-informed | Reason not informed | Reason why a person was not informed of the application | MAY | 
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

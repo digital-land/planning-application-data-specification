@@ -4,6 +4,10 @@ Information about voluntary agreements related to extraction oil and gas applica
 including whether a draft agreement is included and summary details
 
 
+**Voluntary agreement module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | draft-agreement-included | Draft agreement included | Has an outline or draft agreement been included? (True / False) |  | MUST |  |
 | agreement-summary | Agreement summary | Summary of the agreement |  | MAY | Rule: is a MUST if `draft-agreement-included` is `True` |
 

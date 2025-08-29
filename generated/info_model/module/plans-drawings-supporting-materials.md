@@ -4,11 +4,15 @@ Specification for plans, drawings, and supporting documents required for
 planning applications, including document references and inspection details
 
 
+**Plans, drawings and supporting materials module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | plans-documents | Plans documents[]{} | List of plans, drawings, and supporting documents |  | MUST |  |
 | inspection-address | Inspection address | Full postal address where supporting material can be inspected |  | MUST | Should this be the address-text field |
 
 
-**Plans document model**
+**Plans document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

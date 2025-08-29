@@ -3,11 +3,15 @@
 Information about ownership of trees affected by the proposed works
 
 
+**Trees ownership module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | is-applicant-owner | Is applicant owner | Whether the applicant owns the trees affected by the proposed works | notice-trees-in-con-area, consent-under-tpo | MUST |  |
 | owner | Tree owner[]{} | Details of the tree owner when applicant is not the owner | notice-trees-in-con-area, consent-under-tpo | MAY | Rule: is a MUST if `is-applicant-owner` is `False` |
 
 
-**Tree owner model**
+**Tree owner component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -15,7 +19,7 @@ person | Person{} | Personal identification details of the tree owner | MUST |
 contact-details | Contact details{} | Contact information for the tree owner | MAY | 
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -26,7 +30,7 @@ address-text | Address Text | Flexible field for capturing addresses | MUST |
 postcode | Postcode | The postal code | MAY | 
 
 
-**Contact details model**
+**Contact details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -34,7 +38,7 @@ email | Email | The email address that can be used for electronic correspondence
 phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
 
 
-**Phone number model**
+**Phone number component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

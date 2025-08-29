@@ -3,10 +3,14 @@
 Information about addresses of properties adjacent to the development site
 
 
+**Adjacent premises module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | addresses | Addresses[]{} | A list of addresses for the adjoining properties |  | MUST |  |
 
 
-**Address model**
+**Address component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

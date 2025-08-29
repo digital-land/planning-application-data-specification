@@ -2,12 +2,17 @@
 
 Information about non-residential floorspace changes including use class details and room counts for specific accommodation types
 
-| non-residential-change | Non residential change | Does the proposal involve the loss, gain, or change of non-residential floorspace? |  | MUST |  |
-| floorspace-details | Floorspace details[]{} | List of non-residential floorspace changes by use class |  | MAY | Rule: is a MUST if `non-residential-change` is `True` |
+**Non residential floorspace module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
+| non-residential-change | Non residential change | Does the proposal involve the loss, gain, or change of non-residential floorspace? | full | MUST |  |
+| non-residential-change-outline | Non residential change | Does the proposal involve the loss, gain, or change of non-residential floorspace? | outline | MUST | Select from the **yes-no-unknown** enum. this is only used in outline applications where unknown is an option |
+| floorspace-details | Floorspace details[]{} | List of non-residential floorspace changes by use class |  | MAY |  |
 | room-details | Room details[]{} | List of room changes for hotels, residential institutions and hostels |  | MAY | Required if change to hotels, residential institutions and hostel floorspace (C1, C2, C2A use classes) |
 
 
-**Floorspace details model**
+**Floorspace details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -19,7 +24,7 @@ total-gross-proposed | Total gross proposed | Total gross internal floorspace pr
 net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace
 
 
-**Room details model**
+**Room details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

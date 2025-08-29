@@ -3,11 +3,15 @@
 Contact details for the applicant or applicants, including email and phone numbers
 
 
+**Applicant contact details module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component |  | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. |  | MUST |  |
 
 
-**Contact details model**
+**Contact details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -15,7 +19,7 @@ email | Email | The email address that can be used for electronic correspondence
 phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
 
 
-**Phone number model**
+**Phone number component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

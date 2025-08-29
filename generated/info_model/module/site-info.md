@@ -4,13 +4,17 @@ Additional information about the development site including area,
 existing use, constraints, and supporting documentation
 
 
+**Site information module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | site-area | Site area{} | The total area of the site where development is proposed |  | MUST |  |
 | existing-use | Existing use[]{} | Structured information on the current use of the site |  | MUST |  |
 | known-constraints | Known constraints[] | A list of the known constraints affecting the site |  | MUST | Select from the **site-constraint** enum |
 | supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used |  | MAY |  |
 
 
-**Site area model**
+**Site area component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -19,7 +23,7 @@ unit | Unit | Unit of measurement for a value | MUST |
 provided-by | Provided by | Whether the information was provided by the applicant or calculated by the system | MAY | Select from the **provided-by** enum
 
 
-**Existing use model**
+**Existing use component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -27,7 +31,7 @@ uses | Uses[]{} | List of applicable uses for a site or development | MUST |
 floorspace | Floorspace | Total floorspace for a use in square metres | MUST | 
 
 
-**Supporting document model**
+**Supporting document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -36,7 +40,7 @@ name | Name | A name of a person | MUST |
 details | Details | Additional details or information about an item | MAY | 
 
 
-**Use model**
+**Use component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

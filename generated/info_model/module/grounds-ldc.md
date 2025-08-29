@@ -4,6 +4,10 @@ Grounds on which a lawful development certificate is being sought,
 including supporting evidence and explanations
 
 
+**Grounds for lawful development certificate module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | grounds-pre-2024 | Grounds pre 2024[] | List of grounds pre 2024-04-25 under which the certificate is sought |  | MAY | Select from the **grounds-ldc-pre-apr-2024** enum |
 | grounds-post-2024 | Grounds post 2024[] | List of grounds post 2024-04-25 under which the certificate is sought |  | MAY | Select from the **grounds-ldc-post-apr-2024** enum |
 | other-details | Other details | Explanation if other ground is selected |  | MAY |  |
@@ -11,7 +15,7 @@ including supporting evidence and explanations
 | reason | Reason | A textual reason |  | MUST |  |
 
 
-**Supporting applications model**
+**Supporting applications component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

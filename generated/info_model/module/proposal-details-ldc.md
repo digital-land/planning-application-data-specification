@@ -2,6 +2,10 @@
 
 Details of the proposal for lawful development certificate applications
 
+**Proposal details LDC module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | proposal-incl-building-operations | Proposal incl building operations | Does the proposal include building operations? |  | MUST | For lawful development certificate for proposed work |
 | proposal-building-operations-description | Proposal building operations description | Description of the building operations included in the proposal |  | MAY | Rule: is a MUST if `proposal-incl-building-operations` is `True` |
 | proposal-incl-change-of-use | Proposal incl change of use | Does the proposal include a change of use? |  | MUST |  |

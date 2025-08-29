@@ -4,10 +4,14 @@ Details about the applicants for the planning application,
 including their personal information and contact details
 
 
+**Applicant details module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicants | Applicants[]{} |  |  | MUST |  |
 
 
-**Applicant model**
+**Applicant component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -15,7 +19,7 @@ reference | Reference | A unique reference for the data item | MUST |
 person | Person{} | Detail to help identify a person | MUST | 
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

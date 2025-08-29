@@ -3,6 +3,10 @@
 Information about what development, works or change of use is being proposed
 
 
+**Description of the proposal module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | proposal-description | Proposal description | A description of what is being proposed, including the development, works, or change of use | advertising, demolition-con-area, full, hh, lbc, outline | MUST |  |
 | reserved-matters | Reserved matters[] | Identifies which reserved matters are being submitted for approval as part of this application | outline, reserved-matters | MUST | Select from the **reserved-matter-type** enum |
 | related-application | Related application{} | Details about the approved development, as shown in the decision letter | reserved-matters | MUST |  |
@@ -14,7 +18,7 @@ Information about what development, works or change of use is being proposed
 | is-psi | Is public service infrastructure | For applications made on or after 1 August 2021, is the proposal for public service infrastructure development | full | MUST |  |
 
 
-**Related application details model**
+**Related application details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

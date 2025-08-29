@@ -3,6 +3,10 @@
 Information about trees and hedges on or adjacent to the development site, including any that pose risks or need to be removed
 
 
+**Trees and hedges information module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | trees-on-site | Trees on site | Whether trees or hedges are present on the proposed development site | full;outline-some;extraction-oil-gas | MUST |  |
 | trees-on-adj-land | Trees on adjacent land | Whether trees or hedges on land adjacent to the proposed development site could influence the development or might be important as part of the local landscape character | full;outline-some;extraction-oil-gas | MUST |  |
 | has-falling-trees-risk | Falling trees risk | Whether there are falling trees on-premises or adjacent premises that are a risk to the development | hh | MUST |  |
@@ -11,7 +15,7 @@ Information about trees and hedges on or adjacent to the development site, inclu
 | tree-removal-plan | Tree removal plan{} | Details of document showing location of trees and hedges to be removed or pruned | hh | MAY | Rule: is a MUST if `tree-removal` is `True` |
 
 
-**Supporting document model**
+**Supporting document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

@@ -4,11 +4,15 @@ Details of trees and proposed work to them, including identification,
 species and work descriptions
 
 
+**Identification of tree(s) and description of works module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | description | Description | Description of work applicant wishes to carry out, including identifying the trees, species and setting out the work |  | MUST |  |
 | tree-details | Tree details[]{} | Details of each tree that is part of the proposal |  | MAY |  |
 
 
-**Tree details model**
+**Tree details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

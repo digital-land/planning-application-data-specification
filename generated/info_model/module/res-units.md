@@ -4,6 +4,10 @@ Information about residential units including existing and proposed unit counts,
 with detailed breakdowns by tenure and housing type
 
 
+**Residential units module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | will-residential-units-change | Residential unit change | Proposal includes the gain, loss or change of use of residential units |  | MUST |  |
 | residential-unit-summary | Residential unit summary[]{} | Breakdown of unit counts by tenure and housing type |  | MAY | Rule: is a MUST if `will-residential-units-change` is `True` |
 | total-existing-units | Total existing units | The total number of existing units |  | MUST |  |
@@ -11,7 +15,7 @@ with detailed breakdowns by tenure and housing type
 | net-change | Net change | Calculated net change in units |  | MUST |  |
 
 
-**Residential unit summary model**
+**Residential unit summary component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -21,7 +25,7 @@ existing-unit-breakdown | Existing unit breakdown[]{} | Number of existing units
 proposed-unit-breakdown | Proposed unit breakdown[]{} | Number of proposed units by bedroom count | MAY | 
 
 
-**Unit quantities model**
+**Unit quantities component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -30,7 +34,7 @@ units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken dow
 total-units | Total units | Total number of units | MAY | 
 
 
-**Bedroom count model**
+**Bedroom count component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

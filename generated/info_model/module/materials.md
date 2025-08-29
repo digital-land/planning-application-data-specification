@@ -3,12 +3,16 @@
 Information about the materials used in the development, including both existing and proposed materials
 
 
+**Materials module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | building-elements | Building elements[]{} | Details of materials for a specific building element such as walls, roof, windows or doors |  | MUST |  |
 | additional-material-information | Additional material information | Additional context or details about the materials to be used in the development |  | MUST |  |
 | supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used |  | MAY | Rule: is a MUST if `additional-material-information` is `True` |
 
 
-**Building element model**
+**Building element component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -19,7 +23,7 @@ materials-not-applicable | Materials not applicable | Indicates this building el
 materials-not-known | Materials not known | Indicates the materials for this building element are not yet known | MAY | 
 
 
-**Supporting document model**
+**Supporting document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

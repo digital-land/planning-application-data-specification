@@ -23,14 +23,19 @@ Prospective use of the site
 * [Site details](#site-details)
 * [Site Visit Details](#site-visit-details)
 
+### Codelists
+
+
 # Application fields
 
 Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Application fields module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
 | application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-sub-type** enum |
@@ -41,7 +46,7 @@ application types, submission details, modules, documents, and fees
 | fee | Fee{} | The fee payable for the application including amounts and transaction details | MAY |  |
 
 
-**Document model**
+**Document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -52,7 +57,7 @@ document-types | Document types[] | List of codelist references that the documen
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
-**Fee model**
+**Fee component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -61,7 +66,7 @@ amount-paid | Amount paid | The amount paid towards the application fee | MUST |
 transactions | Transactions[] | References to payments or financial transactions related to this application | MAY | 
 
 
-**File model**
+**File component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -88,13 +93,15 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 Contact details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Agent contact details module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | agent-reference | Agent reference | A reference to an agent object | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
 
-**Contact details model**
+**Contact details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -102,7 +109,7 @@ email | Email | The email address that can be used for electronic correspondence
 phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
 
 
-**Phone number model**
+**Phone number component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -116,12 +123,14 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 Details of the agent acting on behalf of the applicant
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Agent details module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | agent | agent{} | Details of the agent | MAY |  |
 
 
-**Agent obj model**
+**Agent obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -131,7 +140,7 @@ company | Company | The name of a company (that the agent works for) | MAY |
 user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -148,13 +157,15 @@ postcode | Postcode | The postal code | MAY |
 Contact details for the applicant or applicants, including email and phone numbers
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Applicant contact details module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | applicant-reference | Applicant reference | Reference to match contact details to a named individual from the applicant details component | MUST |  |
 | contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
 
 
-**Contact details model**
+**Contact details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -162,7 +173,7 @@ email | Email | The email address that can be used for electronic correspondence
 phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
 
 
-**Phone number model**
+**Phone number component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -180,12 +191,14 @@ Details about the applicants for the planning application,
 including their personal information and contact details
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Applicant details module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | applicants | Applicants[]{} |  | MUST |  |
 
 
-**Applicant model**
+**Applicant component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -193,7 +206,7 @@ reference | Reference | A unique reference for the data item | MUST |
 person | Person{} | Detail to help identify a person | MUST | 
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -213,8 +226,10 @@ postcode | Postcode | The postal code | MAY |
 Identifies the national requirement types that apply to this application type
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Checklist module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | national-req-types | National requirement types[] | List of the document types required for the given application type | MUST |  |
 
 **Validation rules**
@@ -228,8 +243,10 @@ Information about any conflicts of interest between the applicant/agent and the 
 including relationships with staff or elected members
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Conflict of interest module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 
 **Validation rules**
 
@@ -240,8 +257,10 @@ including relationships with staff or elected members
 Declaration by the applicant or agent confirming the accuracy of the information provided
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Declaration module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | name | Name | A name of a person | MUST |  |
 | declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
 | declaration-date | Declaration date | The date the declaration was made | MUST |  |
@@ -259,8 +278,10 @@ a lawful development certificate application, including lawful justification,
 use classification, and supporting documentary evidence
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Grounds for application (information about the existing use(s)) module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | use-lawful-reason | Use lawful reason | Explanation of why the existing or last use is considered lawful, 
 providing justification for a lawful development certificate application
  | MUST |  |
@@ -269,7 +290,7 @@ providing justification for a lawful development certificate application
 | specified-use | Specified use | A specified use if no applicable use class is available | MAY | Rule: is a MUST if `use` is `sui`. Rule: is a MUST if `use` is `other` |
 
 
-**Document model**
+**Document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -280,7 +301,7 @@ document-types | Document types[] | List of codelist references that the documen
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
-**File model**
+**File component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -303,8 +324,10 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 Information about the proposed use class, operation type, and supporting reasoning for lawful development certificate applications
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Grounds for proposed use module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | use | Use | State proposed use class | MAY | Select from the **use-class** enum. an option needs to be "other" |
 | specified-use | Specified use | A specified use if no applicable use class is available | MAY |  |
 | operation-type | Operation type | Whether the proposed use is temporary or permanent | MUST | Select from the **operation-type** enum |
@@ -322,8 +345,10 @@ Details of the applicant's interest in land or listed buildings and information 
 other interested parties including owners and persons with interests in the property
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Interest details module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | applicant-interest | Applicant interest | Description of the applicant's interest in the land | MUST |  |
 | owner-details | Owner details[]{} | Details of property owners including their personal information and notification status | MAY |  |
 | interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status | MAY | Rule: is a MUST if `applicant-interest` is `none` |
@@ -332,7 +357,7 @@ other interested parties including owners and persons with interests in the prop
 | permission-not-obtained-details | Permission not obtained details | Details explaining why permission from the land owner has not been obtained for the advertisement display | MAY |  |
 
 
-**LDC Owner Details model**
+**LDC Owner Details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -340,7 +365,7 @@ person | Person{} | Personal details of the property owner | MUST |
 informed-of-application | Informed of application | Whether the owner has been informed of the application | MUST | 
 
 
-**LDC Interested Person model**
+**LDC Interested Person component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -350,7 +375,7 @@ informed-of-application | Informed of application | Whether the person has been 
 reason-not-informed | Reason not informed | Reason why a person was not informed of the application | MAY | 
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -373,8 +398,10 @@ postcode | Postcode | The postal code | MAY |
 Information about any pre-application advice sought from the planning authority
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Pre-application advice module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | advice-sought | Pre-application advice sought | Whether pre-application advice has been sought from the planning authority | MUST |  |
 | officer-name | Officer name | Name of the planning officer who provided the pre-application advice | MAY | Rule: is a MUST if `advice-sought` is `True` |
 | reference | Reference | A unique reference for the data item | MAY | Rule: is a MUST if `advice-sought` is `True` |
@@ -387,8 +414,10 @@ Information about any pre-application advice sought from the planning authority
 
 Details of the proposal for lawful development certificate applications
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Proposal details LDC module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | proposal-incl-building-operations | Proposal incl building operations | Does the proposal include building operations? | MUST | For lawful development certificate for proposed work |
 | proposal-building-operations-description | Proposal building operations description | Description of the building operations included in the proposal | MAY | Rule: is a MUST if `proposal-incl-building-operations` is `True` |
 | proposal-incl-change-of-use | Proposal incl change of use | Does the proposal include a change of use? | MUST |  |
@@ -411,12 +440,14 @@ Information about the location and extent of the site where development
 or works are proposed
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Site details module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
 
 
-**Site location model**
+**Site location component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -432,8 +463,8 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 **Validation rules**
 
-- At least one site-location must be provided for tree works applications
-- Exactly one site-location for all other applications types
+- {'description': 'At least one site-location must be provided for tree works applications', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'in': ['tree-works']}}, 'require': {'min': 1}}
+- {'description': 'Exactly one site-location for all other applications types', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'not': ['tree-works']}}, 'require': {'exact': 1}}
 - If easting is provided, northing must also be provided and vice versa
 - If latitude is provided, longitude must also be provided and vice versa
 - Site boundary must be valid GeoJSON
@@ -445,15 +476,17 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 Details needed to support a site visit by the planning authority
 
 
-| reference | name | description | only for application | requirement | notes |
-| --- | --- | --- | --- | --- | --- |
+**Site Visit Details module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
 | can-be-seen-from | Site seen from public area | Can site be seen from a public road, public footpath, bridleway or other public land | MUST |  |
 | contact-type | Site visit contact type | Indicates who the authority should contact to arrange a site visit | MUST | Select from the **site-visit-contact-type** enum |
 | contact-reference | Contact reference | The reference of the applicant or agent who should be contacted for site visits | MAY |  |
 | other-contact | Other site visit contact{} | Details of specifically named contact for site visits | MAY | Rule: is a MUST if `contact-type` is `other` |
 
 
-**Other contact model**
+**Other contact component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

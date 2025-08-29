@@ -3,6 +3,10 @@
 Information about changes to access arrangements and public rights of way
 
 
+**Access and rights of way module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | new-altered-vehicle | New or altered vehicle access | Is a new or altered vehicle access proposed to/from the public highway |  | MUST | Select from the **rights-of-way-answer** enum |
 | new-altered-pedestrian | New or altered pedestrian access | Is a new or altered pedestrian access proposed to/from the public highway |  | MUST | Select from the **rights-of-way-answer** enum |
 | change-right-of-way | Change to right of way | Will the proposal change public rights of way (diversion/extinguishment/creation) | full, hh, outline | MUST | Select from the **rights-of-way-answer** enum |
@@ -13,7 +17,7 @@ Information about changes to access arrangements and public rights of way
 | supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used |  | MAY |  |
 
 
-**Supporting document model**
+**Supporting document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

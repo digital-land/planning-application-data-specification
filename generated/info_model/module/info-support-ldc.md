@@ -4,6 +4,10 @@ Information to support Lawful Development Certificate applications including
 details of existing use, interruptions, and changes to support evidence of lawfulness
 
 
+**Information to support LDC module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | existing-use-start-date | Existing use start date | Date when the existing use of the land or building commenced, in YYYY-MM-DD format |  | MUST |  |
 | has-existing-use-interrupted | Existing use interrupted | Indicating whether the existing use has been interrupted since it commenced |  | MUST |  |
 | interruption-details | Interruption details | Details of any interruption to the existing use including dates and circumstances |  | MAY | Rule: is a MUST if `has-existing-use-interrupted` is `True` |

@@ -4,6 +4,10 @@ Information about why applicant wishes planning condition(s) to be removed or ch
 and how the condition should vary for s73 applications
 
 
+**Condition removal or variation module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | reason | Reason | The reason why the applicant wishes condition(s) to be removed or changed |  | MUST |  |
 | condition-change | Condition change | State how the condition should vary |  | MAY |  |
 

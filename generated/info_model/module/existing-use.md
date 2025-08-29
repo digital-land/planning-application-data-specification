@@ -3,6 +3,10 @@
 Information about the current and previous use of the site, including contamination status and supporting documents.
 
 
+**Existing use module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | existing-use-details | Existing use details[]{} | List of existing site uses and related land areas |  | MUST |  |
 | site-vacant | Site vacant | Is the site currently vacant |  | MUST |  |
 | last-use-details | Last use details | Description of the last use of the site |  | MAY | Rule: is a MUST if `site-vacant` is `True` |
@@ -13,7 +17,7 @@ Information about the current and previous use of the site, including contaminat
 | contamination-assessment | Contamination assessment | Reference to contamination assessment document |  | MAY |  |
 
 
-**Existing use detail model**
+**Existing use detail component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

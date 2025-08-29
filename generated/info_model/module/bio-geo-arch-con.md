@@ -4,6 +4,10 @@ Assessment of potential impacts on protected species, important habitats,
 biodiversity features, geological features, and archaeological features
 
 
+**Biodiversity, geological and archaeological conservation module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | protected-species-impact | Protected species impact | Where is there a likelihood of protected and priority species being affected? |  | MUST | Select from the **affected-area-type** enum |
 | biodiversity-features-impact | Biodiversity features impact | Where is there a likelihood of important habitats or biodiversity features being affected? |  | MUST | Select from the **affected-area-type** enum |
 | geological-features-impact | Geological features impact | Where is there a likelihood of features of geological conservation importance being affected? |  | MUST | Select from the **affected-area-type** enum |

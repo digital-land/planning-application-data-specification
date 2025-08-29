@@ -4,6 +4,10 @@ Information about flood risk assessments for planning applications including flo
 data sources, assessment documents, watercourse proximity, flood risk impacts, and surface water disposal methods
 
 
+**Flood risk assessment module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | flood-risk-area | Flood risk area | Is the site within an area at risk of flooding? |  | MUST |  |
 | data-provided-by | Data provided by | Who provided the data: Applicant or System/Service? |  | MAY | Select from the **provided-by** enum. opens possibility for services to work it out and not rely on the applicant to know |
 | flood-risk-assessment | Flood risk assessment | Reference of the flood risk assessment document |  | MAY | Rule: is a MUST if `flood-risk-area` is `True` |

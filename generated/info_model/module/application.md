@@ -4,6 +4,10 @@ Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
 
+**Application fields module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item |  | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application |  | MUST | Select from the **application-type** enum |
 | application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type |  | MAY | Select from the **application-sub-type** enum |
@@ -14,7 +18,7 @@ application types, submission details, modules, documents, and fees
 | fee | Fee{} | The fee payable for the application including amounts and transaction details |  | MAY |  |
 
 
-**Document model**
+**Document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -25,7 +29,7 @@ document-types | Document types[] | List of codelist references that the documen
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
-**Fee model**
+**Fee component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -34,7 +38,7 @@ amount-paid | Amount paid | The amount paid towards the application fee | MUST |
 transactions | Transactions[] | References to payments or financial transactions related to this application | MAY | 
 
 
-**File model**
+**File component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

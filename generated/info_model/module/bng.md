@@ -5,13 +5,17 @@ including pre-development biodiversity value, habitat loss details, and
 supporting documentation
 
 
+**Biodiversity net gain module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | bng-exempt | Biodiversity gain exemption | Statement whether the biodiversity gain condition will apply if permission is granted. Householder applicants need to confirm the biodiversity gain condition does not apply. | hh | MUST |  |
 | bng-condition-applies | Biodiversity gain condition applies | Does the applicant believe the Biodiversity Gain Condition applies to this application | full, outline, demolition-con-area | MUST |  |
 | bng-condition-exemption-reasons | Biodiversity gain condition exemption reason[]{} | Reasons why BNG does not apply, referencing exemptions or transitional arrangements | full, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `False` |
 | bng-details | Biodiversity net gain details{} | Comprehensive details about biodiversity net gain assessment including pre-development value, habitat loss information, and supporting documentation | full, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `True` |
 
 
-**BNG exemption reason model**
+**BNG exemption reason component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -19,7 +23,7 @@ exemption-type | Exemption type | The type of biodiversity gain exemption from t
 reason | Reason | The reason the exemption applies to this proposal | MUST | 
 
 
-**Biodiversity net gain details model**
+**Biodiversity net gain details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -34,7 +38,7 @@ irreplaceable-habitats-details | Irreplaceable habitats details | Description an
 supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MUST | 
 
 
-**Habitat loss details model**
+**Habitat loss details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -43,7 +47,7 @@ pre-loss-biodiversity-value | Pre loss biodiversity value | Biodiversity value i
 supporting-evidence | Supporting evidence | Description or reference to supporting documents for habitat loss or degradation evidence | MAY | 
 
 
-**Supporting document model**
+**Supporting document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

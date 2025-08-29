@@ -3,11 +3,15 @@
 Information about related applications, previous proposals or demolitions for the site, including whether such proposals exist and details of any related applications
 
 
+**Related applications module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | has-related-applications | Has related applications | Are there any related applications, previous proposals or demolitions for the site |  | MUST |  |
 | related-applications | Related applications[]{} | List of related applications, previous proposals or demolitions for the site |  | MAY |  |
 
 
-**Related application details model**
+**Related application details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

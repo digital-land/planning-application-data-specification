@@ -4,13 +4,17 @@ Details of proposed development with specific provision for capturing both resid
 and non-residential elements, including dwelling numbers and non-residential use amounts
 
 
+**Description of the proposed development including any non-residential development module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | description | Description | Description of proposed development including non-residential development |  | MUST |  |
 | net-dwellings-min | Net dwellings minimum | The minimum number of net additional dwellings proposed as part of the development, accounting for any existing dwellings lost and new dwellings created |  | MUST |  |
 | net-dwellings-max | Net dwellings maximum | The maximum number of net additional dwellings proposed as part of the development, allowing for flexibility in the final housing numbers |  | MUST |  |
 | non-residential-use | Non-residential use[]{} | The amount of non-residential use, which can be expressed as floorspace, site area, or both |  | MUST |  |
 
 
-**Non-residential use model**
+**Non-residential use component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

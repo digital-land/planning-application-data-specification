@@ -4,6 +4,10 @@ Description of proposed development and assessment of impacts on
 amenity, air traffic, defence assets, and protected views
 
 
+**Description of work impacts and risks module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | description | Description | Description of proposed development including details of proposed work and external appearance |  | MUST |  |
 | dwellinghouse-height | Dwellinghouse height | Height from ground to highest point of roof in metres |  | MUST |  |
 | proposed-height | Proposed height | Height once the additional storeys have been added in metres |  | MUST |  |

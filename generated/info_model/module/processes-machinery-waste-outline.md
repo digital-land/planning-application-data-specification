@@ -4,13 +4,17 @@ Information about site activities, processes, and waste management development
 including facility types, capacities, and throughput details. Specifically for outline applications
 
 
+**Processes machinery waste module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | site-activity-details | Site activity details | Description of activities, processes, and end products including site operations, plant, ventilation, and machinery |  | MUST |  |
 | proposal-waste-management-outline | Proposal waste management outline variant | Whether the proposal involves waste management development (yes/no/unknown) |  | MUST | Select from the **yes-no-unknown** enum |
 | waste-management-outline | Waste management[]{} | List of waste management facilities involved in the proposal. Specifically for outline applications |  | MAY |  |
 | waste-streams | Waste streams throughput{} | Annual throughput for waste streams by waste type |  | MAY |  |
 
 
-**Waste management model**
+**Waste management component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -22,7 +26,7 @@ is-annual-throughput-known | Is annual throughput known | Whether the annual thr
 annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-annual-throughput-known` is `True`
 
 
-**Waste streams model**
+**Waste streams component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

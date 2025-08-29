@@ -3,6 +3,10 @@
 Information about ownership of the site and/or property for development, including agricultural tenants and notification requirements.
 
 
+**Ownership certificates and agricultural land declaration module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | sole-owner | Sole owner | Is the applicant the sole owner of the land? | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MUST |  |
 | agricultural-tenants | Agricultural tenants | Are there any agricultural tenants on the land? | hh, full, outline, demolition-con-area, s73, extraction-oil-gas | MUST |  |
 | owners-and-tenants | Owners and tenants[]{} | List of known owners and agricultural tenants | hh, full, outline, demolition-con-area, s73, extraction-oil-gas | MAY |  |
@@ -15,7 +19,7 @@ Information about ownership of the site and/or property for development, includi
 | signature-date | Signature date | Date when the ownership certificate was signed | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
 
 
-**Notified person model**
+**Notified person component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -23,7 +27,7 @@ person | Person{} | details of the owner (or tenant when not a listed building c
 notice-date | Notice date | Date when notice was served | MAY | 
 
 
-**Newspaper notice model**
+**Newspaper notice component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -31,7 +35,7 @@ newspaper-name | Newspaper name | Name of the newspaper where notice was publish
 publication-date | Publication date | Date when the notice was published | MUST | 
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

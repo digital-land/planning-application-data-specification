@@ -5,13 +5,17 @@ explaining why the certificate should be granted and why listed building
 consent is not required, with supporting documentary evidence
 
 
+**Grounds for application module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | grounds-for-application | Grounds for application | Reason(s) why Certificate of Lawfulness of Proposed Works should be granted,
 including explanation of why listed building consent is not required
  |  | MUST |  |
 | documents | Documents[]{} | List of submitted documents with references and details |  | MUST |  |
 
 
-**Document model**
+**Document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -22,7 +26,7 @@ document-types | Document types[] | List of codelist references that the documen
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
-**File model**
+**File component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --

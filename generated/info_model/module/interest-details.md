@@ -4,6 +4,10 @@ Details of the applicant's interest in land or listed buildings and information 
 other interested parties including owners and persons with interests in the property
 
 
+**Interest details module**
+
+| reference | name | description | only for application | requirement | notes |
+| --- | --- | --- | --- | --- | --- |
 | applicant-interest | Applicant interest | Description of the applicant's interest in the land |  | MUST |  |
 | owner-details | Owner details[]{} | Details of property owners including their personal information and notification status |  | MAY |  |
 | interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status |  | MAY | Rule: is a MUST if `applicant-interest` is `none` |
@@ -12,7 +16,7 @@ other interested parties including owners and persons with interests in the prop
 | permission-not-obtained-details | Permission not obtained details | Details explaining why permission from the land owner has not been obtained for the advertisement display |  | MAY |  |
 
 
-**LDC Owner Details model**
+**LDC Owner Details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -20,7 +24,7 @@ person | Person{} | Personal details of the property owner | MUST |
 informed-of-application | Informed of application | Whether the owner has been informed of the application | MUST | 
 
 
-**LDC Interested Person model**
+**LDC Interested Person component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
@@ -30,7 +34,7 @@ informed-of-application | Informed of application | Whether the person has been 
 reason-not-informed | Reason not informed | Reason why a person was not informed of the application | MAY | 
 
 
-**Person obj model**
+**Person obj component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
