@@ -662,7 +662,7 @@ specified-use | Specified use | A specified use if no applicable use class is av
 existing-gross-floorspace | Existing gross floorspace | Existing gross internal floorspace, in sqm | MUST | 
 floorspace-lost | Floorspace lost | Gross floorspace to be lost by change of use, in sqm | MUST | 
 total-gross-proposed | Total gross proposed | Total gross internal floorspace proposed, in sqm | MUST | 
-net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace
+net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace. This should be calculated automatically
 
 
 **Room details component**

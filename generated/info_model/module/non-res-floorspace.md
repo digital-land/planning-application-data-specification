@@ -23,7 +23,7 @@ specified-use | Specified use | A specified use if no applicable use class is av
 existing-gross-floorspace | Existing gross floorspace | Existing gross internal floorspace, in sqm | MUST | 
 floorspace-lost | Floorspace lost | Gross floorspace to be lost by change of use, in sqm | MUST | 
 total-gross-proposed | Total gross proposed | Total gross internal floorspace proposed, in sqm | MUST | 
-net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace
+net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace. This should be calculated automatically
 
 
 **Floorspace details component**
@@ -38,7 +38,7 @@ is-floorspace-lost-known | Is floorspace lost known | Whether the amount of floo
 floorspace-lost | Floorspace lost | Gross floorspace to be lost by change of use, in sqm | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-floorspace-lost-known` is `True`
 is-total-gross-proposed-known | Is total gross proposed known | Whether the total gross proposed floorspace is known | MAY | 
 total-gross-proposed | Total gross proposed | Total gross internal floorspace proposed, in sqm | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-total-gross-proposed-known` is `True`
-net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace
+net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace. This should be calculated automatically
 
 
 **Room details component**
