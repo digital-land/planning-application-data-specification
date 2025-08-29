@@ -1,4 +1,36 @@
 
+<a name="v0.1.27"></a>
+## [v0.1.27](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.26...v0.1.27) (2025-08-29)
+
+Resolve remaining phase 1 issues and improve tooling
+
+### ⚒️ Tooling
+
+* include list of codelists in contents of compiled specifications (commit [d3e9082](https://github.com/digital-land/planning-application-data-specification/commit/d3e9082aa6499ba1b96317dd0e563f5d58a105a4))
+* include contents of codelists in compiled specifications (commit [2218244](https://github.com/digital-land/planning-application-data-specification/commit/221824450ee638cca0e98f596cae7afdc3188fdf))
+* compiling specifications follows the extend attr for sub application types (commit [f652d0f](https://github.com/digital-land/planning-application-data-specification/commit/f652d0fc8fd776896f1354cc166ef5fd29d46e70))
+* add check to confirm codelist referenced exists (commit [7a604f2](https://github.com/digital-land/planning-application-data-specification/commit/7a604f2b7f692094e808cb7a31e577954b8eeee1))
+* set up tests for tooling code (commit [341b5fa](https://github.com/digital-land/planning-application-data-specification/commit/341b5faea76cb00e1499a2b379eb1bfdd7fb3f51))
+* refactor section that outputs markdown tables for info model (commit [89f6156](https://github.com/digital-land/planning-application-data-specification/commit/89f6156ddbd6f345c60aa9b01238b8ffdf81d72e))
+
+### 𝌭 Model changes
+
+* make it clear net-additional-floorspace should be calculated automatically (commit [c96afb9](https://github.com/digital-land/planning-application-data-specification/commit/c96afb9eea1ba7ec72580d7f7a4d7cd7749b3758))
+* handle variance in room-details component for outline applications (commit [f0b6304](https://github.com/digital-land/planning-application-data-specification/commit/f0b63044b8f950a59a608c91d5c44524bbd555e8))
+* handle variance in floorspace-details module for outline apps (commit [30e56c2](https://github.com/digital-land/planning-application-data-specification/commit/30e56c2f3a50d94eae1d791c3774d1102b93f6b3))
+* add non-residential-change-outline to handle unknown answer for outline applications (commit [ea4bff6](https://github.com/digital-land/planning-application-data-specification/commit/ea4bff647439dda47df2a405057bd3acdf6e93d3))
+* experiment with codifying a count-constraint (commit [a86a4c0](https://github.com/digital-land/planning-application-data-specification/commit/a86a4c0fc8acf661530f098bd64162ce01832aae))
+* add illumination-type codelist (commit [58af557](https://github.com/digital-land/planning-application-data-specification/commit/58af557e0846a039594e1d17c77c79b366c4ee84))
+
+### 🐛 Bug Fixes
+
+* typos in illumination-type codelist (commit [a619a04](https://github.com/digital-land/planning-application-data-specification/commit/a619a046456ab4022c685d26b5d4466e93ab3c37))
+* use correct field for outline applications, should be separate-recycling-arrangements-outline (commit [0eb59fc](https://github.com/digital-land/planning-application-data-specification/commit/0eb59fc24aceb0cac23a86d70be213eace313e39))
+* information model output for modules (commit [defdad5](https://github.com/digital-land/planning-application-data-specification/commit/defdad5d5837be43b247d38db83e28027f2a6434))
+* pass codelists to field checks (commit [88887b6](https://github.com/digital-land/planning-application-data-specification/commit/88887b64e68b3da45b32a6063f69152846e0e565))
+* references to codelists (commit [0e915d1](https://github.com/digital-land/planning-application-data-specification/commit/0e915d1ac8aed7c58ad5b1b1af566ba7e6ea0253))
+
+
 <a name="v0.1.26"></a>
 ## [v0.1.26](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.25...v0.1.26) (2025-08-27)
 
