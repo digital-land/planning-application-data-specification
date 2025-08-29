@@ -29,8 +29,8 @@ An application for all types of advertisements and signs
 
 * [Advertisement type](#advertisement-type)
 * [Contact priority](#contact-priority)
+* [Illumination type](#illumination-type)
 * [User role type](#user-role-type)
-* [illumination type](#illumination-type)
 
 # Application fields
 
@@ -566,16 +566,16 @@ Below are the codelists required to support this specification:
 | primary | Primary | The preferred item to use |
 | secondary | Secondary | The option to use if primary is not working |
 
+### Illumination type
+
+| reference | name | description |
+| --- | --- | --- |
+| static | Static | Illumination is constant and does not change or flash. |
+| intermittent | Intermittent | Illumination switches on and off or flashes at intervals. |
+
 ### User role type
 
 | reference | name | description |
 | --- | --- | --- |
 | agent | Agent | A professional agent working for the applicant |
 | proxy | Proxy | An individual working on behalf of the applicant but not in a professional capacity |
-
-### illumination type
-
-| reference | name | description |
-| --- | --- | --- |
-| static | Static | Illumination is constant and does not change or flash. |
-| intermittent | Intermittent | Illumination switches on and off or flashes at intervals. |
