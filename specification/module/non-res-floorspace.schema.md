@@ -17,12 +17,19 @@ fields:
       application-type:
         in: ['outline']
   - field: floorspace-details
+    applies-if:
+      application-type:
+        in: ['full']
     required-if:
-      any:
-        - field: non-residential-change
-          value: true
-        - field: non-residential-change-outline
-          value: true
+      - field: non-residential-change
+        value: true
+  - field: floorspace-details-outline
+    applies-if:
+      application-type:
+        in: ['outline']
+    required-if:
+      - field: non-residential-change-outline
+        value: true
   - field: room-details
     required-if:
       condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
