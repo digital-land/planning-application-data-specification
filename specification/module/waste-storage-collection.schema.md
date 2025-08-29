@@ -24,7 +24,7 @@ fields:
     applies-if:
       application-type:
         in: ['full']
-  - field: separate-recycling-arrangements
+  - field: separate-recycling-arrangements-outline
     required: true
     applies-if:
       application-type:
