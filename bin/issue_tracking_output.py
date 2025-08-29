@@ -155,7 +155,7 @@ def make_markdown_output(issue_tracking_data, modules):
     return "\n".join(markdown_lines)
 
 
-def write_markdown_to_file(markdown_content, filename="issue-tracking/index.md"):
+def write_markdown_to_file(markdown_content, filename="issue-tracking/README.md"):
     """
     Write markdown content to a file with the standard header.
 
