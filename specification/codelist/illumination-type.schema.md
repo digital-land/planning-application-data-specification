@@ -11,9 +11,9 @@ fields:
 github-discussion: 
 key-field: reference
 licence: ogl3
-name: illumination type
+name: Illumination type
 notes:
 organisation: government-organisation:D1342
-plural: illumination types
+plural: Illumination types
 source: data/codelist/illumination-type.csv
 ---
