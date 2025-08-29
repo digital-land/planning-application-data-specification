@@ -26,6 +26,7 @@ def format_fields_table(field_entries, fields_spec, table_type="main", app_type=
                 "| reference | name | description | requirement | notes |",
                 "| --- | --- | --- | --- | --- |",
             ]
+        else:
             lines = [
                 "| reference | name | description | only for application | requirement | notes |",
                 "| --- | --- | --- | --- | --- | --- |",
@@ -118,10 +119,11 @@ def generate_module(module_ref, specification, app_type=None):
         module.get("description", "") + "\n",
     ]
     # Top-level fields table
+    out.append(f"**{module.get('name', module_ref)} module**\n")
     out.append(format_main_module_table(module, fields_spec, app_type) + "\n")
     # Component tables
     for cname, component in related_components.items():
-        out.append(f"\n**{component.get('name', cname)} model**\n")
+        out.append(f"\n**{component.get('name', cname)} component**\n")
         out.append(
             format_component_table(component, fields_spec, app_type=app_type) + "\n"
         )
@@ -298,7 +300,7 @@ if __name__ == "__main__":
         #     "\n".join(generate_module("interest-details", specification)), "tmp/test-gen.md"
         # )
         # result = generate_module("res-units", specification, app_type="full")
-        # result = generate_module("demolition-reason", specification)
+        result = generate_module("demolition-reason", specification)
         # result = generate_module(
         #     "tree-work-details", specification, app_type="notice-trees-in-con-area"
         # )
