@@ -74,3 +74,17 @@ def split_field_in_dicts(
                 d[key] = split_string(val, separator)
 
     return target_list
+
+
+def make_hyperlink_cell(name: str, url: str) -> str:
+    """
+    Create a Google Sheets HYPERLINK formula string.
+
+    Args:
+        name (str): The text to display in the cell.
+        url (str): The URL to link to.
+
+    Returns:
+        str: A string that can be written into a Google Sheet cell.
+    """
+    return f'=HYPERLINK("{url}", "{name}")'
