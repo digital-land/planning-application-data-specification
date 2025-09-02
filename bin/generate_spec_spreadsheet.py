@@ -1,46 +1,15 @@
 from __future__ import annotations
 
 from collections import defaultdict
-from dataclasses import dataclass, field
-from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
 
+# dataclasses.field not needed here
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
+
+from models import ApplicationDef, ComponentDef, ComponentInstance, FieldDef, ModuleDef
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
-
-# ---------- Declarative model primitives ----------
-
-
-@dataclass
-class FieldDef:
-    ref: str
-    name: str
-    datatype: str = "string"
-    required: bool = False
-    description: str = ""
-
-
-@dataclass
-class ComponentDef:
-    ref: str
-    name: str
-    description: str = ""
-    fields: List[FieldDef] = field(default_factory=list)
-    components: List["ComponentDef"] = field(
-        default_factory=list
-    )  # allow nested components
-
-
-@dataclass
-class ModuleDef:
-    ref: str
-    name: str
-    description: str = ""
-    # Modules can have their own fields and/or nested components
-    fields: List[FieldDef] = field(default_factory=list)
-    components: List[ComponentDef] = field(default_factory=list)
-
 
 # ---------- Example minimal model (replace with your loader) ----------
 
@@ -118,7 +87,10 @@ MODULES: Dict[str, ModuleDef] = {
 HOUSEHOLDER = {
     "application": "hh",
     "name": "Householder planning application",
-    "description": "A simplified process for applications to alter or enlarge a single house (but not a flat), including works within the boundary/garden",
+    "description": (
+        "A simplified process for applications to alter or enlarge a single house (but not a flat), "
+        "including works within the boundary/garden"
+    ),
     "fields": [  # app-level fields
         {
             "field": "application",
@@ -147,12 +119,22 @@ def walk_component_paths(
     leading to the field (e.g. ['agent', 'person', 'first-name'] but we keep field separate).
     """
     rows: List[Tuple[List[str], FieldDef]] = []
-    # fields at this component level
-    for f in component.fields:
-        rows.append((prefix + [component.name], f))
-    # recurse into nested components
-    for c in component.components:
-        rows.extend(walk_component_paths(c, prefix + [component.name]))
+    # component may be a ComponentDef or a ComponentInstance wrapper
+    if isinstance(component, ComponentInstance):
+        comp = component.component
+        base = component.referenced_by_field.name
+        if component.referenced_by_field.cardinality == "n":
+            base += "[]"
+    else:
+        comp = component
+        base = comp.name
+
+    # comp.items preserves author-specified order; each item is FieldDef or ComponentDef/ComponentInstance
+    for item in getattr(comp, "items", comp.fields):
+        if isinstance(item, FieldDef):
+            rows.append((prefix + [base], item))
+        else:
+            rows.extend(walk_component_paths(item, prefix + [base]))
     return rows
 
 
@@ -163,13 +145,15 @@ def flatten_module_to_rows(mod: ModuleDef) -> List[Tuple[List[str], FieldDef]]:
       - we return (path_without_fieldname_components, field) so caller can split into fieldN cols.
     """
     rows: List[Tuple[List[str], FieldDef]] = []
-    # module-level fields (no component); path will just be [field_name]
-    for f in mod.fields:
-        rows.append(([mod.name], f))  # keep module name in path head for consistency
-    # component trees
-    for c in mod.components:
-        for comp_path, f in walk_component_paths(c, []):
-            rows.append((comp_path, f))
+    # module-level items may include fields and embedded components; preserve order
+    for item in mod.items:
+        if isinstance(item, FieldDef):
+            # simple module-level field: no component path
+            rows.append(([], item))
+        else:
+            # item may be ComponentDef or ComponentInstance; return its component path
+            for comp_path, f in walk_component_paths(item, []):
+                rows.append((comp_path, f))
     return rows
 
 
@@ -188,7 +172,7 @@ def auto_width(ws):
 
 
 def write_application_excel(
-    app: Dict[str, Any], modules_index: Dict[str, ModuleDef], out_dir: Path
+    app: ApplicationDef, modules_index: Dict[str, ModuleDef], out_dir: Path
 ) -> Path:
     """
     Writes one XLSX with columns:
@@ -201,37 +185,61 @@ def write_application_excel(
     ws = wb.active
     ws.title = "Specification"
 
-    app_code = app["application"]
-    app_desc = app["description"]
+    app_ref = app.application
+    app_desc = app.description
 
     # Build flat rows
     flat_rows: List[Dict[str, Any]] = []
 
-    # 1) Application-level fields
-    for fld in app.get("fields", []):
-        # top-level = the field name at the application level
-        top = fld["field"]
-        top_desc = fld["description"]
-        field_chain = [
-            fld["field"]
-        ]  # no nested components under app field in this example
-        flat_rows.append(
-            dict(
-                application=app_code,
-                application_description=app_desc,
-                top_level=top,
-                top_description=top_desc,
-                field_chain=field_chain,  # includes the final field name
-                description=fld.get("description", ""),
-                datatype=fld.get("datatype", "string"),
-                requirement="MUST" if fld.get("required", False) else "MAY",
+    # 1) Application-level items (fields and possibly embedded components)
+    for item in app.items:
+        if isinstance(item, FieldDef):
+            top = item.ref
+            top_desc = item.description
+            field_chain = [item.ref]
+            flat_rows.append(
+                dict(
+                    application=app_ref,
+                    application_description=app_desc,
+                    top_level=top,
+                    top_description=top_desc,
+                    field_chain=field_chain,
+                    description=item.description,
+                    datatype=getattr(item, "datatype", "string"),
+                    requirement=("MUST" if getattr(item, "required", False) else "MAY"),
+                )
             )
-        )
+        elif isinstance(item, ComponentInstance):
+            # embedded component at application level
+            for comp_path, f in walk_component_paths(item, []):
+                top = item.referenced_by_field.name
+                top_desc = item.referenced_by_field.description
+                subpath = (
+                    comp_path[1:] if comp_path and comp_path[0] == top else comp_path
+                )
+                field_name = f"{f.name}"
+                if f.cardinality == "n":
+                    field_name = f"{f.name}[]"
+                field_chain = subpath + [field_name]
+                flat_rows.append(
+                    dict(
+                        application=app_ref,
+                        application_description=app_desc,
+                        top_level=top,
+                        top_description=top_desc,
+                        field_chain=field_chain,
+                        description=f.description,
+                        datatype=f.datatype,
+                        requirement="MUST" if f.required else "MAY",
+                    )
+                )
+        else:
+            # defensive: skip unknown item types
+            continue
 
     # 2) Modules
-    for m in app.get("modules", []):
-        mod_id = m["module"]
-        mod = modules_index.get(mod_id)
+
+    for mod in app.modules:
         if not mod:
             continue
 
@@ -242,7 +250,7 @@ def write_application_excel(
         if not mod_rows:
             flat_rows.append(
                 dict(
-                    application=app_code,
+                    application=app_ref,
                     application_description=app_desc,
                     top_level=mod.name,
                     top_description=mod.description,
@@ -260,7 +268,7 @@ def write_application_excel(
                 field_chain = comp_path + [f.name]
                 flat_rows.append(
                     dict(
-                        application=app_code,
+                        application=app_ref,
                         application_description=app_desc,
                         top_level=top,
                         top_description=mod.description,
@@ -270,6 +278,21 @@ def write_application_excel(
                         requirement="MUST" if f.required else "MAY",
                     )
                 )
+
+    # If there are no rows, add a single empty placeholder so headers still render
+    if not flat_rows:
+        flat_rows.append(
+            dict(
+                application=app_ref or "",
+                application_description=app_desc or "",
+                top_level="",
+                top_description="",
+                field_chain=[""],
+                description="",
+                datatype="",
+                requirement="",
+            )
+        )
 
     # Figure out max depth of field_chain to create field1..N columns
     max_depth = max((len(r["field_chain"]) for r in flat_rows), default=1)
@@ -371,14 +394,22 @@ def write_application_excel(
     auto_width(ws)
 
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"{app_code}.xlsx"
+    out_path = out_dir / f"{app_ref}.xlsx"
     wb.save(out_path)
     return out_path
 
 
 # ---------- Run for all applications ----------
 if __name__ == "__main__":
+    from loader import load_specification_model
+
+    model = load_specification_model()
     output_dir = Path("tmp/app_specs")
-    for app in APPLICATIONS:
-        path = write_application_excel(app, MODULES, output_dir)
-        print("Wrote:", path)
+    # for app in APPLICATIONS:
+    #     path = write_application_excel(app, MODULES, output_dir)
+    #     print("Wrote:", path)
+    # test with a single one
+    path = write_application_excel(
+        model["applications"]["hh"], model["modules"], output_dir
+    )
+    print("Wrote:", path)

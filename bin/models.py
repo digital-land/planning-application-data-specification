@@ -55,6 +55,18 @@ class FieldDef:
 
 
 @dataclass
+class ComponentInstance:
+    """
+    Lightweight wrapper used when a field references a component.
+    Keeps the shared ComponentDef unchanged while preserving the
+    calling field reference for traversal/output.
+    """
+
+    component: ComponentDef
+    referenced_by_field: Optional[str] = None
+
+
+@dataclass
 class ComponentDef:
     ref: str
     name: str
@@ -98,7 +110,12 @@ class ComponentDef:
                     )
                     if component_item:
                         items.append(
-                            cls.from_spec(component_item, field_defs, component_index)
+                            ComponentInstance(
+                                component=cls.from_spec(
+                                    component_item, field_defs, component_index
+                                ),
+                                referenced_by_field=original_field_def,
+                            )
                         )
                 else:
                     # we might want to do overrides here
@@ -251,7 +268,12 @@ def resolve_items(raw_fields, field_defs, component_defs):
                 # resolve this component def
                 component_def = component_defs.get(original_field_def.component)
                 if component_def:
-                    items.append(component_def)
+                    items.append(
+                        ComponentInstance(
+                            component=component_def,
+                            referenced_by_field=original_field_def,
+                        )
+                    )
             else:
                 # we might want to do overrides here
                 items.append(original_field_def)
