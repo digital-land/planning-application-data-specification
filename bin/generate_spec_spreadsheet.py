@@ -4,7 +4,14 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
-from models import ApplicationDef, ComponentDef, ComponentInstance, FieldDef, ModuleDef
+from models import (
+    ApplicationDef,
+    ComponentDef,
+    ComponentInstance,
+    FieldDef,
+    FieldInstance,
+    ModuleDef,
+)
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
@@ -13,33 +20,41 @@ from openpyxl.utils import get_column_letter
 
 
 def walk_component_paths(
-    component: ComponentDef, prefix: List[str]
-) -> List[Tuple[List[str], FieldDef]]:
+    node: Any, prefix: List[str]
+) -> List[Tuple[List[str], FieldInstance]]:
     """
     Return list of (path_names, field) where path_names is the chain of component names
     leading to the field (e.g. ['agent', 'person', 'first-name'] but we keep field separate).
     """
-    rows: List[Tuple[List[str], FieldDef]] = []
-    # component may be a ComponentDef or a ComponentInstance wrapper
-    if isinstance(component, ComponentInstance):
-        comp = component.component
-        base = component.referenced_by_field.name
-        if component.referenced_by_field.cardinality == "n":
+    rows: List[Tuple[List[str], FieldInstance]] = []
+    # node can be a ComponentInstance, ComponentDef, or unexpectedly a FieldInstance
+    if isinstance(node, ComponentInstance):
+        comp_def = node.component
+        ref_field = node.referenced_by_field  # FieldInstance
+        base = ref_field.original.name
+        if ref_field.original.cardinality == "n":
             base += "[]"
+    elif isinstance(node, ComponentDef):
+        comp_def = node
+        base = comp_def.name
+    elif isinstance(node, FieldInstance):
+        # reached a field instance directly - return it as a leaf
+        rows.append((prefix, node))
+        return rows
     else:
-        comp = component
-        base = comp.name
+        # unknown node type
+        return rows
 
-    # comp.items preserves author-specified order; each item is FieldDef or ComponentDef/ComponentInstance
-    for item in getattr(comp, "items", comp.fields):
-        if isinstance(item, FieldDef):
+    # comp_def.items preserves author-specified order; each item is FieldInstance or ComponentInstance
+    for item in getattr(comp_def, "items", []):
+        if isinstance(item, FieldInstance):
             rows.append((prefix + [base], item))
         else:
             rows.extend(walk_component_paths(item, prefix + [base]))
     return rows
 
 
-def flatten_module_to_rows(mod: ModuleDef) -> List[Tuple[List[str], FieldDef]]:
+def flatten_module_to_rows(mod: ModuleDef) -> List[Tuple[List[str], FieldInstance]]:
     """
     Produce rows for a module. For each field:
       - path is [component1, component2, ..., field_name] (module name goes in 'top-level').
@@ -48,8 +63,8 @@ def flatten_module_to_rows(mod: ModuleDef) -> List[Tuple[List[str], FieldDef]]:
     rows: List[Tuple[List[str], FieldDef]] = []
     # module-level items may include fields and embedded components; preserve order
     for item in mod.items:
-        if isinstance(item, FieldDef):
-            # simple module-level field: no component path
+        if isinstance(item, FieldInstance):
+            # simple module-level field instance: no component path
             rows.append(([], item))
         else:
             # item may be ComponentDef or ComponentInstance; return its component path
@@ -61,9 +76,16 @@ def flatten_module_to_rows(mod: ModuleDef) -> List[Tuple[List[str], FieldDef]]:
 # ---------- Excel writing ----------
 
 
-def format_field_name(f: FieldDef) -> str:
-    name = f.name
-    if getattr(f, "cardinality", None) == "n":
+def format_field_name(f: Any) -> str:
+    # Accept either FieldDef or FieldInstance
+    if isinstance(f, FieldInstance):
+        orig = f.original
+        name = f.overrides.get("name") or orig.name
+        cardinality = f.overrides.get("cardinality") or orig.cardinality
+    else:
+        name = getattr(f, "name", "")
+        cardinality = getattr(f, "cardinality", None)
+    if cardinality == "n":
         name += "[]"
     return name
 
@@ -72,16 +94,19 @@ def requirement_label(required: bool) -> str:
     return "MUST" if required else "MAY"
 
 
-def make_row(application, app_desc, top, top_desc, field_chain, f: FieldDef):
+def make_row(application, app_desc, top, top_desc, field_chain, f: FieldInstance):
+    orig = f.original
+    overrides = f.overrides
+    requirement_level = overrides.get("required", orig.required)
     return {
         "application": application,
         "application_description": app_desc,
         "top_level": top,
         "top_description": top_desc,
         "field_chain": field_chain,
-        "description": f.description,
-        "datatype": getattr(f, "datatype", "string"),
-        "requirement": requirement_label(getattr(f, "required", False)),
+        "description": overrides.get("description", orig.description),
+        "datatype": getattr(orig, "datatype", "string"),
+        "requirement": requirement_label(requirement_level),
     }
 
 
@@ -122,18 +147,25 @@ def write_application_excel(
             top = item.ref
             top_desc = item.description
             field_chain = [item.ref]
-            flat_rows.append(make_row(app_ref, app_desc, top, top_desc, field_chain, item))
+            flat_rows.append(
+                make_row(app_ref, app_desc, top, top_desc, field_chain, item)
+            )
         elif isinstance(item, ComponentInstance):
             # embedded component at application level
             for comp_path, f in walk_component_paths(item, []):
-                top = item.referenced_by_field.name
-                top_desc = item.referenced_by_field.description
+                top = item.referenced_by_field.original.name
+                top_desc = (
+                    item.referenced_by_field.overrides.get("description")
+                    or item.referenced_by_field.original.description
+                )
                 subpath = (
                     comp_path[1:] if comp_path and comp_path[0] == top else comp_path
                 )
                 field_name = format_field_name(f)
                 field_chain = subpath + [field_name]
-                flat_rows.append(make_row(app_ref, app_desc, top, top_desc, field_chain, f))
+                flat_rows.append(
+                    make_row(app_ref, app_desc, top, top_desc, field_chain, f)
+                )
         else:
             # defensive: skip unknown item types
             continue
@@ -167,7 +199,9 @@ def write_application_excel(
                 top = mod.name
                 # field_chain is the component path + field name
                 field_chain = comp_path + [format_field_name(f)]
-                flat_rows.append(make_row(app_ref, app_desc, top, mod.description, field_chain, f))
+                flat_rows.append(
+                    make_row(app_ref, app_desc, top, mod.description, field_chain, f)
+                )
 
     # If there are no rows, add a single empty placeholder so headers still render
     if not flat_rows:

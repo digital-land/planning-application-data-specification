@@ -57,6 +57,16 @@ class FieldDef:
 
 
 @dataclass
+class FieldInstance:
+    """
+    Lightweight wrapper used when a field is instantiated. For example for a specific component or module
+    """
+
+    original: FieldDef
+    overrides: Dict[str, Any]
+
+
+@dataclass
 class ComponentInstance:
     """
     Lightweight wrapper used when a field references a component.
@@ -65,7 +75,7 @@ class ComponentInstance:
     """
 
     component: ComponentDef
-    referenced_by_field: Optional[FieldDef] = None
+    referenced_by_field: Optional[FieldInstance] = None
 
 
 @dataclass
@@ -105,6 +115,9 @@ class ComponentDef:
             original_field_def = field_defs.get(field_ref) if field_defs else None
 
             if original_field_def:
+                field_instance = FieldInstance(
+                    original=original_field_def, overrides=field_item
+                )
                 if original_field_def.component:
                     # resolve this component def
                     component_item = dict(
@@ -116,12 +129,11 @@ class ComponentDef:
                                 component=cls.from_spec(
                                     component_item, field_defs, component_index
                                 ),
-                                referenced_by_field=original_field_def,
+                                referenced_by_field=field_instance,
                             )
                         )
                 else:
-                    # we might want to do overrides here
-                    items.append(original_field_def)
+                    items.append(field_instance)
 
         # easy access attrs
         fields = [i for i in items if isinstance(i, FieldDef)]
@@ -266,6 +278,9 @@ def resolve_items(raw_fields, field_defs, component_defs):
         original_field_def = field_defs.get(field_ref) if field_defs else None
 
         if original_field_def:
+            field_instance = FieldInstance(
+                original=original_field_def, overrides=field_item
+            )
             if original_field_def.component:
                 # resolve this component def
                 component_def = component_defs.get(original_field_def.component)
@@ -273,10 +288,10 @@ def resolve_items(raw_fields, field_defs, component_defs):
                     items.append(
                         ComponentInstance(
                             component=component_def,
-                            referenced_by_field=original_field_def,
+                            referenced_by_field=field_instance,
                         )
                     )
             else:
                 # we might want to do overrides here
-                items.append(original_field_def)
+                items.append(field_instance)
     return items
