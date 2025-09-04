@@ -4,7 +4,7 @@ from typing import Dict
 import frontmatter
 
 # import here to avoid import-time cycles
-from models import ApplicationDef, ComponentDef, FieldDef, ModuleDef
+from models import ApplicationDef, ComponentDef, ComponentInstance, FieldDef, ModuleDef
 
 tables = {
     "application": {},
@@ -50,6 +50,11 @@ def load_specification_model():
         if f.ref:
             field_defs[f.ref] = f
 
+    # After we've loaded components (below) we'll attach resolved_component
+    # wrappers to any FieldDef that references a component. To do that we need
+    # component_index populated; we therefore defer creating ComponentInstance
+    # wrappers until after component_defs are built.
+
     # load component models
     component_defs = {}
     for component_ref, content in tables.get("component", {}).items():
@@ -57,6 +62,15 @@ def load_specification_model():
         c = ComponentDef.from_spec(component_def, field_defs, component_index)
         if c.ref:
             component_defs[c.ref] = c
+
+    # Now attach resolved_component ComponentInstance wrappers to field_defs
+    # where applicable. This lets consumers know which component a field
+    # references while preserving the shared ComponentDef.
+    for f in field_defs.values():
+        if f.component:
+            comp = component_defs.get(f.component)
+            if comp:
+                f.resolved_component = ComponentInstance(component=comp, referenced_by_field=f)
 
     # load module models
     module_defs = {}

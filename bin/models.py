@@ -14,9 +14,11 @@ class FieldDef:
     notes: str = ""
     # If this field is an object that references a component, `component` will
     # contain the component ref (string) from the spec. After resolving, the
-    # `resolved_component` attribute may hold the actual ComponentDef instance.
+    # `resolved_component` attribute may hold a ComponentInstance wrapper which
+    # preserves the calling field context while referencing the shared
+    # ComponentDef.
     component: Optional[str] = None
-    resolved_component: Optional["ComponentDef"] = None
+    resolved_component: Optional["ComponentInstance"] = None
     # cardinality in the spec is typically '1' or 'n'
     cardinality: str = "1"
     entry_date: Optional[str] = None
@@ -59,11 +61,11 @@ class ComponentInstance:
     """
     Lightweight wrapper used when a field references a component.
     Keeps the shared ComponentDef unchanged while preserving the
-    calling field reference for traversal/output.
+    calling field reference (FieldDef) for traversal/output.
     """
 
     component: ComponentDef
-    referenced_by_field: Optional[str] = None
+    referenced_by_field: Optional[FieldDef] = None
 
 
 @dataclass

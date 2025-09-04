@@ -1,8 +1,6 @@
 from __future__ import annotations
 
 from collections import defaultdict
-
-# dataclasses.field not needed here
 from pathlib import Path
 from typing import Any, Dict, List, Tuple
 
@@ -10,103 +8,6 @@ from models import ApplicationDef, ComponentDef, ComponentInstance, FieldDef, Mo
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Font
 from openpyxl.utils import get_column_letter
-
-# ---------- Example minimal model (replace with your loader) ----------
-
-# site-details → site-location → site-boundary
-site_location = ComponentDef(
-    ref="site-location",
-    name="site-location",
-    description="Where the proposed development sits.",
-    fields=[
-        FieldDef(
-            ref="site-boundary",
-            name="site-boundary",
-            datatype="geojson",
-            required=False,
-            description="Geometry of the site",
-        ),
-    ],
-)
-
-site_details = ModuleDef(
-    ref="site-details",
-    name="site-details",
-    description="Location and extent of the site.",
-    components=[site_location],
-)
-
-# agent-details → agent → person → first-name
-person = ComponentDef(
-    ref="person",
-    name="person",
-    fields=[
-        FieldDef(
-            ref="first-name",
-            name="first-name",
-            datatype="string",
-            required=True,
-            description="The first name of the individual",
-        ),
-        FieldDef(
-            ref="surname-name",
-            name="surname-name",
-            datatype="string",
-            required=True,
-            description="The surname of the individual",
-        ),
-    ],
-)
-agent = ComponentDef(
-    ref="agent",
-    name="agent",
-    components=[person],
-    fields=[
-        FieldDef(
-            ref="reference",
-            name="reference",
-            datatype="string",
-            required=True,
-            description="The reference of the agent",
-        ),
-    ],
-)
-agent_details = ModuleDef(
-    ref="agent-details",
-    name="agent-details",
-    description="Information about the agent.",
-    components=[agent],
-)
-
-MODULES: Dict[str, ModuleDef] = {
-    "site-details": site_details,
-    "agent-details": agent_details,
-}
-
-# Application definition (like your YAML example)
-HOUSEHOLDER = {
-    "application": "hh",
-    "name": "Householder planning application",
-    "description": (
-        "A simplified process for applications to alter or enlarge a single house (but not a flat), "
-        "including works within the boundary/garden"
-    ),
-    "fields": [  # app-level fields
-        {
-            "field": "application",
-            "required": True,
-            "datatype": "string",
-            "description": "Application identifier",
-        },
-    ],
-    "modules": [
-        {"module": "site-details"},
-        {"module": "agent-details"},
-    ],
-}
-
-APPLICATIONS = [HOUSEHOLDER]  # add more as needed
-
 
 # ---------- Traversal helpers ----------
 
@@ -160,6 +61,30 @@ def flatten_module_to_rows(mod: ModuleDef) -> List[Tuple[List[str], FieldDef]]:
 # ---------- Excel writing ----------
 
 
+def format_field_name(f: FieldDef) -> str:
+    name = f.name
+    if getattr(f, "cardinality", None) == "n":
+        name += "[]"
+    return name
+
+
+def requirement_label(required: bool) -> str:
+    return "MUST" if required else "MAY"
+
+
+def make_row(application, app_desc, top, top_desc, field_chain, f: FieldDef):
+    return {
+        "application": application,
+        "application_description": app_desc,
+        "top_level": top,
+        "top_description": top_desc,
+        "field_chain": field_chain,
+        "description": f.description,
+        "datatype": getattr(f, "datatype", "string"),
+        "requirement": requirement_label(getattr(f, "required", False)),
+    }
+
+
 def auto_width(ws):
     widths = defaultdict(int)
     for row in ws.iter_rows(values_only=True):
@@ -197,18 +122,7 @@ def write_application_excel(
             top = item.ref
             top_desc = item.description
             field_chain = [item.ref]
-            flat_rows.append(
-                dict(
-                    application=app_ref,
-                    application_description=app_desc,
-                    top_level=top,
-                    top_description=top_desc,
-                    field_chain=field_chain,
-                    description=item.description,
-                    datatype=getattr(item, "datatype", "string"),
-                    requirement=("MUST" if getattr(item, "required", False) else "MAY"),
-                )
-            )
+            flat_rows.append(make_row(app_ref, app_desc, top, top_desc, field_chain, item))
         elif isinstance(item, ComponentInstance):
             # embedded component at application level
             for comp_path, f in walk_component_paths(item, []):
@@ -217,22 +131,9 @@ def write_application_excel(
                 subpath = (
                     comp_path[1:] if comp_path and comp_path[0] == top else comp_path
                 )
-                field_name = f"{f.name}"
-                if f.cardinality == "n":
-                    field_name = f"{f.name}[]"
+                field_name = format_field_name(f)
                 field_chain = subpath + [field_name]
-                flat_rows.append(
-                    dict(
-                        application=app_ref,
-                        application_description=app_desc,
-                        top_level=top,
-                        top_description=top_desc,
-                        field_chain=field_chain,
-                        description=f.description,
-                        datatype=f.datatype,
-                        requirement="MUST" if f.required else "MAY",
-                    )
-                )
+                flat_rows.append(make_row(app_ref, app_desc, top, top_desc, field_chain, f))
         else:
             # defensive: skip unknown item types
             continue
@@ -265,19 +166,8 @@ def write_application_excel(
                 # top-level is the module name
                 top = mod.name
                 # field_chain is the component path + field name
-                field_chain = comp_path + [f.name]
-                flat_rows.append(
-                    dict(
-                        application=app_ref,
-                        application_description=app_desc,
-                        top_level=top,
-                        top_description=mod.description,
-                        field_chain=field_chain,
-                        description=f.description,
-                        datatype=f.datatype,
-                        requirement="MUST" if f.required else "MAY",
-                    )
-                )
+                field_chain = comp_path + [format_field_name(f)]
+                flat_rows.append(make_row(app_ref, app_desc, top, mod.description, field_chain, f))
 
     # If there are no rows, add a single empty placeholder so headers still render
     if not flat_rows:
