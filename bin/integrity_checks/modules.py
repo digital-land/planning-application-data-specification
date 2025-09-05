@@ -8,6 +8,7 @@ from integrity_checks.utils import has_reference_error, print_error
 # 3. every module must have entry-date and end-date attrs
 
 # . if applies-if attr with `application-type` then must be a valid application type TODO
+# applies-if condition should be a dict not a list TODO
 # . if required-if attr with `application-type` then must be a valid application type TODO
 # . if required-if attr with `field` then must be a valid field TODO
 
@@ -106,6 +107,45 @@ def check_attrs(modules):
     return not has_errors
 
 
+def check_applies_if_structure(modules):
+    """
+    Ensure that any `applies-if` condition in module field entries is a dict
+    (not a list). The model expects a mapping of conditions, for example:
+
+      applies-if:
+        application-type:
+          in: [outline, reserved-matters]
+
+    Some authors use a list of condition objects; flag those as errors.
+    """
+    has_errors = False
+
+    for module_name, module in modules.items():
+        module_fields = module.get("fields", [])
+        for idx, field_def in enumerate(module_fields):
+            applies_if = field_def.get("applies-if")
+            if applies_if is None:
+                continue
+            # if it's a list (common mistake) that's an error
+            if isinstance(applies_if, list):
+                print_error(
+                    "module",
+                    module_name,
+                    f"field #{field_def.get('field')} has 'applies-if' as a list; expected mapping/dict",
+                )
+                has_errors = True
+            # also reject other non-dict types
+            elif not isinstance(applies_if, dict):
+                print_error(
+                    "module",
+                    module_name,
+                    f"field #{field_def.get('field')} has 'applies-if' with unexpected type {type(applies_if).__name__}",
+                )
+                has_errors = True
+
+    return not has_errors
+
+
 def check_all(modules, fields):
     """Run all module integrity checks.
 
@@ -119,6 +159,7 @@ def check_all(modules, fields):
         (check_field_references, [modules, fields]),
         (check_dates, [modules]),
         (check_attrs, [modules]),
+        (check_applies_if_structure, [modules]),
     ]
 
     all_passed = True
