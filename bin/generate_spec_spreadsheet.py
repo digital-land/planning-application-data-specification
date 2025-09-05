@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from collections import defaultdict
 from pathlib import Path
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from models import (
     ApplicationDef,
@@ -13,14 +13,46 @@ from models import (
     ModuleDef,
 )
 from openpyxl import Workbook
-from openpyxl.styles import Alignment, Font
+from openpyxl.styles import Alignment, Border, Font, Side
 from openpyxl.utils import get_column_letter
 
 # ---------- Traversal helpers ----------
 
 
+def is_node_applicable(node: Any, application_type: Optional[str] = None):
+
+    if not application_type:
+        # there is no application type specified so all apply
+        return True
+
+    if isinstance(node, FieldInstance):
+        overrides = node.overrides
+        field = node.original
+
+    if isinstance(node, ComponentInstance):
+        overrides = node.referenced_by_field.overrides
+        field = node.referenced_by_field.original
+
+    applies_if_conditions = overrides.get("applies-if")
+
+    # assuming applies_if_conditions is dict with key "application-type"
+    if applies_if_conditions:
+        for k, app_type_cond in applies_if_conditions.items():
+            if not k == "application-type":
+                print("no an application-type condition")
+            allowed_types = app_type_cond.get("in", [])
+
+            if application_type not in allowed_types:
+                print(f"for {field.ref}", application_type, " not ", app_type_cond)
+                return False
+    else:
+        # if no applies-if condition then universally apply
+        return True
+    return True
+
+
 def walk_component_paths(
-    node: Any, prefix: List[str]
+    node: Any, prefix: List[str], application_type: Optional[str] = None
 ) -> List[Tuple[List[str], FieldInstance]]:
     """
     Return list of (path_names, field) where path_names is the chain of component names
@@ -29,32 +61,42 @@ def walk_component_paths(
     rows: List[Tuple[List[str], FieldInstance]] = []
     # node can be a ComponentInstance, ComponentDef, or unexpectedly a FieldInstance
     if isinstance(node, ComponentInstance):
-        comp_def = node.component
-        ref_field = node.referenced_by_field  # FieldInstance
-        base = ref_field.original.name
-        if ref_field.original.cardinality == "n":
-            base += "[]"
-    elif isinstance(node, ComponentDef):
-        comp_def = node
-        base = comp_def.name
-    elif isinstance(node, FieldInstance):
-        # reached a field instance directly - return it as a leaf
-        rows.append((prefix, node))
-        return rows
+        # check if node is applicable to this application type (if provided)
+        if is_node_applicable(node, application_type):
+            comp_def = node.component
+            ref_field = node.referenced_by_field  # FieldInstance
+            base = ref_field.original.name
+            if ref_field.original.cardinality == "n":
+                base += "[]"
+
+            # comp_def.items preserves author-specified order; each item is FieldInstance or ComponentInstance
+            for item in getattr(comp_def, "items", []):
+                level_prefix = prefix + [base]
+                # handle leaf nodes
+                if isinstance(item, FieldInstance):
+                    if is_node_applicable(item, application_type):
+                        rows.append((level_prefix, item))
+                else:
+                    # handle nested nodes
+                    # do we need to repeat this check?
+                    if is_node_applicable(item, application_type):
+                        rows.extend(
+                            walk_component_paths(item, level_prefix, application_type)
+                        )
+                    else:
+                        # component instance not applicable for this application type
+                        pass
+
     else:
         # unknown node type
-        return rows
+        print("unknown node type")
 
-    # comp_def.items preserves author-specified order; each item is FieldInstance or ComponentInstance
-    for item in getattr(comp_def, "items", []):
-        if isinstance(item, FieldInstance):
-            rows.append((prefix + [base], item))
-        else:
-            rows.extend(walk_component_paths(item, prefix + [base]))
     return rows
 
 
-def flatten_module_to_rows(mod: ModuleDef) -> List[Tuple[List[str], FieldInstance]]:
+def flatten_module_to_rows(
+    mod: ModuleDef, application_type: Optional[str] = None
+) -> List[Tuple[List[str], FieldInstance]]:
     """
     Produce rows for a module. For each field:
       - path is [component1, component2, ..., field_name] (module name goes in 'top-level').
@@ -65,10 +107,11 @@ def flatten_module_to_rows(mod: ModuleDef) -> List[Tuple[List[str], FieldInstanc
     for item in mod.items:
         if isinstance(item, FieldInstance):
             # simple module-level field instance: no component path
-            rows.append(([], item))
+            if is_node_applicable(item, application_type):
+                rows.append(([], item))
         else:
             # item may be ComponentDef or ComponentInstance; return its component path
-            for comp_path, f in walk_component_paths(item, []):
+            for comp_path, f in walk_component_paths(item, [], application_type):
                 rows.append((comp_path, f))
     return rows
 
@@ -121,8 +164,31 @@ def auto_width(ws):
         ws.column_dimensions[get_column_letter(i)].width = min(72, w + 2)
 
 
+def format_header_row(ws):
+    """
+    Format the header row of the worksheet.
+    ws = worksheet
+    """
+    thin_border = Side(border_style="thin", color="000000")
+    for cell in ws[1]:
+        cell.font = Font(bold=True)
+        cell.alignment = Alignment(wrap_text=True, vertical="top")
+        cell.border = Border(bottom=thin_border)
+
+
+def merge_cells_vertical(ws, col_num: int, row_start, row_end):
+    ws.merge_cells(
+        start_row=row_start, start_column=col_num, end_row=row_end, end_column=col_num
+    )
+    ws.cell(row=row_start, column=col_num).alignment = Alignment(
+        vertical="top", wrap_text=True
+    )
+
+
 def write_application_excel(
-    app: ApplicationDef, modules_index: Dict[str, ModuleDef], out_dir: Path
+    app: ApplicationDef,
+    modules_index: Dict[str, ModuleDef],
+    out_dir: Path,
 ) -> Path:
     """
     Writes one XLSX with columns:
@@ -177,7 +243,7 @@ def write_application_excel(
             continue
 
         # Produce rows for this module
-        mod_rows = flatten_module_to_rows(mod)
+        mod_rows = flatten_module_to_rows(mod, app_ref)
 
         # If a module has zero fields/components, still emit a placeholder row
         if not mod_rows:
@@ -231,9 +297,9 @@ def write_application_excel(
     header += [f"field{i}" for i in range(1, max_depth + 1)]
     header += ["description", "datatype", "requirement"]
     ws.append(header)
-    for c in ws[1]:
-        c.font = Font(bold=True)
-        c.alignment = Alignment(wrap_text=True, vertical="top")
+
+    # format the heeader row
+    format_header_row(ws)
 
     # Write rows while remembering blocks for merging
     start_row_for_app = ws.max_row + 1
@@ -244,19 +310,10 @@ def write_application_excel(
     def close_top_block(end_row: int):
         if top_block_start is not None and end_row >= top_block_start:
             # Merge the 'top-level' column (3rd column) for the block
-            ws.merge_cells(
-                start_row=top_block_start, start_column=3, end_row=end_row, end_column=3
-            )
-            ws.cell(row=top_block_start, column=3).alignment = Alignment(
-                vertical="top", wrap_text=True
-            )
+            merge_cells_vertical(ws, 3, top_block_start, end_row)
+
             # Merge the 'top-level-description' column (4th column) for the block
-            ws.merge_cells(
-                start_row=top_block_start, start_column=4, end_row=end_row, end_column=4
-            )
-            ws.cell(row=top_block_start, column=4).alignment = Alignment(
-                vertical="top", wrap_text=True
-            )
+            merge_cells_vertical(ws, 4, top_block_start, end_row)
 
     for row in flat_rows:
         # flush/rotate top-level block if the value changes
@@ -291,24 +348,9 @@ def write_application_excel(
     # Merge application/application-description across all rows
     end_row_for_app = ws.max_row
     if end_row_for_app >= start_row_for_app:
-        ws.merge_cells(
-            start_row=start_row_for_app,
-            start_column=1,
-            end_row=end_row_for_app,
-            end_column=1,
-        )
-        ws.merge_cells(
-            start_row=start_row_for_app,
-            start_column=2,
-            end_row=end_row_for_app,
-            end_column=2,
-        )
-        ws.cell(row=start_row_for_app, column=1).alignment = Alignment(
-            vertical="top", wrap_text=True
-        )
-        ws.cell(row=start_row_for_app, column=2).alignment = Alignment(
-            vertical="top", wrap_text=True
-        )
+        # merge application cells
+        merge_cells_vertical(ws, 1, start_row_for_app, end_row_for_app)
+        merge_cells_vertical(ws, 2, start_row_for_app, end_row_for_app)
 
     # Formatting
     for row in ws.iter_rows(min_row=2):
