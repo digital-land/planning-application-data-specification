@@ -9,12 +9,12 @@ fields:
   - field: hours-of-operation
     required: true
     applies-if:
-      - application-type:
-          in: ['full', 'outline', 'extraction-oil-gas']
+      application-type:
+        in: ['full', 'outline', 'extraction-oil-gas']
   - field: additional-information
     applies-if:
-      - application-type:
-          in: ['extraction-oil-gas']
+      application-type:
+        in: ['extraction-oil-gas']
 rules:
   - rule: "At least one hours-of-operation entry must be provided"
     condition: "hours-of-operation is not empty"

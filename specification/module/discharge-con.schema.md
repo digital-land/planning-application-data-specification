@@ -8,8 +8,8 @@ fields:
   - field: description-list
     required: true
     applies-if:
-      - application-type:
-          in: [approval-condition]
+      application-type:
+        in: [approval-condition]
 rules:
   - "Description-list must provide clear details of materials/details submitted for approval"
   - "This module is only applicable to approval-condition applications"

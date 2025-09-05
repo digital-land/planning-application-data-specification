@@ -8,12 +8,12 @@ description: |
 fields:
   - field: bng-exempt
     applies-if:
-      - application-type:
-          in: [hh]
+      application-type:
+        in: [hh]
     required: true
   - field: bng-condition-applies
     applies-if:
-      - application-type:
+      application-type:
           in: [full, outline, demolition-con-area]
     required: true
   - field: bng-condition-exemption-reasons
@@ -21,14 +21,14 @@ fields:
       - field: bng-condition-applies
         value: false
     applies-if:
-      - application-type:
+      application-type:
           in: [full, outline, demolition-con-area]
   - field: bng-details
     required-if:
       - field: bng-condition-applies
         value: true
     applies-if:
-      - application-type:
+      application-type:
           in: [full, outline, demolition-con-area]
 rules:
   - description: "For householder applications, only bng-exempt field is required"

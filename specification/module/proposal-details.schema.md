@@ -6,53 +6,52 @@ description: |
 fields:
   - field: proposal-description
     applies-if:
-      - application-type:
-          in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
+      application-type:
+        in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
     required: true
   - field: reserved-matters
     applies-if:
-      - application-type:
-          in: ["outline", "reserved-matters"]
+      application-type:
+        in: ["outline", "reserved-matters"]
     required: true
   - field: related-application
     applies-if:
-      - application-type:
-          in: [reserved-matters]
+      application-type:
+        in: [reserved-matters]
     required: true
   - field: proposal-started
     applies-if:
-      - application-type:
-          in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
+      application-type:
+        in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
     required: true
   - field: proposal-started-date
     applies-if:
-      - application-type:
-          in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
+      application-type:
+        in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
     required-if:
       - field: proposal-started
         value: true
   - field: proposal-completed
     applies-if:
-      - application-type:
-          in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
+      application-type:
+        in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
     required: true
   - field: proposal-completed-date
     applies-if:
-      - application-type:
-          in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
+      application-type:
+        in: ["advertising", "demolition-con-area", "full", "hh", "lbc", "outline"]
     required-if:
       - field: proposal-completed
         value: true
   - field: pip-reference
     applies-if:
-      - application-type:
-          in: ["full"]
+      application-type:
+        in: ["full"]
   - field: is-psi
     applies-if:
-      - application-type:
-          in: ["full"]
+      application-type:
+        in: ["full"]
     required: true
-
 rules:
   - rule: "proposal-description must be clear and concise"
   - rule: "proposal-started-date must not be in the future"
