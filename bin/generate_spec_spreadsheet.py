@@ -423,14 +423,9 @@ if __name__ == "__main__":
     from loader import load_specification_model
 
     model = load_specification_model()
-    output_dir = Path("tmp/app_specs")
-    # for app in APPLICATIONS:
-    #     path = write_application_excel(app, MODULES, output_dir)
-    #     print("Wrote:", path)
-    # test with a single one
-    path = write_application_excel(
-        model["applications"]["hh"],
-        output_dir,
-        incl_app_details=False,
-    )
-    print("Wrote:", path)
+    output_dir = Path("generated/spreadsheet")
+    for app in model["applications"].values():
+        # check it isn't a sub-type
+        if app.extends is None:
+            path = write_application_excel(app, output_dir, incl_app_details=False)
+            print("Wrote:", path)

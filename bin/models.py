@@ -207,6 +207,7 @@ class ApplicationDef:
     ref: str
     name: str
     description: str = ""
+    extends: Optional[str] = None
     synonyms: List[str] = field(default_factory=list)
     legislation: List[str] = field(default_factory=list)
     notes: str = ""
@@ -233,6 +234,7 @@ class ApplicationDef:
         app = app_content.get("application")
         name = app_content.get("name") or app
         description = app_content.get("description") or ""
+        extends = app_content.get("extends")
         synonyms = app_content.get("synonyms") or []
         legislation = app_content.get("legislation") or []
         notes = app_content.get("notes") or ""
@@ -257,6 +259,7 @@ class ApplicationDef:
             ref=app,
             name=name,
             description=description,
+            extends=extends,
             synonyms=synonyms,
             legislation=legislation,
             notes=notes,
