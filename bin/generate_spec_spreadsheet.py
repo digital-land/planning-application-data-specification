@@ -15,6 +15,7 @@ from models import (
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, Side
 from openpyxl.utils import get_column_letter
+from utils import to_anchor
 
 # ---------- Traversal helpers ----------
 
@@ -137,13 +138,19 @@ def requirement_label(required: bool) -> str:
     return "MUST" if required else "MAY"
 
 
-def make_row(application, app_desc, top, top_desc, field_chain, f: FieldInstance):
+def make_row(
+    application,
+    app_desc,
+    top,
+    top_desc,
+    field_chain,
+    f: FieldInstance,
+    incl_app_details: bool = True,
+):
     orig = f.original
     overrides = f.overrides
     requirement_level = overrides.get("required", orig.required)
-    return {
-        "application": application,
-        "application_description": app_desc,
+    row = {
         "top_level": top,
         "top_description": top_desc,
         "field_chain": field_chain,
@@ -151,6 +158,12 @@ def make_row(application, app_desc, top, top_desc, field_chain, f: FieldInstance
         "datatype": getattr(orig, "datatype", "string"),
         "requirement": requirement_label(requirement_level),
     }
+
+    if incl_app_details:
+        row["application"] = application
+        row["application_description"] = app_desc
+
+    return row
 
 
 def auto_width(ws):
@@ -185,10 +198,21 @@ def merge_cells_vertical(ws, col_num: int, row_start, row_end):
     )
 
 
+def set_cell_alignment(cell, alignment: Alignment):
+    cell.alignment = alignment
+
+
+def set_alignment_all(ws, vertical_alignment="top", start_from_row=2):
+    cell_alignment = Alignment(wrap_text=True, vertical=vertical_alignment)
+    for row in ws.iter_rows(min_row=start_from_row):
+        for cell in row:
+            set_cell_alignment(cell, cell_alignment)
+
+
 def write_application_excel(
     app: ApplicationDef,
-    modules_index: Dict[str, ModuleDef],
     out_dir: Path,
+    incl_app_details: bool = True,
 ) -> Path:
     """
     Writes one XLSX with columns:
@@ -203,6 +227,7 @@ def write_application_excel(
 
     app_ref = app.application
     app_desc = app.description
+    app_name = app.name
 
     # Build flat rows
     flat_rows: List[Dict[str, Any]] = []
@@ -214,7 +239,15 @@ def write_application_excel(
             top_desc = item.description
             field_chain = [item.ref]
             flat_rows.append(
-                make_row(app_ref, app_desc, top, top_desc, field_chain, item)
+                make_row(
+                    app_ref,
+                    app_desc,
+                    top,
+                    top_desc,
+                    field_chain,
+                    item,
+                    incl_app_details=incl_app_details,
+                )
             )
         elif isinstance(item, ComponentInstance):
             # embedded component at application level
@@ -230,7 +263,15 @@ def write_application_excel(
                 field_name = format_field_name(f)
                 field_chain = subpath + [field_name]
                 flat_rows.append(
-                    make_row(app_ref, app_desc, top, top_desc, field_chain, f)
+                    make_row(
+                        app_ref,
+                        app_desc,
+                        top,
+                        top_desc,
+                        field_chain,
+                        f,
+                        incl_app_details=incl_app_details,
+                    )
                 )
         else:
             # defensive: skip unknown item types
@@ -247,18 +288,18 @@ def write_application_excel(
 
         # If a module has zero fields/components, still emit a placeholder row
         if not mod_rows:
-            flat_rows.append(
-                dict(
-                    application=app_ref,
-                    application_description=app_desc,
-                    top_level=mod.name,
-                    top_description=mod.description,
-                    field_chain=[""],  # no field
-                    description="",
-                    datatype="",
-                    requirement="",
-                )
-            )
+            row = {
+                "top_level": mod.name,
+                "top_description": mod.description,
+                "field_chain": [""],  # no field
+                "description": "",
+                "datatype": "",
+                "requirement": "",
+            }
+            if incl_app_details:
+                row["application"] = app_ref
+                row["application_description"] = app_desc
+            flat_rows.append(row)
         else:
             for comp_path, f in mod_rows:
                 # top-level is the module name
@@ -266,31 +307,40 @@ def write_application_excel(
                 # field_chain is the component path + field name
                 field_chain = comp_path + [format_field_name(f)]
                 flat_rows.append(
-                    make_row(app_ref, app_desc, top, mod.description, field_chain, f)
+                    make_row(
+                        app_ref,
+                        app_desc,
+                        top,
+                        mod.description,
+                        field_chain,
+                        f,
+                        incl_app_details=incl_app_details,
+                    )
                 )
 
     # If there are no rows, add a single empty placeholder so headers still render
     if not flat_rows:
-        flat_rows.append(
-            dict(
-                application=app_ref or "",
-                application_description=app_desc or "",
-                top_level="",
-                top_description="",
-                field_chain=[""],
-                description="",
-                datatype="",
-                requirement="",
-            )
-        )
+        row = {
+            "top_level": "",
+            "top_description": "",
+            "field_chain": [""],
+            "description": "",
+            "datatype": "",
+            "requirement": "",
+        }
+        if incl_app_details:
+            row["application"] = app_ref or ""
+            row["application_description"] = app_desc or ""
+        flat_rows.append(row)
 
     # Figure out max depth of field_chain to create field1..N columns
     max_depth = max((len(r["field_chain"]) for r in flat_rows), default=1)
 
     # Header
-    header = [
-        "application",
-        "application-description",
+    header = []
+    if incl_app_details:
+        header += ["application", "application-description"]
+    header += [
         "top-level",
         "top-level-description",
     ]
@@ -306,21 +356,22 @@ def write_application_excel(
     # We also merge top-level blocks: whenever top_level value changes, close the previous block
     current_top = None
     top_block_start = None
+    module_cols = [1, 2]
+    if incl_app_details:
+        module_cols = [3, 4]
 
-    def close_top_block(end_row: int):
+    def close_top_block(end_row: int, cols: List[int]):
         if top_block_start is not None and end_row >= top_block_start:
-            # Merge the 'top-level' column (3rd column) for the block
-            merge_cells_vertical(ws, 3, top_block_start, end_row)
-
-            # Merge the 'top-level-description' column (4th column) for the block
-            merge_cells_vertical(ws, 4, top_block_start, end_row)
+            # merge the top-level and top-level-description cols
+            for col in cols:
+                merge_cells_vertical(ws, col, top_block_start, end_row)
 
     for row in flat_rows:
         # flush/rotate top-level block if the value changes
         if row["top_level"] != current_top:
             # close previous block
             prev_end = ws.max_row
-            close_top_block(prev_end)
+            close_top_block(prev_end, cols=module_cols)
             # start new block
             current_top = row["top_level"]
             top_block_start = prev_end + 1
@@ -329,38 +380,40 @@ def write_application_excel(
         chain = row["field_chain"]
         padded = chain + [""] * (max_depth - len(chain))
 
-        ws.append(
-            [
+        spreadsheet_row = []
+        if incl_app_details:
+            spreadsheet_row += [
                 row["application"],
                 row["application_description"],
-                row["top_level"],
-                row["top_description"],
-                *padded,
-                row["description"],
-                row["datatype"],
-                row["requirement"],
             ]
-        )
+        spreadsheet_row += [
+            row["top_level"],
+            row["top_description"],
+            *padded,
+            row["description"],
+            row["datatype"],
+            row["requirement"],
+        ]
+        ws.append(spreadsheet_row)
 
     # Close last top-level block
-    close_top_block(ws.max_row)
+    close_top_block(ws.max_row, cols=module_cols)
 
     # Merge application/application-description across all rows
-    end_row_for_app = ws.max_row
-    if end_row_for_app >= start_row_for_app:
-        # merge application cells
-        merge_cells_vertical(ws, 1, start_row_for_app, end_row_for_app)
-        merge_cells_vertical(ws, 2, start_row_for_app, end_row_for_app)
+    if incl_app_details:
+        end_row_for_app = ws.max_row
+        if end_row_for_app >= start_row_for_app:
+            # merge application cells
+            merge_cells_vertical(ws, 1, start_row_for_app, end_row_for_app)
+            merge_cells_vertical(ws, 2, start_row_for_app, end_row_for_app)
 
-    # Formatting
-    for row in ws.iter_rows(min_row=2):
-        for cell in row:
-            cell.alignment = Alignment(wrap_text=True, vertical="top")
-
+    # Excel formatting
+    set_alignment_all(ws)
     auto_width(ws)
 
+    filename = f"{app_name} ({app_ref})"
     out_dir.mkdir(parents=True, exist_ok=True)
-    out_path = out_dir / f"{app_ref}.xlsx"
+    out_path = out_dir / f"{to_anchor(filename)}.xlsx"
     wb.save(out_path)
     return out_path
 
@@ -376,6 +429,8 @@ if __name__ == "__main__":
     #     print("Wrote:", path)
     # test with a single one
     path = write_application_excel(
-        model["applications"]["hh"], model["modules"], output_dir
+        model["applications"]["hh"],
+        output_dir,
+        incl_app_details=False,
     )
     print("Wrote:", path)
