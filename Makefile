@@ -29,6 +29,10 @@ specification::
 	python3 bin/specification_data.py
 
 
+spreadsheets::
+	python3 bin/generate_spec_spreadsheet.py
+
+
 clean::
 	rm -rf generated
 
