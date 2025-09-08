@@ -7,6 +7,7 @@ fields:
   - field: reference
     required: true
   - field: name
+    description: A name for the document. For example, The Site Plan
     required: true
   - field: details
     applies-if:

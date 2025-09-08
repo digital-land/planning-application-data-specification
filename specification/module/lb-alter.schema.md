@@ -7,11 +7,11 @@ fields:
   - field: proposal-alter-lb
     required: true
   - field: proposal-alter-lb-types
-    applies-if:
+    required-if:
       field: proposal-alter-lb
       value: true
   - field: document-reference
-    applies-if:
+    required-if:
       field: proposal-alter-lb
       value: true
 entry-date: 2025-07-08

@@ -14,8 +14,8 @@ fields:
   - field: produce-foul-sewage
     required: true
     applies-if:
-      - application-types: 
-          in: [extraction-oil-gas]
+      application-types: 
+        in: [extraction-oil-gas]
   - field: connect-to-drainage-system
     required: true
   - field: drainage-system-details

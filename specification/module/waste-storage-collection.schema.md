@@ -16,7 +16,7 @@ fields:
       application-type:
         in: ['outline']
   - field: waste-storage-area-details
-    applies-if:
+    required-if:
       field: needs-waste-storage-area
       value: true
   - field: separate-recycling-arrangements
@@ -30,7 +30,7 @@ fields:
       application-type:
         in: ['outline']
   - field: separate-recycling-arrangements-details
-    applies-if:
+    required-if:
       field: separate-recycling-arrangements
       value: true
 rules:
