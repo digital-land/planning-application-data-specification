@@ -355,7 +355,7 @@ Information about proposed alterations to listed buildings, including types of a
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name of a person | MUST | 
+name | Name | A name for the document. For example, The Site Plan | MUST | 
 
 
 
@@ -407,7 +407,7 @@ materials-not-known | Materials not known | Indicates the materials for this bui
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name of a person | MUST | 
+name | Name | A name for the document. For example, The Site Plan | MUST | 
 
 **Validation rules**
 

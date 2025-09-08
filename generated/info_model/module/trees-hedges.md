@@ -20,7 +20,7 @@ Information about trees and hedges on or adjacent to the development site, inclu
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name of a person | MUST | 
+name | Name | A name for the document. For example, The Site Plan | MUST | 
 details | Details | Additional details or information about an item | MAY | 
 
 **Validation rules**
