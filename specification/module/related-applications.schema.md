@@ -7,7 +7,7 @@ fields:
   - field: has-related-applications
     required: true
   - field: related-applications
-    applies-if:
+    required-if:
       field: has-related-applications
       value: true
 rules:
