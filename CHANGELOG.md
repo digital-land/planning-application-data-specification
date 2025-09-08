@@ -1,4 +1,32 @@
 
+<a name="v0.1.30"></a>
+## [v0.1.30](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.27...v0.1.30) (2025-09-08)
+
+Spreadsheet generator
+
+### ⚒️ Tooling
+
+* code to extract all modules into a csv (commit [fd657b9](https://github.com/digital-land/planning-application-data-specification/commit/fd657b95d494c9691c2627f3691b19a6a3f6abf8))
+* add spreadsheet builder to make targets (commit [98623db](https://github.com/digital-land/planning-application-data-specification/commit/98623db5fa9e9b1868d2d7c84ee57aefaec891de))
+* generate spreadsheets for all top level app types (commit [6768fa0](https://github.com/digital-land/planning-application-data-specification/commit/6768fa03455209896190f7323cd4bce63660602e))
+* make the application details in rows optional (commit [e3dc519](https://github.com/digital-land/planning-application-data-specification/commit/e3dc5195c1b5e36a5e9d681fe766ad3fb17f16f8))
+* create spreadsheet for compiled spec that only includes relevant fields (commit [ad86115](https://github.com/digital-land/planning-application-data-specification/commit/ad86115b2e0968ae0f548533540b75ab8de5e4cc))
+* add check of applies-if structure in modules (commit [57feb11](https://github.com/digital-land/planning-application-data-specification/commit/57feb11bf74c1ec737cf1e9d55c2aa9df8e1f688))
+* add a FieldInstance class to handle overrides in modules (commit [5d9a657](https://github.com/digital-land/planning-application-data-specification/commit/5d9a657ad32d3998fbbf33c11c09e6b2751ae668))
+* minor refactoring of spreadsheet generator (commit [8593d26](https://github.com/digital-land/planning-application-data-specification/commit/8593d26cf8a6bfad5a9b660dde7e8c5fa71fb6e8))
+* output example hh specification as spreadsheet (commit [91cd5f4](https://github.com/digital-land/planning-application-data-specification/commit/91cd5f4c09791275720141aa8a29f62d67c42826))
+* func to load the specification as objects (commit [d2b8ec4](https://github.com/digital-land/planning-application-data-specification/commit/d2b8ec46203923ecac211f980706a45042f02750))
+* output spreadsheet style spec using example specification (commit [0860409](https://github.com/digital-land/planning-application-data-specification/commit/08604096231494f87169ba355dd9ba41167feac2))
+* code to extract all modules into a csv (commit [3e77f5b](https://github.com/digital-land/planning-application-data-specification/commit/3e77f5bf051f67370263a8fac0dd289be6a16731))
+* func to return original forms for an app type (commit [30c47be](https://github.com/digital-land/planning-application-data-specification/commit/30c47be8b8954a70e1109caf2871dcc90bb075b7))
+
+### 🐛 Bug Fixes
+
+* conditions should be required-if not applies-if (commit [418753a](https://github.com/digital-land/planning-application-data-specification/commit/418753a917464a1e02f849b9b591426a95da6a80))
+* name field needs specific description when used in supporting document component (commit [897b4dd](https://github.com/digital-land/planning-application-data-specification/commit/897b4dddd1f29c05e6eb48fa41171ddf829d22ac))
+* incorrect structure used for applies-if application-type conditions (commit [8e9c0d6](https://github.com/digital-land/planning-application-data-specification/commit/8e9c0d6e56227bd551148d743bfe19c9c1a7aad3))
+
+
 <a name="v0.1.27"></a>
 ## [v0.1.27](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.26...v0.1.27) (2025-08-29)
 
