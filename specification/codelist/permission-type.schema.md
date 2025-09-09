@@ -9,7 +9,7 @@ fields:
   - field: name
   - field: description
   - field: related-proposal-required
-github-discussion: 
+github-discussion: 198
 key-field: reference
 licence: ogl3
 name: Permission type
