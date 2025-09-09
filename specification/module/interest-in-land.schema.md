@@ -8,11 +8,11 @@ fields:
   - field: applicant-owns-land
     required: true
   - field: permission-obtained
-    applies-if:
+    required-if:
       field: applicant-owns-land
       value: false
   - field: permission-not-obtained-details
-    applies-if:
+    required-if:
       field: applicant-owns-land
       value: false
       field: permission-obtained
