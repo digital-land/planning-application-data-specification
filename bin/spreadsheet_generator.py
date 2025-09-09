@@ -1,4 +1,6 @@
 import os
+from dataclasses import dataclass, field
+from typing import Any, Dict, List, Optional
 
 from csv_helpers import write_csv
 from forms import get_2025_forms_by_app_type
@@ -6,19 +8,33 @@ from loader import load_content
 from utils import make_hyperlink_cell
 
 
-def _get_module_ref(module_obj, key=None):
-    # try common keys for a module reference
-    if key and isinstance(key, str):
-        return key
-    if not isinstance(module_obj, dict):
-        return ""
-    return (
-        module_obj.get("module")
-        or module_obj.get("reference")
-        or module_obj.get("id")
-        or module_obj.get("ref")
-        or ""
-    )
+# ---------- Minimal model types ----------
+@dataclass
+class FieldDef:
+    ref: str
+    name: str
+    type: str = "string"
+    required: bool = False
+    description: str = ""
+    notes: str = ""
+    codelist: Optional[str] = None
+
+
+@dataclass
+class ComponentDef:
+    ref: str
+    name: str
+    description: str = ""
+    fields: List[FieldDef] = field(default_factory=list)
+
+
+@dataclass
+class ModuleDef:
+    ref: str
+    name: str
+    description: str = ""
+    fields: List[FieldDef] = field(default_factory=list)  # top-level fields
+    components: List[ComponentDef] = field(default_factory=list)  # nested components
 
 
 def _format_form_link(form):
@@ -108,6 +124,10 @@ def generate_spreadsheet_all_modules(
     write_csv(rows, output_file=output_path, final_headers=final_headers)
 
     return output_path
+
+
+def generate_spreadsheet(app_type, specification):
+    pass
 
 
 if __name__ == "__main__":
