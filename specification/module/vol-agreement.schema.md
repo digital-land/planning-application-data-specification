@@ -1,19 +1,18 @@
 ---
+description: Details of any voluntary agreements made as part of an oil and gas extraction
+  application.
+end-date: ''
+entry-date: 2025-06-26
+fields:
+- field: draft-agreement-included
+  required: true
+- field: agreement-summary
+  required-if:
+  - field: draft-agreement-included
+    value: true
 module: vol-agreement
 name: Voluntary agreement
-description: |
-  Information about voluntary agreements related to extraction oil and gas applications, 
-  including whether a draft agreement is included and summary details
-fields:
-  - field: draft-agreement-included
-    required: true
-  - field: agreement-summary
-    required-if:
-      - field: draft-agreement-included
-        value: true
 rules:
-  - rule: "agreement-summary is required when draft-agreement-included is true"
-  - rule: "Module only applies to extraction-oil-gas application types"
-entry-date: 2025-06-26
-end-date: ''
+- rule: agreement-summary is required when draft-agreement-included is true
+- rule: Module only applies to extraction-oil-gas application types
 ---

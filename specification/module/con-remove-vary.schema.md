@@ -1,17 +1,17 @@
 ---
+description: Why the applicant is asking for planning conditions to be removed or
+  changed.
+end-date: ''
+entry-date: 2025-07-08
+fields:
+- description: The reason why the applicant wishes condition(s) to be removed or changed
+  field: reason
+  required: true
+- field: condition-change
 module: con-remove-vary
 name: Condition removal or variation
-description: |
-  Information about why applicant wishes planning condition(s) to be removed or changed,
-  and how the condition should vary for s73 applications
-fields:
-  - field: reason
-    description: The reason why the applicant wishes condition(s) to be removed or changed
-    required: true
-  - field: condition-change
 rules:
-  - "Reason must explain why the applicant wishes condition(s) to be removed or changed"
-  - "Condition change should specify how the condition should vary if modification is sought"
-entry-date: 2025-07-08
-end-date: ''
+- Reason must explain why the applicant wishes condition(s) to be removed or changed
+- Condition change should specify how the condition should vary if modification is
+  sought
 ---

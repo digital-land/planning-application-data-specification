@@ -1,20 +1,20 @@
 ---
+description: Details of any other development proposals made for the site
+end-date: ''
+entry-date: 2025-07-08
+fields:
+- field: has-related-applications
+  required: true
+- field: related-applications
+  required-if:
+    field: has-related-applications
+    value: true
 module: related-applications
 name: Related applications
-description: |
-  Information about related applications, previous proposals or demolitions for the site, including whether such proposals exist and details of any related applications
-fields:
-  - field: has-related-applications
-    required: true
-  - field: related-applications
-    required-if:
-      field: has-related-applications
-      value: true
 rules:
-  - rule: "related-applications must be provided when has-related-applications is true"
-  - rule: "decision-date is optional and only relevant if the related proposal has been decided"
-entry-date: 2025-07-08
-end-date: ''
+- rule: related-applications must be provided when has-related-applications is true
+- rule: decision-date is optional and only relevant if the related proposal has been
+    decided
 ---
 
 This module captures information about any related applications, previous proposals, or demolitions that have affected the development site. The `has-related-applications` field determines whether there are any such related matters, and when true, the `related-applications` array provides details of each related application.

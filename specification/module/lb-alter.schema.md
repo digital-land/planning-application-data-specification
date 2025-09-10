@@ -1,21 +1,21 @@
 ---
+description: Details of any changes being made to a listed building as part of development
+  works
+end-date: ''
+entry-date: 2025-07-08
+fields:
+- field: proposal-alter-lb
+  required: true
+- field: proposal-alter-lb-types
+  required-if:
+    field: proposal-alter-lb
+    value: true
+- field: document-reference
+  required-if:
+    field: proposal-alter-lb
+    value: true
 module: lb-alter
 name: Listed building alterations
-description: |
-  Information about proposed alterations to listed buildings, including types of alterations and supporting documentation
-fields:
-  - field: proposal-alter-lb
-    required: true
-  - field: proposal-alter-lb-types
-    required-if:
-      field: proposal-alter-lb
-      value: true
-  - field: document-reference
-    required-if:
-      field: proposal-alter-lb
-      value: true
-entry-date: 2025-07-08
-end-date: ''
 ---
 
 This module captures information about proposed alterations to listed buildings. The `proposal-alter-lb` field determines whether the proposal includes any alterations to listed buildings. When this is true, applicants must specify the types of alterations using the `proposal-alter-lb-types` field and provide supporting documentation through the `document-reference` field.

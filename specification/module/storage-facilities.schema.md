@@ -1,14 +1,12 @@
 ---
+description: For oil and gas extraction developments, how chemicals will be stored
+end-date: ''
+entry-date: 2025-07-08
+fields:
+- field: storage-facilities-description
+  required: true
 module: storage-facilities
 name: Storage facilities
-description: |
-  Details about proposed facilities for the storage of oil, fuel and chemicals and 
-  the measures to protect them, specifically for extraction oil and gas applications
-fields:
-  - field: storage-facilities-description
-    required: true
-entry-date: 2025-07-08
-end-date: ''
 ---
 
 This module captures information about proposed storage facilities for oil, fuel, and chemicals as part of extraction oil and gas applications. The description should include details about:

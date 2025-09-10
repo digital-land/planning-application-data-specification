@@ -1,16 +1,15 @@
 ---
+description: For oil and gas extraction developments, who owns or has an interest
+  in the site.
+end-date: ''
+entry-date: 2025-07-09
+fields:
+- field: site-owner
+  required: true
+- field: applicant-interest
+  required: true
+- field: applicant-interest-adjoining-land
+  required: true
 module: site-ownership
 name: Site ownership
-description: |
-  Information about site ownership and the applicant's interest in the land
-  for extraction-oil-gas applications
-fields:
-  - field: site-owner
-    required: true
-  - field: applicant-interest
-    required: true
-  - field: applicant-interest-adjoining-land
-    required: true
-entry-date: 2025-07-09
-end-date: ''
 ---

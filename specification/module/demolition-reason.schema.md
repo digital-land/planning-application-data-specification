@@ -1,12 +1,12 @@
 ---
+description: Why demolition is necessary at the development site
+end-date: ''
+entry-date: 2025-06-30
+fields:
+- description: Why is it necessary to demolish all or part of the building(s) and
+    structure(s)?
+  field: reason
+  required: true
 module: demolition-reason
 name: Demolition reason
-description: |
-  Explanation of why demolition is necessary for the proposed development
-fields:
-  - field: reason
-    description: Why is it necessary to demolish all or part of the building(s) and structure(s)?
-    required: true
-entry-date: 2025-06-30
-end-date: ''
 ---
