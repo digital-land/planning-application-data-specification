@@ -1,8 +1,6 @@
 # Site area
 
-Information about the size of the development site, including 
-the area measurement and source of the measurement
-
+How big the site is including relevant measurements
 
 **Site area module**
 

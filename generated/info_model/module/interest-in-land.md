@@ -1,8 +1,6 @@
 # Interest in land
 
-Information about the applicant's interest in the land where an advertisement 
-will be displayed, including ownership status and permission arrangements
-
+Whether the applicant owns or has permission to use the land where the proposed advertisement will be placed
 
 **Interest in land module**
 

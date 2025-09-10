@@ -1,8 +1,6 @@
 # Advertisement types
 
-Module for capturing information about different types of advertisements 
-proposed, including their counts and descriptions
-
+What type of advertisements are proposed and how many there will be.
 
 **Advertisement types module**
 

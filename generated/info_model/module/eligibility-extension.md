@@ -1,8 +1,6 @@
 # Eligibility extension
 
-Eligibility criteria for extension applications to determine if the proposal
-meets the requirements for the application type
-
+How a proposal to build an extension meets relevant criteria.
 
 **Eligibility extension module**
 

@@ -1,7 +1,6 @@
 # Description of the proposal
 
-Information about what development, works or change of use is being proposed
-
+What development, works or change of use is proposed
 
 **Description of the proposal module**
 

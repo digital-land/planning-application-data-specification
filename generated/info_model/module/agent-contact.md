@@ -1,7 +1,6 @@
 # Agent contact details
 
-Contact details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent contact details module**
 

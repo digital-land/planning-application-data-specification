@@ -1,7 +1,6 @@
 # Advert period
 
-Module for capturing the time period that consent to advertisement is sought
-
+How long the proposed advertisement will be shown.
 
 **Advert period module**
 

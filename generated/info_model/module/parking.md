@@ -1,7 +1,6 @@
 # Parking arrangements
 
-Information about how the proposed development affects existing parking arrangements
-
+Details of any changes the proposed development would make to parking facilities.
 
 **Parking arrangements module**
 

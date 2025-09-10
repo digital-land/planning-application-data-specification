@@ -1,8 +1,6 @@
 # Development type
 
-Information about oil and gas development applications including phases, 
-quantities, licensing, and environmental considerations
-
+Supporting information for developments used for oil and gas exploration or mining 
 
 **Development type module**
 

@@ -1,7 +1,6 @@
 # Hedgerow removal notice
 
-Information required for hedgerow removal notices including removal reasons, plans, length details, age considerations, and interest declarations
-
+Details of any hedgerows being removed as part of the development
 
 **Hedgerow removal notice module**
 

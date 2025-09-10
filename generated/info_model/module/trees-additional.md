@@ -1,8 +1,6 @@
 # Trees additional information
 
-Additional information about trees on the site, including condition concerns, 
-damage reports, and supporting documentation
-
+Further details of any issues relating to trees on the site
 
 **Trees additional information module**
 

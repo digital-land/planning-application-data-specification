@@ -1,8 +1,6 @@
 # Part discharge
 
-Information about whether the applicant is trying to discharge part of a condition
-and details about which part of the condition is being addressed
-
+Details of how the applicant is meeting a specific part of a set of conditions made by the planning authority.
 
 **Part discharge module**
 

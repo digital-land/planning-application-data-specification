@@ -1,7 +1,6 @@
 # Materials
 
-Information about the materials used in the development, including both existing and proposed materials
-
+What materials are being used for the proposed development
 
 **Materials module**
 

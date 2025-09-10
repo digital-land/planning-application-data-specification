@@ -1,8 +1,6 @@
 # Site information
 
-Additional information about the development site including area, 
-existing use, constraints, and supporting documentation
-
+Any additional relevant information about the development site.
 
 **Site information module**
 

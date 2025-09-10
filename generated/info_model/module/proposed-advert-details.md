@@ -1,6 +1,6 @@
 # Proposed advert details
 
-Details of proposed advertisements including dimensions, materials, and illumination specifications
+Details of the proposed advertisements such as their size and how they are made
 
 **Proposed advert details module**
 

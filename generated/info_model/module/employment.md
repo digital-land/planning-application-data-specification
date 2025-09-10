@@ -1,8 +1,6 @@
 # Employment
 
-Module for capturing information about employment impacts of a development 
-proposal, including existing and proposed employee counts
-
+How the proposed development will impact employment, including existing and proposed employee numbers
 
 **Employment module**
 

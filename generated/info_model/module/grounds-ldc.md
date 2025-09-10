@@ -1,8 +1,6 @@
 # Grounds for lawful development certificate
 
-Grounds on which a lawful development certificate is being sought,
-including supporting evidence and explanations
-
+Evidence and explanations relating to a Lawful Development Certificate (LDC) application
 
 **Grounds for lawful development certificate module**
 

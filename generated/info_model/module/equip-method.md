@@ -1,8 +1,6 @@
 # Equipment and method
 
-Module for capturing information about equipment and methods to be used 
-in extraction operations, particularly for oil and gas applications
-
+How oil and gas will be extracted as part of the proposed development.
 
 **Equipment and method module**
 

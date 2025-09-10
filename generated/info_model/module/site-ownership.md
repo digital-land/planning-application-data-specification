@@ -1,8 +1,6 @@
 # Site ownership
 
-Information about site ownership and the applicant's interest in the land
-for extraction-oil-gas applications
-
+For oil and gas extraction developments, who owns or has an interest in the site.
 
 **Site ownership module**
 

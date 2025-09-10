@@ -1,8 +1,6 @@
 # Condition removal or variation
 
-Information about why applicant wishes planning condition(s) to be removed or changed,
-and how the condition should vary for s73 applications
-
+Why the applicant is asking for planning conditions to be removed or changed.
 
 **Condition removal or variation module**
 

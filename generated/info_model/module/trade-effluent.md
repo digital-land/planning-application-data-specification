@@ -1,8 +1,6 @@
 # Trade effluent
 
-Information about the disposal of trade effluents or waste, including whether 
-disposal is required and details about the nature, volume and means of disposal
-
+Details of any liquid waste produced by industial processes on the proposed site, and how it will be diposed of.
 
 **Trade effluent module**
 

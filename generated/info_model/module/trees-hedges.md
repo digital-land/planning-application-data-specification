@@ -1,7 +1,6 @@
 # Trees and hedges information
 
-Information about trees and hedges on or adjacent to the development site, including any that pose risks or need to be removed
-
+Details of trees and/or hedges that will be affected by the proposed development
 
 **Trees and hedges information module**
 

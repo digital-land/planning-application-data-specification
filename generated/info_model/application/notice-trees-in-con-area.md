@@ -89,8 +89,7 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 
 ## Agent contact details
 
-Contact details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent contact details module**
 
@@ -119,8 +118,7 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Agent details
 
-Details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent details module**
 
@@ -153,8 +151,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Applicant contact details
 
-Contact details for the applicant or applicants, including email and phone numbers
-
+Telephone number and email address of the applicant.
 
 **Applicant contact details module**
 
@@ -186,9 +183,7 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Applicant details
 
-Details about the applicants for the planning application,
-including their personal information and contact details
-
+Name and contact information for the parties making the application.
 
 **Applicant details module**
 
@@ -222,8 +217,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Checklist
 
-Identifies the national requirement types that apply to this application type
-
+Checking whether all the requirements of the form have been met, such as proof of payment or supporting documentation.
 
 **Checklist module**
 
@@ -238,9 +232,7 @@ Identifies the national requirement types that apply to this application type
 
 ## Conflict of interest
 
-Information about any conflicts of interest between the applicant/agent and the planning authority,
-including relationships with staff or elected members
-
+Details of any conflict of interest that may exist between the applicant and planning authority.
 
 **Conflict of interest module**
 
@@ -256,8 +248,7 @@ including relationships with staff or elected members
 
 ## Declaration
 
-Declaration by the applicant or agent confirming the accuracy of the information provided
-
+Signed and dated verification of the application's accuracy.
 
 **Declaration module**
 
@@ -275,9 +266,7 @@ Declaration by the applicant or agent confirming the accuracy of the information
 
 ## Identification of tree(s) and description of works
 
-Details of trees and proposed work to them, including identification, 
-species and work descriptions
-
+Details of trees affected by the proposed development and what work is being done to them.
 
 **Identification of tree(s) and description of works module**
 
@@ -302,9 +291,7 @@ description-of-works | Description of works | Description of the nature of the w
 
 ## Trees additional information
 
-Additional information about trees on the site, including condition concerns, 
-damage reports, and supporting documentation
-
+Further details of any issues relating to trees on the site
 
 **Trees additional information module**
 
@@ -331,8 +318,7 @@ name | Name | A name for the document. For example, The Site Plan | MUST |
 
 ## Trees location
 
-Location information for trees affected by the proposed works, required when the site is different from the applicant's address
-
+Where trees affected by the proposed development are located.
 
 **Trees location module**
 
@@ -366,8 +352,7 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 ## Trees ownership
 
-Information about ownership of trees affected by the proposed works
-
+Who owns any trees affected by the proposed development.
 
 **Trees ownership module**
 

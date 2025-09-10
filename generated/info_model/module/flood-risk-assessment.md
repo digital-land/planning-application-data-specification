@@ -1,8 +1,6 @@
 # Flood risk assessment
 
-Information about flood risk assessments for planning applications including flood risk area status, 
-data sources, assessment documents, watercourse proximity, flood risk impacts, and surface water disposal methods
-
+Results of any flood risk assessments made for the development site
 
 **Flood risk assessment module**
 

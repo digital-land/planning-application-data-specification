@@ -1,8 +1,6 @@
 # Waste storage and collection
 
-Information about waste storage and recycling arrangements for developments, 
-including whether waste storage areas are needed and details of recycling provisions
-
+Any waste storage or recycling arrangements are in place, such as waste storage areas
 
 **Waste storage and collection module**
 

@@ -96,9 +96,7 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 
 ## Advertisement location
 
-Information about advertisement placement including whether it's already in place,
-replacement status, and potential overhang over public areas
-
+Where the advertisement being applied to be built will be located
 
 **Advertisement location module**
 
@@ -125,8 +123,7 @@ name | Name | A name for the document. For example, The Site Plan | MUST |
 
 ## Advert period
 
-Module for capturing the time period that consent to advertisement is sought
-
+How long the proposed advertisement will be shown.
 
 **Advert period module**
 
@@ -143,9 +140,7 @@ Module for capturing the time period that consent to advertisement is sought
 
 ## Advertisement types
 
-Module for capturing information about different types of advertisements 
-proposed, including their counts and descriptions
-
+What type of advertisements are proposed and how many there will be.
 
 **Advertisement types module**
 
@@ -171,8 +166,7 @@ advertisement-other-description | Advertisement other description | Details requ
 
 ## Agent contact details
 
-Contact details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent contact details module**
 
@@ -201,8 +195,7 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Agent details
 
-Details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent details module**
 
@@ -235,8 +228,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Applicant contact details
 
-Contact details for the applicant or applicants, including email and phone numbers
-
+Telephone number and email address of the applicant.
 
 **Applicant contact details module**
 
@@ -268,9 +260,7 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Applicant details
 
-Details about the applicants for the planning application,
-including their personal information and contact details
-
+Name and contact information for the parties making the application.
 
 **Applicant details module**
 
@@ -304,8 +294,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Checklist
 
-Identifies the national requirement types that apply to this application type
-
+Checking whether all the requirements of the form have been met, such as proof of payment or supporting documentation.
 
 **Checklist module**
 
@@ -320,8 +309,7 @@ Identifies the national requirement types that apply to this application type
 
 ## Community consultation
 
-Information about community consultation activities carried out in relation to the planning application
-
+What community consultation activities have taken place as part of the application
 
 **Community consultation module**
 
@@ -337,9 +325,7 @@ Information about community consultation activities carried out in relation to t
 
 ## Conflict of interest
 
-Information about any conflicts of interest between the applicant/agent and the planning authority,
-including relationships with staff or elected members
-
+Details of any conflict of interest that may exist between the applicant and planning authority.
 
 **Conflict of interest module**
 
@@ -355,8 +341,7 @@ including relationships with staff or elected members
 
 ## Declaration
 
-Declaration by the applicant or agent confirming the accuracy of the information provided
-
+Signed and dated verification of the application's accuracy.
 
 **Declaration module**
 
@@ -374,9 +359,7 @@ Declaration by the applicant or agent confirming the accuracy of the information
 
 ## Interest details
 
-Details of the applicant's interest in land or listed buildings and information about
-other interested parties including owners and persons with interests in the property
-
+Names and contact details for all parties with an interest in the proposed develpoment.
 
 **Interest details module**
 
@@ -428,8 +411,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Pre-application advice
 
-Information about any pre-application advice sought from the planning authority
-
+Details of pre-application advice received from the planning authority
 
 **Pre-application advice module**
 
@@ -445,7 +427,7 @@ Information about any pre-application advice sought from the planning authority
 
 ## Proposed advert details
 
-Details of proposed advertisements including dimensions, materials, and illumination specifications
+Details of the proposed advertisements such as their size and how they are made
 
 **Proposed advert details module**
 
@@ -482,9 +464,7 @@ illumination-type | Illumination type | Type of illumination (static or intermit
 
 ## Site details
 
-Information about the location and extent of the site where development 
-or works are proposed
-
+Where the proposed development will be built.
 
 **Site details module**
 
@@ -509,8 +489,8 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 **Validation rules**
 
-- {'description': 'At least one site-location must be provided for tree works applications', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'in': ['tree-works']}}, 'require': {'min': 1}}
-- {'description': 'Exactly one site-location for all other applications types', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'not': ['tree-works']}}, 'require': {'exact': 1}}
+- {'description': 'At least one site-location must be provided for tree works applications', 'field': 'site-locations', 'require': {'min': 1}, 'type': 'count-constraint', 'when': {'application-type': {'in': ['tree-works']}}}
+- {'description': 'Exactly one site-location for all other applications types', 'field': 'site-locations', 'require': {'exact': 1}, 'type': 'count-constraint', 'when': {'application-type': {'not': ['tree-works']}}}
 - If easting is provided, northing must also be provided and vice versa
 - If latitude is provided, longitude must also be provided and vice versa
 - Site boundary must be valid GeoJSON
@@ -519,8 +499,7 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 ## Site Visit Details
 
-Details needed to support a site visit by the planning authority
-
+Information to help the planning authority arrange a site visit
 
 **Site Visit Details module**
 

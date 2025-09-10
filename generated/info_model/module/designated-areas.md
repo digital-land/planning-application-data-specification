@@ -1,7 +1,6 @@
 # Designated areas
 
-Module for capturing information about designated areas that apply to a development site
-
+Details of any 'designated area' the develpoment site is on, such as a Conservation Area or National Park.
 
 **Designated areas module**
 

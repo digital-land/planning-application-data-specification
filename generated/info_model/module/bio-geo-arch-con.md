@@ -1,8 +1,6 @@
 # Biodiversity, geological and archaeological conservation
 
-Assessment of potential impacts on protected species, important habitats, 
-biodiversity features, geological features, and archaeological features
-
+Details of potential impacts to the biodiversity of the site, or any noteable archaeological or geological features.
 
 **Biodiversity, geological and archaeological conservation module**
 

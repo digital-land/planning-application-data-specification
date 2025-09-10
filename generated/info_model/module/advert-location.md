@@ -1,8 +1,6 @@
 # Advertisement location
 
-Information about advertisement placement including whether it's already in place,
-replacement status, and potential overhang over public areas
-
+Where the advertisement being applied to be built will be located
 
 **Advertisement location module**
 

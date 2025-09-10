@@ -1,8 +1,6 @@
 # Eligibility
 
-Complete eligibility assessment for planning applications including applicant land interest,
-ownership notifications, and proposal-specific eligibility criteria
-
+Whether certain eligibility criteria has been met and the right people notified
 
 **Eligibility module**
 

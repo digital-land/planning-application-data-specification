@@ -1,7 +1,6 @@
 # Grounds for proposed use
 
-Information about the proposed use class, operation type, and supporting reasoning for lawful development certificate applications
-
+What the new site will be used for
 
 **Grounds for proposed use module**
 

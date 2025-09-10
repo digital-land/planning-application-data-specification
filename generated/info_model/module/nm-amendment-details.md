@@ -1,8 +1,6 @@
 # Non-material amendment details
 
-Details of non-material amendments to planning applications including
-description of changes, document substitutions, and reasons for amendments
-
+Details of changes being requested to plans after permission has already been granted.
 
 **Non-material amendment details module**
 

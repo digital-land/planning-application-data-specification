@@ -1,8 +1,6 @@
 # Eligibility proposal
 
-Eligibility criteria related to proposal design and construction including storey construction,
-height restrictions, roof specifications, and material requirements
-
+How the proposed development meets eligibility criteria
 
 **Eligibility proposal module**
 

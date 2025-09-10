@@ -1,7 +1,6 @@
 # Pre-application advice
 
-Information about any pre-application advice sought from the planning authority
-
+Details of pre-application advice received from the planning authority
 
 **Pre-application advice module**
 

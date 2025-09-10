@@ -1,7 +1,6 @@
 # Immunity from listing
 
-Details about certificate of immunity applications and their results
-
+Whether the applicant has obtained a Certificate of Immunity (COI) meaning the building in question cannot be listed
 
 **Immunity from listing module**
 

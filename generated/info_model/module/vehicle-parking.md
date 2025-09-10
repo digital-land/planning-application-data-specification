@@ -1,8 +1,6 @@
 # Vehicle parking
 
-Detailed information about parking spaces by vehicle type, including existing 
-and proposed counts with net change calculations
-
+Details of current parking facilities at the site and any changes that would be made by the proposed development.
 
 **Vehicle parking module**
 

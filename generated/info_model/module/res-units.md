@@ -1,8 +1,6 @@
 # Residential units
 
-Information about residential units including existing and proposed unit counts, 
-with detailed breakdowns by tenure and housing type
-
+Details of the residential units that make up both the current and proposed development.
 
 **Residential units module**
 

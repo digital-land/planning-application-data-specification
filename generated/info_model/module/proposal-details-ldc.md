@@ -1,6 +1,6 @@
 # Proposal details LDC
 
-Details of the proposal for lawful development certificate applications
+Details of why a Lawful Development Certificate is required.
 
 **Proposal details LDC module**
 

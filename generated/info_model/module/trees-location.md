@@ -1,7 +1,6 @@
 # Trees location
 
-Location information for trees affected by the proposed works, required when the site is different from the applicant's address
-
+Where trees affected by the proposed development are located.
 
 **Trees location module**
 

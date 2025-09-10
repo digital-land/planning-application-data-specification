@@ -1,7 +1,6 @@
 # Checklist
 
-Identifies the national requirement types that apply to this application type
-
+Checking whether all the requirements of the form have been met, such as proof of payment or supporting documentation.
 
 **Checklist module**
 

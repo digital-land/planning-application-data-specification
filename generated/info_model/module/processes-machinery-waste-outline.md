@@ -1,8 +1,6 @@
 # Processes machinery waste
 
-Information about site activities, processes, and waste management development
-including facility types, capacities, and throughput details. Specifically for outline applications
-
+If making an 'outline' application, how waste will be managed on the development site
 
 **Processes machinery waste module**
 

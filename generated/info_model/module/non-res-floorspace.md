@@ -1,6 +1,6 @@
 # Non residential floorspace
 
-Information about non-residential floorspace changes including use class details and room counts for specific accommodation types
+Details of changes to non-residential floorspace in the proposed development.
 
 **Non residential floorspace module**
 

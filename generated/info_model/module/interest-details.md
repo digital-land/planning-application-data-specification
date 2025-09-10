@@ -1,8 +1,6 @@
 # Interest details
 
-Details of the applicant's interest in land or listed buildings and information about
-other interested parties including owners and persons with interests in the property
-
+Names and contact details for all parties with an interest in the proposed develpoment.
 
 **Interest details module**
 

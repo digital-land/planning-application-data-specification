@@ -1,8 +1,6 @@
 # Information to support LDC
 
-Information to support Lawful Development Certificate applications including
-details of existing use, interruptions, and changes to support evidence of lawfulness
-
+Supporting information required to make a Lawful Development Certificate application
 
 **Information to support LDC module**
 

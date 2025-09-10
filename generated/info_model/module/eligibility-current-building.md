@@ -1,8 +1,6 @@
 # Eligibility current building
 
-Eligibility criteria related to current building status including construction period,
-storey additions, permitted development use, and site location constraints
-
+How the current building meets eligibity criteria
 
 **Eligibility current building module**
 

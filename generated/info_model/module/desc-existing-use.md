@@ -1,8 +1,6 @@
 # Description of existing use
 
-Information about the existing uses of the development site, including 
-use classes and which parts of the land they relate to
-
+How the development site is used, including use class information
 
 **Description of existing use module**
 

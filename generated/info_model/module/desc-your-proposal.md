@@ -1,8 +1,6 @@
 # Description of your proposal
 
-Details about your proposal including related planning permissions, 
-development status, and condition information
-
+Written description of the proposed development including any additional relevant details.
 
 **Description of your proposal module**
 

@@ -1,8 +1,6 @@
 # Foul sewage disposal
 
-Information about foul sewage disposal methods and connection to existing 
-drainage systems for development proposals
-
+How waste water will leave the property as part of the proposed development
 
 **Foul sewage disposal module**
 

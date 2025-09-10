@@ -1,8 +1,6 @@
 # Description of proposed works
 
-Description of proposed development works including extension measurements
-and detailed work specifications for planning applications
-
+Details of development plans such as extensions measurements or work specifications
 
 **Description of proposed works module**
 

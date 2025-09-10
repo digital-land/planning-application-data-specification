@@ -1,7 +1,6 @@
 # Declaration
 
-Declaration by the applicant or agent confirming the accuracy of the information provided
-
+Signed and dated verification of the application's accuracy.
 
 **Declaration module**
 

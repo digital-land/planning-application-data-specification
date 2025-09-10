@@ -1,7 +1,6 @@
 # Related applications
 
-Information about related applications, previous proposals or demolitions for the site, including whether such proposals exist and details of any related applications
-
+Details of any other development proposals made for the site
 
 **Related applications module**
 

@@ -1,7 +1,6 @@
 # Listed building grade
 
-Information about the grade of listed buildings affected by the planning application
-
+The grade of any listed building affected by the proposed development.
 
 **Listed building grade module**
 

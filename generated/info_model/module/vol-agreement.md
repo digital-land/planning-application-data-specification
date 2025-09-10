@@ -1,8 +1,6 @@
 # Voluntary agreement
 
-Information about voluntary agreements related to extraction oil and gas applications, 
-including whether a draft agreement is included and summary details
-
+Details of any voluntary agreements made as part of an oil and gas extraction application.
 
 **Voluntary agreement module**
 

@@ -1,8 +1,6 @@
 # Hazardous substances
 
-Information about hazardous substances involved in the proposal,
-including substance types, quantities, and consent requirements
-
+What hazardous substances may be used as part of the development
 
 **Hazardous substances module**
 

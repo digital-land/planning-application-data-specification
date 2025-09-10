@@ -1,7 +1,6 @@
 # Tree preservation order details
 
-Information about Tree Preservation Orders (TPOs) covering trees affected by the proposed works
-
+Details of any Tree Preservation Orders (TPO) affecting the development site
 
 **Tree preservation order details module**
 

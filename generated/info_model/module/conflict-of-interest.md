@@ -1,8 +1,6 @@
 # Conflict of interest
 
-Information about any conflicts of interest between the applicant/agent and the planning authority,
-including relationships with staff or elected members
-
+Details of any conflict of interest that may exist between the applicant and planning authority.
 
 **Conflict of interest module**
 

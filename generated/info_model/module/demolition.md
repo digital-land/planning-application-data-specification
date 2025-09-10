@@ -1,7 +1,6 @@
 # Demolition
 
-Permission or prior approval that may be required to demolish a building, specifically for listed building consent applications
-
+Details of any demolition that needs to take place as part of the development proposal.
 
 **Demolition module**
 

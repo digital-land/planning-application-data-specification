@@ -1,9 +1,6 @@
 # Grounds for application (information about the existing use(s))
 
-Information about the existing or last use of the site to support 
-a lawful development certificate application, including lawful justification,
-use classification, and supporting documentary evidence
-
+Supporting inforation for a Lawful Development Certificate application relating to how the site has most recently been used.
 
 **Grounds for application (information about the existing use(s)) module**
 

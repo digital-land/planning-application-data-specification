@@ -1,7 +1,6 @@
 # Access and rights of way
 
-Information about changes to access arrangements and public rights of way
-
+Details of any changes the proposed development would make to existing access arrangements or public rights of way
 
 **Access and rights of way module**
 

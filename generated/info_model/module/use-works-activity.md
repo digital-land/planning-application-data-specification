@@ -1,6 +1,6 @@
 # Use works activity
 
-Information about what the lawful development certificate is needed for and related use details
+Why a Lawful Development Certificate is required regarding how the development site is being used, or specific works taking place on the site.
 
 **Use works activity module**
 

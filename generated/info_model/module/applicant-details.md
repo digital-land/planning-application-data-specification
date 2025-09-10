@@ -1,8 +1,6 @@
 # Applicant details
 
-Details about the applicants for the planning application,
-including their personal information and contact details
-
+Name and contact information for the parties making the application.
 
 **Applicant details module**
 

@@ -1,9 +1,6 @@
 # Grounds for application
 
-Grounds for a Certificate of Lawfulness of Proposed Works application,
-explaining why the certificate should be granted and why listed building
-consent is not required, with supporting documentary evidence
-
+Why a Certificate of Lawfulness of Propose Works is being requested.
 
 **Grounds for application module**
 

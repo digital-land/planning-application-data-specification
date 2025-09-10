@@ -1,7 +1,6 @@
 # Existing use
 
-Information about the current and previous use of the site, including contamination status and supporting documents.
-
+How the site is currently being used.
 
 **Existing use module**
 

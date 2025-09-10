@@ -1,8 +1,6 @@
 # Discharge condition
 
-Module for capturing information about materials and details being submitted 
-for approval as part of discharging planning conditions
-
+How any conditions imposed as part of being given planning permission will be met
 
 **Discharge condition module**
 

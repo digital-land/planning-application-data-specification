@@ -1,8 +1,6 @@
 # Description of the proposed development including any non-residential development
 
-Details of proposed development with specific provision for capturing both residential 
-and non-residential elements, including dwelling numbers and non-residential use amounts
-
+Details of the residential and non-residential parts of the proposed development.
 
 **Description of the proposed development including any non-residential development module**
 

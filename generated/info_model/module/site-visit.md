@@ -1,7 +1,6 @@
 # Site Visit Details
 
-Details needed to support a site visit by the planning authority
-
+Information to help the planning authority arrange a site visit
 
 **Site Visit Details module**
 

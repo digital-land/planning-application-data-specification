@@ -1,7 +1,6 @@
 # Community consultation
 
-Information about community consultation activities carried out in relation to the planning application
-
+What community consultation activities have taken place as part of the application
 
 **Community consultation module**
 

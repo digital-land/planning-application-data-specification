@@ -1,7 +1,6 @@
 # Applicant contact details
 
-Contact details for the applicant or applicants, including email and phone numbers
-
+Telephone number and email address of the applicant.
 
 **Applicant contact details module**
 

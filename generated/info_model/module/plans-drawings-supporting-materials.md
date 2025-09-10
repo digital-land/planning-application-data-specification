@@ -1,8 +1,6 @@
 # Plans, drawings and supporting materials
 
-Specification for plans, drawings, and supporting documents required for
-planning applications, including document references and inspection details
-
+Additional materials and specifications that form part of the planning application
 
 **Plans, drawings and supporting materials module**
 

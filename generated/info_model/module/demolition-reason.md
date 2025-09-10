@@ -1,7 +1,6 @@
 # Demolition reason
 
-Explanation of why demolition is necessary for the proposed development
-
+Why demolition is necessary at the development site
 
 **Demolition reason module**
 

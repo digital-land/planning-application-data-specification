@@ -1,7 +1,6 @@
 # Listed building alterations
 
-Information about proposed alterations to listed buildings, including types of alterations and supporting documentation
-
+Details of any changes being made to a listed building as part of development works
 
 **Listed building alterations module**
 

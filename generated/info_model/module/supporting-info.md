@@ -1,8 +1,6 @@
 # Supporting information
 
-Information to support the application, including details of approved 
-drawings being replaced by new drawings
-
+Any additional information which will help with the planning application
 
 **Supporting information module**
 

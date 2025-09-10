@@ -1,8 +1,6 @@
 # Eligibility related works
 
-Eligibility criteria for engineering works related to prior approval applications,
-specifically relating to external support structures and curtilage extensions
-
+Whether any related works such as scaffolding required will affect the eligibility of the planning proposal
 
 **Eligibility related works module**
 

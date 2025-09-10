@@ -1,7 +1,6 @@
 # Ownership certificates and agricultural land declaration
 
-Information about ownership of the site and/or property for development, including agricultural tenants and notification requirements.
-
+Who will be affected by the proposal and whether they have been notified, such as agricultural tenants
 
 **Ownership certificates and agricultural land declaration module**
 

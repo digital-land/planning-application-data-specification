@@ -1,8 +1,6 @@
 # Storage facilities
 
-Details about proposed facilities for the storage of oil, fuel and chemicals and 
-the measures to protect them, specifically for extraction oil and gas applications
-
+For oil and gas extraction developments, how chemicals will be stored
 
 **Storage facilities module**
 

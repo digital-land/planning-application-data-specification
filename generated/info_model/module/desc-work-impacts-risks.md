@@ -1,8 +1,6 @@
 # Description of work impacts and risks
 
-Description of proposed development and assessment of impacts on
-amenity, air traffic, defence assets, and protected views
-
+How the proposed development may affect nearby amenities, air traffic, defence assets or protected views.
 
 **Description of work impacts and risks module**
 

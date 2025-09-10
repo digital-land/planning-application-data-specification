@@ -1,7 +1,6 @@
 # Trees ownership
 
-Information about ownership of trees affected by the proposed works
-
+Who owns any trees affected by the proposed development.
 
 **Trees ownership module**
 

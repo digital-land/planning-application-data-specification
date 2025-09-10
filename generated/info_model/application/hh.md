@@ -97,8 +97,7 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 
 ## Access and rights of way
 
-Information about changes to access arrangements and public rights of way
-
+Details of any changes the proposed development would make to existing access arrangements or public rights of way
 
 **Access and rights of way module**
 
@@ -126,8 +125,7 @@ name | Name | A name for the document. For example, The Site Plan | MUST |
 
 ## Agent contact details
 
-Contact details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent contact details module**
 
@@ -156,8 +154,7 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Agent details
 
-Details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent details module**
 
@@ -190,8 +187,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Applicant contact details
 
-Contact details for the applicant or applicants, including email and phone numbers
-
+Telephone number and email address of the applicant.
 
 **Applicant contact details module**
 
@@ -223,9 +219,7 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Applicant details
 
-Details about the applicants for the planning application,
-including their personal information and contact details
-
+Name and contact information for the parties making the application.
 
 **Applicant details module**
 
@@ -259,10 +253,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Biodiversity net gain
 
-Information about biodiversity net gain requirements for the development,
-including pre-development biodiversity value, habitat loss details, and
-supporting documentation
-
+How any natural habitats on the development site will be improved by the proposed works.
 
 **Biodiversity net gain module**
 
@@ -283,8 +274,7 @@ supporting documentation
 
 ## Checklist
 
-Identifies the national requirement types that apply to this application type
-
+Checking whether all the requirements of the form have been met, such as proof of payment or supporting documentation.
 
 **Checklist module**
 
@@ -299,9 +289,7 @@ Identifies the national requirement types that apply to this application type
 
 ## Conflict of interest
 
-Information about any conflicts of interest between the applicant/agent and the planning authority,
-including relationships with staff or elected members
-
+Details of any conflict of interest that may exist between the applicant and planning authority.
 
 **Conflict of interest module**
 
@@ -317,8 +305,7 @@ including relationships with staff or elected members
 
 ## Declaration
 
-Declaration by the applicant or agent confirming the accuracy of the information provided
-
+Signed and dated verification of the application's accuracy.
 
 **Declaration module**
 
@@ -336,8 +323,7 @@ Declaration by the applicant or agent confirming the accuracy of the information
 
 ## Materials
 
-Information about the materials used in the development, including both existing and proposed materials
-
+What materials are being used for the proposed development
 
 **Materials module**
 
@@ -376,8 +362,7 @@ name | Name | A name for the document. For example, The Site Plan | MUST |
 
 ## Ownership certificates and agricultural land declaration
 
-Information about ownership of the site and/or property for development, including agricultural tenants and notification requirements.
-
+Who will be affected by the proposal and whether they have been notified, such as agricultural tenants
 
 **Ownership certificates and agricultural land declaration module**
 
@@ -424,8 +409,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Parking arrangements
 
-Information about how the proposed development affects existing parking arrangements
-
+Details of any changes the proposed development would make to parking facilities.
 
 **Parking arrangements module**
 
@@ -438,8 +422,7 @@ Information about how the proposed development affects existing parking arrangem
 
 ## Pre-application advice
 
-Information about any pre-application advice sought from the planning authority
-
+Details of pre-application advice received from the planning authority
 
 **Pre-application advice module**
 
@@ -455,8 +438,7 @@ Information about any pre-application advice sought from the planning authority
 
 ## Description of the proposal
 
-Information about what development, works or change of use is being proposed
-
+What development, works or change of use is proposed
 
 **Description of the proposal module**
 
@@ -480,9 +462,7 @@ Information about what development, works or change of use is being proposed
 
 ## Site details
 
-Information about the location and extent of the site where development 
-or works are proposed
-
+Where the proposed development will be built.
 
 **Site details module**
 
@@ -507,8 +487,8 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 **Validation rules**
 
-- {'description': 'At least one site-location must be provided for tree works applications', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'in': ['tree-works']}}, 'require': {'min': 1}}
-- {'description': 'Exactly one site-location for all other applications types', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'not': ['tree-works']}}, 'require': {'exact': 1}}
+- {'description': 'At least one site-location must be provided for tree works applications', 'field': 'site-locations', 'require': {'min': 1}, 'type': 'count-constraint', 'when': {'application-type': {'in': ['tree-works']}}}
+- {'description': 'Exactly one site-location for all other applications types', 'field': 'site-locations', 'require': {'exact': 1}, 'type': 'count-constraint', 'when': {'application-type': {'not': ['tree-works']}}}
 - If easting is provided, northing must also be provided and vice versa
 - If latitude is provided, longitude must also be provided and vice versa
 - Site boundary must be valid GeoJSON
@@ -517,8 +497,7 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 ## Site Visit Details
 
-Details needed to support a site visit by the planning authority
-
+Information to help the planning authority arrange a site visit
 
 **Site Visit Details module**
 
@@ -546,8 +525,7 @@ email | Email | The email address that can be used for electronic correspondence
 
 ## Trees and hedges information
 
-Information about trees and hedges on or adjacent to the development site, including any that pose risks or need to be removed
-
+Details of trees and/or hedges that will be affected by the proposed development
 
 **Trees and hedges information module**
 

@@ -1,8 +1,6 @@
 # Identification of tree(s) and description of works
 
-Details of trees and proposed work to them, including identification, 
-species and work descriptions
-
+Details of trees affected by the proposed development and what work is being done to them.
 
 **Identification of tree(s) and description of works module**
 

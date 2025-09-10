@@ -1,7 +1,6 @@
 # LDC Interest
 
-Information about the applicant's interest in the listed building and details of other interested parties including owners and interested persons
-
+Who had a say in whether the proposal should go ahead
 
 **LDC Interest module**
 

@@ -1,6 +1,6 @@
 # Hours of operation
 
-Hours of opening for each non-residential use proposed
+Proposed operating hours if the proposed development is intended for non-residential use.
 
 **Hours of operation module**
 

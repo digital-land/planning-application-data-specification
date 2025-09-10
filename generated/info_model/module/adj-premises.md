@@ -1,7 +1,6 @@
 # Adjacent premises
 
-Information about addresses of properties adjacent to the development site
-
+Details of properties next to the development site
 
 **Adjacent premises module**
 

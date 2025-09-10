@@ -87,8 +87,7 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 
 ## Adjacent premises
 
-Information about addresses of properties adjacent to the development site
-
+Details of properties next to the development site
 
 **Adjacent premises module**
 
@@ -113,8 +112,7 @@ uprn | UPRN | Unique Property Reference Number | MAY |
 
 ## Agent contact details
 
-Contact details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent contact details module**
 
@@ -143,8 +141,7 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Agent details
 
-Details of the agent acting on behalf of the applicant
-
+Name and contact information if an agent is being used.
 
 **Agent details module**
 
@@ -177,8 +174,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Applicant contact details
 
-Contact details for the applicant or applicants, including email and phone numbers
-
+Telephone number and email address of the applicant.
 
 **Applicant contact details module**
 
@@ -210,9 +206,7 @@ contact-priority | Contact priority | The priority of a number | MAY | Select fr
 
 ## Applicant details
 
-Details about the applicants for the planning application,
-including their personal information and contact details
-
+Name and contact information for the parties making the application.
 
 **Applicant details module**
 
@@ -246,8 +240,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Checklist
 
-Identifies the national requirement types that apply to this application type
-
+Checking whether all the requirements of the form have been met, such as proof of payment or supporting documentation.
 
 **Checklist module**
 
@@ -262,9 +255,7 @@ Identifies the national requirement types that apply to this application type
 
 ## Conflict of interest
 
-Information about any conflicts of interest between the applicant/agent and the planning authority,
-including relationships with staff or elected members
-
+Details of any conflict of interest that may exist between the applicant and planning authority.
 
 **Conflict of interest module**
 
@@ -277,8 +268,7 @@ including relationships with staff or elected members
 
 ## Declaration
 
-Declaration by the applicant or agent confirming the accuracy of the information provided
-
+Signed and dated verification of the application's accuracy.
 
 **Declaration module**
 
@@ -296,9 +286,7 @@ Declaration by the applicant or agent confirming the accuracy of the information
 
 ## Description of proposed works
 
-Description of proposed development works including extension measurements
-and detailed work specifications for planning applications
-
+Details of development plans such as extensions measurements or work specifications
 
 **Description of proposed works module**
 
@@ -319,9 +307,7 @@ and detailed work specifications for planning applications
 
 ## Eligibility extension
 
-Eligibility criteria for extension applications to determine if the proposal
-meets the requirements for the application type
-
+How a proposal to build an extension meets relevant criteria.
 
 **Eligibility extension module**
 
@@ -345,9 +331,7 @@ meets the requirements for the application type
 
 ## Site details
 
-Information about the location and extent of the site where development 
-or works are proposed
-
+Where the proposed development will be built.
 
 **Site details module**
 
@@ -372,8 +356,8 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 
 **Validation rules**
 
-- {'description': 'At least one site-location must be provided for tree works applications', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'in': ['tree-works']}}, 'require': {'min': 1}}
-- {'description': 'Exactly one site-location for all other applications types', 'type': 'count-constraint', 'field': 'site-locations', 'when': {'application-type': {'not': ['tree-works']}}, 'require': {'exact': 1}}
+- {'description': 'At least one site-location must be provided for tree works applications', 'field': 'site-locations', 'require': {'min': 1}, 'type': 'count-constraint', 'when': {'application-type': {'in': ['tree-works']}}}
+- {'description': 'Exactly one site-location for all other applications types', 'field': 'site-locations', 'require': {'exact': 1}, 'type': 'count-constraint', 'when': {'application-type': {'not': ['tree-works']}}}
 - If easting is provided, northing must also be provided and vice versa
 - If latitude is provided, longitude must also be provided and vice versa
 - Site boundary must be valid GeoJSON

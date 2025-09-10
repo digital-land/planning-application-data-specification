@@ -1,9 +1,6 @@
 # Biodiversity net gain
 
-Information about biodiversity net gain requirements for the development,
-including pre-development biodiversity value, habitat loss details, and
-supporting documentation
-
+How any natural habitats on the development site will be improved by the proposed works.
 
 **Biodiversity net gain module**
 
