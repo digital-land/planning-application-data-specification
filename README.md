@@ -12,6 +12,11 @@ The specification is made up of these elements:
 * [Fields](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/field) - these deine the specific fields, setting expectations for the field. For example, [decision date](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/field/decision-date.md?plain=1)
 * [Codelists](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/codelist) - these set the allowable values for a given field, for example, [parking space type](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/codelist/parking-space-type.schema.md?plain=1)
 
+These parts are used to generate the following outputs
+
+* [information models](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/info_model/module) for each module
+* [compiled specifications](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/info_model/application) for each application type and sub-type
+* a [spreadsheet](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/spreadsheet) view of each application type
 
 You can get involved by:
 
