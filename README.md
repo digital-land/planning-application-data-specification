@@ -24,9 +24,9 @@ More background can be found on the [planning application project page](https://
 
 ## Application types
 
-Below is the list of official application types (and their sub-types where applicable) that we are working through.
+Below is the list of official application types (and their sub-types where applicable) that we have produced specifications for.
 
-You can download a csv of [planning application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv) and [sub-types](http://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv).
+A [complete list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv) is available to download and use, and there is a dataset of application [sub-types](http://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv).
 
 | Application type | Sub type | Spec | Notes |
 |---|---|---|---|
@@ -52,6 +52,29 @@ You can download a csv of [planning application types](https://github.com/digita
 | [Removal/variation of conditions (S73)](https://github.com/digital-land/planning-application-data-specification/discussions/172) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/generated/info_model/application/s73.md) | |
 | [Reserved matters](https://github.com/digital-land/planning-application-data-specification/discussions/168) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/generated/info_model/application/reserved-matters.md) | |
 
+
+The application types we have not yet included in these specifications are
+
+* Additional environmental approval to extend the duration of a planning permission (ref: extend-duration-permission)
+* Certificate of alternative appropriate development (ref: cert-alt-appropriate-dev)
+* Change of use planning application (ref: change-of-use)
+* Circular 14/90 Overhead lines (ref: overhead-lines)
+* Development relating to the onshore extraction of oil and gas (ref: extraction-oil-gas)
+* Footpath diversion (ref: footpath-diversion)
+* Hazardous Substances Consent (ref: haz-substance-consent)
+* Land Drainage Consent (ref: land-drainage-consent)
+* Mineral extraction or associated development (ref: mineral-extraction)
+* Mineral planning applications (ref: mineral-app)
+* Modification of conditions relating to construction working hours (ref: mod-construction-hours)
+* Modification or discharge of a Section 106 planning obligation (ref: mod-discharge-s106)
+* Nationally Significant Infrastructure Projects (NSIPs) (ref: nsips)
+* Public Service Infrastructure applications (ref: psi-app)
+* Regulation 3 planning application (ref: reg-3)
+* Regulation 4 planning application (ref: reg-4)
+* Review of mineral permission (ROMP) (ref: romp)
+* Technical Details Consent (ref: technical-details-consent)
+* Transport and works act order (ref: twao)
+* Waste development (ref: waste-dev)
 
 ## Contributing
 
