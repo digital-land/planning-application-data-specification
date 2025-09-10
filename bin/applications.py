@@ -1,3 +1,24 @@
+from csv_helpers import read_csv
+from loader import load_content
+
+
+def get_undefined_application_types(
+    all_types_csv: str = "data/planning-application-type.csv",
+) -> list:
+    # read in csv with read_csv
+    all_types = read_csv(all_types_csv, as_dict=True)
+    # load specification
+    specification = load_content()
+    undefined_types = []
+
+    for app_type in all_types:
+        if app_type["reference"] not in specification.get("application", {}):
+            undefined_types.append(app_type)
+
+    # sort undefined_types by 'name'
+    return sorted(undefined_types, key=lambda x: x.get("name", ""))
+
+
 def get_application_module_refs(application: object | str, specification: dict) -> list:
     """
     Given an application object (or application ref string) and the full specification,
@@ -85,11 +106,12 @@ def get_application_module_refs(application: object | str, specification: dict) 
 
 
 if __name__ == "__main__":
-    print("Testing information model generation script.")
+
+    undefined_types = get_undefined_application_types()
+    for app in undefined_types:
+        print(f"* {app['name']} (ref: {app['reference']})")
 
     try:
-        from loader import load_content
-
         specification = load_content()
         print("Specification loaded successfully")
 
