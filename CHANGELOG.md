@@ -1,4 +1,49 @@
 
+<a name="v0.1.31"></a>
+## [v0.1.31](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.30...v0.1.31) (2025-09-10)
+
+update the list of application types
+
+### ⚒️ Tooling
+
+* compare complete list of application types with those defined in the specification(s) (commit [7ecd124](https://github.com/digital-land/planning-application-data-specification/commit/7ecd124d4ceee65da197fe34a528178da5d81ec2))
+
+### 𝌭 Model changes
+
+* tweaks to application type data based on feedback (commit [368b471](https://github.com/digital-land/planning-application-data-specification/commit/368b471a7b962135c95f4b9a700d935a5a867be5))
+* add declarative version of permission-type module (commit [2b622f7](https://github.com/digital-land/planning-application-data-specification/commit/2b622f7e7cdd2da1805ba3001eb283bc8fd313d2))
+
+### 🐛 Bug Fixes
+
+* mv schemas for planning requirement datasets to docs (commit [6aaf78e](https://github.com/digital-land/planning-application-data-specification/commit/6aaf78edbfbd973d515e414e89d2d14e60206585))
+* remove compiled application specifications from specification/application folder: (commit [3ebd6e0](https://github.com/digital-land/planning-application-data-specification/commit/3ebd6e0266de7e88bbdfc4a308803328c3829f10))
+* remove rest of replaced module info models (commit [4fe142f](https://github.com/digital-land/planning-application-data-specification/commit/4fe142fa3244da613272fbe2caafd4f9712682ba))
+* remove replaced information models (commit [ee362ac](https://github.com/digital-land/planning-application-data-specification/commit/ee362acd33045ee0db7b228c6db86b136ff024be))
+* module should use required-if structure not applies-if (commit [c6c89b5](https://github.com/digital-land/planning-application-data-specification/commit/c6c89b54b268b3fcd93e343180dbc2915ffe20de))
+
+### 👷‍♀️ Application changes
+
+* add public sector infrastucture to list of application types (commit [dcf54c7](https://github.com/digital-land/planning-application-data-specification/commit/dcf54c740b50d0da35f57b5708e97d99a5efc9de))
+* add hazardous substance consent to list of application types (commit [23052e3](https://github.com/digital-land/planning-application-data-specification/commit/23052e3ddb021af9de8d96205379f0c00dacfb87))
+* add review of mineral permission to list of application types (commit [356ce94](https://github.com/digital-land/planning-application-data-specification/commit/356ce94ffa8532a58d53c2f55b327552c59103e0))
+* add technical details consent to list of application types (commit [de28222](https://github.com/digital-land/planning-application-data-specification/commit/de282222725ca6fbcb3ec1983428f39b04f90646))
+* add minerals application to list of application types (commit [95c2de5](https://github.com/digital-land/planning-application-data-specification/commit/95c2de5a011b9ff9e972d832872861f83e38044c))
+* add regulation 4 to list of application types (commit [5cf94ae](https://github.com/digital-land/planning-application-data-specification/commit/5cf94ae10412e9e6c749a531c9d34efb5f49dc88))
+* add regulation 3 to list of application types (commit [8e8b69a](https://github.com/digital-land/planning-application-data-specification/commit/8e8b69a636748ebe4e8612fe1bd0a97ad3b44e63))
+* add change of use to list of application types (commit [7304eb3](https://github.com/digital-land/planning-application-data-specification/commit/7304eb353b0abaed859c3a0a60983b92916464a6))
+* add transport and works act order to list of application types (commit [c73f156](https://github.com/digital-land/planning-application-data-specification/commit/c73f156140867a09c920ededd3fdef4638ececbd))
+* add modification or discharge of section 106 obligation to list of application types (commit [c5d1987](https://github.com/digital-land/planning-application-data-specification/commit/c5d1987ea3d5f14eb4986fb205c0ea58cd116c96))
+* add mineral extraction to list of application types (commit [fbe3c60](https://github.com/digital-land/planning-application-data-specification/commit/fbe3c605d0854edba5099daa75db34fbd5668777))
+* add additional environmental approval to extend permission period to list of application types (commit [29504f1](https://github.com/digital-land/planning-application-data-specification/commit/29504f1a7092a08c6c51524f2f4c251097d142aa))
+* add modification of conditions relating to construction of working hours to list of application types (commit [d1b6137](https://github.com/digital-land/planning-application-data-specification/commit/d1b6137fdcbcbe636f5442b5cb8f815ce5de457e))
+* add nsips to list of application types (commit [5a9f1b2](https://github.com/digital-land/planning-application-data-specification/commit/5a9f1b262232da602287caf5662a98d3a14147b0))
+* add overhead line consent to list of application types (commit [ee30bfd](https://github.com/digital-land/planning-application-data-specification/commit/ee30bfd0d6c79ba7375492033a15301389bfc07c))
+* add certificate of alternative appropriate dev to list of application types (commit [7ac5219](https://github.com/digital-land/planning-application-data-specification/commit/7ac521979749033c2cefbc9914f8453282503e28))
+* add footpath diversion to list of application types (commit [10778fd](https://github.com/digital-land/planning-application-data-specification/commit/10778fd6a912d68c23111d68c2deb122be3ec829))
+* add land drainage consent to list of application types (commit [5b2ca0a](https://github.com/digital-land/planning-application-data-specification/commit/5b2ca0ac45a6ef7514b8f6a62e79bd34c8bc4e15))
+* add waste development to list of application types (commit [f5e70d5](https://github.com/digital-land/planning-application-data-specification/commit/f5e70d5c22fb45084bccb9070f5d8f4ebf0b3b0c))
+
+
 <a name="v0.1.30"></a>
 ## [v0.1.30](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.27...v0.1.30) (2025-09-08)
 
