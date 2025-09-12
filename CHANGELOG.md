@@ -1,4 +1,24 @@
 
+<a name="v0.1.32"></a>
+## [v0.1.32](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.31...v0.1.32) (2025-09-12)
+
+batch updates and descriptions
+
+### ⚒️ Tooling
+
+* to batch update application or module definitions (commit [e9690a3](https://github.com/digital-land/planning-application-data-specification/commit/e9690a387c9d89c561e90c71aeef39ff1ccd1f00))
+
+### 𝌭 Model changes
+
+* rework module descriptions (commit [a939279](https://github.com/digital-land/planning-application-data-specification/commit/a939279276875e3fc65ceb08999be8bebee819fe))
+
+### 👷‍♀️ Application changes
+
+* add synonyms for Approval of details reserved by condition applications (commit [19ab81f](https://github.com/digital-land/planning-application-data-specification/commit/19ab81f0315584fee279bf82241c4436aea1466c))
+* tweak so application names based on feedback (commit [4b9ffae](https://github.com/digital-land/planning-application-data-specification/commit/4b9ffaeb8814ad0ac7b605942849da4e976ddc0d))
+* update description for lbc and demolition in conservation area applications (commit [0ee8358](https://github.com/digital-land/planning-application-data-specification/commit/0ee8358a68820a84ed9c815d05053b7cd0fe66a9))
+
+
 <a name="v0.1.31"></a>
 ## [v0.1.31](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.30...v0.1.31) (2025-09-10)
 
