@@ -87,3 +87,13 @@ It is important that these specifications work for the people (software vendors,
 
 You can comment on any of the items in this repository and we encourage you to help us work through the [issues](https://github.com/digital-land/planning-application-data-specification/issues).
 
+We maintain a [CHANGELOG](CHANGELOG.md) using [git-chglog](https://github.com/git-chglog/git-chglog). This groups commits by type and into releases. Types are configurable and set in [.chglog/config.yml](.chglog/config.yml). Releases are handled by `git tag`.
+
+If you have made a number of commits (following [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)) and want to update the CHANGELOG, run
+
+```
+git tag -a v{version_number} -m "{release description}"
+# then
+git-chglog -o CHANGELOG.md
+```
+
