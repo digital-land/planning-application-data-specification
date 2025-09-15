@@ -32,6 +32,8 @@ specification::
 spreadsheets::
 	python3 bin/generate_spec_spreadsheet.py
 
+jsonschema::
+	python3 bin/generate_json_schema.py
 
 clean::
 	rm -rf generated

@@ -6,8 +6,8 @@ Details of trees and/or hedges that will be affected by the proposed development
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| trees-on-site | Trees on site | Whether trees or hedges are present on the proposed development site | full;outline-some;extraction-oil-gas | MUST |  |
-| trees-on-adj-land | Trees on adjacent land | Whether trees or hedges on land adjacent to the proposed development site could influence the development or might be important as part of the local landscape character | full;outline-some;extraction-oil-gas | MUST |  |
+| trees-on-site | Trees on site | Whether trees or hedges are present on the proposed development site | full, outline-some, extraction-oil-gas | MUST |  |
+| trees-on-adj-land | Trees on adjacent land | Whether trees or hedges on land adjacent to the proposed development site could influence the development or might be important as part of the local landscape character | full, outline-some, extraction-oil-gas | MUST |  |
 | has-falling-trees-risk | Falling trees risk | Whether there are falling trees on-premises or adjacent premises that are a risk to the development | hh | MUST |  |
 | falling-trees-document | Falling trees document{} | Details of document showing location of trees that pose a risk to the development | hh | MAY | Rule: is a MUST if `has-falling-trees-risk` is `True` |
 | tree-removal | Tree removal | Whether trees or hedges need to be pruned or removed | hh | MUST |  |

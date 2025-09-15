@@ -7,13 +7,17 @@ fields:
 - applies-if:
     application-type:
       in:
-      - full;outline-some;extraction-oil-gas
+      - full
+      - outline-some
+      - extraction-oil-gas
   field: trees-on-site
   required: true
 - applies-if:
     application-type:
       in:
-      - full;outline-some;extraction-oil-gas
+      - full
+      - outline-some
+      - extraction-oil-gas
   field: trees-on-adj-land
   required: true
 - applies-if:

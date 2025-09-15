@@ -146,6 +146,40 @@ def check_applies_if_structure(modules):
     return not has_errors
 
 
+def check_required_if_fields(modules, fields):
+    """
+    Check rule: if required-if attribute is present, and references other fields that those fields must exist
+    """
+    has_errors = False
+
+    for module_name, module in modules.items():
+        module_fields = module.get("fields", [])
+        for field_def in module_fields:
+            required_if = field_def.get("required-if")
+            if required_if is not None:
+                # Check if all referenced fields exist
+                # required-if attribute can be a list of conditions
+                if isinstance(required_if, list):
+                    for condition in required_if:
+                        for ref_field in condition.get("fields", []):
+                            if ref_field not in module_fields:
+                                print_error(
+                                    "module",
+                                    module_name,
+                                    f"field #{field_def.get('field')} references missing required-if field: {ref_field}",
+                                )
+                        has_errors = True
+                else:
+                    print_error(
+                        "module",
+                        module_name,
+                        f"field #{field_def.get('field')} has 'required-if' with unexpected type {type(required_if).__name__}",
+                    )
+                    has_errors = True
+
+    return not has_errors
+
+
 def check_all(modules, fields):
     """Run all module integrity checks.
 
@@ -160,6 +194,7 @@ def check_all(modules, fields):
         (check_dates, [modules]),
         (check_attrs, [modules]),
         (check_applies_if_structure, [modules]),
+        (check_required_if_fields, [modules, fields]),
     ]
 
     all_passed = True
