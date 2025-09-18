@@ -35,48 +35,6 @@
   },
   "required": [],
   "definitions": {
-    "building-element": {
-      "type": "object",
-      "properties": {
-        "building-element-type": {
-          "type": "string",
-          "enum": [
-            "walls",
-            "roof",
-            "windows",
-            "doors",
-            "boundary-treatments",
-            "vehicle-access-hard-standings",
-            "lighting",
-            "external-walls",
-            "roof-covering",
-            "chimney",
-            "external-doors",
-            "ceilings",
-            "internal-walls",
-            "floors",
-            "internal-doors",
-            "rainwater-goods",
-            "other"
-          ]
-        },
-        "existing-materials": {
-          "type": "string"
-        },
-        "proposed-materials": {
-          "type": "string"
-        },
-        "materials-not-applicable": {
-          "type": "boolean"
-        },
-        "materials-not-known": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "building-element-type"
-      ]
-    },
     "supporting-document": {
       "type": "object",
       "properties": {
@@ -197,6 +155,48 @@
         }
       ]
     },
+    "building-element": {
+      "type": "object",
+      "properties": {
+        "building-element-type": {
+          "type": "string",
+          "enum": [
+            "walls",
+            "roof",
+            "windows",
+            "doors",
+            "boundary-treatments",
+            "vehicle-access-hard-standings",
+            "lighting",
+            "external-walls",
+            "roof-covering",
+            "chimney",
+            "external-doors",
+            "ceilings",
+            "internal-walls",
+            "floors",
+            "internal-doors",
+            "rainwater-goods",
+            "other"
+          ]
+        },
+        "existing-materials": {
+          "type": "string"
+        },
+        "proposed-materials": {
+          "type": "string"
+        },
+        "materials-not-applicable": {
+          "type": "boolean"
+        },
+        "materials-not-known": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "building-element-type"
+      ]
+    },
     "haz-substances": {
       "type": "object",
       "properties": {
@@ -257,43 +257,73 @@
         }
       ]
     },
-    "materials": {
+    "waste-storage-collection": {
       "type": "object",
       "properties": {
-        "building-elements": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/building-element"
-          },
-          "minItems": 1
-        },
-        "additional-material-information": {
+        "waste-storage-area-details": {
           "type": "string"
         },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
+        "separate-recycling-arrangements-details": {
+          "type": "string"
         }
       },
-      "required": [
-        "building-elements",
-        "additional-material-information"
-      ],
+      "required": [],
       "allOf": [
         {
           "if": {
             "properties": {
-              "additional-material-information": {
+              "needs-waste-storage-area": {
                 "const": true
               }
             }
           },
           "then": {
             "required": [
-              "supporting-documents"
+              "waste-storage-area-details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "separate-recycling-arrangements": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "separate-recycling-arrangements-details"
+            ]
+          }
+        }
+      ]
+    },
+    "trade-effluent": {
+      "type": "object",
+      "properties": {
+        "is-disposal-required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "is-disposal-required"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "disposal-required": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "description"
             ]
           }
         }
@@ -491,73 +521,43 @@
         "trees-on-adj-land"
       ]
     },
-    "waste-storage-collection": {
+    "materials": {
       "type": "object",
       "properties": {
-        "waste-storage-area-details": {
-          "type": "string"
-        },
-        "separate-recycling-arrangements-details": {
-          "type": "string"
-        }
-      },
-      "required": [],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "needs-waste-storage-area": {
-                "const": true
-              }
-            }
+        "building-elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/building-element"
           },
-          "then": {
-            "required": [
-              "waste-storage-area-details"
-            ]
-          }
+          "minItems": 1
         },
-        {
-          "if": {
-            "properties": {
-              "separate-recycling-arrangements": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "separate-recycling-arrangements-details"
-            ]
-          }
-        }
-      ]
-    },
-    "trade-effluent": {
-      "type": "object",
-      "properties": {
-        "is-disposal-required": {
-          "type": "boolean"
-        },
-        "description": {
+        "additional-material-information": {
           "type": "string"
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "is-disposal-required"
+        "building-elements",
+        "additional-material-information"
       ],
       "allOf": [
         {
           "if": {
             "properties": {
-              "disposal-required": {
+              "additional-material-information": {
                 "const": true
               }
             }
           },
           "then": {
             "required": [
-              "description"
+              "supporting-documents"
             ]
           }
         }
