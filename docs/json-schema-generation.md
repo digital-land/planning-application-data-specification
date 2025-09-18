@@ -325,9 +325,11 @@ Each application JSON Schema file contains:
 **Future scope**: Complex validation rules from module `rules:` sections would require additional analysis and are not included in the initial implementation.
 
 ### Deliverables
-1. **JSON Schema generation script** (`bin/generate_json_schema.py`) ✅ Complete
-2. **Generated schema files** (`generated/json-schema/applications/*.json`) ✅ Complete (24 schemas)
-3. **Integration with build process** (Makefile targets) ✅ Complete
+1. **JSON Schema generation script** (`bin/generate_json_schema.py`) - ✅ Complete
+2. **Generated schema files** (`generated/json-schema/applications/*.json`) - ✅ Complete (24 schemas)
+3. **Integration with build process** (Makefile targets) - ✅ Complete
+4. **Sample application json files for householder, full and outline** - [❌] Incomplete
+5. **Sample vaidation script using jsonschema (Python)** - [❌] Incomplete
 
 ### File paths and data sources
 
