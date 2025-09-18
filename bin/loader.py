@@ -1,5 +1,4 @@
 from glob import glob
-from applications import get_application_module_refs
 
 import frontmatter
 
@@ -90,7 +89,8 @@ def load_specification_model():
         if a.application:
             application_defs[a.ref] = a
 
-    # Resolve inheritance for all applications
+    # Resolve inheritance for all applications - import here because of circular import issues
+    from applications import get_application_module_refs
     for app_ref, app_def in application_defs.items():
         if app_def.extends:
             resolved_module_refs = get_application_module_refs(app_ref, tables)
