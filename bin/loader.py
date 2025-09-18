@@ -1,5 +1,5 @@
 from glob import glob
-from typing import Dict
+from applications import get_application_module_refs
 
 import frontmatter
 
@@ -89,6 +89,13 @@ def load_specification_model():
         )
         if a.application:
             application_defs[a.ref] = a
+
+    # Resolve inheritance for all applications
+    for app_ref, app_def in application_defs.items():
+        if app_def.extends:
+            resolved_module_refs = get_application_module_refs(app_ref, tables)
+            resolved_modules = [module_defs.get(ref) for ref in resolved_module_refs if module_defs.get(ref)]
+            app_def.modules = resolved_modules
 
     specification_model = {
         "tables": tables,
