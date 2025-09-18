@@ -1,0 +1,456 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "ldc-existing-use.json",
+  "title": "LDC Existing Use",
+  "description": "Existing use of the site",
+  "type": "object",
+  "properties": {
+    "desc-existing-use": {
+      "$ref": "#/definitions/desc-existing-use"
+    },
+    "use-works-activity": {
+      "$ref": "#/definitions/use-works-activity"
+    },
+    "grounds-ldc": {
+      "$ref": "#/definitions/grounds-ldc"
+    },
+    "info-support-ldc": {
+      "$ref": "#/definitions/info-support-ldc"
+    },
+    "res-units": {
+      "$ref": "#/definitions/res-units"
+    }
+  },
+  "required": [],
+  "definitions": {
+    "existing-use-detail": {
+      "type": "object",
+      "properties": {
+        "use": {
+          "type": "string",
+          "enum": []
+        },
+        "use-details": {
+          "type": "string"
+        },
+        "land-part": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "use",
+        "land-part"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "use": {
+                "const": "sui"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "use-details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "use": {
+                "const": "other"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "use-details"
+            ]
+          }
+        }
+      ]
+    },
+    "supporting-applications": {
+      "type": "object",
+      "properties": {
+        "reference-number": {
+          "type": "string"
+        },
+        "condition-number": {
+          "type": "string"
+        },
+        "decision-date": {
+          "type": "string"
+        }
+      },
+      "required": []
+    },
+    "residential-unit-summary": {
+      "type": "object",
+      "properties": {
+        "tenure-type": {
+          "type": "string",
+          "enum": [
+            "market-housing",
+            "social-rented",
+            "intermediate-housing",
+            "key-worker-housing",
+            "affordable-rent",
+            "home-ownership",
+            "starter-homes",
+            "custom-build"
+          ]
+        },
+        "housing-type": {
+          "type": "string",
+          "enum": [
+            "houses",
+            "flats-maisonettes",
+            "sheltered-housing",
+            "bedsit-studio",
+            "cluster-flats",
+            "other",
+            "live-work-units",
+            "unknown"
+          ]
+        },
+        "existing-unit-breakdown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/unit-quantities"
+          },
+          "minItems": 1
+        },
+        "proposed-unit-breakdown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/unit-quantities"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "tenure-type",
+        "housing-type"
+      ]
+    },
+    "unit-quantities": {
+      "type": "object",
+      "properties": {
+        "units-unknown": {
+          "type": "boolean"
+        },
+        "units-per-bedroom-no": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bedroom-count"
+          },
+          "minItems": 1
+        },
+        "total-units": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "units-unknown"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "units-unknown": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "units-per-bedroom-no"
+            ]
+          }
+        }
+      ]
+    },
+    "bedroom-count": {
+      "type": "object",
+      "properties": {
+        "no-bedrooms-unknown": {
+          "type": "boolean"
+        },
+        "no-of-bedrooms": {
+          "type": "number"
+        },
+        "units": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "no-bedrooms-unknown",
+        "units"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "no-bedrooms-unknown": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "no-of-bedrooms"
+            ]
+          }
+        }
+      ]
+    },
+    "info-support-ldc": {
+      "type": "object",
+      "properties": {
+        "existing-use-start-date": {
+          "type": "string"
+        },
+        "has-existing-use-interrupted": {
+          "type": "boolean"
+        },
+        "interruption-details": {
+          "type": "string"
+        },
+        "has-existing-use-changed": {
+          "type": "boolean"
+        },
+        "existing-use-change-details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "existing-use-start-date",
+        "has-existing-use-interrupted",
+        "has-existing-use-changed"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "has-existing-use-interrupted": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "interruption-details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "has-existing-use-changed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "existing-use-change-details"
+            ]
+          }
+        }
+      ]
+    },
+    "grounds-ldc": {
+      "type": "object",
+      "properties": {
+        "grounds-pre-2024": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "use-10y",
+              "breach-10y",
+              "lawful-change-no-pp",
+              "works-complete-4y",
+              "dwelling-change-4y",
+              "other"
+            ]
+          },
+          "minItems": 1
+        },
+        "grounds-post-2024": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "use-10y",
+              "lawful-change-no-pp",
+              "other"
+            ]
+          },
+          "minItems": 1
+        },
+        "other-details": {
+          "type": "string"
+        },
+        "supporting-applications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-applications"
+          },
+          "minItems": 1
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason"
+      ]
+    },
+    "use-works-activity": {
+      "type": "object",
+      "properties": {
+        "ldc-need": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "existing-use",
+              "existing-building-work",
+              "breach-con-existing-use",
+              "breach-con-building-work",
+              "breach-con-activity"
+            ]
+          },
+          "minItems": 1
+        },
+        "use": {
+          "type": "string",
+          "enum": []
+        },
+        "specified-use": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "ldc-need"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "ldc-need": {
+                    "const": null
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "ldc-need": {
+                    "const": null
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "use"
+            ]
+          }
+        },
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "use": {
+                    "const": "sui"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "use": {
+                    "const": "other"
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "specified-use"
+            ]
+          }
+        }
+      ]
+    },
+    "desc-existing-use": {
+      "type": "object",
+      "properties": {
+        "existing-use-details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/existing-use-detail"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "existing-use-details"
+      ]
+    },
+    "res-units": {
+      "type": "object",
+      "properties": {
+        "will-residential-units-change": {
+          "type": "boolean"
+        },
+        "residential-unit-summary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/residential-unit-summary"
+          },
+          "minItems": 1
+        },
+        "total-existing-units": {
+          "type": "number"
+        },
+        "total-proposed-units": {
+          "type": "number"
+        },
+        "net-change": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "will-residential-units-change",
+        "total-existing-units",
+        "total-proposed-units",
+        "net-change"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "will-residential-units-change": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "residential-unit-summary"
+            ]
+          }
+        }
+      ]
+    }
+  }
+}

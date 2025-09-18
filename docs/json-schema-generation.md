@@ -1,0 +1,347 @@
+# JSON Schema generation
+
+## Overview
+
+This document outlines the approach for generating JSON Schema definitions from the existing markdown based planning application data specifications.
+
+The goal is to create schemas that can be used to validate JSON payloads representing planning applications of specific types.
+
+The main aim for this piece of work was to:
+
+**"Combine the various 'separate modules & components' of the current declarative models into a 'composite for the whole specification payload.'**
+
+## Key design decision: One schema per application type
+
+A key design decision in this architecture is to generate one self-contained JSON schema for each individual application type, rather than a single 
+monolithic schema to 
+validate all possible payloads.
+
+**This approach is a starting point and can be changed based on future based on feedback**.
+
+While the planning application data model allows a payload to represent multiple application types simultaneously (via the `application-types` array), 
+a single, all encompassing schema may require a number of nested `if/then` logic conditions to handle every possible combination of application types.
+The alternative approach of a single schema hasn't been tested given the time available but may be worth exploring at some point if required.
+
+The chosen approach promotes separation of concerns. Each schema is stand alone and the trade-off in taking this approach is that it would require
+validation orchestration.
+
+To restate this, the approach is to have:
+
+1.  **Schemas as rules to apply for each application type:** Each generated schema (e.g., `hh.json`, `lbc.json`) acts as a complete, focused, and 
+    more readable set of constraints for a single application type. It defines exactly which modules and fields are required for that specific type.
+
+2.  **Validation orchestration:** The responsibility for handling multi-type applications is placed on the consuming application (the "validator").
+    A validator should be implemented with the following logic:
+
+    *   Inspect the `application-types` array in the incoming JSON payload.
+    *   For each type listed in the array, fetch the corresponding schema file.
+    *   Validate the entire payload against **each** of the fetched schemas.
+
+A payload is only considered valid if it successfully validates against all the schemas it declares an interest in. This ensures that a combined 
+"Householder" and "Listed Building Consent" application, for example, contains all the required modules and fields for both types.
+
+This modular architecture ensures the schemas themselves remain simpler and maintainable while providing the necessary building blocks for developers 
+to implement robust and flexible validation logic.
+
+## JSON Schema version
+
+**Reason for using JSON Schema Draft-07** for maximum compatibility across validation tooling. While Draft 2020-12 is the latest standard, Draft-07 has:
+
+- **Widespread tooling support**: Supported by many JSON Schema validation libraries
+- **Sufficient features**: Includes all validation constructs used in this project (`if/then/else`, `definitions`, etc.)
+
+The generated schemas use Draft-07 syntax (`definitions` instead of `$defs`, etc.) to ensure they work reliably across different validation environments.
+
+## Current architecture
+
+### Specification structure
+The current specification is organized as a hierarchical structure:
+
+```
+Application (hh, full, lbc, etc.)
+├── Application-level Fields (application, etc.)
+│   └── Components (e.g., application core data)
+└── Modules (agent-details, proposal-details, etc.)
+    ├── Fields (with conditional logic)
+    └── Components (reusable field groups)
+```
+
+### Key components
+
+#### 1. **Applications** (`specification/application/*.schema.md`)
+- Define application types (householder, full planning, listed building consent, etc.)
+- Include application-level fields (typically core application data like reference, submission-date)
+- Reference modules for specific functional areas
+- Include application-specific metadata (legislation, synonyms, dates)
+
+#### 2. **Modules** (`specification/module/*.schema.md`) 
+- Group related fields by subject area (e.g., agent-details, proposal-details)
+- Support conditional field inclusion (`applies-if`, `required-if`)
+- Include validation rules in human-readable format
+
+#### 3. **Fields** (`specification/field/*.md`)
+- Define individual data elements with:
+  - **Datatype**: `string`, `number`, `boolean`, `enum`, `object`
+  - **Cardinality**: `1` (single) or `n` (array)
+  - **Component reference**: Links to reusable components
+  - **Codelist reference**: Links to enumerated values
+
+#### 4. **Components** (`specification/component/*.md`)
+- Reusable field groupings (e.g., supporting-document, address)
+- Can be referenced by fields with `datatype: object`
+- 
+#### 5. **Codelists** (`specification/codelist/*.schema.md` + `data/codelist/*.csv`)
+- Enumerated values for dropdown/select fields
+- CSV data with reference, name, description columns
+
+## JSON Schema generation requirements
+
+### Schema structure
+
+**Inline Definitions**: The current implementation uses inline definitions within each application schema file. 
+All component and module definitions are included in the `"definitions"` section of each application's JSON Schema file.
+
+**Rationale**:
+- **Self-contained**: Each schema file works independently without external dependencies
+- **Validation reliability**: No risk of broken references
+
+**Future Considerations**: The approach could be adapted to generate separate component/module schema files referenced via relative file paths or URLs if needed.
+
+### Core mapping
+
+#### Datatype mapping
+```
+# Field specification → JSON Schema
+string → {"type": "string"}
+number → {"type": "number"}
+boolean → {"type": "boolean"}
+enum → {"type": "string", "enum": [values from CSV]}
+object → {"type": "object", "$ref": "#/definitions/ComponentName"}
+```
+
+#### Cardinality mapping
+```
+# Cardinality → JSON Schema
+cardinality: "1" → field definition
+cardinality: "n" → {"type": "array", "items": field_definition}
+```
+
+#### Module mapping
+```
+module: tpo
+name: Tree preservation order details
+fields:
+- field: tpo-reference        # cardinality: n, datatype: string
+- field: tpo-provided-by      # cardinality: 1, datatype: enum
+```
+Maps to application property and definition:
+```
+{
+  "properties": {
+    "tpo": {"$ref": "#/definitions/tpo"}
+  },
+  "definitions": {
+    "tpo": {
+      "type": "object",
+      "properties": {
+        "tpo-reference": {
+          "type": "array",
+          "items": {"type": "string"}
+        },
+        "tpo-provided-by": {
+          "type": "string",
+          "enum": ["applicant", "system"]
+        }
+      }
+    }
+  }
+}
+```
+
+####  Component mapping
+```
+# Field with component reference
+field: documents
+datatype: object
+component: document
+cardinality: n
+```
+Maps to:
+```
+{
+  "documents": {
+    "type": "array",
+    "items": {"$ref": "#/definitions/document"}
+  }
+}
+```
+
+#### Codelist mapping
+```
+# Field with enumeration
+field: foul-sewage-disposal-types  
+datatype: enum
+codelist: foul-sewage-disposal-type
+cardinality: n
+```
+Maps to:
+```
+{
+  "foul-sewage-disposal-types": {
+    "type": "array", 
+    "items": {
+      "type": "string",
+      "enum": ["mains-sewer", "cess-pit", "septic-tank", "package-treatment", "other"]
+    }
+  }
+}
+```
+With the values for the enum read from the corresponding csv in (data/codelist/*.csv) directory.
+ 
+#### Conditional logic mapping
+The module specifications include complex conditional logic that is handled differently depending on the condition type:
+
+```
+# Example from proposal-details module
+- field: proposal-started-date
+  required-if:
+  - field: proposal-started
+    value: true
+  applies-if:
+    application-type:
+      in: [advertising, full, hh]
+```
+
+**Two types of conditional logic:**
+
+1. **`required-if` conditions** - Convert to JSON Schema `if/then/else` constructs:
+```
+{
+  "if": {
+    "properties": {
+      "proposal-started": {"const": true}
+    }
+  },
+  "then": {
+    "required": ["proposal-started-date"]
+  }
+}
+```
+
+2. **`applies-if` conditions** - Since we generate individual application schemas, fields are directly required when the current application type matches:
+```
+# For hh.json: if "hh" is in [advertising, full, hh], then directly add to required array
+"required": ["proposal-started-date"]
+```
+
+This approach eliminates complex conditional validation at runtime since each application schema only contains fields relevant to that specific application type.
+
+### Schema architecture
+
+#### 1. **Application level schema**
+Each application type gets its own self-contained JSON Schema file matching the specification filenames:
+- `generated/json-schema/applications/hh.json` (householder)
+- `generated/json-schema/applications/full.json` (full planning)
+- `generated/json-schema/applications/lbc.json` (listed building consent)
+- `generated/json-schema/applications/advertising.json`
+- `generated/json-schema/applications/approval-condition.json`
+- etc. (24 total application schemas)
+
+#### 2. **Inline definitions**
+All modules and components are treated uniformly as properties with inline definitions:
+
+```
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "$id": "hh.json",
+  "properties": {
+    "agent-details": {"$ref": "#/definitions/agent-details"},
+    "proposal-details": {"$ref": "#/definitions/proposal-details"},
+    "supporting-document": {"$ref": "#/definitions/supporting-document"},
+    "application": {"$ref": "#/definitions/application"}
+  },
+  "definitions": {
+    "agent-details": {
+      "type": "object",
+      "properties": {...}
+    },
+    "proposal-details": {
+      "type": "object",
+      "properties": {...}
+    },
+    "supporting-document": {
+      "type": "object",
+      "properties": {...}
+    },
+    "application": {
+      "type": "object",
+      "properties": {...}
+    }
+  }
+}
+```
+
+**Key architectural decisions:**
+- **Self-contained schemas**: Each application schema includes all necessary definitions inline
+- **Unified treatment**: Modules and components are both treated as properties with `$ref` pointers to inline definitions
+- **No external dependencies**: Each schema file works independently without requiring external references
+
+
+### Technical implementation details
+
+#### Generator script
+
+The script for generation of json is [bin/generate_json_schema.py](bin/generate_json_schema.py)
+
+#### Output structure
+```
+generated/
+└── json-schema/
+    └── applications/
+        ├── hh.json
+        ├── full.json
+        ├── lbc.json
+        ├── advertising.json
+        └── ... (all application types)
+```
+
+Each application JSON Schema file contains:
+- Main application properties
+- Inline module definitions in `"definitions"` section
+- Inline component definitions in `"definitions"` section
+
+#### Integration with existing workflow
+- Generator script added to `Makefile`: `json-schemas` target
+
+### Implementation scope
+
+**Initial focus**: Direct technical mapping of specification elements to JSON Schema:
+- Field datatypes (`string`, `number`, `boolean`, `enum`, `object`)
+- Cardinality constraints (`1` vs `n` for arrays)
+- Module and Component references via `$ref` with definitions
+- Application level fields (core application data)
+- Module and Component inclusion with (`applies-if`, `required-if`)
+
+**Future scope**: Complex validation rules from module `rules:` sections would require additional analysis and are not included in the initial implementation.
+
+### Deliverables
+1. **JSON Schema generation script** (`bin/generate_json_schema.py`) ✅ Complete
+2. **Generated schema files** (`generated/json-schema/applications/*.json`) ✅ Complete (24 schemas)
+3. **Integration with build process** (Makefile targets) ✅ Complete
+
+### File paths and data sources
+
+**Specification loading:**
+- `bin/loader.py:load_specification_model()` → Returns complete model
+- `bin/models.py` → Dataclass definitions
+- Uses `frontmatter` library to parse YAML headers
+
+**Data sources:**
+- Applications: `specification/application/*.schema.md`
+- Modules: `specification/module/*.schema.md` 
+- Fields: `specification/field/*.md`
+- Components: `specification/component/*.md`
+- Codelists: `specification/codelist/*.schema.md` + `data/codelist/*.csv`
+
+The current generation approach leverages the existing structured specification model and provides the basis for JSON Schema generation 
+while maintaining the integrity and conditional logic present in the current markdown based specifications.

@@ -789,6 +789,8 @@ Details of trees and/or hedges that will be affected by the proposed development
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
+| trees-on-site | Trees on site | Whether trees or hedges are present on the proposed development site | MUST |  |
+| trees-on-adj-land | Trees on adjacent land | Whether trees or hedges on land adjacent to the proposed development site could influence the development or might be important as part of the local landscape character | MUST |  |
 
 **Validation rules**
 
