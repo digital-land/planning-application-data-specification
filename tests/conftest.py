@@ -13,7 +13,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "bin"))
 
 @pytest.fixture
 def hh_application_payload():
-    path = PROJECT_ROOT / "specification" / "example" / "householder-application.json"
+    path = PROJECT_ROOT / "specification" / "example" / "example-hh-payload-minimal.json"
     with open(path) as f:
         return json.load(f)
 

@@ -305,7 +305,12 @@ def generate_definitions(
 
         # Add conditional logic if present
         if conditional_rules:
-            schema["allOf"] = conditional_rules
+            if len(conditional_rules) == 1:
+                # Single rule - add directly to schema
+                schema.update(conditional_rules[0])
+            else:
+                # Multiple rules - use allOf
+                schema["allOf"] = conditional_rules
 
         definitions[ref] = schema
         processed.add(ref)
@@ -392,8 +397,14 @@ def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
     schema["required"].extend(app_level_required)
     if app_level_conditionals:
         if "allOf" not in schema:
-            schema["allOf"] = []
-        schema["allOf"].extend(app_level_conditionals)
+            # No existing allOf, so apply the same logic as before
+            if len(app_level_conditionals) == 1:
+                schema.update(app_level_conditionals[0])
+            else:
+                schema["allOf"] = app_level_conditionals
+        else:
+            # Already has allOf from module conditionals, extend it
+            schema["allOf"].extend(app_level_conditionals)
 
     # Re-process any components found at the application level
     if component_refs - set(component_definitions.keys()):
