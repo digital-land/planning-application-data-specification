@@ -358,8 +358,6 @@ def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
         "definitions": {},
     }
 
-    # TODO: BUGFIX - modules should be listed in required list for application
-
     # Collect component references from all modules to ensure they are all defined
     component_refs = set()
     for mod in app_def.modules:
@@ -380,10 +378,11 @@ def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
     )
     schema["definitions"].update(module_definitions)
 
-    # Add module properties to main schema
+    # Add module properties to main schema and mark them as required
     for module_ref in module_refs:
         if module_ref in module_definitions:
             schema["properties"][module_ref] = {"$ref": f"#/definitions/{module_ref}"}
+            schema["required"].append(module_ref)
 
     # Handle application-level fields
     app_level_properties, app_level_required, app_level_conditionals = process_items(
