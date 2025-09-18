@@ -77,6 +77,69 @@
         "building-element-type"
       ]
     },
+    "supporting-document": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "name"
+      ]
+    },
+    "hazardous-substance": {
+      "type": "object",
+      "properties": {
+        "hazardous-substance-type": {
+          "type": "string",
+          "enum": [
+            "acrylonitrile",
+            "ammonia",
+            "bromine",
+            "chlorine",
+            "ethylene-oxide",
+            "flour",
+            "hydrogen-cyanide",
+            "liquid-oxygen",
+            "liquid-petroleum-gas",
+            "phosgene",
+            "refined-white-sugar",
+            "sulphur-dioxide"
+          ]
+        },
+        "hazardous-substance-other": {
+          "type": "string"
+        },
+        "amount": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "hazardous-substance-type",
+        "amount"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "hazardous-substance-type": {
+                "const": "other"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "hazardous-substance-other"
+            ]
+          }
+        }
+      ]
+    },
     "parking-space": {
       "type": "object",
       "properties": {
@@ -134,139 +197,189 @@
         }
       ]
     },
-    "hazardous-substance": {
+    "haz-substances": {
       "type": "object",
       "properties": {
-        "hazardous-substance-type": {
+        "involves-hazardous-substances": {
           "type": "string",
           "enum": [
-            "acrylonitrile",
-            "ammonia",
-            "bromine",
-            "chlorine",
-            "ethylene-oxide",
-            "flour",
-            "hydrogen-cyanide",
-            "liquid-oxygen",
-            "liquid-petroleum-gas",
-            "phosgene",
-            "refined-white-sugar",
-            "sulphur-dioxide"
+            "yes",
+            "no",
+            "not-applicable"
           ]
         },
-        "hazardous-substance-other": {
-          "type": "string"
+        "substance-types": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hazardous-substance"
+          },
+          "minItems": 1
         },
-        "amount": {
-          "type": "number"
+        "hazardous-sub-consent-req": {
+          "type": "boolean"
+        },
+        "hazardous-sub-consent-details": {
+          "type": "string"
         }
       },
       "required": [
-        "hazardous-substance-type",
-        "amount"
+        "involves-hazardous-substances",
+        "hazardous-sub-consent-req"
       ],
       "allOf": [
         {
           "if": {
             "properties": {
-              "hazardous-substance-type": {
-                "const": "other"
+              "involves-hazardous-substances": {
+                "const": "yes"
               }
             }
           },
           "then": {
             "required": [
-              "hazardous-substance-other"
-            ]
-          }
-        }
-      ]
-    },
-    "supporting-document": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference",
-        "name"
-      ]
-    },
-    "waste-storage-collection": {
-      "type": "object",
-      "properties": {
-        "waste-storage-area-details": {
-          "type": "string"
-        },
-        "separate-recycling-arrangements-details": {
-          "type": "string"
-        }
-      },
-      "required": [],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "needs-waste-storage-area": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "waste-storage-area-details"
+              "substance-types"
             ]
           }
         },
         {
           "if": {
             "properties": {
-              "separate-recycling-arrangements": {
+              "hazardous-sub-consent-req": {
                 "const": true
               }
             }
           },
           "then": {
             "required": [
-              "separate-recycling-arrangements-details"
+              "hazardous-sub-consent-details"
             ]
           }
         }
       ]
     },
-    "vehicle-parking": {
+    "materials": {
       "type": "object",
       "properties": {
-        "parking-spaces": {
+        "building-elements": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/parking-space"
+            "$ref": "#/definitions/building-element"
+          },
+          "minItems": 1
+        },
+        "additional-material-information": {
+          "type": "string"
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
           },
           "minItems": 1
         }
       },
       "required": [
-        "parking-spaces"
+        "building-elements",
+        "additional-material-information"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "additional-material-information": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "supporting-documents"
+            ]
+          }
+        }
       ]
     },
-    "trees-hedges": {
+    "bio-geo-arch-con": {
       "type": "object",
       "properties": {
-        "trees-on-site": {
-          "type": "boolean"
+        "protected-species-impact": {
+          "type": "string",
+          "enum": [
+            "on-development-site",
+            "adjacent-to-site"
+          ]
         },
-        "trees-on-adj-land": {
-          "type": "boolean"
+        "biodiversity-features-impact": {
+          "type": "string",
+          "enum": [
+            "on-development-site",
+            "adjacent-to-site"
+          ]
+        },
+        "geological-features-impact": {
+          "type": "string",
+          "enum": [
+            "on-development-site",
+            "adjacent-to-site"
+          ]
         }
       },
       "required": [
-        "trees-on-site",
-        "trees-on-adj-land"
+        "protected-species-impact",
+        "biodiversity-features-impact",
+        "geological-features-impact"
+      ]
+    },
+    "foul-sewage": {
+      "type": "object",
+      "properties": {
+        "has-new-disposal-arrangements": {
+          "type": "boolean"
+        },
+        "foul-sewage-disposal-types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "mains-sewer",
+              "cess-pit",
+              "septic-tank",
+              "package-treatment",
+              "other"
+            ]
+          },
+          "minItems": 1
+        },
+        "produce-foul-sewage": {
+          "type": "boolean"
+        },
+        "connect-to-drainage-system": {
+          "type": "boolean"
+        },
+        "drainage-system-details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "has-new-disposal-arrangements",
+        "produce-foul-sewage",
+        "connect-to-drainage-system"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "has-new-disposal-arrangements": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "foul-sewage-disposal-types"
+            ]
+          }
+        }
       ]
     },
     "access-rights-of-way": {
@@ -363,77 +476,61 @@
         }
       ]
     },
-    "materials": {
+    "trees-hedges": {
       "type": "object",
       "properties": {
-        "building-elements": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/building-element"
-          },
-          "minItems": 1
+        "trees-on-site": {
+          "type": "boolean"
         },
-        "additional-material-information": {
-          "type": "string"
-        },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
+        "trees-on-adj-land": {
+          "type": "boolean"
         }
       },
       "required": [
-        "building-elements",
-        "additional-material-information"
-      ],
+        "trees-on-site",
+        "trees-on-adj-land"
+      ]
+    },
+    "waste-storage-collection": {
+      "type": "object",
+      "properties": {
+        "waste-storage-area-details": {
+          "type": "string"
+        },
+        "separate-recycling-arrangements-details": {
+          "type": "string"
+        }
+      },
+      "required": [],
       "allOf": [
         {
           "if": {
             "properties": {
-              "additional-material-information": {
+              "needs-waste-storage-area": {
                 "const": true
               }
             }
           },
           "then": {
             "required": [
-              "supporting-documents"
+              "waste-storage-area-details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "separate-recycling-arrangements": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "separate-recycling-arrangements-details"
             ]
           }
         }
-      ]
-    },
-    "bio-geo-arch-con": {
-      "type": "object",
-      "properties": {
-        "protected-species-impact": {
-          "type": "string",
-          "enum": [
-            "on-development-site",
-            "adjacent-to-site"
-          ]
-        },
-        "biodiversity-features-impact": {
-          "type": "string",
-          "enum": [
-            "on-development-site",
-            "adjacent-to-site"
-          ]
-        },
-        "geological-features-impact": {
-          "type": "string",
-          "enum": [
-            "on-development-site",
-            "adjacent-to-site"
-          ]
-        }
-      },
-      "required": [
-        "protected-species-impact",
-        "biodiversity-features-impact",
-        "geological-features-impact"
       ]
     },
     "trade-effluent": {
@@ -466,116 +563,19 @@
         }
       ]
     },
-    "foul-sewage": {
+    "vehicle-parking": {
       "type": "object",
       "properties": {
-        "has-new-disposal-arrangements": {
-          "type": "boolean"
-        },
-        "foul-sewage-disposal-types": {
+        "parking-spaces": {
           "type": "array",
           "items": {
-            "type": "string",
-            "enum": [
-              "mains-sewer",
-              "cess-pit",
-              "septic-tank",
-              "package-treatment",
-              "other"
-            ]
+            "$ref": "#/definitions/parking-space"
           },
           "minItems": 1
-        },
-        "produce-foul-sewage": {
-          "type": "boolean"
-        },
-        "connect-to-drainage-system": {
-          "type": "boolean"
-        },
-        "drainage-system-details": {
-          "type": "string"
         }
       },
       "required": [
-        "has-new-disposal-arrangements",
-        "produce-foul-sewage",
-        "connect-to-drainage-system"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "has-new-disposal-arrangements": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "foul-sewage-disposal-types"
-            ]
-          }
-        }
-      ]
-    },
-    "haz-substances": {
-      "type": "object",
-      "properties": {
-        "involves-hazardous-substances": {
-          "type": "string",
-          "enum": [
-            "yes",
-            "no",
-            "not-applicable"
-          ]
-        },
-        "substance-types": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/hazardous-substance"
-          },
-          "minItems": 1
-        },
-        "hazardous-sub-consent-req": {
-          "type": "boolean"
-        },
-        "hazardous-sub-consent-details": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "involves-hazardous-substances",
-        "hazardous-sub-consent-req"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "involves-hazardous-substances": {
-                "const": "yes"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "substance-types"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "hazardous-sub-consent-req": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "hazardous-sub-consent-details"
-            ]
-          }
-        }
+        "parking-spaces"
       ]
     }
   }

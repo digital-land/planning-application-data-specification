@@ -72,6 +72,21 @@
         }
       ]
     },
+    "supporting-applications": {
+      "type": "object",
+      "properties": {
+        "reference-number": {
+          "type": "string"
+        },
+        "condition-number": {
+          "type": "string"
+        },
+        "decision-date": {
+          "type": "string"
+        }
+      },
+      "required": []
+    },
     "residential-unit-summary": {
       "type": "object",
       "properties": {
@@ -120,21 +135,6 @@
         "tenure-type",
         "housing-type"
       ]
-    },
-    "supporting-applications": {
-      "type": "object",
-      "properties": {
-        "reference-number": {
-          "type": "string"
-        },
-        "condition-number": {
-          "type": "string"
-        },
-        "decision-date": {
-          "type": "string"
-        }
-      },
-      "required": []
     },
     "unit-quantities": {
       "type": "object",
@@ -207,19 +207,107 @@
         }
       ]
     },
-    "desc-existing-use": {
+    "info-support-ldc": {
       "type": "object",
       "properties": {
-        "existing-use-details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/existing-use-detail"
-          },
-          "minItems": 1
+        "existing-use-start-date": {
+          "type": "string"
+        },
+        "has-existing-use-interrupted": {
+          "type": "boolean"
+        },
+        "interruption-details": {
+          "type": "string"
+        },
+        "has-existing-use-changed": {
+          "type": "boolean"
+        },
+        "existing-use-change-details": {
+          "type": "string"
         }
       },
       "required": [
-        "existing-use-details"
+        "existing-use-start-date",
+        "has-existing-use-interrupted",
+        "has-existing-use-changed"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "has-existing-use-interrupted": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "interruption-details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "has-existing-use-changed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "existing-use-change-details"
+            ]
+          }
+        }
+      ]
+    },
+    "grounds-ldc": {
+      "type": "object",
+      "properties": {
+        "grounds-pre-2024": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "use-10y",
+              "breach-10y",
+              "lawful-change-no-pp",
+              "works-complete-4y",
+              "dwelling-change-4y",
+              "other"
+            ]
+          },
+          "minItems": 1
+        },
+        "grounds-post-2024": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "use-10y",
+              "lawful-change-no-pp",
+              "other"
+            ]
+          },
+          "minItems": 1
+        },
+        "other-details": {
+          "type": "string"
+        },
+        "supporting-applications": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-applications"
+          },
+          "minItems": 1
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason"
       ]
     },
     "use-works-activity": {
@@ -303,6 +391,21 @@
         }
       ]
     },
+    "desc-existing-use": {
+      "type": "object",
+      "properties": {
+        "existing-use-details": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/existing-use-detail"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "existing-use-details"
+      ]
+    },
     "res-units": {
       "type": "object",
       "properties": {
@@ -344,109 +447,6 @@
           "then": {
             "required": [
               "residential-unit-summary"
-            ]
-          }
-        }
-      ]
-    },
-    "grounds-ldc": {
-      "type": "object",
-      "properties": {
-        "grounds-pre-2024": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "use-10y",
-              "breach-10y",
-              "lawful-change-no-pp",
-              "works-complete-4y",
-              "dwelling-change-4y",
-              "other"
-            ]
-          },
-          "minItems": 1
-        },
-        "grounds-post-2024": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "use-10y",
-              "lawful-change-no-pp",
-              "other"
-            ]
-          },
-          "minItems": 1
-        },
-        "other-details": {
-          "type": "string"
-        },
-        "supporting-applications": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-applications"
-          },
-          "minItems": 1
-        },
-        "reason": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reason"
-      ]
-    },
-    "info-support-ldc": {
-      "type": "object",
-      "properties": {
-        "existing-use-start-date": {
-          "type": "string"
-        },
-        "has-existing-use-interrupted": {
-          "type": "boolean"
-        },
-        "interruption-details": {
-          "type": "string"
-        },
-        "has-existing-use-changed": {
-          "type": "boolean"
-        },
-        "existing-use-change-details": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "existing-use-start-date",
-        "has-existing-use-interrupted",
-        "has-existing-use-changed"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "has-existing-use-interrupted": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "interruption-details"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "has-existing-use-changed": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "existing-use-change-details"
             ]
           }
         }
