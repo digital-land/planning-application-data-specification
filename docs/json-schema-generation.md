@@ -44,8 +44,7 @@ To restate this, the approach is to have:
     A validator should be implemented with the following logic:
 
     *   Inspect the `application-types` array in the incoming JSON payload.
-    *   For each type listed in the array, fetch the corresponding schema file.
-    *   Validate the entire payload against **each** of the fetched schemas.
+    *   For each type listed in the array, validate the entire payload against **each** of the relevant JSON schemas.
 
 A payload is only considered valid if it successfully validates against all the schemas it declares an interest in. This ensures that a combined 
 "Householder" and "Listed Building Consent" application, for example, contains all the required modules and fields for both types.
