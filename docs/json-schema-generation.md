@@ -351,6 +351,7 @@ while maintaining the integrity and conditional logic present in the current mar
 
 ## Future considerations
 
-1. Would a single schema be a better approach?
-2. Publication of schemas. Github urls, release branch?
-3. Versioning options, version number in url, version in output file name, convention for latest, directory based versioning?
+1. How could/should the rules lists from the markdown schemas be incorporated into JSON schema?
+2. Would a single schema be a better approach?
+3. Publication of schemas. Github urls, release branch?
+4. Versioning options, version number in url, version in output file name, convention for latest, directory based versioning?
