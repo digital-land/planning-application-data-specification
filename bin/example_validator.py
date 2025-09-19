@@ -5,10 +5,12 @@ from pathlib import Path
 import click
 import jsonschema
 
+
 def _load_json(path):
     """Load a JSON file from the given path."""
     with open(path, "r") as f:
         return json.load(f)
+
 
 @click.command()
 @click.option(
@@ -46,7 +48,9 @@ def validate_payload(payload_path: Path, schema_dir: Path):
     application_types = payload.get("application", {}).get("application-types")
 
     if application_types is None or not isinstance(application_types, list):
-        print("Error: '''application-types''' array not found or not a list in payload.")
+        print(
+            "Error: 'application-types' array not found or not a list in payload."
+        )
         return
 
     print(f"Found application types: {', '.join(application_types)}")
@@ -71,22 +75,26 @@ def validate_payload(payload_path: Path, schema_dir: Path):
             validator.validate(payload)
             print(f"VALID: Payload is valid against '{application_type}.json' schema.")
         except jsonschema.exceptions.ValidationError as e:
-            print(f"INVALID: Payload is not valid against '{application_type}.json' schema.")
+            print(
+                f"INVALID: Payload is not valid against '{application_type}.json' schema."
+            )
             print(f"  Error: {e.message}")
             all_valid = False
         except Exception as e:
-            print(f"An unexpected error occurred during validation for '{application_type}': {e}")
+            print(
+                f"An unexpected error occurred during validation for '{application_type}': {e}"
+            )
             all_valid = False
-        
+
         print("-" * 30)
 
     if all_valid:
-        print("Success: Payload is valid against all specified application type schemas.")
+        print(
+            "Success: Payload is valid against all specified application type schemas."
+        )
     else:
         print("Failure: Payload failed validation against one or more schemas.")
 
 
 if __name__ == "__main__":
     validate_payload()
-
-
