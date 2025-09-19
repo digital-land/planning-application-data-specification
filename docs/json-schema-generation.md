@@ -413,7 +413,7 @@ Each application JSON Schema file contains:
 2. **Generated schema files** (`generated/json-schema/applications/*.json`) - ✅ Complete (24 schemas)
 3. **Integration with build process** (Makefile targets) - ✅ Complete
 4. **Sample application json files for householder, full and outline** - [❌] Incomplete
-5. **Sample vaidation script using jsonschema (Python)** - [❌] Incomplete
+5. **Sample vaidation script using jsonschema (Python)** - ✅ Complete
 
 ### File paths and data sources
 
