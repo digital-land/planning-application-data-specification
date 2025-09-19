@@ -11,10 +11,10 @@ The main aim for this piece of work was to:
 **"Combine the various 'separate modules & components' of the current declarative models into a 'composite for the whole specification payload.'**
 
 ### Note
-A major part missing in this work is sample application JSON data. This would have made testing the generation of JSON schema much easier
-and sustainable. 
+**A major part missing in this work is sample application JSON data. This would have made testing the generation of JSON schema much easier
+and sustainable.** 
 
-An attempt was made to use LLMs to generate sample application, but the result was a mixed bag and required a fair bit of manual reworking.
+An attempt to use LLMs was made to generate sample application, but the result was a mixed bag and required a fair bit of manual reworking.
 
 In the end only one example application was created [example-hh-payload-minimal.json](../specification/example/example-hh-payload-minimal.json)
 
