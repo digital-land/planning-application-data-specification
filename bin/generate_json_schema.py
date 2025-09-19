@@ -26,7 +26,7 @@ def create_simple_required_if_rule(
 def create_anyof_conditions_rule(
     field_ref: str, any_conditions: List[Dict[str, Any]]
 ) -> Dict[str, Any]:
-    """Creates an 'anyOf' JSON Schema rule from a list of field-value conditions."""
+    """Creates an 'anyOf' JSON Schema rule from a list of dictionaries field-value conditions."""
     return {
         "if": {
             "anyOf": [
@@ -351,7 +351,7 @@ def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
     if not app_def:
         raise ValueError(f"Application {app_ref} not found")
 
-    # TODO: work out what url will need to be for $id, for now just use file name
+    # TODO: work out what url will need to be for $id, for now just use file name but when publishing worked out change to URL.
     schema = {
         "$schema": "https://json-schema.org/draft-07/schema#",
         "$id": f"{app_ref}.json",

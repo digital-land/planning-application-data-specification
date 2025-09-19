@@ -347,3 +347,10 @@ Each application JSON Schema file contains:
 
 The current generation approach leverages the existing structured specification model and provides the basis for JSON Schema generation 
 while maintaining the integrity and conditional logic present in the current markdown based specifications.
+
+
+## Future considerations
+
+1. Would a single schema be a better approach?
+2. Publication of schemas. Github urls, release branch?
+3. Versioning options, version number in url, version in output file name, convention for latest, directory based versioning?
