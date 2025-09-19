@@ -53,25 +53,6 @@
     "application"
   ],
   "definitions": {
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
     "agent": {
       "type": "object",
       "properties": {
@@ -95,6 +76,31 @@
       "required": [
         "reference",
         "person"
+      ]
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "first-name": {
+          "type": "string"
+        },
+        "last-name": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first-name",
+        "last-name",
+        "address-text"
       ]
     },
     "applicant": {
@@ -149,21 +155,24 @@
       },
       "required": []
     },
-    "phone-number": {
+    "contact-details": {
       "type": "object",
       "properties": {
-        "number": {
+        "email": {
           "type": "string"
         },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
         }
       },
-      "required": []
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
     },
     "other-contact": {
       "type": "object",
@@ -184,67 +193,51 @@
         "email"
       ]
     },
-    "person": {
+    "phone-number": {
       "type": "object",
       "properties": {
-        "title": {
+        "number": {
           "type": "string"
         },
-        "first-name": {
-          "type": "string"
-        },
-        "last-name": {
-          "type": "string"
-        },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "first-name",
-        "last-name",
-        "address-text"
-      ]
-    },
-    "site-visit": {
-      "type": "object",
-      "properties": {
-        "can-be-seen-from": {
-          "type": "boolean"
-        },
-        "contact-type": {
+        "contact-priority": {
           "type": "string",
           "enum": [
-            "applicant",
-            "agent"
+            "primary",
+            "secondary"
           ]
-        },
-        "contact-reference": {
-          "type": "string"
-        },
-        "other-contact": {
-          "$ref": "#/definitions/other-contact"
+        }
+      },
+      "required": []
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "can-be-seen-from",
-        "contact-type"
-      ],
-      "if": {
-        "properties": {
-          "contact-type": {
-            "const": "other"
-          }
+        "applicants"
+      ]
+    },
+    "checklist": {
+      "type": "object",
+      "properties": {
+        "national-req-types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
         }
       },
-      "then": {
-        "required": [
-          "other-contact"
-        ]
-      }
+      "required": [
+        "national-req-types"
+      ]
     },
     "declaration": {
       "type": "object",
@@ -263,6 +256,46 @@
         "name",
         "declaration-confirmed",
         "declaration-date"
+      ]
+    },
+    "hedgerow-removal": {
+      "type": "object",
+      "properties": {
+        "removal-reasons": {
+          "type": "string"
+        },
+        "plan-references": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "hedgerow-length": {
+          "type": "number"
+        },
+        "hedgerow-less-than-30-years": {
+          "type": "boolean"
+        },
+        "planting-evidence-attached": {
+          "type": "boolean"
+        },
+        "interest-declaration": {
+          "type": "string",
+          "enum": [
+            "owner",
+            "agricultural-tenant",
+            "farm-business-tenant",
+            "utility-operator"
+          ]
+        }
+      },
+      "required": [
+        "removal-reasons",
+        "plan-references",
+        "hedgerow-length",
+        "hedgerow-less-than-30-years",
+        "interest-declaration"
       ]
     },
     "pre-app-advice": {
@@ -346,49 +379,65 @@
         }
       ]
     },
-    "checklist": {
+    "site-visit": {
       "type": "object",
       "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "national-req-types"
-      ]
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
-      ]
-    },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
+        "can-be-seen-from": {
+          "type": "boolean"
+        },
+        "contact-type": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "agent"
+          ]
+        },
+        "contact-reference": {
           "type": "string"
         },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
+        "other-contact": {
+          "$ref": "#/definitions/other-contact"
         }
       },
       "required": [
-        "agent-reference",
-        "contact-details"
+        "can-be-seen-from",
+        "contact-type"
+      ],
+      "if": {
+        "properties": {
+          "contact-type": {
+            "const": "other"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "other-contact"
+        ]
+      }
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
+    },
+    "site-details": {
+      "type": "object",
+      "properties": {
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "site-locations"
       ]
     },
     "applicant-contact": {
@@ -406,68 +455,19 @@
         "contact-details"
       ]
     },
-    "site-details": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "site-locations"
-      ]
-    },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
-    },
-    "hedgerow-removal": {
-      "type": "object",
-      "properties": {
-        "removal-reasons": {
+        "agent-reference": {
           "type": "string"
         },
-        "plan-references": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        },
-        "hedgerow-length": {
-          "type": "number"
-        },
-        "hedgerow-less-than-30-years": {
-          "type": "boolean"
-        },
-        "planting-evidence-attached": {
-          "type": "boolean"
-        },
-        "interest-declaration": {
-          "type": "string",
-          "enum": [
-            "owner",
-            "agricultural-tenant",
-            "farm-business-tenant",
-            "utility-operator"
-          ]
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "removal-reasons",
-        "plan-references",
-        "hedgerow-length",
-        "hedgerow-less-than-30-years",
-        "interest-declaration"
+        "agent-reference",
+        "contact-details"
       ]
     },
     "application": {
