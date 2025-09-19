@@ -10,7 +10,15 @@ The main aim for this piece of work was to:
 
 **"Combine the various 'separate modules & components' of the current declarative models into a 'composite for the whole specification payload.'**
 
-The task could have been 
+### Note
+A major part missing in this work is sample application JSON data. This would have made testing the generation of JSON schema much easier
+and sustainable. 
+
+An attempt was made to use LLMs to generate sample application, but the result was a mixed bag and required a fair bit of manual reworking.
+
+In the end only one example application was created [example-hh-payload-minimal.json](../specification/example/example-hh-payload-minimal.json)
+
+It should be a high priority to create sample application payloads for each application type.
 
 ## Key design decision: One schema per application type
 
@@ -44,6 +52,15 @@ A payload is only considered valid if it successfully validates against all the 
 
 This modular architecture ensures the schemas themselves remain simpler and maintainable while providing the necessary building blocks for developers 
 to implement robust and flexible validation logic.
+
+[TODO: add example with link to script of how to validate multiple application types.]: # 
+
+## Future enhancements, questions and considerations
+1. Create a complete set of correct sample application types for testing.
+2. How could/should the rules lists from the markdown schemas be incorporated into JSON schema?
+3. Would a single schema be a better approach?
+4. Publication of schemas. Github urls, release branch?
+5. Versioning options, version number in url, version in output file name, convention for latest, directory based versioning?
 
 ## JSON Schema version
 
@@ -399,9 +416,3 @@ The current generation approach leverages the existing structured specification 
 while maintaining the integrity and conditional logic present in the current markdown based specifications.
 
 
-## Future considerations
-
-1. How could/should the rules lists from the markdown schemas be incorporated into JSON schema?
-2. Would a single schema be a better approach?
-3. Publication of schemas. Github urls, release branch?
-4. Versioning options, version number in url, version in output file name, convention for latest, directory based versioning?
