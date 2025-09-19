@@ -10,6 +10,8 @@ The main aim for this piece of work was to:
 
 **"Combine the various 'separate modules & components' of the current declarative models into a 'composite for the whole specification payload.'**
 
+The task could have been 
+
 ## Key design decision: One schema per application type
 
 A key design decision in this architecture is to generate one self-contained JSON schema for each individual application type, rather than a single 
@@ -199,42 +201,90 @@ Maps to:
 With the values for the enum read from the corresponding csv in (data/codelist/*.csv) directory.
  
 #### Conditional logic mapping
-The module specifications include complex conditional logic that is handled differently depending on the condition type:
+The module specifications include complex conditional logic that is handled differently depending on the condition type
 
+There are two main types of conditionals in the markdown schemas. 
+
+1. `required-if` conditions
+2. `applies-if` conditions
+
+Both are converted to JSON Schema `if/then/else` constructs. Some are simple `if/then/else` constructs. The conditions
+evaluated within the `if` may in turn be combined using `allOf` or `anyOf`constructs resulting in logical and|or semantics.
+
+#### **1. Simple `required-if` (single condition)**
+Example from: [specification/component/operational-times.md](../specification/component/operational-times.md)
 ```
-# Example from proposal-details module
-- field: proposal-started-date
+- field: time-ranges
   required-if:
-  - field: proposal-started
-    value: true
-  applies-if:
-    application-type:
-      in: [advertising, full, hh]
+    - field: closed
+      value: false
 ```
-
-**Two types of conditional logic:**
-
-1. **`required-if` conditions** - Convert to JSON Schema `if/then/else` constructs:
+Maps to:
 ```
 {
-  "if": {
-    "properties": {
-      "proposal-started": {"const": true}
-    }
-  },
-  "then": {
-    "required": ["proposal-started-date"]
-  }
+  "if": {"properties": {"closed": {"const": false}}},
+  "then": {"required": ["time-ranges"]}
 }
 ```
 
-2. **`applies-if` conditions** - Since we generate individual application schemas, fields are directly required when the current application type matches:
+#### **2. `allOf` pattern (multiple 'AND' conditions)**
+Example from: [specification/component/floorspace-details-outline.md](../specification/component/floorspace-details-outline.md)
 ```
-# For hh.json: if "hh" is in [advertising, full, hh], then directly add to required array
-"required": ["proposal-started-date"]
+- field: floorspace-lost
+  required-if:
+    - field: not-applicable
+      value: false
+    - field: is-floorspace-lost-known
+      value: true
+```
+Maps to:
+```
+{
+  "if": {
+    "allOf": [
+      {"properties": {"not-applicable": {"const": false}}},
+      {"properties": {"is-floorspace-lost-known": {"const": true}}}
+    ]
+  },
+  "then": {"required": ["floorspace-lost"]}
+}
 ```
 
-This approach eliminates complex conditional validation at runtime since each application schema only contains fields relevant to that specific application type.
+#### **3. `anyOf` pattern (multiple 'OR' conditions)**
+Example from: [specification/component/floorspace-details-outline.md](../specification/component/floorspace-details-outline.md)
+```
+- field: specified-use
+  required-if:
+    any:
+      - field: use
+        contains: sui
+      - field: use
+        contains: other
+```
+Maps to:
+```
+{
+  "if": {
+    "anyOf": [
+      {"properties": {"use": {"pattern": "sui"}}},
+      {"properties": {"use": {"pattern": "other"}}}
+    ]
+  },
+  "then": {"required": ["specified-use"]}
+}
+```
+
+#### **4. `applies-if` (Field inclusion by application type)**
+Example from: [specification/component/tree-details.md](../specification/component/tree-details.md)
+```
+- field: replanting-description
+  applies-if:
+    application-type:
+      in: [consent-under-tpo]
+```
+**Field only included** in schemas where the application type matches. Only appears in `consent-under-tpo.json`,
+in the `properties` list and of course in the `definitions`. It's excluded from all other application type schemas.
+
 
 ### Schema architecture
 
@@ -306,9 +356,9 @@ generated/
 ```
 
 Each application JSON Schema file contains:
-- Main application properties
-- Inline module definitions in `"definitions"` section
-- Inline component definitions in `"definitions"` section
+- Main application `properties` with references to items in `defintions` list
+- Inline module definitions in `definitions` section
+- Inline component definitions in `definitions` section
 
 #### Integration with existing workflow
 - Generator script added to `Makefile`: `json-schemas` target
