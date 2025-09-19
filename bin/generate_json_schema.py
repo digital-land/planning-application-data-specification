@@ -5,93 +5,11 @@ from glob import glob
 from pathlib import Path
 from typing import Any, Dict, List, Set, Tuple
 
+from json_schema_helpers import parse_and_generate_required_if_rules
 from loader import load_content
 from models import ComponentInstance, FieldDef, FieldInstance
 from utils import save_string_to_file
 
-
-# Helper functions for extracting various conditional validations from specification model object to generate JSON schema equivalents
-
-
-def create_simple_required_if_rule(
-    field_ref: str, condition_field: str, condition_value: Any
-) -> Dict[str, Any]:
-    """Creates a simple 'required-if' JSON Schema rule."""
-    return {
-        "if": {"properties": {condition_field: {"const": condition_value}}},
-        "then": {"required": [field_ref]},
-    }
-
-
-def create_anyof_conditions_rule(
-    field_ref: str, any_conditions: List[Dict[str, Any]]
-) -> Dict[str, Any]:
-    """Creates an 'anyOf' JSON Schema rule from a list of dictionaries field-value conditions."""
-    return {
-        "if": {
-            "anyOf": [
-                {"properties": {c.get("field"): {"const": c.get("value")}}}
-                for c in any_conditions
-            ]
-        },
-        "then": {"required": [field_ref]},
-    }
-
-
-def create_anyof_fields_rule(field_ref: str, any_fields: List[str]) -> Dict[str, Any]:
-    """Creates an 'anyOf' JSON Schema rule from a list of field names (checking for 'true')."""
-    return {
-        "if": {"anyOf": [{"properties": {f: {"const": "true"}}} for f in any_fields]},
-        "then": {"required": [field_ref]},
-    }
-
-
-def parse_and_generate_required_if_rules(
-    field_ref: str, required_if_config: Any
-) -> List[Dict[str, Any]]:
-    """
-    Parses the required_if configuration and generates a list of JSON Schema conditional rules.
-    Handles single dict conditions, lists of conditions, and 'any' conditions.
-    """
-    rules = []
-
-    if isinstance(required_if_config, list):
-        for condition_item in required_if_config:
-            if isinstance(condition_item, dict):
-                rules.extend(
-                    parse_and_generate_required_if_rules(field_ref, condition_item)
-                )
-            # Non-dict items in a list are ignored
-        return rules
-
-    if isinstance(required_if_config, dict):
-        # Handle dictionary conditions with a flatter if/elif/else structure
-        any_conditions_list = required_if_config.get("any")
-        any_fields_list = required_if_config.get("field")
-
-        if isinstance(any_conditions_list, list):
-            # Case: {"any": [{"field": "f1", "value": "v1"}, ...]}
-            rules.append(create_anyof_conditions_rule(field_ref, any_conditions_list))
-        elif any_conditions_list is True and isinstance(any_fields_list, list):
-            # Case: {"any": True, "field": ["f1", "f2"]}
-            rules.append(create_anyof_fields_rule(field_ref, any_fields_list))
-        else:
-            # Case: Simple {"field": "some_field", "value": "some_value"}
-            condition_field = required_if_config.get("field")
-            condition_value = required_if_config.get("value")
-            if condition_field and condition_value is not None:
-                rules.append(
-                    create_simple_required_if_rule(
-                        field_ref, condition_field, condition_value
-                    )
-                )
-
-    # Non-dict/list types for required_if_config are ignored,
-
-    return rules
-
-
-# end helper functions
 
 OUTPUT_DIR = "generated/json-schema"
 APPLICATIONS_OUTPUT_DIR = f"{OUTPUT_DIR}/applications"

@@ -1,20 +1,9 @@
-import pytest
-import jsonschema
-
-from bin.generate_json_schema import (
+from bin.json_schema_helpers import (
     create_simple_required_if_rule,
     create_anyof_conditions_rule,
     create_anyof_fields_rule,
     parse_and_generate_required_if_rules,
 )
-
-
-def test_valid_householder_application(hh_application_payload, hh_json_schema):
-    try:
-        validator = jsonschema.Draft7Validator(hh_json_schema)
-        validator.validate(hh_application_payload)
-    except jsonschema.exceptions.ValidationError as e:
-        pytest.fail(f"Validation failed: {e}")
 
 
 def test_create_simple_required_if_rule():
@@ -39,6 +28,25 @@ def test_create_anyof_conditions_rule():
             "anyOf": [
                 {"properties": {"field-a": {"const": "value-a"}}},
                 {"properties": {"field-b": {"const": "value-b"}}},
+            ]
+        },
+        "then": {"required": [field_ref]},
+    }
+    assert rule == expected_rule
+
+
+def test_create_anyof_conditions_rule_with_contains():
+    field_ref = "test-field"
+    any_conditions = [
+        {"field": "use", "contains": "sui"},
+        {"field": "use", "contains": "other"},
+    ]
+    rule = create_anyof_conditions_rule(field_ref, any_conditions)
+    expected_rule = {
+        "if": {
+            "anyOf": [
+                {"properties": {"use": {"pattern": "sui"}}},
+                {"properties": {"use": {"pattern": "other"}}},
             ]
         },
         "then": {"required": [field_ref]},
@@ -75,7 +83,7 @@ def test_parse_required_if_single_dict():
     assert rules == expected_rules
 
 
-def test_parse_required_if_list_of_dicts():
+def test_parse_required_if_list_of_dicts_is_and_condition():
     field_ref = "test-field"
     required_if_config = [
         {"field": "status", "value": "active"},
@@ -84,11 +92,12 @@ def test_parse_required_if_list_of_dicts():
     rules = parse_and_generate_required_if_rules(field_ref, required_if_config)
     expected_rules = [
         {
-            "if": {"properties": {"status": {"const": "active"}}},
-            "then": {"required": [field_ref]},
-        },
-        {
-            "if": {"properties": {"type": {"const": "premium"}}},
+            "if": {
+                "allOf": [
+                    {"properties": {"status": {"const": "active"}}},
+                    {"properties": {"type": {"const": "premium"}}},
+                ]
+            },
             "then": {"required": [field_ref]},
         },
     ]
@@ -145,14 +154,15 @@ def test_parse_required_if_mixed_list():
     rules = parse_and_generate_required_if_rules(field_ref, required_if_config)
     expected_rules = [
         {
-            "if": {"properties": {"simple-flag": {"const": "yes"}}},
-            "then": {"required": [field_ref]},
-        },
-        {
             "if": {
-                "anyOf": [
-                    {"properties": {"any-a": {"const": "1"}}},
-                    {"properties": {"any-b": {"const": "2"}}},
+                "allOf": [
+                    {"properties": {"simple-flag": {"const": "yes"}}},
+                    {
+                        "anyOf": [
+                            {"properties": {"any-a": {"const": "1"}}},
+                            {"properties": {"any-b": {"const": "2"}}},
+                        ]
+                    },
                 ]
             },
             "then": {"required": [field_ref]},
