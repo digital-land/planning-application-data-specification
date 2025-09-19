@@ -57,6 +57,50 @@
     "site-details"
   ],
   "definitions": {
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
     "site-location": {
       "type": "object",
       "properties": {
@@ -90,6 +134,22 @@
             "type": "string"
           },
           "minItems": 1
+        }
+      },
+      "required": []
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
         }
       },
       "required": []
@@ -134,64 +194,73 @@
         "address-text"
       ]
     },
-    "contact-details": {
+    "declaration": {
       "type": "object",
       "properties": {
-        "email": {
+        "name": {
           "type": "string"
         },
-        "phone-numbers": {
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
+    "conflict-of-interest": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "checklist": {
+      "type": "object",
+      "properties": {
+        "national-req-types": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/phone-number"
+            "type": "string"
           },
           "minItems": 1
         }
       },
       "required": [
-        "email",
-        "phone-numbers"
+        "national-req-types"
       ]
     },
-    "phone-number": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "number": {
+        "agent-reference": {
           "type": "string"
         },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
-    },
-    "agent": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "reference",
-        "person"
+        "agent-reference",
+        "contact-details"
+      ]
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
       ]
     },
     "eligibility-current-building": {
@@ -215,81 +284,6 @@
         "has-additional-storeys",
         "was-use-granted-by-pdr",
         "is-site-in-restricted-area"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
-    },
-    "checklist": {
-      "type": "object",
-      "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "national-req-types"
-      ]
-    },
-    "conflict-of-interest": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    },
-    "desc-work-impacts-risks": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "dwellinghouse-height": {
-          "type": "number"
-        },
-        "proposed-height": {
-          "type": "number"
-        },
-        "impact-on-amenity": {
-          "type": "string"
-        },
-        "air-traffic-defence-impacts": {
-          "type": "string"
-        },
-        "protected-view-impact": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "description",
-        "dwellinghouse-height",
-        "proposed-height",
-        "impact-on-amenity",
-        "air-traffic-defence-impacts",
-        "protected-view-impact"
       ]
     },
     "eligibility-related-works": {
@@ -316,21 +310,6 @@
       },
       "required": [
         "site-locations"
-      ]
-    },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
       ]
     },
     "eligibility-proposal": {
@@ -420,39 +399,60 @@
         }
       ]
     },
-    "declaration": {
+    "applicant-contact": {
       "type": "object",
       "properties": {
-        "name": {
+        "applicant-reference": {
           "type": "string"
         },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
+        "applicant-reference",
+        "contact-details"
       ]
     },
-    "applicant-details": {
+    "desc-work-impacts-risks": {
       "type": "object",
       "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
+        "description": {
+          "type": "string"
+        },
+        "dwellinghouse-height": {
+          "type": "number"
+        },
+        "proposed-height": {
+          "type": "number"
+        },
+        "impact-on-amenity": {
+          "type": "string"
+        },
+        "air-traffic-defence-impacts": {
+          "type": "string"
+        },
+        "protected-view-impact": {
+          "type": "string"
         }
       },
       "required": [
-        "applicants"
+        "description",
+        "dwellinghouse-height",
+        "proposed-height",
+        "impact-on-amenity",
+        "air-traffic-defence-impacts",
+        "protected-view-impact"
       ]
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
     }
   }
 }
