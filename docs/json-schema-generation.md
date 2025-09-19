@@ -43,16 +43,34 @@ To restate this, the approach is to have:
 2.  **Validation orchestration:** The responsibility for handling multi-type applications is placed on the consuming application (the "validator").
     A validator should be implemented with the following logic:
 
-    *   Inspect the `application-types` array in the incoming JSON payload.
-    *   For each type listed in the array, validate the entire payload against **each** of the relevant JSON schemas.
+    * Inspect the `application-types` array in the incoming JSON payload. 
+    * For each type listed in the array, validate the entire payload against **each** of the relevant JSON schemas.
 
 A payload is only considered valid if it successfully validates against all the schemas it declares an interest in. This ensures that a combined 
 "Householder" and "Listed Building Consent" application, for example, contains all the required modules and fields for both types.
+**See the section below for an example validation script.**
 
 This modular architecture ensures the schemas themselves remain simpler and maintainable while providing the necessary building blocks for developers 
 to implement robust and flexible validation logic.
 
-[TODO: add example with link to script of how to validate multiple application types.]: # 
+#### Example validation orchestration script
+
+To illustrate how validation could be done for multi type planning applications an example script has been added to this
+repository and can be found here [bin/example_validator.py](../bin/example_validator.py)
+
+To use this script check out this repository and set up the required tools (create a python virtual env, activate it and run `make init`).
+
+Then you can run:
+
+```
+ bin/example_validator.py --payload [path to application json ] --schema-dir [path to schema director]
+```
+So a real example you can run is:
+
+```
+bin/example_validator.py --payload specification/example/example-hh-payload-minimal.json --schema-dir generated/json-schema/applications
+```
+
 
 ## Future enhancements, questions and considerations
 1. Create a complete set of correct sample application types for testing.
