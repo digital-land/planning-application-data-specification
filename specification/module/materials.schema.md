@@ -5,11 +5,11 @@ entry-date: 2025-06-13
 fields:
 - field: building-elements
   required: true
-- field: additional-material-information
+- field: providing-additional-material-information
   required: true
 - field: supporting-documents
   required-if:
-  - field: additional-material-information
+  - field: providing-additional-material-information
     value: true
 module: materials
 name: Materials
