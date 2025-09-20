@@ -4,6 +4,6 @@
 - **Fields**: 424
 - **Module schemas**: 85
 - **Substructures (objects/components)**: 53
-- **Example files**: 263
+- **Example files**: 262
 
-**Total elements**: 849
+**Total elements**: 848
