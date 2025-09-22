@@ -66,7 +66,6 @@ The application types we have not yet included in these specifications are
 * Certificate of alternative appropriate development 
 * Change of use planning application 
 * Circular 14/90 Overhead lines 
-* Development relating to the onshore extraction of oil and gas 
 * Footpath diversion
 * Hazardous Substances Consent 
 * Land Drainage Consent 
