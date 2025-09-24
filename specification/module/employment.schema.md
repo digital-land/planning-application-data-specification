@@ -1,5 +1,5 @@
 ---
-description: How the proposed development will impact employment, including existing
+description: How the proposed development will impact existing
   and proposed employee numbers
 end-date: ''
 entry-date: 2025-07-08
