@@ -105,6 +105,27 @@ def get_application_module_refs(application: object | str, specification: dict) 
     return sorted(collected)
 
 
+def get_applications_with_module(module_ref: str, specification: dict) -> list:
+    """
+    Given a module reference string and the full specification,
+    return a list of application reference strings that include this module.
+
+    - Iterates over all applications in the specification.
+    - Uses get_application_module_refs to get modules for each application.
+    - Collects applications that include the specified module_ref.
+    - Returns a sorted list of application references.
+    """
+    applications = specification.get("application", {}) or {}
+    matching_apps = []
+
+    for app_ref, app_obj in applications.items():
+        modules = get_application_module_refs(app_obj, specification)
+        if module_ref in modules:
+            matching_apps.append(app_ref)
+
+    return sorted(matching_apps)
+
+
 if __name__ == "__main__":
 
     undefined_types = get_undefined_application_types()
