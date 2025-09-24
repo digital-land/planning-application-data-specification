@@ -267,7 +267,7 @@ Signed and dated verification of the application's accuracy.
 
 ## Pre-application advice
 
-Details of pre-application advice received from the planning authority
+Details of pre-application advice previously received from the planning authority
 
 **Pre-application advice module**
 

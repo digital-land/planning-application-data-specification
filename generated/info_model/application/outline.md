@@ -344,7 +344,7 @@ Signed and dated verification of the application's accuracy.
 
 ## Employment
 
-How the proposed development will impact employment, including existing and proposed employee numbers
+How the proposed development will impact existing and proposed employee numbers
 
 **Employment module**
 
@@ -567,7 +567,7 @@ postcode | Postcode | The postal code | MAY |
 
 ## Pre-application advice
 
-Details of pre-application advice received from the planning authority
+Details of pre-application advice previously received from the planning authority
 
 **Pre-application advice module**
 

@@ -383,7 +383,7 @@ Supporting information for developments used for oil and gas exploration or mini
 
 ## Employment
 
-How the proposed development will impact employment, including existing and proposed employee numbers
+How the proposed development will impact existing and proposed employee numbers
 
 **Employment module**
 
@@ -647,7 +647,7 @@ name | Name | Name of the document (descriptive) | MUST |
 
 ## Pre-application advice
 
-Details of pre-application advice received from the planning authority
+Details of pre-application advice previously received from the planning authority
 
 **Pre-application advice module**
 

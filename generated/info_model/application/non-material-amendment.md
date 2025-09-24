@@ -365,7 +365,7 @@ new-document | New document | Reference for the new document replacing the old d
 
 ## Pre-application advice
 
-Details of pre-application advice received from the planning authority
+Details of pre-application advice previously received from the planning authority
 
 **Pre-application advice module**
 

@@ -397,7 +397,7 @@ The grade of any listed building affected by the proposed development.
 
 ## Pre-application advice
 
-Details of pre-application advice received from the planning authority
+Details of pre-application advice previously received from the planning authority
 
 **Pre-application advice module**
 

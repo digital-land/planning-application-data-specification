@@ -1,6 +1,6 @@
 # Employment
 
-How the proposed development will impact employment, including existing and proposed employee numbers
+How the proposed development will impact existing and proposed employee numbers
 
 **Employment module**
 

@@ -329,7 +329,7 @@ Details of how the applicant is meeting a specific part of a set of conditions m
 
 ## Pre-application advice
 
-Details of pre-application advice received from the planning authority
+Details of pre-application advice previously received from the planning authority
 
 **Pre-application advice module**
 

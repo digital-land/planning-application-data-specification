@@ -422,7 +422,7 @@ Details of any changes the proposed development would make to parking facilities
 
 ## Pre-application advice
 
-Details of pre-application advice received from the planning authority
+Details of pre-application advice previously received from the planning authority
 
 **Pre-application advice module**
 
