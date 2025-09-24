@@ -1,4 +1,49 @@
 
+<a name="v0.1.33"></a>
+## [v0.1.33](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.32...v0.1.33) (2025-09-24)
+
+Generate JSON schemas
+
+### ⚒️ Tooling
+
+* add func to return applications where a module is used (commit [0c4de6d](https://github.com/digital-land/planning-application-data-specification/commit/0c4de6d6c167e0542b4d971cacdcb01c71f53e20))
+* ran black formatting (commit [04be585](https://github.com/digital-land/planning-application-data-specification/commit/04be585b75e8867807bfd8a3c5f4ea812eca4c9a))
+* Parameterize json schema validation unit test test_valid_application (commit [022e701](https://github.com/digital-land/planning-application-data-specification/commit/022e7018e9d29b574854b9ca2e86b01e0ba183db))
+* Refactored to move mapping helpers to own module. Fixed bug in mapping incorrectly or'ing multiple required lists, when in should have been and'ing (commit [ddf32f6](https://github.com/digital-land/planning-application-data-specification/commit/ddf32f62cfeff72fffc61071b835d4bb18736b42))
+* update example HH payload to use correct organisation reference (commit [ef56589](https://github.com/digital-land/planning-application-data-specification/commit/ef5658976b7657325beb4e85ff07ae6e18522169))
+* check fields referenced in required-if statements exist (commit [e60e87a](https://github.com/digital-land/planning-application-data-specification/commit/e60e87a1bac51d89f5e5926dd304dccc7e44f0a9))
+
+### 𝌭 Model changes
+
+* tweak 2 modules descriptions (commit [ffaeade](https://github.com/digital-land/planning-application-data-specification/commit/ffaeade3c3b80e6f1718cf086c73937110b9cc69))
+* rename field from additional-material-information to providing-additional-material-information (commit [5de1b49](https://github.com/digital-land/planning-application-data-specification/commit/5de1b49e99f3c6e773ae3b617de9226144890332))
+* add minimal sample hh payload (commit [a44e2ee](https://github.com/digital-land/planning-application-data-specification/commit/a44e2eea3b9608a090d2f8e77c0e9bd627f547bc))
+
+### 🐛 Bug Fixes
+
+* Fixed incorrect property type in example and added required supported-documents property (commit [488d43b](https://github.com/digital-land/planning-application-data-specification/commit/488d43b42564d3097a8a7c3717098b0b976834e4))
+* supporting documents only needed in access rights of way module if one of the other fields is true. Corrected in sample payload (commit [05b4940](https://github.com/digital-land/planning-application-data-specification/commit/05b4940e8022d5c542048013934a908618be541e))
+* Removed redundant allOf in cases where only one condition to evaluate. Updated example payload to use correct datatypes. Updated conftest to load new example - note still fails test (commit [db333dc](https://github.com/digital-land/planning-application-data-specification/commit/db333dcfbc533f26a14b29d26b8fef3601070c5b))
+* issue with circular imports (commit [da4994f](https://github.com/digital-land/planning-application-data-specification/commit/da4994ffaaca8104e441969fce45fe14df9f7667))
+* JSON schema generation now works for appliction sub-types. Extented load_spefication_model to resolve inheritance hierachies (commit [c7edc6d](https://github.com/digital-land/planning-application-data-specification/commit/c7edc6d9cce8d850087b47c2f3ec5650da1ec5ad))
+* List of required properties for application was not listing all modules (commit [1563367](https://github.com/digital-land/planning-application-data-specification/commit/1563367fbaa1199b1dd5c6ec06e8215ceb6de771))
+
+### 👷‍♀️ Application changes
+
+* add missing spec for extraction of oil and gas application (commit [78262cf](https://github.com/digital-land/planning-application-data-specification/commit/78262cff5f12902987965076be3ae9adaece20a5))
+
+### 📚 Documentation
+
+* Added example script is done (commit [0b7e2b9](https://github.com/digital-land/planning-application-data-specification/commit/0b7e2b98c496bab96b5b9c0950491fa85a82f64a))
+* Added notion of using tags to denote schema version in url. (commit [92f9282](https://github.com/digital-land/planning-application-data-specification/commit/92f9282cd8886e29d83d6ef6fa820dd629213169))
+* Clarify validation steps (commit [9808d66](https://github.com/digital-land/planning-application-data-specification/commit/9808d666f9d79d984eb9ef3b6c9b6e6533bb17bb))
+* Update json-schema-generation.md (commit [bbb3d43](https://github.com/digital-land/planning-application-data-specification/commit/bbb3d4318f973aab003df11c2806bc4e4c0a56ab))
+* Added note about need for sample applications (commit [5f21773](https://github.com/digital-land/planning-application-data-specification/commit/5f217738dec236f8181c00b6a5497cf21b251d3a))
+* Reworked the conditional logic mapping section of json schema generation to be clearer (commit [145ee2f](https://github.com/digital-land/planning-application-data-specification/commit/145ee2fc3914c26c371cb515f390acdcbd992ac5))
+* Update future considerations (commit [009d334](https://github.com/digital-land/planning-application-data-specification/commit/009d33424a7775210d0599ecb3c9423c77f4f335))
+* Clarify code comments Add future considerations to readme. Correct example hh application json (commit [ce688fd](https://github.com/digital-land/planning-application-data-specification/commit/ce688fd82c7a9a5e99c7c833bb36c550cfa09c94))
+
+
 <a name="v0.1.32"></a>
 ## [v0.1.32](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.31...v0.1.32) (2025-09-12)
 
