@@ -4,7 +4,7 @@ This repository contains data specifications used to submit planning application
 
 It is an initiative led by the Ministry of Housing, Communities and Local Government aiming to standardise the data you provide when a planning application is submitted.
 
-The specification is made up of these elements:
+The [specification](https://github.com/digital-land/planning-application-data-specification/tree/main/specification) is made up of these elements:
 
 * [applications](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/application) - these define what is required for a given application type, for example '[householder](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/application/hh.schema.md?plain=1)'
 * [modules](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/module) - groupings of fields focused on a specific subject. For example '[agent details](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/module/agent-details.schema.md?plain=1)'
