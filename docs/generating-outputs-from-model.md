@@ -48,3 +48,11 @@ If you have an idea for an improvement or new output, build it and contribute it
 The best way to improve the ecosystem is to try things out and share what works.
 
 You can open a pull request to contribute code or enhancements, or open [an issue](https://github.com/digital-land/planning-application-data-specification/issues) if you want to explore an idea first.
+
+### Concept diagram
+
+Below is a diagram showing how the declarative model acts as the foundation for these outputs.
+
+<img width="4178" height="2825" alt="3-items-built-on-specifications-repo-locations" src="https://github.com/user-attachments/assets/ae7040d7-f0a6-406b-a7f7-0df1b82a9d01" />
+
+Each of these outputs is generated automatically from the same underlying definitions, keeping everything consistent and easier to maintain.
