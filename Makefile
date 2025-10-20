@@ -37,10 +37,12 @@ jsonschema::
 
 clean::
 	rm -rf generated
-
-
-build: clean
 	mkdir -p generated
+
+copy-output-docs: 
+	cp docs/generating-outputs-from-model.md generated/README.md
+
+build: clean copy-output-docs
 	python3 bin/build.py
 
 
