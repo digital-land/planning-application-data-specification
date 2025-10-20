@@ -15,18 +15,18 @@ Others can build on the model to produce their own tools, documentation or outpu
 Comprehensive, human-readable documents detailing the specification requirements for each application type.
 They provide an accessible entry point into the data model and explain what fields are included and why.
 
-•	Status: Beta
-•	Code: /bin/generate_info_model.py
-•	Output folder: /generated/info_model
+* Status: Beta
+* Code: /bin/generate_info_model.py
+* Output folder: /generated/info_model
 
 📊 **Spreadsheets**
 
 Spreadsheet versions of each application type specification.
 These make it easier to scan all fields for a given type and compare across modules.
 
-•	Status: Alpha
-•	Code: /bin/generate_spec_spreadsheets.py
-•	Output folder: /generated/spreadsheet
+* Status: Alpha
+* Code: /bin/generate_spec_spreadsheets.py
+* Output folder: /generated/spreadsheet
 
 💻 **JSON Schemas**
 
@@ -34,11 +34,11 @@ A JSON Schema for each application type.
 These define the expected structure of a planning application payload, allowing data producers and consumers to check validity and completeness.
 They are also useful for testing whether example submissions match the model.
 
-•	Status: Alpha
-•	Code: /bin/generate_json_schema.py
-•	Output folder: /generated/json-schema
+* Status: Alpha
+* Code: /bin/generate_json_schema.py
+* Output folder: /generated/json-schema
 
-—--
+<hr />
 
 ### Contribute or build your own
 
