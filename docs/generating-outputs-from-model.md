@@ -16,8 +16,8 @@ Comprehensive, human-readable documents detailing the specification requirements
 They provide an accessible entry point into the data model and explain what fields are included and why.
 
 * Status: Beta
-* Code: /bin/generate_info_model.py
-* Output folder: /generated/info_model
+* Code: [/bin/generate_info_model.py](https://github.com/digital-land/planning-application-data-specification/blob/main/bin/generate_info_model.py)
+* Output folder: [/generated/info_model](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/info_model)
 
 📊 **Spreadsheets**
 
@@ -25,8 +25,8 @@ Spreadsheet versions of each application type specification.
 These make it easier to scan all fields for a given type and compare across modules.
 
 * Status: Alpha
-* Code: /bin/generate_spec_spreadsheets.py
-* Output folder: /generated/spreadsheet
+* Code: [/bin/generate_spec_spreadsheets.py](https://github.com/digital-land/planning-application-data-specification/blob/main/bin/generate_spec_spreadsheet.py)
+* Output folder: [/generated/spreadsheet](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/spreadsheet)
 
 💻 **JSON Schemas**
 
@@ -35,8 +35,8 @@ These define the expected structure of a planning application payload, allowing 
 They are also useful for testing whether example submissions match the model.
 
 * Status: Alpha
-* Code: /bin/generate_json_schema.py
-* Output folder: /generated/json-schema
+* Code: [/bin/generate_json_schema.py](https://github.com/digital-land/planning-application-data-specification/blob/main/bin/generate_json_schema.py)
+* Output folder: [/generated/json-schema](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/json-schema)
 
 <hr />
 
@@ -48,6 +48,8 @@ If you have an idea for an improvement or new output, build it and contribute it
 The best way to improve the ecosystem is to try things out and share what works.
 
 You can open a pull request to contribute code or enhancements, or open [an issue](https://github.com/digital-land/planning-application-data-specification/issues) if you want to explore an idea first.
+
+<hr />
 
 ### Concept diagram
 
