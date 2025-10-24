@@ -10,6 +10,7 @@ fields:
     description: A reference for the document
   - field: name
     required: true
+    description: The name or title of the document
   - field: description
     description: Brief description of what the document contains
   - field: document-types
