@@ -6,8 +6,13 @@ entry-date: 2025-08-28
 end-date: ''
 note: 'Used solely for outline applications'
 fields:
-  - field: use-class
+  - field: use-class-accommodation
     required: true
+  - field: use-other
+    required-if:
+    - field: use-class-accommodation
+      value: other
+      description: if use-class-accommodation == "other"
   - field: not-applicable
   - field: is-existing-rooms-lost-known
   - field: existing-rooms-lost
