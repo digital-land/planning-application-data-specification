@@ -37,6 +37,7 @@ Applications that are used to understand whether the basic nature of a developme
 * [Day type](#day-type)
 * [Housing type](#housing-type)
 * [Tenure type](#tenure-type)
+* [Use class](#use-class)
 * [User role type](#user-role-type)
 * [Waste management type](#waste-management-type)
 
@@ -832,6 +833,42 @@ Below are the codelists required to support this specification:
 | home-ownership | Affordable Home Ownership | Shared ownership or similar schemes. | full;outline |
 | starter-homes | Starter Homes | Discounted homes for first-time buyers. | full;outline |
 | custom-build | Self-Build and Custom Build | Homes built or commissioned by individuals. | full;outline |
+
+### Use class
+
+| reference | name | description | notes | entry-date | start-date | end-date |
+| --- | --- | --- | --- | --- | --- | --- |
+| b2 | B2 – General Industrial | Industrial uses not falling within Class E. |  | 2025-10-27 |  |  |
+| b8 | B8 – Storage and Distribution | Warehousing and storage. |  | 2025-10-27 |  |  |
+| c1 | C1 – Hotels | Includes hotels, boarding houses, and guest houses. |  | 2025-10-27 |  |  |
+| c2 | C2 – Residential Institutions | Care homes, hospitals, and boarding schools. |  | 2025-10-27 |  |  |
+| c2a | C2A – Secure Residential Institutions | Prisons, young offender institutions. |  | 2025-10-27 |  |  |
+| c3 | C3 – Dwellinghouses | Sole or main residence used by people forming a single household. |  | 2025-10-27 |  |  |
+| c4 | C4 – Houses in multiple occupation | Defined in the Housing Act 2004 (with the exclusion of converted block of flats). |  | 2025-10-27 |  |  |
+| e-a | E(a) – Retail (other than hot food) | Shops and other retail services. |  | 2025-10-27 |  |  |
+| e-b | E(b) – Food and Drink | Premises mostly for on-site consumption. |  | 2025-10-27 |  |  |
+| e-c-i | E(c)(i) – Financial Services | Banks, building societies, and credit unions. |  | 2025-10-27 |  |  |
+| e-c-ii | E(c)(ii) – Professional Services | Non-health/medical services (e.g., accountants, solicitors). |  | 2025-10-27 |  |  |
+| e-c-iii | E(c)(iii) – Any Other Service | Non-retail services to the public. |  | 2025-10-27 |  |  |
+| e-d | E(d) – Indoor Sports and Recreation | Excludes motorised or firearms activities. |  | 2025-10-27 |  |  |
+| e-e | E(e) – Medical or Health Services | Clinics and health centres. |  | 2025-10-27 |  |  |
+| e-f | E(f) – Creche, Day Nursery | Facilities for childcare. |  | 2025-10-27 |  |  |
+| e-g-i | E(g)(i) – Office | For operational or administrative functions. |  | 2025-10-27 |  |  |
+| e-g-ii | E(g)(ii) – Research and Development | Development of products or processes. |  | 2025-10-27 |  |  |
+| e-g-iii | E(g)(iii) – Industrial Process | Processes that can operate within a residential area. |  | 2025-10-27 |  |  |
+| f1-a | F1(a) – Education | Schools, colleges, and training centres. |  | 2025-10-27 |  |  |
+| f1-b | F1(b) – Display of Works of Art | Galleries (excluding commercial galleries). |  | 2025-10-27 |  |  |
+| f1-c | F1(c) – Museum | Non-commercial museums. |  | 2025-10-27 |  |  |
+| f1-d | F1(d) – Public Library | Libraries open to the public. |  | 2025-10-27 |  |  |
+| f1-e | F1(e) – Public Hall/Exhibition Hall | Community spaces for events. |  | 2025-10-27 |  |  |
+| f1-f | F1(f) – Public Worship/Religious Instruction | Churches, mosques, synagogues. |  | 2025-10-27 |  |  |
+| f1-g | F1(g) – Law Court | Court facilities. |  | 2025-10-27 |  |  |
+| f2-a | F2(a) – Local Community Shop | Shop under 280 sqm with no similar facility nearby. |  | 2025-10-27 |  |  |
+| f2-b | F2(b) – Community Hall | Halls for local community use. |  | 2025-10-27 |  |  |
+| f2-c | F2(c) – Outdoor Sport/Recreation | Excludes motorised sports. |  | 2025-10-27 |  |  |
+| f2-d | F2(d) – Indoor/Outdoor Swimming Pool | Includes skating rinks. |  | 2025-10-27 |  |  |
+| sui | Sui generis | Uses that do not fall within any defined use class and are considered unique. For example, theatres, nightclubs, scrap yards and mineral extraction |  | 2025-10-27 |  |  |
+| other | Other (Please Specify) | Free text required if selected. |  | 2025-10-27 |  |  |
 
 ### User role type
 
