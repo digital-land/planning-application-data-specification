@@ -1,4 +1,33 @@
 
+<a name="v0.1.34"></a>
+## [v0.1.34](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.33...v0.1.34) (2025-10-27)
+
+Tool tweaks and documentation
+
+### ⚒️ Tooling
+
+* add make target to move documentation to generated folder (commit [a948479](https://github.com/digital-land/planning-application-data-specification/commit/a948479cb665b7928764917195a377e4b2295fe3))
+* add documentation for outputs generated from the model (commit [8e13889](https://github.com/digital-land/planning-application-data-specification/commit/8e1388934a40be5d3e199d19d1f16cbc112a362a))
+
+### 𝌭 Model changes
+
+* add specific description to name field in document component (commit [b090b11](https://github.com/digital-land/planning-application-data-specification/commit/b090b11bc5b05db0aac8bf2336a607312faace1c))
+* update legislation field to legislation-urls (commit [57a64e9](https://github.com/digital-land/planning-application-data-specification/commit/57a64e98828e19116bdea29a8fc0b1d54b96df56))
+
+### 🐛 Bug Fixes
+
+* issues with bullet lists in documentation (commit [5762182](https://github.com/digital-land/planning-application-data-specification/commit/57621827326a2b08ccbc5e9161be60e3e830134a))
+* extra column in one row of planning application types dataset (commit [ea82e2c](https://github.com/digital-land/planning-application-data-specification/commit/ea82e2ccf533618d5b68640b983fab5c14ddfbca))
+
+### 👷‍♀️ Application changes
+
+* add missing description for extraction of oil and gas applications (commit [dc4cbf7](https://github.com/digital-land/planning-application-data-specification/commit/dc4cbf7bcf0080432c7848da023b18aa4ea63e1c))
+
+### 📚 Documentation
+
+* add links to the corresponding output code and folderS (commit [1969c6f](https://github.com/digital-land/planning-application-data-specification/commit/1969c6f69aa314071021628ebbe83e407e0d8dc1))
+
+
 <a name="v0.1.33"></a>
 ## [v0.1.33](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.32...v0.1.33) (2025-09-24)
 
