@@ -11,7 +11,7 @@ fields:
   - field: use-other
     required-if:
       - field: use
-        other: other
+        value: other
         description: required if `use` field is other
   - field: operational-times
     required-if:
