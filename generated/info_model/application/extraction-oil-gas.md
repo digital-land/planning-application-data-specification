@@ -543,7 +543,7 @@ Proposed operating hours if the proposed development is intended for non-residen
 field | name | description | required | notes
 -- | -- | -- | -- | --
 use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
-use-other | Use other | Specify use if use is "other" | MAY | Required if use is "other"
+use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use` is `other`. Required if use is "other"
 operational-times | Operational times[]{} | Structured data for operational hours by day | MAY | Rule: is a MUST if `hours-not-known` is `True`. Must be completed if hours-not-known is not provided
 hours-not-known | Hours not known | Applicant states they do not know the hours of operation | MAY | 
 

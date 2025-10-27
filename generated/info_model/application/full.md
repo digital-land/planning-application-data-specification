@@ -50,6 +50,7 @@ This application is needed when making detailed proposals for developments which
 * [Parking space type](#parking-space-type)
 * [Tenure type](#tenure-type)
 * [Use class](#use-class)
+* [Use class for accommodation](#use-class-for-accommodation)
 * [User role type](#user-role-type)
 * [Waste management type](#waste-management-type)
 
@@ -547,7 +548,7 @@ Proposed operating hours if the proposed development is intended for non-residen
 field | name | description | required | notes
 -- | -- | -- | -- | --
 use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
-use-other | Use other | Specify use if use is "other" | MAY | Required if use is "other"
+use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use` is `other`. Required if use is "other"
 operational-times | Operational times[]{} | Structured data for operational hours by day | MAY | Rule: is a MUST if `hours-not-known` is `True`. Must be completed if hours-not-known is not provided
 hours-not-known | Hours not known | Applicant states they do not know the hours of operation | MAY | 
 
@@ -645,7 +646,9 @@ net-additional-floorspace | Net additional floorspace | Net additional gross int
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use-class | Use class | Type of non-residential use class | MUST | Select from the **use-class** enum. Only required for C1, C2, C2A, or Other use classes
+use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Select from the **use-class-accommodation** enum. Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
+
+use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use-class-accommodation` is `other`. Required if use is "other"
 existing-rooms-lost | Existing rooms lost | Existing rooms to be lost by change of use | MUST | Must be 0 or positive
 total-rooms-proposed | Total rooms proposed | Total rooms proposed (including change of use) | MUST | Must be 0 or positive
 net-additional-rooms | Net additional rooms | Net additional rooms following development | MUST | Calculated as total-rooms-proposed - existing-rooms-lost
@@ -1141,6 +1144,15 @@ Below are the codelists required to support this specification:
 | f2-c | F2(c) – Outdoor Sport/Recreation | Excludes motorised sports. |  | 2025-10-27 |  |  |
 | f2-d | F2(d) – Indoor/Outdoor Swimming Pool | Includes skating rinks. |  | 2025-10-27 |  |  |
 | sui | Sui generis | Uses that do not fall within any defined use class and are considered unique. For example, theatres, nightclubs, scrap yards and mineral extraction |  | 2025-10-27 |  |  |
+| other | Other (Please Specify) | Free text required if selected. |  | 2025-10-27 |  |  |
+
+### Use class for accommodation
+
+| reference | name | description | notes | entry-date | start-date | end-date |
+| --- | --- | --- | --- | --- | --- | --- |
+| c1 | C1 – Hotels | Includes hotels, boarding houses, and guest houses. |  | 2025-10-27 |  |  |
+| c2 | C2 – Residential Institutions | Care homes, hospitals, and boarding schools. |  | 2025-10-27 |  |  |
+| c2a | C2A – Secure Residential Institutions | Prisons, young offender institutions. |  | 2025-10-27 |  |  |
 | other | Other (Please Specify) | Free text required if selected. |  | 2025-10-27 |  |  |
 
 ### User role type

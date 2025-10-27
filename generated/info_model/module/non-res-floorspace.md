@@ -45,7 +45,9 @@ net-additional-floorspace | Net additional floorspace | Net additional gross int
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use-class | Use class | Type of non-residential use class | MUST | Select from the **use-class** enum. Only required for C1, C2, C2A, or Other use classes
+use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Select from the **use-class-accommodation** enum. Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
+
+use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use-class-accommodation` is `other`. Required if use is "other"
 existing-rooms-lost | Existing rooms lost | Existing rooms to be lost by change of use | MUST | Must be 0 or positive
 total-rooms-proposed | Total rooms proposed | Total rooms proposed (including change of use) | MUST | Must be 0 or positive
 net-additional-rooms | Net additional rooms | Net additional rooms following development | MUST | Calculated as total-rooms-proposed - existing-rooms-lost
@@ -55,7 +57,9 @@ net-additional-rooms | Net additional rooms | Net additional rooms following dev
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use-class | Use class | Type of non-residential use class | MUST | Select from the **use-class** enum. Only required for C1, C2, C2A, or Other use classes
+use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Select from the **use-class-accommodation** enum. Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
+
+use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use-class-accommodation` is `other`. Required if use is "other"
 not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
 is-existing-rooms-lost-known | Is existing rooms lost known | Whether the total existing rooms that will be lost is known | MAY | 
 existing-rooms-lost | Existing rooms lost | Existing rooms to be lost by change of use | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-existing-rooms-lost-known` is `True`. Must be 0 or positive
