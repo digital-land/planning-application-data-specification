@@ -54,35 +54,47 @@ def is_node_applicable(node: Any, application_type: Optional[str] = None):
 
 def walk_component_paths(
     node: Any, prefix: List[str], application_type: Optional[str] = None
-) -> List[Tuple[List[str], FieldInstance]]:
+) -> List[Tuple[List[str], List[str], FieldInstance]]:
     """
-    Return list of (path_names, field) where path_names is the chain of component names
-    leading to the field (e.g. ['agent', 'person', 'first-name'] but we keep field separate).
+    Return list of (path_names, path_refs, field) where:
+    - path_names: display names for components
+    - path_refs: reference names for components
+    - field: the FieldInstance
     """
-    rows: List[Tuple[List[str], FieldInstance]] = []
+    rows: List[Tuple[List[str], List[str], FieldInstance]] = []
     # node can be a ComponentInstance, ComponentDef, or unexpectedly a FieldInstance
     if isinstance(node, ComponentInstance):
         # check if node is applicable to this application type (if provided)
         if is_node_applicable(node, application_type):
             comp_def = node.component
             ref_field = node.referenced_by_field  # FieldInstance
-            base = ref_field.original.name
+
+            # Display name (with cardinality)
+            base_name = ref_field.original.name
             if ref_field.original.cardinality == "n":
-                base += "[]"
+                base_name += "[]"
+
+            # Reference name
+            base_ref = ref_field.original.ref
 
             # comp_def.items preserves author-specified order; each item is FieldInstance or ComponentInstance
             for item in getattr(comp_def, "items", []):
-                level_prefix = prefix + [base]
+                level_prefix_names = prefix[0] + [base_name]
+                level_prefix_refs = prefix[1] + [base_ref]
                 # handle leaf nodes
                 if isinstance(item, FieldInstance):
                     if is_node_applicable(item, application_type):
-                        rows.append((level_prefix, item))
+                        rows.append((level_prefix_names, level_prefix_refs, item))
                 else:
                     # handle nested nodes
                     # do we need to repeat this check?
                     if is_node_applicable(item, application_type):
                         rows.extend(
-                            walk_component_paths(item, level_prefix, application_type)
+                            walk_component_paths(
+                                item,
+                                (level_prefix_names, level_prefix_refs),
+                                application_type,
+                            )
                         )
                     else:
                         # component instance not applicable for this application type
@@ -97,24 +109,36 @@ def walk_component_paths(
 
 def flatten_module_to_rows(
     mod: ModuleDef, application_type: Optional[str] = None
-) -> List[Tuple[List[str], FieldInstance]]:
+) -> List[Tuple[List[str], List[str], FieldInstance]]:
     """
-    Produce rows for a module. For each field:
-      - path is [component1, component2, ..., field_name] (module name goes in 'top-level').
-      - we return (path_without_fieldname_components, field) so caller can split into fieldN cols.
+    Produce rows for a module returning (path_names, path_refs, field).
     """
-    rows: List[Tuple[List[str], FieldDef]] = []
+    rows: List[Tuple[List[str], List[str], FieldInstance]] = []
     # module-level items may include fields and embedded components; preserve order
     for item in mod.items:
         if isinstance(item, FieldInstance):
             # simple module-level field instance: no component path
             if is_node_applicable(item, application_type):
-                rows.append(([], item))
+                rows.append(([], [], item))
         else:
             # item may be ComponentDef or ComponentInstance; return its component path
-            for comp_path, f in walk_component_paths(item, [], application_type):
-                rows.append((comp_path, f))
+            for comp_path_names, comp_path_refs, f in walk_component_paths(
+                item, ([], []), application_type
+            ):
+                rows.append((comp_path_names, comp_path_refs, f))
     return rows
+
+
+def extract_field_references(
+    field_chain: List[str], path_refs: List[str]
+) -> Tuple[List[str], List[str]]:
+    """
+    Extract field names and references from a field chain.
+    Returns (display_names, field_refs)
+    """
+    display_names = field_chain.copy()
+    field_refs = path_refs.copy() if path_refs else [""] * len(field_chain)
+    return display_names, field_refs
 
 
 # ---------- Excel writing ----------
@@ -140,16 +164,21 @@ def requirement_label(required: bool) -> str:
 
 def make_row(
     application,
+    app_ref_code,
     app_desc,
     top,
+    top_ref,
     top_desc,
     field_chain,
+    field_chain_refs,
     f: FieldInstance,
     incl_app_details: bool = True,
+    incl_references: bool = False,
 ):
     orig = f.original
     overrides = f.overrides
     requirement_level = overrides.get("required", orig.required)
+
     row = {
         "top_level": top,
         "top_description": top_desc,
@@ -159,9 +188,15 @@ def make_row(
         "requirement": requirement_label(requirement_level),
     }
 
+    if incl_references:
+        row["top_level_ref"] = top_ref
+        row["field_chain_refs"] = field_chain_refs
+
     if incl_app_details:
         row["application"] = application
         row["application_description"] = app_desc
+        if incl_references:
+            row["application_ref"] = app_ref_code
 
     return row
 
@@ -209,10 +244,47 @@ def set_alignment_all(ws, vertical_alignment="top", start_from_row=2):
             set_cell_alignment(cell, cell_alignment)
 
 
+def create_header_row(
+    incl_app_details: bool = True,
+    incl_references: bool = False,
+    max_field_depth: int = 1,
+):
+    # In write_application_excel function, update header construction:
+    header = []
+    if incl_app_details:
+        if incl_references:
+            header += ["application", "application-ref", "application-description"]
+        else:
+            header += ["application", "application-description"]
+
+    if incl_references:
+        header += [
+            "top-level",
+            "top-level-ref",
+            "top-level-description",
+        ]
+    else:
+        header += [
+            "top-level",
+            "top-level-description",
+        ]
+
+    # Interleave field references and names: field1-ref, field1, field2-ref, field2, etc.
+    if incl_references:
+        for i in range(1, max_field_depth + 1):
+            header += [f"field{i}-ref", f"field{i}"]
+    else:
+        header += [f"field{i}" for i in range(1, max_field_depth + 1)]
+
+    header += ["description", "datatype", "requirement"]
+    return header
+
+
 def write_application_excel(
     app: ApplicationDef,
     out_dir: Path,
     incl_app_details: bool = True,
+    incl_references: bool = False,
 ) -> Path:
     """
     Writes one XLSX with columns:
@@ -235,50 +307,68 @@ def write_application_excel(
     # 1) Application-level items (fields and possibly embedded components)
     for item in app.items:
         if isinstance(item, FieldDef):
-            top = item.ref
+            # Simple application-level field
+            top = item.name
+            top_ref = item.ref if incl_references else None
             top_desc = item.description
-            field_chain = [item.ref]
+            field_chain = [format_field_name(item)]
+            field_chain_refs = [item.ref] if incl_references else []
+
             flat_rows.append(
                 make_row(
+                    app_name,
                     app_ref,
                     app_desc,
                     top,
+                    top_ref,
                     top_desc,
                     field_chain,
+                    field_chain_refs,
                     item,
                     incl_app_details=incl_app_details,
+                    incl_references=incl_references,
                 )
             )
         elif isinstance(item, ComponentInstance):
-            # embedded component at application level
-            for comp_path, f in walk_component_paths(item, []):
-                top = item.referenced_by_field.original.name
-                top_desc = (
-                    item.referenced_by_field.overrides.get("description")
-                    or item.referenced_by_field.original.description
-                )
-                subpath = (
-                    comp_path[1:] if comp_path and comp_path[0] == top else comp_path
-                )
+            # Application-level field that references a component - expand it
+            ref_field = item.referenced_by_field  # FieldInstance
+            top = ref_field.original.name
+            top_ref = ref_field.original.ref if incl_references else None
+            top_desc = (
+                ref_field.overrides.get("description") or ref_field.original.description
+            )
+
+            # Walk the component and get all nested fields
+            for comp_path_names, comp_path_refs, f in walk_component_paths(
+                item, ([], []), app_ref
+            ):
+                # Build field chain: component path + field name
                 field_name = format_field_name(f)
-                field_chain = subpath + [field_name]
+                field_chain = comp_path_names + [field_name]
+                field_chain_refs = (
+                    (comp_path_refs + [f.original.ref]) if incl_references else []
+                )
+
                 flat_rows.append(
                     make_row(
+                        app_name,
                         app_ref,
                         app_desc,
                         top,
+                        top_ref,
                         top_desc,
                         field_chain,
+                        field_chain_refs,
                         f,
                         incl_app_details=incl_app_details,
+                        incl_references=incl_references,
                     )
                 )
         else:
             # defensive: skip unknown item types
             continue
 
-    # 2) Modules
-
+    # 2) Modules: each module is a top-level block in the sheet
     for mod in app.modules:
         if not mod:
             continue
@@ -296,25 +386,40 @@ def write_application_excel(
                 "datatype": "",
                 "requirement": "",
             }
+            if incl_references:
+                row["top_level_ref"] = mod.ref
+                row["field_chain_refs"] = []
             if incl_app_details:
                 row["application"] = app_ref
                 row["application_description"] = app_desc
+                if incl_references:
+                    row["application_ref"] = app_ref
             flat_rows.append(row)
         else:
-            for comp_path, f in mod_rows:
+            for comp_path_names, comp_path_refs, f in mod_rows:
                 # top-level is the module name
                 top = mod.name
+                top_ref = mod.ref if incl_references else None
                 # field_chain is the component path + field name
-                field_chain = comp_path + [format_field_name(f)]
+                field_name = format_field_name(f)
+                field_chain = comp_path_names + [field_name]
+                field_chain_refs = (
+                    (comp_path_refs + [f.original.ref]) if incl_references else []
+                )
+
                 flat_rows.append(
                     make_row(
+                        app_name,
                         app_ref,
                         app_desc,
                         top,
+                        top_ref,
                         mod.description,
                         field_chain,
+                        field_chain_refs,
                         f,
                         incl_app_details=incl_app_details,
+                        incl_references=incl_references,
                     )
                 )
 
@@ -337,16 +442,13 @@ def write_application_excel(
     max_depth = max((len(r["field_chain"]) for r in flat_rows), default=1)
 
     # Header
-    header = []
-    if incl_app_details:
-        header += ["application", "application-description"]
-    header += [
-        "top-level",
-        "top-level-description",
-    ]
-    header += [f"field{i}" for i in range(1, max_depth + 1)]
-    header += ["description", "datatype", "requirement"]
-    ws.append(header)
+    ws.append(
+        create_header_row(
+            incl_app_details=incl_app_details,
+            incl_references=incl_references,
+            max_field_depth=max_depth,
+        )
+    )
 
     # format the heeader row
     format_header_row(ws)
@@ -378,22 +480,37 @@ def write_application_excel(
 
         # Expand field_chain into field columns with padding
         chain = row["field_chain"]
-        padded = chain + [""] * (max_depth - len(chain))
+        padded_names = chain + [""] * (max_depth - len(chain))
 
         spreadsheet_row = []
         if incl_app_details:
-            spreadsheet_row += [
-                row["application"],
-                row["application_description"],
-            ]
-        spreadsheet_row += [
-            row["top_level"],
-            row["top_description"],
-            *padded,
-            row["description"],
-            row["datatype"],
-            row["requirement"],
-        ]
+            spreadsheet_row.append(row["application"])
+            if incl_references:
+                spreadsheet_row.append(row["application_ref"])
+            spreadsheet_row.append(row["application_description"])
+
+        spreadsheet_row.append(row["top_level"])
+        if incl_references:
+            spreadsheet_row.append(row["top_level_ref"])
+        spreadsheet_row.append(row["top_description"])
+
+        # Interleave field references and names
+        if incl_references:
+            chain_refs = row.get("field_chain_refs", [])
+            padded_refs = chain_refs + [""] * (max_depth - len(chain_refs))
+
+            # Interleave: ref1, name1, ref2, name2, etc.
+            for i in range(max_depth):
+                spreadsheet_row.append(padded_refs[i])  # field{i}-ref
+                spreadsheet_row.append(padded_names[i])  # field{i}
+        else:
+            # Just add field name columns
+            spreadsheet_row.extend(padded_names)
+
+        spreadsheet_row.extend(
+            [row["description"], row["datatype"], row["requirement"]]
+        )
+
         ws.append(spreadsheet_row)
 
     # Close last top-level block
@@ -412,6 +529,8 @@ def write_application_excel(
     auto_width(ws)
 
     filename = f"{app_name} ({app_ref})"
+    if incl_references:
+        filename += "--verbose"
     out_dir.mkdir(parents=True, exist_ok=True)
     out_path = out_dir / f"{to_anchor(filename)}.xlsx"
     wb.save(out_path)
@@ -427,5 +546,15 @@ if __name__ == "__main__":
     for app in model["applications"].values():
         # check it isn't a sub-type
         if app.extends is None:
+            # Generate standard version (names only)
             path = write_application_excel(app, output_dir, incl_app_details=False)
             print("Wrote:", path)
+
+            # Generate version with references
+            path2 = write_application_excel(
+                app,
+                output_dir / "verbose",
+                incl_app_details=False,
+                incl_references=True,
+            )
+            print("Wrote references version:", path2)
