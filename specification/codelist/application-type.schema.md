@@ -15,5 +15,5 @@ name: Application type
 notes:
 organisation: government-organisation:D1342
 plural: Application types
-source:
+source: data/planning-application-type.csv
 ---
