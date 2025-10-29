@@ -36,7 +36,7 @@ application types, submission details, modules, documents, and fees
 | --- | --- | --- | --- | --- |
 | reference | Reference | A unique reference for the data item | MUST |  |
 | application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
-| application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-sub-type** enum |
+| application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-subtype** enum |
 | planning-authority | Planning authority | The reference of the planning authority the application has been submitted to, e.g. local-authority:CMD | MUST |  |
 | submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST |  |
 | modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST |  |
