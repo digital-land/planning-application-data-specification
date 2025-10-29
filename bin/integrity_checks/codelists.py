@@ -36,7 +36,7 @@ def check_codelist_source(codelists):
         valid_source = (
             source
             and isinstance(source, str)
-            and (source.startswith("http") or source.startswith("data/codelist/"))
+            and (source.startswith("http") or source.startswith("data/"))
         )
         if not valid_source:
             print_error(
