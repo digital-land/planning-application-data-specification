@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-codelist: application-sub-type
+codelist: application-subtype
 datatype: enum
 description: Further classification of the application type for specific variations
   within the main application type
