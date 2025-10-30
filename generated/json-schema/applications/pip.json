@@ -53,24 +53,6 @@
     "application"
   ],
   "definitions": {
-    "supporting-document": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        },
-        "details": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference",
-        "name"
-      ]
-    },
     "agent": {
       "type": "object",
       "properties": {
@@ -96,45 +78,41 @@
         "person"
       ]
     },
-    "contact-details": {
+    "existing-use": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
+        "uses": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/phone-number"
+            "$ref": "#/definitions/use"
           },
           "minItems": 1
+        },
+        "floorspace": {
+          "type": "number"
         }
       },
       "required": [
-        "email",
-        "phone-numbers"
+        "uses",
+        "floorspace"
       ]
     },
-    "site-area": {
+    "supporting-document": {
       "type": "object",
       "properties": {
-        "value": {
-          "type": "number"
-        },
-        "unit": {
+        "reference": {
           "type": "string"
         },
-        "provided-by": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "system"
-          ]
+        "name": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
         }
       },
       "required": [
-        "value",
-        "unit"
+        "reference",
+        "name"
       ]
     },
     "non-residential-use": {
@@ -158,20 +136,40 @@
         "non-residential-measurement-type"
       ]
     },
-    "applicant": {
+    "contact-details": {
       "type": "object",
       "properties": {
-        "reference": {
+        "email": {
           "type": "string"
         },
-        "person": {
-          "$ref": "#/definitions/person"
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "reference",
-        "person"
+        "email",
+        "phone-numbers"
       ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
     },
     "person": {
       "type": "object",
@@ -197,22 +195,6 @@
         "last-name",
         "address-text"
       ]
-    },
-    "phone-number": {
-      "type": "object",
-      "properties": {
-        "number": {
-          "type": "string"
-        },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
     },
     "site-location": {
       "type": "object",
@@ -251,23 +233,41 @@
       },
       "required": []
     },
-    "existing-use": {
+    "applicant": {
       "type": "object",
       "properties": {
-        "uses": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/use"
-          },
-          "minItems": 1
+        "reference": {
+          "type": "string"
         },
-        "floorspace": {
-          "type": "number"
+        "person": {
+          "$ref": "#/definitions/person"
         }
       },
       "required": [
-        "uses",
-        "floorspace"
+        "reference",
+        "person"
+      ]
+    },
+    "site-area": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "provided-by": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "system"
+          ]
+        }
+      },
+      "required": [
+        "value",
+        "unit"
       ]
     },
     "use": {
@@ -340,6 +340,30 @@
         ]
       }
     },
+    "checklist": {
+      "type": "object",
+      "properties": {
+        "national-req-types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "national-req-types"
+      ]
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
+    },
     "site-info": {
       "type": "object",
       "properties": {
@@ -383,40 +407,10 @@
         "known-constraints"
       ]
     },
-    "checklist": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "national-req-types"
-      ]
-    },
-    "site-details": {
-      "type": "object",
-      "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "site-locations"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
+        "agent-reference": {
           "type": "string"
         },
         "contact-details": {
@@ -424,7 +418,7 @@
         }
       },
       "required": [
-        "applicant-reference",
+        "agent-reference",
         "contact-details"
       ]
     },
@@ -470,19 +464,19 @@
         "non-residential-use"
       ]
     },
-    "agent-contact": {
+    "site-details": {
       "type": "object",
       "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "agent-reference",
-        "contact-details"
+        "site-locations"
       ]
     },
     "conflict-of-interest": {
@@ -551,14 +545,20 @@
         "declaration-date"
       ]
     },
-    "agent-details": {
+    "applicant-contact": {
       "type": "object",
       "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
-      "required": []
+      "required": [
+        "applicant-reference",
+        "contact-details"
+      ]
     },
     "application": {
       "type": "object",
