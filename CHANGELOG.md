@@ -1,4 +1,28 @@
 
+<a name="v0.1.35"></a>
+## [v0.1.35](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.34...v0.1.35) (2025-10-30)
+
+Fixes and enhancements
+
+### ⚒️ Tooling
+
+* increase flexibility of where codelist sources can reside (commit [35816cc](https://github.com/digital-land/planning-application-data-specification/commit/35816cc586ecd78fc36551c6e422b2e211ffa9e4))
+* generate version of spreadsheet output with references (commit [df7b194](https://github.com/digital-land/planning-application-data-specification/commit/df7b194ea4a5b7fc7efa7804d2bf04f77a38f43b))
+
+### 𝌭 Model changes
+
+* add use-class-accommodation codelist, used in room details component (commit [c0b2775](https://github.com/digital-land/planning-application-data-specification/commit/c0b2775b2e1aa2ddec9a01a6ae6963d9102c6b52))
+* add use-class codelist (commit [73e8289](https://github.com/digital-land/planning-application-data-specification/commit/73e82898b81289d232c551f7138aa0cb0fdf4536))
+
+### 🐛 Bug Fixes
+
+* add missing application-subtype codelist (commit [dd72ae9](https://github.com/digital-land/planning-application-data-specification/commit/dd72ae9af8de960bae28c5cfb367c18c15bdae11))
+* add missing source url for application-type codelist (commit [059b30f](https://github.com/digital-land/planning-application-data-specification/commit/059b30fbba944f2887a2935d15be6f5ed0331b01))
+* rename use-class field to use-class-accommodation to more accurately reflect purpose' (commit [a15399a](https://github.com/digital-land/planning-application-data-specification/commit/a15399aa546294e4f0cecb6106945f86e0041dc8))
+* required-of condition should have value attr (commit [aceb32e](https://github.com/digital-land/planning-application-data-specification/commit/aceb32e058d279dc32ee01df01449e5a37036f41))
+* github workflow ci issues (commit [88ec0aa](https://github.com/digital-land/planning-application-data-specification/commit/88ec0aa7201115764c4d4893ce22d208deb417c1))
+
+
 <a name="v0.1.34"></a>
 ## [v0.1.34](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.33...v0.1.34) (2025-10-27)
 
