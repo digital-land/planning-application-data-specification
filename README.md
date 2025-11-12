@@ -35,21 +35,20 @@ Below is the list of official application types (and their subtypes where applic
 
 A [complete list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv) is available to download and use, and there is a dataset of application [subtypes](http://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv).
 
+We are prioritising the application types that lead to housing delivery.
+
+#### Applications affecting housing delivery
+
 | Application type | Sub type |
 |---|---|
-| [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) | | 
 | [Approval (discharge) of conditions](https://github.com/digital-land/planning-application-data-specification/discussions/173) | | 
-| [Consent under TPO](https://github.com/digital-land/planning-application-data-specification/discussions/220) | |
-| [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | |
 | [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/generated/info_model/application/full.md) | |
-| [Hedgerow removal notice](https://github.com/digital-land/planning-application-data-specification/discussions/218) | |
 | [Householder planning application](https://github.com/digital-land/planning-application-data-specification/discussions/166) | | 
 | Lawful development certificate | [Existing use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/182) | |
 | Lawful development certificate | [Prospective use of the site](https://github.com/digital-land/planning-application-data-specification/discussions/181) ||
 | Lawful development certificate | [Proposed work to a listed building](https://github.com/digital-land/planning-application-data-specification/discussions/180) | |
 | [Listed building consent](https://github.com/digital-land/planning-application-data-specification/discussions/170) | |
 | [Non-material amendment](https://github.com/digital-land/planning-application-data-specification/discussions/174) |  |
-| [Notification of proposed works to trees in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/219) ||
 | Outline planning | [All matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/179) ||
 | Outline planning | [Some matters reserved](https://github.com/digital-land/planning-application-data-specification/discussions/178) | |
 | [Permission in principle](https://github.com/digital-land/planning-application-data-specification/discussions/175) |  |
@@ -58,8 +57,19 @@ A [complete list of application types](https://github.com/digital-land/planning-
 | Prior approval | [Additional storeys](https://github.com/digital-land/planning-application-data-specification/discussions/184) | |
 | [Removal/variation of conditions (S73)](https://github.com/digital-land/planning-application-data-specification/discussions/172) |  |
 | [Reserved matters](https://github.com/digital-land/planning-application-data-specification/discussions/168) | |
-| [Technical details consent](https://github.com/digital-land/planning-application-data-specification/discussions/343) | 
+| [Technical details consent](https://github.com/digital-land/planning-application-data-specification/discussions/343) | |
 
+#### Other applications in scope
+
+| Application type | Sub type |
+|---|---|
+| [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) | | 
+| [Consent under TPO](https://github.com/digital-land/planning-application-data-specification/discussions/220) | |
+| [Development relating to the onshore extraction of oil and gas](https://github.com/digital-land/planning-application-data-specification/discussions/176) | |
+| [Hedgerow removal notice](https://github.com/digital-land/planning-application-data-specification/discussions/218) | |
+| [Notification of proposed works to trees in a conservation area](https://github.com/digital-land/planning-application-data-specification/discussions/219) | |
+
+#### Applications not in scope
 
 The application types we have not yet included in these specifications are
 
