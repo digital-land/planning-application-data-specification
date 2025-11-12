@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: string
+datatype: date
 description: The end of the time period that consent to advertisement is sought
 end-date: ''
 entry-date: 2025-07-07

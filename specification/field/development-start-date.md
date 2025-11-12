@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: string
+datatype: date
 description: Date when development started
 end-date: ''
 entry-date: 2025-06-26
