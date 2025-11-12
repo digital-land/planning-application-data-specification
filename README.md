@@ -58,6 +58,7 @@ A [complete list of application types](https://github.com/digital-land/planning-
 | Prior approval | [Additional storeys](https://github.com/digital-land/planning-application-data-specification/discussions/184) | |
 | [Removal/variation of conditions (S73)](https://github.com/digital-land/planning-application-data-specification/discussions/172) |  |
 | [Reserved matters](https://github.com/digital-land/planning-application-data-specification/discussions/168) | |
+| [Technical details consent](https://github.com/digital-land/planning-application-data-specification/discussions/343) | 
 
 
 The application types we have not yet included in these specifications are
@@ -78,7 +79,6 @@ The application types we have not yet included in these specifications are
 * Regulation 3 planning application
 * Regulation 4 planning application 
 * Review of mineral permission (ROMP) 
-* Technical Details Consent 
 * Transport and works act order 
 * Waste development 
 
