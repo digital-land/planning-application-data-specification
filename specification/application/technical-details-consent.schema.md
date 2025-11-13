@@ -6,7 +6,8 @@ description: |
 synonyms: []
 legislation:
   - https://www.legislation.gov.uk/uksi/2015/596/article/7
-notes: ''
+notes: |
+  An applicant writes the type of application it is in the description of development, which the council would then pick up when they validate the application
 entry-date: 2025-11-12
 start-date: ''
 end-date: ''
