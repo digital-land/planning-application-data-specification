@@ -54,3 +54,4 @@ specified-use | Specified use | A specified use if no applicable use class is av
 - use must reference valid use class or be 'other' or 'sui'
 - specified-use is required if use is 'sui' or 'other'
 - floorspace must be numeric value in m2
+- each document in supporting-documents must have a `reference` that matches a document in application.documents

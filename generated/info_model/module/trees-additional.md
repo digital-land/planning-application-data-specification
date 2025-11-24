@@ -28,3 +28,4 @@ details | Details | Additional details or information about an item | MAY |
 - If causing-structural-damage is true then a Structural damage report is required
 - supporting-documents must include sketch plan, supporting documents, reports, or photographs
 - supporting-documents must include any documents required based on condition concerns, subsidence, or structural damage
+- each document in supporting-documents must have a `reference` that matches a document in application.documents

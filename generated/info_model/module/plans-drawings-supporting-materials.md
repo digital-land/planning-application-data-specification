@@ -23,3 +23,4 @@ name | Name | Name of the document (descriptive) | MUST |
 - plans-documents[].reference-number must be unique
 - plans-documents[].name.length > 0
 - inspection-address must include street, town/city, and postcode
+- each document in plans-document must have a `reference` that matches a document in application.documents

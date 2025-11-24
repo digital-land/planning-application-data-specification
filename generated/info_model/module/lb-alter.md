@@ -19,3 +19,6 @@ reference | Reference | A unique reference for the data item | MUST |
 name | Name | A name for the document. For example, The Site Plan | MUST | 
 details | Details | Additional details or information about an item | MAY | 
 
+**Validation rules**
+
+- each document in document-reference must have a `reference` that matches a document in application.documents

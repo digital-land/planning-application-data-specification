@@ -344,7 +344,9 @@ field | name | description | required | notes
 reference | Reference | A unique reference for the data item | MUST | 
 name | Name | A name for the document. For example, The Site Plan | MUST | 
 
+**Validation rules**
 
+- each document in document-reference must have a `reference` that matches a document in application.documents
 
 ## Listed building grade
 

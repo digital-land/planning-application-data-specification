@@ -25,3 +25,4 @@ details | Details | Additional details or information about an item | MAY |
 
 - if is-advert-in-place == true then advert-placed-date is required
 - if (is-advert-in-place == true OR is-replacement-advert == true) then document-reference is required
+- each document in document-reference must have a `reference` that matches a document in application.documents

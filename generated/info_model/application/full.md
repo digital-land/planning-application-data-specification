@@ -145,6 +145,7 @@ name | Name | A name for the document. For example, The Site Plan | MUST |
 - If new-altered-vehicle is yes, details must be provided in highways module
 - If change-right-of-way is yes, separate rights of way order may be needed
 - If temp-right-of-way is yes, details of temporary diversions must be provided
+- each document in supporting-documents must have a `reference` that matches a document in application.documents
 
 ## Agent contact details
 

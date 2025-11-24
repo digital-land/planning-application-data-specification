@@ -120,6 +120,7 @@ name | Name | A name for the document. For example, The Site Plan | MUST |
 
 - if is-advert-in-place == true then advert-placed-date is required
 - if (is-advert-in-place == true OR is-replacement-advert == true) then document-reference is required
+- each document in document-reference must have a `reference` that matches a document in application.documents
 
 ## Advert period
 
