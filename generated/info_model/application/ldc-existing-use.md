@@ -353,9 +353,6 @@ Names and contact details for all parties with an interest in the proposed devel
 | applicant-interest | Applicant interest | Description of the applicant's interest in the land | MUST |  |
 | owner-details | Owner details[]{} | Details of property owners including their personal information and notification status | MAY |  |
 | interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status | MAY | Rule: is a MUST if `applicant-interest` is `none` |
-| applicant-owns-land | Applicant owns land | True or False indicating whether the applicant owns the land where the advertisement will be displayed | MUST |  |
-| permission-obtained | Permission obtained | True or False indicating whether permission of the owner for the display of an advertisement has been obtained | MAY | Rule: is a MUST if `applicant-owns-land` is `False` |
-| permission-not-obtained-details | Permission not obtained details | Details explaining why permission from the land owner has not been obtained for the advertisement display | MAY |  |
 
 
 **LDC Owner Details component**
@@ -392,7 +389,6 @@ postcode | Postcode | The postal code | MAY |
 - if applicant-interest is 'none', then interested-persons is required
 - if applicant-owns-land is false, then permission-obtained is required
 - if applicant-owns-land is false and permission-obtained is false, then permission-not-obtained-details is required
-- No advertisement to be displayed without permission of owner or person with interest entitled to grant permission
 
 ## Pre-application advice
 

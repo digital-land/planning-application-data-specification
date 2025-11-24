@@ -14,3 +14,4 @@ Whether the applicant owns or has permission to use the land where the proposed 
 
 - permission-obtained must be provided when applicant-owns-land is false
 - permission-not-obtained-details must be provided when applicant-owns-land is false and permission-obtained is false
+- No advertisement to be displayed without permission of owner or person with interest entitled to grant permission

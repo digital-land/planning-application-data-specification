@@ -19,7 +19,7 @@ An application for all types of advertisements and signs
 * [Community consultation](#community-consultation)
 * [Conflict of interest](#conflict-of-interest)
 * [Declaration](#declaration)
-* [Interest details](#interest-details)
+* [Interest in land](#interest-in-land)
 * [Pre-application advice](#pre-application-advice)
 * [Proposed advert details](#proposed-advert-details)
 * [Site details](#site-details)
@@ -357,56 +357,22 @@ Signed and dated verification of the application's accuracy.
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
 
-## Interest details
+## Interest in land
 
-Names and contact details for all parties with an interest in the proposed develpoment.
+Whether the applicant owns or has permission to use the land where the proposed advertisement will be placed
 
-**Interest details module**
+**Interest in land module**
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| applicant-interest | Applicant interest | Description of the applicant's interest in the land | MUST |  |
-| owner-details | Owner details[]{} | Details of property owners including their personal information and notification status | MAY |  |
-| interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status | MAY | Rule: is a MUST if `applicant-interest` is `none` |
 | applicant-owns-land | Applicant owns land | True or False indicating whether the applicant owns the land where the advertisement will be displayed | MUST |  |
-| permission-obtained | Permission obtained | True or False indicating whether permission of the owner for the display of an advertisement has been obtained | MAY | Rule: is a MUST if `applicant-owns-land` is `False` |
+| permission-obtained | Permission obtained | True or False indicating whether permission of the owner for the display of an advertisement has been obtained | MAY |  |
 | permission-not-obtained-details | Permission not obtained details | Details explaining why permission from the land owner has not been obtained for the advertisement display | MAY |  |
-
-
-**LDC Owner Details component**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-person | Person{} | Personal details of the property owner | MUST | 
-informed-of-application | Informed of application | Whether the owner has been informed of the application | MUST | 
-
-
-**LDC Interested Person component**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-person | Person{} | Personal details of the interested person | MUST | 
-nature-of-interest | Nature of interest | Description of the nature of a person's interest in the property | MUST | 
-informed-of-application | Informed of application | Whether the person has been informed of the application | MUST | 
-reason-not-informed | Reason not informed | Reason why a person was not informed of the application | MAY | 
-
-
-**Person obj component**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-title | Title | The title of the individual | MAY | 
-first-name | First Name | The first name of the individual | MUST | 
-last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
 
 **Validation rules**
 
-- if applicant-interest is 'lessee' or 'occupier', then owner-details is required
-- if applicant-interest is 'none', then interested-persons is required
-- if applicant-owns-land is false, then permission-obtained is required
-- if applicant-owns-land is false and permission-obtained is false, then permission-not-obtained-details is required
+- permission-obtained must be provided when applicant-owns-land is false
+- permission-not-obtained-details must be provided when applicant-owns-land is false and permission-obtained is false
 - No advertisement to be displayed without permission of owner or person with interest entitled to grant permission
 
 ## Pre-application advice
