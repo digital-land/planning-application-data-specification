@@ -12,14 +12,20 @@ fields:
     value: false
 - field: permission-not-obtained-details
   required-if:
-    field: permission-obtained
-    value: false
+    all:
+    - field: applicant-owns-land
+      value: false
+    - field: permission-obtained
+      value: false
 module: interest-in-land
 name: Interest in land
 rules:
 - rule: permission-obtained must be provided when applicant-owns-land is false
 - rule: permission-not-obtained-details must be provided when applicant-owns-land
     is false and permission-obtained is false
+- description: Advertisement permission compliance
+  rule: No advertisement to be displayed without permission of owner or person with
+    interest entitled to grant permission
 ---
 
 This module captures information about the applicant's legal interest in the land where an advertisement will be displayed. It determines whether the applicant owns the land, and if not, whether they have obtained permission from the land owner.

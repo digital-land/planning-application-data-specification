@@ -19,19 +19,6 @@ fields:
   required-if:
   - field: applicant-interest
     value: none
-- field: applicant-owns-land
-  required: true
-- field: permission-obtained
-  required-if:
-  - field: applicant-owns-land
-    value: false
-- field: permission-not-obtained-details
-  required-if:
-    any:
-    - field: applicant-owns-land
-      value: false
-    - field: permission-obtained
-      value: false
 module: interest-details
 name: Interest details
 rules:
@@ -44,7 +31,4 @@ rules:
 - description: Permission details required when not obtained
   rule: if applicant-owns-land is false and permission-obtained is false, then permission-not-obtained-details
     is required
-- description: Advertisement permission compliance
-  rule: No advertisement to be displayed without permission of owner or person with
-    interest entitled to grant permission
 ---

@@ -23,7 +23,7 @@ modules:
   - module: checklist
   - module: community-consultation
   - module: conflict-of-interest
-  - module: interest-details
+  - module: interest-in-land
   - module: declaration
   - module: pre-app-advice
   - module: proposed-advert-details
