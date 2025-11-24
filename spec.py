@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "bin"))
 
 import click
 from bin.applications import get_application_module_refs, get_applications_with_module
+from bin.fields import find_field_usage
 from bin.loader import load_content
 
 
@@ -65,7 +66,30 @@ def modules_in_application(application_ref):
         click.echo(f"No modules found for application '{application_ref}'")
 
 
-# find subcommand to find where a field is used (should return modules and components) TODO
+@find.command()
+@click.argument("field_ref")
+def field_usage(field_ref):
+    """Find modules and components that include a given field."""
+    spec = load_content()
+    usage = find_field_usage(field_ref, spec)
+    module_hits = usage["modules"]
+    component_hits = usage["components"]
+
+    if not module_hits and not component_hits:
+        click.echo(f"No modules or components found using field '{field_ref}'")
+        return
+
+    if module_hits:
+        click.echo(f"Modules using field '{field_ref}':")
+        for ref, name in module_hits:
+            click.echo(f"  • {ref}: {name}")
+
+    if component_hits:
+        if module_hits:
+            click.echo()
+        click.echo(f"Components using field '{field_ref}':")
+        for ref, name in component_hits:
+            click.echo(f"  • {ref}: {name}")
 
 
 if __name__ == "__main__":

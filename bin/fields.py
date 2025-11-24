@@ -69,3 +69,34 @@ def is_field_applicable_to_app_type(field_entry, app_type):
 
 def get_codelist(field_def):
     return field_def.get("codelist", None)
+
+
+def find_field_usage(field_ref, specification):
+    """
+    Return sequences of modules and components that reference the given field.
+
+    The specification argument should match the structure from loader.load_content().
+    Results are sorted by reference for deterministic output.
+    """
+    modules = (specification or {}).get("module") or {}
+    components = (specification or {}).get("component") or {}
+
+    def collect(records):
+        matches = []
+        for ref, post in records.items():
+            fields = post.get("fields") if hasattr(post, "get") else None
+            if not isinstance(fields, list):
+                continue
+            for entry in fields:
+                entry_ref = entry if isinstance(entry, str) else entry.get("field")
+                if entry_ref == field_ref:
+                    name = post.get("name", ref) if hasattr(post, "get") else ref
+                    matches.append((ref, name))
+                    break
+        matches.sort(key=lambda item: item[0])
+        return matches
+
+    return {
+        "modules": collect(modules),
+        "components": collect(components),
+    }
