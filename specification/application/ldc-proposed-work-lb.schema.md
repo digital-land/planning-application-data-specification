@@ -7,7 +7,7 @@ entry-date: 2025-08-12
 start-date: ''
 end-date: ''
 modules:
-  - module: desc-proposed-works
+  - module: desc-proposed-works-lb-ldc
   - module: grounds-for-application
   - module: lb-grade
 ---
