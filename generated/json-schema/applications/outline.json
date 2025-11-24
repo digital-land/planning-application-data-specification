@@ -97,6 +97,93 @@
     "application"
   ],
   "definitions": {
+    "hours-of-operation": {
+      "type": "object",
+      "properties": {
+        "use": {
+          "type": "string",
+          "enum": [
+            "b2",
+            "b8",
+            "c1",
+            "c2",
+            "c2a",
+            "c3",
+            "c4",
+            "e-a",
+            "e-b",
+            "e-c-i",
+            "e-c-ii",
+            "e-c-iii",
+            "e-d",
+            "e-e",
+            "e-f",
+            "e-g-i",
+            "e-g-ii",
+            "e-g-iii",
+            "f1-a",
+            "f1-b",
+            "f1-c",
+            "f1-d",
+            "f1-e",
+            "f1-f",
+            "f1-g",
+            "f2-a",
+            "f2-b",
+            "f2-c",
+            "f2-d",
+            "sui",
+            "other"
+          ]
+        },
+        "use-other": {
+          "type": "string"
+        },
+        "operational-times": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/operational-times"
+          },
+          "minItems": 1
+        },
+        "hours-not-known": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "use"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "use": {
+                "const": "other"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "use-other"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "hours-not-known": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "operational-times"
+            ]
+          }
+        }
+      ]
+    },
     "contact-details": {
       "type": "object",
       "properties": {
@@ -114,308 +201,6 @@
       "required": [
         "email",
         "phone-numbers"
-      ]
-    },
-    "agent": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "bng-details": {
-      "type": "object",
-      "properties": {
-        "pre-development-date": {
-          "type": "string"
-        },
-        "pre-development-biodiversity-value": {
-          "type": "number"
-        },
-        "earlier-date-reason": {
-          "type": "string"
-        },
-        "habitat-loss-after-2020": {
-          "type": "boolean"
-        },
-        "habitat-loss-details": {
-          "$ref": "#/definitions/habitat-loss-details"
-        },
-        "metric-publication-date": {
-          "type": "string"
-        },
-        "irreplaceable-habitats": {
-          "type": "boolean"
-        },
-        "irreplaceable-habitats-details": {
-          "type": "string"
-        },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "pre-development-date",
-        "pre-development-biodiversity-value",
-        "metric-publication-date",
-        "irreplaceable-habitats",
-        "supporting-documents"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "habitat-loss-after-2020": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "habitat-loss-details"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "irreplaceable-habitats": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "irreplaceable-habitats-details"
-            ]
-          }
-        }
-      ]
-    },
-    "habitat-loss-details": {
-      "type": "object",
-      "properties": {
-        "loss-date": {
-          "type": "string"
-        },
-        "pre-loss-biodiversity-value": {
-          "type": "number"
-        },
-        "supporting-evidence": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "loss-date",
-        "pre-loss-biodiversity-value"
-      ]
-    },
-    "supporting-document": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "name": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference",
-        "name"
-      ]
-    },
-    "newspaper-notice": {
-      "type": "object",
-      "properties": {
-        "newspaper-name": {
-          "type": "string"
-        },
-        "publication-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "newspaper-name",
-        "publication-date"
-      ]
-    },
-    "person": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "first-name": {
-          "type": "string"
-        },
-        "last-name": {
-          "type": "string"
-        },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "first-name",
-        "last-name",
-        "address-text"
-      ]
-    },
-    "bng-exemption-reason": {
-      "type": "object",
-      "properties": {
-        "exemption-type": {
-          "type": "string",
-          "enum": [
-            "pre-commencement",
-            "small-sites",
-            "de-minimis",
-            "self-build",
-            "gain-site",
-            "retrospective",
-            "hs2"
-          ]
-        },
-        "reason": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "exemption-type",
-        "reason"
-      ]
-    },
-    "waste-management": {
-      "type": "object",
-      "properties": {
-        "waste-management-facility-type": {
-          "type": "string",
-          "enum": [
-            "inert-landfill",
-            "non-hazardous-landfill",
-            "hazardous-landfill",
-            "energy-waste-incineration",
-            "other-incineration",
-            "landfill-gas-plant",
-            "pyrolysis-gasification",
-            "metal-recycling",
-            "transfer-stations",
-            "mrf",
-            "household-amenity-site",
-            "open-windrow-composting",
-            "in-vessel-composting",
-            "anaerobic-digestion",
-            "mbt",
-            "sewage-treatment",
-            "other-treatment",
-            "construction-recycling",
-            "waste-storage",
-            "other-waste-management",
-            "other-developments"
-          ]
-        },
-        "not-applicable": {
-          "type": "boolean"
-        },
-        "total-capacity": {
-          "type": "number"
-        },
-        "annual-throughput": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "waste-management-facility-type"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "not-applicable": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "total-capacity"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "not-applicable": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "annual-throughput"
-            ]
-          }
-        }
-      ]
-    },
-    "applicant": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "other-contact": {
-      "type": "object",
-      "properties": {
-        "fullname": {
-          "type": "string"
-        },
-        "number": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "fullname",
-        "number",
-        "email"
       ]
     },
     "floorspace-details-outline": {
@@ -565,202 +350,6 @@
         }
       ]
     },
-    "hours-of-operation": {
-      "type": "object",
-      "properties": {
-        "use": {
-          "type": "string",
-          "enum": [
-            "b2",
-            "b8",
-            "c1",
-            "c2",
-            "c2a",
-            "c3",
-            "c4",
-            "e-a",
-            "e-b",
-            "e-c-i",
-            "e-c-ii",
-            "e-c-iii",
-            "e-d",
-            "e-e",
-            "e-f",
-            "e-g-i",
-            "e-g-ii",
-            "e-g-iii",
-            "f1-a",
-            "f1-b",
-            "f1-c",
-            "f1-d",
-            "f1-e",
-            "f1-f",
-            "f1-g",
-            "f2-a",
-            "f2-b",
-            "f2-c",
-            "f2-d",
-            "sui",
-            "other"
-          ]
-        },
-        "use-other": {
-          "type": "string"
-        },
-        "operational-times": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/operational-times"
-          },
-          "minItems": 1
-        },
-        "hours-not-known": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "use"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "use": {
-                "const": "other"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "use-other"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "hours-not-known": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "operational-times"
-            ]
-          }
-        }
-      ]
-    },
-    "operational-times": {
-      "type": "object",
-      "properties": {
-        "day-type": {
-          "type": "string",
-          "enum": [
-            "monday-friday",
-            "saturday",
-            "sunday",
-            "bank-holiday"
-          ]
-        },
-        "closed": {
-          "type": "boolean"
-        },
-        "time-ranges": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/time-range"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "day-type"
-      ],
-      "if": {
-        "properties": {
-          "closed": {
-            "const": false
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "time-ranges"
-        ]
-      }
-    },
-    "time-range": {
-      "type": "object",
-      "properties": {
-        "open-time": {
-          "type": "string"
-        },
-        "close-time": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "open-time",
-        "close-time"
-      ]
-    },
-    "site-location": {
-      "type": "object",
-      "properties": {
-        "site-boundary": {
-          "type": "string"
-        },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
-        },
-        "easting": {
-          "type": "number"
-        },
-        "northing": {
-          "type": "number"
-        },
-        "latitude": {
-          "type": "number"
-        },
-        "longitude": {
-          "type": "number"
-        },
-        "description": {
-          "type": "string"
-        },
-        "uprns": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": []
-    },
-    "waste-streams": {
-      "type": "object",
-      "properties": {
-        "municipal": {
-          "type": "number"
-        },
-        "construction-demolition": {
-          "type": "number"
-        },
-        "commercial-industrial": {
-          "type": "number"
-        },
-        "hazardous": {
-          "type": "number"
-        }
-      },
-      "required": []
-    },
     "notified-person": {
       "type": "object",
       "properties": {
@@ -773,21 +362,20 @@
       },
       "required": []
     },
-    "phone-number": {
+    "applicant": {
       "type": "object",
       "properties": {
-        "number": {
+        "reference": {
           "type": "string"
         },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
+        "person": {
+          "$ref": "#/definitions/person"
         }
       },
-      "required": []
+      "required": [
+        "reference",
+        "person"
+      ]
     },
     "employees": {
       "type": "object",
@@ -807,6 +395,59 @@
         "part-time",
         "total-fte"
       ]
+    },
+    "waste-streams": {
+      "type": "object",
+      "properties": {
+        "municipal": {
+          "type": "number"
+        },
+        "construction-demolition": {
+          "type": "number"
+        },
+        "commercial-industrial": {
+          "type": "number"
+        },
+        "hazardous": {
+          "type": "number"
+        }
+      },
+      "required": []
+    },
+    "other-contact": {
+      "type": "object",
+      "properties": {
+        "fullname": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fullname",
+        "number",
+        "email"
+      ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
     },
     "existing-use-detail": {
       "type": "object",
@@ -882,87 +523,171 @@
         ]
       }
     },
-    "residential-unit-summary": {
+    "waste-management": {
       "type": "object",
       "properties": {
-        "tenure-type": {
+        "waste-management-facility-type": {
           "type": "string",
           "enum": [
-            "market-housing",
-            "social-rented",
-            "intermediate-housing",
-            "key-worker-housing",
-            "affordable-rent",
-            "home-ownership",
-            "starter-homes",
-            "custom-build"
+            "inert-landfill",
+            "non-hazardous-landfill",
+            "hazardous-landfill",
+            "energy-waste-incineration",
+            "other-incineration",
+            "landfill-gas-plant",
+            "pyrolysis-gasification",
+            "metal-recycling",
+            "transfer-stations",
+            "mrf",
+            "household-amenity-site",
+            "open-windrow-composting",
+            "in-vessel-composting",
+            "anaerobic-digestion",
+            "mbt",
+            "sewage-treatment",
+            "other-treatment",
+            "construction-recycling",
+            "waste-storage",
+            "other-waste-management",
+            "other-developments"
           ]
         },
-        "housing-type": {
-          "type": "string",
-          "enum": [
-            "houses",
-            "flats-maisonettes",
-            "sheltered-housing",
-            "bedsit-studio",
-            "cluster-flats",
-            "other",
-            "live-work-units",
-            "unknown"
-          ]
-        },
-        "existing-unit-breakdown": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/unit-quantities"
-          },
-          "minItems": 1
-        },
-        "proposed-unit-breakdown": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/unit-quantities"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "tenure-type",
-        "housing-type"
-      ]
-    },
-    "unit-quantities": {
-      "type": "object",
-      "properties": {
-        "units-unknown": {
+        "not-applicable": {
           "type": "boolean"
         },
-        "units-per-bedroom-no": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/bedroom-count"
-          },
-          "minItems": 1
+        "total-capacity": {
+          "type": "number"
         },
-        "total-units": {
+        "annual-throughput": {
           "type": "number"
         }
       },
       "required": [
-        "units-unknown"
+        "waste-management-facility-type"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "not-applicable": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "total-capacity"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "not-applicable": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "annual-throughput"
+            ]
+          }
+        }
+      ]
+    },
+    "bng-exemption-reason": {
+      "type": "object",
+      "properties": {
+        "exemption-type": {
+          "type": "string",
+          "enum": [
+            "pre-commencement",
+            "small-sites",
+            "de-minimis",
+            "self-build",
+            "gain-site",
+            "retrospective",
+            "hs2"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "exemption-type",
+        "reason"
+      ]
+    },
+    "newspaper-notice": {
+      "type": "object",
+      "properties": {
+        "newspaper-name": {
+          "type": "string"
+        },
+        "publication-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "newspaper-name",
+        "publication-date"
+      ]
+    },
+    "operational-times": {
+      "type": "object",
+      "properties": {
+        "day-type": {
+          "type": "string",
+          "enum": [
+            "monday-friday",
+            "saturday",
+            "sunday",
+            "bank-holiday"
+          ]
+        },
+        "closed": {
+          "type": "boolean"
+        },
+        "time-ranges": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/time-range"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "day-type"
       ],
       "if": {
         "properties": {
-          "units-unknown": {
+          "closed": {
             "const": false
           }
         }
       },
       "then": {
         "required": [
-          "units-per-bedroom-no"
+          "time-ranges"
         ]
       }
+    },
+    "time-range": {
+      "type": "object",
+      "properties": {
+        "open-time": {
+          "type": "string"
+        },
+        "close-time": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "open-time",
+        "close-time"
+      ]
     },
     "room-details-outline": {
       "type": "object",
@@ -1069,6 +794,186 @@
         }
       ]
     },
+    "person": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "first-name": {
+          "type": "string"
+        },
+        "last-name": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first-name",
+        "last-name",
+        "address-text"
+      ]
+    },
+    "bng-details": {
+      "type": "object",
+      "properties": {
+        "pre-development-date": {
+          "type": "string"
+        },
+        "pre-development-biodiversity-value": {
+          "type": "number"
+        },
+        "earlier-date-reason": {
+          "type": "string"
+        },
+        "habitat-loss-after-2020": {
+          "type": "boolean"
+        },
+        "habitat-loss-details": {
+          "$ref": "#/definitions/habitat-loss-details"
+        },
+        "metric-publication-date": {
+          "type": "string"
+        },
+        "irreplaceable-habitats": {
+          "type": "boolean"
+        },
+        "irreplaceable-habitats-details": {
+          "type": "string"
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "pre-development-date",
+        "pre-development-biodiversity-value",
+        "metric-publication-date",
+        "irreplaceable-habitats",
+        "supporting-documents"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "habitat-loss-after-2020": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "habitat-loss-details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "irreplaceable-habitats": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "irreplaceable-habitats-details"
+            ]
+          }
+        }
+      ]
+    },
+    "residential-unit-summary": {
+      "type": "object",
+      "properties": {
+        "tenure-type": {
+          "type": "string",
+          "enum": [
+            "market-housing",
+            "social-rented",
+            "intermediate-housing",
+            "key-worker-housing",
+            "affordable-rent",
+            "home-ownership",
+            "starter-homes",
+            "custom-build"
+          ]
+        },
+        "housing-type": {
+          "type": "string",
+          "enum": [
+            "houses",
+            "flats-maisonettes",
+            "sheltered-housing",
+            "bedsit-studio",
+            "cluster-flats",
+            "other",
+            "live-work-units",
+            "unknown"
+          ]
+        },
+        "existing-unit-breakdown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/unit-quantities"
+          },
+          "minItems": 1
+        },
+        "proposed-unit-breakdown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/unit-quantities"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "tenure-type",
+        "housing-type"
+      ]
+    },
+    "unit-quantities": {
+      "type": "object",
+      "properties": {
+        "units-unknown": {
+          "type": "boolean"
+        },
+        "units-per-bedroom-no": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bedroom-count"
+          },
+          "minItems": 1
+        },
+        "total-units": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "units-unknown"
+      ],
+      "if": {
+        "properties": {
+          "units-unknown": {
+            "const": false
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "units-per-bedroom-no"
+        ]
+      }
+    },
     "bedroom-count": {
       "type": "object",
       "properties": {
@@ -1096,6 +1001,448 @@
       "then": {
         "required": [
           "no-of-bedrooms"
+        ]
+      }
+    },
+    "site-location": {
+      "type": "object",
+      "properties": {
+        "site-boundary": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "easting": {
+          "type": "number"
+        },
+        "northing": {
+          "type": "number"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        },
+        "uprns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": []
+    },
+    "habitat-loss-details": {
+      "type": "object",
+      "properties": {
+        "loss-date": {
+          "type": "string"
+        },
+        "pre-loss-biodiversity-value": {
+          "type": "number"
+        },
+        "supporting-evidence": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "loss-date",
+        "pre-loss-biodiversity-value"
+      ]
+    },
+    "supporting-document": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "name"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "proposal-details": {
+      "type": "object",
+      "properties": {
+        "proposal-description": {
+          "type": "string"
+        },
+        "reserved-matters": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "access",
+              "appearance",
+              "landscaping",
+              "layout",
+              "scale"
+            ]
+          },
+          "minItems": 1
+        },
+        "proposal-started": {
+          "type": "boolean"
+        },
+        "proposal-started-date": {
+          "type": "string"
+        },
+        "proposal-completed": {
+          "type": "boolean"
+        },
+        "proposal-completed-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "proposal-description",
+        "reserved-matters",
+        "proposal-started",
+        "proposal-completed"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "proposal-started": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "proposal-started-date"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "proposal-completed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "proposal-completed-date"
+            ]
+          }
+        }
+      ]
+    },
+    "site-visit": {
+      "type": "object",
+      "properties": {
+        "can-be-seen-from": {
+          "type": "boolean"
+        },
+        "contact-type": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "agent"
+          ]
+        },
+        "contact-reference": {
+          "type": "string"
+        },
+        "other-contact": {
+          "$ref": "#/definitions/other-contact"
+        }
+      },
+      "required": [
+        "can-be-seen-from",
+        "contact-type"
+      ],
+      "if": {
+        "properties": {
+          "contact-type": {
+            "const": "other"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "other-contact"
+        ]
+      }
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
+      ]
+    },
+    "applicant-contact": {
+      "type": "object",
+      "properties": {
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "applicant-reference",
+        "contact-details"
+      ]
+    },
+    "employment": {
+      "type": "object",
+      "properties": {
+        "existing-employees": {
+          "$ref": "#/definitions/employees"
+        },
+        "proposed-employees": {
+          "$ref": "#/definitions/employees"
+        },
+        "employment-impact": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "existing-employees",
+        "proposed-employees"
+      ]
+    },
+    "pre-app-advice": {
+      "type": "object",
+      "properties": {
+        "advice-sought": {
+          "type": "boolean"
+        },
+        "officer-name": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "advice-date": {
+          "type": "string"
+        },
+        "advice-summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "advice-sought"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "officer-name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reference"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "advice-date"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "advice-summary"
+            ]
+          }
+        }
+      ]
+    },
+    "bng": {
+      "type": "object",
+      "properties": {
+        "bng-condition-applies": {
+          "type": "boolean"
+        },
+        "bng-condition-exemption-reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bng-exemption-reason"
+          },
+          "minItems": 1
+        },
+        "bng-details": {
+          "$ref": "#/definitions/bng-details"
+        }
+      },
+      "required": [
+        "bng-condition-applies"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "bng-condition-applies": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "bng-condition-exemption-reasons"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "bng-condition-applies": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "bng-details"
+            ]
+          }
+        }
+      ]
+    },
+    "site-area": {
+      "type": "object",
+      "properties": {
+        "site-area-in-hectares": {
+          "type": "number"
+        },
+        "site-area-provided-by": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "system"
+          ]
+        }
+      },
+      "required": [
+        "site-area-in-hectares"
+      ]
+    },
+    "res-units": {
+      "type": "object",
+      "properties": {
+        "will-residential-units-change": {
+          "type": "boolean"
+        },
+        "residential-unit-summary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/residential-unit-summary"
+          },
+          "minItems": 1
+        },
+        "total-existing-units": {
+          "type": "number"
+        },
+        "total-proposed-units": {
+          "type": "number"
+        },
+        "net-change": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "will-residential-units-change",
+        "total-existing-units",
+        "total-proposed-units",
+        "net-change"
+      ],
+      "if": {
+        "properties": {
+          "will-residential-units-change": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "residential-unit-summary"
         ]
       }
     },
@@ -1201,34 +1548,19 @@
         }
       ]
     },
-    "site-details": {
+    "hrs-operation": {
       "type": "object",
       "properties": {
-        "site-locations": {
+        "hours-of-operation": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/site-location"
+            "$ref": "#/definitions/hours-of-operation"
           },
           "minItems": 1
         }
       },
       "required": [
-        "site-locations"
-      ]
-    },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
+        "hours-of-operation"
       ]
     },
     "non-res-floorspace": {
@@ -1273,24 +1605,6 @@
         ]
       }
     },
-    "site-area": {
-      "type": "object",
-      "properties": {
-        "site-area-in-hectares": {
-          "type": "number"
-        },
-        "site-area-provided-by": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "system"
-          ]
-        }
-      },
-      "required": [
-        "site-area-in-hectares"
-      ]
-    },
     "declaration": {
       "type": "object",
       "properties": {
@@ -1310,74 +1624,59 @@
         "declaration-date"
       ]
     },
-    "proposal-details": {
+    "site-details": {
       "type": "object",
       "properties": {
-        "proposal-description": {
-          "type": "string"
-        },
-        "reserved-matters": {
+        "site-locations": {
           "type": "array",
           "items": {
-            "type": "string",
-            "enum": [
-              "access",
-              "appearance",
-              "landscaping",
-              "layout",
-              "scale"
-            ]
+            "$ref": "#/definitions/site-location"
           },
           "minItems": 1
-        },
-        "proposal-started": {
-          "type": "boolean"
-        },
-        "proposal-started-date": {
-          "type": "string"
-        },
-        "proposal-completed": {
-          "type": "boolean"
-        },
-        "proposal-completed-date": {
-          "type": "string"
         }
       },
       "required": [
-        "proposal-description",
-        "reserved-matters",
-        "proposal-started",
-        "proposal-completed"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "proposal-started": {
-                "const": true
-              }
-            }
+        "site-locations"
+      ]
+    },
+    "checklist": {
+      "type": "object",
+      "properties": {
+        "national-req-types": {
+          "type": "array",
+          "items": {
+            "type": "string"
           },
-          "then": {
-            "required": [
-              "proposal-started-date"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "proposal-completed": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "proposal-completed-date"
-            ]
-          }
+          "minItems": 1
         }
+      },
+      "required": [
+        "national-req-types"
+      ]
+    },
+    "processes-machinery-waste": {
+      "type": "object",
+      "properties": {
+        "site-activity-details": {
+          "type": "string"
+        },
+        "proposal-waste-management": {
+          "type": "boolean"
+        },
+        "waste-management": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/waste-management"
+          },
+          "minItems": 1
+        },
+        "waste-streams": {
+          "$ref": "#/definitions/waste-streams"
+        }
+      },
+      "required": [
+        "site-activity-details",
+        "proposal-waste-management"
       ]
     },
     "agent-details": {
@@ -1389,205 +1688,19 @@
       },
       "required": []
     },
-    "hrs-operation": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "hours-of-operation": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/hours-of-operation"
-          },
-          "minItems": 1
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "hours-of-operation"
-      ]
-    },
-    "pre-app-advice": {
-      "type": "object",
-      "properties": {
-        "advice-sought": {
-          "type": "boolean"
-        },
-        "officer-name": {
-          "type": "string"
-        },
-        "reference": {
-          "type": "string"
-        },
-        "advice-date": {
-          "type": "string"
-        },
-        "advice-summary": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "advice-sought"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "officer-name"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "reference"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "advice-date"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "advice-summary"
-            ]
-          }
-        }
-      ]
-    },
-    "site-visit": {
-      "type": "object",
-      "properties": {
-        "can-be-seen-from": {
-          "type": "boolean"
-        },
-        "contact-type": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "agent"
-          ]
-        },
-        "contact-reference": {
-          "type": "string"
-        },
-        "other-contact": {
-          "$ref": "#/definitions/other-contact"
-        }
-      },
-      "required": [
-        "can-be-seen-from",
-        "contact-type"
-      ],
-      "if": {
-        "properties": {
-          "contact-type": {
-            "const": "other"
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "other-contact"
-        ]
-      }
-    },
-    "employment": {
-      "type": "object",
-      "properties": {
-        "existing-employees": {
-          "$ref": "#/definitions/employees"
-        },
-        "proposed-employees": {
-          "$ref": "#/definitions/employees"
-        },
-        "employment-impact": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "existing-employees",
-        "proposed-employees"
-      ]
-    },
-    "ownership-certs": {
-      "type": "object",
-      "properties": {
-        "sole-owner": {
-          "type": "boolean"
-        },
-        "agricultural-tenants": {
-          "type": "boolean"
-        },
-        "owners-and-tenants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/notified-person"
-          },
-          "minItems": 1
-        },
-        "steps-taken": {
-          "type": "string"
-        },
-        "newspaper-notices": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/newspaper-notice"
-          },
-          "minItems": 1
-        },
-        "ownership-cert-option": {
-          "type": "string",
-          "enum": [
-            "certificate-a",
-            "certificate-b",
-            "certificate-c",
-            "certificate-d"
-          ]
-        },
-        "applicant-signature": {
-          "type": "string"
-        },
-        "agent-signature": {
-          "type": "string"
-        },
-        "signature-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "sole-owner",
-        "agricultural-tenants"
+        "agent-reference",
+        "contact-details"
       ]
     },
     "flood-risk-assessment": {
@@ -1646,70 +1759,54 @@
         ]
       }
     },
-    "applicant-details": {
+    "ownership-certs": {
       "type": "object",
       "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
-      ]
-    },
-    "bng": {
-      "type": "object",
-      "properties": {
-        "bng-condition-applies": {
+        "sole-owner": {
           "type": "boolean"
         },
-        "bng-condition-exemption-reasons": {
+        "agricultural-tenants": {
+          "type": "boolean"
+        },
+        "owners-and-tenants": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/bng-exemption-reason"
+            "$ref": "#/definitions/notified-person"
           },
           "minItems": 1
         },
-        "bng-details": {
-          "$ref": "#/definitions/bng-details"
+        "steps-taken": {
+          "type": "string"
+        },
+        "newspaper-notices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/newspaper-notice"
+          },
+          "minItems": 1
+        },
+        "ownership-cert-option": {
+          "type": "string",
+          "enum": [
+            "certificate-a",
+            "certificate-b",
+            "certificate-c",
+            "certificate-d"
+          ]
+        },
+        "applicant-signature": {
+          "type": "string"
+        },
+        "agent-signature": {
+          "type": "string"
+        },
+        "signature-date": {
+          "type": "string"
         }
       },
       "required": [
-        "bng-condition-applies"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "bng-condition-applies": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "bng-condition-exemption-reasons"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "bng-condition-applies": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "bng-details"
-            ]
-          }
-        }
+        "sole-owner",
+        "agricultural-tenants"
       ]
     },
     "conflict-of-interest": {
@@ -1757,103 +1854,6 @@
             ]
           }
         }
-      ]
-    },
-    "processes-machinery-waste": {
-      "type": "object",
-      "properties": {
-        "site-activity-details": {
-          "type": "string"
-        },
-        "proposal-waste-management": {
-          "type": "boolean"
-        },
-        "waste-management": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/waste-management"
-          },
-          "minItems": 1
-        },
-        "waste-streams": {
-          "$ref": "#/definitions/waste-streams"
-        }
-      },
-      "required": [
-        "site-activity-details",
-        "proposal-waste-management"
-      ]
-    },
-    "res-units": {
-      "type": "object",
-      "properties": {
-        "will-residential-units-change": {
-          "type": "boolean"
-        },
-        "residential-unit-summary": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/residential-unit-summary"
-          },
-          "minItems": 1
-        },
-        "total-existing-units": {
-          "type": "number"
-        },
-        "total-proposed-units": {
-          "type": "number"
-        },
-        "net-change": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "will-residential-units-change",
-        "total-existing-units",
-        "total-proposed-units",
-        "net-change"
-      ],
-      "if": {
-        "properties": {
-          "will-residential-units-change": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "residential-unit-summary"
-        ]
-      }
-    },
-    "checklist": {
-      "type": "object",
-      "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "national-req-types"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
       ]
     },
     "application": {
@@ -1913,7 +1913,423 @@
         },
         "planning-authority": {
           "type": "string",
-          "enum": []
+          "enum": [
+            "local-authority:ADU",
+            "local-authority:ALL",
+            "local-authority:AMB",
+            "local-authority:ARU",
+            "local-authority:ASF",
+            "local-authority:ASH",
+            "local-authority:AYL",
+            "local-authority:BAB",
+            "local-authority:BAE",
+            "local-authority:BAI",
+            "local-authority:BAN",
+            "local-authority:BAR",
+            "local-authority:BAS",
+            "local-authority:BBD",
+            "local-authority:BDF",
+            "local-authority:BDG",
+            "local-authority:BEN",
+            "local-authority:BEX",
+            "local-authority:BIR",
+            "local-authority:BKM",
+            "local-authority:BLA",
+            "local-authority:BMH",
+            "local-authority:BNE",
+            "local-authority:BNH",
+            "local-authority:BNS",
+            "local-authority:BOL",
+            "local-authority:BOS",
+            "local-authority:BOT",
+            "local-authority:BPC",
+            "local-authority:BPL",
+            "local-authority:BRA",
+            "local-authority:BRC",
+            "local-authority:BRD",
+            "local-authority:BRE",
+            "local-authority:BRM",
+            "local-authority:BRO",
+            "local-authority:BRT",
+            "local-authority:BRW",
+            "local-authority:BRX",
+            "local-authority:BRY",
+            "local-authority:BST",
+            "local-authority:BUC",
+            "local-authority:BUN",
+            "local-authority:BUR",
+            "local-authority:CAB",
+            "local-authority:CAM",
+            "local-authority:CAN",
+            "local-authority:CAR",
+            "local-authority:CAS",
+            "local-authority:CAT",
+            "local-authority:CBF",
+            "local-authority:CHA",
+            "local-authority:CHC",
+            "local-authority:CHE",
+            "local-authority:CHI",
+            "local-authority:CHL",
+            "local-authority:CHN",
+            "local-authority:CHO",
+            "local-authority:CHR",
+            "local-authority:CHS",
+            "local-authority:CHT",
+            "local-authority:CHW",
+            "local-authority:CLD",
+            "local-authority:CMA",
+            "local-authority:CMD",
+            "local-authority:COL",
+            "local-authority:CON",
+            "local-authority:COP",
+            "local-authority:COR",
+            "local-authority:COT",
+            "local-authority:COV",
+            "local-authority:CPCA",
+            "local-authority:CRA",
+            "local-authority:CRW",
+            "local-authority:CRY",
+            "local-authority:DAC",
+            "local-authority:DAL",
+            "local-authority:DAR",
+            "local-authority:DAV",
+            "local-authority:DBY",
+            "local-authority:DEB",
+            "local-authority:DER",
+            "local-authority:DEV",
+            "local-authority:DNC",
+            "local-authority:DOR",
+            "local-authority:DOV",
+            "local-authority:DST",
+            "local-authority:DUD",
+            "local-authority:DUR",
+            "local-authority:EAL",
+            "local-authority:EAS",
+            "local-authority:EAT",
+            "local-authority:ECA",
+            "local-authority:EDE",
+            "local-authority:EDN",
+            "local-authority:EDO",
+            "local-authority:EHA",
+            "local-authority:EHE",
+            "local-authority:ELI",
+            "local-authority:ELM",
+            "local-authority:ENF",
+            "local-authority:ENO",
+            "local-authority:EPP",
+            "local-authority:EPS",
+            "local-authority:ERE",
+            "local-authority:ERY",
+            "local-authority:ESK",
+            "local-authority:ESS",
+            "local-authority:EST",
+            "local-authority:ESX",
+            "local-authority:EXE",
+            "local-authority:FAR",
+            "local-authority:FEN",
+            "local-authority:FOE",
+            "local-authority:FOR",
+            "local-authority:FYL",
+            "local-authority:GAT",
+            "local-authority:GED",
+            "local-authority:GLA",
+            "local-authority:GLO",
+            "local-authority:GLS",
+            "local-authority:GMCA",
+            "local-authority:GOS",
+            "local-authority:GRA",
+            "local-authority:GRE",
+            "local-authority:GRT",
+            "local-authority:GRY",
+            "local-authority:HAA",
+            "local-authority:HAE",
+            "local-authority:HAG",
+            "local-authority:HAL",
+            "local-authority:HAM",
+            "local-authority:HAO",
+            "local-authority:HAR",
+            "local-authority:HAS",
+            "local-authority:HAT",
+            "local-authority:HAV",
+            "local-authority:HCK",
+            "local-authority:HEF",
+            "local-authority:HER",
+            "local-authority:HIG",
+            "local-authority:HIL",
+            "local-authority:HIN",
+            "local-authority:HMF",
+            "local-authority:HNS",
+            "local-authority:HOR",
+            "local-authority:HPL",
+            "local-authority:HRT",
+            "local-authority:HRW",
+            "local-authority:HRY",
+            "local-authority:HUN",
+            "local-authority:HYN",
+            "local-authority:IOS",
+            "local-authority:IOW",
+            "local-authority:IPS",
+            "local-authority:ISL",
+            "local-authority:KEC",
+            "local-authority:KEN",
+            "local-authority:KET",
+            "local-authority:KHL",
+            "local-authority:KIN",
+            "local-authority:KIR",
+            "local-authority:KTT",
+            "local-authority:KWL",
+            "local-authority:LAC",
+            "local-authority:LAN",
+            "local-authority:LBH",
+            "local-authority:LCE",
+            "local-authority:LCR",
+            "local-authority:LDS",
+            "local-authority:LEC",
+            "local-authority:LEE",
+            "local-authority:LEW",
+            "local-authority:LIC",
+            "local-authority:LIF",
+            "local-authority:LIN",
+            "local-authority:LIV",
+            "local-authority:LND",
+            "local-authority:LUT",
+            "local-authority:MAI",
+            "local-authority:MAL",
+            "local-authority:MAN",
+            "local-authority:MAS",
+            "local-authority:MAV",
+            "local-authority:MDB",
+            "local-authority:MDE",
+            "local-authority:MDW",
+            "local-authority:MEL",
+            "local-authority:MEN",
+            "local-authority:MIK",
+            "local-authority:MOL",
+            "local-authority:MRT",
+            "local-authority:MSS",
+            "local-authority:MSU",
+            "local-authority:NBL",
+            "local-authority:NDE",
+            "local-authority:NDO",
+            "local-authority:NEA",
+            "local-authority:NEC",
+            "local-authority:NECA",
+            "local-authority:NED",
+            "local-authority:NEL",
+            "local-authority:NET",
+            "local-authority:NEW",
+            "local-authority:NFK",
+            "local-authority:NGM",
+            "local-authority:NHE",
+            "local-authority:NKE",
+            "local-authority:NLN",
+            "local-authority:NNO",
+            "local-authority:NOR",
+            "local-authority:NOW",
+            "local-authority:NSM",
+            "local-authority:NTCA",
+            "local-authority:NTH",
+            "local-authority:NTT",
+            "local-authority:NTY",
+            "local-authority:NUN",
+            "local-authority:NWA",
+            "local-authority:NWL",
+            "local-authority:NWM",
+            "local-authority:NYK",
+            "local-authority:OAD",
+            "local-authority:OLD",
+            "local-authority:OXF",
+            "local-authority:OXO",
+            "local-authority:PEN",
+            "local-authority:PLY",
+            "local-authority:POL",
+            "local-authority:POR",
+            "local-authority:PRE",
+            "local-authority:PTE",
+            "local-authority:PUR",
+            "local-authority:RCC",
+            "local-authority:RCH",
+            "local-authority:RDB",
+            "local-authority:RDG",
+            "local-authority:RED",
+            "local-authority:REI",
+            "local-authority:RIB",
+            "local-authority:RIC",
+            "local-authority:RIH",
+            "local-authority:ROC",
+            "local-authority:ROH",
+            "local-authority:ROS",
+            "local-authority:ROT",
+            "local-authority:RUG",
+            "local-authority:RUH",
+            "local-authority:RUN",
+            "local-authority:RUS",
+            "local-authority:RUT",
+            "local-authority:RYE",
+            "local-authority:SAL",
+            "local-authority:SAW",
+            "local-authority:SBU",
+            "local-authority:SCA",
+            "local-authority:SCE",
+            "local-authority:SYMCA",
+            "local-authority:SDE",
+            "local-authority:SED",
+            "local-authority:SEG",
+            "local-authority:SEL",
+            "local-authority:SEV",
+            "local-authority:SFK",
+            "local-authority:SFT",
+            "local-authority:SGC",
+            "local-authority:SHA",
+            "local-authority:SHE",
+            "local-authority:SHF",
+            "local-authority:SHN",
+            "local-authority:SHO",
+            "local-authority:SHR",
+            "local-authority:SKE",
+            "local-authority:SKP",
+            "local-authority:SLA",
+            "local-authority:SLF",
+            "local-authority:SLG",
+            "local-authority:SND",
+            "local-authority:SNO",
+            "local-authority:SNR",
+            "local-authority:SOL",
+            "local-authority:SOM",
+            "local-authority:SOS",
+            "local-authority:SOX",
+            "local-authority:SPE",
+            "local-authority:SRI",
+            "local-authority:SRY",
+            "local-authority:SSO",
+            "local-authority:SST",
+            "local-authority:STA",
+            "local-authority:STE",
+            "local-authority:STF",
+            "local-authority:STH",
+            "local-authority:STN",
+            "local-authority:STO",
+            "local-authority:STR",
+            "local-authority:STS",
+            "local-authority:STT",
+            "local-authority:STV",
+            "local-authority:STY",
+            "local-authority:SUF",
+            "local-authority:SUR",
+            "local-authority:SWD",
+            "local-authority:SWK",
+            "local-authority:SWL",
+            "local-authority:SWT",
+            "local-authority:TAM",
+            "local-authority:TAN",
+            "local-authority:TAU",
+            "local-authority:TAW",
+            "local-authority:TEI",
+            "local-authority:TEN",
+            "local-authority:TES",
+            "local-authority:TEW",
+            "local-authority:TFW",
+            "local-authority:THA",
+            "local-authority:THE",
+            "local-authority:THR",
+            "local-authority:TOB",
+            "local-authority:TON",
+            "local-authority:TOR",
+            "local-authority:TRF",
+            "local-authority:TUN",
+            "local-authority:TVCA",
+            "local-authority:TWH",
+            "local-authority:UTT",
+            "local-authority:VAL",
+            "local-authority:WAE",
+            "local-authority:WAR",
+            "local-authority:WAT",
+            "local-authority:WAV",
+            "local-authority:WAW",
+            "local-authority:WBK",
+            "local-authority:WDE",
+            "local-authority:WDO",
+            "local-authority:WEA",
+            "local-authority:WECA",
+            "local-authority:WEL",
+            "local-authority:WEW",
+            "local-authority:WEY",
+            "local-authority:WFT",
+            "local-authority:WGN",
+            "local-authority:WIL",
+            "local-authority:WIN",
+            "local-authority:WKF",
+            "local-authority:WLA",
+            "local-authority:WLI",
+            "local-authority:WLL",
+            "local-authority:WLV",
+            "local-authority:WMCA",
+            "local-authority:WND",
+            "local-authority:WNM",
+            "local-authority:WOC",
+            "local-authority:WOI",
+            "local-authority:WOK",
+            "local-authority:WOR",
+            "local-authority:WOT",
+            "local-authority:WOX",
+            "local-authority:WRL",
+            "local-authority:WRT",
+            "local-authority:WSK",
+            "local-authority:WSM",
+            "local-authority:WSO",
+            "local-authority:WSX",
+            "local-authority:WYC",
+            "local-authority:WYCA",
+            "local-authority:WYE",
+            "local-authority:WYO",
+            "local-authority:WYR",
+            "local-authority:YOR",
+            "local-authority:CUA",
+            "local-authority:WFUA",
+            "local-authority:SUA",
+            "local-authority:NYUA",
+            "local-authority:YNYCA",
+            "local-authority:NNECA",
+            "local-authority:EMCCA",
+            "local-authority:NNUA",
+            "local-authority:WNUA",
+            "national-park-authority:Q20198711",
+            "national-park-authority:Q27159704",
+            "national-park-authority:Q27178932",
+            "national-park-authority:Q4972284",
+            "national-park-authority:Q5225646",
+            "national-park-authority:Q72617158",
+            "national-park-authority:Q72617669",
+            "national-park-authority:Q72617784",
+            "national-park-authority:Q72617890",
+            "national-park-authority:Q72617988",
+            "development-corporation:Q20648596",
+            "development-corporation:Q4916714",
+            "development-corporation:Q6670544",
+            "development-corporation:Q6670837",
+            "development-corporation:Q72456968",
+            "development-corporation:Q72463795",
+            "development-corporation:Q7799380",
+            "development-corporation:Q7860503",
+            "development-corporation:Q7986087",
+            "development-corporation:Q105544651",
+            "development-corporation:Q105544654",
+            "development-corporation:Q5061392",
+            "development-corporation:Q3258953",
+            "development-corporation:Q105544669",
+            "development-corporation:Q7694573",
+            "development-corporation:Q117149370",
+            "development-corporation:Q124604981",
+            "development-corporation:Q6515953",
+            "development-corporation:Q4968888",
+            "development-corporation:Q5182976",
+            "development-corporation:Q115585981",
+            "development-corporation:Q3920908",
+            "development-corporation:Q6861239",
+            "development-corporation:Q7177999",
+            "development-corporation:Q7205796",
+            "development-corporation:Q7832579"
+          ]
         },
         "submission-date": {
           "type": "string"
