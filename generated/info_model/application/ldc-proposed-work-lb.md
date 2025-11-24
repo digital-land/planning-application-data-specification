@@ -15,7 +15,7 @@ Proposed work to a listed building
 * [Checklist](#checklist)
 * [Conflict of interest](#conflict-of-interest)
 * [Declaration](#declaration)
-* [Description of proposed works](#description-of-proposed-works)
+* [Description of proposed works for listed building lawful development certificate](#description-of-proposed-works-for-listed-building-lawful-development-certificate)
 * [Grounds for application](#grounds-for-application)
 * [Interest details](#interest-details)
 * [Listed building grade](#listed-building-grade)
@@ -263,26 +263,19 @@ Signed and dated verification of the application's accuracy.
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
 
-## Description of proposed works
+## Description of proposed works for listed building lawful development certificate
 
-Details of development plans such as extensions measurements or work specifications
+Details of development plans for the work to the listed building an applicant is seeking a lawful development certificate for
 
-**Description of proposed works module**
+**Description of proposed works for listed building lawful development certificate module**
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| proposed-works-details | Proposed works details | Description of the proposed works including detailed explanation of the work | MUST |  |
-| extension-depth | Extension depth | How far the extension extends beyond the rear wall, measured externally in metres | MUST |  |
-| max-extension-height | Maximum extension height | Maximum height of the extension, measured externally from natural ground level in metres | MUST |  |
-| eaves-height | Eaves height | Height at the eaves of the extension, measured externally from natural ground level in metres | MUST |  |
+| description | Description | A detailed description of the proposed works (including existing and proposed materials and finishes) together with details of those parts) of the building that are likely to be affected. | MUST |  |
 
 **Validation rules**
 
-- extension-depth > 0 AND max-extension-height > 0 AND eaves-height > 0
-- eaves-height <= max-extension-height
-- extension-depth measurement taken from external face of existing rear wall
-- max-extension-height and eaves-height measured from natural ground level
-- proposed-works-details.length > 10
+- description is not empty
 
 ## Grounds for application
 
