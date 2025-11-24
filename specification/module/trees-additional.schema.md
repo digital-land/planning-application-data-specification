@@ -36,4 +36,5 @@ rules:
     or photographs
 - rule: supporting-documents must include any documents required based on condition
     concerns, subsidence, or structural damage
+- rule: each document in supporting-documents must have a `reference` that matches a document in application.documents
 ---

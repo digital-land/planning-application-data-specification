@@ -16,6 +16,8 @@ fields:
     value: true
 module: lb-alter
 name: Listed building alterations
+rules:
+- rule: each document in document-reference must have a `reference` that matches a document in application.documents
 ---
 
 This module captures information about proposed alterations to listed buildings. The `proposal-alter-lb` field determines whether the proposal includes any alterations to listed buildings. When this is true, applicants must specify the types of alterations using the `proposal-alter-lb-types` field and provide supporting documentation through the `document-reference` field.

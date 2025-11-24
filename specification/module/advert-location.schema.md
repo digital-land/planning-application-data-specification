@@ -28,4 +28,5 @@ rules:
     is true
   rule: if (is-advert-in-place == true OR is-replacement-advert == true) then document-reference
     is required
+- rule: each document in document-reference must have a `reference` that matches a document in application.documents
 ---

@@ -19,4 +19,5 @@ rules:
   rule: plans-documents[].name.length > 0
 - description: Inspection address must be a complete postal address
   rule: inspection-address must include street, town/city, and postcode
+- rule: each document in plans-document must have a `reference` that matches a document in application.documents
 ---

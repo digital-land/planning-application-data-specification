@@ -15,4 +15,6 @@ fields:
         in: ["pip"]
 entry-date: 2025-06-12
 end-date: ''
+rules:
+- rule: reference must match a document reference in application.documents
 ---

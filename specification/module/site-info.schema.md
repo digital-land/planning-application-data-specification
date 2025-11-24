@@ -23,4 +23,5 @@ rules:
 - rule: use must reference valid use class or be 'other' or 'sui'
 - rule: specified-use is required if use is 'sui' or 'other'
 - rule: floorspace must be numeric value in m2
+- rule: each document in supporting-documents must have a `reference` that matches a document in application.documents
 ---

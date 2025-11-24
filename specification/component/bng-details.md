@@ -30,4 +30,6 @@ fields:
     required: true
 entry-date: 2025-06-16
 end-date: ''
+rules:
+- rule: each document in supporting-documents must have a `reference` that matches a document in application.documents
 ---
