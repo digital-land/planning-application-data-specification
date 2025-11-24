@@ -22,6 +22,10 @@ checks:
 	python3 bin/check.py
 
 
+codelists:
+	python3 bin/build_codelists.py
+
+
 issue-tracking-data:
 	python3 bin/issue_tracking.py
 
