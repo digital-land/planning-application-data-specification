@@ -1,4 +1,43 @@
 
+<a name="v0.1.36"></a>
+## [v0.1.36](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.35...v0.1.36) (2025-11-24)
+
+Responding to feedback
+
+### ⚒️ Tooling
+
+* build a codelist that combines local-authorities, national-park-authorities and development corporations (commit [8459b7c](https://github.com/digital-land/planning-application-data-specification/commit/8459b7cce4b57e83700d14be38760bcd6dbdf7ef))
+* expand cli to find instances of fields (commit [cea826d](https://github.com/digital-land/planning-application-data-specification/commit/cea826d24b246ecabd42f6c6278f8f879a517a7c))
+* commandline interface to find which app types use a module (commit [f8071ac](https://github.com/digital-land/planning-application-data-specification/commit/f8071acb136df84849d03c1aa895f06da0f43311))
+
+### 𝌭 Model changes
+
+* remove unused application module (commit [5ebf1d1](https://github.com/digital-land/planning-application-data-specification/commit/5ebf1d124ead71a3e5ac37de5f12e7c9617a0117))
+* add end-date to unused application module (commit [89802de](https://github.com/digital-land/planning-application-data-specification/commit/89802de04b198b1ec5d5935c928dda6b48d060ec))
+* add built planning-authority codelist (commit [e171ba8](https://github.com/digital-land/planning-application-data-specification/commit/e171ba8db2146d52da394464592fbda2da707c11))
+* define planning-authority codelist needed for planning-authority field (commit [56ff295](https://github.com/digital-land/planning-application-data-specification/commit/56ff295a0aa22634c8eadd08491363058a2797cb))
+* add missing description of proposal for work to lb for lawful dev cert module (commit [11fa70a](https://github.com/digital-land/planning-application-data-specification/commit/11fa70a59721ce5e0212827b272994efb89ed62a))
+* add notes to technical details consent application (commit [3e88183](https://github.com/digital-land/planning-application-data-specification/commit/3e88183b40d0548355ae3a12cfad6ac5ba78a769))
+* add planning-requirement codelist (commit [879e056](https://github.com/digital-land/planning-application-data-specification/commit/879e056b5616d0df6052469db07dbaacfaefd3c0))
+
+### 🐛 Bug Fixes
+
+* add rules stating modules referencing documents must refer to documents in application.documents (commit [c60bf1d](https://github.com/digital-land/planning-application-data-specification/commit/c60bf1d0c2fb0b616751866206b9555dfc59efff))
+* update ldc-proposed-work-lb app to use desc-proposed-works-lb-ldc module (commit [30972d2](https://github.com/digital-land/planning-application-data-specification/commit/30972d27e844ac0aaa82513d017510865d67aed9))
+* use the right interest in details or land modules for advertising and ldc applications (commit [f03307f](https://github.com/digital-land/planning-application-data-specification/commit/f03307f9a34b27ea7b67ce4b1d53f112c9f7793e))
+* correct datatype to date on -date fields (commit [2ddcd4c](https://github.com/digital-land/planning-application-data-specification/commit/2ddcd4c00a6169707d2ea42701deaafd63db40be))
+
+### 👷‍♀️ Application changes
+
+* add schema for technical details consent application (commit [aa59179](https://github.com/digital-land/planning-application-data-specification/commit/aa59179a78d7c8e79a30a03dfaa06b1dff4bcc88))
+
+### 📚 Documentation
+
+* split application types by priority -> those that affect housing delivery (commit [59a7406](https://github.com/digital-land/planning-application-data-specification/commit/59a74062c24e9a34bc55dab41a0a8edee3dfb827))
+* add technical details consent to list of applications in scope (commit [45e61c2](https://github.com/digital-land/planning-application-data-specification/commit/45e61c2dcaebfa6d420a9c1125f8209a88ca9609))
+* add some documentation about the work into decision data (commit [fe5b4fe](https://github.com/digital-land/planning-application-data-specification/commit/fe5b4fe2ce2ca1894bc9bd67d1cda5e932471364))
+
+
 <a name="v0.1.35"></a>
 ## [v0.1.35](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.34...v0.1.35) (2025-10-30)
 
