@@ -11,6 +11,7 @@ from integrity_checks.utils import has_reference_error, print_error
 # applies-if condition should be a dict not a list TODO
 # . if required-if attr with `application-type` then must be a valid application type TODO
 # . if required-if attr with `field` then must be a valid field TODO
+# . warning if module is defined but not used in any application TODO
 
 
 def check_module_names(modules):

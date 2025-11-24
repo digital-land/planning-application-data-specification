@@ -65,5 +65,8 @@ def modules_in_application(application_ref):
         click.echo(f"No modules found for application '{application_ref}'")
 
 
+# find subcommand to find where a field is used (should return modules and components) TODO
+
+
 if __name__ == "__main__":
     cli()
