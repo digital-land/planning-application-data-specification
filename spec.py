@@ -92,5 +92,9 @@ def field_usage(field_ref):
             click.echo(f"  • {ref}: {name}")
 
 
+# TODO: find all fields that reference a given codelist
+# TODO: find all fields that reference a given component
+
+
 if __name__ == "__main__":
     cli()
