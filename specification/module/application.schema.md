@@ -29,5 +29,5 @@ rules:
   - rule: "file must contain either url or base64, but not both"
   - rule: "document-types must reference valid planning requirement codelist values"
 entry-date: 2025-06-20
-end-date: ''
+end-date: 2025-11-24
 ---
