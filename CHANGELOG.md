@@ -1,4 +1,15 @@
 
+<a name="v0.1.37"></a>
+## [v0.1.37](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.36...v0.1.37) (2025-12-05)
+
+Add missing nmodule
+
+### 𝌭 Model changes
+
+* list permission types that make related-permission related required (commit [cc7718e](https://github.com/digital-land/planning-application-data-specification/commit/cc7718e196a83db1c79a719cdeb5c66e980db035))
+* add missing permission type module and use in extract oil gas application (commit [6ca7cbc](https://github.com/digital-land/planning-application-data-specification/commit/6ca7cbcc2202b13e09897df6477634715949582d))
+
+
 <a name="v0.1.36"></a>
 ## [v0.1.36](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.35...v0.1.36) (2025-11-24)
 
