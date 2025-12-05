@@ -9,7 +9,7 @@ from fields import (
     get_requirement_str,
     is_field_applicable_to_app_type,
 )
-from modules import get_codelists_for_module, get_module_parts
+from modules import collect_related_components_bfs, get_codelists_for_module, get_module_parts
 from utils import save_string_to_file
 
 
@@ -207,6 +207,71 @@ def generate_codelist_md_str(codelists):
     return "\n".join(lines)
 
 
+def generate_application_fields_section(specification, app_type=None):
+    fields_spec = specification.get("field", {})
+    components = specification.get("component", {})
+
+    application_field = fields_spec.get("application")
+    if not application_field:
+        print("Field definition for 'application' not found in specification.")
+        return None
+
+    component_ref = application_field.get("component") or "application"
+    application_component = components.get(component_ref) or components.get("application")
+    if not application_component:
+        print("Component definition for application fields not found in specification.")
+        return None
+
+    heading_name = application_field.get("name", "Application").strip()
+    if not heading_name:
+        heading_name = "Application"
+    heading_title = (
+        heading_name
+        if heading_name.lower().endswith("fields")
+        else f"{heading_name} fields"
+    )
+
+    out = [f"## {heading_title}\n"]
+
+    description = application_component.get("description") or application_field.get(
+        "description", ""
+    )
+    if description:
+        out.append(description.strip() + "\n")
+
+    module_label = (
+        heading_title
+        if heading_title.lower().endswith("fields")
+        else f"{heading_title} fields"
+    )
+    out.append(f"**{module_label} module**\n")
+    out.append(
+        format_component_table(
+            application_component, fields_spec, app_type=app_type
+        )
+        + "\n"
+    )
+
+    related_components = collect_related_components_bfs(
+        application_component.get("fields", []),
+        components,
+        fields_spec,
+        app_type=app_type,
+    )
+    for cname, component in related_components.items():
+        out.append(f"\n**{component.get('name', cname)} component**\n")
+        out.append(
+            format_component_table(component, fields_spec, app_type=app_type) + "\n"
+        )
+
+    validation_rules = application_component.get("validation")
+    rules_str = format_rules_md_str(validation_rules)
+    if rules_str:
+        out.append(rules_str)
+
+    return "\n".join(out)
+
+
 def generate_application(app_ref, specification):
     """
     Generate the information model for a specific application type.
@@ -261,11 +326,12 @@ def generate_application(app_ref, specification):
     out.append("")
 
     # 5. Application Data Specification
-    application_fields_section = generate_module(
-        "application", specification, app_type=app_ref
+    application_fields_section = generate_application_fields_section(
+        specification, app_type=app_ref
     )
-    out.append(application_fields_section)
-    out.append("")
+    if application_fields_section:
+        out.append(application_fields_section)
+        out.append("")
 
     # 6. Module Sections
     for mod in module_refs:
