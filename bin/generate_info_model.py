@@ -9,7 +9,11 @@ from fields import (
     get_requirement_str,
     is_field_applicable_to_app_type,
 )
-from modules import collect_related_components_bfs, get_codelists_for_module, get_module_parts
+from modules import (
+    collect_related_components_bfs,
+    get_codelists_for_module,
+    get_module_parts,
+)
 from utils import save_string_to_file
 
 
@@ -217,7 +221,9 @@ def generate_application_fields_section(specification, app_type=None):
         return None
 
     component_ref = application_field.get("component") or "application"
-    application_component = components.get(component_ref) or components.get("application")
+    application_component = components.get(component_ref) or components.get(
+        "application"
+    )
     if not application_component:
         print("Component definition for application fields not found in specification.")
         return None
@@ -246,9 +252,7 @@ def generate_application_fields_section(specification, app_type=None):
     )
     out.append(f"**{module_label} module**\n")
     out.append(
-        format_component_table(
-            application_component, fields_spec, app_type=app_type
-        )
+        format_component_table(application_component, fields_spec, app_type=app_type)
         + "\n"
     )
 
