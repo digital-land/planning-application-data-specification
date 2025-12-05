@@ -28,5 +28,9 @@ fields:
     description: Previous permissions for minerals development on the site (if any)
 entry-date: 2025-09-09
 end-date: ''
+rules:
+  rule: the field `oilgas-permission-types` must be one or more of the oilgas-permission-type codelist values
+  rule: related-permissions is required if oilgas-permission-types includes any of `renewal-unimplemented`, `renewal-temporary`, `extension-existing-site` `variation-condition`, `romp-review` or `minerals-development`
+  rule: if `will-consolidate-permissions` is true then `details` is required
 ---
 
