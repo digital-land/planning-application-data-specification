@@ -49,7 +49,7 @@ modules:
   - module: storage-facilities
   - module: trade-effluent
   - module: trees-hedges
+  - module: oilgas-permission-type
   - module: dev-type
-  - module: types-application
   - module: vol-agreement
 ---

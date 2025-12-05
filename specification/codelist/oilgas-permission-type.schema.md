@@ -1,7 +1,7 @@
 ---
-codelist: permission-type
+codelist: oilgas-permission-type
 description: |
-  Types of planning permission for applications.
+  Types of permission for onshore oil nd gas extraction applications.
 end-date:
 entry-date: 2025-08-13
 fields:
@@ -12,9 +12,9 @@ fields:
 github-discussion: 198
 key-field: reference
 licence: ogl3
-name: Permission type
+name: Oil and gas permission type
 notes:
 organisation: government-organisation:D1342
-plural: Permission types
-source: data/codelist/permission-type.csv
+plural: Oil and gas permission types
+source: data/codelist/oilgas-permission-type.csv
 ---
