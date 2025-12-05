@@ -8,6 +8,14 @@ fields:
     required: true
   - field: related-permissions
     require-if:
+      - field: oilgas-permission-types
+        in: 
+          - renewal-unimplemented
+          - renewal-temporary
+          - extension-existing-site
+          - variation-condition
+          - romp-review
+          - minerals-development
   - field: other-details
   - field: will-consolidate-permissions
     required: true
