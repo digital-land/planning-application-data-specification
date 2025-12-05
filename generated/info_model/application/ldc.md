@@ -25,24 +25,23 @@ A legal document stating the lawfulness of past, present or future building use,
 * [Contact priority](#contact-priority)
 * [User role type](#user-role-type)
 
-# Application fields
+## Application fields
 
 Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
-
 **Application fields module**
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| reference | Reference | A unique reference for the data item | MUST |  |
-| application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
-| application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-subtype** enum |
-| planning-authority | Planning authority | A reference of the planning authority the application has been submitted to, e.g. local-authority:CMD for London borough of Camden | MUST | Select from the **planning-authority** enum. Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk |
-| submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST |  |
-| modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST |  |
-| documents | Documents[]{} | List of submitted documents with references and details | MUST |  |
-| fee | Fee{} | The fee payable for the application including amounts and transaction details | MAY |  |
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum
+application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-subtype** enum
+planning-authority | Planning authority | A reference of the planning authority the application has been submitted to, e.g. local-authority:CMD for London borough of Camden | MUST | Select from the **planning-authority** enum. Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk
+submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST | 
+modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST | 
+documents | Documents[]{} | List of submitted documents with references and details | MUST | 
+fee | Fee{} | The fee payable for the application including amounts and transaction details | MAY | 
 
 
 **Document component**

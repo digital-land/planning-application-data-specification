@@ -30,6 +30,7 @@ application.
 * [Foul sewage disposal](#foul-sewage-disposal)
 * [Hazardous substances](#hazardous-substances)
 * [Hours of operation](#hours-of-operation)
+* [Oil and gas permission types](#oil-and-gas-permission-types)
 * [Ownership certificates and agricultural land declaration](#ownership-certificates-and-agricultural-land-declaration)
 * [Plans, drawings and supporting materials](#plans,-drawings-and-supporting-materials)
 * [Pre-application advice](#pre-application-advice)
@@ -39,35 +40,35 @@ application.
 * [Storage facilities](#storage-facilities)
 * [Trade effluent](#trade-effluent)
 * [Trees and hedges information](#trees-and-hedges-information)
-* [Types application](#types-application)
 * [Voluntary agreement](#voluntary-agreement)
 
 ### Codelists
 
+* [Application type](#application-type)
 * [Contact priority](#contact-priority)
 * [Day type](#day-type)
 * [Hazardous substance type](#hazardous-substance-type)
+* [Oil and gas permission type](#oil-and-gas-permission-type)
 * [Use class](#use-class)
 * [User role type](#user-role-type)
 
-# Application fields
+## Application fields
 
 Core planning application structure containing reference information,
 application types, submission details, modules, documents, and fees
 
-
 **Application fields module**
 
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| reference | Reference | A unique reference for the data item | MUST |  |
-| application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum |
-| application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-subtype** enum |
-| planning-authority | Planning authority | A reference of the planning authority the application has been submitted to, e.g. local-authority:CMD for London borough of Camden | MUST | Select from the **planning-authority** enum. Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk |
-| submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST |  |
-| modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST |  |
-| documents | Documents[]{} | List of submitted documents with references and details | MUST |  |
-| fee | Fee{} | The fee payable for the application including amounts and transaction details | MAY |  |
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum
+application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-subtype** enum
+planning-authority | Planning authority | A reference of the planning authority the application has been submitted to, e.g. local-authority:CMD for London borough of Camden | MUST | Select from the **planning-authority** enum. Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk
+submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST | 
+modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST | 
+documents | Documents[]{} | List of submitted documents with references and details | MUST | 
+fee | Fee{} | The fee payable for the application including amounts and transaction details | MAY | 
 
 
 **Document component**
@@ -574,6 +575,45 @@ close-time | Close time | Closing time | MUST | Format: HH:MM
 - open-time and close-time must be in HH:MM format
 - close-time must be after open-time within same time range
 
+## Oil and gas permission types
+
+Module for details about types of onshore oil and gas extraction permissions already received and applying for
+
+
+**Oil and gas permission types module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| oilgas-permission-types | Oil and gas permission types[] | List of permission types being applied for | MUST | Select from the **oilgas-permission-type** enum |
+| related-permissions | Related permissions[]{} | List of related permissions | MAY | Used in onshore extraction of oil and gas applications |
+| other-details | Other details | Explanation if other ground is selected | MAY |  |
+| will-consolidate-permissions | Will consolidate permissions | Is the applicant looking to consolidate permissions? | MUST |  |
+| details | Details | Details about the consolidation or update of permissions | MAY | Rule: is a MUST if `will-consolidate-permissions` is `True` |
+| related-proposals | Related proposals[]{} | Previous permissions for minerals development on the site (if any) | MAY |  |
+
+
+**Related permission-details component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | The reference for the related application that permission was received for | MUST | 
+oilgas-permission-type | Oil and gas permission type | An oil and gas related permission type | MUST | Select from the **oilgas-permission-type** enum
+decision-date | Decision date | The date when the decision was made, in YYYY-MM-DD format | MUST | 
+condition-number | Condition number | Number of any condition being breached | MAY | Rule: is a MUST if `oilgas-permission-type` is `variation-condition`
+
+
+**Related proposal component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | The reference for the related application | MUST | 
+application-type | Application type | The type of planning application | MUST | Select from the **application-type** enum
+decision-date | Decision date | The date when the decision was made, in YYYY-MM-DD format | MUST | 
+
+**Validation rules**
+
+- rule
+
 ## Ownership certificates and agricultural land declaration
 
 Who will be affected by the proposal and whether they have been notified, such as agricultural tenants
@@ -813,6 +853,48 @@ Details of any voluntary agreements made as part of an oil and gas extraction ap
 
 Below are the codelists required to support this specification:
 
+### Application type
+
+| reference | name | description | synonyms | legislation-urls | notes | entry-date | start-date | end-date |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| hh | Householder planning application | A simplified process for applications to alter or enlarge a single house (but not a flat), including works within the boundary/garden |  | https://www.legislation.gov.uk/ukpga/1990/8/section/62 |  | 2025-01-07 |  |  |
+| full | Full planning permission | This application is needed when making detailed proposals for developments which are not covered by a householder application or permitted development rights |  | https://www.legislation.gov.uk/ukpga/1990/8/section/62 |  | 2025-01-07 |  |  |
+| outline | Outline planning | Applications that are used to understand whether the basic nature of a development is viable |  | https://www.legislation.gov.uk/ukpga/1990/8/section/92 |  | 2025-01-07 |  |  |
+| reserved-matters | Reserved matters | This application is only required when the applicant has already been granted outline planning permission. Reserved matters can include appearance, means of access, landscaping, layout and scale |  | https://www.legislation.gov.uk/ukpga/1990/8/section/196D;https://www.legislation.gov.uk/ukpga/1990/9/section/69 |  | 2025-01-07 |  |  |
+| demolition-con-area | Planning permission for relevant demolition in a conservation area | An application for planning permission involving the demolition of any unlisted building or structure in a conservation area if permission is required |  | https://www.legislation.gov.uk/ukpga/1990/8/section/196D |  | 2025-01-07 |  |  |
+| lbc | Listed building consent | An application for works for the demolition of a listed building or for its alteration or extension in any manner which would affect its character as a building of special architectural or historic interest |  | https://www.legislation.gov.uk/ukpga/1990/9/contents |  | 2025-01-07 |  |  |
+| advertising | Advertising | An application for all types of advertisements and signs |  | https://www.legislation.gov.uk/uksi/2007/783/introduction/made |  | 2025-01-07 |  |  |
+| ldc | Lawful development certificate | A legal document stating the lawfulness of past, present or future building use, operation or other matters, signifying that enforcement action cannot be carried out against the development |  | https://www.legislation.gov.uk/ukpga/1990/8/part/VII/crossheading/established-use-certificates;https://www.legislation.gov.uk/uksi/2015/595/contents/made |  | 2025-01-07 |  |  |
+| prior-approval | Prior approval | This applies to  developments with permitted development rights (where developments are granted planning permission by national legislation without the need to submit a planning application) |  | https://www.legislation.gov.uk/uksi/2015/596/contents |  | 2025-01-07 |  |  |
+| s73 | Removal or variation of a condition following grant of planning permission | Applications for a removal or variation of a condition after planning permission has been granted | s73;Section 73;Minor Material Amendment | https://www.legislation.gov.uk/ukpga/1990/8/section/73;https://www.legislation.gov.uk/ukpga/1990/9/section/19 | Case law: Armstrong v Secretary of State for Levelling Up, Housing and Communities (2023)
+Hillside Parks Ltd v Snowdonia National Park Authority (2022) | 2025-01-07 |  |  |
+| approval-condition | Approval of details reserved by condition | An application to have conditions approved which have been applied at the time of granting a planning permission to limit and control the way in which the planning permission has been implemented | Details pursuant;Discharge of condition;Approval of details;AOD;Details application;DET;Approval (Discharge) of Planning Condition | https://www.legislation.gov.uk/ukpga/1990/8/section/74A;https://www.legislation.gov.uk/ukpga/1990/9/contents |  | 2025-01-07 |  |  |
+| consent-under-tpo | Consent under TPO | An application that will affect a protected tree including those covered by a Tree Preservation Order (TPO) or those which grow in a conservation area |  | https://www.legislation.gov.uk/ukpga/1990/8/part/VIII/chapter/I |  | 2025-01-07 |  |  |
+| non-material-amendment | Non-material amendment (S96a) | An application for any minor changes to proposals that have already been approved | s96a;section 96 application | https://www.legislation.gov.uk/ukpga/1990/8/section/96A |  | 2025-01-07 |  |  |
+| pip | Permission in principle | An alternative way of getting planning permission for housing-led development which separates the consideration of matters of principle from the technical detail of the development |  | https://www.legislation.gov.uk/uksi/2017/1309/contents/made;https://www.legislation.gov.uk/uksi/2017/403/contents/made |  | 2025-01-07 |  |  |
+| extraction-oil-gas | Development relating to the onshore extraction of oil and gas | An application for planning permission for the onshore extraction of oil and gas onshore, including exploration, appraisal, and production activities. This covers drilling wells, installing associated infrastructure, and any related development required for the extraction process. |  | https://www.legislation.gov.uk/ukpga/1990/8/contents;https://view.officeapps.live.com/op/view.aspx?src=https%3A%2F%2Fassets.publishing.service.gov.uk%2Fmedia%2F5a7ca4fded915d6969f46560%2FOnshore_UK_oil_and_gas_exploration_all_countries_Dec13.pptx&wdOrigin=BROWSELINK;https://www.legislation.gov.uk/ukpga/1991/34/contents;https://www.legislation.gov.uk/ukpga/1995/25/contents;https://www.legislation.gov.uk/ukpga/1998/17/contents;https://www.legislation.gov.uk/ukpga/1976/76/contents;https://www.legislation.gov.uk/uksi/1995/1436/contents/made | A form of full planning | 2025-01-07 |  |  |
+| hedgerow-removal | Hedgerow removal notice | An application for anyone proposing to remove a hedgerow, or part of a hedgerow |  | https://www.legislation.gov.uk/uksi/1997/1160/regulation/5/made |  | 2025-01-07 |  |  |
+| notice-trees-in-con-area | Notification of proposed works to trees in a conservation area | Notification, 6 weeks prior to works being carried out, of proposed works to a tree in a conservation area that is not subject to a Tree Preservation order |  | https://www.legislation.gov.uk/ukpga/1990/8/section/211 |  | 2025-02-12 |  |  |
+| waste-dev | Waste development | An application which involves the use of land for waste management activities like storage, treatment, or disposal |  | https://www.legislation.gov.uk/ukpga/1990/8/section/62 | this type of application is made via a detailed planning application form | 2025-09-08 |  |  |
+| land-drainage-consent | Land Drainage Consent | Land drainage consent is required for works affecting the flow of water in an ordinary watercourse, such as a stream, ditch, or culvert, to ensure they don't negatively impact flood risk or the environment. This consent, often granted by the Lead Local Flood Authority (LLFA), is needed for both permanent and temporary works, including alterations to culverts, weirs, or other obstructions. |  | https://www.legislation.gov.uk/ukpga/1991/59/section/23 |  | 2025-09-08 |  |  |
+| footpath-diversion | Footpath diversion | The diversion or stopping up of public footpaths, bridleways, or restricted byways when it is necessary to facilitate development in accordance with planning permission. |  | https://www.legislation.gov.uk/ukpga/1990/8/section/257 |  | 2025-09-08 |  |  |
+| cert-alt-appropriate-dev | Certificate of alternative appropriate development | This enables the claimant under a compulsory purchase scheme to request that their local planning authority review their site and consider what development could have occurred in a ‘no scheme world’. | CAAD | https://www.legislation.gov.uk/ukpga/Eliz2/9-10/33/section/17#:~:text=%5BF117%20Certificates%20of%20appropriate,%E2%80%9Crelevant%20planning%20date%E2%80%9D%20is%E2%80%94 |  | 2025-09-08 |  | 	 |
+| overhead-lines | Circular 14/90 Overhead lines | Consent required to install or maintain overhead electric lines |  | https://www.legislation.gov.uk/ukpga/1989/29/section/37 |  | 2025-09-09 |  |  |
+| nsips | Nationally Significant Infrastructure Projects (NSIPs) | Nationally Significant Infrastructure Projects are large-scale projects which require consent from the Secretary of State. | DCO | https://www.legislation.gov.uk/ukpga/2008/29/part/3 |  | 2025-09-09 |  |  |
+| mod-construction-hours | Modification of conditions relating to construction working hours | Application for modification of conditions relating to construction working hours |  | https://www.legislation.gov.uk/ukpga/1990/8/section/74B/2022-08-01 |  | 2025-09-09 |  |  |
+| extend-duration-permission | Additional environmental approval to extend the duration of a planning permission | If the original planning permission was subject to an EIA or HRA, and the applicant is seeking an extension to the time limit for implementation, the application for Additional Environmental Approval is required. |  | https://www.legislation.gov.uk/ukpga/2020/16/section/17 |  | 2025-09-09 |  |  |
+| mineral-extraction | Mineral extraction or associated development | Planning permission is generally required for mineral extraction and associated development from the local Mineral Planning Authority (MPA) |  | https://www.legislation.gov.uk/ukpga/1981/36/enacted;https://www.legislation.gov.uk/ukpga/1995/25/contents |  | 2025-09-09 |  |  |
+| mod-discharge-s106 | Modification or discharge of a Section 106 planning obligation | A Section 106 planning obligation, which is a legal agreement between a local planning authority and a developer, can be modified or discharged through agreement between the parties involved or, if no agreement can be reached, by application to the local planning authority. |  | https://www.legislation.gov.uk/ukpga/1990/8/section/106A |  | 2025-09-10 |  |  |
+| twao | Transport and works act order | A TWAO is a statutory instrument made by the Secretary of State under the Transport and Works Act 1992. A TWAO can authorise the construction, operation and maintenance of new transport infrastructure. |  | https://www.legislation.gov.uk/ukpga/1992/42/contents |  | 2025-09-10 |  |  |
+| change-of-use | Change of use planning application | A change of use planning application is required when there's a significant alteration in how a property is used, moving it from one 'use class' to another as defined in the Use Classes Order. Most changes of use require permission, but some are permitted under specific circumstances. The need for an application depends on whether the change is considered 'material' and the specific regulations from each LPA. |  | https://www.legislation.gov.uk/ukpga/1990/8/part/III/crossheading/meaning-of-development;https://www.legislation.gov.uk/uksi/2020/757 |  | 2025-09-10 |  |  |
+| reg-3 | Regulation 3 planning application | Regulation 3 of the Town and Country Planning General Regulations 1992 allows a local planning authority to grant planning permission for its own development, essentially acting as both the applicant and the decision-maker. This means a council can approve development projects on land they own, even if it might otherwise be restricted. |  | https://www.legislation.gov.uk/uksi/1992/1492/regulation/3/made | While Reg 3 is a seperate type of application, they are currently dealt with via a tick box at the beginning of the application form, rather than a seperate or different application form | 2025-09-10 |  |  |
+| reg-4 | Regulation 4 planning application | Where a planning authority applies for permission to develop land they own or have an interest in, but do not intend to develop themselves. In such cases, Regulation 4 dictates that the application is determined by the authority itself, unless the Secretary of State decides to take over the determination. |  | https://www.legislation.gov.uk/uksi/1992/1492/regulation/4/made | While Reg 4 is a seperate type of application, they are currently dealt with via a tick box at the beginning of the application form, rather than a seperate or different application form | 2025-09-10 |  |  |
+| mineral-app | Mineral planning applications | A mineral planning application is a request for permission to extract minerals or carry out related development. |  | https://www.legislation.gov.uk/ukpga/1995/25/schedule/14/crossheading/application-to-determine-the-conditions-to-which-the-mineral-permissions-relating-to-a-mining-site-are-to-be-subject |  | 2025-09-10 |  |  |
+| technical-details-consent | Technical Details Consent | Technical Details Consent (TDC) is the second stage of the 'Permission in Principle' (PiP) process in planning, primarily for housing-led development. It follows the initial 'Permission in Principle' stage, which establishes whether a site is suitable in principle for development. TDC assesses the detailed design, layout, and other technical aspects of the proposed development. |  | https://www.legislation.gov.uk/uksi/2015/596/article/7 | Technical details consent accompanies permission in principle, and has the same requirements as an application for full planning permission. Therefore technical details consent is submitted using the full application form, where there is a field which allows the applicant to provide reference to the original permission in principle application. Where this is filled in, the officer will be able to infer that the application is therefore a technical details consent. Technical details consent should be captured separately from full planning permission, and we should ensure that it can be linked to the permission in principle application. | 2025-09-10 |  |  |
+| romp | Review of mineral permission (ROMP) | The ROMP review is an important piece of legislation allowing MPAs to update older mineral planning permissions to bring them into line with modern standards of environmental protection and planning control, and to impose modern restoration and aftercare conditions. | ROMP | https://www.legislation.gov.uk/ukpga/1995/25/schedule/14/crossheading/application-to-determine-the-conditions-to-which-the-mineral-permissions-relating-to-a-mining-site-are-to-be-subject |  | 2025-09-10 |  |  |
+| haz-substance-consent | Hazardous Substances Consent | Hazardous Substance Consent is required when substances on a site are at, or in excess of the 'controlled quantity' as set out in the Planning (Hazardous Substances) Regulations 2015. |  | https://www.legislation.gov.uk/uksi/2015/627/contents |  | 2025-09-10 |  |  |
+| psi-app | Public Service Infrastructure applications | Public Service Infrastructure (PSI) applications in planning refer to proposals for major developments related to essential public services like schools, hospitals, and criminal justice accommodation. These applications are subject to specific regulations and accelerated decision-making timelines to ensure timely delivery of these crucial public services. | psi | https://www.legislation.gov.uk/uksi/2021/746/made | Currently handled with a checkbox in the full application form | 2025-09-10 |  |  |
+
 ### Contact priority
 
 | reference | name | description |
@@ -845,6 +927,19 @@ Below are the codelists required to support this specification:
 | phosgene | Phosgene |  |
 | refined-white-sugar | Refined white sugar |  |
 | sulphur-dioxide | Sulphur dioxide |  |
+
+### Oil and gas permission type
+
+| reference | name | description | related-proposal-required |
+| --- | --- | --- | --- |
+| oil-gas-full-permission | Full planning permission for oil and gas working |  | No |
+| waste-full-permission | Full planning permission for controlled waste |  | No |
+| renewal-unimplemented | Renewal of unimplemented permission |  | Yes |
+| renewal-temporary | Renewal of temporary permission |  | Yes |
+| extension-existing-site | Extension to an existing site |  | Yes |
+| variation-condition | Variation of condition(s) |  | Yes |
+| romp-review | Review of conditions for Mineral Permissions (ROMPs) |  | Yes |
+| minerals-development | Previous permissions for minerals development on the site |  | Yes |
 
 ### Use class
 
