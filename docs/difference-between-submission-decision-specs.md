@@ -1,4 +1,4 @@
-# the differences between the Submission Specification and the Decision Specification
+# The differences between the submission specification and the decision specification
 
 ## The core distinction: inputs vs. outcomes
 
