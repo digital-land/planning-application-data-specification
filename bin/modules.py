@@ -155,6 +155,43 @@ def get_module_parts(specification, ref, app_type=None):
     return {"module": module, "related-components": related_components, "rules": rules}
 
 
+def count_module_fields(
+    specification, module_ref, include_related_components=False, app_type=None
+):
+    """
+    Count the number of fields defined directly on a module. If
+    include_related_components is True, include fields from related components
+    discovered via collect_related_components_bfs.
+    """
+    module_parts = get_module_parts(specification, module_ref, app_type=app_type)
+    if not module_parts:
+        return 0
+
+    count = len(module_parts["module"].get("fields", []))
+    if include_related_components:
+        for component in module_parts.get("related-components", {}).values():
+            count += len(component.get("fields", []))
+    return count
+
+
+def print_module_field_counts(
+    specification, include_related_components=False, app_type=None
+):
+    """
+    Iterate over all modules in the specification and print their field counts.
+    """
+    modules = specification.get("module", {})
+    for module_ref, module in modules.items():
+        count = count_module_fields(
+            specification,
+            module_ref,
+            include_related_components=include_related_components,
+            app_type=app_type,
+        )
+        module_name = module.get("name", module_ref)
+        print(f"{module_name} ({module_ref}): {count}")
+
+
 if __name__ == "__main__":
     print("Testing modules.py")
 
@@ -166,6 +203,8 @@ if __name__ == "__main__":
 
         specification = load_content()
         print("Specification loaded successfully")
+
+        print_module_field_counts(specification=specification)
 
         # Test the function
         # result = get_module_parts(specification, "res-units")
