@@ -1,6 +1,6 @@
 ## Decision: Explicitly set if application payloads can contain additional properties
 
-**Date:** 2025-01-07  
+**Date:** 2025-12-16 
 **Status:** Under review  
 
 **Context:**  
