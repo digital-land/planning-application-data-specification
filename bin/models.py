@@ -208,6 +208,7 @@ class ApplicationDef:
     name: str
     description: str = ""
     extends: Optional[str] = None
+    allow_additional_properties: Optional[bool] = None
     synonyms: List[str] = field(default_factory=list)
     legislation: List[str] = field(default_factory=list)
     notes: str = ""
@@ -235,6 +236,7 @@ class ApplicationDef:
         name = app_content.get("name") or app
         description = app_content.get("description") or ""
         extends = app_content.get("extends")
+        allow_additional_properties = app_content.get("allow-additional-properties")
         synonyms = app_content.get("synonyms") or []
         legislation = app_content.get("legislation") or []
         notes = app_content.get("notes") or ""
@@ -260,6 +262,7 @@ class ApplicationDef:
             name=name,
             description=description,
             extends=extends,
+            allow_additional_properties=allow_additional_properties,
             synonyms=synonyms,
             legislation=legislation,
             notes=notes,

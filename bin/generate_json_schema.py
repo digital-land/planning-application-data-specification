@@ -10,7 +10,6 @@ from loader import load_content
 from models import ComponentInstance, FieldDef, FieldInstance
 from utils import save_string_to_file
 
-
 OUTPUT_DIR = "generated/json-schema"
 APPLICATIONS_OUTPUT_DIR = f"{OUTPUT_DIR}/applications"
 CODELIST_DATA_DIR = "data/codelist"
@@ -274,6 +273,7 @@ def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
         "$schema": "https://json-schema.org/draft-07/schema#",
         "$id": f"{app_ref}.json",
         "title": app_def.name,
+        "additionalProperties": getattr(app_def, "allow_additional_properties", False),
         "description": getattr(app_def, "description", ""),
         "type": "object",
         "properties": {},
