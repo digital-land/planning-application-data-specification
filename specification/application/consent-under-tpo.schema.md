@@ -25,4 +25,5 @@ name: Consent under TPO
 notes: ''
 start-date: ''
 synonyms: []
+allow-additional-properties: true
 ---

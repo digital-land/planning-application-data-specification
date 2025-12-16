@@ -24,4 +24,5 @@ modules:
   - module: trees-location
   - module: trees-ownership
   - module: tree-work-details
+allow-additional-properties: true
 ---

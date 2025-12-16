@@ -52,4 +52,5 @@ modules:
   - module: oilgas-permission-type
   - module: dev-type
   - module: vol-agreement
+allow-additional-properties: true
 ---

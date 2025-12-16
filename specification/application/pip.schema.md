@@ -24,5 +24,6 @@ modules:
   - module: proposal-details-inc-non-residential
   - module: site-details
   - module: site-info
+allow-additional-properties: true
 ---
 

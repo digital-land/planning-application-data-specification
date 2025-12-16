@@ -45,4 +45,5 @@ modules:
   - module: trees-hedges
   - module: vehicle-parking
   - module: waste-storage-collection
+allow-additional-properties: true
 ---

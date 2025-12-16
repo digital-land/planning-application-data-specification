@@ -30,4 +30,5 @@ name: Planning permission for relevant demolition in a conservation area
 notes: ''
 start-date: ''
 synonyms: []
+allow-additional-properties: true
 ---

@@ -26,4 +26,5 @@ modules:
   - module: site-details
   - module: site-visit
   - module: supporting-info
+allow-additional-properties: true
 ---

@@ -30,4 +30,5 @@ modules:
   - module: site-details
   - module: site-visit
   - module: trees-hedges
+allow-additional-properties: true
 ---

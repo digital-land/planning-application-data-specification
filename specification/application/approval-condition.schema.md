@@ -32,4 +32,5 @@ synonyms:
 - Details pursuant
 - Discharge of condition
 - Approval of details
+allow-additional-properties: true
 ---

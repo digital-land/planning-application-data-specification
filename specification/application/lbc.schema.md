@@ -34,4 +34,5 @@ name: Listed building consent
 notes: ''
 start-date: ''
 synonyms: []
+allow-additional-properties: true
 ---

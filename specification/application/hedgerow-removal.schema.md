@@ -23,4 +23,5 @@ modules:
   - module: pre-app-advice
   - module: site-details
   - module: site-visit
+allow-additional-properties: true
 ---

@@ -29,4 +29,5 @@ modules:
   - module: proposed-advert-details
   - module: site-details
   - module: site-visit
+allow-additional-properties: true
 ---

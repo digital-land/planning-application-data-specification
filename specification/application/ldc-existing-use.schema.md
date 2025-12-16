@@ -12,4 +12,5 @@ modules:
   - module: grounds-ldc
   - module: info-support-ldc
   - module: res-units
+allow-additional-properties: true
 ---

@@ -11,4 +11,5 @@ modules:
   - module: eligibility-related-works
   - module: eligibility-current-building
   - module: eligibility-proposal
+allow-additional-properties: true
 ---

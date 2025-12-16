@@ -29,4 +29,5 @@ start-date: ''
 synonyms:
 - s96a
 - section 96 application
+allow-additional-properties: true
 ---

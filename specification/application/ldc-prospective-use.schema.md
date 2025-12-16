@@ -10,4 +10,5 @@ modules:
   - module: proposal-details-ldc
   - module: grounds-existing-use
   - module: grounds-proposed-use
+allow-additional-properties: true
 ---

@@ -10,4 +10,5 @@ modules:
   - module: desc-proposed-works-lb-ldc
   - module: grounds-for-application
   - module: lb-grade
+allow-additional-properties: true
 ---

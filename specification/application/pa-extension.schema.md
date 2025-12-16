@@ -10,4 +10,5 @@ modules:
   - module: adj-premises
   - module: desc-proposed-works
   - module: eligibility-extension
+allow-additional-properties: true
 ---
