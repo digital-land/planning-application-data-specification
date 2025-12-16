@@ -8,3 +8,4 @@ When there are no more current issues for a module the module will disappear fro
 | # | Module | Current Issues | Backlog Issues | GitHub Labels |
 |---|--------|----------------|----------------|---------------|
 | 1 | [Residential units (including conversion)](https://github.com/digital-land/planning-application-data-specification/discussions/33) | 1 | 2 | [component: res units](https://github.com/digital-land/planning-application-data-specification/issues?q=is%3Aissue%20state%3Aopen%20label%3A"component%3A%20res%20units") |
+| 2 | [Site address details](https://github.com/digital-land/planning-application-data-specification/discussions/70) | 1 | 5 | [component:site address details](https://github.com/digital-land/planning-application-data-specification/issues?q=is%3Aissue%20state%3Aopen%20label%3A"component%3Asite%20address%20details") |
