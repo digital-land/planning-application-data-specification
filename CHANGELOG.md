@@ -1,4 +1,36 @@
 
+<a name="v0.1.38"></a>
+## [v0.1.38](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.37...v0.1.38) (2025-12-16)
+
+Be explicit about allowing additional properties or not
+
+### ⚒️ Tooling
+
+* handle not allowing additional properties, should output false: (commit [11421cd](https://github.com/digital-land/planning-application-data-specification/commit/11421cd0c3bab7976450d5d19fa2ad9cfc81a5d7))
+* update JSON schema generator to handle allow-additional-properties attr (commit [b1b5d0f](https://github.com/digital-land/planning-application-data-specification/commit/b1b5d0ffc53c0ecd6b80680ee06aee7465f9e2ca))
+* count number of fields of a module for comparison (commit [da2ed08](https://github.com/digital-land/planning-application-data-specification/commit/da2ed0881115420b4b732b89815479605b369207))
+* fix generating application fields section (commit [7e9f2d6](https://github.com/digital-land/planning-application-data-specification/commit/7e9f2d66b397c73d34e950be1338684f13f61bb2))
+
+### 𝌭 Model changes
+
+* add allow-additional-properties to all other application types (commit [407a809](https://github.com/digital-land/planning-application-data-specification/commit/407a8095819948ea3dd0eb4b038ee474185d6e7b))
+* add allow-additional-properties to outline apps (commit [e0960d7](https://github.com/digital-land/planning-application-data-specification/commit/e0960d75501a357aac2b2fe779bf85fbb39b9616))
+* add allow-additional-properties: true to full application definition (commit [7b4f58d](https://github.com/digital-land/planning-application-data-specification/commit/7b4f58d5b2755d2e510de9edac5a9cf9566d2c03))
+* list permission types that make related-permission related required (commit [c35150f](https://github.com/digital-land/planning-application-data-specification/commit/c35150f7c5f803a9eb927b573a7ab9566ab66de4))
+* add missing permission type module and use in extract oil gas application (commit [7775896](https://github.com/digital-land/planning-application-data-specification/commit/77758962fc6766ae1225f01fed539ebcad5ca046))
+
+### 🐛 Bug Fixes
+
+* remove redundant info models for oil and gas app (commit [c874330](https://github.com/digital-land/planning-application-data-specification/commit/c874330e3e86ee28f5293b2cab2ce40309f3904b))
+* remove redundant info models for outline apps (commit [e310729](https://github.com/digital-land/planning-application-data-specification/commit/e310729597b35e787b07ad2c6d432574e9a943f7))
+* typo in documentation (commit [2932ccd](https://github.com/digital-land/planning-application-data-specification/commit/2932ccd18d28919cdab7b71009f3ec2a48b934c9))
+
+### 📚 Documentation
+
+* add decision record for allowing additional properties (commit [eea1c30](https://github.com/digital-land/planning-application-data-specification/commit/eea1c30d10c0c9c7ae2582c6dab0e1f990f73e72))
+* document the differences between submission and decision specifications (commit [1aadbbc](https://github.com/digital-land/planning-application-data-specification/commit/1aadbbc684f6f6379c966c37fffa9752eb514bfd))
+
+
 <a name="v0.1.37"></a>
 ## [v0.1.37](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.36...v0.1.37) (2025-12-05)
 
