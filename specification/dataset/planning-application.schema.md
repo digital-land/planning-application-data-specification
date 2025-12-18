@@ -1,0 +1,31 @@
+---
+attribution: crown-copyright
+collection: planning-applications
+consideration: planning-applications-decisions
+dataset: planning-application
+description: 'Records of applications submitted to planning authorities'
+end-date: ''
+entity-maximum: ''
+entity-minimum: ''
+entry-date: '2025-12-18'
+fields:
+- field: reference
+key-field: ''
+licence: ogl3
+name: Planning application
+paint-options: ''
+phase: alpha
+plural: Planning applications
+prefix: ''
+realm: dataset
+replacement-dataset: ''
+start-date: ''
+themes:
+- administrative
+- development
+- housing
+typology: document
+version: 
+wikidata: ''
+wikipedia: ''
+---
