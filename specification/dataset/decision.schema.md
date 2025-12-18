@@ -29,4 +29,19 @@ typology: document
 version: 
 wikidata: ''
 wikipedia: ''
+
+semantics:
+  aligns_to:
+    - iri: "https://schema.org/Decision"
+      relation: "closeMatch"
+      description: >
+        A planning decision represents the outcome of a planning application,
+        made by a planning authority, determining whether permission is granted,
+        refused, or otherwise disposed of.
+  links:
+    - predicate: "https://schema.org/result"   # decision -> (thing it results in / relates to)
+      target_dataset: planning-application
+      via_field: planning-application
+      target_field: reference
+      description: "This decision relates to the planning application it determines."
 ---

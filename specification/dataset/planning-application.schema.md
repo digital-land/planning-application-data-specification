@@ -28,4 +28,10 @@ typology: document
 version: 
 wikidata: ''
 wikipedia: ''
+
+semantics:
+  aligns_to:
+    - iri: "https://schema.org/ApplyAction"
+      relation: "closeMatch"
+      description: "A planning application represents a request to a public authority for permission to carry out development."
 ---
