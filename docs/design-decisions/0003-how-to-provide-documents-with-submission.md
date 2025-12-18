@@ -1,6 +1,6 @@
 ## Decision: Require documents to be submitted as files within the application record
 
-**Date:** 2025-01-07  
+**Date:** 2025-12-18  
 **Status:** Under review  
 
 **Context:**  
