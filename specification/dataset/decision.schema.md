@@ -9,6 +9,8 @@ entity-maximum: ''
 entity-minimum: ''
 entry-date: '2025-12-18'
 fields:
+- field: decision
+- field: planning-application
 - field: reference
 key-field: ''
 licence: ogl3
