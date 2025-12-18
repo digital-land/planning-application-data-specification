@@ -2,6 +2,8 @@
 
 This folder defines the **core data model** for planning application data.
 
+It is intended for anyone working with the model in practice, including software suppliers implementing the specifications, local planning authorities using or testing them, policy and standards teams contributing to their development, and analysts or integrators who need to understand how planning data is structured.
+
 It is used to support **two related but distinct specifications**:
 
 - **Submission specification** – what information is required to submit a valid planning application
@@ -210,6 +212,49 @@ Modules:
 - make requirements easier to understand and maintain
 
 Adding fields directly to applications would quickly lead to duplication and inconsistency.
+
+
+### Why is the same subject a module in one place and a dataset in another?
+
+Some subjects appear in both submission modules and decision datasets. This is expected.
+
+In the submission specification, a **module** groups related information that a user is asked to provide as part of an application. Its purpose is to support data entry and validation.
+
+In the decision specification, a **dataset** records the enduring, authoritative version of that information once it exists as part of the planning record.
+
+The difference is not about the subject itself, but about **when and why the data is being captured**:
+- modules organise information at the point of submission
+- datasets record facts that exist independently and can be referenced, published or analysed later
+
+### Does the specification define validation rules or user interface behaviour?
+
+The specification includes some **expressed rules**, but it does not fully codify validation logic (if you think it should then add to the [discussion](https://github.com/digital-land/planning-application-data-specification/issues/231)).
+
+Rules are used to:
+- describe important relationships between fields
+- capture constraints that matter to the planning process
+- make expectations explicit for implementers
+
+For example, a module may state rules such as:
+- a reference must match an entry defined elsewhere
+- at least one contact method must be marked as primary
+
+These rules describe **what must be true**, not **how systems must enforce it**.
+
+Context-dependent rules are expected to be handled by validation logic outside the schema.  
+For example, while the schema defines the fields that make up an address, a rule such as “a postcode is required if the site is in the UK” is currently enforced by application logic, not by the schema itself.
+
+Similarly, the specification does not dictate whether something should be implemented as a checkbox, radio button or text input. Those decisions sit with individual systems, provided the resulting data meets the requirements of the model.
+---
+
+## Making changes to the model
+
+Changes are made incrementally and deliberately, usually in response to:
+- policy changes
+- delivery needs identified by local authorities
+- feedback from suppliers and the wider community
+
+Most changes involve adding or refining fields, modules or datasets rather than restructuring the model. Existing elements are kept stable where possible, with new requirements introduced alongside them.
 
 ---
 
