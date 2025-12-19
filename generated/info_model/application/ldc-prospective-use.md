@@ -73,7 +73,6 @@ field | name | description | required | notes
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
 filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
-checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
 
 **Validation rules**
@@ -295,7 +294,6 @@ field | name | description | required | notes
 base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
 filename | Filename | Name of the file being uploaded | MUST | 
 mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
-checksum | Checksum | Hash of the file contents used for file validation and checking files have not been tampered with | MAY | 
 file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
 
 **Validation rules**

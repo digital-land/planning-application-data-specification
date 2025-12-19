@@ -98,161 +98,99 @@
     "application"
   ],
   "definitions": {
-    "waste-streams": {
+    "notified-person": {
       "type": "object",
       "properties": {
-        "municipal": {
-          "type": "number"
+        "person": {
+          "$ref": "#/definitions/person"
         },
-        "construction-demolition": {
-          "type": "number"
-        },
-        "commercial-industrial": {
-          "type": "number"
-        },
-        "hazardous": {
-          "type": "number"
+        "notice-date": {
+          "type": "string"
         }
       },
       "required": []
     },
-    "site-location": {
+    "applicant": {
       "type": "object",
       "properties": {
-        "site-boundary": {
+        "reference": {
           "type": "string"
         },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
-        },
-        "easting": {
-          "type": "number"
-        },
-        "northing": {
-          "type": "number"
-        },
-        "latitude": {
-          "type": "number"
-        },
-        "longitude": {
-          "type": "number"
-        },
-        "description": {
-          "type": "string"
-        },
-        "uprns": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": []
-    },
-    "newspaper-notice": {
-      "type": "object",
-      "properties": {
-        "newspaper-name": {
-          "type": "string"
-        },
-        "publication-date": {
-          "type": "string"
+        "person": {
+          "$ref": "#/definitions/person"
         }
       },
       "required": [
-        "newspaper-name",
-        "publication-date"
+        "reference",
+        "person"
       ]
     },
-    "hours-of-operation": {
+    "contact-details": {
       "type": "object",
       "properties": {
-        "use": {
-          "type": "string",
-          "enum": [
-            "b2",
-            "b8",
-            "c1",
-            "c2",
-            "c2a",
-            "c3",
-            "c4",
-            "e-a",
-            "e-b",
-            "e-c-i",
-            "e-c-ii",
-            "e-c-iii",
-            "e-d",
-            "e-e",
-            "e-f",
-            "e-g-i",
-            "e-g-ii",
-            "e-g-iii",
-            "f1-a",
-            "f1-b",
-            "f1-c",
-            "f1-d",
-            "f1-e",
-            "f1-f",
-            "f1-g",
-            "f2-a",
-            "f2-b",
-            "f2-c",
-            "f2-d",
-            "sui",
-            "other"
-          ]
-        },
-        "use-other": {
+        "email": {
           "type": "string"
         },
-        "operational-times": {
+        "phone-numbers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/operational-times"
+            "$ref": "#/definitions/phone-number"
           },
           "minItems": 1
-        },
-        "hours-not-known": {
-          "type": "boolean"
         }
       },
       "required": [
-        "use"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "use": {
-                "const": "other"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "use-other"
-            ]
-          }
+        "email",
+        "phone-numbers"
+      ]
+    },
+    "bng-exemption-reason": {
+      "type": "object",
+      "properties": {
+        "exemption-type": {
+          "type": "string",
+          "enum": [
+            "pre-commencement",
+            "small-sites",
+            "de-minimis",
+            "self-build",
+            "gain-site",
+            "retrospective",
+            "hs2"
+          ]
         },
-        {
-          "if": {
-            "properties": {
-              "hours-not-known": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "operational-times"
-            ]
-          }
+        "reason": {
+          "type": "string"
         }
+      },
+      "required": [
+        "exemption-type",
+        "reason"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
       ]
     },
     "existing-use-detail": {
@@ -329,14 +267,292 @@
         ]
       }
     },
-    "notified-person": {
+    "waste-management": {
       "type": "object",
       "properties": {
-        "person": {
-          "$ref": "#/definitions/person"
+        "waste-management-facility-type": {
+          "type": "string",
+          "enum": [
+            "inert-landfill",
+            "non-hazardous-landfill",
+            "hazardous-landfill",
+            "energy-waste-incineration",
+            "other-incineration",
+            "landfill-gas-plant",
+            "pyrolysis-gasification",
+            "metal-recycling",
+            "transfer-stations",
+            "mrf",
+            "household-amenity-site",
+            "open-windrow-composting",
+            "in-vessel-composting",
+            "anaerobic-digestion",
+            "mbt",
+            "sewage-treatment",
+            "other-treatment",
+            "construction-recycling",
+            "waste-storage",
+            "other-waste-management",
+            "other-developments"
+          ]
         },
-        "notice-date": {
+        "not-applicable": {
+          "type": "boolean"
+        },
+        "total-capacity": {
+          "type": "number"
+        },
+        "annual-throughput": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "waste-management-facility-type"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "not-applicable": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "total-capacity"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "not-applicable": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "annual-throughput"
+            ]
+          }
+        }
+      ]
+    },
+    "other-contact": {
+      "type": "object",
+      "properties": {
+        "fullname": {
           "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fullname",
+        "number",
+        "email"
+      ]
+    },
+    "newspaper-notice": {
+      "type": "object",
+      "properties": {
+        "newspaper-name": {
+          "type": "string"
+        },
+        "publication-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "newspaper-name",
+        "publication-date"
+      ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "first-name": {
+          "type": "string"
+        },
+        "last-name": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first-name",
+        "last-name",
+        "address-text"
+      ]
+    },
+    "room-details-outline": {
+      "type": "object",
+      "properties": {
+        "use-class-accommodation": {
+          "type": "string",
+          "enum": [
+            "c1",
+            "c2",
+            "c2a",
+            "other"
+          ]
+        },
+        "use-other": {
+          "type": "string"
+        },
+        "not-applicable": {
+          "type": "boolean"
+        },
+        "is-existing-rooms-lost-known": {
+          "type": "boolean"
+        },
+        "existing-rooms-lost": {
+          "type": "number"
+        },
+        "is-total-rooms-proposed-known": {
+          "type": "boolean"
+        },
+        "total-rooms-proposed": {
+          "type": "number"
+        },
+        "net-additional-rooms": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "use-class-accommodation",
+        "net-additional-rooms"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "use-class-accommodation": {
+                "const": "other"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "use-other"
+            ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "not-applicable": {
+                    "const": false
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "is-existing-rooms-lost-known": {
+                    "const": true
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "existing-rooms-lost"
+            ]
+          }
+        },
+        {
+          "if": {
+            "allOf": [
+              {
+                "properties": {
+                  "not-applicable": {
+                    "const": false
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "is-total-rooms-proposed-known": {
+                    "const": true
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "total-rooms-proposed"
+            ]
+          }
+        }
+      ]
+    },
+    "site-location": {
+      "type": "object",
+      "properties": {
+        "site-boundary": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "easting": {
+          "type": "number"
+        },
+        "northing": {
+          "type": "number"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        },
+        "uprns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
         }
       },
       "required": []
@@ -488,84 +704,6 @@
         }
       ]
     },
-    "person": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "first-name": {
-          "type": "string"
-        },
-        "last-name": {
-          "type": "string"
-        },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "first-name",
-        "last-name",
-        "address-text"
-      ]
-    },
-    "employees": {
-      "type": "object",
-      "properties": {
-        "full-time": {
-          "type": "number"
-        },
-        "part-time": {
-          "type": "number"
-        },
-        "total-fte": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "full-time",
-        "part-time",
-        "total-fte"
-      ]
-    },
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
-    "applicant": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
     "bng-details": {
       "type": "object",
       "properties": {
@@ -657,21 +795,42 @@
         "pre-loss-biodiversity-value"
       ]
     },
-    "phone-number": {
+    "waste-streams": {
       "type": "object",
       "properties": {
-        "number": {
-          "type": "string"
+        "municipal": {
+          "type": "number"
         },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
+        "construction-demolition": {
+          "type": "number"
+        },
+        "commercial-industrial": {
+          "type": "number"
+        },
+        "hazardous": {
+          "type": "number"
         }
       },
       "required": []
+    },
+    "employees": {
+      "type": "object",
+      "properties": {
+        "full-time": {
+          "type": "number"
+        },
+        "part-time": {
+          "type": "number"
+        },
+        "total-fte": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "full-time",
+        "part-time",
+        "total-fte"
+      ]
     },
     "supporting-document": {
       "type": "object",
@@ -686,135 +845,6 @@
       "required": [
         "reference",
         "name"
-      ]
-    },
-    "room-details-outline": {
-      "type": "object",
-      "properties": {
-        "use-class-accommodation": {
-          "type": "string",
-          "enum": [
-            "c1",
-            "c2",
-            "c2a",
-            "other"
-          ]
-        },
-        "use-other": {
-          "type": "string"
-        },
-        "not-applicable": {
-          "type": "boolean"
-        },
-        "is-existing-rooms-lost-known": {
-          "type": "boolean"
-        },
-        "existing-rooms-lost": {
-          "type": "number"
-        },
-        "is-total-rooms-proposed-known": {
-          "type": "boolean"
-        },
-        "total-rooms-proposed": {
-          "type": "number"
-        },
-        "net-additional-rooms": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "use-class-accommodation",
-        "net-additional-rooms"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "use-class-accommodation": {
-                "const": "other"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "use-other"
-            ]
-          }
-        },
-        {
-          "if": {
-            "allOf": [
-              {
-                "properties": {
-                  "not-applicable": {
-                    "const": false
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "is-existing-rooms-lost-known": {
-                    "const": true
-                  }
-                }
-              }
-            ]
-          },
-          "then": {
-            "required": [
-              "existing-rooms-lost"
-            ]
-          }
-        },
-        {
-          "if": {
-            "allOf": [
-              {
-                "properties": {
-                  "not-applicable": {
-                    "const": false
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "is-total-rooms-proposed-known": {
-                    "const": true
-                  }
-                }
-              }
-            ]
-          },
-          "then": {
-            "required": [
-              "total-rooms-proposed"
-            ]
-          }
-        }
-      ]
-    },
-    "bng-exemption-reason": {
-      "type": "object",
-      "properties": {
-        "exemption-type": {
-          "type": "string",
-          "enum": [
-            "pre-commencement",
-            "small-sites",
-            "de-minimis",
-            "self-build",
-            "gain-site",
-            "retrospective",
-            "hs2"
-          ]
-        },
-        "reason": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "exemption-type",
-        "reason"
       ]
     },
     "residential-unit-summary": {
@@ -929,6 +959,93 @@
         ]
       }
     },
+    "hours-of-operation": {
+      "type": "object",
+      "properties": {
+        "use": {
+          "type": "string",
+          "enum": [
+            "b2",
+            "b8",
+            "c1",
+            "c2",
+            "c2a",
+            "c3",
+            "c4",
+            "e-a",
+            "e-b",
+            "e-c-i",
+            "e-c-ii",
+            "e-c-iii",
+            "e-d",
+            "e-e",
+            "e-f",
+            "e-g-i",
+            "e-g-ii",
+            "e-g-iii",
+            "f1-a",
+            "f1-b",
+            "f1-c",
+            "f1-d",
+            "f1-e",
+            "f1-f",
+            "f1-g",
+            "f2-a",
+            "f2-b",
+            "f2-c",
+            "f2-d",
+            "sui",
+            "other"
+          ]
+        },
+        "use-other": {
+          "type": "string"
+        },
+        "operational-times": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/operational-times"
+          },
+          "minItems": 1
+        },
+        "hours-not-known": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "use"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "use": {
+                "const": "other"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "use-other"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "hours-not-known": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "operational-times"
+            ]
+          }
+        }
+      ]
+    },
     "operational-times": {
       "type": "object",
       "properties": {
@@ -983,315 +1100,57 @@
         "close-time"
       ]
     },
-    "agent": {
+    "site-visit": {
       "type": "object",
       "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "waste-management": {
-      "type": "object",
-      "properties": {
-        "waste-management-facility-type": {
-          "type": "string",
-          "enum": [
-            "inert-landfill",
-            "non-hazardous-landfill",
-            "hazardous-landfill",
-            "energy-waste-incineration",
-            "other-incineration",
-            "landfill-gas-plant",
-            "pyrolysis-gasification",
-            "metal-recycling",
-            "transfer-stations",
-            "mrf",
-            "household-amenity-site",
-            "open-windrow-composting",
-            "in-vessel-composting",
-            "anaerobic-digestion",
-            "mbt",
-            "sewage-treatment",
-            "other-treatment",
-            "construction-recycling",
-            "waste-storage",
-            "other-waste-management",
-            "other-developments"
-          ]
-        },
-        "not-applicable": {
+        "can-be-seen-from": {
           "type": "boolean"
         },
-        "total-capacity": {
-          "type": "number"
-        },
-        "annual-throughput": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "waste-management-facility-type"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "not-applicable": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "total-capacity"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "not-applicable": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "annual-throughput"
-            ]
-          }
-        }
-      ]
-    },
-    "other-contact": {
-      "type": "object",
-      "properties": {
-        "fullname": {
-          "type": "string"
-        },
-        "number": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "fullname",
-        "number",
-        "email"
-      ]
-    },
-    "conflict-of-interest": {
-      "type": "object",
-      "properties": {
-        "conflict-to-declare": {
-          "type": "boolean"
-        },
-        "conflict-person-name": {
-          "type": "string"
-        },
-        "conflict-details": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "conflict-to-declare"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "conflict-to-declare": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "conflict-person-name"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "conflict-to-declare": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "conflict-details"
-            ]
-          }
-        }
-      ]
-    },
-    "bng": {
-      "type": "object",
-      "properties": {
-        "bng-condition-applies": {
-          "type": "boolean"
-        },
-        "bng-condition-exemption-reasons": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/bng-exemption-reason"
-          },
-          "minItems": 1
-        },
-        "bng-details": {
-          "$ref": "#/definitions/bng-details"
-        }
-      },
-      "required": [
-        "bng-condition-applies"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "bng-condition-applies": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "bng-condition-exemption-reasons"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "bng-condition-applies": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "bng-details"
-            ]
-          }
-        }
-      ]
-    },
-    "site-details": {
-      "type": "object",
-      "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "site-locations"
-      ]
-    },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
-      ]
-    },
-    "flood-risk-assessment": {
-      "type": "object",
-      "properties": {
-        "flood-risk-area": {
-          "type": "boolean"
-        },
-        "data-provided-by": {
+        "contact-type": {
           "type": "string",
           "enum": [
             "applicant",
-            "system"
+            "agent"
           ]
         },
-        "flood-risk-assessment": {
+        "contact-reference": {
           "type": "string"
         },
-        "within-20m-watercourse": {
-          "type": "boolean"
-        },
-        "increases-flood-risk": {
-          "type": "boolean"
-        },
-        "surface-water-disposal": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "sustainable-drainage",
-              "soakaway",
-              "main-sewer",
-              "existing-watercourse",
-              "pond-lake"
-            ]
-          },
-          "minItems": 1
+        "other-contact": {
+          "$ref": "#/definitions/other-contact"
         }
       },
       "required": [
-        "flood-risk-area",
-        "within-20m-watercourse",
-        "increases-flood-risk",
-        "surface-water-disposal"
+        "can-be-seen-from",
+        "contact-type"
       ],
       "if": {
         "properties": {
-          "flood-risk-area": {
-            "const": true
+          "contact-type": {
+            "const": "other"
           }
         }
       },
       "then": {
         "required": [
-          "flood-risk-assessment"
+          "other-contact"
         ]
       }
+    },
+    "hrs-operation": {
+      "type": "object",
+      "properties": {
+        "hours-of-operation": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/hours-of-operation"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "hours-of-operation"
+      ]
     },
     "checklist": {
       "type": "object",
@@ -1306,24 +1165,6 @@
       },
       "required": [
         "national-req-types"
-      ]
-    },
-    "site-area": {
-      "type": "object",
-      "properties": {
-        "site-area-in-hectares": {
-          "type": "number"
-        },
-        "site-area-provided-by": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "system"
-          ]
-        }
-      },
-      "required": [
-        "site-area-in-hectares"
       ]
     },
     "proposal-details": {
@@ -1396,6 +1237,241 @@
         }
       ]
     },
+    "employment": {
+      "type": "object",
+      "properties": {
+        "existing-employees": {
+          "$ref": "#/definitions/employees"
+        },
+        "proposed-employees": {
+          "$ref": "#/definitions/employees"
+        },
+        "employment-impact": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "existing-employees",
+        "proposed-employees"
+      ]
+    },
+    "applicant-contact": {
+      "type": "object",
+      "properties": {
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "applicant-reference",
+        "contact-details"
+      ]
+    },
+    "processes-machinery-waste": {
+      "type": "object",
+      "properties": {
+        "site-activity-details": {
+          "type": "string"
+        },
+        "proposal-waste-management": {
+          "type": "boolean"
+        },
+        "waste-management": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/waste-management"
+          },
+          "minItems": 1
+        },
+        "waste-streams": {
+          "$ref": "#/definitions/waste-streams"
+        }
+      },
+      "required": [
+        "site-activity-details",
+        "proposal-waste-management"
+      ]
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
+      ]
+    },
+    "conflict-of-interest": {
+      "type": "object",
+      "properties": {
+        "conflict-to-declare": {
+          "type": "boolean"
+        },
+        "conflict-person-name": {
+          "type": "string"
+        },
+        "conflict-details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "conflict-to-declare"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "conflict-to-declare": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "conflict-person-name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "conflict-to-declare": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "conflict-details"
+            ]
+          }
+        }
+      ]
+    },
+    "pre-app-advice": {
+      "type": "object",
+      "properties": {
+        "advice-sought": {
+          "type": "boolean"
+        },
+        "officer-name": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "advice-date": {
+          "type": "string"
+        },
+        "advice-summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "advice-sought"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "officer-name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reference"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "advice-date"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "advice-summary"
+            ]
+          }
+        }
+      ]
+    },
+    "agent-contact": {
+      "type": "object",
+      "properties": {
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "agent-reference",
+        "contact-details"
+      ]
+    },
     "non-res-floorspace": {
       "type": "object",
       "properties": {
@@ -1438,30 +1514,181 @@
         ]
       }
     },
-    "processes-machinery-waste": {
+    "flood-risk-assessment": {
       "type": "object",
       "properties": {
-        "site-activity-details": {
-          "type": "string"
-        },
-        "proposal-waste-management": {
+        "flood-risk-area": {
           "type": "boolean"
         },
-        "waste-management": {
+        "data-provided-by": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "system"
+          ]
+        },
+        "flood-risk-assessment": {
+          "type": "string"
+        },
+        "within-20m-watercourse": {
+          "type": "boolean"
+        },
+        "increases-flood-risk": {
+          "type": "boolean"
+        },
+        "surface-water-disposal": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/waste-management"
+            "type": "string",
+            "enum": [
+              "sustainable-drainage",
+              "soakaway",
+              "main-sewer",
+              "existing-watercourse",
+              "pond-lake"
+            ]
           },
           "minItems": 1
-        },
-        "waste-streams": {
-          "$ref": "#/definitions/waste-streams"
         }
       },
       "required": [
-        "site-activity-details",
-        "proposal-waste-management"
+        "flood-risk-area",
+        "within-20m-watercourse",
+        "increases-flood-risk",
+        "surface-water-disposal"
+      ],
+      "if": {
+        "properties": {
+          "flood-risk-area": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "flood-risk-assessment"
+        ]
+      }
+    },
+    "bng": {
+      "type": "object",
+      "properties": {
+        "bng-condition-applies": {
+          "type": "boolean"
+        },
+        "bng-condition-exemption-reasons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/bng-exemption-reason"
+          },
+          "minItems": 1
+        },
+        "bng-details": {
+          "$ref": "#/definitions/bng-details"
+        }
+      },
+      "required": [
+        "bng-condition-applies"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "bng-condition-applies": {
+                "const": false
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "bng-condition-exemption-reasons"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "bng-condition-applies": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "bng-details"
+            ]
+          }
+        }
       ]
+    },
+    "site-area": {
+      "type": "object",
+      "properties": {
+        "site-area-in-hectares": {
+          "type": "number"
+        },
+        "site-area-provided-by": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "system"
+          ]
+        }
+      },
+      "required": [
+        "site-area-in-hectares"
+      ]
+    },
+    "res-units": {
+      "type": "object",
+      "properties": {
+        "will-residential-units-change": {
+          "type": "boolean"
+        },
+        "residential-unit-summary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/residential-unit-summary"
+          },
+          "minItems": 1
+        },
+        "total-existing-units": {
+          "type": "number"
+        },
+        "total-proposed-units": {
+          "type": "number"
+        },
+        "net-change": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "will-residential-units-change",
+        "total-existing-units",
+        "total-proposed-units",
+        "net-change"
+      ],
+      "if": {
+        "properties": {
+          "will-residential-units-change": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "residential-unit-summary"
+        ]
+      }
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
     },
     "existing-use": {
       "type": "object",
@@ -1565,73 +1792,6 @@
         }
       ]
     },
-    "employment": {
-      "type": "object",
-      "properties": {
-        "existing-employees": {
-          "$ref": "#/definitions/employees"
-        },
-        "proposed-employees": {
-          "$ref": "#/definitions/employees"
-        },
-        "employment-impact": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "existing-employees",
-        "proposed-employees"
-      ]
-    },
-    "declaration": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
-    "hrs-operation": {
-      "type": "object",
-      "properties": {
-        "hours-of-operation": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/hours-of-operation"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "hours-of-operation"
-      ]
-    },
     "ownership-certs": {
       "type": "object",
       "properties": {
@@ -1682,179 +1842,19 @@
         "agricultural-tenants"
       ]
     },
-    "res-units": {
+    "site-details": {
       "type": "object",
       "properties": {
-        "will-residential-units-change": {
-          "type": "boolean"
-        },
-        "residential-unit-summary": {
+        "site-locations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/residential-unit-summary"
+            "$ref": "#/definitions/site-location"
           },
           "minItems": 1
-        },
-        "total-existing-units": {
-          "type": "number"
-        },
-        "total-proposed-units": {
-          "type": "number"
-        },
-        "net-change": {
-          "type": "number"
         }
       },
       "required": [
-        "will-residential-units-change",
-        "total-existing-units",
-        "total-proposed-units",
-        "net-change"
-      ],
-      "if": {
-        "properties": {
-          "will-residential-units-change": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "residential-unit-summary"
-        ]
-      }
-    },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
-    "site-visit": {
-      "type": "object",
-      "properties": {
-        "can-be-seen-from": {
-          "type": "boolean"
-        },
-        "contact-type": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "agent"
-          ]
-        },
-        "contact-reference": {
-          "type": "string"
-        },
-        "other-contact": {
-          "$ref": "#/definitions/other-contact"
-        }
-      },
-      "required": [
-        "can-be-seen-from",
-        "contact-type"
-      ],
-      "if": {
-        "properties": {
-          "contact-type": {
-            "const": "other"
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "other-contact"
-        ]
-      }
-    },
-    "pre-app-advice": {
-      "type": "object",
-      "properties": {
-        "advice-sought": {
-          "type": "boolean"
-        },
-        "officer-name": {
-          "type": "string"
-        },
-        "reference": {
-          "type": "string"
-        },
-        "advice-date": {
-          "type": "string"
-        },
-        "advice-summary": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "advice-sought"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "officer-name"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "reference"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "advice-date"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "advice-summary"
-            ]
-          }
-        }
+        "site-locations"
       ]
     },
     "application": {
@@ -2476,9 +2476,6 @@
           "type": "string"
         },
         "mime-type": {
-          "type": "string"
-        },
-        "checksum": {
           "type": "string"
         },
         "file-size": {
