@@ -2,11 +2,8 @@
 component: file
 name: File
 description: |
-  Structure for digital files or references to stored files,
-  including metadata and validation information
+  Structure for digital files to be included in the submission of an application
 fields:
-  - field: url
-    description: A URL pointing to the stored file
   - field: base64-content
   - field: filename
     required: true
