@@ -15,7 +15,7 @@ source:
   - type: regulation
     notes:
 variations:
-next_step:
+next_step: rewrite
 notes:
 ---
 
