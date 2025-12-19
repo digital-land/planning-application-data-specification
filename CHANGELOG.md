@@ -1,4 +1,48 @@
 
+<a name="v0.1.40"></a>
+## [v0.1.40](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.38...v0.1.40) (2025-12-19)
+
+Begin adding the working draft decision stage specification to repository
+
+### ⚒️ Tooling
+
+* handle not allowing additional properties, should output false: (commit [bddbc22](https://github.com/digital-land/planning-application-data-specification/commit/bddbc22a43dc2fbf7b7ea1d726a66465f0857482))
+
+### 𝌭 Model changes
+
+* Clarify dataset intent and relationships with semantic metadata (commit [e9c5a03](https://github.com/digital-land/planning-application-data-specification/commit/e9c5a03a5ae05f111539ede278a6d0f57426fe7f))
+* add skeleton definition of planning application dataset (commit [397c0de](https://github.com/digital-land/planning-application-data-specification/commit/397c0ded4fbcc3096816a83fa135f1e1ae3282a6))
+* add planning-application and decision fields to decision dataset (commit [c7601a8](https://github.com/digital-land/planning-application-data-specification/commit/c7601a81061312e03dc33238c7987067bbf3076e))
+* add a skeleton dataset definition for the decision dataset (commit [2439d7b](https://github.com/digital-land/planning-application-data-specification/commit/2439d7bc2fabfac4d52ca9115d65aec8dc90a290))
+* add allow-additional-properties to all other application types (commit [07863d4](https://github.com/digital-land/planning-application-data-specification/commit/07863d4104c3e538752a8bcda5332e3d2793dd82))
+* add allow-additional-properties to outline apps (commit [5ad93cc](https://github.com/digital-land/planning-application-data-specification/commit/5ad93cc70bda2b7bd776aca6a82a6bab7326330e))
+
+### 🐛 Bug Fixes
+
+* date on design decision record (commit [35eeb23](https://github.com/digital-land/planning-application-data-specification/commit/35eeb23ce59c4e34a82a3e05eeeb16b7904621a1))
+* mistakes in first dataset and justification files (commit [9c5ffdb](https://github.com/digital-land/planning-application-data-specification/commit/9c5ffdb9cfa247a0f32329227f55df65821107b3))
+* remove redundant info models for oil and gas app (commit [7247fc3](https://github.com/digital-land/planning-application-data-specification/commit/7247fc3638474527616144d0a23e32bed2304d72))
+* remove redundant info models for outline apps (commit [48a7e2b](https://github.com/digital-land/planning-application-data-specification/commit/48a7e2b5d2167d46993678d1329b825078731fa9))
+
+### 📚 Documentation
+
+* add need dd-need-010 (commit [c4d36b6](https://github.com/digital-land/planning-application-data-specification/commit/c4d36b6f6d4170c6b70f88bb9891debd6b4685b6))
+* add need-ps-004 (commit [480175e](https://github.com/digital-land/planning-application-data-specification/commit/480175e7396364778c5a10cdc038a2c1eda442e0))
+* add dd-need-017 (commit [8ee2411](https://github.com/digital-land/planning-application-data-specification/commit/8ee24112dc8221d1dd6dc36bc9ee77aebac9c2bf))
+* update dd-need-014 (commit [5c8e4ec](https://github.com/digital-land/planning-application-data-specification/commit/5c8e4ec051221f5a397c5e9f02623d4f651caf29))
+* add dd-need031 (commit [0bf88ab](https://github.com/digital-land/planning-application-data-specification/commit/0bf88abecf5403f1c3ce3c5e5a839df544b1b218))
+* update just-0001 to make it more of a universal rule to be applied across datasets (commit [b62c213](https://github.com/digital-land/planning-application-data-specification/commit/b62c213f5cf8e820fd6eeca1884708f13be21ca5))
+* add design decision record for calling dataset planning-application (commit [2a044bc](https://github.com/digital-land/planning-application-data-specification/commit/2a044bc48b0c8f766aff3cc968c0b957f279c1d2))
+* add justication record for dd-need-033 and dd-need-034 (commit [58e0cd6](https://github.com/digital-land/planning-application-data-specification/commit/58e0cd69583ac530da4f2a14e4150f461180f5f7))
+* add a couple of needs (commit [3907d8d](https://github.com/digital-land/planning-application-data-specification/commit/3907d8df11f85e5c6eb8a3bcbe432699e276c3a0))
+* add design decision record about submitting documents with applications (commit [3875017](https://github.com/digital-land/planning-application-data-specification/commit/3875017f36d62290ddeacc7cba54cae8f0e3e67d))
+* update specification folder readme based on feedback (commit [1a4c5dc](https://github.com/digital-land/planning-application-data-specification/commit/1a4c5dc6118db50aba92996183c8e93e1125d239))
+* document what need and justification records are (commit [9c68d9b](https://github.com/digital-land/planning-application-data-specification/commit/9c68d9bab17b3dc0d424699a3a9c2ce9c9483749))
+* log how dd-need-048 is satisfied (commit [6987161](https://github.com/digital-land/planning-application-data-specification/commit/6987161d39d4cb59ef2c2a5492358b4be1f746fb))
+* capture how data-need-001 is satisfied (commit [bec330a](https://github.com/digital-land/planning-application-data-specification/commit/bec330a0574642e6c599502eb0b3415e828730b9))
+* document how the data model is structured (commit [77017a2](https://github.com/digital-land/planning-application-data-specification/commit/77017a2e5a1fb1b8d1c9811c4e16ee4998f6ea1b))
+
+
 <a name="v0.1.38"></a>
 ## [v0.1.38](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.37...v0.1.38) (2025-12-16)
 
