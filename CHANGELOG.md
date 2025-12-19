@@ -1,4 +1,23 @@
 
+<a name="v0.1.41"></a>
+## [v0.1.41](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.40...v0.1.41) (2025-12-19)
+
+Align spec with decision on submitting documents
+
+### 𝌭 Model changes
+
+* remove checksum field from file component, no longer needed (commit [93596f7](https://github.com/digital-land/planning-application-data-specification/commit/93596f70b883d4b5abe3b775b5ff4ad0ba3a09c7))
+* remove option to link to a file instead of including it, see decision 0003-how-to-provide-documents-with-submission (commit [563b0bf](https://github.com/digital-land/planning-application-data-specification/commit/563b0bf3483b51287a73b97e6b6a38eb6ecc9f92))
+
+### 📚 Documentation
+
+* add need dd-need-010 (commit [c2519d9](https://github.com/digital-land/planning-application-data-specification/commit/c2519d9ce573bfa5c23c11e3be8e1de93850f29b))
+* add need-ps-004 (commit [83ad2ec](https://github.com/digital-land/planning-application-data-specification/commit/83ad2ec906e81536098f7b47168f1bc90ba4ec49))
+* add dd-need-017 (commit [d223ddd](https://github.com/digital-land/planning-application-data-specification/commit/d223dddaf6203a456dd019631b157b4a671f5c15))
+* update dd-need-014 (commit [cef91d7](https://github.com/digital-land/planning-application-data-specification/commit/cef91d7623ff0eaea24721a1c05a8dd68e4b242b))
+* add dd-need031 (commit [b06f85e](https://github.com/digital-land/planning-application-data-specification/commit/b06f85eaf5bd4b37c7fa631c2a1fff2dc4a499dc))
+
+
 <a name="v0.1.40"></a>
 ## [v0.1.40](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.38...v0.1.40) (2025-12-19)
 
