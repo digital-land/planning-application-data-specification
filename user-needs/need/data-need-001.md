@@ -14,7 +14,7 @@ scope: in # in-spec | out-of-spec | future
 themes:
   - data-principle
 source: 
-  - type: data-design # interview | community-session | legislation | analytics | data-design | other
+  - type: data-design # interview | community-session | legislation | ps1-ps2 | data-design | other
     notes: 
 variations: # ids of other needs that capture similar or overlapping user needs
 next_step: # review | rewrite | split
