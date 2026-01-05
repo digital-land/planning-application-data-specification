@@ -9,6 +9,8 @@ entity-maximum: ''
 entity-minimum: ''
 entry-date: '2025-12-18'
 fields:
+- field: document-url
+- field: documentation-url
 - field: reference
 key-field: ''
 licence: ogl3
