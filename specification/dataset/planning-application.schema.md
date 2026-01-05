@@ -10,7 +10,9 @@ entity-minimum: ''
 entry-date: '2025-12-18'
 fields:
 - field: document-url
+  description: A url to the completed application form
 - field: documentation-url
+  description: URL where supporting documents for the application can be accessed
 - field: reference
 key-field: ''
 licence: ogl3
