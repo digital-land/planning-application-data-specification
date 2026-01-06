@@ -13,6 +13,7 @@ fields:
 - field: decision-date
 - field: organisation
   description: Identifier of the organisation issuing the decision notice (planning authority, Planning Inspectorate, or Secretary of State)
+- field: decision-maker
 - field: planning-application
 - field: reference
 key-field: ''
