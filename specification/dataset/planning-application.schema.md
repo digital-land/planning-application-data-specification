@@ -13,6 +13,8 @@ fields:
   description: A url to the completed application form
 - field: documentation-url
   description: URL where supporting documents for the application can be accessed
+- field: received-date
+  description: Date the planning authority received the application
 - field: reference
 key-field: ''
 licence: ogl3

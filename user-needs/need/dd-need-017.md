@@ -12,7 +12,7 @@ themes:
   - compliance
   - processing
 source:
-  - type: regulation
+  - type: legislation
     notes:
 variations:
 next_step:
