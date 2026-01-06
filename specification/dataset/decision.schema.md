@@ -11,6 +11,8 @@ entry-date: '2025-12-18'
 fields:
 - field: decision
 - field: decision-date
+- field: organisation
+  description: Identifier of the organisation issuing the decision notice (planning authority, Planning Inspectorate, or Secretary of State)
 - field: planning-application
 - field: reference
 key-field: ''
