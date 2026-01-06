@@ -1,4 +1,40 @@
 
+<a name="v0.1.42.1"></a>
+## [v0.1.42.1](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.42...v0.1.42.1) (2026-01-06)
+
+Add missing field to decision dataset draft
+
+### 𝌭 Model changes
+
+* add application-types field to planning-application dataset (commit [f33a79d](https://github.com/digital-land/planning-application-data-specification/commit/f33a79d59c921d54ddf601ea6878adcc246747ee))
+
+
+<a name="v0.1.42"></a>
+## [v0.1.42](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.41...v0.1.42) (2026-01-06)
+
+Initial draft of decision dataset
+
+### 𝌭 Model changes
+
+* add routes to access decision notice to decision dataset (commit [621a9d9](https://github.com/digital-land/planning-application-data-specification/commit/621a9d982b084d4cb41661dcc0b09a5a72a60058))
+* add description field to planning application records (commit [bdb900e](https://github.com/digital-land/planning-application-data-specification/commit/bdb900ec6b92cdc491dab65a3582ee2da027a296))
+* add planning-officer-recommendation field to decision dataset (commit [32efccd](https://github.com/digital-land/planning-application-data-specification/commit/32efccd99b170f05e44f1ec98c59be0bcbfe1a52))
+* add decision-maker field to decision dataset (commit [4b76484](https://github.com/digital-land/planning-application-data-specification/commit/4b76484b9beff0639a197b4e927a8d38b5819c49))
+* add organisation field to decision dataset (commit [1c85f91](https://github.com/digital-land/planning-application-data-specification/commit/1c85f916b0a0c6cc7fec6cb813fb85b680c6ffcd))
+* add received-date field to planning application records (commit [1622599](https://github.com/digital-land/planning-application-data-specification/commit/16225998062e133c34a67da77126815467aaf763))
+* add decision-date field to decision dataset (commit [a80a120](https://github.com/digital-land/planning-application-data-specification/commit/a80a12049e089a58d3ea94a3086e5175adf7dc92))
+* add documentation and document urls to planning application dataset (commit [eb2c149](https://github.com/digital-land/planning-application-data-specification/commit/eb2c149dcd2b216c47d0a45b283c262b8647213f))
+
+### 📚 Documentation
+
+* add just-0008 record for decisions in a period (commit [828edf9](https://github.com/digital-land/planning-application-data-specification/commit/828edf9abf957782f158a0b228d44e27cc5a2a5b))
+* add just-0005 for satisfying volume need (dd-need-031) (commit [8111a75](https://github.com/digital-land/planning-application-data-specification/commit/8111a753804e32a63802ff42fe80518553e2d022))
+* tweak description for just-0004 (commit [5e9077a](https://github.com/digital-land/planning-application-data-specification/commit/5e9077a079be8b8b66c229fb37cc78269656ced5))
+* add descriptions to document and documentation fields in planning application dataset (commit [27131ee](https://github.com/digital-land/planning-application-data-specification/commit/27131eebb7f21d6a98e3bc0e7954567204ec8d8c))
+* add need dd-need-032 (commit [ff4ff24](https://github.com/digital-land/planning-application-data-specification/commit/ff4ff24e770a740c393fddada0f4282afcf2387b))
+* add series of identified needs around decision stage data (commit [fd6edd6](https://github.com/digital-land/planning-application-data-specification/commit/fd6edd6011881471cb2105a3df2f2bcdc98bd61c))
+
+
 <a name="v0.1.41"></a>
 ## [v0.1.41](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.40...v0.1.41) (2025-12-19)
 
