@@ -15,6 +15,7 @@ fields:
   description: URL where supporting documents for the application can be accessed
 - field: description
   description: The description of the proposed development
+- field: application-types
 - field: received-date
   description: Date the planning authority received the application
 - field: reference
