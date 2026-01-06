@@ -10,6 +10,7 @@ entity-minimum: ''
 entry-date: '2025-12-18'
 fields:
 - field: decision
+- field: decision-date
 - field: planning-application
 - field: reference
 key-field: ''
