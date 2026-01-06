@@ -63,6 +63,10 @@ status:
 	git status --ignored
 
 
+changelog:
+	git-chglog -o CHANGELOG.md
+
+
 commit-issue-tracking::
 	git add .
 	git diff --quiet && git diff --staged --quiet || (git commit -m "Latest issue tracking updates $(shell date +%F)"; git push origin $(BRANCH))
