@@ -11,7 +11,7 @@ fields:
   - field: application-type
   - field: legislation
   - field: notes
-github-discussion:
+github-discussion: 373
 key-field: reference
 licence: ogl3
 name: Application subtype

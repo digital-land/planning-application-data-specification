@@ -10,7 +10,7 @@ fields:
   - field: description
   - field: application-types
   - field: notes
-github-discussion:
+github-discussion: 207
 key-field: reference
 licence: ogl3
 name: Building element type

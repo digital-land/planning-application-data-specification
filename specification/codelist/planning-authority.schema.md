@@ -15,7 +15,7 @@ fields:
   - field: entry-date
   - field: start-date
   - field: end-date
-github-discussion: 
+github-discussion: 372
 key-field: reference
 licence: ogl3
 name: Planning authority

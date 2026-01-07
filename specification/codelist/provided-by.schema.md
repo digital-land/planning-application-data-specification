@@ -8,7 +8,7 @@ fields:
   - field: reference
   - field: name
   - field: description
-github-discussion:
+github-discussion: 376
 key-field: reference
 licence: ogl3
 name: Provided by

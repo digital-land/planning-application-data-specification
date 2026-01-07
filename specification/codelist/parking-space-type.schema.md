@@ -11,7 +11,7 @@ fields:
   - field: used-by
   - field: entry-date
   - field: end-date
-github-discussion:
+github-discussion: 199
 key-field: reference
 licence: ogl3
 name: Parking space type

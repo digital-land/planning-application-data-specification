@@ -10,7 +10,7 @@ fields:
   - field: description
   - field: entry-date
   - field: end-date
-github-discussion:
+github-discussion: 377
 key-field: reference
 licence: ogl3
 name: BNG exemption type

@@ -10,7 +10,7 @@ fields:
   - field: description
   - field: entry-date
   - field: end-date
-github-discussion:
+github-discussion: 375
 key-field: reference
 licence: olg3
 name: Listed building grade
