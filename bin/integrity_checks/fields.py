@@ -1,12 +1,6 @@
 from integrity_checks.utils import has_reference_error, print_error
 from utils import check_kebab_case
 
-
-def print_error(field_name: str, message: str):
-    """Utility function to print errors in a consistent format."""
-    print(f"Error in field '{field_name}': {message}")
-
-
 # FIELDS
 # ======
 
@@ -47,6 +41,7 @@ def check_cardinality(fields):
         cardinality = field.get("cardinality")
         if str(cardinality) not in valid_values:
             print_error(
+                "field",
                 field.get("field", "unknown"),
                 f"cardinality must be one of {valid_values}, got {cardinality}",
             )
@@ -68,10 +63,13 @@ def check_object_components(fields, components):
             field_name = field.get("field", "unknown")
 
             if not component:
-                print_error(field_name, "object type must have component attribute")
+                print_error(
+                    "field", field_name, "object type must have component attribute"
+                )
                 has_errors = True
             elif component not in components:
                 print_error(
+                    "field",
                     field_name,
                     f"component '{component}' not found in component definitions",
                 )
@@ -94,13 +92,17 @@ def check_enum_codelist(fields):
 
         # If datatype is enum, must have codelist
         if datatype == "enum" and not codelist:
-            print_error(field_name, "enum datatype must have codelist attribute")
+            print_error(
+                "field", field_name, "enum datatype must have codelist attribute"
+            )
             has_errors = True
 
         # If has codelist, datatype must be enum
         if codelist and datatype != "enum":
             print_error(
-                field_name, f"codelist attribute requires enum datatype, got {datatype}"
+                "field",
+                field_name,
+                f"codelist attribute requires enum datatype, got {datatype}",
             )
             has_errors = True
 
@@ -134,6 +136,7 @@ def check_codelist_exists(fields, codelists):
             # codelist key or the codelist value to be used as lookup.
             if codelist not in available:
                 print_error(
+                    "field",
                     field_name,
                     f"codelist '{codelist}' not found in codelist definitions",
                 )
@@ -150,10 +153,10 @@ def check_dates(fields):
 
     for field_name, field in fields.items():
         if "entry-date" not in field:
-            print_error(field_name, "missing entry-date")
+            print_error("field", field_name, "missing entry-date")
             has_errors = True
         if "end-date" not in field:
-            print_error(field_name, "missing end-date")
+            print_error("field", field_name, "missing end-date")
             has_errors = True
 
     return not has_errors
