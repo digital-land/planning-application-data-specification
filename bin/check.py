@@ -7,6 +7,7 @@ def perform_checks():
     from integrity_checks.applications import check_all as check_applications
     from integrity_checks.codelists import check_all as check_codelists
     from integrity_checks.components import check_all as check_components
+    from integrity_checks.datasets import check_all as check_datasets
     from integrity_checks.fields import check_all as check_fields
     from integrity_checks.modules import check_all as check_modules
 
@@ -15,6 +16,7 @@ def perform_checks():
     fields = specification["field"]
     codelists = specification["codelist"]
     components = specification["component"]
+    datasets = specification["dataset"]
     modules = specification["module"]
     applications = specification["application"]
 
@@ -23,6 +25,8 @@ def perform_checks():
     fields_valid = check_fields(fields, components, codelists)
     print("\nChecking components\n===========")
     components_valid = check_components(components, fields, applications)
+    print("\nChecking datasets\n===========")
+    datasets_valid = check_datasets(datasets, fields)
     print("\nChecking modules\n===========")
     modules_valid = check_modules(modules, fields)
 
@@ -36,6 +40,7 @@ def perform_checks():
     if (
         fields_valid
         and components_valid
+        and datasets_valid
         and modules_valid
         and applications_valid
         and codelists_valid

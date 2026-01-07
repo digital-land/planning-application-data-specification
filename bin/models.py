@@ -202,6 +202,60 @@ class ModuleDef:
 
 
 @dataclass
+class DatasetDef:
+    dataset: str
+    ref: str
+    name: str
+    description: str = ""
+    # Preserve original order of fields/components; items may contain FieldInstance
+    # or ComponentInstance objects.
+    items: List[Any] = field(default_factory=list)
+    # Datasets list fields directly; they can be plain fields or fields that
+    # resolve to components, so we keep the resolved items here.
+    fields: List[Any] = field(default_factory=list)
+    components: List[ComponentDef] = field(default_factory=list)
+    entry_date: Optional[str] = None
+    start_date: Optional[str] = None
+    end_date: Optional[str] = None
+
+    @classmethod
+    def from_spec(
+        cls,
+        dataset_content: Any,
+        field_defs: Dict[str, FieldDef],
+        component_defs: Dict[str, ComponentDef],
+    ) -> "DatasetDef":
+        if isinstance(dataset_content, DatasetDef):
+            return dataset_content
+
+        dataset = dataset_content.get("dataset") or ""
+        name = dataset_content.get("name") or dataset
+        description = dataset_content.get("description") or ""
+
+        raw_fields = dataset_content.get("fields") or []
+        items = resolve_items(raw_fields, field_defs, component_defs)
+
+        components = [i.component for i in items if isinstance(i, ComponentInstance)]
+
+        entry_date = dataset_content.get("entry-date")
+        start_date = dataset_content.get("start-date")
+        end_date = dataset_content.get("end-date")
+
+        return cls(
+            dataset=dataset,
+            ref=dataset,
+            name=name,
+            description=description,
+            items=items,
+            fields=items,
+            components=components,
+            entry_date=entry_date,
+            start_date=start_date,
+            end_date=end_date,
+        )
+
+
+@dataclass
 class ApplicationDef:
     application: str
     ref: str

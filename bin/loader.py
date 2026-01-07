@@ -9,6 +9,7 @@ tables = {
     "application": {},
     "codelist": {},
     "component": {},
+    "dataset": {},
     "field": {},
     "module": {},
     # "planning-requirement": {},
@@ -17,7 +18,7 @@ tables = {
 
 def load_table_content(table):
     file_path = "*.md"
-    if table in ["application", "module", "codelist"]:
+    if table in ["application", "module", "codelist", "dataset"]:
         file_path = "*.schema.md"
 
     for path in glob(f"specification/{table}/{file_path}"):
@@ -69,7 +70,9 @@ def load_specification_model():
         if f.component:
             comp = component_defs.get(f.component)
             if comp:
-                f.resolved_component = ComponentInstance(component=comp, referenced_by_field=f)
+                f.resolved_component = ComponentInstance(
+                    component=comp, referenced_by_field=f
+                )
 
     # load module models
     module_defs = {}
@@ -91,10 +94,15 @@ def load_specification_model():
 
     # Resolve inheritance for all applications - import here because of circular import issues
     from applications import get_application_module_refs
+
     for app_ref, app_def in application_defs.items():
         if app_def.extends:
             resolved_module_refs = get_application_module_refs(app_ref, tables)
-            resolved_modules = [module_defs.get(ref) for ref in resolved_module_refs if module_defs.get(ref)]
+            resolved_modules = [
+                module_defs.get(ref)
+                for ref in resolved_module_refs
+                if module_defs.get(ref)
+            ]
             app_def.modules = resolved_modules
 
     specification_model = {
