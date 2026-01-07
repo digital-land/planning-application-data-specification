@@ -2,7 +2,7 @@
 need: dd-need-051
 status: proposed
 priority: high
-title: Record site of proposal
+name: Record site of proposal
 statement: >
   As a user of the planning system, I need a clear record of the site a proposal relates to so that I can understand where development is proposed and how it relates to its surroundings.
 actors:

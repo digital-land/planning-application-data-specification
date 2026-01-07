@@ -2,7 +2,7 @@
 need: dd-need-031
 status: proposed
 priority: high
-title: Understand decision volumes and outcomes
+name: Understand decision volumes and outcomes
 statement: >
   As a planner or analyst, I need to understand the volume and outcomes of planning application decisions so that I can assess development trends, monitor the delivery pipeline, and identify where policy or resourcing changes may be required.
 actors:

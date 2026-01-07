@@ -2,7 +2,7 @@
 need: dd-need-029
 status: proposed
 priority: high
-title: Include authority identity on decision notice
+name: Include authority identity on decision notice
 statement: >
   As a planning authority, I need our identity to be included on the decision notice so that the notice is authoritative, traceable, and valid for legal and administrative purposes across all downstream processes.
 actors:

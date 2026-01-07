@@ -2,7 +2,7 @@
 need: ps-need-005
 status: proposed
 priority: high
-title: Monitor major development outcomes
+name: Monitor major development outcomes
 statement: >
   As a strategic planner or analyst (in a local authority or central government) I need to understand the volume and outcomes of major development applications, particularly for housing so that I can monitor development scale and direction, assess planned housing sufficiency, and identify needs for support, intervention, or plan changes.
 actors:

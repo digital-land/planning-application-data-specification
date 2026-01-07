@@ -2,7 +2,7 @@
 need: dd-need-034
 status: proposed
 priority: high
-title: Link decision to application
+name: Link decision to application
 statement: >
   As a planner, analyst or developer, I need to know which application a decision relates to so that I can understand clearly what development has been approved or refused
 actors:

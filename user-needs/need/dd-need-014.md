@@ -2,7 +2,7 @@
 need: dd-need-014
 status: proposed
 priority: high
-title: Record decision date
+name: Record decision date
 statement: >
   As a planning stakeholder, I need to know the exact date of the planning decision so that I can track the timeline of the application, understand processing times, and ensure compliance with statutory decision-making periods.
 actors:

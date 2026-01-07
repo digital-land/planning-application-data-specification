@@ -2,7 +2,7 @@
 need: dd-need-050
 status: proposed
 priority: high
-title: Record application submission details
+name: Record application submission details
 statement: >
   As a user of the planning system, I need a clear record of submitted planning applications so that I can understand what has been applied for and track it through the planning process.
 actors:

@@ -2,7 +2,7 @@
 need: dd-need-030
 status: proposed
 priority: high
-title: Publish decision notice
+name: Publish decision notice
 statement: >
   As a planning authority, I need to make the decision notice publicly accessible so that I meet my statutory duty to issue a formal written decision that others can rely on.
 actors:

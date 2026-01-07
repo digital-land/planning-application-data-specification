@@ -2,7 +2,7 @@
 need: dd-need-035
 status: proposed
 priority: high
-title: Identify who made the decision
+name: Identify who made the decision
 statement: >
   As a planner, I need to know who made the decision (officer, committee, SoS, Mayor, or PINS) so that I can understand the governance route and explain the reasoning and accountability behind the outcome.
 actors:

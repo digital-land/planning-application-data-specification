@@ -2,7 +2,7 @@
 need: dd-need-010
 status: proposed
 priority: medium
-title: Reflect policy changes in data capture
+name: Reflect policy changes in data capture
 statement: >
   As a planner, I need changes in policy and regulation to be reflected in how planning information is captured and used so that I am not forced to rely on workarounds for years.
 actors:
