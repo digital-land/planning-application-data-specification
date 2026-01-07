@@ -1,5 +1,5 @@
 ---
-need: ps-need-011
+need: need-ps-011
 status: proposed
 priority: high
 name: Track public service infrastructure decisions
