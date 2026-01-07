@@ -15,6 +15,8 @@ tables = {
     # "planning-requirement": {},
 }
 
+needs_tables = {"need": {}, "justification": {}}
+
 
 def load_table_content(table):
     file_path = "*.md"
@@ -30,6 +32,26 @@ def load_content():
     for table in tables.keys():
         load_table_content(table)
     return tables
+
+
+def load_needs():
+    """
+    Load user need and justification records from user-needs/* directories.
+    Needs use `need` as the identifier; justifications use `id`.
+    """
+
+    # can probably refactor with load_table_content but keeping simple for now
+    def load_dir(target, pattern, key_fields):
+        for path in glob(pattern):
+            post = frontmatter.load(path)
+            key = next((post.get(k) for k in key_fields if post.get(k)), None)
+            if key:
+                needs_tables[target][key] = post
+
+    load_dir("need", "user-needs/need/*.md", ["need"])
+    load_dir("justification", "user-needs/justification/*.md", ["id"])
+
+    return needs_tables
 
 
 def load_specification_model():

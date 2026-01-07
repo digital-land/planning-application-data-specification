@@ -17,6 +17,6 @@ source:
   - type: data-design # interview | community-session | legislation | ps1-ps2 | data-design | other
     notes: 
 variations: # ids of other needs that capture similar or overlapping user needs
-next_step: # review | rewrite | split
+next_step: # review | rewrite | split | retire
 notes:
 ---
