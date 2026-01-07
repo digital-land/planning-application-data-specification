@@ -9,6 +9,7 @@ def perform_checks():
     from integrity_checks.components import check_all as check_components
     from integrity_checks.datasets import check_all as check_datasets
     from integrity_checks.fields import check_all as check_fields
+    from integrity_checks.justifications import check_all as check_justifications
     from integrity_checks.modules import check_all as check_modules
     from integrity_checks.needs import check_all as check_needs
 
@@ -45,6 +46,9 @@ def perform_checks():
     print("\nChecking needs\n===========")
     needs_valid = check_needs(needs)
 
+    print("\nChecking justification records\n===========")
+    justifications_valid = check_justifications(justifications, needs, datasets, fields)
+
     print("------------------------------------")
     if (
         fields_valid
@@ -54,6 +58,7 @@ def perform_checks():
         and applications_valid
         and codelists_valid
         and needs_valid
+        and justifications_valid
     ):
         print("All integrity checks passed.")
     else:
