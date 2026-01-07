@@ -1,4 +1,4 @@
-from integrity_checks.utils import has_reference_error, print_error
+from integrity_checks.utils import has_reference_error, print_error, print_warning
 
 # DATASETS (.schema.md files)
 # ===========================
@@ -127,7 +127,7 @@ def check_attrs(datasets):
             has_errors = True
 
         for attr in sorted(extra_attrs):
-            print(f"Warning in dataset '{dataset_name}': unexpected attribute '{attr}'")
+            print_warning("dataset", dataset_name, f"unexpected attribute '{attr}'")
 
     return not has_errors
 

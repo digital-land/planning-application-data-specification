@@ -2,7 +2,7 @@ import glob
 import re
 
 import yaml
-from integrity_checks.utils import print_error
+from integrity_checks.utils import print_error, print_warning
 from utils import check_kebab_case
 
 
@@ -52,7 +52,7 @@ def check_codelist_github_discussion(codelists):
     """
     for path, meta in codelists.items():
         if not meta.get("github-discussion"):
-            print(f"Warning in {path}: github-discussion is empty")
+            print_warning("codelist", path, "github-discussion is empty")
 
 
 def check_codelist_entry_date(codelists):
