@@ -1,4 +1,44 @@
 
+<a name="v0.1.43"></a>
+## [v0.1.43](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.42.1...v0.1.43) (2026-01-07)
+
+Add integrity checks for datasets, needs and justification records
+
+### ⚒️ Tooling
+
+* correct error message printing from fields integrity checks (commit [1cbdc14](https://github.com/digital-land/planning-application-data-specification/commit/1cbdc14cca244eb92c7edf42464dc971c61e339e))
+* add integrity checks for justification records (commit [945f713](https://github.com/digital-land/planning-application-data-specification/commit/945f7139b4d766a686d31c8e081f1629807d50a9))
+* add integrity checks for needs (commit [4087820](https://github.com/digital-land/planning-application-data-specification/commit/40878201356e05da3e000757cea5bda8a18a607d))
+* give error and warning msgs colours for easier interpretation (commit [23a05e7](https://github.com/digital-land/planning-application-data-specification/commit/23a05e71b1b34157eeb3c7ed1462c6c720a25373))
+* add integrity checks for dataset definitions (commit [adc96e5](https://github.com/digital-land/planning-application-data-specification/commit/adc96e5a51132c96b688aaac50bcf7cffc8038c6))
+
+### 𝌭 Model changes
+
+* add application-types field to planning-application dataset (commit [3f63530](https://github.com/digital-land/planning-application-data-specification/commit/3f635308ffecd0641f47b577192701306e884140))
+* add routes to access decision notice to decision dataset (commit [b084d1b](https://github.com/digital-land/planning-application-data-specification/commit/b084d1bbf2779f7f04d8fd529d69132f4a944739))
+* add description field to planning application records (commit [d817496](https://github.com/digital-land/planning-application-data-specification/commit/d817496ce5c3bdedf0ba4f134d4d165c8df86f45))
+* add planning-officer-recommendation field to decision dataset (commit [cd22d8b](https://github.com/digital-land/planning-application-data-specification/commit/cd22d8b4932651550b22ad57752b28d8c07ec871))
+* add decision-maker field to decision dataset (commit [f598ca5](https://github.com/digital-land/planning-application-data-specification/commit/f598ca5e11a200a302ff857c1b2a8a83d2b750a6))
+* add organisation field to decision dataset (commit [d00f3be](https://github.com/digital-land/planning-application-data-specification/commit/d00f3be0ba400a704a45844a1a4f6f200d78e470))
+* add received-date field to planning application records (commit [59345f2](https://github.com/digital-land/planning-application-data-specification/commit/59345f2021a37c9688336ef6ae576c678d5a8ae7))
+* add decision-date field to decision dataset (commit [9aebe12](https://github.com/digital-land/planning-application-data-specification/commit/9aebe12d95bc22070b0910c88f5cf9343820b6af))
+
+### 🐛 Bug Fixes
+
+* add notes attr to dataset schemas (commit [148b55c](https://github.com/digital-land/planning-application-data-specification/commit/148b55c7c244758a189acbf82b66478368f93df4))
+* rename needs files to correct format (commit [030b051](https://github.com/digital-land/planning-application-data-specification/commit/030b051b69becea706a1724d2e2ad1f2c7f3995c))
+* pointer to existing need (commit [1de1d3b](https://github.com/digital-land/planning-application-data-specification/commit/1de1d3b43878e5a426fe3ab4fba87dd5849b86ec))
+* attr should be name not title (commit [c8109f1](https://github.com/digital-land/planning-application-data-specification/commit/c8109f141d1937c865f6e56d7db54c4bcd1a0751))
+* in need records variations should be a list of need ids (commit [58b7b31](https://github.com/digital-land/planning-application-data-specification/commit/58b7b314cce67e95e2e637e1e252fd3cf306154d))
+* add missing github disucssion numbers to codelist schemas (commit [16350c8](https://github.com/digital-land/planning-application-data-specification/commit/16350c870f06b61683cdc73d08c383afb445ecbe))
+
+### 📚 Documentation
+
+* add just-0008 record for decisions in a period (commit [7f98527](https://github.com/digital-land/planning-application-data-specification/commit/7f98527d42f729b708c792115472783716e9e274))
+* add just-0005 for satisfying volume need (dd-need-031) (commit [e059fef](https://github.com/digital-land/planning-application-data-specification/commit/e059fefb847c84412ba09653d3939a47bf5ac4ee))
+* tweak description for just-0004 (commit [389a9b0](https://github.com/digital-land/planning-application-data-specification/commit/389a9b0b94b97ed3a8d7fa9b64d83e18d1f99c03))
+
+
 <a name="v0.1.42.1"></a>
 ## [v0.1.42.1](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.42...v0.1.42.1) (2026-01-06)
 
