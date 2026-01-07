@@ -14,7 +14,8 @@ themes:
 source:
   - type: interview
     notes:
-variations: dd-need-016
+variations: 
+  - dd-need-016
 next_step:
 notes:
 ---
