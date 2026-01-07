@@ -24,7 +24,7 @@ fields:
 key-field: ''
 licence: ogl3
 name: Decision
-paint-options: ''
+notes: 
 phase: alpha
 plural: Decisions
 prefix: ''
@@ -36,8 +36,6 @@ themes:
 - development
 typology: document
 version: 
-wikidata: ''
-wikipedia: ''
 
 semantics:
   aligns_to:

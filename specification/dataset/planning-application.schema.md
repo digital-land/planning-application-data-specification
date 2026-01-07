@@ -22,7 +22,7 @@ fields:
 key-field: ''
 licence: ogl3
 name: Planning application
-paint-options: ''
+notes: 
 phase: alpha
 plural: Planning applications
 prefix: ''
@@ -35,8 +35,6 @@ themes:
 - housing
 typology: document
 version: 
-wikidata: ''
-wikipedia: ''
 
 semantics:
   aligns_to:
