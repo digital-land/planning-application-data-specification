@@ -14,6 +14,8 @@ fields:
   description: Plain-language label for the condition so it can be identified without technical codes
 - field: description
   description: The text of the condition thats required to be met
+- field: reason
+  description: Explanation of why the condition was imposed
 key-field: ''
 licence: ogl3
 name: Planning condition
