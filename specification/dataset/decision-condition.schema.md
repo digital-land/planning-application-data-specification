@@ -9,6 +9,8 @@ entity-maximum: ''
 entity-minimum: ''
 entry-date: 2026-01-08
 fields:
+- field: reference
+  description: Unique identifier for this decision-condition record
 key-field: ''
 licence: ogl3
 name: Decision condition
