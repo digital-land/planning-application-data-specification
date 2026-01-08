@@ -15,6 +15,8 @@ fields:
   description: Reference to the decision record this condition relates to
 - field: planning-condition
   description: Reference to the planning condition record linked to the decision
+- field: organisation
+  description: Identifier of the organisation responsible for this condition within the decision
 key-field: ''
 licence: ogl3
 name: Decision condition

@@ -16,6 +16,8 @@ fields:
   description: The text of the condition thats required to be met
 - field: reason
   description: Explanation of why the condition was imposed
+- field: organisation
+  description: Identifier of the organisation responsible for this condition
 key-field: ''
 licence: ogl3
 name: Planning condition
