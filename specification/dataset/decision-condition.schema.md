@@ -11,6 +11,10 @@ entry-date: 2026-01-08
 fields:
 - field: reference
   description: Unique identifier for this decision-condition record
+- field: decision
+  description: Reference to the decision record this condition relates to
+- field: planning-condition
+  description: Reference to the planning condition record linked to the decision
 key-field: ''
 licence: ogl3
 name: Decision condition
