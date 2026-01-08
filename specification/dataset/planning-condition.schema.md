@@ -10,6 +10,8 @@ entity-minimum: ''
 entry-date: 2026-01-08
 fields:
 - field: reference
+- field: description
+  description: The text of the condition thats required to be met
 key-field: ''
 licence: ogl3
 name: Planning condition
