@@ -10,7 +10,6 @@ entity-minimum: ''
 entry-date: 2026-01-08
 fields:
 - field: reference
-  description: Unique identifier for this decision-condition record
 - field: decision
   description: Reference to the decision record this condition relates to
 - field: planning-condition
@@ -18,6 +17,7 @@ fields:
 - field: organisation
   description: Identifier of the organisation responsible for this condition within the decision
 - field: requested-by
+- field: discharged-by
 key-field: ''
 licence: ogl3
 name: Decision condition
