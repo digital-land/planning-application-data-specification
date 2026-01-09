@@ -12,6 +12,7 @@ tables = {
     "dataset": {},
     "field": {},
     "module": {},
+    "specification": {},
     # "planning-requirement": {},
 }
 
@@ -23,7 +24,13 @@ def load_table_content(table):
     if table in ["application", "module", "codelist", "dataset"]:
         file_path = "*.schema.md"
 
-    for path in glob(f"specification/{table}/{file_path}"):
+    # specification files live directly under specification/
+    if table == "specification":
+        pattern = "specification/*.schema.md"
+    else:
+        pattern = f"specification/{table}/{file_path}"
+
+    for path in glob(pattern):
         post = frontmatter.load(path)
         tables[table][post[table]] = post
 

@@ -12,6 +12,7 @@ def perform_checks():
     from integrity_checks.justifications import check_all as check_justifications
     from integrity_checks.modules import check_all as check_modules
     from integrity_checks.needs import check_all as check_needs
+    from integrity_checks.specifications import check_all as check_specifications
 
     # Load from specification files
     specification = load_content()
@@ -21,6 +22,7 @@ def perform_checks():
     datasets = specification["dataset"]
     modules = specification["module"]
     applications = specification["application"]
+    specifications = specification["specification"]
 
     # load needs (for some checks)
     needs_content = load_needs()
@@ -49,6 +51,9 @@ def perform_checks():
     print("\nChecking justification records\n===========")
     justifications_valid = check_justifications(justifications, needs, datasets, fields)
 
+    print("\nChecking specifications\n===========")
+    specifications_valid = check_specifications(specifications, datasets)
+
     print("------------------------------------")
     if (
         fields_valid
@@ -59,6 +64,7 @@ def perform_checks():
         and codelists_valid
         and needs_valid
         and justifications_valid
+        and specifications_valid
     ):
         print("All integrity checks passed.")
     else:
