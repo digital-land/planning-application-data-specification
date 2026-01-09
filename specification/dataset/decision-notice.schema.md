@@ -2,8 +2,8 @@
 attribution: crown-copyright
 collection: planning-applications
 consideration: planning-applications-decisions
-dataset: decision
-description: 'The decision dataset records what decision was made on a planning application'
+dataset: decision-notice
+description: 'The decision notice dataset records the issued decision for a planning application'
 end-date: ''
 entity-maximum: ''
 entity-minimum: ''
@@ -23,10 +23,10 @@ fields:
 - field: reference
 key-field: ''
 licence: ogl3
-name: Decision
+name: Decision notice
 notes: 
 phase: alpha
-plural: Decisions
+plural: Decision notices
 prefix: ''
 realm: dataset
 replacement-dataset: ''
@@ -46,9 +46,9 @@ semantics:
         made by a planning authority, determining whether permission is granted,
         refused, or otherwise disposed of.
   links:
-    - predicate: "https://schema.org/result"   # decision -> (thing it results in / relates to)
+    - predicate: "https://schema.org/result"
       target_dataset: planning-application
       via_field: planning-application
       target_field: reference
-      description: "This decision relates to the planning application it determines."
+      description: "This decision notice relates to the planning application it determines."
 ---

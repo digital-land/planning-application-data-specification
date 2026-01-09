@@ -55,7 +55,7 @@ A need is satisfied by a single dataset or field.
 
 ```
 satisfied_by:
-  dataset: decision
+  dataset: decision-notice
   field: reference
 ```
 
@@ -68,9 +68,9 @@ A need is satisfied only when multiple elements exist together.
 ```
 satisfied_by:
   allOf:
-    - dataset: decision
+    - dataset: decision-notice
       field: reference
-    - dataset: decision
+    - dataset: decision-notice
       field: decision-date
 ```
 
