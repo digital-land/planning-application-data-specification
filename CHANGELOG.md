@@ -1,4 +1,54 @@
 
+<a name="v0.1.44"></a>
+## [v0.1.44](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.43...v0.1.44) (2026-01-09)
+
+Work on an initial model for conditions
+
+### ⚒️ Tooling
+
+* justification checks should check field belongs to dataset (commit [a66530e](https://github.com/digital-land/planning-application-data-specification/commit/a66530e12c41f84aa0aac98ccaf5e5624417bc03))
+* correct error message printing from fields integrity checks (commit [73b5812](https://github.com/digital-land/planning-application-data-specification/commit/73b58121c3ecd2e56802dd106576fba83692081d))
+* add integrity checks for justification records (commit [a5fac6d](https://github.com/digital-land/planning-application-data-specification/commit/a5fac6deac4823bc1336e9d74a61cbf170614511))
+* add integrity checks for needs (commit [ec3fab1](https://github.com/digital-land/planning-application-data-specification/commit/ec3fab13a925757f1d5a27136f735738516b2caf))
+* give error and warning msgs colours for easier interpretation (commit [de78578](https://github.com/digital-land/planning-application-data-specification/commit/de78578685e6551afaf28ab28be35fa462713759))
+* add integrity checks for dataset definitions (commit [7bb50a6](https://github.com/digital-land/planning-application-data-specification/commit/7bb50a6603506bc4da39fbf08a3e950701cb1472))
+
+### 𝌭 Model changes
+
+* rename dataset from decision to decision-notice (commit [d2b3bcd](https://github.com/digital-land/planning-application-data-specification/commit/d2b3bcd47ff94dc616c479d0dc1f95e4aba3b696))
+* add planning-condition field (commit [e6784a9](https://github.com/digital-land/planning-application-data-specification/commit/e6784a90ee173d05c45cca54c4524dab3b0161ba))
+* add discharged-by field to decision-condition dataset (commit [4fa77e8](https://github.com/digital-land/planning-application-data-specification/commit/4fa77e85d871bce815727018d810e7a9cdd74037))
+* add requested-by field to decision-condition dataset (commit [642781a](https://github.com/digital-land/planning-application-data-specification/commit/642781ad8ff83e975a2782b45d1bbca0ffcd1fb8))
+* add organisation field to planning-condition and decision-condition datasets (commit [8670d3d](https://github.com/digital-land/planning-application-data-specification/commit/8670d3d037317fd9cbff9fc2b44a66d259aa2dd1))
+* add links to decision and planning-condition datasets to decision-condition dataset (commit [7240e4e](https://github.com/digital-land/planning-application-data-specification/commit/7240e4e9b8fb71fda9cb19564389689479840fc2))
+* add reference field to decision-condition dataset (commit [70ccfe5](https://github.com/digital-land/planning-application-data-specification/commit/70ccfe5fdc4e60d0dbb04b44c061e980c5f65e9c))
+* add skeleton decision-condition dataset (commit [cdff8bc](https://github.com/digital-land/planning-application-data-specification/commit/cdff8bc64df7da9b24203aa2ab30997b58005e20))
+* add reason field to planning-condition dataset (commit [8eba156](https://github.com/digital-land/planning-application-data-specification/commit/8eba1564e2775bd53b87c745a44b340877c67813))
+* add name field to planning-condition dataset (commit [049378b](https://github.com/digital-land/planning-application-data-specification/commit/049378b27803682a72c90ee368011ae67226f384))
+* add description field to planning-condition dataset (commit [879a670](https://github.com/digital-land/planning-application-data-specification/commit/879a6704d3b1457beef2775705348a1418b62085))
+* add a planning-condition dataset (commit [492a05e](https://github.com/digital-land/planning-application-data-specification/commit/492a05eec8989cab28b1e6dcbe2097338dc3a7d8))
+
+### 🐛 Bug Fixes
+
+* add notes attr to dataset schemas (commit [63c01fc](https://github.com/digital-land/planning-application-data-specification/commit/63c01fca908ac9aca05933782b0921233f453a5f))
+* rename needs files to correct format (commit [895e8f9](https://github.com/digital-land/planning-application-data-specification/commit/895e8f94213f19ffce6f8e03263bb4c01c09afe4))
+* pointer to existing need (commit [edd06b0](https://github.com/digital-land/planning-application-data-specification/commit/edd06b0da3614b5b1a7582948a0f7c37c92584fe))
+* attr should be name not title (commit [59a3fa7](https://github.com/digital-land/planning-application-data-specification/commit/59a3fa72ed0736c8798284454bd44bde90351905))
+* in need records variations should be a list of need ids (commit [d956db3](https://github.com/digital-land/planning-application-data-specification/commit/d956db306b2d4cb2a7fa2681f8ca7bd658457b94))
+* add missing github disucssion numbers to codelist schemas (commit [eb41359](https://github.com/digital-land/planning-application-data-specification/commit/eb41359db778f11a95d7f9fd7994ebfb9597fb18))
+
+### 📚 Documentation
+
+* document decision to rename dataset to decision-notice (commit [5dc0063](https://github.com/digital-land/planning-application-data-specification/commit/5dc006304e957f78d0fc14cb585e8f275b18a479))
+* add need dd-need-054 (commit [dd47d12](https://github.com/digital-land/planning-application-data-specification/commit/dd47d12a1235e70e01ca1c41dfdf67789153bfb4))
+* justification record for counting number of conditions associated with a decision (commit [d39d018](https://github.com/digital-land/planning-application-data-specification/commit/d39d01800ef7695ecd852be8de040a95752f15d3))
+* dd-need-052 is satisfied (commit [3d0f927](https://github.com/digital-land/planning-application-data-specification/commit/3d0f927aaa016d20501a56fc3fd1eca9411d4d84))
+* add a data need for making things identifiable for humans (commit [5b853c4](https://github.com/digital-land/planning-application-data-specification/commit/5b853c497de6b259994dbeafa1933c062e825f6e))
+* add batch of needs related to conditions (commit [c0ee020](https://github.com/digital-land/planning-application-data-specification/commit/c0ee020a4c7c7339abe64d259502045243fb5050))
+* add needs about understanding conditions and seeing where they apply (commit [16b59e9](https://github.com/digital-land/planning-application-data-specification/commit/16b59e9475ad20d20ee38f0138235fe5d83925c0))
+* add couple of needs about recording conditions as data (commit [d97b0fd](https://github.com/digital-land/planning-application-data-specification/commit/d97b0fde39da2355246a6541b0a55b801a0cf4cf))
+
+
 <a name="v0.1.43"></a>
 ## [v0.1.43](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.42.1...v0.1.43) (2026-01-07)
 
