@@ -170,6 +170,14 @@ def check_satisfied_by_refs(justifications, datasets, fields):
     has_errors = False
     dataset_ids = set(datasets.keys())
     field_ids = set(fields.keys())
+    dataset_field_map = {
+        name: {
+            f.get("field")
+            for f in (dataset.get("fields") or [])
+            if isinstance(f, dict) and f.get("field")
+        }
+        for name, dataset in datasets.items()
+    }
 
     for just_id, just in justifications.items():
         sb = just.get("satisfied_by")
@@ -190,6 +198,19 @@ def check_satisfied_by_refs(justifications, datasets, fields):
                     "justification",
                     just_id,
                     f"field '{field}' in satisfied_by not found in fields",
+                )
+                has_errors = True
+            if (
+                ds
+                and field
+                and ds in dataset_ids
+                and field in field_ids
+                and field not in dataset_field_map.get(ds, set())
+            ):
+                print_error(
+                    "justification",
+                    just_id,
+                    f"field '{field}' is not listed for dataset '{ds}'",
                 )
                 has_errors = True
     return not has_errors
