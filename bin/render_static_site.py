@@ -308,7 +308,31 @@ def build_site(args: argparse.Namespace) -> None:
                 need_meta.append(
                     {"label": "Themes", "value": ", ".join(need.get("themes"))}
                 )
+            if need.get("actors"):
+                need_meta.append(
+                    {"label": "Actors", "value": ", ".join(need.get("actors"))}
+                )
+            if need.get("source"):
+                sources = need.get("source")
+                formatted_sources = (
+                    ", ".join([s.get("type", "") for s in sources])
+                    if isinstance(sources, list)
+                    else str(sources)
+                )
+                need_meta.append({"label": "Source", "value": formatted_sources})
+            if need.get("variations"):
+                need_meta.append(
+                    {
+                        "label": "Variations",
+                        "value": ", ".join(
+                            [str(v) for v in need.get("variations") if v]
+                        ),
+                    }
+                )
+            if need.get("next_step"):
+                need_meta.append({"label": "Next step", "value": need.get("next_step")})
             need_ctx = {
+                "need_ref": n_id,
                 "page_title": f"Need {n_id}",
                 "links": {"back": url_for(base_url, "/decision-stage/need")},
                 "tag_label": label,
@@ -327,7 +351,7 @@ def build_site(args: argparse.Namespace) -> None:
                 ],
             }
             need_html = need_template.render(**need_ctx)
-            write_page(output_dir, f"decision-stage/need/{n_id}.html", need_html)
+            write_page(output_dir, f"decision-stage/need/{n_id}/index.html", need_html)
 
         # Decision stage datasets list
         dataset_ctx = {
@@ -403,7 +427,9 @@ def build_site(args: argparse.Namespace) -> None:
                 ],
             }
             dataset_page = dataset_template.render(**dataset_ctx)
-            write_page(output_dir, f"decision-stage/dataset/{ds_id}/index.html", dataset_page)
+            write_page(
+                output_dir, f"decision-stage/dataset/{ds_id}/index.html", dataset_page
+            )
 
         # Submission index
         submission_ctx = {
