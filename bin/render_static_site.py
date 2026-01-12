@@ -21,10 +21,9 @@ import jinja2.filters as jinja_filters
 if not hasattr(jinja_filters, "evalcontextfilter"):
     jinja_filters.evalcontextfilter = jinja_filters.pass_eval_context
 
-from loader import load_needs, load_specification_model
-
 from digital_land_frontend import filters as dlf_filters  # noqa: E402
 from digital_land_frontend import globals as dlf_globals  # noqa: E402
+from loader import load_needs, load_specification_model
 
 try:
     import markdown as markdown_lib
@@ -96,7 +95,9 @@ def extract_dataset_refs(blob: Any) -> List[str]:
     return refs
 
 
-def build_need_maps(needs_data: Dict[str, Dict[str, Any]]) -> Tuple[Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
+def build_need_maps(
+    needs_data: Dict[str, Dict[str, Any]],
+) -> Tuple[Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
     needs = needs_data.get("need", {})
     justifications = needs_data.get("justification", {})
 
@@ -109,7 +110,9 @@ def build_need_maps(needs_data: Dict[str, Dict[str, Any]]) -> Tuple[Dict[str, Li
         for n_id in need_ids:
             need_to_justifications[n_id].append(justification)
             for dataset in datasets:
-                dataset_to_need_justifications[dataset].append({"need": n_id, "justification": justification})
+                dataset_to_need_justifications[dataset].append(
+                    {"need": n_id, "justification": justification}
+                )
     return need_to_justifications, dataset_to_need_justifications
 
 
@@ -119,8 +122,12 @@ def build_env() -> jinja2.Environment:
         jinja2.FileSystemLoader([str(TEMPLATE_DIR), str(TEMPLATE_DIR / "components")]),
         jinja2.PrefixLoader(
             {
-                "digital-land-frontend": jinja2.PackageLoader("digital_land_frontend", "templates"),
-                "govuk_frontend_jinja": jinja2.PackageLoader("govuk_frontend_jinja", "templates"),
+                "digital-land-frontend": jinja2.PackageLoader(
+                    "digital_land_frontend", "templates"
+                ),
+                "govuk_frontend_jinja": jinja2.PackageLoader(
+                    "govuk_frontend_jinja", "templates"
+                ),
             }
         ),
     ]
@@ -168,7 +175,11 @@ def build_site(args: argparse.Namespace) -> None:
     spec_root = Path(args.spec_root).resolve()
     needs_root = Path(args.needs_root).resolve()
 
-    root_dir = spec_root.parent if (spec_root.parent / "user-needs").exists() else needs_root.parent
+    root_dir = (
+        spec_root.parent
+        if (spec_root.parent / "user-needs").exists()
+        else needs_root.parent
+    )
     original_cwd = Path.cwd()
     os.chdir(root_dir)
 
@@ -193,19 +204,13 @@ def build_site(args: argparse.Namespace) -> None:
         needs_data = load_needs()
         need_records = list(needs_data.get("need", {}).values())
         need_records.sort(key=lambda n: n.get("need", ""))
-        need_to_justifications, dataset_to_need_justifications = build_need_maps(needs_data)
-
-        # Intro texts
-        root_readme_intro = render_markdown(extract_intro(load_readme(REPO_ROOT / "README.md")))
-        spec_readme_intro = extract_intro(load_readme(spec_root / "README.md"))
-        decision_intro = render_markdown(load_readme(REPO_ROOT / "docs/decision-stage-specification/README.md"))
-        submission_intro_source = REPO_ROOT / "docs/application.md"
-        submission_intro = render_markdown(extract_intro(load_readme(submission_intro_source))) if submission_intro_source.exists() else render_markdown(spec_readme_intro)
+        need_to_justifications, dataset_to_need_justifications = build_need_maps(
+            needs_data
+        )
 
         # Index
         index_ctx = {
             "page_title": "Planning application data specification",
-            "intro_html": root_readme_intro,
             "links": {
                 "submission": url_for(base_url, "/submission"),
                 "decision_stage": url_for(base_url, "/decision-stage"),
@@ -217,12 +222,13 @@ def build_site(args: argparse.Namespace) -> None:
         # Decision stage index
         decision_ctx = {
             "page_title": "Decision stage specification",
-            "intro_html": decision_intro,
             "datasets": [
                 {
                     "name": ds.get("name", ds["dataset"]),
                     "description": ds.get("description", ""),
-                    "href": url_for(base_url, f"/decision-stage/dataset/{ds['dataset']}"),
+                    "href": url_for(
+                        base_url, f"/decision-stage/dataset/{ds['dataset']}"
+                    ),
                 }
                 for ds in decision_datasets
             ],
@@ -238,9 +244,15 @@ def build_site(args: argparse.Namespace) -> None:
                 {
                     "id": need.get("need"),
                     "statement": need.get("statement") or need.get("name") or "",
-                    "href": url_for(base_url, f"/decision-stage/need/{need.get('need')}"),
-                    "tag_label": need_status(need_to_justifications.get(need.get("need"), []))[0],
-                    "tag_class": need_status(need_to_justifications.get(need.get("need"), []))[1],
+                    "href": url_for(
+                        base_url, f"/decision-stage/need/{need.get('need')}"
+                    ),
+                    "tag_label": need_status(
+                        need_to_justifications.get(need.get("need"), [])
+                    )[0],
+                    "tag_class": need_status(
+                        need_to_justifications.get(need.get("need"), [])
+                    )[1],
                 }
                 for need in need_records
             ],
@@ -260,7 +272,9 @@ def build_site(args: argparse.Namespace) -> None:
             if need.get("status"):
                 need_meta.append({"label": "Status", "value": need.get("status")})
             if need.get("themes"):
-                need_meta.append({"label": "Themes", "value": ", ".join(need.get("themes"))})
+                need_meta.append(
+                    {"label": "Themes", "value": ", ".join(need.get("themes"))}
+                )
             need_ctx = {
                 "page_title": f"Need {n_id}",
                 "links": {"back": url_for(base_url, "/decision-stage/need")},
@@ -289,7 +303,9 @@ def build_site(args: argparse.Namespace) -> None:
                 {
                     "name": ds.get("name", ds["dataset"]),
                     "description": ds.get("description", ""),
-                    "href": url_for(base_url, f"/decision-stage/dataset/{ds['dataset']}"),
+                    "href": url_for(
+                        base_url, f"/decision-stage/dataset/{ds['dataset']}"
+                    ),
                 }
                 for ds in decision_datasets
             ],
@@ -307,12 +323,16 @@ def build_site(args: argparse.Namespace) -> None:
                 field_ref = f.get("field")
                 field_meta = field_index.get(field_ref)
                 field_name = getattr(field_meta, "name", None) if field_meta else None
-                field_desc = getattr(field_meta, "description", None) if field_meta else None
+                field_desc = (
+                    getattr(field_meta, "description", None) if field_meta else None
+                )
                 fields.append(
                     {
                         "name": field_name or field_ref,
                         "ref": field_ref,
-                        "description": render_markdown(f.get("description") or field_desc or ""),
+                        "description": render_markdown(
+                            f.get("description") or field_desc or ""
+                        ),
                     }
                 )
             dataset_ctx = {
@@ -324,10 +344,16 @@ def build_site(args: argparse.Namespace) -> None:
                 "needs": [
                     {
                         "need_id": item["need"],
-                        "need_href": url_for(base_url, f"/decision-stage/need/{item['need']}"),
+                        "need_href": url_for(
+                            base_url, f"/decision-stage/need/{item['need']}"
+                        ),
                         "just_id": item["justification"].get("id", ""),
-                        "satisfaction": item["justification"].get("satisfaction", "justification"),
-                        "notes": render_markdown(item["justification"].get("notes", "") or ""),
+                        "satisfaction": item["justification"].get(
+                            "satisfaction", "justification"
+                        ),
+                        "notes": render_markdown(
+                            item["justification"].get("notes", "") or ""
+                        ),
                     }
                     for item in ds_needs
                 ],
@@ -338,7 +364,6 @@ def build_site(args: argparse.Namespace) -> None:
         # Submission index
         submission_ctx = {
             "page_title": "Submission specifications",
-            "intro_html": submission_intro,
             "applications": [
                 {
                     "name": app.get("name", app.get("application")),
@@ -347,15 +372,22 @@ def build_site(args: argparse.Namespace) -> None:
                 for app in applications
             ],
         }
-        submission_html = env.get_template("submission_index.html").render(**submission_ctx)
+        submission_html = env.get_template("submission_index.html").render(
+            **submission_ctx
+        )
         write_page(output_dir, "submission/index.html", submission_html)
 
         # Emit a sitemap for inspection
         site_map = {
             "index": "index.html",
             "decision_stage": "decision-stage/index.html",
-            "needs": [f"decision-stage/need/{n.get('need')}.html" for n in need_records],
-            "datasets": [f"decision-stage/dataset/{ds.get('dataset')}.html" for ds in decision_datasets],
+            "needs": [
+                f"decision-stage/need/{n.get('need')}.html" for n in need_records
+            ],
+            "datasets": [
+                f"decision-stage/dataset/{ds.get('dataset')}.html"
+                for ds in decision_datasets
+            ],
             "submission": "submission/index.html",
         }
         write_page(output_dir, "sitemap.json", json.dumps(site_map, indent=2))
@@ -365,10 +397,26 @@ def build_site(args: argparse.Namespace) -> None:
 
 def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Render static specification site.")
-    parser.add_argument("--output", default=REPO_ROOT / "generated/github-pages", help="Output directory for rendered site.")
-    parser.add_argument("--base-url", default="", help="Base URL for links (e.g. /planning-spec when hosting under a subpath).")
-    parser.add_argument("--spec-root", default=REPO_ROOT / "specification", help="Path to specification directory.")
-    parser.add_argument("--needs-root", default=REPO_ROOT / "user-needs", help="Path to user-needs directory.")
+    parser.add_argument(
+        "--output",
+        default=REPO_ROOT / "generated/github-pages",
+        help="Output directory for rendered site.",
+    )
+    parser.add_argument(
+        "--base-url",
+        default="",
+        help="Base URL for links (e.g. /planning-spec when hosting under a subpath).",
+    )
+    parser.add_argument(
+        "--spec-root",
+        default=REPO_ROOT / "specification",
+        help="Path to specification directory.",
+    )
+    parser.add_argument(
+        "--needs-root",
+        default=REPO_ROOT / "user-needs",
+        help="Path to user-needs directory.",
+    )
     return parser.parse_args(argv)
 
 
