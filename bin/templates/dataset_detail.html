@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block main %}
+  <a class="govuk-back-link" href="{{ links.back }}">Back to datasets</a>
+  <h1 class="govuk-heading-xl">{{ title }}</h1>
+  {% if description %}<p class="govuk-body">{{ description }}</p>{% endif %}
+
+  {% if fields %}
+    <h2 class="govuk-heading-l">Fields</h2>
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Field</th>
+          <th scope="col" class="govuk-table__header">Description</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for field in fields %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              {{ field.name }}
+              <div class="govuk-hint govuk-!-margin-bottom-0">{{ field.ref }}</div>
+            </td>
+            <td class="govuk-table__cell">{{ field.description | safe }}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  {% endif %}
+
+  <h2 class="govuk-heading-l">Needs satisfied by this dataset</h2>
+  {% if needs %}
+    {% for item in needs %}
+      <details class="govuk-details govuk-!-margin-bottom-3">
+        <summary class="govuk-details__summary">
+          <span class="govuk-details__summary-text">Need {{ item.need_id }} ({{ item.satisfaction }})</span>
+        </summary>
+        <div class="govuk-details__text">
+          <p class="govuk-body">Linked need: <a class="govuk-link" href="{{ item.need_href }}">{{ item.need_id }}</a></p>
+          {{ item.notes | safe }}
+          <p class="govuk-hint">Justification {{ item.just_id }}</p>
+        </div>
+      </details>
+    {% endfor %}
+  {% else %}
+    <p class="govuk-hint">No recorded links yet.</p>
+  {% endif %}
+{% endblock %}

@@ -11,8 +11,8 @@ init::
 	python -m pip install "pip-tools==$(PINNED_PIPTOOLS)"
 
 	# Compile from .in to .txt (use backtracking resolver for consistency)
-	python -m piptools compile --resolver=backtracking requirements/dev-requirements.in
 	python -m piptools compile --resolver=backtracking requirements/requirements.in
+	python -m piptools compile --resolver=backtracking requirements/dev-requirements.in
 
 	# Sync the environment to the compiled lock files
 	python -m piptools sync requirements/dev-requirements.txt requirements/requirements.txt
@@ -47,6 +47,12 @@ spreadsheets::
 
 jsonschema::
 	python3 bin/generate_json_schema.py
+
+render-github-pages::
+	python3 bin/render_static_site.py --output generated/github-pages
+
+serve-github-pages::
+	python3 -m http.server 8000 -d generated/github-pages
 
 clean::
 	rm -rf generated
