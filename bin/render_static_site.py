@@ -118,8 +118,14 @@ def build_need_maps(
 
 def build_env() -> jinja2.Environment:
     loaders: List[jinja2.BaseLoader] = [
-        # Local templates (and subfolders like components/)
-        jinja2.FileSystemLoader([str(TEMPLATE_DIR), str(TEMPLATE_DIR / "components")]),
+        # Local templates (and subfolders like components/ and assets)
+        jinja2.FileSystemLoader(
+            [
+                str(TEMPLATE_DIR),
+                str(TEMPLATE_DIR / "components"),
+                str(REPO_ROOT / "bin" / "assets"),
+            ]
+        ),
         jinja2.PrefixLoader(
             {
                 "digital-land-frontend": jinja2.PackageLoader(
@@ -165,6 +171,22 @@ def write_page(output_dir: Path, relative_path: str, content: str) -> None:
     target = output_dir / relative_path
     ensure_dir(target.parent)
     target.write_text(content, encoding="utf-8")
+
+
+def copy_static(output_dir: Path) -> None:
+    """
+    Copy local static assets (CSS) into the output directory.
+    """
+    # is it worth replacing this with a make target?
+    static_src = REPO_ROOT / "bin" / "assets"
+    static_dst = output_dir / "static"
+    if static_src.exists():
+        for path in static_src.rglob("*"):
+            if path.is_file():
+                rel = path.relative_to(static_src)
+                target = static_dst / rel
+                ensure_dir(target.parent)
+                target.write_bytes(path.read_bytes())
 
 
 def build_site(args: argparse.Namespace) -> None:
@@ -391,6 +413,9 @@ def build_site(args: argparse.Namespace) -> None:
             "submission": "submission/index.html",
         }
         write_page(output_dir, "sitemap.json", json.dumps(site_map, indent=2))
+
+        # Copy static assets (CSS)
+        copy_static(output_dir)
     finally:
         os.chdir(original_cwd)
 
