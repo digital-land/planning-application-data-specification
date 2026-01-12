@@ -386,6 +386,7 @@ def build_site(args: argparse.Namespace) -> None:
                 field_cardinality = (
                     getattr(field_meta, "cardinality", None) if field_meta else None
                 )
+                target_dataset = f.get("dataset")
                 fields.append(
                     {
                         "name": field_name or field_ref,
@@ -394,6 +395,12 @@ def build_site(args: argparse.Namespace) -> None:
                             f.get("description") or field_desc or ""
                         ),
                         "cardinality": f.get("cardinality") or field_cardinality or "",
+                        "target_dataset": target_dataset,
+                        "target_dataset_href": url_for(
+                            base_url, f"/decision-stage/dataset/{target_dataset}"
+                        )
+                        if target_dataset
+                        else "",
                     }
                 )
             dataset_ctx = {
