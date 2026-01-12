@@ -4,7 +4,7 @@ from integrity_checks.utils import has_reference_error, print_error
 # =========================================================
 # - id must be present, string, kebab-case, and unique
 # - status is one of draft | proposed | accepted | retired
-# - need references (need_id or needs list) must point to known needs
+# - need references (needs list) must point to known needs (need_id not allowed)
 # - satisfaction is full | partial
 # - confidence is high | medium | low
 # - body/content must be non-empty
@@ -50,51 +50,57 @@ def check_status(justifications):
 
 
 def check_need_refs(justifications, needs):
-    """need_id or needs list must reference known needs."""
+    """needs list must reference known needs; need_id is not allowed."""
     has_errors = False
     known_needs = set(needs.keys())
 
     for just_id, just in justifications.items():
-        need_id = just.get("need_id")
-        need_list = just.get("needs")
-
-        # at least one of need_id/needs should exist
-        if not need_id and not need_list:
+        if "need_id" in just:
             print_error(
                 "justification",
                 just_id,
-                "missing need reference (need_id or needs list)",
+                "need_id is not allowed; use a 'needs' list instead",
+            )
+            has_errors = True
+
+        need_list = just.get("needs")
+
+        # check list
+        if need_list is None:
+            print_error(
+                "justification",
+                just_id,
+                "missing need reference (provide a 'needs' list)",
             )
             has_errors = True
             continue
 
-        # check singular
-        if need_id and need_id not in known_needs:
+        if not isinstance(need_list, list):
             print_error(
                 "justification",
                 just_id,
-                f"need_id '{need_id}' not found among needs",
+                f"needs must be a list, got {type(need_list).__name__}",
             )
             has_errors = True
+            continue
 
-        # check list
-        if need_list is not None:
-            if not isinstance(need_list, list):
+        if not need_list:
+            print_error(
+                "justification",
+                just_id,
+                "needs list is empty; include at least one need reference",
+            )
+            has_errors = True
+            continue
+
+        for ref in need_list:
+            if ref not in known_needs:
                 print_error(
                     "justification",
                     just_id,
-                    f"needs must be a list, got {type(need_list).__name__}",
+                    f"need reference '{ref}' not found among needs",
                 )
                 has_errors = True
-            else:
-                for ref in need_list:
-                    if ref not in known_needs:
-                        print_error(
-                            "justification",
-                            just_id,
-                            f"need reference '{ref}' not found among needs",
-                        )
-                        has_errors = True
     return not has_errors
 
 
