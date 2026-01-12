@@ -106,13 +106,24 @@ def build_need_maps(
 
     for justification in justifications.values():
         need_ids = justification.get("needs", [])
-        datasets = extract_dataset_refs(justification.get("satisfied_by", {}))
+        satisfied_by = justification.get("satisfied_by", {})
+        datasets = extract_dataset_refs(satisfied_by)
         for n_id in need_ids:
             need_to_justifications[n_id].append(justification)
-            for dataset in datasets:
-                dataset_to_need_justifications[dataset].append(
-                    {"need": n_id, "justification": justification}
+            # Only attach to dataset if satisfied_by is a simple dataset-only entry
+            # (list of dicts with only 'dataset')
+            if isinstance(satisfied_by, list) and satisfied_by:
+                all_simple_dataset_refs = all(
+                    isinstance(item, dict)
+                    and "dataset" in item
+                    and len([k for k in item.keys() if item.get(k)]) == 1
+                    for item in satisfied_by
                 )
+                if all_simple_dataset_refs:
+                    for dataset in datasets:
+                        dataset_to_need_justifications[dataset].append(
+                            {"need": n_id, "justification": justification}
+                        )
     return need_to_justifications, dataset_to_need_justifications
 
 
@@ -348,6 +359,9 @@ def build_site(args: argparse.Namespace) -> None:
                 field_desc = (
                     getattr(field_meta, "description", None) if field_meta else None
                 )
+                field_cardinality = (
+                    getattr(field_meta, "cardinality", None) if field_meta else None
+                )
                 fields.append(
                     {
                         "name": field_name or field_ref,
@@ -355,6 +369,7 @@ def build_site(args: argparse.Namespace) -> None:
                         "description": render_markdown(
                             f.get("description") or field_desc or ""
                         ),
+                        "cardinality": f.get("cardinality") or field_cardinality or "",
                     }
                 )
             dataset_ctx = {
@@ -373,15 +388,22 @@ def build_site(args: argparse.Namespace) -> None:
                         "satisfaction": item["justification"].get(
                             "satisfaction", "justification"
                         ),
+                        "confidence": item["justification"].get("confidence", ""),
                         "notes": render_markdown(
                             item["justification"].get("notes", "") or ""
+                        ),
+                        "justification_body": render_markdown(
+                            getattr(item["justification"], "content", "")
+                            or item["justification"].get("body", "")
+                            or item["justification"].get("notes", "")
+                            or ""
                         ),
                     }
                     for item in ds_needs
                 ],
             }
             dataset_page = dataset_template.render(**dataset_ctx)
-            write_page(output_dir, f"decision-stage/dataset/{ds_id}.html", dataset_page)
+            write_page(output_dir, f"decision-stage/dataset/{ds_id}/index.html", dataset_page)
 
         # Submission index
         submission_ctx = {
@@ -407,7 +429,7 @@ def build_site(args: argparse.Namespace) -> None:
                 f"decision-stage/need/{n.get('need')}.html" for n in need_records
             ],
             "datasets": [
-                f"decision-stage/dataset/{ds.get('dataset')}.html"
+                f"decision-stage/dataset/{ds.get('dataset')}/index.html"
                 for ds in decision_datasets
             ],
             "submission": "submission/index.html",
