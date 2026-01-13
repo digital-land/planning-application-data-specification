@@ -609,7 +609,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Render static specification site.")
     parser.add_argument(
         "--output",
-        default=REPO_ROOT / "generated/github-pages",
+        default=REPO_ROOT / "docs",
         help="Output directory for rendered site.",
     )
     parser.add_argument(

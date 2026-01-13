@@ -49,10 +49,10 @@ jsonschema::
 	python3 bin/generate_json_schema.py
 
 render-github-pages::
-	python3 bin/render_static_site.py --output generated/github-pages
+	python3 bin/render_static_site.py --output docs
 
 serve-github-pages::
-	python3 -m http.server 8000 -d generated/github-pages
+	python3 -m http.server 8000 -d docs
 
 clean::
 	rm -rf generated
