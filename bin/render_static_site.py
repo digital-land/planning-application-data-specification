@@ -127,6 +127,126 @@ def build_need_maps(
     return need_to_justifications, dataset_to_need_justifications
 
 
+def join_list_phrases(items: List[str], conj: str = "and") -> str:
+    if not items:
+        return ""
+    if len(items) == 1:
+        return items[0]
+    return ", ".join(items[:-1]) + f" {conj} " + items[-1]
+
+
+def satisfaction_messages_for_field(
+    all_need_justs: List[Tuple[str, Dict[str, Any]]],
+    current_dataset: str,
+    current_field: str,
+    base_url: str,
+) -> List[Dict[str, str]]:
+    messages: List[Dict[str, str]] = []
+
+    def label_item(item: Dict[str, Any]) -> Optional[str]:
+        ds = item.get("dataset")
+        field = item.get("field")
+        if not field:
+            return None
+        ds_link = (
+            f'<a class="govuk-link" href="{url_for(base_url, f"/decision-stage/dataset/{ds}")}">{ds}</a>'
+            if ds
+            else ""
+        )
+        field_code = f"<code class='app-code'>{field}</code>"
+        if ds and ds != current_dataset:
+            return f"field {field_code} (dataset {ds_link})"
+        return f"field {field_code}"
+
+    def process_group(
+        items: List[Dict[str, Any]], connector: str, need_id: str, need_href: str
+    ) -> Optional[str]:
+        current_in_group = False
+        other_labels: List[str] = []
+        for it in items:
+            ds = it.get("dataset")
+            field = it.get("field")
+            if ds == current_dataset and field == current_field:
+                current_in_group = True
+            else:
+                lbl = label_item(it)
+                if lbl:
+                    other_labels.append(lbl)
+        if not current_in_group:
+            return None
+        if connector == "and":
+            if other_labels:
+                return f"This field and {join_list_phrases(other_labels, 'and')} satisfy need <a class=\"govuk-link\" href=\"{need_href}\">{need_id}</a>."
+            return f'This field satisfies need <a class="govuk-link" href="{need_href}">{need_id}</a>.'
+        else:
+            if other_labels:
+                return f"This field or {join_list_phrases(other_labels, 'or')} satisfy need <a class=\"govuk-link\" href=\"{need_href}\">{need_id}</a>."
+            return f'This field satisfies need <a class="govuk-link" href="{need_href}">{need_id}</a>.'
+
+    for need_id, justification in all_need_justs:
+        sb = justification.get("satisfied_by")
+        need_href = url_for(base_url, f"/decision-stage/need/{need_id}")
+
+        # List of simple dicts (dataset/field)
+        if isinstance(sb, list):
+            msg = process_group(sb, "and", need_id, need_href)
+            if msg:
+                messages.append({"text": msg})
+            continue
+
+        if isinstance(sb, dict):
+            if "allOf" in sb and isinstance(sb["allOf"], list):
+                # handle nested anyOf within allOf
+                current_matched = False
+                other_labels: List[str] = []
+                nested_msgs: List[str] = []
+                for clause in sb["allOf"]:
+                    if isinstance(clause, dict) and "anyOf" in clause:
+                        any_msg = process_group(
+                            clause["anyOf"], "or", need_id, need_href
+                        )
+                        if any_msg:
+                            nested_msgs.append(
+                                any_msg.replace("This field", "One of these fields")
+                            )
+                            current_matched = True
+                        else:
+                            # collect other labels for summary text
+                            for it in clause["anyOf"]:
+                                lbl = label_item(it)
+                                if lbl:
+                                    other_labels.append(lbl)
+                    elif isinstance(clause, dict):
+                        ds = clause.get("dataset")
+                        field = clause.get("field")
+                        if ds == current_dataset and field == current_field:
+                            current_matched = True
+                        else:
+                            lbl = label_item(clause)
+                            if lbl:
+                                other_labels.append(lbl)
+                if current_matched:
+                    if other_labels:
+                        messages.append(
+                            {
+                                "text": f"This field and {join_list_phrases(other_labels, 'and')} satisfy need <a class=\"govuk-link\" href=\"{need_href}\">{need_id}</a>."
+                            }
+                        )
+                    messages.extend([{"text": m} for m in nested_msgs])
+                continue
+
+            if "anyOf" in sb and isinstance(sb["anyOf"], list):
+                msg = process_group(sb["anyOf"], "or", need_id, need_href)
+                if msg:
+                    messages.append({"text": msg})
+                continue
+
+            # rule-based not tied to a specific field
+            continue
+
+    return messages
+
+
 def build_env() -> jinja2.Environment:
     loaders: List[jinja2.BaseLoader] = [
         # Local templates (and subfolders like components/ and assets)
@@ -375,6 +495,11 @@ def build_site(args: argparse.Namespace) -> None:
         for ds in decision_datasets:
             ds_id = ds.get("dataset")
             ds_needs = dataset_to_need_justifications.get(ds_id, [])
+            all_need_justs = [
+                (need_id, j)
+                for need_id, just_list in need_to_justifications.items()
+                for j in just_list
+            ]
             fields = []
             for f in ds.get("fields", []):
                 field_ref = f.get("field")
@@ -396,11 +521,16 @@ def build_site(args: argparse.Namespace) -> None:
                         ),
                         "cardinality": f.get("cardinality") or field_cardinality or "",
                         "target_dataset": target_dataset,
-                        "target_dataset_href": url_for(
-                            base_url, f"/decision-stage/dataset/{target_dataset}"
-                        )
-                        if target_dataset
-                        else "",
+                        "target_dataset_href": (
+                            url_for(
+                                base_url, f"/decision-stage/dataset/{target_dataset}"
+                            )
+                            if target_dataset
+                            else ""
+                        ),
+                        "satisfactions": satisfaction_messages_for_field(
+                            all_need_justs, ds_id, field_ref, base_url
+                        ),
                     }
                 )
             dataset_ctx = {
