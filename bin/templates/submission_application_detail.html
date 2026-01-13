@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% set spec_route = "submissions" %}
+
+{% block content %}
+
+<div class='govuk-grid-row'>
+  <div class='govuk-grid-column-full'>
+    <a class="govuk-back-link" href="{{ links.back }}">Back to submission specifications</a>
+    <h1 class="govuk-heading-xl">{{ title }}</h1>
+  </div>
+</div>
+
+<div class='govuk-grid-row'>
+  <div class='govuk-grid-column-three-quarters'>
+  {% if description %}<p class="govuk-body-l">{{ description }}</p>{% endif %}
+
+  <dl class="govuk-summary-list">
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Application</dt>
+      <dd class="govuk-summary-list__value"><code>{{ application }}</code></dd>
+    </div>
+    {% if synonyms %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Synonyms</dt>
+      <dd class="govuk-summary-list__value">{{ synonyms | join(", ") }}</dd>
+    </div>
+    {% endif %}
+    {% if entry_date %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Entry date</dt>
+      <dd class="govuk-summary-list__value">{{ entry_date }}</dd>
+    </div>
+    {% endif %}
+    {% if legislation %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Legislation</dt>
+      <dd class="govuk-summary-list__value">
+        <ul class="govuk-list govuk-list--bullet">
+          {% for l in legislation %}
+            <li><a class="govuk-link" href="{{ l }}">{{ l }}</a></li>
+          {% endfor %}
+        </ul>
+      </dd>
+    </div>
+    {% endif %}
+    {% if notes %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">Notes</dt>
+      <dd class="govuk-summary-list__value">{{ notes }}</dd>
+    </div>
+    {% endif %}
+  </dl>
+
+  {% if fields %}
+    <h2 class="govuk-heading-l">Fields</h2>
+    <dl class="govuk-summary-list">
+      {% for field in fields %}
+        <div class="govuk-summary-list__row">
+          <dt class="govuk-summary-list__key">{{ field.name }}</dt>
+          <dd class="govuk-summary-list__value">
+            <p class="govuk-body">{{ field.description }}</p>
+            <p class="govuk-hint govuk-!-margin-bottom-1">Reference: <code>{{ field.ref }}</code></p>
+            {% if field.required is not none %}
+              <p class="govuk-hint govuk-!-margin-bottom-0">Required: {{ field.required }}</p>
+            {% endif %}
+          </dd>
+        </div>
+      {% endfor %}
+    </dl>
+  {% endif %}
+
+  {% if modules %}
+    <h2 class="govuk-heading-l">Modules</h2>
+    <ul class="govuk-list govuk-list--bullet">
+      {% for module in modules %}
+        <li><code>{{ module.ref }}</code>{% if module.required is not none %} (required: {{ module.required }}){% endif %}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  </div>
+</div>
+{% endblock %}

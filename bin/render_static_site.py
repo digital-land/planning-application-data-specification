@@ -576,6 +576,10 @@ def build_site(args: argparse.Namespace) -> None:
                 {
                     "name": app.get("name", app.get("application")),
                     "description": app.get("description", ""),
+                    "href": url_for(
+                        base_url,
+                        f"/submission/application/{app.get('application')}",
+                    ),
                 }
                 for app in applications
             ],
@@ -584,6 +588,46 @@ def build_site(args: argparse.Namespace) -> None:
             **submission_ctx
         )
         write_page(output_dir, "submission/index.html", submission_html)
+
+        # Submission application detail pages
+        app_template = env.get_template("submission_application_detail.html")
+        for app in applications:
+            app_id = app.get("application")
+            fields = []
+            for f in app.get("fields", []):
+                field_ref = f.get("field")
+                field_meta = field_index.get(field_ref)
+                fields.append(
+                    {
+                        "ref": field_ref,
+                        "name": getattr(field_meta, "name", None) or field_ref,
+                        "description": getattr(field_meta, "description", None) or "",
+                        "required": f.get("required"),
+                    }
+                )
+            modules = [
+                {"ref": m.get("module"), "required": m.get("required")}
+                for m in app.get("modules", [])
+            ]
+            app_ctx = {
+                "page_title": f"Application {app_id}",
+                "title": app.get("name", app_id),
+                "description": app.get("description", ""),
+                "application": app_id,
+                "synonyms": app.get("synonyms", []),
+                "notes": app.get("notes", ""),
+                "entry_date": app.get("entry-date", ""),
+                "legislation": app.get("legislation", []),
+                "fields": fields,
+                "modules": modules,
+                "links": {"back": url_for(base_url, "/submission")},
+            }
+            app_html = app_template.render(**app_ctx)
+            write_page(
+                output_dir,
+                f"submission/application/{app_id}/index.html",
+                app_html,
+            )
 
         # Emit a sitemap for inspection
         site_map = {
