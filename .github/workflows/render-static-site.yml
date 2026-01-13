@@ -1,0 +1,42 @@
+name: Render static specification site
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - 'specification/**'
+
+jobs:
+  render-static-site:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+
+      - name: Install dependencies
+        run: make init
+      
+      - name: Set up environment variables
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "GITHUB_TOKEN=$GITHUB_TOKEN" > .env
+
+      - name: Render static site
+        run: make render-github-pages
+
+      - name: Commit and push generated site
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add generated/github-pages
+          git diff --quiet && git diff --staged --quiet || git commit -m "Render static site [skip ci]"
+          git push
