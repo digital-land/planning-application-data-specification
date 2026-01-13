@@ -1,4 +1,39 @@
 
+<a name="v0.1.5"></a>
+## [v0.1.5](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.45...v0.1.5) (2026-01-13)
+
+Add a proof of concept static site for viewing the specifications
+
+### ⚒️ Tooling
+
+* stub a page for each application (commit [f33b3dd](https://github.com/digital-land/planning-application-data-specification/commit/f33b3dd61d2f0e1af0a15efb3cf99600df28e498))
+* workflow to output to docs folder (commit [966be52](https://github.com/digital-land/planning-application-data-specification/commit/966be522d7ede762d7b198ed317929f5a40558de))
+* fix urls and links so can test local and serve on github pages (commit [5e65a58](https://github.com/digital-land/planning-application-data-specification/commit/5e65a58640a4fa3bee932c91ca1d2dece8beb1e4))
+* move static site from generated/github-pages to docs so it can be served (commit [0142865](https://github.com/digital-land/planning-application-data-specification/commit/014286595a29040aff565794941c0826afc3a843))
+* move documentation from docs to documentation folder (commit [701adfe](https://github.com/digital-land/planning-application-data-specification/commit/701adfeafc5f52f1fe56c7696af4218b94986aae))
+* github workflow to automate building static site (commit [8179c80](https://github.com/digital-land/planning-application-data-specification/commit/8179c80a70c417a8ee2af3c3b27b2f1be59f287c))
+* improve the layout of the fields on the detailed dataset pages (commit [80bc3a6](https://github.com/digital-land/planning-application-data-specification/commit/80bc3a6a2d3a78c84b50e4a7836cb12aa20cf833))
+* list what needs a field satisfies on dataset detail pages (commit [5ea06e3](https://github.com/digital-land/planning-application-data-specification/commit/5ea06e3124a18be316452c508f91a151350ecf23))
+* add link to fields that are references to other datasets (commit [0c6ac94](https://github.com/digital-land/planning-application-data-specification/commit/0c6ac94aec94b3f9e48eab2fac6998ad39d1cad3))
+* work on layout of specification parts (commit [3814162](https://github.com/digital-land/planning-application-data-specification/commit/38141626374046b71a0d58e77dbc2bcdffcf9ec5))
+* layout the details of a need (commit [3912aac](https://github.com/digital-land/planning-application-data-specification/commit/3912aacd49c9c2a2ae4b9f5793c3ea39d74dfae4))
+* list needs satisfied by dataset on dataset page (commit [a4d4554](https://github.com/digital-land/planning-application-data-specification/commit/a4d4554acee9a2556f1d8a3fc20e7470cdee717b))
+* add some local css to generated github pages (commit [aa943a6](https://github.com/digital-land/planning-application-data-specification/commit/aa943a6e88b68316c10dee7d2c0d8d86abe87e81))
+* add introductions to different spec index pages (commit [94270f8](https://github.com/digital-land/planning-application-data-specification/commit/94270f84f9ab914209035927e90ef992bcbf7bf6))
+* setup initial rendering of static pages to view specifications (commit [5a0d73a](https://github.com/digital-land/planning-application-data-specification/commit/5a0d73a58eb59a59e6fde9cc3a967ccfdb0d453f))
+* add integrity checks for specifications (platform-like) (commit [4eb06af](https://github.com/digital-land/planning-application-data-specification/commit/4eb06af79b497d4966e314479bf62acbbc10b58c))
+
+### 𝌭 Model changes
+
+* add schema file for decision stage specification (commit [c8c830c](https://github.com/digital-land/planning-application-data-specification/commit/c8c830c7b2bda8390ad708049a6f41e29ca8abc6))
+
+### 🐛 Bug Fixes
+
+* links in nav bar (commit [94bb01e](https://github.com/digital-land/planning-application-data-specification/commit/94bb01e2698e0a45a6d262ee39cf1ba274f43e06))
+* incorrect attribute used on justification record (commit [3737823](https://github.com/digital-land/planning-application-data-specification/commit/373782314018a3e5d6679a5fe3efb3fd0e3763fd))
+* justification integrity checks should only check for needs attr (commit [acd7a12](https://github.com/digital-land/planning-application-data-specification/commit/acd7a12259ca81b7dc4070e11400c092a13a49fd))
+
+
 <a name="v0.1.45"></a>
 ## [v0.1.45](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.44...v0.1.45) (2026-01-09)
 
