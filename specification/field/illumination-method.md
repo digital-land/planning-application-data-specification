@@ -1,6 +1,7 @@
 ---
 cardinality: 1
-datatype: string
+codelist: illumination-method
+datatype: enum
 description: Method of illumination for the advertisement
 end-date: ''
 entry-date: 2025-07-17
