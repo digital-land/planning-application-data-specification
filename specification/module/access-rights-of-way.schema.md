@@ -59,7 +59,7 @@ module: access-rights-of-way
 name: Access and rights of way
 rules:
 - rule: All fields must use values from rights-of-way-answers codelist
-- rule: If new-altered-vehicle is yes, details must be provided in highways module
+- rule: If new-altered-vehicle is yes, details must be provided
 - rule: If change-right-of-way is yes, separate rights of way order may be needed
 - rule: If temp-right-of-way is yes, details of temporary diversions must be provided
 - rule: each document in supporting-documents must have a `reference` that matches a document in application.documents
