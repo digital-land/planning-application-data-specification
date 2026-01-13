@@ -48,11 +48,19 @@ spreadsheets::
 jsonschema::
 	python3 bin/generate_json_schema.py
 
-render-github-pages::
+clean-static-site::
+	rm -rf docs
+	mkdir -p docs
+
+render-local-site:: clean-static-site
+	python3 bin/render_static_site.py --output docs --base-url ""
+
+render-github-pages:: clean-static-site
 	python3 bin/render_static_site.py --output docs
 
 serve-github-pages::
-	python3 -m http.server 8000 -d docs
+	# Local preview: serve docs at root; URLs will use whatever base-url you rendered with
+	python3 -m http.server 8000 --bind :: -d docs
 
 clean::
 	rm -rf generated

@@ -247,7 +247,7 @@ def satisfaction_messages_for_field(
     return messages
 
 
-def build_env() -> jinja2.Environment:
+def build_env(base_url: str) -> jinja2.Environment:
     loaders: List[jinja2.BaseLoader] = [
         # Local templates (and subfolders like components/ and assets)
         jinja2.FileSystemLoader(
@@ -286,8 +286,8 @@ def build_env() -> jinja2.Environment:
 
     # Expose globals commonly used by DL templates
     env.globals["random_int"] = dlf_globals.random_int
-    env.globals["assetPath"] = "https://digital-land.github.io"
-    env.globals["staticPath"] = "https://digital-land.github.io"
+    env.globals["assetPath"] = base_url.rstrip("/") + "/static"
+    env.globals["staticPath"] = base_url.rstrip("/") + "/static"
 
     return env
 
@@ -336,7 +336,8 @@ def build_site(args: argparse.Namespace) -> None:
     original_cwd = Path.cwd()
     os.chdir(root_dir)
 
-    env = build_env()
+    env = build_env(base_url or "")
+    env.globals["base_url"] = base_url
 
     try:
         spec_model = load_specification_model()
@@ -614,8 +615,8 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--base-url",
-        default="",
-        help="Base URL for links (e.g. /planning-spec when hosting under a subpath).",
+        default="/planning-application-data-specification",
+        help="Base URL for links (e.g. /planning-spec when hosting under a subpath). Use \"\" for local root preview.",
     )
     parser.add_argument(
         "--spec-root",
