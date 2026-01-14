@@ -14,6 +14,7 @@ fields:
       value: other
       description: if use-class-accommodation == "other"
   - field: not-applicable
+    description: Used to explicitly state the use class does not apply to the proposal
   - field: is-existing-rooms-lost-known
   - field: existing-rooms-lost
     required-if:
