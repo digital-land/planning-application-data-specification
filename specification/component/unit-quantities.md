@@ -19,9 +19,8 @@ fields:
       - any:
         - field: units-unknown
           value: false
-        - applies-if:
-            application-type:
-              in:
+        - application-type:
+            in:
               - ldc-existing-use
   - field: total-units
 entry-date: 2025-07-17
