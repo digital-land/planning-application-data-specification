@@ -4,12 +4,25 @@ name: Unit quantities
 description: |
   Structure for defining quantities of units, either as unknown or broken down by bedroom count
 fields:
-  - field: units-unknown
+  - applies-if:
+      application-type:
+        in:
+        - full
+        - outline
+        - outline-all
+        - outline-some
+        - technical-details-consent
+    field: units-unknown
     required: true
   - field: units-per-bedroom-no
     required-if:
-      - field: units-unknown
-        value: false
+      - any:
+        - field: units-unknown
+          value: false
+        - applies-if:
+            application-type:
+              in:
+              - ldc-existing-use
   - field: total-units
 entry-date: 2025-07-17
 end-date: ''
