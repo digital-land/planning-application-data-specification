@@ -27,6 +27,9 @@ rules:
     > 0
 - description: Old and new document references must be different
   rule: replacement-documents[].old-document != replacement-documents[].new-document
+- description: Old and new document references must match documents uploaded with the application
+  rule: each document in replacement-documents must have `old-document` and `new-document`
+    that match a document in application.documents
 - description: Description must provide clear details of the amendments
   rule: description.length > 10
 - description: Reason must provide clear justification for the amendment

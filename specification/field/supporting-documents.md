@@ -2,8 +2,7 @@
 cardinality: n
 component: supporting-document
 datatype: object
-description: Supporting documents that provide additional information about the materials
-  to be used
+description: References to supporting documents that have been uploaded with the application
 end-date: ''
 entry-date: 2025-06-13
 field: supporting-documents

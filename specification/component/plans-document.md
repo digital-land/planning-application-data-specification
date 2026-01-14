@@ -7,9 +7,8 @@ fields:
   - field: reference-number
     required: true
     description: Unique identifier for the document
-  - field: name
-    required: true
-    description: Name of the document (descriptive)
 entry-date: 2025-07-14
-end-date: ''
+end-date: 2026-01-14
 ---
+
+Deprecated. Use supporting-document component instead.

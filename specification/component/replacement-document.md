@@ -3,7 +3,7 @@ component: replacement-document
 name: Replacement document
 description: |
   Structure for documents being replaced in non-material amendments,
-  mapping old document references to new document references
+  mapping old document references to new document references held in application.documents
 fields:
   - field: old-document
     required: true
