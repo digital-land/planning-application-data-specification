@@ -17,14 +17,20 @@ fields:
   required: true
 - field: connect-to-drainage-system
   required: true
-- field: drainage-system-details
+- field: supporting-documents
+  description: References to plans or drawings showing details of the existing drainage
+    system
 module: foul-sewage
 name: Foul sewage disposal
 rules:
-- description: drainage-system-details is required when connect-to-drainage-system
-    is true
-  rule: if connect-to-drainage-system == true then drainage-system-details is required
-- description: drainage-system-details is required for extraction-oil-gas applications
-  rule: if application-type includes 'extraction-oil-gas' then drainage-system-details
+- description: supporting-documents is required when connect-to-drainage-system is
+    true
+  rule: if connect-to-drainage-system == true then supporting-documents is required
+- description: supporting-documents is required for extraction-oil-gas applications
+  rule: if application-type includes 'extraction-oil-gas' then supporting-documents
     is required
+- description: each document in supporting-documents must have a `reference` that
+    matches a document in application.documents
+  rule: each document in supporting-documents must have a `reference` that matches
+    a document in application.documents
 ---
