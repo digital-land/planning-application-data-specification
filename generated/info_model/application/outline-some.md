@@ -436,12 +436,20 @@ How waste water will leave the property as part of the proposed development
 | foul-sewage-disposal-types | Foul sewage disposal types[] | List of ways foul sewage will be disposed of | MAY | Select from the **foul-sewage-disposal-type** enum |
 | produce-foul-sewage | Produce foul sewage | Whether the proposed development will produce any foul sewage | MUST |  |
 | connect-to-drainage-system | Connect to drainage system | Whether the proposal needs to connect to the existing drainage system | MUST |  |
-| drainage-system-details | Drainage system details | Details of the drawings/plans that show the existing drainage system | MAY |  |
+| supporting-documents | Supporting documents[]{} | References to plans or drawings showing details of the existing drainage system | MAY |  |
+
+
+**Supporting document component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
 
 **Validation rules**
 
-- if connect-to-drainage-system == true then drainage-system-details is required
-- if application-type includes 'extraction-oil-gas' then drainage-system-details is required
+- if connect-to-drainage-system == true then supporting-documents is required
+- if application-type includes 'extraction-oil-gas' then supporting-documents is required
+- each document in supporting-documents must have a `reference` that matches a document in application.documents
 
 ## Hazardous substances
 
