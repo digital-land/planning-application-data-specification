@@ -15,6 +15,8 @@ fields:
     description: Brief description of what the document contains
   - field: document-types
     required: true
+  - field: uploaded-date
+    required: true
   - field: file
     required: true
 entry-date: 2025-06-20
