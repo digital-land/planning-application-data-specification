@@ -8,7 +8,6 @@ fields:
   required: true
 - field: proposed-employees
   required: true
-- field: employment-impact
 module: employment
 name: Employment
 rules:
