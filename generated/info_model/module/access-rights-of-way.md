@@ -13,7 +13,7 @@ Details of any changes the proposed development would make to existing access ar
 | new-public-road | New public road | Will new public roads be provided within the site | full, extraction-oil-gas, outline | MUST | Select from the **rights-of-way-answer** enum |
 | temp-right-of-way | Temporary right of way changes | Are temporary changes to rights of way needed while the site is worked | extraction-oil-gas | MUST | Select from the **rights-of-way-answer** enum |
 | future-new-right-of-way | Future new right of way | Will new public rights of way be provided after extraction? | extraction-oil-gas | MUST | Select from the **rights-of-way-answer** enum |
-| supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used |  | MAY |  |
+| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application |  | MAY |  |
 
 
 **Supporting document component**
@@ -21,13 +21,12 @@ Details of any changes the proposed development would make to existing access ar
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 details | Details | Additional details or information about an item | MAY | 
 
 **Validation rules**
 
 - All fields must use values from rights-of-way-answers codelist
-- If new-altered-vehicle is yes, details must be provided in highways module
+- If new-altered-vehicle is yes, details must be provided
 - If change-right-of-way is yes, separate rights of way order may be needed
 - If temp-right-of-way is yes, details of temporary diversions must be provided
 - each document in supporting-documents must have a `reference` that matches a document in application.documents

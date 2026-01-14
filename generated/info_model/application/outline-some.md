@@ -72,6 +72,7 @@ reference | Reference | A reference for the document | MUST |
 name | Name | The name or title of the document | MUST | 
 description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
+uploaded-date | Uploaded date | The date the document was uploaded to the application | MUST | 
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
@@ -114,7 +115,7 @@ Details of any changes the proposed development would make to existing access ar
 | --- | --- | --- | --- | --- |
 | new-altered-vehicle | New or altered vehicle access | Is a new or altered vehicle access proposed to/from the public highway | MUST | Select from the **rights-of-way-answer** enum |
 | new-altered-pedestrian | New or altered pedestrian access | Is a new or altered pedestrian access proposed to/from the public highway | MUST | Select from the **rights-of-way-answer** enum |
-| supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MAY |  |
+| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application | MAY |  |
 
 
 **Supporting document component**
@@ -122,12 +123,11 @@ Details of any changes the proposed development would make to existing access ar
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 
 **Validation rules**
 
 - All fields must use values from rights-of-way-answers codelist
-- If new-altered-vehicle is yes, details must be provided in highways module
+- If new-altered-vehicle is yes, details must be provided
 - If change-right-of-way is yes, separate rights of way order may be needed
 - If temp-right-of-way is yes, details of temporary diversions must be provided
 - each document in supporting-documents must have a `reference` that matches a document in application.documents
@@ -445,30 +445,17 @@ How waste water will leave the property as part of the proposed development
 
 ## Hazardous substances
 
-What hazardous substances may be used as part of the development
+Details of hazardous substances requiring consent used as part of the development
 
 **Hazardous substances module**
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| involves-hazardous-substances | Involves hazardous substances | Indicates if hazardous substances are involved in the proposal | MUST | Select from the **yes-no-not-applicable** enum |
-| substance-types | Substance types[]{} | List of hazardous substances and their quantities | MAY | Rule: is a MUST if `involves-hazardous-substances` is `yes` |
-| hazardous-sub-consent-req | Hazardous substance consent required | Does the proposal involve the use or storage of any substances requiring hazardous substances consent | MUST |  |
-| hazardous-sub-consent-details | Hazardous substance consent details | Details of hazardous substance consent requirements | MAY | Rule: is a MUST if `hazardous-sub-consent-req` is `True` |
-
-
-**Hazardous substance component**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-hazardous-substance-type | Hazardous substance type | Reference of hazardous substance type from predefined list | MUST | Select from the **hazardous-sub-type** enum
-hazardous-substance-other | Hazardous substance other | The specific name of the hazardous substance if other is selected | MAY | Rule: is a MUST if `hazardous-substance-type` is `other`
-amount | Amount | The total amount due for the application fee | MUST | 
 
 **Validation rules**
 
-- if involves-hazardous-substances == 'yes' then substance-types is required
-- if hazardous-sub-consent-req == true then hazardous-sub-consent-details is required
+- if application-type in ['full', 'outline'] and involves-hazardous-substances == 'yes' then substance-types is required
+- if application-type == 'extraction-oil-gas' and hazardous-sub-consent-req == true then hazardous-sub-consent-details is required
 - if hazardous-substance-type == 'other' then name is required
 - amount > 0
 
@@ -500,7 +487,7 @@ What materials are being used for the proposed development
 | --- | --- | --- | --- | --- |
 | building-elements | Building elements[]{} | Details of materials for a specific building element such as walls, roof, windows or doors | MUST |  |
 | providing-additional-material-information | Providing additional material information | Is the applicant providing additional materials information on submitted plan(s)/drawing(s)/design and access statement? | MUST |  |
-| supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MAY | Rule: is a MUST if `providing-additional-material-information` is `True` |
+| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application | MAY | Rule: is a MUST if `providing-additional-material-information` is `True` |
 
 
 **Building element component**
@@ -519,7 +506,6 @@ materials-not-known | Materials not known | Indicates the materials for this bui
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 
 **Validation rules**
 

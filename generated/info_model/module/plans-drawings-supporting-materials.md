@@ -6,21 +6,19 @@ Additional materials and specifications that form part of the planning applicati
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| plans-documents | Plans documents[]{} | List of plans, drawings, and supporting documents |  | MUST |  |
+| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application |  | MUST |  |
 | inspection-address | Inspection address | Full postal address where supporting material can be inspected |  | MUST | Should this be the address-text field |
 
 
-**Plans document component**
+**Supporting document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference-number | Reference number | Unique identifier for the document | MUST | 
-name | Name | Name of the document (descriptive) | MUST | 
+reference | Reference | A unique reference for the data item | MUST | 
+details | Details | Additional details or information about an item | MAY | 
 
 **Validation rules**
 
-- plans-documents.length >= 1
-- plans-documents[].reference-number must be unique
-- plans-documents[].name.length > 0
+- supporting-documents.length >= 1
 - inspection-address must include street, town/city, and postcode
-- each document in plans-document must have a `reference` that matches a document in application.documents
+- each document in supporting-documents must have a `reference` that matches a document in application.documents

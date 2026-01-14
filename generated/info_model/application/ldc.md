@@ -52,6 +52,7 @@ reference | Reference | A reference for the document | MUST |
 name | Name | The name or title of the document | MUST | 
 description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
+uploaded-date | Uploaded date | The date the document was uploaded to the application | MUST | 
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 

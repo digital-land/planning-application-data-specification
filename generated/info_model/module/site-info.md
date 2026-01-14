@@ -9,7 +9,7 @@ Any additional relevant information about the development site.
 | site-area | Site area{} | The total area of the site where development is proposed |  | MUST |  |
 | existing-use | Existing use[]{} | Structured information on the current use of the site |  | MUST |  |
 | known-constraints | Known constraints[] | A list of the known constraints affecting the site |  | MUST | Select from the **site-constraint** enum |
-| supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used |  | MAY |  |
+| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application |  | MAY |  |
 
 
 **Site area component**
@@ -34,7 +34,6 @@ floorspace | Floorspace | Total floorspace for a use in square metres | MUST |
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 details | Details | Additional details or information about an item | MAY | 
 
 

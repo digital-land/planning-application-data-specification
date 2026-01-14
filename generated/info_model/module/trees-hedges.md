@@ -19,7 +19,6 @@ Details of trees and/or hedges that will be affected by the proposed development
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 details | Details | Additional details or information about an item | MAY | 
 
 **Validation rules**

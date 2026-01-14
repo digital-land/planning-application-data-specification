@@ -22,7 +22,7 @@ colour | Colour | Colour of proposed sign | MAY |
 materials | Materials | Materials of proposed sign | MAY | 
 max-projection | Max projection | Maximum projection, in metres, of the advertisement from the face of the building | MAY | 
 illuminated | Illuminated | Will the sign(s) be illuminated? | MAY | 
-illumination-method | Illumination method | Method of illumination for the advertisement | MAY | Rule: is a MUST if `illuminated` is `True`
+illumination-method | Illumination method | Method of illumination for the advertisement | MAY | Select from the **illumination-method** enum. Rule: is a MUST if `illuminated` is `True`
 illuminance-level | Illuminance level | Level of illuminance for the advertisement | MAY | Rule: is a MUST if `illuminated` is `True`. Unit: cd/m2
 illumination-type | Illumination type | Type of illumination (static or intermittent) | MAY | Select from the **illumination-type** enum. Rule: is a MUST if `illuminated` is `True`
 

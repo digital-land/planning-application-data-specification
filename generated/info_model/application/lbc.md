@@ -61,6 +61,7 @@ reference | Reference | A reference for the document | MUST |
 name | Name | The name or title of the document | MUST | 
 description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
+uploaded-date | Uploaded date | The date the document was uploaded to the application | MUST | 
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
@@ -339,7 +340,6 @@ Details of any changes being made to a listed building as part of development wo
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 
 **Validation rules**
 
@@ -372,7 +372,7 @@ What materials are being used for the proposed development
 | --- | --- | --- | --- | --- |
 | building-elements | Building elements[]{} | Details of materials for a specific building element such as walls, roof, windows or doors | MUST |  |
 | providing-additional-material-information | Providing additional material information | Is the applicant providing additional materials information on submitted plan(s)/drawing(s)/design and access statement? | MUST |  |
-| supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MAY | Rule: is a MUST if `providing-additional-material-information` is `True` |
+| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application | MAY | Rule: is a MUST if `providing-additional-material-information` is `True` |
 
 
 **Building element component**
@@ -391,7 +391,6 @@ materials-not-known | Materials not known | Indicates the materials for this bui
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 
 **Validation rules**
 

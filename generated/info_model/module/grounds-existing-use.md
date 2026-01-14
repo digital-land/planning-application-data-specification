@@ -9,34 +9,20 @@ Supporting inforation for a Lawful Development Certificate application relating 
 | use-lawful-reason | Use lawful reason | Explanation of why the existing or last use is considered lawful, 
 providing justification for a lawful development certificate application
  |  | MUST |  |
-| documents | Documents[]{} | List of submitted documents with references and details |  | MAY |  |
+| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application |  | MAY |  |
 | use | Use | A use class or type of use |  | MAY | Select from the **use-class** enum. an option needs to be "other" |
 | specified-use | Specified use | A specified use if no applicable use class is available |  | MAY | Rule: is a MUST if `use` is `sui`. Rule: is a MUST if `use` is `other` |
 
 
-**Document component**
+**Supporting document component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A reference for the document | MUST | 
-name | Name | The name or title of the document | MUST | 
-description | Description | Brief description of what the document contains | MAY | 
-document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
-file | File{} | The digital file or a reference to where the file is stored | MUST | 
-
-
-**File component**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-base64-content | Base64 | Base64-encoded content of the file for inline file uploads | MAY | 
-filename | Filename | Name of the file being uploaded | MUST | 
-mime-type | MIME type | The file's MIME type such as application/pdf or image/jpeg | MAY | 
-file-size | File size | Size of the file in bytes that can be used to enforce limits | MAY | 
+reference | Reference | A unique reference for the data item | MUST | 
+details | Details | Additional details or information about an item | MAY | 
 
 **Validation rules**
 
 - use-lawful-reason.length > 0
 - use IN ['sui', 'other'] REQUIRES specified-use.length > 0
-- documents[].reference.length > 0 AND documents[].name.length > 0
-- documents[].reference should be unique across application.documents[]
+- each document in supporting-documents must have a `reference` that matches a document in application.documents

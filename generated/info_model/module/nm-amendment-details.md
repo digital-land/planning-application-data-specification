@@ -24,5 +24,6 @@ new-document | New document | Reference for the new document replacing the old d
 - is-substituting-document == true REQUIRES replacement-documents.length >= 1
 - replacement-documents[].old-document.length > 0 AND replacement-documents[].new-document.length > 0
 - replacement-documents[].old-document != replacement-documents[].new-document
+- each document in replacement-documents must have `old-document` and `new-document` that match a document in application.documents
 - description.length > 10
 - reason.length > 5

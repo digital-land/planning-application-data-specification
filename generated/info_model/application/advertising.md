@@ -29,6 +29,7 @@ An application for all types of advertisements and signs
 
 * [Advertisement type](#advertisement-type)
 * [Contact priority](#contact-priority)
+* [Illumination method](#illumination-method)
 * [Illumination type](#illumination-type)
 * [User role type](#user-role-type)
 
@@ -59,6 +60,7 @@ reference | Reference | A reference for the document | MUST |
 name | Name | The name or title of the document | MUST | 
 description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
+uploaded-date | Uploaded date | The date the document was uploaded to the application | MUST | 
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
@@ -111,7 +113,6 @@ Where the advertisement being applied to be built will be located
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 
 **Validation rules**
 
@@ -413,7 +414,7 @@ colour | Colour | Colour of proposed sign | MAY |
 materials | Materials | Materials of proposed sign | MAY | 
 max-projection | Max projection | Maximum projection, in metres, of the advertisement from the face of the building | MAY | 
 illuminated | Illuminated | Will the sign(s) be illuminated? | MAY | 
-illumination-method | Illumination method | Method of illumination for the advertisement | MAY | Rule: is a MUST if `illuminated` is `True`
+illumination-method | Illumination method | Method of illumination for the advertisement | MAY | Select from the **illumination-method** enum. Rule: is a MUST if `illuminated` is `True`
 illuminance-level | Illuminance level | Level of illuminance for the advertisement | MAY | Rule: is a MUST if `illuminated` is `True`. Unit: cd/m2
 illumination-type | Illumination type | Type of illumination (static or intermittent) | MAY | Select from the **illumination-type** enum. Rule: is a MUST if `illuminated` is `True`
 
@@ -508,6 +509,13 @@ Below are the codelists required to support this specification:
 | --- | --- | --- |
 | primary | Primary | The preferred item to use |
 | secondary | Secondary | The option to use if primary is not working |
+
+### Illumination method
+
+| reference | name | description |
+| --- | --- | --- |
+| internally | Internally | Illumination provided from within the advertisement structure. |
+| externally | Externally | Illumination provided by external light sources. |
 
 ### Illumination type
 

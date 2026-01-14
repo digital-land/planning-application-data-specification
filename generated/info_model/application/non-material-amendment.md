@@ -54,6 +54,7 @@ reference | Reference | A reference for the document | MUST |
 name | Name | The name or title of the document | MUST | 
 description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
+uploaded-date | Uploaded date | The date the document was uploaded to the application | MUST | 
 file | File{} | The digital file or a reference to where the file is stored | MUST | 
 
 
@@ -357,6 +358,7 @@ new-document | New document | Reference for the new document replacing the old d
 - is-substituting-document == true REQUIRES replacement-documents.length >= 1
 - replacement-documents[].old-document.length > 0 AND replacement-documents[].new-document.length > 0
 - replacement-documents[].old-document != replacement-documents[].new-document
+- each document in replacement-documents must have `old-document` and `new-document` that match a document in application.documents
 - description.length > 10
 - reason.length > 5
 

@@ -8,7 +8,7 @@ What materials are being used for the proposed development
 | --- | --- | --- | --- | --- | --- |
 | building-elements | Building elements[]{} | Details of materials for a specific building element such as walls, roof, windows or doors |  | MUST |  |
 | providing-additional-material-information | Providing additional material information | Is the applicant providing additional materials information on submitted plan(s)/drawing(s)/design and access statement? |  | MUST |  |
-| supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used |  | MAY | Rule: is a MUST if `providing-additional-material-information` is `True` |
+| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application |  | MAY | Rule: is a MUST if `providing-additional-material-information` is `True` |
 
 
 **Building element component**
@@ -27,7 +27,6 @@ materials-not-known | Materials not known | Indicates the materials for this bui
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 details | Details | Additional details or information about an item | MAY | 
 
 **Validation rules**

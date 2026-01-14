@@ -32,7 +32,7 @@ habitat-loss-details | Habitat loss details{} | Details of habitat loss or degra
 metric-publication-date | Metric publication date | Publication date of the biodiversity metric tool used for calculations | MUST | 
 irreplaceable-habitats | Irreplaceable habitats | Indicates whether the site contains any irreplaceable habitats | MUST | 
 irreplaceable-habitats-details | Irreplaceable habitats details | Description and references for any irreplaceable habitats identified on the site | MAY | Rule: is a MUST if `irreplaceable-habitats` is `True`
-supporting-documents | Supporting documents[]{} | Supporting documents that provide additional information about the materials to be used | MUST | 
+supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application | MUST | 
 
 
 **Habitat loss details component**
@@ -49,7 +49,6 @@ supporting-evidence | Supporting evidence | Description or reference to supporti
 field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
-name | Name | A name for the document. For example, The Site Plan | MUST | 
 details | Details | Additional details or information about an item | MAY | 
 
 **Validation rules**
