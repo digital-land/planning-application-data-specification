@@ -5,7 +5,8 @@ entry-date: 2025-07-17
 fields:
 - field: removal-reasons
   required: true
-- field: plan-references
+- field: supporting-documents
+  description: References to plans or drawings showing the stretches of hedgerow to be removed
   required: true
 - field: hedgerow-length
   required: true
@@ -19,5 +20,6 @@ name: Hedgerow removal notice
 rules:
 - rule: hedgerow-length must be a positive number
 - rule: planting-evidence-attached is required if hedgerow-less-than-30-years is true
-- rule: plan-references should reference documents in application.documents
+- rule: each document in supporting-documents must have a `reference` that matches
+    a document in application.documents
 ---
