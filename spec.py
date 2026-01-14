@@ -94,6 +94,7 @@ def field_usage(field_ref):
 
 # TODO: find all fields that reference a given codelist
 # TODO: find all fields that reference a given component
+# TODO: find all fields that are not used anywhere
 
 
 if __name__ == "__main__":
