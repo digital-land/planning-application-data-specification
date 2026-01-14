@@ -18,8 +18,8 @@ fields:
   required: true
 - field: waste-storage-area-details
   required-if:
-    field: needs-waste-storage-area
-    value: true
+    - field: needs-waste-storage-area
+      value: true
 - applies-if:
     application-type:
       in:
@@ -34,8 +34,8 @@ fields:
   required: true
 - field: separate-recycling-arrangements-details
   required-if:
-    field: separate-recycling-arrangements
-    value: true
+    - field: separate-recycling-arrangements
+      value: true
 module: waste-storage-collection
 name: Waste storage and collection
 rules:

@@ -11,7 +11,16 @@ fields:
     required-if:
       - field: not-applicable
         value: false
+  - field: unit-type
+    required-if:
+      - field: not-applicable
+        value: false
   - field: annual-throughput
+    required-if:
+      - field: not-applicable
+        value: false
+  - field: unit-type
+    codelist: waste-throughput-unit
     required-if:
       - field: not-applicable
         value: false
