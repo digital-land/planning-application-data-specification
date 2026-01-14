@@ -590,7 +590,9 @@ field | name | description | required | notes
 waste-management-facility-type | Waste management facility type | Type of waste management facility | MUST | Select from the **waste-management-type** enum
 not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
 total-capacity | Total capacity | Total capacity of void in cubic metres (or tonnes/litres) | MAY | Rule: is a MUST if `not-applicable` is `False`
+unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `not-applicable` is `False`
 annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MAY | Rule: is a MUST if `not-applicable` is `False`
+unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `not-applicable` is `False`
 
 
 **Waste streams component**
@@ -825,8 +827,8 @@ Any waste storage or recycling arrangements are in place, such as waste storage 
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| waste-storage-area-details | Waste storage area details | Details of the waste storage area including location, size, design and access arrangements | MAY |  |
-| separate-recycling-arrangements-details | Separate recycling arrangements details | Details of the recycling arrangements including types of materials, collection methods and storage facilities | MAY |  |
+| waste-storage-area-details | Waste storage area details | Details of the waste storage area including location, size, design and access arrangements | MAY | Rule: is a MUST if `needs-waste-storage-area` is `True` |
+| separate-recycling-arrangements-details | Separate recycling arrangements details | Details of the recycling arrangements including types of materials, collection methods and storage facilities | MAY | Rule: is a MUST if `separate-recycling-arrangements` is `True` |
 
 **Validation rules**
 

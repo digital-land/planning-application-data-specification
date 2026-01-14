@@ -52,6 +52,7 @@ This application is needed when making detailed proposals for developments which
 * [Use class](#use-class)
 * [Use class for accommodation](#use-class-for-accommodation)
 * [User role type](#user-role-type)
+* [Waste capacity unit](#waste-capacity-unit)
 * [Waste management type](#waste-management-type)
 
 ## Application fields
@@ -749,7 +750,9 @@ field | name | description | required | notes
 waste-management-facility-type | Waste management facility type | Type of waste management facility | MUST | Select from the **waste-management-type** enum
 not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
 total-capacity | Total capacity | Total capacity of void in cubic metres (or tonnes/litres) | MAY | Rule: is a MUST if `not-applicable` is `False`
+unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `not-applicable` is `False`
 annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MAY | Rule: is a MUST if `not-applicable` is `False`
+unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `not-applicable` is `False`
 
 
 **Waste streams component**
@@ -991,9 +994,9 @@ Any waste storage or recycling arrangements are in place, such as waste storage 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
 | needs-waste-storage-area | Needs waste storage area | Does the proposal require a waste storage area | MUST |  |
-| waste-storage-area-details | Waste storage area details | Details of the waste storage area including location, size, design and access arrangements | MAY |  |
+| waste-storage-area-details | Waste storage area details | Details of the waste storage area including location, size, design and access arrangements | MAY | Rule: is a MUST if `needs-waste-storage-area` is `True` |
 | separate-recycling-arrangements | Separate recycling arrangements | Does the proposal include separate recycling arrangements | MUST |  |
-| separate-recycling-arrangements-details | Separate recycling arrangements details | Details of the recycling arrangements including types of materials, collection methods and storage facilities | MAY |  |
+| separate-recycling-arrangements-details | Separate recycling arrangements details | Details of the recycling arrangements including types of materials, collection methods and storage facilities | MAY | Rule: is a MUST if `separate-recycling-arrangements` is `True` |
 
 **Validation rules**
 
@@ -1163,6 +1166,14 @@ Below are the codelists required to support this specification:
 | --- | --- | --- |
 | agent | Agent | A professional agent working for the applicant |
 | proxy | Proxy | An individual working on behalf of the applicant but not in a professional capacity |
+
+### Waste capacity unit
+
+| reference | name | description |
+| --- | --- | --- |
+| cubic-metres | Cubic metres | Measured by volume in cubic metres |
+| tonnes | Tonnes | Measured by mass in tonnes |
+| litres | Litres | Measured by volume in litres |
 
 ### Waste management type
 

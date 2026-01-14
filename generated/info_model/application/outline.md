@@ -40,6 +40,7 @@ Applications that are used to understand whether the basic nature of a developme
 * [Use class](#use-class)
 * [Use class for accommodation](#use-class-for-accommodation)
 * [User role type](#user-role-type)
+* [Waste capacity unit](#waste-capacity-unit)
 * [Waste management type](#waste-management-type)
 
 ## Application fields
@@ -603,7 +604,9 @@ field | name | description | required | notes
 waste-management-facility-type | Waste management facility type | Type of waste management facility | MUST | Select from the **waste-management-type** enum
 not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
 total-capacity | Total capacity | Total capacity of void in cubic metres (or tonnes/litres) | MAY | Rule: is a MUST if `not-applicable` is `False`
+unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `not-applicable` is `False`
 annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MAY | Rule: is a MUST if `not-applicable` is `False`
+unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `not-applicable` is `False`
 
 
 **Waste streams component**
@@ -885,6 +888,14 @@ Below are the codelists required to support this specification:
 | --- | --- | --- |
 | agent | Agent | A professional agent working for the applicant |
 | proxy | Proxy | An individual working on behalf of the applicant but not in a professional capacity |
+
+### Waste capacity unit
+
+| reference | name | description |
+| --- | --- | --- |
+| cubic-metres | Cubic metres | Measured by volume in cubic metres |
+| tonnes | Tonnes | Measured by mass in tonnes |
+| litres | Litres | Measured by volume in litres |
 
 ### Waste management type
 
