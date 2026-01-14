@@ -33,6 +33,7 @@ def check_module_names(modules):
 def check_field_references(modules, fields):
     """
     Check rule 2: each field in fields attr must be a field reference in /fields
+    and must not be end-dated/deprecated
     """
     has_errors = False
 
@@ -51,6 +52,17 @@ def check_field_references(modules, fields):
                     "module",
                     module_name,
                     f"referenced field '{field_name}' not found in field definitions",
+                )
+                has_errors = True
+                continue
+
+            field_def = fields[field_name]
+            # Treat fields with an end-date as deprecated/inactive
+            if field_def.get("end-date"):
+                print_error(
+                    "module",
+                    module_name,
+                    f"referenced field '{field_name}' is deprecated (has end-date {field_def.get('end-date')})",
                 )
                 has_errors = True
 

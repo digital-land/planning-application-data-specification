@@ -43,7 +43,7 @@ def check_component_names(components: List[Dict[str, Any]]) -> bool:
 def check_field_references(
     components: List[Dict[str, Any]], fields: Dict[str, Any]
 ) -> bool:
-    """Check rule 2: each field must reference an existing field."""
+    """Check rule 2: each field must reference an existing, active field."""
     has_errors = False
     for component_name, component in components.items():
 
@@ -58,6 +58,14 @@ def check_field_references(
                 print_error(
                     component_name,
                     f"field '{field_name}' not found in field definitions",
+                )
+                has_errors = True
+                continue
+            field_data = fields[field_name]
+            if field_data.get("end-date"):
+                print_error(
+                    component_name,
+                    f"field '{field_name}' is deprecated (has end-date {field_data.get('end-date')})",
                 )
                 has_errors = True
     return not has_errors
