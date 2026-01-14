@@ -392,7 +392,6 @@ How the proposed development will impact existing and proposed employee numbers
 | --- | --- | --- | --- | --- |
 | existing-employees | Existing employees{} | Counts of existing employees | MUST |  |
 | proposed-employees | Proposed employees{} | Counts of proposed employees | MUST |  |
-| employment-impact | Employment impact | Summary of net employment change (gain/loss) | MAY |  |
 
 
 **Employees component**

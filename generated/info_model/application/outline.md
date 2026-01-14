@@ -352,7 +352,6 @@ How the proposed development will impact existing and proposed employee numbers
 | --- | --- | --- | --- | --- |
 | existing-employees | Existing employees{} | Counts of existing employees | MUST |  |
 | proposed-employees | Proposed employees{} | Counts of proposed employees | MUST |  |
-| employment-impact | Employment impact | Summary of net employment change (gain/loss) | MAY |  |
 
 
 **Employees component**
@@ -503,7 +502,7 @@ field | name | description | required | notes
 use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Select from the **use-class-accommodation** enum. Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
 
 use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use-class-accommodation` is `other`. Required if use is "other"
-not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
+not-applicable | Not applicable | Used to explicitly state the use class does not apply to the proposal | MAY | 
 is-existing-rooms-lost-known | Is existing rooms lost known | Whether the total existing rooms that will be lost is known | MAY | 
 existing-rooms-lost | Existing rooms lost | Existing rooms to be lost by change of use | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-existing-rooms-lost-known` is `True`. Must be 0 or positive
 is-total-rooms-proposed-known | Is total rooms proposed known | Whether the total rooms proposed is known | MAY | 
@@ -681,7 +680,7 @@ proposed-unit-breakdown | Proposed unit breakdown[]{} | Number of proposed units
 field | name | description | required | notes
 -- | -- | -- | -- | --
 units-unknown | Units unknown | Whether the number of units is unknown | MUST | 
-units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | Rule: is a MUST if `units-unknown` is `False`
+units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | 
 total-units | Total units | Total number of units | MAY | 
 
 

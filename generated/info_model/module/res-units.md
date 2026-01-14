@@ -28,7 +28,7 @@ proposed-unit-breakdown | Proposed unit breakdown[]{} | Number of proposed units
 field | name | description | required | notes
 -- | -- | -- | -- | --
 units-unknown | Units unknown | Whether the number of units is unknown | MUST | 
-units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | Rule: is a MUST if `units-unknown` is `False`
+units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | 
 total-units | Total units | Total number of units | MAY | 
 
 

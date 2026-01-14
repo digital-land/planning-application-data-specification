@@ -354,7 +354,6 @@ How the proposed development will impact existing and proposed employee numbers
 | --- | --- | --- | --- | --- |
 | existing-employees | Existing employees{} | Counts of existing employees | MUST |  |
 | proposed-employees | Proposed employees{} | Counts of proposed employees | MUST |  |
-| employment-impact | Employment impact | Summary of net employment change (gain/loss) | MAY |  |
 
 
 **Employees component**
@@ -661,7 +660,7 @@ proposed-unit-breakdown | Proposed unit breakdown[]{} | Number of proposed units
 field | name | description | required | notes
 -- | -- | -- | -- | --
 units-unknown | Units unknown | Whether the number of units is unknown | MUST | 
-units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | Rule: is a MUST if `units-unknown` is `False`
+units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | 
 total-units | Total units | Total number of units | MAY | 
 
 
