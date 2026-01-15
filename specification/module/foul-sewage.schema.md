@@ -9,11 +9,11 @@ fields:
   required-if:
     field: has-new-disposal-arrangements
     value: true
-- applies-if:
-    application-types:
+- field: produce-foul-sewage
+  applies-if:
+    application-type:
       in:
       - extraction-oil-gas
-  field: produce-foul-sewage
   required: true
 - field: connect-to-drainage-system
   required: true
