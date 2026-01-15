@@ -36,10 +36,18 @@ def format_fields_table(field_entries, fields_spec, table_type="main", app_type=
                 "| --- | --- | --- | --- | --- | --- |",
             ]
     else:  # component table
-        lines = [
-            "field | name | description | required | notes",
-            "-- | -- | -- | -- | --",
-        ]
+        # include application column only if any field has applies-if
+        has_applies_if = any("applies-if" in fe for fe in field_entries)
+        if has_applies_if:
+            lines = [
+                "field | name | description | required | notes | only for application",
+                "-- | -- | -- | -- | -- | --",
+            ]
+        else:
+            lines = [
+                "field | name | description | required | notes",
+                "-- | -- | -- | -- | --",
+            ]
 
     for field_entry in field_entries:
         if app_type:
@@ -69,9 +77,15 @@ def format_fields_table(field_entries, fields_spec, table_type="main", app_type=
                     f"| {ref} | {name} | {description} | {only_for_md_str} | {requirement} | {notes_md_str} |"
                 )
         else:
-            lines.append(
-                f"{ref} | {name} | {description} | {requirement} | {notes_md_str}"
-            )
+            if len(lines[0].split("|")) > 5:
+                # has only-for column
+                lines.append(
+                    f"{ref} | {name} | {description} | {requirement} | {notes_md_str} | {only_for_md_str}"
+                )
+            else:
+                lines.append(
+                    f"{ref} | {name} | {description} | {requirement} | {notes_md_str}"
+                )
 
     return "\n".join(lines)
 
