@@ -458,6 +458,7 @@ reference | Reference | A unique reference for the data item | MUST |
 
 - if connect-to-drainage-system == true then supporting-documents is required
 - if application-type includes 'extraction-oil-gas' then supporting-documents is required
+- if connect-to-drainage-system-oil-gas == 'yes' then supporting-documents is required
 - each document in supporting-documents must have a `reference` that matches a document in application.documents
 
 ## Hazardous substances

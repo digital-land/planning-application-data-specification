@@ -82,59 +82,6 @@
     "application"
   ],
   "definitions": {
-    "supporting-document": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference"
-      ]
-    },
-    "building-element": {
-      "type": "object",
-      "properties": {
-        "building-element-type": {
-          "type": "string",
-          "enum": [
-            "walls",
-            "roof",
-            "windows",
-            "doors",
-            "boundary-treatments",
-            "vehicle-access-hard-standings",
-            "lighting",
-            "external-walls",
-            "roof-covering",
-            "chimney",
-            "external-doors",
-            "ceilings",
-            "internal-walls",
-            "floors",
-            "internal-doors",
-            "rainwater-goods",
-            "other"
-          ]
-        },
-        "existing-materials": {
-          "type": "string"
-        },
-        "proposed-materials": {
-          "type": "string"
-        },
-        "materials-not-applicable": {
-          "type": "boolean"
-        },
-        "materials-not-known": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "building-element-type"
-      ]
-    },
     "other-contact": {
       "type": "object",
       "properties": {
@@ -152,6 +99,25 @@
         "fullname",
         "number",
         "email"
+      ]
+    },
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
       ]
     },
     "site-location": {
@@ -191,23 +157,30 @@
       },
       "required": []
     },
-    "contact-details": {
+    "supporting-document": {
       "type": "object",
       "properties": {
-        "email": {
+        "reference": {
           "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
         }
       },
       "required": [
-        "email",
-        "phone-numbers"
+        "reference"
+      ]
+    },
+    "newspaper-notice": {
+      "type": "object",
+      "properties": {
+        "newspaper-name": {
+          "type": "string"
+        },
+        "publication-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "newspaper-name",
+        "publication-date"
       ]
     },
     "agent": {
@@ -276,19 +249,61 @@
       },
       "required": []
     },
-    "newspaper-notice": {
+    "applicant": {
       "type": "object",
       "properties": {
-        "newspaper-name": {
+        "reference": {
           "type": "string"
         },
-        "publication-date": {
-          "type": "string"
+        "person": {
+          "$ref": "#/definitions/person"
         }
       },
       "required": [
-        "newspaper-name",
-        "publication-date"
+        "reference",
+        "person"
+      ]
+    },
+    "building-element": {
+      "type": "object",
+      "properties": {
+        "building-element-type": {
+          "type": "string",
+          "enum": [
+            "walls",
+            "roof",
+            "windows",
+            "doors",
+            "boundary-treatments",
+            "vehicle-access-hard-standings",
+            "lighting",
+            "external-walls",
+            "roof-covering",
+            "chimney",
+            "external-doors",
+            "ceilings",
+            "internal-walls",
+            "floors",
+            "internal-doors",
+            "rainwater-goods",
+            "other"
+          ]
+        },
+        "existing-materials": {
+          "type": "string"
+        },
+        "proposed-materials": {
+          "type": "string"
+        },
+        "materials-not-applicable": {
+          "type": "boolean"
+        },
+        "materials-not-known": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "building-element-type"
       ]
     },
     "notified-person": {
@@ -303,19 +318,38 @@
       },
       "required": []
     },
-    "applicant": {
+    "applicant-details": {
       "type": "object",
       "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "reference",
-        "person"
+        "applicants"
+      ]
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
       ]
     },
     "proposal-details": {
@@ -373,67 +407,187 @@
         }
       ]
     },
-    "trees-hedges": {
+    "conflict-of-interest": {
       "type": "object",
       "properties": {
-        "has-falling-trees-risk": {
+        "conflict-to-declare": {
           "type": "boolean"
         },
-        "falling-trees-document": {
-          "$ref": "#/definitions/supporting-document"
+        "conflict-person-name": {
+          "type": "string"
         },
-        "tree-removal": {
-          "type": "boolean"
-        },
-        "tree-removal-plan": {
-          "$ref": "#/definitions/supporting-document"
+        "conflict-details": {
+          "type": "string"
         }
       },
       "required": [
-        "has-falling-trees-risk",
-        "tree-removal"
+        "conflict-to-declare"
       ],
       "allOf": [
         {
           "if": {
             "properties": {
-              "has-falling-trees-risk": {
+              "conflict-to-declare": {
                 "const": true
               }
             }
           },
           "then": {
             "required": [
-              "falling-trees-document"
+              "conflict-person-name"
             ]
           }
         },
         {
           "if": {
             "properties": {
-              "tree-removal": {
+              "conflict-to-declare": {
                 "const": true
               }
             }
           },
           "then": {
             "required": [
-              "tree-removal-plan"
+              "conflict-details"
             ]
           }
         }
       ]
     },
-    "bng": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "bng-exempt": {
-          "type": "boolean"
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "bng-exempt"
+        "agent-reference",
+        "contact-details"
       ]
+    },
+    "pre-app-advice": {
+      "type": "object",
+      "properties": {
+        "advice-sought": {
+          "type": "boolean"
+        },
+        "officer-name": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "advice-date": {
+          "type": "string"
+        },
+        "advice-summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "advice-sought"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "officer-name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reference"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "advice-date"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "advice-summary"
+            ]
+          }
+        }
+      ]
+    },
+    "site-details": {
+      "type": "object",
+      "properties": {
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "site-locations"
+      ]
+    },
+    "applicant-contact": {
+      "type": "object",
+      "properties": {
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "applicant-reference",
+        "contact-details"
+      ]
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
     },
     "checklist": {
       "type": "object",
@@ -449,6 +603,157 @@
       "required": [
         "national-req-types"
       ]
+    },
+    "ownership-certs": {
+      "type": "object",
+      "properties": {
+        "sole-owner": {
+          "type": "boolean"
+        },
+        "agricultural-tenants": {
+          "type": "boolean"
+        },
+        "owners-and-tenants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/notified-person"
+          },
+          "minItems": 1
+        },
+        "steps-taken": {
+          "type": "string"
+        },
+        "newspaper-notices": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/newspaper-notice"
+          },
+          "minItems": 1
+        },
+        "ownership-cert-option": {
+          "type": "string",
+          "enum": [
+            "certificate-a",
+            "certificate-b",
+            "certificate-c",
+            "certificate-d"
+          ]
+        },
+        "applicant-signature": {
+          "type": "string"
+        },
+        "agent-signature": {
+          "type": "string"
+        },
+        "signature-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "sole-owner",
+        "agricultural-tenants"
+      ]
+    },
+    "parking": {
+      "type": "object",
+      "properties": {
+        "is-existing-parking-affected": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "is-existing-parking-affected"
+      ],
+      "if": {
+        "properties": {
+          "is-existing-parking-affected": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "description"
+        ]
+      }
+    },
+    "site-visit": {
+      "type": "object",
+      "properties": {
+        "can-be-seen-from": {
+          "type": "boolean"
+        },
+        "contact-type": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "agent"
+          ]
+        },
+        "contact-reference": {
+          "type": "string"
+        },
+        "other-contact": {
+          "$ref": "#/definitions/other-contact"
+        }
+      },
+      "required": [
+        "can-be-seen-from",
+        "contact-type"
+      ],
+      "if": {
+        "properties": {
+          "contact-type": {
+            "const": "other"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "other-contact"
+        ]
+      }
+    },
+    "materials": {
+      "type": "object",
+      "properties": {
+        "building-elements": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/building-element"
+          },
+          "minItems": 1
+        },
+        "providing-additional-material-information": {
+          "type": "boolean"
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "building-elements",
+        "providing-additional-material-information"
+      ],
+      "if": {
+        "properties": {
+          "providing-additional-material-information": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "supporting-documents"
+        ]
+      }
     },
     "access-rights-of-way": {
       "type": "object",
@@ -549,372 +854,67 @@
         ]
       }
     },
-    "agent-details": {
+    "trees-hedges": {
       "type": "object",
       "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
-      ]
-    },
-    "pre-app-advice": {
-      "type": "object",
-      "properties": {
-        "advice-sought": {
+        "has-falling-trees-risk": {
           "type": "boolean"
         },
-        "officer-name": {
-          "type": "string"
+        "falling-trees-document": {
+          "$ref": "#/definitions/supporting-document"
         },
-        "reference": {
-          "type": "string"
+        "tree-removal": {
+          "type": "boolean"
         },
-        "advice-date": {
-          "type": "string"
-        },
-        "advice-summary": {
-          "type": "string"
+        "tree-removal-plan": {
+          "$ref": "#/definitions/supporting-document"
         }
       },
       "required": [
-        "advice-sought"
+        "has-falling-trees-risk",
+        "tree-removal"
       ],
       "allOf": [
         {
           "if": {
             "properties": {
-              "advice-sought": {
+              "has-falling-trees-risk": {
                 "const": true
               }
             }
           },
           "then": {
             "required": [
-              "officer-name"
+              "falling-trees-document"
             ]
           }
         },
         {
           "if": {
             "properties": {
-              "advice-sought": {
+              "tree-removal": {
                 "const": true
               }
             }
           },
           "then": {
             "required": [
-              "reference"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "advice-date"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "advice-summary"
+              "tree-removal-plan"
             ]
           }
         }
       ]
     },
-    "conflict-of-interest": {
+    "bng": {
       "type": "object",
       "properties": {
-        "conflict-to-declare": {
+        "bng-exempt": {
           "type": "boolean"
-        },
-        "conflict-person-name": {
-          "type": "string"
-        },
-        "conflict-details": {
-          "type": "string"
         }
       },
       "required": [
-        "conflict-to-declare"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "conflict-to-declare": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "conflict-person-name"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "conflict-to-declare": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "conflict-details"
-            ]
-          }
-        }
+        "bng-exempt"
       ]
-    },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
-    "declaration": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
-    "ownership-certs": {
-      "type": "object",
-      "properties": {
-        "sole-owner": {
-          "type": "boolean"
-        },
-        "agricultural-tenants": {
-          "type": "boolean"
-        },
-        "owners-and-tenants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/notified-person"
-          },
-          "minItems": 1
-        },
-        "steps-taken": {
-          "type": "string"
-        },
-        "newspaper-notices": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/newspaper-notice"
-          },
-          "minItems": 1
-        },
-        "ownership-cert-option": {
-          "type": "string",
-          "enum": [
-            "certificate-a",
-            "certificate-b",
-            "certificate-c",
-            "certificate-d"
-          ]
-        },
-        "applicant-signature": {
-          "type": "string"
-        },
-        "agent-signature": {
-          "type": "string"
-        },
-        "signature-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "sole-owner",
-        "agricultural-tenants"
-      ]
-    },
-    "parking": {
-      "type": "object",
-      "properties": {
-        "is-existing-parking-affected": {
-          "type": "boolean"
-        },
-        "description": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "is-existing-parking-affected"
-      ],
-      "if": {
-        "properties": {
-          "is-existing-parking-affected": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "description"
-        ]
-      }
-    },
-    "materials": {
-      "type": "object",
-      "properties": {
-        "building-elements": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/building-element"
-          },
-          "minItems": 1
-        },
-        "providing-additional-material-information": {
-          "type": "boolean"
-        },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "building-elements",
-        "providing-additional-material-information"
-      ],
-      "if": {
-        "properties": {
-          "providing-additional-material-information": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "supporting-documents"
-        ]
-      }
-    },
-    "site-details": {
-      "type": "object",
-      "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "site-locations"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
-    "site-visit": {
-      "type": "object",
-      "properties": {
-        "can-be-seen-from": {
-          "type": "boolean"
-        },
-        "contact-type": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "agent"
-          ]
-        },
-        "contact-reference": {
-          "type": "string"
-        },
-        "other-contact": {
-          "$ref": "#/definitions/other-contact"
-        }
-      },
-      "required": [
-        "can-be-seen-from",
-        "contact-type"
-      ],
-      "if": {
-        "properties": {
-          "contact-type": {
-            "const": "other"
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "other-contact"
-        ]
-      }
     },
     "application": {
       "type": "object",
