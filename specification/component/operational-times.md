@@ -16,3 +16,18 @@ fields:
         value: false
         description: required if field `closed` is false
 ---
+
+For example
+
+```
+day-type: monday-friday
+time-ranges: [
+    { open-time: 0900, close-time: 1200 },
+    { open-time: 1300, close-time: 1700 }
+]
+```
+and
+```
+day-type: sunday
+closed: closed
+```
