@@ -16,6 +16,18 @@ fields:
       - extraction-oil-gas
   required: true
 - field: connect-to-drainage-system
+  applies-if:
+    application-type:
+      in:
+      - full
+      - outline-some
+      - technical-details-consent
+  required: true
+- field: connect-to-drainage-system-oil-gas
+  applies-if:
+    application-type:
+      in:
+      - extraction-oil-gas
   required: true
 - field: supporting-documents
   description: References to plans or drawings showing details of the existing drainage
@@ -28,6 +40,10 @@ rules:
   rule: if connect-to-drainage-system == true then supporting-documents is required
 - description: supporting-documents is required for extraction-oil-gas applications
   rule: if application-type includes 'extraction-oil-gas' then supporting-documents
+    is required
+- description: supporting-documents is required when connect-to-drainage-system-oil-gas
+    is yes
+  rule: if connect-to-drainage-system-oil-gas == 'yes' then supporting-documents
     is required
 - description: each document in supporting-documents must have a `reference` that
     matches a document in application.documents
