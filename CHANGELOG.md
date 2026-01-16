@@ -1,4 +1,45 @@
 
+<a name="v0.1.51"></a>
+## [v0.1.51](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.5...v0.1.51) (2026-01-16)
+
+Resolving issue from DMSF analysis
+
+### ⚒️ Tooling
+
+* components in standalone only modules should include 'only for application' column if applicable (commit [9b2ffc0](https://github.com/digital-land/planning-application-data-specification/commit/9b2ffc049e2358514e58b779e7af92c46ec2f500))
+* update integrity checks to handle when field has end-date (commit [31a6578](https://github.com/digital-land/planning-application-data-specification/commit/31a6578af1d649b6e592fe351ea3b297346e405a))
+* stub a page for each application (commit [aa76cf8](https://github.com/digital-land/planning-application-data-specification/commit/aa76cf862d87b32d91797d5bb3f32d9d478e468e))
+
+### 𝌭 Model changes
+
+* add example of operational times to component definition (commit [64f4a1f](https://github.com/digital-land/planning-application-data-specification/commit/64f4a1f967093a1fed4635a59d7a6eec6976e82e))
+* added new connect-to-drainage-system-oil-gas field to handle variation in extraction-oil-gas applications (commit [c9b5b11](https://github.com/digital-land/planning-application-data-specification/commit/c9b5b11b1460f621b43e0ba5e1791c6224b4e465))
+* remove employment-impact field, not par tof existing forms (commit [577c124](https://github.com/digital-land/planning-application-data-specification/commit/577c124f51c83a4ff261539cb55580bc9a0299cc))
+* clarify the not-applicable field in room-details-outline is for disambiguating a blank row (commit [a617705](https://github.com/digital-land/planning-application-data-specification/commit/a617705b729e7dbdcbeede5c145a1a602655ce27))
+* add codelists for handling measurement unit types (commit [35af675](https://github.com/digital-land/planning-application-data-specification/commit/35af67514b5c196f048ae1697cdd16482f2e2bb8))
+* clarify WGS84 is government chosen standard for exchange of location data (commit [02ea808](https://github.com/digital-land/planning-application-data-specification/commit/02ea80829048e708d3d86829f290cd81b9736ba3))
+* replaces details field with supporting-documents field in foul sewage module (commit [53a12ce](https://github.com/digital-land/planning-application-data-specification/commit/53a12cecb426ba4ac0ac5737ee5a0eb8442ef38c))
+* rationalise and document approach to including and referencing documents (commit [eacec70](https://github.com/digital-land/planning-application-data-specification/commit/eacec70f5ce1c97d0defaefffb9be870abce8bbb))
+* add uploaded-date to document component (commit [755ed9b](https://github.com/digital-land/planning-application-data-specification/commit/755ed9b0602f9d327528457e0feba6e6cda7bd9a))
+* update illumination-method field to use an illumination-method codelist (commit [1d3188c](https://github.com/digital-land/planning-application-data-specification/commit/1d3188cff8c301b1a2ffec91bf0b03212e8f87b4))
+
+### 🐛 Bug Fixes
+
+* produce-foul-sewage was not showing it is only applicable to extraction-oil-gas apps in info_model output (commit [de66ed1](https://github.com/digital-land/planning-application-data-specification/commit/de66ed1a0569bee62381f5bfbe27f3cdfa37febc))
+* issue with condition structure in unit-quantities component (commit [b0b1962](https://github.com/digital-land/planning-application-data-specification/commit/b0b1962141c6dac15123a7012a741e79e8785eea))
+* ldc-existing-use shouldn't be able to say unknown on unit-qunanties (commit [cd19f90](https://github.com/digital-land/planning-application-data-specification/commit/cd19f9075be7557206e2222c1d645d7325c527b3))
+* hedgerow-removal module should use supporting-documents field (commit [881c605](https://github.com/digital-land/planning-application-data-specification/commit/881c605b482e7b4234788acb9aa9ec31b77e6dc0))
+* the path to the documentation folder (commit [c4085d2](https://github.com/digital-land/planning-application-data-specification/commit/c4085d2063de7b7c3028b3942838944143f07115))
+* add missing applies-if attributes to hazardous substances module so variants are covered (commit [24cf08b](https://github.com/digital-land/planning-application-data-specification/commit/24cf08b388707f2c46c7274bc68a807b038830bf))
+* remove incorrect reference to highways module (commit [e3ae270](https://github.com/digital-land/planning-application-data-specification/commit/e3ae27003e9077855d3d50dffd3709dfb3fb56a7))
+
+### 📚 Documentation
+
+* add clearer decision record for requiring WGS84 for location data (commit [29e83b4](https://github.com/digital-land/planning-application-data-specification/commit/29e83b4ef3c19011624a6a2b16fe9ded5f5497cb))
+* clarify that document references are expected to come from the submission service whether created by system or applicant (commit [f3af71b](https://github.com/digital-land/planning-application-data-specification/commit/f3af71bb8d8c1194da99545c18a171c11ec246ea))
+* add design decision record about consolidating approach to referring to documents in modules (commit [3acccfc](https://github.com/digital-land/planning-application-data-specification/commit/3acccfcf926f5e8bdcedd7f00201cc27a858dbad))
+
+
 <a name="v0.1.5"></a>
 ## [v0.1.5](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.45...v0.1.5) (2026-01-13)
 
