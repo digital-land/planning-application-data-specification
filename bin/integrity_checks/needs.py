@@ -15,6 +15,14 @@ from integrity_checks.utils import has_reference_error, print_error
 VALID_STATUSES = {"draft", "proposed", "accepted", "retired"}
 VALID_PRIORITIES = {"high", "medium", "low"}
 VALID_NEXT_STEPS = {"review", "rewrite", "split", "retire"}
+VALID_SOURCE_TYPES = {
+    "interview",
+    "community-session",
+    "legislation",
+    "ps1-ps2",
+    "data-design",
+    "other",
+}
 
 
 def check_need_identifiers(needs):
@@ -133,6 +141,41 @@ def check_next_step(needs):
     return not has_errors
 
 
+def check_sources(needs):
+    """Ensure each source.type, if present, is in the allowed set."""
+    has_errors = False
+    for need_id, need in needs.items():
+        sources = need.get("sources") or need.get("source") or []
+        if sources is None:
+            continue
+        if not isinstance(sources, list):
+            print_error(
+                "need",
+                need_id,
+                f"sources must be a list, got {type(sources).__name__}",
+            )
+            has_errors = True
+            continue
+        for src in sources:
+            if not isinstance(src, dict):
+                print_error(
+                    "need",
+                    need_id,
+                    f"source entry must be a mapping, got {type(src).__name__}",
+                )
+                has_errors = True
+                continue
+            stype = src.get("type")
+            if stype and stype not in VALID_SOURCE_TYPES:
+                print_error(
+                    "need",
+                    need_id,
+                    f"source type '{stype}' is invalid; expected one of {sorted(VALID_SOURCE_TYPES)}",
+                )
+                has_errors = True
+    return not has_errors
+
+
 def check_all(needs):
     """Run all need integrity checks."""
     checks_with_args = [
@@ -143,6 +186,7 @@ def check_all(needs):
         (check_statement, [needs]),
         (check_variations, [needs]),
         (check_next_step, [needs]),
+        (check_sources, [needs]),
     ]
 
     all_passed = True
