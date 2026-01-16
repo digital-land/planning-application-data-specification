@@ -131,9 +131,9 @@ Details of any changes the proposed development would make to existing access ar
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 
@@ -450,9 +450,9 @@ How waste water will leave the property as part of the proposed development
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 
@@ -521,9 +521,9 @@ materials-not-known | Materials not known | Indicates the materials for this bui
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 
@@ -668,11 +668,11 @@ proposed-unit-breakdown | Proposed unit breakdown[]{} | Number of proposed units
 
 **Unit quantities component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-units-unknown | Units unknown | Whether the number of units is unknown | MUST | 
-units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | 
-total-units | Total units | Total number of units | MAY | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+units-unknown | Units unknown | Whether the number of units is unknown | MUST |  | full, outline, outline-all, outline-some, technical-details-consent
+units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY |  | 
+total-units | Total units | Total number of units | MAY |  | 
 
 
 **Bedroom count component**
@@ -812,13 +812,13 @@ Details of current parking facilities at the site and any changes that would be 
 
 **Parking space component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-parking-space-type | Parking space type | Type of parking space or vehicle type | MUST | Select from the **parking-space-type** enum
-vehicle-type-other | Vehicle type other | Vehicle type when parking space type is 'other' | MAY | Rule: is a MUST if `parking-space-type` is `other`
-total-existing | Total existing | Total number of existing parking spaces | MUST | 
-total-proposed | Total proposed | Total number of proposed parking spaces | MUST | 
-difference-in-spaces | Difference in spaces | Net change in parking spaces (proposed minus existing) | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+parking-space-type | Parking space type | Type of parking space or vehicle type | MUST | Select from the **parking-space-type** enum | 
+vehicle-type-other | Vehicle type other | Vehicle type when parking space type is 'other' | MAY | Rule: is a MUST if `parking-space-type` is `other` | 
+total-existing | Total existing | Total number of existing parking spaces | MUST |  | 
+total-proposed | Total proposed | Total number of proposed parking spaces | MUST |  | 
+difference-in-spaces | Difference in spaces | Net change in parking spaces (proposed minus existing) | MUST |  | 
 
 **Validation rules**
 

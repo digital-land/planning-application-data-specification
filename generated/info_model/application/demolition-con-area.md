@@ -266,9 +266,9 @@ supporting-evidence | Supporting evidence | Description or reference to supporti
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 

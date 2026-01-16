@@ -131,9 +131,9 @@ Details of any changes the proposed development would make to existing access ar
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 
@@ -494,9 +494,9 @@ How waste water will leave the property as part of the proposed development
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 
@@ -670,9 +670,9 @@ Additional materials and specifications that form part of the planning applicati
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 

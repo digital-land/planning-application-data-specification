@@ -276,11 +276,11 @@ Details of trees affected by the proposed development and what work is being don
 
 **Tree details component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | Identifier for the tree, use the TPO identifier if applicable | MUST | 
-species | Species | The species of the tree | MAY | 
-description-of-works | Description of works | Description of the nature of the work to be carried out on this tree | MAY | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | Identifier for the tree, use the TPO identifier if applicable | MUST |  | 
+species | Species | The species of the tree | MAY |  | 
+description-of-works | Description of works | Description of the nature of the work to be carried out on this tree | MAY |  | 
 
 **Validation rules**
 
@@ -301,9 +301,9 @@ Further details of any issues relating to trees on the site
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 

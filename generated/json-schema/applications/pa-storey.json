@@ -58,25 +58,6 @@
     "site-details"
   ],
   "definitions": {
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
     "agent": {
       "type": "object",
       "properties": {
@@ -95,6 +76,21 @@
             "agent",
             "proxy"
           ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
         }
       },
       "required": [
@@ -125,6 +121,25 @@
         "first-name",
         "last-name",
         "address-text"
+      ]
+    },
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
       ]
     },
     "phone-number": {
@@ -180,19 +195,30 @@
       },
       "required": []
     },
-    "applicant": {
+    "eligibility-related-works": {
       "type": "object",
       "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
+        "external-support-required": {
+          "type": "boolean"
         }
       },
       "required": [
-        "reference",
-        "person"
+        "external-support-required"
+      ]
+    },
+    "applicant-contact": {
+      "type": "object",
+      "properties": {
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "applicant-reference",
+        "contact-details"
       ]
     },
     "applicant-details": {
@@ -208,37 +234,6 @@
       },
       "required": [
         "applicants"
-      ]
-    },
-    "desc-work-impacts-risks": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "dwellinghouse-height": {
-          "type": "number"
-        },
-        "proposed-height": {
-          "type": "number"
-        },
-        "impact-on-amenity": {
-          "type": "string"
-        },
-        "air-traffic-defence-impacts": {
-          "type": "string"
-        },
-        "protected-view-impact": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "description",
-        "dwellinghouse-height",
-        "proposed-height",
-        "impact-on-amenity",
-        "air-traffic-defence-impacts",
-        "protected-view-impact"
       ]
     },
     "declaration": {
@@ -260,31 +255,48 @@
         "declaration-date"
       ]
     },
-    "eligibility-related-works": {
+    "eligibility-current-building": {
       "type": "object",
       "properties": {
-        "external-support-required": {
+        "was-constructed-btw-1948-2018": {
+          "type": "boolean"
+        },
+        "has-additional-storeys": {
+          "type": "boolean"
+        },
+        "was-use-granted-by-pdr": {
+          "type": "boolean"
+        },
+        "is-site-in-restricted-area": {
           "type": "boolean"
         }
       },
       "required": [
-        "external-support-required"
+        "was-constructed-btw-1948-2018",
+        "has-additional-storeys",
+        "was-use-granted-by-pdr",
+        "is-site-in-restricted-area"
       ]
     },
-    "agent-contact": {
+    "site-details": {
       "type": "object",
       "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "agent-reference",
-        "contact-details"
+        "site-locations"
       ]
+    },
+    "conflict-of-interest": {
+      "type": "object",
+      "properties": {},
+      "required": []
     },
     "eligibility-proposal": {
       "type": "object",
@@ -373,34 +385,36 @@
         }
       ]
     },
-    "conflict-of-interest": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    },
-    "site-details": {
+    "desc-work-impacts-risks": {
       "type": "object",
       "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
+        "description": {
+          "type": "string"
+        },
+        "dwellinghouse-height": {
+          "type": "number"
+        },
+        "proposed-height": {
+          "type": "number"
+        },
+        "impact-on-amenity": {
+          "type": "string"
+        },
+        "air-traffic-defence-impacts": {
+          "type": "string"
+        },
+        "protected-view-impact": {
+          "type": "string"
         }
       },
       "required": [
-        "site-locations"
+        "description",
+        "dwellinghouse-height",
+        "proposed-height",
+        "impact-on-amenity",
+        "air-traffic-defence-impacts",
+        "protected-view-impact"
       ]
-    },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
     },
     "checklist": {
       "type": "object",
@@ -417,33 +431,19 @@
         "national-req-types"
       ]
     },
-    "eligibility-current-building": {
+    "agent-details": {
       "type": "object",
       "properties": {
-        "was-constructed-btw-1948-2018": {
-          "type": "boolean"
-        },
-        "has-additional-storeys": {
-          "type": "boolean"
-        },
-        "was-use-granted-by-pdr": {
-          "type": "boolean"
-        },
-        "is-site-in-restricted-area": {
-          "type": "boolean"
+        "agent": {
+          "$ref": "#/definitions/agent"
         }
       },
-      "required": [
-        "was-constructed-btw-1948-2018",
-        "has-additional-storeys",
-        "was-use-granted-by-pdr",
-        "is-site-in-restricted-area"
-      ]
+      "required": []
     },
-    "applicant-contact": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "applicant-reference": {
+        "agent-reference": {
           "type": "string"
         },
         "contact-details": {
@@ -451,7 +451,7 @@
         }
       },
       "required": [
-        "applicant-reference",
+        "agent-reference",
         "contact-details"
       ]
     }

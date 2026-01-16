@@ -263,9 +263,9 @@ Details of any hedgerows being removed as part of the development
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
 
 **Validation rules**
 

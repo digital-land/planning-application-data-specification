@@ -11,14 +11,14 @@ Details of current parking facilities at the site and any changes that would be 
 
 **Parking space component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-parking-space-type | Parking space type | Type of parking space or vehicle type | MUST | Select from the **parking-space-type** enum
-vehicle-type-other | Vehicle type other | Vehicle type when parking space type is 'other' | MAY | Rule: is a MUST if `parking-space-type` is `other`
-total-existing | Total existing | Total number of existing parking spaces | MUST | 
-total-proposed | Total proposed | Total number of proposed parking spaces | MUST | 
-unknown-proposed | Unknown proposed | If proposed parking spaces is unknown | MAY | 
-difference-in-spaces | Difference in spaces | Net change in parking spaces (proposed minus existing) | MUST | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+parking-space-type | Parking space type | Type of parking space or vehicle type | MUST | Select from the **parking-space-type** enum | 
+vehicle-type-other | Vehicle type other | Vehicle type when parking space type is 'other' | MAY | Rule: is a MUST if `parking-space-type` is `other` | 
+total-existing | Total existing | Total number of existing parking spaces | MUST |  | 
+total-proposed | Total proposed | Total number of proposed parking spaces | MUST |  | 
+unknown-proposed | Unknown proposed | If proposed parking spaces is unknown | MAY |  | outline-some
+difference-in-spaces | Difference in spaces | Net change in parking spaces (proposed minus existing) | MUST |  | 
 
 **Validation rules**
 

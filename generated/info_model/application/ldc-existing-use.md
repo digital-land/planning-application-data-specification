@@ -431,10 +431,10 @@ proposed-unit-breakdown | Proposed unit breakdown[]{} | Number of proposed units
 
 **Unit quantities component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY | 
-total-units | Total units | Total number of units | MAY | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+units-per-bedroom-no | Units per bedroom number[]{} | Number of units broken down by bedroom count | MAY |  | 
+total-units | Total units | Total number of units | MAY |  | 
 
 
 **Bedroom count component**

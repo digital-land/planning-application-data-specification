@@ -16,10 +16,10 @@ providing justification for a lawful development certificate application
 
 **Supporting document component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
-details | Details | Additional details or information about an item | MAY | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
+details | Details | Additional details or information about an item | MAY |  | pip
 
 **Validation rules**
 
