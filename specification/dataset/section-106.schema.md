@@ -10,6 +10,7 @@ entity-minimum: ''
 entry-date: '2026-01-09'
 fields:
 - field: reference
+- field: decision-notice
 key-field: ''
 licence: ogl3
 name: Section 106 agreement
