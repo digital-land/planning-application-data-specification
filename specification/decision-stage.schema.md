@@ -24,6 +24,11 @@ datasets:
         description: a URL to the completed application form
       - field: documentation-url
         description: the URL where supporting documents for the application can be accessed
+  - dataset: site
+    name: site
+    fields:
+      - field: reference
+        description: the <a href="#reference">reference</a> for the site
   - dataset: decision-notice
     name: decision notice
     fields:
