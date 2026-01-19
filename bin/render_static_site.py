@@ -629,6 +629,44 @@ def build_site(args: argparse.Namespace) -> None:
                 app_html,
             )
 
+        # Justification index and detail pages
+        justification_template = env.get_template("justification_detail.html")
+        justifications = list(needs_data.get("justification", {}).values())
+        justifications.sort(key=lambda j: j.get("id", ""))
+        justification_index_ctx = {
+            "page_title": "Justifications",
+            "justifications": [
+                {
+                    "id": j.get("id"),
+                    "needs": j.get("needs", []),
+                    "satisfaction": j.get("satisfaction", ""),
+                    "confidence": j.get("confidence", ""),
+                    "status": j.get("status", ""),
+                    "href": url_for(base_url, f"/justification/{j.get('id')}"),
+                }
+                for j in justifications
+            ],
+        }
+        justification_index_html = env.get_template("justification_index.html").render(
+            **justification_index_ctx
+        )
+        write_page(output_dir, "justification/index.html", justification_index_html)
+
+        for j in justifications:
+            j_ctx = {
+                "page_title": f"Justification {j.get('id')}",
+                "id": j.get("id", ""),
+                "needs": j.get("needs", []),
+                "satisfaction": j.get("satisfaction", ""),
+                "confidence": j.get("confidence", ""),
+                "status": j.get("status", ""),
+                "body": render_markdown(getattr(j, "content", "") or j.get("body", "") or j.get("notes", "") or ""),
+                "raw": j,
+                "links": {"back": url_for(base_url, "/justification")},
+            }
+            j_html = justification_template.render(**j_ctx)
+            write_page(output_dir, f"justification/{j.get('id')}/index.html", j_html)
+
         # Emit a sitemap for inspection
         site_map = {
             "index": "index.html",
