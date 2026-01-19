@@ -1,32 +1,50 @@
 {% extends "base.html" %}
 {% set spec_route = "decisions" %}
 
-{% block main %}
-  <a class="govuk-back-link" href="{{ links.back }}">Back to justifications</a>
-  <h1 class="govuk-heading-xl">Justification {{ id }}</h1>
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <a class="govuk-back-link" href="{{ links.back }}">Back to justifications</a>
+    <span class="govuk-caption-xl">{{ id }}</span>
+    <h1 class="govuk-heading-xl">{{ title or ('Justification ' ~ id) }}</h1>
 
-  <dl class="govuk-summary-list">
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Needs</dt>
-      <dd class="govuk-summary-list__value">{{ needs | join(", ") }}</dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Satisfaction</dt>
-      <dd class="govuk-summary-list__value">{{ satisfaction }}</dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Confidence</dt>
-      <dd class="govuk-summary-list__value">{{ confidence }}</dd>
-    </div>
-    <div class="govuk-summary-list__row">
-      <dt class="govuk-summary-list__key">Status</dt>
-      <dd class="govuk-summary-list__value">{{ status }}</dd>
-    </div>
-  </dl>
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Needs</dt>
+        <dd class="govuk-summary-list__value">
+          {% if needs_links %}
+            {{ needs_links | join(', ') | safe }}
+          {% else %}
+            {{ needs | join(', ') }}
+          {% endif %}
+        </dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Satisfaction</dt>
+        <dd class="govuk-summary-list__value">{{ satisfaction }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Confidence</dt>
+        <dd class="govuk-summary-list__value">{{ confidence }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Status</dt>
+        <dd class="govuk-summary-list__value">{{ status }}</dd>
+      </div>
+    </dl>
 
-  {% if body %}
-    <div class="govuk-body">
-      {{ body | safe }}
-    </div>
-  {% endif %}
+    {% if body %}
+      <div class="govuk-body">
+        {{ body | safe }}
+      </div>
+    {% endif %}
+
+    <h2 class="govuk-heading-m">Help improve this specification</h2>
+    <p class="govuk-body">To help keep this justification useful and up to date, you can:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link" href="{{ github_issue_url }}">Raise feedback on GitHub for {{ id }}</a></li>
+      <li><a class="govuk-link" href="{{ github_edit_url }}">Propose an edit on GitHub</a></li>
+    </ul>
+  </div>
+</div>
 {% endblock %}

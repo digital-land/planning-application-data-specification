@@ -640,7 +640,10 @@ def build_site(args: argparse.Namespace) -> None:
             "justifications": [
                 {
                     "id": j.get("id"),
-                    "needs": j.get("needs", []),
+                    "needs": [
+                        f'<a class="govuk-link" href="{url_for(base_url, f"/decision-stage/need/{n}")}">{n}</a>'
+                        for n in j.get("needs", [])
+                    ],
                     "satisfaction": j.get("satisfaction", ""),
                     "confidence": j.get("confidence", ""),
                     "status": j.get("status", ""),
@@ -659,12 +662,18 @@ def build_site(args: argparse.Namespace) -> None:
                 "page_title": f"Justification {j.get('id')}",
                 "id": j.get("id", ""),
                 "needs": j.get("needs", []),
+                "needs_links": [
+                    f'<a class="govuk-link" href="{url_for(base_url, f"/decision-stage/need/{n}")}">{n}</a>'
+                    for n in j.get("needs", [])
+                ],
                 "satisfaction": j.get("satisfaction", ""),
                 "confidence": j.get("confidence", ""),
                 "status": j.get("status", ""),
                 "body": render_markdown(getattr(j, "content", "") or j.get("body", "") or j.get("notes", "") or ""),
                 "raw": j,
                 "links": {"back": url_for(base_url, "/justification")},
+                "github_issue_url": f"https://github.com/digital-land/planning-application-data-specification/issues/new?title=Feedback%20on%20justification%20{j.get('id')}",
+                "github_edit_url": f"https://github.com/digital-land/planning-application-data-specification/edit/main/user-needs/justification/{j.get('id')}.md",
             }
             j_html = justification_template.render(**j_ctx)
             write_page(output_dir, f"justification/{j.get('id')}/index.html", j_html)
