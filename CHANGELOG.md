@@ -1,4 +1,31 @@
 
+<a name="v0.1.52"></a>
+## [v0.1.52](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.51...v0.1.52) (2026-01-19)
+
+Adding and indexing user needs
+
+### ⚒️ Tooling
+
+* sort out layout of justification index and detail pages (commit [c8960c0](https://github.com/digital-land/planning-application-data-specification/commit/c8960c059f24febfcc8ade245626e0b298705325))
+* add content of justification record on needs page (commit [18cadaf](https://github.com/digital-land/planning-application-data-specification/commit/18cadaf169cba58bb627e852007bdcc66ae1bc68))
+* add links to take user to issue template for adding new needs/requirements (commit [85ab4bd](https://github.com/digital-land/planning-application-data-specification/commit/85ab4bd671c2180c87398a7d800fec63e1a73054))
+* tweak layout of needs index (commit [d10900f](https://github.com/digital-land/planning-application-data-specification/commit/d10900f31c48d30439a65e0d4684976482c0dfd5))
+* stub pages for the justification records (commit [8e28456](https://github.com/digital-land/planning-application-data-specification/commit/8e28456b6d10927b9e70b3af0ee043e8e7565907))
+* user needs checker should check source.types are consistent (commit [4be8f6a](https://github.com/digital-land/planning-application-data-specification/commit/4be8f6a09fd1c7379512e89ff547b03e0c98960d))
+* components in standalone only modules should include 'only for application' column if applicable (commit [bd488ce](https://github.com/digital-land/planning-application-data-specification/commit/bd488cef8f114c4731daca114638bdb006a49312))
+
+### 𝌭 Model changes
+
+* add example of operational times to component definition (commit [a37f3f0](https://github.com/digital-land/planning-application-data-specification/commit/a37f3f0eb3d9ac1697f853ea76f765f304c3f357))
+
+### 📚 Documentation
+
+* add couple of user needs about committee output (commit [0f4e1e9](https://github.com/digital-land/planning-application-data-specification/commit/0f4e1e9e4cb49fd528154dfda83bd1bdd24db9ed))
+* add batch of user needs taken from ps1 and ps2 return analysis (commit [08b3a0c](https://github.com/digital-land/planning-application-data-specification/commit/08b3a0ce53e633c7cbb447de259986bb801b8873))
+* document another batch of user needs (commit [dcc8a32](https://github.com/digital-land/planning-application-data-specification/commit/dcc8a3296235d40ec0bb35a6d34991e7755bc5e8))
+* add and refine user-needs for decision stage (commit [c0a2836](https://github.com/digital-land/planning-application-data-specification/commit/c0a2836536bb750af2394044954ea91e912dddb3))
+
+
 <a name="v0.1.51"></a>
 ## [v0.1.51](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.5...v0.1.51) (2026-01-16)
 
