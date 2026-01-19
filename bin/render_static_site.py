@@ -467,6 +467,8 @@ def build_site(args: argparse.Namespace) -> None:
                         "satisfaction": j.get("satisfaction", ""),
                         "confidence": j.get("confidence", ""),
                         "notes": j.get("notes", ""),
+                        "body": j.get("__body__", ""),
+                        "href": url_for(base_url, f"/justification/{j.get('id', '')}")
                     }
                     for j in justs
                 ],

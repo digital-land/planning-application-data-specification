@@ -51,6 +51,8 @@ def load_needs():
     def load_dir(target, pattern, key_fields):
         for path in glob(pattern):
             post = frontmatter.load(path)
+            # include body/content for downstream rendering
+            post["__body__"] = post.content
             key = next((post.get(k) for k in key_fields if post.get(k)), None)
             if key:
                 needs_tables[target][key] = post
