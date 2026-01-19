@@ -81,4 +81,12 @@ datasets:
         description: identifier of the body requesting the condition
       - field: discharged-by
         description: identifier of the body discharging the condition
+  - dataset: section-106
+    name: section 106 agreement
+    fields:
+      - field: reference
+        description: the <a href="#reference">reference</a> for the section 106 agreement
+      - field: decision-notice
+        description: the <a href="#reference">reference</a> for the decision notice tied to the section 106 agreement
+        dataset: decision-notice
 ---
