@@ -10,6 +10,8 @@ entity-minimum: ''
 entry-date: '2026-01-19'
 fields:
 - field: reference
+- field: site-boundary
+  notes: should this field be geometry?
 key-field: ''
 licence: ogl3
 name: Site
