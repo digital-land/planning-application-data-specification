@@ -2,19 +2,19 @@
 need: dd-need-016
 status: proposed
 priority: high
-name: Flag section 106 agreements
+name: Know if a decision has a section 106 agreement
 statement: >
-  As a planning stakeholder, I need to know if a section 106 agreement is associated with the planning decision so that I can understand the additional legal obligations, community benefits, and mitigation measures attached to the development.
+  As a planning stakeholder, I need to know whether a planning decision includes a section 106 agreement so that I can understand what extra legal commitments, contributions, or requirements are tied to the development.
 actors:
   - planning-stakeholder
 scope: in
 themes:
-  - legal
   - obligations
+  - compliance
 source:
   - type: regulation
     notes:
 variations:
-next_step: review
+next_step:
 notes:
 ---
