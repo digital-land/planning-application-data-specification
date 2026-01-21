@@ -11,7 +11,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "bin"))
 import click
 from bin.applications import get_application_module_refs, get_applications_with_module
 from bin.fields import find_field_usage
-from bin.loader import load_content
+from bin.loader import load_content, load_needs
 
 
 @click.group()
@@ -95,6 +95,36 @@ def field_usage(field_ref):
 # TODO: find all fields that reference a given codelist
 # TODO: find all fields that reference a given component
 # TODO: find all fields that are not used anywhere
+
+
+@cli.group()
+def decision():
+    """Decision-stage reporting."""
+    pass
+
+
+@decision.command()
+@click.option("--list", "do_list", is_flag=True, help="List covered need ids")
+def summary(do_list):
+    """Summarise decision-stage needs coverage by justifications."""
+    needs_data = load_needs()
+    needs = needs_data.get("need", {})
+    justs = needs_data.get("justification", {})
+
+    covered = {}
+    for jid, j in justs.items():
+        for n in j.get("needs", []):
+            covered.setdefault(n, set()).add(jid)
+
+    total_needs = len(needs)
+    total_covered = len(covered.keys())
+    click.echo(f"Decision-stage needs covered by justifications: {total_covered}/{total_needs}")
+    if do_list and covered:
+        click.echo("Covered needs:")
+        for nid in sorted(covered.keys()):
+            jids = sorted(covered[nid])
+            jlabel = f" ({', '.join(jids)})" if jids else ""
+            click.echo(f"  • {nid}{jlabel}")
 
 
 if __name__ == "__main__":
