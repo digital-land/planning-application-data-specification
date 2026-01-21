@@ -1,4 +1,25 @@
 
+<a name="v0.1.53"></a>
+## [v0.1.53](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.52...v0.1.53) (2026-01-21)
+
+Add additional datasets to decision-stage specification
+
+### 𝌭 Model changes
+
+* add document and documentation-url field pair to section 106 dataset (commit [430114a](https://github.com/digital-land/planning-application-data-specification/commit/430114af602bb56cb4362501ac1360d1bc946203))
+* add section 106 dataset to decision-stage specification (commit [d6a7e4d](https://github.com/digital-land/planning-application-data-specification/commit/d6a7e4ddda423bf8f02d2725e8cf5a1f0989d9f1))
+* add decision notice field to section 106 dataset (commit [d05cdb8](https://github.com/digital-land/planning-application-data-specification/commit/d05cdb86d76a205b140b751e244a7f9899972613))
+* add a section 106 dataset (commit [0be8250](https://github.com/digital-land/planning-application-data-specification/commit/0be82502bfeeedbefc501dfe25daa050efceafb8))
+* add site-boundary field to site dataset (commit [5e6ef36](https://github.com/digital-land/planning-application-data-specification/commit/5e6ef36d991004f8e9541498ea5d46d6dceac0c5))
+* add a site dataset for site linked to planning applications (commit [bf225a5](https://github.com/digital-land/planning-application-data-specification/commit/bf225a57d93aab85da5b1b8cbcf7af8b379934d2))
+
+### 📚 Documentation
+
+* flesh out rationale for decision-notice field on section 106 dataset (commit [e0d20e1](https://github.com/digital-land/planning-application-data-specification/commit/e0d20e13373e079eee85bbc8e90a08993d7b0b18))
+* add user need about section 106s (commit [c594937](https://github.com/digital-land/planning-application-data-specification/commit/c594937d72dab58b2cae1c2939686c2a71625c5b))
+* add a data need about spatial representations (commit [e627917](https://github.com/digital-land/planning-application-data-specification/commit/e6279179da339b470230ac36e1cde895ef90bc5e))
+
+
 <a name="v0.1.52"></a>
 ## [v0.1.52](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.51...v0.1.52) (2026-01-19)
 
