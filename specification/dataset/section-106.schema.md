@@ -11,6 +11,8 @@ entry-date: '2026-01-09'
 fields:
 - field: reference
 - field: decision-notice
+- field: document-url
+- field: documentation-url
 key-field: ''
 licence: ogl3
 name: Section 106 agreement

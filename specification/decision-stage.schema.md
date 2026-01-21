@@ -89,4 +89,8 @@ datasets:
       - field: decision-notice
         description: the <a href="#reference">reference</a> for the decision notice tied to the section 106 agreement
         dataset: decision-notice
+      - field: document-url
+        description: the URL to the published section 106 agreement document
+      - field: documentation-url
+        description: the URL of the page where the section 106 agreement can be found
 ---
