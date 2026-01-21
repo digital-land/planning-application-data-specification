@@ -77,6 +77,25 @@
         "person"
       ]
     },
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
+    },
     "agent": {
       "type": "object",
       "properties": {
@@ -102,22 +121,47 @@
         "person"
       ]
     },
-    "replacement-drawing": {
+    "related-application-details": {
       "type": "object",
       "properties": {
-        "old-drawing-reference": {
+        "reference": {
           "type": "string"
         },
-        "new-drawing-reference": {
+        "description": {
           "type": "string"
         },
-        "reason": {
+        "decision-date": {
           "type": "string"
         }
       },
       "required": [
-        "old-drawing-reference",
-        "new-drawing-reference"
+        "reference",
+        "description"
+      ]
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "first-name": {
+          "type": "string"
+        },
+        "last-name": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first-name",
+        "last-name",
+        "address-text"
       ]
     },
     "other-contact": {
@@ -138,6 +182,22 @@
         "number",
         "email"
       ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
     },
     "site-location": {
       "type": "object",
@@ -176,108 +236,69 @@
       },
       "required": []
     },
-    "related-application-details": {
+    "replacement-drawing": {
       "type": "object",
       "properties": {
-        "reference": {
+        "old-drawing-reference": {
           "type": "string"
         },
-        "description": {
+        "new-drawing-reference": {
           "type": "string"
         },
-        "decision-date": {
+        "reason": {
           "type": "string"
         }
       },
       "required": [
-        "reference",
-        "description"
+        "old-drawing-reference",
+        "new-drawing-reference"
       ]
     },
-    "contact-details": {
+    "conflict-of-interest": {
       "type": "object",
       "properties": {
-        "email": {
+        "conflict-to-declare": {
+          "type": "boolean"
+        },
+        "conflict-person-name": {
           "type": "string"
         },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
+        "conflict-details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "conflict-to-declare"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "conflict-to-declare": {
+                "const": true
+              }
+            }
           },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
-    "phone-number": {
-      "type": "object",
-      "properties": {
-        "number": {
-          "type": "string"
-        },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
-    },
-    "person": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "first-name": {
-          "type": "string"
-        },
-        "last-name": {
-          "type": "string"
-        },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "first-name",
-        "last-name",
-        "address-text"
-      ]
-    },
-    "proposal-details": {
-      "type": "object",
-      "properties": {
-        "reserved-matters": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "access",
-              "appearance",
-              "landscaping",
-              "layout",
-              "scale"
+          "then": {
+            "required": [
+              "conflict-person-name"
             ]
-          },
-          "minItems": 1
+          }
         },
-        "related-application": {
-          "$ref": "#/definitions/related-application-details"
+        {
+          "if": {
+            "properties": {
+              "conflict-to-declare": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "conflict-details"
+            ]
+          }
         }
-      },
-      "required": [
-        "reserved-matters",
-        "related-application"
       ]
     },
     "pre-app-advice": {
@@ -361,6 +382,40 @@
         }
       ]
     },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
+    "supporting-info": {
+      "type": "object",
+      "properties": {
+        "replacement-drawings": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/replacement-drawing"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "replacement-drawings"
+      ]
+    },
     "applicant-contact": {
       "type": "object",
       "properties": {
@@ -374,6 +429,47 @@
       "required": [
         "applicant-reference",
         "contact-details"
+      ]
+    },
+    "agent-contact": {
+      "type": "object",
+      "properties": {
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "agent-reference",
+        "contact-details"
+      ]
+    },
+    "proposal-details": {
+      "type": "object",
+      "properties": {
+        "reserved-matters": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "access",
+              "appearance",
+              "landscaping",
+              "layout",
+              "scale"
+            ]
+          },
+          "minItems": 1
+        },
+        "related-application": {
+          "$ref": "#/definitions/related-application-details"
+        }
+      },
+      "required": [
+        "reserved-matters",
+        "related-application"
       ]
     },
     "checklist": {
@@ -391,19 +487,19 @@
         "national-req-types"
       ]
     },
-    "applicant-details": {
+    "site-details": {
       "type": "object",
       "properties": {
-        "applicants": {
+        "site-locations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/applicant"
+            "$ref": "#/definitions/site-location"
           },
           "minItems": 1
         }
       },
       "required": [
-        "applicants"
+        "site-locations"
       ]
     },
     "site-visit": {
@@ -443,55 +539,6 @@
         ]
       }
     },
-    "declaration": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
-    "site-details": {
-      "type": "object",
-      "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "site-locations"
-      ]
-    },
-    "supporting-info": {
-      "type": "object",
-      "properties": {
-        "replacement-drawings": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/replacement-drawing"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "replacement-drawings"
-      ]
-    },
     "agent-details": {
       "type": "object",
       "properties": {
@@ -501,66 +548,19 @@
       },
       "required": []
     },
-    "conflict-of-interest": {
+    "applicant-details": {
       "type": "object",
       "properties": {
-        "conflict-to-declare": {
-          "type": "boolean"
-        },
-        "conflict-person-name": {
-          "type": "string"
-        },
-        "conflict-details": {
-          "type": "string"
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "conflict-to-declare"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "conflict-to-declare": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "conflict-person-name"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "conflict-to-declare": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "conflict-details"
-            ]
-          }
-        }
-      ]
-    },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
+        "applicants"
       ]
     },
     "application": {
