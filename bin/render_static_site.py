@@ -491,6 +491,10 @@ def build_site(args: argparse.Namespace) -> None:
                 }
                 for ds in decision_datasets
             ],
+            "links": {
+                "justifications": url_for(base_url, "/justification"),
+                "needs": url_for(base_url, "/decision-stage/need"),
+            },
         }
         dataset_html = env.get_template("dataset_index.html").render(**dataset_ctx)
         write_page(output_dir, "decision-stage/dataset/index.html", dataset_html)
