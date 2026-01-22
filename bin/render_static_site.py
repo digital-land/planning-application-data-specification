@@ -341,8 +341,10 @@ def build_site(args: argparse.Namespace) -> None:
 
     try:
         spec_model = load_specification_model()
+        spec_tables = spec_model.get("tables", {})
         field_index = spec_model.get("fields", {})
         dataset_index = spec_model.get("tables", {}).get("dataset", {})
+        module_index = spec_model.get("modules", {})
 
         decision_stage = load_decision_stage(spec_root / "decision-stage.schema.md")
         decision_datasets: List[Dict[str, Any]] = []
@@ -591,6 +593,54 @@ def build_site(args: argparse.Namespace) -> None:
         )
         write_page(output_dir, "submission/index.html", submission_html)
 
+        # Submission module index and detail pages
+        submission_modules = list(spec_tables.get("module", {}).values())
+        submission_modules.sort(key=lambda m: m.get("module", ""))
+        module_index_ctx = {
+            "page_title": "Submission modules",
+            "modules": [
+                {
+                    "ref": m.get("module"),
+                    "name": m.get("name", m.get("module")),
+                    "description": m.get("description", ""),
+                    "href": url_for(base_url, f"/submission/module/{m.get('module')}"),
+                }
+                for m in submission_modules
+            ],
+        }
+        module_index_html = env.get_template("module_index.html").render(
+            **module_index_ctx
+        )
+        write_page(output_dir, "submission/module/index.html", module_index_html)
+
+        module_template = env.get_template("module_detail.html")
+        for m in submission_modules:
+            mod_fields = []
+            for f in m.get("fields", []):
+                field_ref = f.get("field")
+                field_meta = field_index.get(field_ref)
+                mod_fields.append(
+                    {
+                        "ref": field_ref,
+                        "name": getattr(field_meta, "name", None) or field_ref,
+                        "description": getattr(field_meta, "description", None) or "",
+                        "required": f.get("required"),
+                    }
+                )
+            module_ctx = {
+                "page_title": f"Module {m.get('module')}",
+                "ref": m.get("module"),
+                "name": m.get("name", m.get("module")),
+                "description": m.get("description", ""),
+                "fields": mod_fields,
+                "rules": m.get("rules", []),
+                "links": {"back": url_for(base_url, "/submission/module")},
+            }
+            module_html = module_template.render(**module_ctx)
+            write_page(
+                output_dir, f"submission/module/{m.get('module')}/index.html", module_html
+            )
+
         # Submission application detail pages
         app_template = env.get_template("submission_application_detail.html")
         for app in applications:
@@ -607,10 +657,22 @@ def build_site(args: argparse.Namespace) -> None:
                         "required": f.get("required"),
                     }
                 )
-            modules = [
-                {"ref": m.get("module"), "required": m.get("required")}
-                for m in app.get("modules", [])
-            ]
+            modules = []
+            for m in app.get("modules", []):
+                mref = m.get("module")
+                mobj = module_index.get(mref)
+                mdesc = ""
+                if mobj:
+                    mdesc = getattr(mobj, "description", None) or mobj.content.get(
+                        "description", ""
+                    )
+                modules.append(
+                    {
+                        "ref": mref,
+                        "required": m.get("required"),
+                        "description": mdesc,
+                    }
+                )
             app_ctx = {
                 "page_title": f"Application {app_id}",
                 "title": app.get("name", app_id),

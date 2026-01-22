@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% set spec_route = "submissions" %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <a class="govuk-back-link" href="{{ links.back }}">Back to modules</a>
+    <span class="govuk-caption-xl">{{ ref }}</span>
+    <h1 class="govuk-heading-xl">{{ name }}</h1>
+    {% if description %}<p class="govuk-body-l">{{ description }}</p>{% endif %}
+
+    {% if fields %}
+      <h2 class="govuk-heading-l">Fields</h2>
+      <dl class="govuk-summary-list">
+        {% for field in fields %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">{{ field.name }}</dt>
+            <dd class="govuk-summary-list__value">
+              <p class="govuk-body">{{ field.description }}</p>
+              <p class="govuk-hint govuk-!-margin-bottom-1">Reference: <code>{{ field.ref }}</code></p>
+              {% if field.required is not none %}
+                <p class="govuk-hint govuk-!-margin-bottom-0">Required: {{ field.required }}</p>
+              {% endif %}
+            </dd>
+          </div>
+        {% endfor %}
+      </dl>
+    {% endif %}
+
+    {% if rules %}
+      <h2 class="govuk-heading-l">Rules</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        {% for rule in rules %}
+          {% if rule.rule %}<li>{{ rule.rule }}</li>{% elif rule.description %}<li>{{ rule.description }}</li>{% else %}<li>{{ rule }}</li>{% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
