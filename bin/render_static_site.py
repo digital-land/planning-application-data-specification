@@ -95,6 +95,23 @@ def extract_dataset_refs(blob: Any) -> List[str]:
     return refs
 
 
+def extract_dataset_only_refs(blob: Any) -> List[str]:
+    """
+    Return dataset refs only from entries that specify a dataset alone (no field).
+    For satisfied_by lists, this means items that are dicts with a dataset key and
+    no other populated keys (or only dataset populated).
+    """
+    refs: List[str] = []
+    if isinstance(blob, dict):
+        keys_with_values = [k for k, v in blob.items() if v]
+        if "dataset" in blob and isinstance(blob["dataset"], str):
+            if len(keys_with_values) == 1 and keys_with_values[0] == "dataset":
+                refs.append(blob["dataset"])
+    elif isinstance(blob, list):
+        for item in blob:
+            refs.extend(extract_dataset_only_refs(item))
+    return refs
+
 def build_need_maps(
     needs_data: Dict[str, Dict[str, Any]],
 ) -> Tuple[Dict[str, List[Dict[str, Any]]], Dict[str, List[Dict[str, Any]]]]:
@@ -107,23 +124,14 @@ def build_need_maps(
     for justification in justifications.values():
         need_ids = justification.get("needs", [])
         satisfied_by = justification.get("satisfied_by", {})
-        datasets = extract_dataset_refs(satisfied_by)
+        datasets = extract_dataset_only_refs(satisfied_by)
         for n_id in need_ids:
             need_to_justifications[n_id].append(justification)
-            # Only attach to dataset if satisfied_by is a simple dataset-only entry
-            # (list of dicts with only 'dataset')
-            if isinstance(satisfied_by, list) and satisfied_by:
-                all_simple_dataset_refs = all(
-                    isinstance(item, dict)
-                    and "dataset" in item
-                    and len([k for k in item.keys() if item.get(k)]) == 1
-                    for item in satisfied_by
+            # Attach to datasets that are satisfied purely by dataset references
+            for dataset in datasets:
+                dataset_to_need_justifications[dataset].append(
+                    {"need": n_id, "justification": justification}
                 )
-                if all_simple_dataset_refs:
-                    for dataset in datasets:
-                        dataset_to_need_justifications[dataset].append(
-                            {"need": n_id, "justification": justification}
-                        )
     return need_to_justifications, dataset_to_need_justifications
 
 
@@ -568,6 +576,7 @@ def build_site(args: argparse.Namespace) -> None:
                             or item["justification"].get("notes", "")
                             or ""
                         ),
+                        "requires_dataset": True,
                     }
                     for item in ds_needs
                 ],
