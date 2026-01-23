@@ -1,4 +1,24 @@
 
+<a name="v0.1.55"></a>
+## [v0.1.55](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.54...v0.1.55) (2026-01-23)
+
+add codelists and a name field to decision spec
+
+### 𝌭 Model changes
+
+* update decision schema to include fields recently added to site dataset (commit [0e6815b](https://github.com/digital-land/planning-application-data-specification/commit/0e6815bc59c74688d8f51f980c3cd66cd8f1aa9b))
+* add name field to site dataset so planners can more easily refer to it consistently (commit [8da8a40](https://github.com/digital-land/planning-application-data-specification/commit/8da8a40c897c2482880c6114d331ef67a7b21401))
+* state the Site dataset is semantically a closeMatch to ifcSite (commit [7123970](https://github.com/digital-land/planning-application-data-specification/commit/71239704e2eeac6701ea75dc62b3244a4690f0fe))
+* add the decision-maker codelist (commit [b53bba9](https://github.com/digital-land/planning-application-data-specification/commit/b53bba91232ecb9d090a8b72965de59a0ef540f4))
+* add missing codelist attribute to request-by field (commit [23d7ca6](https://github.com/digital-land/planning-application-data-specification/commit/23d7ca63f1111d1dc59bfd3169d7f5a416b8d691))
+* add the organisation codelist (commit [1d1cdbc](https://github.com/digital-land/planning-application-data-specification/commit/1d1cdbc5df8ace933e8912592baedcd29fa82676))
+
+### 📚 Documentation
+
+* add notes to section 106 dataset that summarise our understanding of section 106s (commit [4f6004e](https://github.com/digital-land/planning-application-data-specification/commit/4f6004e889b28bd64e6645aaab34693e454b227f))
+* update just-0017 so that its more of a rule that datasets should have a name field (commit [2a8873b](https://github.com/digital-land/planning-application-data-specification/commit/2a8873b7389936b0649b7aec0bc85b073a731a58))
+
+
 <a name="v0.1.54"></a>
 ## [v0.1.54](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.53...v0.1.54) (2026-01-23)
 
