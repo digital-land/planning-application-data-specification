@@ -9,6 +9,8 @@ entity-maximum: ''
 entity-minimum: ''
 entry-date: '2026-01-19'
 fields:
+- field: name
+  description: Plain-language name for the site so it can be referenced in discussions and reports
 - field: reference
 - field: site-boundary
   notes: should this field be geometry?
