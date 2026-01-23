@@ -29,6 +29,10 @@ datasets:
     fields:
       - field: reference
         description: the <a href="#reference">reference</a> for the site
+      - field: name
+        description: Plain-language name for the site so it can be referenced in discussions and reports
+      - field: site-boundary
+        description: the boundary geometry for the site
   - dataset: decision-notice
     name: decision notice
     fields:
