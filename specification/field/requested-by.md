@@ -1,6 +1,7 @@
 ---
 cardinality: 1
 datatype: enum
+codelist: organisations
 description: Organisation code for the body that requested the condition
 end-date: ''
 entry-date: 2026-01-09
