@@ -1,4 +1,24 @@
 
+<a name="v0.1.54"></a>
+## [v0.1.54](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.53...v0.1.54) (2026-01-23)
+
+Add justification records to static site
+
+### ⚒️ Tooling
+
+* add some tests for the render static site code (commit [5319bd8](https://github.com/digital-land/planning-application-data-specification/commit/5319bd85497d48c0ce44a081b0b4420d8110c856))
+* include justification record on dataset page when available (commit [e39baee](https://github.com/digital-land/planning-application-data-specification/commit/e39baeed416aa237beabd823c379003549f0a81f))
+* link to justification records on the /decision-stage page (commit [75776a0](https://github.com/digital-land/planning-application-data-specification/commit/75776a05018d7e0ecb24db5699b443749066ab76))
+* tweak layout of 'help to improve this application schema' section (commit [c800cac](https://github.com/digital-land/planning-application-data-specification/commit/c800cac8522cfe1b33ac04bfe9dc56a3c841dee6))
+* add a page per module to static site generator (commit [94711a8](https://github.com/digital-land/planning-application-data-specification/commit/94711a8c3220622d4c7baed394473b32e6828472))
+* add cli command to list which needs have been satisfied (commit [e15367c](https://github.com/digital-land/planning-application-data-specification/commit/e15367c039e243ce5b997f06ede123a374c37226))
+* add content menu to application details page (commit [29d3d4c](https://github.com/digital-land/planning-application-data-specification/commit/29d3d4c448ffab025a709726755e605a9f8475ba))
+
+### 𝌭 Model changes
+
+* add document and documentation-url field pair to section 106 dataset (commit [624356e](https://github.com/digital-land/planning-application-data-specification/commit/624356e58ccc73d01624c7cbafb7ebe0680efef3))
+
+
 <a name="v0.1.53"></a>
 ## [v0.1.53](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.52...v0.1.53) (2026-01-21)
 
