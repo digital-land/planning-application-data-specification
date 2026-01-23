@@ -1,5 +1,6 @@
 import os
 import re
+from pathlib import Path
 
 
 def check_kebab_case(s: str) -> bool:
@@ -88,3 +89,7 @@ def make_hyperlink_cell(name: str, url: str) -> str:
         str: A string that can be written into a Google Sheet cell.
     """
     return f'=HYPERLINK("{url}", "{name}")'
+
+
+def ensure_dir(path: Path) -> None:
+    path.mkdir(parents=True, exist_ok=True)

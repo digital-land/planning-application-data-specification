@@ -1,10 +1,7 @@
 import pytest
 
-from bin.render_static_site import (
-    build_need_maps,
-    extract_dataset_only_refs,
-    url_for,
-)
+from bin.render_static_site import build_need_maps, extract_dataset_only_refs
+from bin.renderer import url_for
 
 
 def test_url_for_handles_base_url():
