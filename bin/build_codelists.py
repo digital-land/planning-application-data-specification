@@ -31,6 +31,19 @@ DATASETS: Sequence[tuple[str, str]] = (
 OUTPUT_PATH = Path("data/codelist/planning-authority.csv")
 
 
+ALL_ORGANISATION_DATASETS: Sequence[tuple[str, str]] = DATASETS + (
+    (
+        "government-organisation",
+        "https://files.planning.data.gov.uk/dataset/government-organisation.json",
+    ),
+    (
+        "passenger-transport-executives",
+        "https://files.planning.data.gov.uk/dataset/passenger-transport-executive.json",
+    ),
+)
+ORGS_OUTPUT_PATH = Path("data/codelist/organisations.csv")
+
+
 def fetch_entities(url: str) -> List[dict]:
     """Fetch the JSON payload from the given URL and return the entities list."""
     try:
@@ -63,7 +76,25 @@ def iter_rows() -> Iterable[dict]:
             }
 
 
-def main() -> None:
+def iter_organisation_rows() -> Iterable[dict]:
+    """Yield rows ready for CSV writing from each organisation dataset."""
+    for dataset_name, url in ALL_ORGANISATION_DATASETS:
+        entities = fetch_entities(url)
+        for entity in entities:
+            yield {
+                "entity": entity.get("entity", ""),
+                "reference": f"{dataset_name}:{entity.get('reference' , '')}",
+                "name": entity.get("name", ""),
+                "planning-data-reference": entity.get("reference", ""),
+                "dataset": entity.get("dataset", dataset_name),
+                "prefix": entity.get("prefix", ""),
+                "entry-date": entity.get("entry-date", ""),
+                "start-date": entity.get("start-date", ""),
+                "end-date": entity.get("end-date", ""),
+            }
+
+
+def build_planning_authority_csv() -> None:
     rows = list(iter_rows())
     OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
     write_csv(
@@ -80,6 +111,29 @@ def main() -> None:
         ],
         final_headers=["entry-date", "start-date", "end-date"],
     )
+
+
+def build_organisations_csv() -> None:
+    rows = list(iter_organisation_rows())
+    ORGS_OUTPUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    write_csv(
+        rows,
+        output_file=str(ORGS_OUTPUT_PATH),
+        first_headers=[
+            "entity",
+            "reference",
+            "name",
+            "planning-data-reference",
+            "dataset",
+            "prefix",
+        ],
+        final_headers=["entry-date", "start-date", "end-date"],
+    )
+
+
+def main() -> None:
+    build_planning_authority_csv()
+    build_organisations_csv()
 
 
 if __name__ == "__main__":
