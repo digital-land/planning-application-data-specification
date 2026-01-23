@@ -54,19 +54,15 @@
     "application"
   ],
   "definitions": {
-    "applicant": {
+    "supporting-document": {
       "type": "object",
       "properties": {
         "reference": {
           "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
         }
       },
       "required": [
-        "reference",
-        "person"
+        "reference"
       ]
     },
     "contact-details": {
@@ -86,102 +82,6 @@
       "required": [
         "email",
         "phone-numbers"
-      ]
-    },
-    "agent": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "supporting-document": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference"
-      ]
-    },
-    "other-contact": {
-      "type": "object",
-      "properties": {
-        "fullname": {
-          "type": "string"
-        },
-        "number": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "fullname",
-        "number",
-        "email"
-      ]
-    },
-    "phone-number": {
-      "type": "object",
-      "properties": {
-        "number": {
-          "type": "string"
-        },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
-    },
-    "person": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "first-name": {
-          "type": "string"
-        },
-        "last-name": {
-          "type": "string"
-        },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "first-name",
-        "last-name",
-        "address-text"
       ]
     },
     "site-location": {
@@ -220,6 +120,247 @@
         }
       },
       "required": []
+    },
+    "other-contact": {
+      "type": "object",
+      "properties": {
+        "fullname": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fullname",
+        "number",
+        "email"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "first-name": {
+          "type": "string"
+        },
+        "last-name": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "first-name",
+        "last-name",
+        "address-text"
+      ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
+    },
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
+    "site-details": {
+      "type": "object",
+      "properties": {
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "site-locations"
+      ]
+    },
+    "site-visit": {
+      "type": "object",
+      "properties": {
+        "can-be-seen-from": {
+          "type": "boolean"
+        },
+        "contact-type": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "agent"
+          ]
+        },
+        "contact-reference": {
+          "type": "string"
+        },
+        "other-contact": {
+          "$ref": "#/definitions/other-contact"
+        }
+      },
+      "required": [
+        "can-be-seen-from",
+        "contact-type"
+      ],
+      "if": {
+        "properties": {
+          "contact-type": {
+            "const": "other"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "other-contact"
+        ]
+      }
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
+      ]
+    },
+    "hedgerow-removal": {
+      "type": "object",
+      "properties": {
+        "removal-reasons": {
+          "type": "string"
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
+          },
+          "minItems": 1
+        },
+        "hedgerow-length": {
+          "type": "number"
+        },
+        "hedgerow-less-than-30-years": {
+          "type": "boolean"
+        },
+        "planting-evidence-attached": {
+          "type": "boolean"
+        },
+        "interest-declaration": {
+          "type": "string",
+          "enum": [
+            "owner",
+            "agricultural-tenant",
+            "farm-business-tenant",
+            "utility-operator"
+          ]
+        }
+      },
+      "required": [
+        "removal-reasons",
+        "supporting-documents",
+        "hedgerow-length",
+        "hedgerow-less-than-30-years",
+        "interest-declaration"
+      ]
+    },
+    "checklist": {
+      "type": "object",
+      "properties": {
+        "national-req-types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "national-req-types"
+      ]
     },
     "pre-app-advice": {
       "type": "object",
@@ -302,63 +443,19 @@
         }
       ]
     },
-    "declaration": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "name": {
+        "agent-reference": {
           "type": "string"
         },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
-    "hedgerow-removal": {
-      "type": "object",
-      "properties": {
-        "removal-reasons": {
-          "type": "string"
-        },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
-        },
-        "hedgerow-length": {
-          "type": "number"
-        },
-        "hedgerow-less-than-30-years": {
-          "type": "boolean"
-        },
-        "planting-evidence-attached": {
-          "type": "boolean"
-        },
-        "interest-declaration": {
-          "type": "string",
-          "enum": [
-            "owner",
-            "agricultural-tenant",
-            "farm-business-tenant",
-            "utility-operator"
-          ]
-        }
-      },
-      "required": [
-        "removal-reasons",
-        "supporting-documents",
-        "hedgerow-length",
-        "hedgerow-less-than-30-years",
-        "interest-declaration"
+        "agent-reference",
+        "contact-details"
       ]
     },
     "applicant-contact": {
@@ -376,88 +473,6 @@
         "contact-details"
       ]
     },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
-    "checklist": {
-      "type": "object",
-      "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "national-req-types"
-      ]
-    },
-    "site-details": {
-      "type": "object",
-      "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "site-locations"
-      ]
-    },
-    "site-visit": {
-      "type": "object",
-      "properties": {
-        "can-be-seen-from": {
-          "type": "boolean"
-        },
-        "contact-type": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "agent"
-          ]
-        },
-        "contact-reference": {
-          "type": "string"
-        },
-        "other-contact": {
-          "$ref": "#/definitions/other-contact"
-        }
-      },
-      "required": [
-        "can-be-seen-from",
-        "contact-type"
-      ],
-      "if": {
-        "properties": {
-          "contact-type": {
-            "const": "other"
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "other-contact"
-        ]
-      }
-    },
     "agent-details": {
       "type": "object",
       "properties": {
@@ -466,21 +481,6 @@
         }
       },
       "required": []
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
-      ]
     },
     "application": {
       "type": "object",
@@ -954,7 +954,11 @@
             "development-corporation:Q6861239",
             "development-corporation:Q7177999",
             "development-corporation:Q7205796",
-            "development-corporation:Q7832579"
+            "development-corporation:Q7832579",
+            "development-corporation:stockport-town-centre-MDC",
+            "development-corporation:northern-gateway-MDC",
+            "development-corporation:old-trafford-MDC",
+            "development-corporation:Q137717415"
           ]
         },
         "submission-date": {
