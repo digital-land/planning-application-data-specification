@@ -1,6 +1,7 @@
 ---
 cardinality: 1
 datatype: datetime
+date_precision: day
 description: Date when development was completed
 end-date: ''
 entry-date: 2025-06-26

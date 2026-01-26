@@ -1,7 +1,8 @@
 ---
 cardinality: 1
 datatype: datetime
-description: The approximate date the part to be removed was built, in YYYY-MM-DD
+date_precision: month
+description: The approximate date the part to be removed was built, in YYYY-MM
   format.
 end-date: ''
 entry-date: 2025-06-30

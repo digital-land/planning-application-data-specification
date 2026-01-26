@@ -1,6 +1,7 @@
 ---
 cardinality: 1
 datatype: datetime
+date_precision: day
 description: The date when work on the proposal was completed, in YYYY-MM-DD format
 end-date: ''
 entry-date: 2025-06-12

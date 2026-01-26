@@ -1,6 +1,7 @@
 ---
 cardinality: 1
 datatype: datetime
+date_precision: day
 description: Date of pre-development biodiversity value calculation, must align with
   application or justified earlier date
 end-date: ''
