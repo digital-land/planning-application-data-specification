@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: date
+datatype: datetime
 description: Date the activity causing habitat loss or degradation occurred
 end-date: ''
 entry-date: 2025-06-16

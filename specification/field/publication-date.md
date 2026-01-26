@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: date
+datatype: datetime
 description: Date when the ownership notice was published in the newspaper
 end-date: ''
 entry-date: 2025-06-13

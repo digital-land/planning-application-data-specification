@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: date
+datatype: datetime
 description: The date the document was uploaded to the application
 end-date: ''
 entry-date: 2025-10-08

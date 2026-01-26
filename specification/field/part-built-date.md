@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: date
+datatype: datetime
 description: The approximate date the part to be removed was built, in YYYY-MM-DD
   format.
 end-date: ''

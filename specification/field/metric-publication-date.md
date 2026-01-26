@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: date
+datatype: datetime
 description: Publication date of the biodiversity metric tool used for calculations
 end-date: ''
 entry-date: 2025-06-16
