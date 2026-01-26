@@ -37,14 +37,14 @@ fields:
       - full
   field: room-details
   required-if:
-    condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
+    - condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
 - applies-if:
     application-type:
       in:
       - outline
   field: room-details-outline
   required-if:
-    condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
+    - condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
 module: non-res-floorspace
 name: Non residential floorspace
 notes: ''

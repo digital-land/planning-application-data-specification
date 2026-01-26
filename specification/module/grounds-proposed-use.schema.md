@@ -7,11 +7,11 @@ fields:
   field: use
 - field: specified-use
   required-if:
-    any:
-    - field: use
-      value: sui
-    - field: use
-      value: other
+    - any:
+      - field: use
+        value: sui
+      - field: use
+        value: other
 - field: operation-type
   required: true
 - field: temporary-details

@@ -8,18 +8,18 @@ fields:
   required: true
 - field: use
   required-if:
-    any:
-    - contains: existing-use
-      field: ldc-need
-    - contains: breach-con-existing-use
-      field: ldc-need
+    - any:
+      - contains: existing-use
+        field: ldc-need
+      - contains: breach-con-existing-use
+        field: ldc-need
 - field: specified-use
   required-if:
-    any:
-    - field: use
-      value: sui
-    - field: use
-      value: other
+    - any:
+      - field: use
+        value: sui
+      - field: use
+        value: other
 module: use-works-activity
 name: Use works activity
 notes: ''

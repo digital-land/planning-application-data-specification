@@ -8,12 +8,12 @@ fields:
   required: true
 - field: proposal-alter-lb-types
   required-if:
-    field: proposal-alter-lb
-    value: true
+    - field: proposal-alter-lb
+      value: true
 - field: document-reference
   required-if:
-    field: proposal-alter-lb
-    value: true
+    - field: proposal-alter-lb
+      value: true
 module: lb-alter
 name: Listed building alterations
 rules:

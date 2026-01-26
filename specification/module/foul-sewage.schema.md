@@ -7,27 +7,27 @@ fields:
   required: true
 - field: foul-sewage-disposal-types
   required-if:
-    field: has-new-disposal-arrangements
-    value: true
+    - field: has-new-disposal-arrangements
+      value: true
 - field: produce-foul-sewage
   applies-if:
     application-type:
-      in:
-      - extraction-oil-gas
+      - in:
+        - extraction-oil-gas
   required: true
 - field: connect-to-drainage-system
   applies-if:
     application-type:
-      in:
-      - full
-      - outline-some
-      - technical-details-consent
+      - in:
+        - full
+        - outline-some
+        - technical-details-consent
   required: true
 - field: connect-to-drainage-system-oil-gas
   applies-if:
     application-type:
-      in:
-      - extraction-oil-gas
+      - in:
+        - extraction-oil-gas
   required: true
 - field: supporting-documents
   description: References to plans or drawings showing details of the existing drainage

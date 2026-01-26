@@ -7,8 +7,8 @@ fields:
   required: true
 - field: related-applications
   required-if:
-    field: has-related-applications
-    value: true
+    - field: has-related-applications
+      value: true
 module: related-applications
 name: Related applications
 rules:

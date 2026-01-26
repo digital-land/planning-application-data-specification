@@ -26,13 +26,13 @@ fields:
 - field: contamination-assessment
   required: false
   required-if:
-    any:
-    - field: is-contaminated-land
-      value: true
-    - field: is-suspected-contaminated-land
-      value: true
-    - field: proposed-use-contamination-risk
-      value: true
+    - any:
+      - field: is-contaminated-land
+        value: true
+      - field: is-suspected-contaminated-land
+        value: true
+      - field: proposed-use-contamination-risk
+        value: true
 module: existing-use
 name: Existing use
 rules:

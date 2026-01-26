@@ -8,15 +8,15 @@ fields:
   required: true
 - field: permission-obtained
   required-if:
-    field: applicant-owns-land
-    value: false
-- field: permission-not-obtained-details
-  required-if:
-    all:
     - field: applicant-owns-land
       value: false
-    - field: permission-obtained
-      value: false
+- field: permission-not-obtained-details
+  required-if:
+    - all:
+      - field: applicant-owns-land
+        value: false
+      - field: permission-obtained
+        value: false
 module: interest-in-land
 name: Interest in land
 rules:

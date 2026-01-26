@@ -10,11 +10,11 @@ fields:
   required: true
 - field: owner-details
   required-if:
-    any:
-    - field: applicant-interest
-      value: lessee
-    - field: applicant-interest
-      value: occupier
+    - any:
+      - field: applicant-interest
+        value: lessee
+      - field: applicant-interest
+        value: occupier
 - field: interested-persons
   required-if:
   - field: applicant-interest
