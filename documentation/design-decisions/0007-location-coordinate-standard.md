@@ -1,7 +1,7 @@
 ## Decision: Require WGS84 for exchanged location coordinates
 
 **Date:** 2025-10-08  
-**Status:** Accepted  
+**Status:** Proposed  
 
 **Context:**  
 - Questions were raised about whether both easting/northing (British National Grid) and latitude/longitude are required (#305).  
