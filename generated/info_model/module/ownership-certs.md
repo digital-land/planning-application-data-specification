@@ -15,7 +15,7 @@ Who will be affected by the proposal and whether they have been notified, such a
 | ownership-cert-option | Ownership certificate type | The type of ownership certificate based on ownership and tenancy status | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY | Select from the **ownership-cert-type** enum |
 | applicant-signature | Applicant signature | Digital signature of the applicant | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
 | agent-signature | Agent signature | Digital signature of the agent (if applicable) | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
-| signature-date | Signature date | Date when the ownership certificate was signed | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
+| declaration-date | Declaration date | The date the declaration was made | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
 
 
 **Notified person component**
