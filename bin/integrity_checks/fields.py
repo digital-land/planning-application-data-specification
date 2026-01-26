@@ -12,6 +12,7 @@ from utils import check_kebab_case
 # 6. if datatype is enum then must have codelist attr, and if has codelist then datatype must be enum
 # 7. codelist must be in codelist definitions
 # 8. every field must have entry-date and end-date attrs
+# 9. if datatype is datetime then must have date_precision attr
 
 
 def check_field_names(fields):
@@ -162,6 +163,24 @@ def check_dates(fields):
     return not has_errors
 
 
+def check_datetime_precision(fields):
+    """
+    Check rule 9: if datatype is datetime then must have date_precision attr
+    """
+    has_errors = False
+
+    for field_name, field in fields.items():
+        if field.get("datatype") == "datetime" and "date_precision" not in field:
+            print_error(
+                "field",
+                field_name,
+                "datetime datatype field must have date_precision attr",
+            )
+            has_errors = True
+
+    return not has_errors
+
+
 def check_all(fields, components, codelists):
     """Run all field integrity checks.
 
@@ -183,6 +202,7 @@ def check_all(fields, components, codelists):
             ],
         ),
         (check_dates, [fields]),
+        (check_datetime_precision, [fields]),
     ]
 
     all_passed = True
