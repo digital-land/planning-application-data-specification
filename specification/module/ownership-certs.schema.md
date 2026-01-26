@@ -110,7 +110,7 @@ fields:
       - lbc
       - s73
       - extraction-oil-gas
-  field: signature-date
+  field: declaration-date
 module: ownership-certs
 name: Ownership certificates and agricultural land declaration
 ---
