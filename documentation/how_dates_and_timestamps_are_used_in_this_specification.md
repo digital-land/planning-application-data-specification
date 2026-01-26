@@ -110,3 +110,45 @@ The `date_precision` attribute describes the *semantic precision* of the field, 
 
 This keeps the specification semantically clear, machine-safe, and consistent across all datasets.
 
+---
+
+### Future flexibility
+
+At the moment all date fields require a date of a certain precision.
+
+We have `year`, `month`, `day` and `timestamp` options to handle this.
+
+If in the future we require a field that is either X or Y then we will consider adding addition options, for example `month-or-day`
+
+This would mean the field expects
+
+* in some cases `YYYY-MM-DD` is a must.
+* in other cases, `YYYY-MM-DD` or `YYYY-MM` are acceptable depending on the level of precision the applicant can provide.
+
+This could be handled in the model by including something like a precision attribute on the field instance. For example
+```
+fields:
+  - field: proposed-start-date
+    date_precision: month-or-day   # allows YYYY-MM or YYYY-MM-DD
+    description: When works are expected to start (month is acceptable if exact day unknown)
+
+  - field: decision-date
+    date_precision: day            # strict YYYY-MM-DD
+    description: Date the decision was issued
+```
+
+which would then translate to something like this in a JSON schema
+for `precision: day`
+```
+{ "type": "string", "pattern": "^\\d{4}-\\d{2}-\\d{2}$" }
+```
+and for `precision: month-or-day`
+```
+{
+  "type": "string",
+  "oneOf": [
+    { "pattern": "^\\d{4}-(0[1-9]|1[0-2])$" },
+    { "pattern": "^\\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[12]\\d|3[01])$" }
+  ]
+}
+```
