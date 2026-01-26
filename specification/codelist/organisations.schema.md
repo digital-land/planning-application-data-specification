@@ -14,7 +14,7 @@ fields:
   - field: entry-date
   - field: start-date
   - field: end-date
-github-discussion:
+github-discussion: 382
 key-field: reference
 licence: ogl3
 name: Organisation

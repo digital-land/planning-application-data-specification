@@ -7,7 +7,7 @@ fields:
   - field: reference
   - field: name
   - field: description
-github-discussion:
+github-discussion: 383
 key-field: reference
 licence: ogl3
 name: Waste capacity unit
