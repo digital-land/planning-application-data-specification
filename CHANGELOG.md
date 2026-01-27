@@ -1,4 +1,48 @@
 
+<a name="v0.1.56"></a>
+## [v0.1.56](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.55...v0.1.56) (2026-01-27)
+
+dates (and more) in submission spec
+
+### ⚒️ Tooling
+
+* cli to output url to existing form for each application type (commit [866b2ff](https://github.com/digital-land/planning-application-data-specification/commit/866b2fffd8fcf09e813ea2dd22782dc1d840f6a2))
+* check that all date fields have date_precision attr set (commit [ecefb20](https://github.com/digital-land/planning-application-data-specification/commit/ecefb205b113f5362d4091c5c2a2267b4c7698b1))
+* add some tests for the render static site code (commit [6ed09e1](https://github.com/digital-land/planning-application-data-specification/commit/6ed09e1a833dedf5283688b0a4cfdcb90c9f443b))
+* include justification record on dataset page when available (commit [68d26df](https://github.com/digital-land/planning-application-data-specification/commit/68d26df8fa06db8e60a32072d02a4c7f257f8b85))
+* link to justification records on the /decision-stage page (commit [7221d92](https://github.com/digital-land/planning-application-data-specification/commit/7221d921bc960bc381f9832cadd055e8a688db3e))
+* tweak layout of 'help to improve this application schema' section (commit [5fd2456](https://github.com/digital-land/planning-application-data-specification/commit/5fd2456a95ad08b1d03df2fb9e93fd2954342a42))
+* add a page per module to static site generator (commit [6dc1429](https://github.com/digital-land/planning-application-data-specification/commit/6dc14299c1794bed9714989aeb775840afedb703))
+* add cli command to list which needs have been satisfied (commit [be9d617](https://github.com/digital-land/planning-application-data-specification/commit/be9d61705631c863be790a6534dbad51a7fd4587))
+* add content menu to application details page (commit [d5fff0c](https://github.com/digital-land/planning-application-data-specification/commit/d5fff0cb6b28d729c52a2781d08f90865863b24b))
+
+### 𝌭 Model changes
+
+* reuse declaration-date field instead of signature-date field in ownership cert module (commit [8c77e06](https://github.com/digital-land/planning-application-data-specification/commit/8c77e0645168ba562450ecba39081a3611df28fb))
+* add date_precision attr to all datetime fields (commit [d7c15bc](https://github.com/digital-land/planning-application-data-specification/commit/d7c15bc481f3da745a1c6e335f43b19bd7196120))
+* all date fields should be of type datetime (commit [ac88827](https://github.com/digital-land/planning-application-data-specification/commit/ac88827956cfaf7f0fb7c161eccf8a540cca8705))
+* update decision schema to include fields recently added to site dataset (commit [64b20d3](https://github.com/digital-land/planning-application-data-specification/commit/64b20d3dd85a82ce8d34a2012152b914ce08399d))
+* add name field to site dataset so planners can more easily refer to it consistently (commit [a9b3d87](https://github.com/digital-land/planning-application-data-specification/commit/a9b3d87308ebdfbdcad6e630797d87b7b1ac2ebc))
+* state the Site dataset is semantically a closeMatch to ifcSite (commit [cb47de4](https://github.com/digital-land/planning-application-data-specification/commit/cb47de481ae2a1d7562804be0b21d605132fc44e))
+* add the decision-maker codelist (commit [cfebd33](https://github.com/digital-land/planning-application-data-specification/commit/cfebd33529cdf714a844cc5bfd876164018fe973))
+* add missing codelist attribute to request-by field (commit [6dd9dfc](https://github.com/digital-land/planning-application-data-specification/commit/6dd9dfc2cdf6b5c9197941ddcaadf214ae428121))
+* add the organisation codelist (commit [ffddddd](https://github.com/digital-land/planning-application-data-specification/commit/ffdddddeaa967dbb89ca2051270e2657a1ee2847))
+
+### 🐛 Bug Fixes
+
+* correct example payload after spec changes (commit [87a1d17](https://github.com/digital-land/planning-application-data-specification/commit/87a1d1702b38e7e0cd00d6b99e15c0b3fc1b7879))
+* some required-of statements in modules should be lists of conditions not dicts (commit [aa7f717](https://github.com/digital-land/planning-application-data-specification/commit/aa7f717d94b016aaa21470defce9ecc5655a6948))
+* status of decision record 0007 (commit [d6bc124](https://github.com/digital-land/planning-application-data-specification/commit/d6bc124951002dee9ed2bae2908871bc21eb79fc))
+
+### 📚 Documentation
+
+* add the relevant github discussion number to codelist definitions (commit [750541a](https://github.com/digital-land/planning-application-data-specification/commit/750541a424a84a8a7afb4f51178c218c286e997b))
+* add not of potentially flexible date fields (commit [7024d4a](https://github.com/digital-land/planning-application-data-specification/commit/7024d4a4bb58221fa589ddc765c247594719a9cf))
+* document decision and approach to using dates and setting precision (commit [537d99f](https://github.com/digital-land/planning-application-data-specification/commit/537d99f701b9b048018ace7a9fd7f67eaff50645))
+* add notes to section 106 dataset that summarise our understanding of section 106s (commit [f7beddc](https://github.com/digital-land/planning-application-data-specification/commit/f7beddcc4fa7389a5b6fc4f3c72a106db45c831e))
+* update just-0017 so that its more of a rule that datasets should have a name field (commit [5aafd95](https://github.com/digital-land/planning-application-data-specification/commit/5aafd957ff68a8a8cfa09fff1343b9c1dbd56a80))
+
+
 <a name="v0.1.55"></a>
 ## [v0.1.55](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.54...v0.1.55) (2026-01-23)
 
