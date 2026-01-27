@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "bin"))
 
 import click
 from bin.applications import get_application_module_refs, get_applications_with_module
+from bin.csv_helpers import read_csv
 from bin.fields import find_field_usage
 from bin.loader import load_content, load_needs
 
@@ -118,13 +119,47 @@ def summary(do_list):
 
     total_needs = len(needs)
     total_covered = len(covered.keys())
-    click.echo(f"Decision-stage needs covered by justifications: {total_covered}/{total_needs}")
+    click.echo(
+        f"Decision-stage needs covered by justifications: {total_covered}/{total_needs}"
+    )
     if do_list and covered:
         click.echo("Covered needs:")
         for nid in sorted(covered.keys()):
             jids = sorted(covered[nid])
             jlabel = f" ({', '.join(jids)})" if jids else ""
             click.echo(f"  • {nid}{jlabel}")
+
+
+@cli.command()
+@click.argument("application_type")
+def form_url(application_type):
+    """Return the PDF form URL for an application type or subtype."""
+    forms_path = PROJECT_ROOT / "data" / "planning-application-form.csv"
+    rows = read_csv(str(forms_path), as_dict=True)
+    query = application_type.strip().lower()
+    matches = []
+
+    for row in rows:
+        raw_types = row.get("application-types", "")
+        types = [t.strip().lower() for t in raw_types.split(";") if t.strip()]
+        if query in types:
+            matches.append(row)
+
+    if not matches:
+        click.echo(f"No form found for application type '{application_type}'")
+        return
+
+    def format_types(raw: str) -> str:
+        items = [t.strip() for t in raw.split(";") if t.strip()]
+        return " + ".join(items) if items else raw.strip()
+
+    formatted = []
+    for row in matches:
+        url = row.get("document-url", "")
+        app_types = format_types(row.get("application-types", ""))
+        formatted.append(f"- application-type: {app_types}\n  form: {url}")
+
+    click.echo("\n\n".join(formatted))
 
 
 if __name__ == "__main__":
