@@ -97,4 +97,16 @@ datasets:
         description: the URL to the published section 106 agreement document
       - field: documentation-url
         description: the URL of the page where the section 106 agreement can be found
+  - dataset: planning-application-document
+    name: planning application document
+    fields:
+      - field: reference
+        description: the <a href="#reference">reference</a> for the document record
+      - field: planning-application
+        description: the <a href="#reference">reference</a> for the related planning application
+        dataset: planning-application
+      - field: document-url
+        description: the URL to the document file
+      - field: documentation-url
+        description: the URL of the page where the document can be found
 ---
