@@ -93,7 +93,25 @@ Use this sparingly. It is most useful where:
 	•	legacy and new approaches coexist
 	•	different producers support different capabilities
 
-4. Rule (general requirement)
+4. Combination with code list requirements
+
+Sometimes a need is only satisfied when a field exists **and** a specific code (or set of codes) exists in a codelist.
+
+```
+satisfied_by:
+  - dataset: planning-application-timeline
+    field: application-event
+  - codelist: planning-application-event
+    includes: [invalid]
+
+notes: >
+  Need is met when the application-event field exists and the codelist
+  includes the `invalid` code (so that “found invalid” can be recorded).
+```
+
+Use this when the codelist contents are essential to satisfying the need. Keep `includes` minimal and specific.
+
+5. Rule (general requirement)
 
 Some needs apply across many parts of the specification.
 
