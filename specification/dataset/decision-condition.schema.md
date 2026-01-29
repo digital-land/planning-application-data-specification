@@ -33,4 +33,29 @@ typology: document
 version: 
 wikidata: ''
 wikipedia: ''
+
+semantics:
+  aligns_to:
+    - iri: "https://schema.org/LegalAction"
+      relation: "closeMatch"
+      description: >
+        Each record represents the application of a planning condition to a specific
+        decision, making that condition legally binding for a particular development.
+  
+  links:
+    - predicate: "https://schema.org/isPartOf"
+      target_dataset: decision-notice
+      via_field: decision-notice
+      target_field: reference
+      description: >
+        Each decision condition forms part of the decision notice and contributes to
+        the legal effect of the permission.
+
+    - predicate: "https://schema.org/about"
+      target_dataset: planning-condition
+      via_field: planning-condition
+      target_field: reference
+      description: >
+        Each decision condition applies a specific planning condition clause to
+        a particular decision.
 ---
