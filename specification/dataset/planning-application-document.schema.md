@@ -29,5 +29,32 @@ themes:
 - administrative
 - development
 typology: document
-version: 
+version:
+
+semantics:
+  aligns_to:
+    - iri: "https://schema.org/DigitalDocument"
+      relation: "closeMatch"
+      description: >
+        Each record represents a digital document submitted as part of a planning
+        application.
+
+    - iri: "https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/OWL#IfcDocumentInformation"
+      relation: "closeMatch"
+      description: >
+        This dataset corresponds to the IFC idea of document information, but in a
+        lighter form, focused on identifying and referencing planning application
+        documents rather than managing their full lifecycle.
+    
+  links:
+    - predicate: "https://schema.org/isPartOf"
+      target_dataset: planning-application
+      via_field: planning-application
+      target_field: reference
+      description: >
+        Each document is part of a planning application and supports its assessment.
 ---
+
+A record of a document submitted as part of a planning application
+One row per file
+Plans, reports, statements, drawings, notices, certificates, etc.
