@@ -33,6 +33,7 @@ typology: document
 version: 
 wikidata: ''
 wikipedia: ''
+notes: ''
 
 semantics:
   aligns_to:
