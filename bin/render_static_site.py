@@ -330,7 +330,10 @@ def render_decision_index(
             }
             for ds in datasets
         ],
-        "links": {"needs": renderer.url_for("/decision-stage/need")},
+        "links": {
+            "needs": renderer.url_for("/decision-stage/need"),
+            "justifications": renderer.url_for("/justification"),
+        },
     }
     decision_html = renderer.render("decision_index.html", decision_ctx)
     renderer.write_page("decision-stage/index.html", decision_html)
