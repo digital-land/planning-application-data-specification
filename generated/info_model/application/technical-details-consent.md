@@ -443,7 +443,7 @@ How waste water will leave the property as part of the proposed development
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
 | has-new-disposal-arrangements | Has new disposal arrangements | Does the proposal include any new foul sewage disposal arrangments | MUST |  |
-| foul-sewage-disposal-types | Foul sewage disposal types[] | List of ways foul sewage will be disposed of | MAY | Select from the **foul-sewage-disposal-type** enum |
+| foul-sewage-disposal-types | Foul sewage disposal types[] | List of ways foul sewage will be disposed of | MAY | Select from the **foul-sewage-disposal-type** enum. Rule: is a MUST if `has-new-disposal-arrangements` is `True` |
 | connect-to-drainage-system | Connect to drainage system | Whether the proposal needs to connect to the existing drainage system | MUST |  |
 | supporting-documents | Supporting documents[]{} | References to plans or drawings showing details of the existing drainage system | MAY |  |
 

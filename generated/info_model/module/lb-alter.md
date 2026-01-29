@@ -7,8 +7,8 @@ Details of any changes being made to a listed building as part of development wo
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
 | proposal-alter-lb | Proposal alter listed building | True or False if proposal includes alterations to a listed building |  | MUST |  |
-| proposal-alter-lb-types | Proposal alteration types[] | Select from a list of listed building alteration types, select all that apply |  | MAY | Select from the **lb-alteration-type** enum |
-| document-reference | Document reference[]{} | References to documents detailing the proposed alterations |  | MAY |  |
+| proposal-alter-lb-types | Proposal alteration types[] | Select from a list of listed building alteration types, select all that apply |  | MAY | Select from the **lb-alteration-type** enum. Rule: is a MUST if `proposal-alter-lb` is `True` |
+| document-reference | Document reference[]{} | References to documents detailing the proposed alterations |  | MAY | Rule: is a MUST if `proposal-alter-lb` is `True` |
 
 
 **Supporting document component**

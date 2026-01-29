@@ -454,7 +454,7 @@ Details of any other development proposals made for the site
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
 | has-related-applications | Has related applications | Are there any related applications, previous proposals or demolitions for the site | MUST |  |
-| related-applications | Related applications[]{} | List of related applications, previous proposals or demolitions for the site | MAY |  |
+| related-applications | Related applications[]{} | List of related applications, previous proposals or demolitions for the site | MAY | Rule: is a MUST if `has-related-applications` is `True` |
 
 
 **Related application details component**

@@ -7,7 +7,7 @@ How waste water will leave the property as part of the proposed development
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
 | has-new-disposal-arrangements | Has new disposal arrangements | Does the proposal include any new foul sewage disposal arrangments |  | MUST |  |
-| foul-sewage-disposal-types | Foul sewage disposal types[] | List of ways foul sewage will be disposed of |  | MAY | Select from the **foul-sewage-disposal-type** enum |
+| foul-sewage-disposal-types | Foul sewage disposal types[] | List of ways foul sewage will be disposed of |  | MAY | Select from the **foul-sewage-disposal-type** enum. Rule: is a MUST if `has-new-disposal-arrangements` is `True` |
 | produce-foul-sewage | Produce foul sewage | Whether the proposed development will produce any foul sewage | extraction-oil-gas | MUST |  |
 | connect-to-drainage-system | Connect to drainage system | Whether the proposal needs to connect to the existing drainage system | full, outline-some, technical-details-consent | MUST |  |
 | connect-to-drainage-system-oil-gas | Connect to drainage system (oil and gas) | Whether the proposal needs to connect to the existing drainage system (oil and gas applications) | extraction-oil-gas | MUST | Select from the **yes-no-unknown** enum |
