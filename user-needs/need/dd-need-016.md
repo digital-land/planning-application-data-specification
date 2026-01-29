@@ -12,7 +12,7 @@ themes:
   - obligations
   - compliance
 source:
-  - type: regulation
+  - type: legislation
     notes:
 variations:
 next_step:

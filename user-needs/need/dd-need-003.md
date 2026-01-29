@@ -12,8 +12,9 @@ themes:
   - conditions
   - monitoring
 source:
-  - type: analytics
-    notes:
+  - type: interview
+    notes: |
+      Numerous users mentioned the increasing number of conditions as a factor delaying the delivery of schemes. This data is currently hard to access making this belief hard to verify.
 variations:
 next_step:
 notes:

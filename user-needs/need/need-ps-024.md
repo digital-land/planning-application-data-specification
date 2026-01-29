@@ -13,7 +13,7 @@ themes:
   - monitoring
   - housing
 source:
-  - type: analytics
+  - type: ps1-ps2
     notes:
 variations:
 next_step:

@@ -12,7 +12,7 @@ themes:
   - decision
   - compliance
 source:
-  - type: regulation
+  - type: legislation
     notes:
 variations:
 next_step: rewrite
