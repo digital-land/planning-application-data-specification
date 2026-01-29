@@ -34,4 +34,15 @@ typology: document
 version: 
 wikidata: ''
 wikipedia: ''
+
+semantics:
+  aligns_to:
+    - iri: "https://schema.org/Legislation"
+      relation: "closeMatch"
+      description: >
+        A catalogue of planning condition clauses that are legislation-like
+        in nature. Each record represents the text of a condition and its rationale,
+        designed for reuse across multiple planning decisions. The clauses themselves
+        are not legally binding until they are attached to a specific decision, where
+        they take effect as enforceable requirements.
 ---
