@@ -32,4 +32,20 @@ notes: |
   * that means you can have a committee decision in principle, but the formal decision notice can be delayed for months (sometimes years) until the s106 is agreed
   * so the notice and s106 effectively need to land together
   * this delay is a key data gap we want to capture (committee date vs decision notice date) to show the time taken to negotiate s106.
+
+semantics:
+  aligns_to:
+    - iri: "https://schema.org/LegalDocument"
+      relation: "closeMatch"
+      description: >
+        Each record represents a legally binding Section 106 agreement made under
+        planning legislation, creating obligations linked to a development.
+  
+  links:
+    - predicate: "https://schema.org/about"
+      target_dataset: decision-notice
+      via_field: decision-notice
+      target_field: reference
+      description: >
+        The Section 106 agreement is associated with the referenced decision notice.
 ---
