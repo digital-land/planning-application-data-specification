@@ -34,34 +34,142 @@
   </div>
 </div>
 
-<div class="govuk-grid-row">
-  <div class="govuk-grid-column-full">
-    <p class="govuk-body">Showing {{ needs|length }} needs</p>
-  {% for need in needs %}
-    <div class="app-need-card--summary govuk-!-margin-bottom-6">
-      <div class="govuk-grid-row">
-        <div class="govuk-grid-column-three-quarters">
-          <h2 class="govuk-heading-m govuk-!-margin-bottom-1">
-            <a class="govuk-link govuk-link--no-visited-state" href="{{ need.href }}">{{ need.id }}</a>
-          </h2>
-          <p class="govuk-body govuk-!-margin-bottom-0">{{ need.statement }}</p>
-        </div>
-        <div class="govuk-grid-column-one-quarter govuk-!-text-align-right">
-          <strong class="govuk-tag {{ need.tag_class }}">{{ need.tag_label }}</strong>
-        </div>
-      </div>
-    </div>
-  {% endfor %}
-  <div class="app-engagement-panel">
-    <h3 class="govuk-heading-m">
-      Want to suggest a new need or improvement?
-    </h3>
-    <p class="govuk-body">To help make sure we have good and useful needs, you can</p>
-    <ul class="govuk-list govuk-list--bullet">
-      <li>add evidence or challenge a user need in our list</li>
-      <li><a href="https://github.com/digital-land/planning-application-data-specification/issues/new?template=new-requirement.yml" class="govuk-link">propose a new need on github</a></li>
-    </ul>
-  </div>
+<div class='govuk-grid-row govuk-!-margin-top-9'>
+  <div class='govuk-grid-column-two-thirds'>
+    <form class="govuk-!-margin-bottom-9" data-filter="form">
+      <label class="dl-list-filter__label govuk-label govuk-!-font-weight-bold" for="filter-needs-list">Search user needs</label>
+      <input class="dl-list-filter__input govuk-input" type="text"
+             id="filter-needs-list"
+             name="list_filter"
+             value=""
+             placeholder="For example, withdrawn">
+    </form>
   </div>
 </div>
+
+<div class="needs-list__wrapper">
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <div class="needs-list__count__wrapper">
+        <p class="govuk-body">Showing <span class="js-accessible-list-filter__count">{{ needs|length }}</span> needs</p>
+        <span class="govuk-body govuk-!-font-weight-bold govuk-visually-hidden js-list-filter__count" aria-hidden="true">{{ needs|length }}</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      {% include 'components/needs-list.html' %}
+      <p class="dl-list-filter__no-filter-match js-no-filter-list-matches">No user needs match your search term.</p>
+    </div>
+  </div>
+</div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <div class="app-engagement-panel">
+      <h3 class="govuk-heading-m">
+        Want to suggest a new need or improvement?
+      </h3>
+      <p class="govuk-body">To help make sure we have good and useful needs, you can</p>
+      <ul class="govuk-list govuk-list--bullet">
+        <li>add evidence or challenge a user need in our list</li>
+        <li><a href="https://github.com/digital-land/planning-application-data-specification/issues/new?template=new-requirement.yml" class="govuk-link">propose a new need on github</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+{% block pageScripts %}
+{{ super() }}
+<script>
+  // initialise list filter
+  const $form = document.querySelector('[data-filter="form"]');
+  const listFilter = new window.DLFrontend.ListFilter($form);
+
+  listFilter.init({
+    list_section_selector: '.needs-list__wrapper',
+    count_wrapper_selector: '.needs-list__count__wrapper'
+  });
+
+  // Update URL with filter value without reloading page
+  const $input = document.querySelector('#filter-needs-list');
+  const $serverFilterForm = document.querySelector('.govuk-form');
+
+  $input.addEventListener('keyup', function(e) {
+    const newUrl = new URL(window.location);
+    if (e.target.value) {
+      newUrl.searchParams.set('list_filter', e.target.value);
+    } else {
+      newUrl.searchParams.delete('list_filter');
+    }
+    window.history.pushState({}, '', newUrl);
+
+    // If enter key is pressed, trigger server form submission
+    if (e.key === 'Enter' && $serverFilterForm) {
+      // Get current URL and form data
+      const url = new URL($serverFilterForm.action || window.location.href);
+      const formData = new FormData($serverFilterForm);
+
+      // Add all form data to URL parameters
+      for (const [key, value] of formData.entries()) {
+        url.searchParams.append(key, value);
+      }
+
+      // Add the list filter value
+      if (e.target.value) {
+        url.searchParams.set('list_filter', e.target.value);
+      }
+
+      // Navigate to the URL with all parameters
+      window.location.href = url.toString();
+    }
+  });
+
+  // Prevent the list filter form from submitting
+  $form.addEventListener('submit', function(e) {
+    e.preventDefault();
+  });
+
+  // Handle server form submission to preserve list filter
+  if ($serverFilterForm) {
+    $serverFilterForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      // Get current URL and form data
+      const url = new URL($serverFilterForm.action || window.location.href);
+      const formData = new FormData($serverFilterForm);
+
+      // Add all form data to URL parameters
+      for (const [key, value] of formData.entries()) {
+        url.searchParams.append(key, value);
+      }
+
+      // Add the list filter if it exists
+      const listFilterValue = $input.value;
+      if (listFilterValue) {
+        url.searchParams.set('list_filter', listFilterValue);
+      }
+
+      // Navigate to the URL with all parameters
+      window.location.href = url.toString();
+    });
+  }
+
+  // If there's a filter value in the URL, trigger the filter
+  const urlParams = new URLSearchParams(window.location.search);
+  const filterValue = urlParams.get('list_filter');
+  if (filterValue) {
+    $input.value = filterValue;
+    // Create and dispatch a keyup event since that's what the ListFilter expects
+    const keyupEvent = new KeyboardEvent('keyup', {
+      bubbles: true,
+      cancelable: true,
+      key: 'dummy',
+      keyCode: 0
+    });
+    $input.dispatchEvent(keyupEvent);
+  }
+</script>
 {% endblock %}

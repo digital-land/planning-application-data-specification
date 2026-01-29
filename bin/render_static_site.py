@@ -470,6 +470,7 @@ def build_site(args: argparse.Namespace) -> None:
             "needs": [
                 {
                     "id": need.get("need"),
+                    "name": need.get("name", ""),
                     "statement": need.get("statement") or need.get("name") or "",
                     "href": renderer.url_for(
                         f"/decision-stage/need/{need.get('need')}"
