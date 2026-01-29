@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% set spec_route = "decisions" %}
+{% from "macros/data_chips.html" import data_chip %}
 
 {% block content %}
 <div class="govuk-grid-row">
@@ -36,6 +37,74 @@
     {% if body %}
       <div class="govuk-body">
         {{ body | safe }}
+      </div>
+    {% endif %}
+
+    <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l app-strong-section-break">
+
+    {% if raw and raw.get("satisfied_by") %}
+      <h2 class="govuk-heading-m">Satisfied by:</h2>
+      <div class="govuk-body">
+        {% set sb = raw.get("satisfied_by") %}
+
+        {% macro render_condition(cond) %}
+          {% if cond.get("allOf") %}
+            <div class="govuk-!-margin-bottom-2">
+              <p class="govuk-body">All of these are required:</p>
+              <div class="govuk-!-margin-left-2">
+                {% for sub in cond.get("allOf") %}
+                  <div class="govuk-!-margin-bottom-1">{{ render_condition(sub) }}</div>
+                  {% if not loop.last %}
+                    <span class="govuk-body">and</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% elif cond.get("anyOf") %}
+            <div class="govuk-!-margin-bottom-2">
+              <p class="govuk-body">One of:</p>
+              <div class="govuk-!-margin-left-2">
+                {% for sub in cond.get("anyOf") %}
+                  <div class="govuk-!-margin-bottom-1">{{ render_condition(sub) }}</div>
+                  {% if not loop.last %}
+                    <span class="govuk-body">or</span>
+                  {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+          {% elif cond.get("dataset") and cond.get("field") %}
+            {{ data_chip("Field", cond.get("field")) }} in {{ data_chip("Dataset", cond.get("dataset")) }}
+          {% elif cond.get("dataset") %}
+            Having {{ data_chip("Dataset", cond.get("dataset")) }}
+          {% elif cond.get("field") %}
+            {{ data_chip("Field", cond.get("field")) }}
+          {% elif cond.get("codelist") %}
+            {{ data_chip("Codelist", cond.get("codelist")) }}
+            {% if cond.get("includes") %}
+              {{ data_chip("Includes code", cond.get("includes") | join(", ")) }}
+            {% endif %}
+          {% elif cond.get("rule") %}
+            <pre>{{ cond | tojson(indent=2) }}</pre>
+          {% endif %}
+        {% endmacro %}
+
+        {% if sb is mapping and sb.get("allOf") %}
+          {{ render_condition({"allOf": sb.get("allOf")}) }}
+        {% elif sb is mapping and sb.get("anyOf") %}
+          {{ render_condition({"anyOf": sb.get("anyOf")}) }}
+        {% elif sb is mapping and sb.get("rule") %}
+          <p class="govuk-body">Rule:</p>
+          <pre>{{ sb.get("rule") | tojson(indent=2) }}</pre>
+        {% elif sb is sequence %}
+          <div class="govuk-!-margin-bottom-3">
+            {% for cond in sb %}
+              <div class="govuk-!-margin-bottom-1">{{ render_condition(cond) }}</div>
+              {% if not loop.last %}
+                <span class="govuk-body">and</span>
+              {% endif %}
+            {% endfor %}
+          </div>
+        {% endif %}
       </div>
     {% endif %}
 
