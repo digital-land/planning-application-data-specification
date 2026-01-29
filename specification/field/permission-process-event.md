@@ -8,4 +8,9 @@ codelist: permission-process-event
 entry-date: 2026-01-29
 end-date: ''
 notes: ''
+
+semantics:
+  predicate: "https://schema.org/eventType"
+  description: >
+    The type of planning process event, using the permission-process-event codelist.
 ---

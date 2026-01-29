@@ -29,4 +29,25 @@ themes:
 typology: administrative
 version: ''
 notes: 
+
+semantics:
+  aligns_to:
+    - iri: "https://schema.org/Event"
+      relation: "closeMatch"
+      description: >
+        Each record represents a dated event in the processing of a planning application.
+
+    - iri: "https://standards.buildingsmart.org/IFC/RELEASE/IFC4_3/HTML/lexical/IfcEvent.htm"
+      relation: "closeMatch"
+      description: >
+        This dataset is conceptually aligned with the IFC IfcEvent concept, but focused on
+        planning permission process events rather than BIM work plans.
+      
+  links:
+    - predicate: "https://schema.org/about"
+      target_dataset: planning-application
+      via_field: planning-application
+      target_field: reference
+      description: >
+        Each timeline entry is about the referenced planning application.
 ---
