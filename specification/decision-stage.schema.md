@@ -109,4 +109,16 @@ datasets:
         description: the URL to the document file
       - field: documentation-url
         description: the URL of the page where the document can be found
+  - dataset: planning-permission-timeline
+    name: planning permission timeline
+    fields:
+      - field: reference
+        description: the <a href="#reference">reference</a> for the timeline entry
+      - field: planning-application
+        description: the <a href="#reference">reference</a> for the related planning application
+        dataset: planning-application
+      - field: permission-process-event
+        description: the type of event in the permission process
+      - field: event-date
+        description: the date the event occurred
 ---
