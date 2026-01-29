@@ -93,6 +93,53 @@ def field_usage(field_ref):
             click.echo(f"  • {ref}: {name}")
 
 
+@find.command()
+@click.argument("component_ref")
+def component_usage(component_ref):
+    """Find fields and modules that use a given component."""
+    spec = load_content()
+    fields = spec.get("field", {}) or {}
+    modules = spec.get("module", {}) or {}
+
+    field_hits = []
+    for ref, field in fields.items():
+        if field.get("component") == component_ref:
+            name = field.get("name", ref)
+            field_hits.append((ref, name))
+    field_hits.sort(key=lambda item: item[0])
+
+    module_hits = []
+    field_refs = {ref for ref, _ in field_hits}
+    if field_refs:
+        for ref, mod in modules.items():
+            entries = mod.get("fields") if hasattr(mod, "get") else None
+            if not isinstance(entries, list):
+                continue
+            for entry in entries:
+                entry_ref = entry if isinstance(entry, str) else entry.get("field")
+                if entry_ref in field_refs:
+                    name = mod.get("name", ref) if hasattr(mod, "get") else ref
+                    module_hits.append((ref, name))
+                    break
+    module_hits.sort(key=lambda item: item[0])
+
+    if not field_hits and not module_hits:
+        click.echo(f"No fields or modules found using component '{component_ref}'")
+        return
+
+    if field_hits:
+        click.echo(f"Fields using component '{component_ref}':")
+        for ref, name in field_hits:
+            click.echo(f"  • {ref}: {name}")
+
+    if module_hits:
+        if field_hits:
+            click.echo()
+        click.echo(f"Modules using component '{component_ref}':")
+        for ref, name in module_hits:
+            click.echo(f"  • {ref}: {name}")
+
+
 # TODO: find all fields that reference a given codelist
 # TODO: find all fields that reference a given component
 # TODO: find all fields that are not used anywhere
