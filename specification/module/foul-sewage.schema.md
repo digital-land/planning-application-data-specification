@@ -12,13 +12,13 @@ fields:
 - field: produce-foul-sewage
   applies-if:
     application-type:
-      - in:
+      in:
         - extraction-oil-gas
   required: true
 - field: connect-to-drainage-system
   applies-if:
     application-type:
-      - in:
+      in:
         - full
         - outline-some
         - technical-details-consent
@@ -26,7 +26,7 @@ fields:
 - field: connect-to-drainage-system-oil-gas
   applies-if:
     application-type:
-      - in:
+      in:
         - extraction-oil-gas
   required: true
 - field: supporting-documents

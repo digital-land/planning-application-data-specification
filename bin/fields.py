@@ -20,12 +20,28 @@ def get_applicable_app_types(field_entry):
         # applies-if can be a list of dicts or a dict (should fix this)
         if isinstance(applies_if, list):
             for cond in applies_if:
-                if "application-type" in cond:
-                    app_types = cond["application-type"].get("in")
+                if not isinstance(cond, dict) or "application-type" not in cond:
+                    continue
+                app_cond = cond["application-type"]
+                if isinstance(app_cond, dict):
+                    app_types = app_cond.get("in")
+                elif isinstance(app_cond, list):
+                    for item in app_cond:
+                        if isinstance(item, dict) and "in" in item:
+                            app_types = item.get("in")
+                            break
+                if app_types:
                     break
         elif isinstance(applies_if, dict):
             if "application-type" in applies_if:
-                app_types = applies_if["application-type"].get("in")
+                app_cond = applies_if["application-type"]
+                if isinstance(app_cond, dict):
+                    app_types = app_cond.get("in")
+                elif isinstance(app_cond, list):
+                    for item in app_cond:
+                        if isinstance(item, dict) and "in" in item:
+                            app_types = item.get("in")
+                            break
         if app_types:
             return app_types
         return []

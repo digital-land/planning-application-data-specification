@@ -21,10 +21,10 @@ import jinja2.filters as jinja_filters
 if not hasattr(jinja_filters, "evalcontextfilter"):
     jinja_filters.evalcontextfilter = jinja_filters.pass_eval_context
 
-from bin.renderer import RenderContext
 from digital_land_frontend import filters as dlf_filters  # noqa: E402
 from digital_land_frontend import globals as dlf_globals  # noqa: E402
 from loader import load_needs, load_specification_model
+from renderer import RenderContext
 from utils import ensure_dir
 
 try:
@@ -541,17 +541,13 @@ def build_site(args: argparse.Namespace) -> None:
                         "confidence": j.get("confidence", ""),
                         "notes": j.get("notes", ""),
                         "body": j.get("__body__", ""),
-                        "href": renderer.url_for(
-                            f"/justification/{j.get('id', '')}"
-                        ),
+                        "href": renderer.url_for(f"/justification/{j.get('id', '')}"),
                     }
                     for j in justs
                 ],
             }
             need_html = need_template.render(**need_ctx)
-            renderer.write_page(
-                f"decision-stage/need/{n_id}/index.html", need_html
-            )
+            renderer.write_page(f"decision-stage/need/{n_id}/index.html", need_html)
 
         # Decision stage dataset detail pages
         dataset_template = env.get_template("dataset_detail.html")
@@ -585,7 +581,9 @@ def build_site(args: argparse.Namespace) -> None:
                         "cardinality": f.get("cardinality") or field_cardinality or "",
                         "target_dataset": target_dataset,
                         "target_dataset_href": (
-                            renderer.url_for(f"/decision-stage/dataset/{target_dataset}")
+                            renderer.url_for(
+                                f"/decision-stage/dataset/{target_dataset}"
+                            )
                             if target_dataset
                             else ""
                         ),
@@ -743,9 +741,7 @@ def build_site(args: argparse.Namespace) -> None:
                 "links": {"back": renderer.url_for("/submission")},
             }
             app_html = app_template.render(**app_ctx)
-            renderer.write_page(
-                f"submission/application/{app_id}/index.html", app_html
-            )
+            renderer.write_page(f"submission/application/{app_id}/index.html", app_html)
 
         # Justification index and detail pages
         justification_template = env.get_template("justification_detail.html")
