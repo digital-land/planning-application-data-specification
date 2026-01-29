@@ -1,4 +1,43 @@
 
+<a name="v0.1.57"></a>
+## [v0.1.57](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.56...v0.1.57) (2026-01-29)
+
+Docs and timeline for decisions
+
+### ⚒️ Tooling
+
+* extend cli find command to included finding where component is used (commit [18dc4db](https://github.com/digital-land/planning-application-data-specification/commit/18dc4dbea0f2d4fc947ee5a2633c2c6f5af40340))
+* cli to output url to existing form for each application type (commit [fd03e09](https://github.com/digital-land/planning-application-data-specification/commit/fd03e0936c7b1533124c34f1f5b4166813e74fbd))
+
+### 𝌭 Model changes
+
+* add semantic annotations to decision-condition dataset (commit [fec3721](https://github.com/digital-land/planning-application-data-specification/commit/fec3721f5a32efaa704f3abb1aeedf12e22e7e83))
+* add semantic annotations to planning-condition dataset (commit [8f722d2](https://github.com/digital-land/planning-application-data-specification/commit/8f722d2201296e1be56f74d9f410c7873cebd63c))
+* add semantic annotation to reference field (commit [630a2fa](https://github.com/digital-land/planning-application-data-specification/commit/630a2fa5fe4cb239e6992c3eb43e65c8203cb987))
+* add semantic annotations to section 106 dataset (commit [cbaa9a5](https://github.com/digital-land/planning-application-data-specification/commit/cbaa9a52153c7ffca502497d163ceb9c16f5d5b4))
+* add semantic annotations to planning permisison timeline dataset (commit [2726a28](https://github.com/digital-land/planning-application-data-specification/commit/2726a283967a032ae9b31ab3534d387a566c42ba))
+* add semantic annotations to planning application document dataset (commit [49a37e0](https://github.com/digital-land/planning-application-data-specification/commit/49a37e08be28e217c596306cba6a691b37e9c51b))
+* add planning-permission-timeline dataset to decision stage specification (commit [a587f63](https://github.com/digital-land/planning-application-data-specification/commit/a587f6339236ebb0f65ab7289c6045e34e03fe4f))
+* add planning-application-document dataset (commit [65f9a45](https://github.com/digital-land/planning-application-data-specification/commit/65f9a45e59e926b5944e2cecc88261c283cfb168))
+* add codelist for permission process events (commit [c923913](https://github.com/digital-land/planning-application-data-specification/commit/c923913fcceee0fb9719ce7b6291d5aaf03d294c))
+
+### 🐛 Bug Fixes
+
+* add missing notes attrs to datasets (commit [15786c9](https://github.com/digital-land/planning-application-data-specification/commit/15786c96a3b6691facfa84ac5b7b16e78bf14d87))
+* correct sources on a few needs (commit [0505ecd](https://github.com/digital-land/planning-application-data-specification/commit/0505ecda98903e98342147e2978f968a75f2c592))
+* correct example payload after spec changes (commit [10b5892](https://github.com/digital-land/planning-application-data-specification/commit/10b5892e6183068dcf65ec4ead52f56ccec4c09e))
+* some required-of statements in modules should be lists of conditions not dicts (commit [49adf34](https://github.com/digital-land/planning-application-data-specification/commit/49adf34ed34780aa3a3072525080e786eef6844f))
+
+### 📚 Documentation
+
+* add need dd-need-077 about access to all documents (commit [88d3a82](https://github.com/digital-land/planning-application-data-specification/commit/88d3a8266d8f84ec944b84baf0574f099f8d4bcb))
+* add a data need for timeline datasets requiring what and when data points (commit [751b89e](https://github.com/digital-land/planning-application-data-specification/commit/751b89e2fad35e6bd79d1a795951de428b13187f))
+* ad a series of needs about aspects of process that need tracking (commit [dc76844](https://github.com/digital-land/planning-application-data-specification/commit/dc76844646950042de9cab9ed3072143bd7c7cde))
+* add another condition type that can be used in justification records (commit [ae3771c](https://github.com/digital-land/planning-application-data-specification/commit/ae3771cf0e8ebeed4f7081c1369149c2c4be770e))
+* add need about tracking what happens in the planning permission process (commit [befa60c](https://github.com/digital-land/planning-application-data-specification/commit/befa60cdefb3f241cf7ca7569fab32a4866e914d))
+* add the relevant github discussion number to codelist definitions (commit [f017a23](https://github.com/digital-land/planning-application-data-specification/commit/f017a23241aa5a6374db9bdd3f75c33f21bc1e1f))
+
+
 <a name="v0.1.56"></a>
 ## [v0.1.56](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.55...v0.1.56) (2026-01-27)
 
