@@ -30,7 +30,7 @@ replacement-dataset: ''
 start-date: ''
 themes:
 - administrative
-typology: document
+typology: legal-instrument
 version: 
 wikidata: ''
 wikipedia: ''

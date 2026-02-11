@@ -26,7 +26,7 @@ replacement-dataset: ''
 themes:
   - development
   - administrative
-typology: administrative
+typology: timetable
 version: ''
 notes: 
 

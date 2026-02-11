@@ -29,7 +29,7 @@ replacement-dataset: ''
 start-date: ''
 themes:
 - administrative
-typology: document
+typology: value
 version: 
 wikidata: ''
 wikipedia: ''
