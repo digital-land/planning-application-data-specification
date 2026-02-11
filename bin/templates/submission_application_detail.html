@@ -1,11 +1,30 @@
 {% extends "base.html" %}
 {% set spec_route = "submissions" %}
 
+
+{% block app_breadcrumbs %}
+  {{- govukBreadcrumbs(breadcrumbs | default({
+    'items': [
+      {
+        'text': "Home",
+        'href': "/"
+      },
+      {
+        'text': "Submissions",
+        'href': base_url + "/submission"
+      },
+      {
+        'text': title
+      }
+    ]
+  })) -}}
+{% endblock %}
+
 {% block content %}
 
 <div class='govuk-grid-row'>
   <div class='govuk-grid-column-full'>
-    <a class="govuk-back-link" href="{{ links.back }}">Back to submission specifications</a>
+    <span class="govuk-caption-xl">Application schema</span>
     <h1 class="govuk-heading-xl">{{ title }}</h1>
   </div>
 </div>
@@ -33,7 +52,13 @@
     {% if synonyms %}
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">Synonyms</dt>
-      <dd class="govuk-summary-list__value">{{ synonyms | join(", ") }}</dd>
+      <dd class="govuk-summary-list__value">
+        <ul class="govuk-list govuk-!-margin-bottom-0">
+          {% for syn in synonyms %}
+            <li>{{ syn }}</li>
+          {% endfor %}
+        </ul>
+      </dd>
     </div>
     {% endif %}
     {% if entry_date %}
@@ -82,12 +107,13 @@
 
   {% if modules %}
     <h2 class="govuk-heading-l" id="modules">Modules</h2>
-    <ul class="govuk-list govuk-list--bullet">
+    <p class="govuk-body">This application uses the following modules. Each module groups fields that collect a related set of information.</p>
+    <ul class="govuk-list">
       {% for module in modules %}
-        <li>
-          <a class="govuk-link" href="/submission/module/{{ module.ref }}">{{ module.ref }}</a>{% if module.required is not none %} (required: {{ module.required }}){% endif %}
-          {% if module.description %}<div class="govuk-hint">{{ module.description }}</div>{% endif %}
-        </li>
+      <li>
+        <h4 class="govuk-heading-s govuk-!-margin-bottom-1"><a class="govuk-link" href="/submission/module/{{ module.ref }}">{{ module.name or module.ref }} ({{ module.ref }})</a></h4>
+        {% if module.description %}<div class="govuk-hint">{{ module.description }}</div>{% endif %}
+      </li>
       {% endfor %}
     </ul>
   {% endif %}

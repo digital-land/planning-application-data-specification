@@ -720,15 +720,20 @@ def build_site(args: argparse.Namespace) -> None:
                 mref = m.get("module")
                 mobj = module_index.get(mref)
                 mdesc = ""
+                mname = ""
                 if mobj:
                     mdesc = getattr(mobj, "description", None) or mobj.content.get(
                         "description", ""
+                    )
+                    mname = getattr(mobj, "name", None) or mobj.content.get(
+                        "name", mref
                     )
                 modules.append(
                     {
                         "ref": mref,
                         "required": m.get("required"),
                         "description": mdesc,
+                        "name": mname or mref,
                     }
                 )
             app_ctx = {
