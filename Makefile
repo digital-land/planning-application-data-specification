@@ -52,10 +52,14 @@ clean-static-site::
 	rm -rf docs
 	mkdir -p docs
 
-render-local-site:: clean-static-site
+copy-assets::
+	mkdir -p docs/static/{stylesheets,javascripts}
+	cp -r bin/assets/javascripts docs/static/
+
+render-local-site:: clean-static-site copy-assets
 	python3 bin/render_static_site.py --output docs --base-url ""
 
-render-github-pages:: clean-static-site
+render-github-pages:: clean-static-site copy-assets
 	python3 bin/render_static_site.py --output docs
 
 serve-github-pages::
