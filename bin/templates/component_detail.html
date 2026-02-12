@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+{% set spec_route = "submissions" %}
+{% from "govuk_frontend_jinja/components/accordion/macro.html" import govukAccordion %}
+{% from "govuk_frontend_jinja/components/breadcrumbs/macro.html" import govukBreadcrumbs %}
+
+{% block app_breadcrumbs %}
+  {{ govukBreadcrumbs({
+    'items': [
+      { 'text': "Home", 'href': base_url + "/" },
+      { 'text': "Submissions", 'href': base_url + "/submission" },
+      { 'text': "Components", 'href': base_url + "/submission/component" },
+      { 'text': name }
+    ]
+  }) }}
+{% endblock %}
+
+{% macro render_fields(fields, level=0) %}
+<dl class="govuk-summary-list">
+  {% for field in fields %}
+    <div class="govuk-summary-list__row">
+      <dt class="govuk-summary-list__key">
+        <div class="govuk-body govuk-!-font-weight-bold">{{ field.name }}</div>
+        <div class="govuk-hint govuk-!-margin-bottom-0"><code>{{ field.ref }}</code></div>
+      </dt>
+      <dd class="govuk-summary-list__value">
+        {% if field.description %}<p class="govuk-body">{{ field.description }}</p>{% endif %}
+        {% if field.required is not none %}
+          <p class="govuk-hint govuk-!-margin-bottom-0">Required: {{ field.required }}</p>
+        {% endif %}
+        <p class="govuk-hint">Datatype: {{ field.datatype }}</p>
+        {% if field.cardinality %}
+          <p class="govuk-hint">
+            Expected number:
+            {% if field.cardinality == "n" %}
+              1 or more
+            {% else %}
+              1
+            {% endif %}
+          </p>
+        {% endif %}
+
+        {% if field.datatype == "object" and field.children %}
+          {{ govukAccordion({
+            "id": ("comp-field-component-" ~ field.ref ~ "-" ~ loop.index ~ "-" ~ level),
+            "classes": "govuk-!-margin-top-2",
+            "showAllSections": false,
+            "items": [
+              {
+                "heading": {
+                  "text": (field.component_name ~ " component") if field.component_name else "Show component"
+                },
+                "content": {
+                  "html": render_fields(field.children, level + 1)
+                }
+              }
+            ]
+          }) }}
+        {% endif %}
+      </dd>
+    </div>
+  {% endfor %}
+</dl>
+{% endmacro %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">{{ ref }}</span>
+    <h1 class="govuk-heading-xl">{{ name }}</h1>
+    {% if description %}<p class="govuk-body-l">{{ description }}</p>{% endif %}
+
+    {% if fields %}
+      <h2 class="govuk-heading-l">Fields</h2>
+      {{ render_fields(fields) }}
+    {% endif %}
+
+    {% if rules %}
+      <h2 class="govuk-heading-l">Rules</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        {% for rule in rules %}
+          {% if rule.rule %}<li>{{ rule.rule }}</li>{% elif rule.description %}<li>{{ rule.description }}</li>{% else %}<li>{{ rule }}</li>{% endif %}
+        {% endfor %}
+      </ul>
+    {% endif %}
+
+    {% if modules %}
+      <h2 class="govuk-heading-l">Used in modules</h2>
+      <ul class="govuk-list govuk-list--bullet">
+        {% for mod in modules %}
+          <li><a class="govuk-link" href="{{ mod.href }}">{{ mod.name or mod.ref }}</a></li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

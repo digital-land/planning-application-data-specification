@@ -24,7 +24,7 @@ if not hasattr(jinja_filters, "evalcontextfilter"):
 from digital_land_frontend import filters as dlf_filters  # noqa: E402
 from digital_land_frontend import globals as dlf_globals  # noqa: E402
 from loader import load_needs, load_specification_model
-from models import FieldDef
+from models import FieldDef, ComponentInstance, FieldInstance
 from renderer import RenderContext
 from utils import ensure_dir
 
@@ -395,8 +395,6 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
 
 
 def build_field_views_from_items(items: List[Any], field_index: Dict[str, Any]) -> List[FieldView]:
-    from models import FieldInstance, ComponentInstance  # type: ignore
-
     views: List[FieldView] = []
     for item in items:
         if isinstance(item, FieldInstance):
@@ -413,6 +411,22 @@ def build_field_views_from_items(items: List[Any], field_index: Dict[str, Any]) 
             fv.children = build_field_views_from_items(item.component.items, field_index)
             views.append(fv)
     return views
+
+
+def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) -> List[str]:
+    refs: List[str] = []
+    for mref, m in modules.items():
+        items = getattr(m, "items", []) or []
+        for item in items:
+            if isinstance(item, FieldInstance):
+                if getattr(item.original, "component", None) == component_ref:
+                    refs.append(mref)
+                    break
+            elif isinstance(item, ComponentInstance):
+                if getattr(item.referenced_by_field.original, "component", None) == component_ref:
+                    refs.append(mref)
+                    break
+    return sorted(set(refs))
 
 
 def build_env(base_url: str) -> jinja2.Environment:
@@ -609,6 +623,7 @@ def build_site(args: argparse.Namespace) -> None:
         field_index = spec_model.get("fields", {})
         dataset_index = spec_model.get("tables", {}).get("dataset", {})
         module_index = spec_model.get("modules", {})
+        component_index = spec_model.get("components", {})
 
         decision_stage = load_decision_stage(spec_root / "decision-stage.schema.md")
         decision_datasets: List[Dict[str, Any]] = []
@@ -813,6 +828,53 @@ def build_site(args: argparse.Namespace) -> None:
             renderer.write_page(
                 f"submission/module/{m.ref}/index.html", module_html
             )
+
+        # Component index and detail pages
+        component_index_ctx = {
+            "page_title": "Components",
+            "components": [
+                {
+                    "ref": c.ref,
+                    "name": c.name or c.ref,
+                    "description": c.description or "",
+                    "href": renderer.url_for(f"/submission/component/{c.ref}"),
+                }
+                for c in sorted(component_index.values(), key=lambda c: c.ref)
+            ],
+            "breadcrumbs": [],
+        }
+        comp_index_html = env.get_template("component_index.html").render(
+            **component_index_ctx
+        )
+        renderer.write_page("submission/component/index.html", comp_index_html)
+
+        comp_template = env.get_template("component_detail.html")
+        raw_components = spec_tables.get("component", {})
+        for cref, comp in component_index.items():
+            comp_fields = build_field_views_from_items(comp.items, field_index)
+            comp_rules = raw_components.get(cref, {}).get("rules", [])
+            module_refs = find_modules_using_component(cref, module_index)
+            modules_list = [
+                {
+                    "ref": mr,
+                    "name": getattr(module_index.get(mr), "name", mr),
+                    "href": renderer.url_for(f"/submission/module/{mr}"),
+                }
+                for mr in module_refs
+                if mr in module_index
+            ]
+            comp_ctx = {
+                "page_title": f"Component {cref}",
+                "ref": cref,
+                "name": comp.name or comp.ref,
+                "description": comp.description or "",
+                "fields": comp_fields,
+                "rules": comp_rules,
+                "modules": modules_list,
+                "breadcrumbs": [],
+            }
+            comp_html = comp_template.render(**comp_ctx)
+            renderer.write_page(f"submission/component/{cref}/index.html", comp_html)
 
         # Submission application detail pages
         app_template = env.get_template("submission_application_detail.html")
