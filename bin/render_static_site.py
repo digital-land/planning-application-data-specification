@@ -784,8 +784,8 @@ def build_site(args: argparse.Namespace) -> None:
             "modules": [
                 {
                     "ref": m.ref,
-                    "name": m.name,
-                    "description": m.description,
+                    "name": m.name or m.ref,
+                    "description": m.description or "",
                     "href": renderer.url_for(f"/submission/module/{m.ref}"),
                 }
                 for m in submission_modules
@@ -831,9 +831,17 @@ def build_site(args: argparse.Namespace) -> None:
             modules = []
             for m in app.get("modules", []):
                 mref = m.get("module")
-                summary = build_module_summary(mref, module_index)
-                summary["required"] = m.get("required")
-                modules.append(summary)
+                mobj = module_index.get(mref)
+                if mobj:
+                    modules.append(
+                        {
+                            "ref": mobj.ref,
+                            "name": mobj.name or mobj.ref,
+                            "description": mobj.description or "",
+                            "href": renderer.url_for(f"/submission/module/{mobj.ref}"),
+                            "required": m.get("required"),
+                        }
+                    )
             app_ctx = {
                 "page_title": f"Application {app_id}",
                 "title": app.get("name", app_id),
