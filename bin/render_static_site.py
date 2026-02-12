@@ -24,6 +24,7 @@ if not hasattr(jinja_filters, "evalcontextfilter"):
 from digital_land_frontend import filters as dlf_filters  # noqa: E402
 from digital_land_frontend import globals as dlf_globals  # noqa: E402
 from loader import load_needs, load_specification_model
+from models import FieldDef
 from renderer import RenderContext
 from utils import ensure_dir
 
@@ -78,6 +79,27 @@ def need_status(justifications: List[Dict[str, Any]]) -> Tuple[str, str]:
     if satisfaction:
         return "Proposed", "govuk-tag--yellow"
     return "Not satisfied", "govuk-tag--grey"
+
+
+def need_status_dict(justifications: List[Dict[str, Any]]) -> Dict[str, str]:
+    label, cls = need_status(justifications)
+    return {"tag_label": label, "tag_class": cls}
+
+
+def build_module_summary(
+    module_ref: str, module_index: Dict[str, Any]
+) -> Dict[str, str]:
+    mobj = module_index.get(module_ref)
+    if mobj:
+        name = getattr(mobj, "name", None) or getattr(mobj, "content", {}).get(
+            "name", module_ref
+        )
+        desc = getattr(mobj, "description", None) or getattr(mobj, "content", {}).get(
+            "description", ""
+        )
+    else:
+        name, desc = module_ref, ""
+    return {"ref": module_ref, "name": name, "description": desc}
 
 
 def extract_dataset_refs(blob: Any) -> List[str]:
@@ -254,6 +276,133 @@ def satisfaction_messages_for_field(
     return messages
 
 
+def build_need_meta(need: Dict[str, Any]) -> List[Dict[str, str]]:
+    meta: List[Dict[str, str]] = []
+    if need.get("priority"):
+        meta.append({"label": "Priority", "value": need.get("priority")})
+    if need.get("status"):
+        meta.append({"label": "Status", "value": need.get("status")})
+    if need.get("themes"):
+        meta.append({"label": "Themes", "value": ", ".join(need.get("themes"))})
+    if need.get("actors"):
+        meta.append({"label": "Actors", "value": ", ".join(need.get("actors"))})
+    if need.get("source"):
+        sources = need.get("source")
+        formatted_sources = (
+            ", ".join([s.get("type", "") for s in sources])
+            if isinstance(sources, list)
+            else str(sources)
+        )
+        meta.append({"label": "Source", "value": formatted_sources})
+    if need.get("variations"):
+        meta.append(
+            {
+                "label": "Variations",
+                "value": ", ".join([str(v) for v in need.get("variations") if v]),
+            }
+        )
+    if need.get("next_step"):
+        meta.append({"label": "Next step", "value": need.get("next_step")})
+    return meta
+
+
+class FieldView:
+    def __init__(
+        self,
+        ref,
+        name,
+        description,
+        cardinality,
+        datatype,
+        required,
+        children=None,
+        target_dataset=None,
+        target_dataset_href="",
+        satisfactions=None,
+    ):
+        self.ref = ref
+        self.name = name
+        self.description = description
+        self.cardinality = cardinality
+        self.datatype = datatype
+        self.required = required
+        self.children = children or []
+        self.target_dataset = target_dataset
+        self.target_dataset_href = target_dataset_href
+        self.satisfactions = satisfactions or []
+
+
+def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) -> FieldView:
+    # If already a FieldView
+    if isinstance(field_entry, FieldView):
+        return field_entry
+
+    # Handle FieldInstance (from models)
+    from models import FieldInstance, FieldDef as FD  # type: ignore
+
+    if isinstance(field_entry, FieldInstance):
+        orig = field_entry.original
+        overrides = field_entry.overrides or {}
+        name = overrides.get("name") or orig.name
+        description = overrides.get("description") or orig.description
+        cardinality = overrides.get("cardinality") or orig.cardinality
+        datatype = overrides.get("datatype") or orig.datatype
+        required = overrides.get("required")
+        if required is None:
+            required = orig.required
+        children = overrides.get("children", [])
+        return FieldView(
+            ref=orig.ref,
+            name=name,
+            description=description,
+            cardinality=cardinality,
+            datatype=datatype,
+            required=required,
+            children=children,
+        )
+
+    # Fallback for dict-based field entries (datasets, etc.)
+    field_ref = field_entry.get("field")
+    fd = None
+    if field_index:
+        fd = field_index.get(field_ref)
+    fd = FD.from_spec(fd) if fd else FD.from_spec(field_ref)
+    name = field_entry.get("name") or fd.name or field_ref
+    description = field_entry.get("description") or fd.description or ""
+    cardinality = field_entry.get("cardinality") or fd.cardinality
+    datatype = field_entry.get("datatype") or fd.datatype
+    return FieldView(
+        ref=field_ref,
+        name=name,
+        description=description,
+        cardinality=cardinality,
+        datatype=datatype,
+        required=field_entry.get("required"),
+        children=field_entry.get("children", []),
+    )
+
+
+def build_field_views_from_items(items: List[Any], field_index: Dict[str, Any]) -> List[FieldView]:
+    from models import FieldInstance, ComponentInstance  # type: ignore
+
+    views: List[FieldView] = []
+    for item in items:
+        if isinstance(item, FieldInstance):
+            fv = build_field_display(item)
+            # attach children if the underlying field references a component
+            if item.original.resolved_component:
+                fv.children = build_field_views_from_items(
+                    item.original.resolved_component.component.items, field_index
+                )
+            views.append(fv)
+        elif isinstance(item, ComponentInstance):
+            fi = item.referenced_by_field
+            fv = build_field_display(fi)
+            fv.children = build_field_views_from_items(item.component.items, field_index)
+            views.append(fv)
+    return views
+
+
 def build_env(base_url: str) -> jinja2.Environment:
     loaders: List[jinja2.BaseLoader] = [
         # Local templates (and subfolders like components/ and assets)
@@ -297,6 +446,15 @@ def build_env(base_url: str) -> jinja2.Environment:
     env.globals["staticPath"] = base_url.rstrip("/") + "/static"
 
     return env
+
+
+def create_renderer(
+    base_url: str, output_dir: Path
+) -> Tuple[jinja2.Environment, RenderContext]:
+    env = build_env(base_url or "")
+    env.globals["base_url"] = base_url
+    renderer = RenderContext(env, base_url, output_dir)
+    return env, renderer
 
 
 def copy_static(output_dir: Path) -> None:
@@ -431,10 +589,7 @@ def build_site(args: argparse.Namespace) -> None:
     original_cwd = Path.cwd()
     os.chdir(root_dir)
 
-    env = build_env(base_url or "")
-    env.globals["base_url"] = base_url
-
-    renderer = RenderContext(env, base_url, output_dir)
+    env, renderer = create_renderer(base_url, output_dir)
 
     try:
         spec_model = load_specification_model()
@@ -478,12 +633,9 @@ def build_site(args: argparse.Namespace) -> None:
                     "href": renderer.url_for(
                         f"/decision-stage/need/{need.get('need')}"
                     ),
-                    "tag_label": need_status(
+                    **need_status_dict(
                         need_to_justifications.get(need.get("need"), [])
-                    )[0],
-                    "tag_class": need_status(
-                        need_to_justifications.get(need.get("need"), [])
-                    )[1],
+                    ),
                 }
                 for need in need_records
             ],
@@ -497,38 +649,7 @@ def build_site(args: argparse.Namespace) -> None:
             n_id = need.get("need")
             justs = need_to_justifications.get(n_id, [])
             label, cls = need_status(justs)
-            need_meta = []
-            if need.get("priority"):
-                need_meta.append({"label": "Priority", "value": need.get("priority")})
-            if need.get("status"):
-                need_meta.append({"label": "Status", "value": need.get("status")})
-            if need.get("themes"):
-                need_meta.append(
-                    {"label": "Themes", "value": ", ".join(need.get("themes"))}
-                )
-            if need.get("actors"):
-                need_meta.append(
-                    {"label": "Actors", "value": ", ".join(need.get("actors"))}
-                )
-            if need.get("source"):
-                sources = need.get("source")
-                formatted_sources = (
-                    ", ".join([s.get("type", "") for s in sources])
-                    if isinstance(sources, list)
-                    else str(sources)
-                )
-                need_meta.append({"label": "Source", "value": formatted_sources})
-            if need.get("variations"):
-                need_meta.append(
-                    {
-                        "label": "Variations",
-                        "value": ", ".join(
-                            [str(v) for v in need.get("variations") if v]
-                        ),
-                    }
-                )
-            if need.get("next_step"):
-                need_meta.append({"label": "Next step", "value": need.get("next_step")})
+            need_meta = build_need_meta(need)
             need_ctx = {
                 "need_ref": n_id,
                 "page_title": f"Need {n_id}",
@@ -564,38 +685,30 @@ def build_site(args: argparse.Namespace) -> None:
                 for j in just_list
             ]
             fields = []
-            for f in ds.get("fields", []):
-                field_ref = f.get("field")
-                field_meta = field_index.get(field_ref)
-                field_name = getattr(field_meta, "name", None) if field_meta else None
-                field_desc = (
-                    getattr(field_meta, "description", None) if field_meta else None
+            raw_fields = ds.get("fields", [])
+            # build FieldViews and attach children for component refs
+            for f in raw_fields:
+                fv = build_field_display(f, field_index)
+                # attach children if this field references a component
+                meta = field_index.get(fv.ref)
+                if getattr(meta, "resolved_component", None):
+                    fv.children = build_field_views_from_items(
+                        meta.resolved_component.component.items, field_index
+                    )
+                target_dataset = getattr(f, "get", lambda k, default=None: f.get(k, default))(
+                    "dataset", None
                 )
-                field_cardinality = (
-                    getattr(field_meta, "cardinality", None) if field_meta else None
+                fv.description = render_markdown(fv.description or "")
+                fv.target_dataset = target_dataset
+                fv.target_dataset_href = (
+                    renderer.url_for(f"/decision-stage/dataset/{target_dataset}")
+                    if target_dataset
+                    else ""
                 )
-                target_dataset = f.get("dataset")
-                fields.append(
-                    {
-                        "name": field_name or field_ref,
-                        "ref": field_ref,
-                        "description": render_markdown(
-                            f.get("description") or field_desc or ""
-                        ),
-                        "cardinality": f.get("cardinality") or field_cardinality or "",
-                        "target_dataset": target_dataset,
-                        "target_dataset_href": (
-                            renderer.url_for(
-                                f"/decision-stage/dataset/{target_dataset}"
-                            )
-                            if target_dataset
-                            else ""
-                        ),
-                        "satisfactions": satisfaction_messages_for_field(
-                            all_need_justs, ds_id, field_ref, renderer
-                        ),
-                    }
+                fv.satisfactions = satisfaction_messages_for_field(
+                    all_need_justs, ds_id, fv.ref, renderer
                 )
+                fields.append(fv)
             dataset_ctx = {
                 "page_title": f"Dataset {ds_id}",
                 "links": {"back": renderer.url_for("/decision-stage/dataset")},
@@ -652,16 +765,16 @@ def build_site(args: argparse.Namespace) -> None:
         renderer.write_page("submission/index.html", submission_html)
 
         # Submission module index and detail pages
-        submission_modules = list(spec_tables.get("module", {}).values())
-        submission_modules.sort(key=lambda m: m.get("module", ""))
+        submission_modules = list(spec_model.get("modules", {}).values())
+        submission_modules.sort(key=lambda m: m.name or m.ref)
         module_index_ctx = {
             "page_title": "Submission modules",
             "modules": [
                 {
-                    "ref": m.get("module"),
-                    "name": m.get("name", m.get("module")),
-                    "description": m.get("description", ""),
-                    "href": renderer.url_for(f"/submission/module/{m.get('module')}"),
+                    "ref": m.ref,
+                    "name": m.name,
+                    "description": m.description,
+                    "href": renderer.url_for(f"/submission/module/{m.ref}"),
                 }
                 for m in submission_modules
             ],
@@ -673,30 +786,20 @@ def build_site(args: argparse.Namespace) -> None:
 
         module_template = env.get_template("module_detail.html")
         for m in submission_modules:
-            mod_fields = []
-            for f in m.get("fields", []):
-                field_ref = f.get("field")
-                field_meta = field_index.get(field_ref)
-                mod_fields.append(
-                    {
-                        "ref": field_ref,
-                        "name": getattr(field_meta, "name", None) or field_ref,
-                        "description": getattr(field_meta, "description", None) or "",
-                        "required": f.get("required"),
-                    }
-                )
+            mod_fields = build_field_views_from_items(m.items, field_index)
+            rules = spec_tables.get("module", {}).get(m.ref, {}).get("rules", [])
             module_ctx = {
-                "page_title": f"Module {m.get('module')}",
-                "ref": m.get("module"),
-                "name": m.get("name", m.get("module")),
-                "description": m.get("description", ""),
+                "page_title": f"Module {m.ref}",
+                "ref": m.ref,
+                "name": m.name or m.ref,
+                "description": m.description or "",
                 "fields": mod_fields,
-                "rules": m.get("rules", []),
+                "rules": rules,
                 "links": {"back": renderer.url_for("/submission/module")},
             }
             module_html = module_template.render(**module_ctx)
             renderer.write_page(
-                f"submission/module/{m.get('module')}/index.html", module_html
+                f"submission/module/{m.ref}/index.html", module_html
             )
 
         # Submission application detail pages
@@ -705,37 +808,20 @@ def build_site(args: argparse.Namespace) -> None:
             app_id = app.get("application")
             fields = []
             for f in app.get("fields", []):
-                field_ref = f.get("field")
-                field_meta = field_index.get(field_ref)
-                fields.append(
-                    {
-                        "ref": field_ref,
-                        "name": getattr(field_meta, "name", None) or field_ref,
-                        "description": getattr(field_meta, "description", None) or "",
-                        "required": f.get("required"),
-                    }
-                )
+                fv = build_field_display(f, field_index)
+                meta = field_index.get(fv.ref)
+                if getattr(meta, "resolved_component", None):
+                    fv.children = build_field_views_from_items(
+                        meta.resolved_component.component.items, field_index
+                    )
+                fv.required = f.get("required")
+                fields.append(fv)
             modules = []
             for m in app.get("modules", []):
                 mref = m.get("module")
-                mobj = module_index.get(mref)
-                mdesc = ""
-                mname = ""
-                if mobj:
-                    mdesc = getattr(mobj, "description", None) or mobj.content.get(
-                        "description", ""
-                    )
-                    mname = getattr(mobj, "name", None) or mobj.content.get(
-                        "name", mref
-                    )
-                modules.append(
-                    {
-                        "ref": mref,
-                        "required": m.get("required"),
-                        "description": mdesc,
-                        "name": mname or mref,
-                    }
-                )
+                summary = build_module_summary(mref, module_index)
+                summary["required"] = m.get("required")
+                modules.append(summary)
             app_ctx = {
                 "page_title": f"Application {app_id}",
                 "title": app.get("name", app_id),
