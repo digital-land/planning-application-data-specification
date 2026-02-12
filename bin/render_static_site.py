@@ -319,6 +319,7 @@ class FieldView:
         target_dataset=None,
         target_dataset_href="",
         satisfactions=None,
+        component_name=None,
     ):
         self.ref = ref
         self.name = name
@@ -330,6 +331,7 @@ class FieldView:
         self.target_dataset = target_dataset
         self.target_dataset_href = target_dataset_href
         self.satisfactions = satisfactions or []
+        self.component_name = component_name
 
 
 def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) -> FieldView:
@@ -351,6 +353,10 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
         if required is None:
             required = orig.required
         children = overrides.get("children", [])
+        comp_name = None
+        if orig.resolved_component:
+            comp = orig.resolved_component.component
+            comp_name = comp.name or comp.ref
         return FieldView(
             ref=orig.ref,
             name=name,
@@ -359,6 +365,7 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
             datatype=datatype,
             required=required,
             children=children,
+            component_name=comp_name,
         )
 
     # Fallback for dict-based field entries (datasets, etc.)
@@ -371,6 +378,10 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
     description = field_entry.get("description") or fd.description or ""
     cardinality = field_entry.get("cardinality") or fd.cardinality
     datatype = field_entry.get("datatype") or fd.datatype
+    comp_name = None
+    if fd.resolved_component:
+        comp = fd.resolved_component.component
+        comp_name = comp.name or comp.ref
     return FieldView(
         ref=field_ref,
         name=name,
@@ -379,6 +390,7 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
         datatype=datatype,
         required=field_entry.get("required"),
         children=field_entry.get("children", []),
+        component_name=comp_name,
     )
 
 
