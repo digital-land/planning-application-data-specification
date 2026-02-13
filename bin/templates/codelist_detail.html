@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+{% set spec_route = "decisions" %}
+{% from "govuk_frontend_jinja/components/breadcrumbs/macro.html" import govukBreadcrumbs %}
+
+{% block app_breadcrumbs %}
+  {{ govukBreadcrumbs({
+    'items': [
+      { 'text': "Home", 'href': base_url + "/" },
+      { 'text': "Codelists", 'href': base_url + "/codelist" },
+      { 'text': codelist.name or codelist.codelist or codelist.ref }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">{{ codelist.codelist or codelist.ref }}</span>
+    <h1 class="govuk-heading-xl">{{ codelist.name or codelist.codelist or codelist.ref }}</h1>
+    {% if codelist.description %}<p class="govuk-body-l">{{ codelist.description }}</p>{% endif %}
+
+    <dl class="govuk-summary-list">
+      {% if codelist.fields %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Fields</dt>
+        <dd class="govuk-summary-list__value">
+          <ul class="govuk-list govuk-list--bullet govuk-!-margin-bottom-0">
+            {% for f in codelist.fields %}
+              <li>{{ f.field or f.ref or f }}</li>
+            {% endfor %}
+          </ul>
+        </dd>
+      </div>
+      {% endif %}
+      {% if codelist.get("source") and codelist.get("source") is mapping %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Source</dt>
+        <dd class="govuk-summary-list__value">
+          {% if codelist.get("source").get("src") %}
+            <a class="govuk-link" href="{{ codelist.get('source').get('src') }}">{{ codelist.get('source').get('src') }}</a>
+          {% elif source_link %}
+            <a class="govuk-link" href="{{ source_link }}">{{ source_link }}</a>
+          {% endif %}
+        </dd>
+      </div>
+      {% elif source_link %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Source</dt>
+        <dd class="govuk-summary-list__value">
+          <a class="govuk-link" href="{{ source_link }}">{{ source_link }}</a>
+        </dd>
+      </div>
+      {% endif %}
+    </dl>
+  </div>
+</div>
+{% endblock %}

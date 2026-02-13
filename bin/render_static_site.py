@@ -429,6 +429,21 @@ def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) ->
     return sorted(set(refs))
 
 
+def build_codelist_source_link(codelist_ref: str, raw_codelist: Dict[str, Any]) -> str:
+    src_obj = raw_codelist.get("source") if hasattr(raw_codelist, "get") else None
+    src = None
+    if src_obj:
+        if isinstance(src_obj, dict):
+            src = src_obj.get("src")
+        else:
+            # if source is a simple string
+            src = str(src_obj)
+    if src:
+        return src
+    # default to GitHub CSV
+    return f"https://github.com/digital-land/planning-application-data-specification/blob/main/data/codelist/{codelist_ref}.csv"
+
+
 def build_env(base_url: str) -> jinja2.Environment:
     loaders: List[jinja2.BaseLoader] = [
         # Local templates (and subfolders like components/ and assets)
@@ -875,6 +890,39 @@ def build_site(args: argparse.Namespace) -> None:
             }
             comp_html = comp_template.render(**comp_ctx)
             renderer.write_page(f"submission/component/{cref}/index.html", comp_html)
+
+        # Codelist index and detail pages
+        codelists_raw = spec_tables.get("codelist", {})
+        codelists_list = sorted(codelists_raw.values(), key=lambda c: c.get("codelist"))
+        codelist_index_ctx = {
+            "page_title": "Codelists",
+            "codelists": [
+                {
+                    "ref": c.get("codelist"),
+                    "codelist": c.get("codelist"),
+                    "name": c.get("name", c.get("codelist")),
+                    "description": c.get("description", ""),
+                    "href": renderer.url_for(f"/codelist/{c.get('codelist')}"),
+                }
+                for c in codelists_list
+            ],
+        }
+        codelist_index_html = env.get_template("codelist_index.html").render(
+            **codelist_index_ctx
+        )
+        renderer.write_page("codelist/index.html", codelist_index_html)
+
+        cl_detail_template = env.get_template("codelist_detail.html")
+        for c in codelists_list:
+            cref = c.get("codelist")
+            source_link = build_codelist_source_link(cref, c)
+            cl_ctx = {
+                "page_title": f"Codelist {cref}",
+                "codelist": c,
+                "source_link": source_link,
+            }
+            cl_html = cl_detail_template.render(**cl_ctx)
+            renderer.write_page(f"codelist/{cref}/index.html", cl_html)
 
         # Submission application detail pages
         app_template = env.get_template("submission_application_detail.html")
