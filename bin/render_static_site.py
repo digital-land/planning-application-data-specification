@@ -924,6 +924,14 @@ def build_site(args: argparse.Namespace) -> None:
             cl_html = cl_detail_template.render(**cl_ctx)
             renderer.write_page(f"codelist/{cref}/index.html", cl_html)
 
+        # Shared elements page
+        shared_template = env.get_template("shared.html")
+        shared_html = shared_template.render(
+            page_title="Shared elements",
+            base_url=base_url,
+        )
+        renderer.write_page("shared-elements/index.html", shared_html)
+
         # Submission application detail pages
         app_template = env.get_template("submission_application_detail.html")
         for app in applications:
