@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+{% set spec_route = "shared" %}
+{% from "govuk_frontend_jinja/components/breadcrumbs/macro.html" import govukBreadcrumbs %}
+
+{% block app_breadcrumbs %}
+  {{ govukBreadcrumbs({
+    'items': [
+      { 'text': "Home", 'href': base_url + "/" },
+      { 'text': "Shared elements", 'href': base_url + "/shared-elements" },
+      { 'text': "Fields", 'href': base_url + "/fields" },
+      { 'text': field.name or field.ref }
+    ]
+  }) }}
+{% endblock %}
+
+{% block content %}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-xl">Field</span>
+    <h1 class="govuk-heading-xl">{{ field.name or field.ref }}</h1>
+    {% if field.description %}<p class="govuk-body-l">{{ field.description }}</p>{% endif %}
+
+    <dl class="govuk-summary-list">
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Reference</dt>
+        <dd class="govuk-summary-list__value"><code>{{ field.ref }}</code></dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Name</dt>
+        <dd class="govuk-summary-list__value">{{ field.name }}</dd>
+      </div>
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Datatype</dt>
+        <dd class="govuk-summary-list__value">{{ field.datatype }}</dd>
+      </div>
+      {% if field.cardinality %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">
+          Cardinality
+          <p class="govuk-hint">(Number expected)</p>
+        </dt>
+        <dd class="govuk-summary-list__value">
+          {% if field.cardinality == "n" %}
+            1 or more
+          {% else %}
+            1
+          {% endif %}
+        </dd>
+      </div>
+      {% endif %}
+      {% if field.codelist %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Codelist</dt>
+        <dd class="govuk-summary-list__value">
+          <a class="govuk-link" href="{{ base_url }}/codelist/{{ field.codelist }}">{{ field.codelist }}</a>
+        </dd>
+      </div>
+      {% endif %}
+      {% if field.component %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Component</dt>
+        <dd class="govuk-summary-list__value">
+          <a class="govuk-link" href="{{ base_url }}/submission/component/{{ field.component }}">{{ field.component }}</a>
+        </dd>
+      </div>
+      {% endif %}
+      {% if field.entry_date %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Entry date</dt>
+        <dd class="govuk-summary-list__value">{{ field.entry_date }}</dd>
+      </div>
+      {% endif %}
+      {% if field.end_date %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">End date</dt>
+        <dd class="govuk-summary-list__value">{{ field.end_date }}</dd>
+      </div>
+      {% endif %}
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Notes</dt>
+        <dd class="govuk-summary-list__value">
+          {% if field.notes %}<p>{{ field.notes }}</p>{% endif %}
+          {% if field.body %}<p>{{ field.body }}</p>{% endif %}
+        </dd>
+      </div>
+    </dl>
+  </div>
+</div>
+{% endblock %}

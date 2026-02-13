@@ -78,6 +78,7 @@ def load_specification_model():
     for field_ref, content in tables.get("field", {}).items():
         field_def = dict(content)
         f = FieldDef.from_spec(field_def)
+        f.body = content.content  # store body text if present
         if f.ref:
             field_defs[f.ref] = f
 

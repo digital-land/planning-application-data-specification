@@ -638,6 +638,7 @@ def build_site(args: argparse.Namespace) -> None:
         field_index = spec_model.get("fields", {})
         dataset_index = spec_model.get("tables", {}).get("dataset", {})
         module_index = spec_model.get("modules", {})
+        codelist_index = spec_model.get("tables", {}).get("codelist", {})
         component_index = spec_model.get("components", {})
 
         decision_stage = load_decision_stage(spec_root / "decision-stage.schema.md")
@@ -931,6 +932,33 @@ def build_site(args: argparse.Namespace) -> None:
             base_url=base_url,
         )
         renderer.write_page("shared-elements/index.html", shared_html)
+
+        # Fields index and detail pages
+        fields_index_ctx = {
+            "page_title": "Fields",
+            "fields": [
+                {
+                    "ref": f.ref,
+                    "name": f.name,
+                    "description": f.description,
+                    "href": renderer.url_for(f"/fields/{f.ref}"),
+                }
+                for f in sorted(field_index.values(), key=lambda f: f.ref)
+            ],
+        }
+        fields_index_html = env.get_template("fields_index.html").render(
+            **fields_index_ctx
+        )
+        renderer.write_page("fields/index.html", fields_index_html)
+
+        field_detail_template = env.get_template("field_detail.html")
+        for f in field_index.values():
+            ctx = {
+                "page_title": f"Field {f.ref}",
+                "field": f,
+            }
+            field_html = field_detail_template.render(**ctx)
+            renderer.write_page(f"fields/{f.ref}/index.html", field_html)
 
         # Submission application detail pages
         app_template = env.get_template("submission_application_detail.html")
