@@ -245,6 +245,7 @@ Context-dependent rules are expected to be handled by validation logic outside t
 For example, while the schema defines the fields that make up an address, a rule such as “a postcode is required if the site is in the UK” is currently enforced by application logic, not by the schema itself.
 
 Similarly, the specification does not dictate whether something should be implemented as a checkbox, radio button or text input. Those decisions sit with individual systems, provided the resulting data meets the requirements of the model.
+
 ---
 
 ## Making changes to the model
@@ -267,4 +268,4 @@ Most changes involve adding or refining fields, modules or datasets rather than 
 - Datasets record **authoritative outcomes**
 - Codelists keep answers **consistent**
 
-Together, these elements form a clear, extensible data model that supports both submitting planning applications and recording planning decisions — without prescribing how systems must be built to do it.
+Together, these elements form a clear, extensible data model that supports both submitting planning applications and recording planning decisions without prescribing how systems must be built to do it.
