@@ -1,4 +1,34 @@
 
+<a name="v0.1.58"></a>
+## [v0.1.58](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.57...v0.1.58) (2026-02-17)
+
+Flesh out more of static site
+
+### ⚒️ Tooling
+
+* link from field details pages to raw schema in repo (commit [29cefb0](https://github.com/digital-land/planning-application-data-specification/commit/29cefb098559741768d872bf05acde991cc04fc5))
+* render field pages in static site (commit [d40b00a](https://github.com/digital-land/planning-application-data-specification/commit/d40b00a1bbbf10f679725c33e2535fc73c87cdb1))
+* add a shared-elements section to static site (for fields and codelists) (commit [1040a23](https://github.com/digital-land/planning-application-data-specification/commit/1040a235de1905ded9d7fe02a79b6d7302097106))
+* add codelists section (commit [8e26375](https://github.com/digital-land/planning-application-data-specification/commit/8e26375c5f99ea90f677badd6ce73337cdb20a30))
+* stub component pages (commit [7d9e43c](https://github.com/digital-land/planning-application-data-specification/commit/7d9e43c868b922d9a77116fd648e3e49820168d2))
+* use ModuleDef for module lists (commit [00da068](https://github.com/digital-land/planning-application-data-specification/commit/00da068ec15c8f7abfd70842d170f864f3db7d80))
+* restructure the module details page (commit [eba120f](https://github.com/digital-land/planning-application-data-specification/commit/eba120fc1cfef161a957f05ab141b39251bd5230))
+* add copy-assets target to makefile (commit [33d68f4](https://github.com/digital-land/planning-application-data-specification/commit/33d68f4ddc0c983bfdf1fb30a3b48d786ac1d55a))
+* Refactor static site rendering to use resolved field views and support nested components (commit [b12e725](https://github.com/digital-land/planning-application-data-specification/commit/b12e725abee2358b70a62c0de0e69b9522df47f6))
+* tweak layout of the application schema pages (commit [8c0fb87](https://github.com/digital-land/planning-application-data-specification/commit/8c0fb87acc4dea7514161aae2cf6848fda10d969))
+* add js filtering to user needs list (commit [158f876](https://github.com/digital-land/planning-application-data-specification/commit/158f87621b28598dabe15d6edcbf299d36850285))
+* tweak layout of the list of user needs (commit [bee8c52](https://github.com/digital-land/planning-application-data-specification/commit/bee8c52a4ea1ce320891b8e3327427c0630775b1))
+* add breadcrumbs to needs and justification pages (commit [b8e6949](https://github.com/digital-land/planning-application-data-specification/commit/b8e6949a3787d646aa40a8e97adf7edd4afd5cdb))
+* display breakdown of what combination of fields and datasets satisfy a need in justification record pages (commit [aa9b117](https://github.com/digital-land/planning-application-data-specification/commit/aa9b11708466f263f244f043910d918c21756a72))
+* add search/filter functionality to user needs page (commit [1dde7aa](https://github.com/digital-land/planning-application-data-specification/commit/1dde7aae23e852d34d3401ea68e66a232f5fa1f7))
+
+### 🐛 Bug Fixes
+
+* typology attr on dataset schemas (commit [43753fd](https://github.com/digital-land/planning-application-data-specification/commit/43753fd5eb6237cb219574882fef264e25622f69))
+* url to justification index page (commit [14b4f3d](https://github.com/digital-land/planning-application-data-specification/commit/14b4f3d92ce972b1e9cd6236c0b78c719eb4d90a))
+* output generator (commit [d06aebd](https://github.com/digital-land/planning-application-data-specification/commit/d06aebdaa6bcad309ece715e313fbf82dd316d1b))
+
+
 <a name="v0.1.57"></a>
 ## [v0.1.57](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.56...v0.1.57) (2026-01-29)
 
