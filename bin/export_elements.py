@@ -69,6 +69,29 @@ def export_components(model):
     write_csv(components, output_file=OUTPUT_DIR / "components.csv")
 
 
+def export_codelists(model, sort=True):
+    codelists = []
+    for c in model.get("tables", {}).get("codelist", {}).values():
+        codelists.append(
+            {
+                "reference": c.get("codelist"),
+                "name": c.get("name", c.get("codelist")),
+                "description": c.get("description", ""),
+                "source": c.get("source", ""),
+                "key-field": c.get("key-field", ""),
+                "entry-date": c.get("entry-date", ""),
+                "end-date": c.get("end-date", ""),
+            }
+        )
+
+    if sort:
+        codelists = sorted(codelists, key=lambda c: c.get("reference") or "")
+
+    if codelists:
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        write_csv(codelists, output_file=OUTPUT_DIR / "codelists.csv")
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Export elements to CSV (and optional Excel)"
@@ -78,18 +101,25 @@ def main():
         help="Optional path to write a combined Excel workbook of the CSV outputs",
         default=None,
     )
+    parser.add_argument(
+        "--no-sort-codelists",
+        help="Do not sort codelists alphabetically by reference",
+        action="store_true",
+    )
     args = parser.parse_args()
 
     model = load_specification_model()
     export_fields(model)
     export_modules(model)
     export_components(model)
+    export_codelists(model, sort=not args.no_sort_codelists)
 
     if args.xlsx:
         csvs = [
             OUTPUT_DIR / "fields.csv",
             OUTPUT_DIR / "modules.csv",
             OUTPUT_DIR / "components.csv",
+            OUTPUT_DIR / "codelists.csv",
         ]
         csvs_to_excel(csvs, args.xlsx)
 
