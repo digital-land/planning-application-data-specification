@@ -1,4 +1,5 @@
 import csv
+from pathlib import Path
 
 
 def read_csv(filename, encoding="utf-8", as_dict=False, include_row_num=False):
@@ -100,3 +101,32 @@ def csv_to_markdown(
             markdown_table += "| " + " | ".join(cleaned_values) + " |\n"
 
     return markdown_table
+
+
+def csvs_to_excel(csv_paths, output_path):
+    """
+    Combine multiple CSV files into a single Excel workbook, one sheet per CSV.
+    Sheet names are derived from the CSV stem and truncated to 31 chars.
+    """
+    try:
+        from openpyxl import Workbook
+    except ImportError as e:  # pragma: no cover
+        raise RuntimeError("openpyxl is required to combine CSVs to Excel") from e
+
+    wb = Workbook()
+    # remove default sheet
+    if wb.active:
+        wb.remove(wb.active)
+
+    for csv_file in csv_paths:
+        sheet_name = Path(csv_file).stem[:31]
+        ws = wb.create_sheet(title=sheet_name)
+        with open(csv_file, newline="", encoding="utf-8") as f:
+            reader = csv.reader(f)
+            for row in reader:
+                ws.append(row)
+
+    output_path = Path(output_path)
+    output_path.parent.mkdir(parents=True, exist_ok=True)
+    wb.save(output_path)
+    return output_path
