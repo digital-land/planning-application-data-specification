@@ -45,6 +45,12 @@ specification::
 spreadsheets::
 	python3 bin/generate_spec_spreadsheet.py
 
+export-elements::
+	python3 bin/export_elements.py
+
+export-elements-xlsx::
+	python3 bin/export_elements.py --xlsx data/element-index/elements.xlsx
+
 jsonschema::
 	python3 bin/generate_json_schema.py
 
