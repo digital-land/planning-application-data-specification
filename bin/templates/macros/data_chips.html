@@ -1,6 +1,25 @@
-{% macro data_chip(key, value, classes="") %}
+{% macro data_chip(key, value, dataset_ref=None, classes="") %}
+{# Renders a chip; when possible, link value to the relevant spec page. #}
+{% set url = None %}
+{% set base = base_url or "" %}
+
+{% if key|lower == "dataset" and value %}
+  {% set url = base + "/decision-stage/dataset/" + value %}
+{% elif key|lower == "field" and value and dataset_ref %}
+  {# Link to field anchor within its dataset page #}
+  {% set url = base + "/decision-stage/dataset/" + dataset_ref + "/#" + value %}
+{% elif key|lower == "codelist" and value %}
+  {% set url = base + "/codelist/" + value %}
+{% endif %}
+
 <div class="kv-chip {{ classes }}">
   <dt class="kv-chip__key">{{ key }}</dt>
-  <dd class="kv-chip__value">{{ value }}</dd>
+  <dd class="kv-chip__value">
+    {% if url %}
+      <a class="govuk-link app-link--text-colour govuk-link--no-visited-state" href="{{ url }}">{{ value }}</a>
+    {% else %}
+      {{ value }}
+    {% endif %}
+  </dd>
 </div>
 {% endmacro %}
