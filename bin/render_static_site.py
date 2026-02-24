@@ -709,6 +709,7 @@ def build_site(args: argparse.Namespace) -> None:
                         "confidence": j.get("confidence", ""),
                         "notes": j.get("notes", ""),
                         "body": j.get("__body__", ""),
+                        "satisfied_by": j.get("satisfied_by"),
                         "href": renderer.url_for(f"/justification/{j.get('id', '')}"),
                     }
                     for j in justs
