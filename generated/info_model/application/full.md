@@ -1077,7 +1077,7 @@ Below are the codelists required to support this specification:
 
 | reference | name | description |
 | --- | --- | --- |
-| houses | Houses | Detached |
+| houses | Houses | Detached, semi-detached, or terraced houses. |
 | flats-maisonettes | Flats/Maisonettes | Self-contained apartments or maisonettes. |
 | sheltered-housing | Sheltered Housing | Housing with support for older or disabled people. |
 | bedsit-studio | Bedsit/Studio | Single-room living spaces. |
