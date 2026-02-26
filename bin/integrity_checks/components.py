@@ -2,6 +2,7 @@
 
 from typing import Any, Dict, List
 
+from integrity_checks.utils import get_object_field_names, iter_required_if_field_refs
 from utils import check_kebab_case
 
 
@@ -125,12 +126,31 @@ def check_condition(cond, fields, field, component_name, application_types):
                     )
                     error_found = True
             elif key == "field":
-                if value not in fields:
+                if isinstance(value, str):
+                    field_refs = [value]
+                elif isinstance(value, list):
+                    field_refs = [field_ref for field_ref in value if isinstance(field_ref, str)]
+                    if len(field_refs) != len(value):
+                        print_error(
+                            component_name,
+                            f"Field reference list in '{field.get('field')}' must only contain strings",
+                        )
+                        error_found = True
+                else:
                     print_error(
                         component_name,
-                        f"Field reference '{value}' in condition not found in field definitions",
+                        f"Field reference in condition for '{field.get('field')}' must be a string or list of strings",
                     )
                     error_found = True
+                    field_refs = []
+
+                for field_ref in field_refs:
+                    if field_ref not in fields:
+                        print_error(
+                            component_name,
+                            f"Field reference '{field_ref}' in condition not found in this component",
+                        )
+                        error_found = True
             elif key == "application-type":
                 # check if application-type is a valid type
                 if not isinstance(value, dict) or "in" not in value.keys():
@@ -172,11 +192,24 @@ def check_field_condition_references(
     has_errors = False
     for component_name, component in components.items():
         component_fields = component.get("fields", [])
+        component_field_names = get_object_field_names(component_fields)
         for field_def in component_fields:
             required_if = field_def.get("required-if", [])
 
+            for field_ref in iter_required_if_field_refs(required_if):
+                if field_ref not in component_field_names:
+                    print_error(
+                        component_name,
+                        f"Field reference '{field_ref}' in required-if for '{field_def.get('field')}' not found in this component",
+                    )
+                    has_errors = True
+
             if check_condition(
-                required_if, fields, field_def, component_name, application_types
+                required_if,
+                component_field_names,
+                field_def,
+                component_name,
+                application_types,
             ):
                 has_errors = True
 

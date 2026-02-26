@@ -1,6 +1,11 @@
 # tests/test_integrity_checks.py
 import pytest
-from bin.integrity_checks.modules import check_all, check_applies_if_structure
+from bin.integrity_checks.components import check_field_condition_references
+from bin.integrity_checks.modules import (
+    check_all,
+    check_applies_if_structure,
+    check_required_if_fields,
+)
 
 
 @pytest.fixture
@@ -135,3 +140,86 @@ class TestComplexAppliesIfScenarios:
         }
         has_no_errors = check_applies_if_structure(modules)
         assert not has_no_errors
+
+
+class TestRequiredIfFieldReferences:
+    """Test required-if field reference validation against local object fields."""
+
+    def test_module_required_if_field_must_exist_in_same_module(self):
+        modules = {
+            "part-discharge": {
+                "fields": [
+                    {"field": "is-discharging-part", "required": True},
+                    {
+                        "field": "discharging-part-details",
+                        "required-if": [{"field": "discharging-part", "value": True}],
+                    },
+                ]
+            }
+        }
+
+        has_no_errors = check_required_if_fields(modules)
+        assert not has_no_errors
+
+    def test_module_required_if_field_in_same_module_passes(self):
+        modules = {
+            "part-discharge": {
+                "fields": [
+                    {"field": "is-discharging-part", "required": True},
+                    {
+                        "field": "discharging-part-details",
+                        "required-if": [{"field": "is-discharging-part", "value": True}],
+                    },
+                ]
+            }
+        }
+
+        has_no_errors = check_required_if_fields(modules)
+        assert has_no_errors
+
+    def test_component_required_if_field_must_exist_in_same_component(self):
+        components = {
+            "test-component": {
+                "fields": [
+                    {"field": "is-enabled"},
+                    {
+                        "field": "details",
+                        "required-if": [{"field": "missing-local-field", "value": True}],
+                    },
+                ]
+            }
+        }
+
+        has_no_errors = check_field_condition_references(
+            components,
+            fields={},
+            application_types={},
+        )
+        assert not has_no_errors
+
+    def test_component_required_if_with_application_type_and_local_field_passes(self):
+        components = {
+            "test-component": {
+                "fields": [
+                    {"field": "is-enabled"},
+                    {
+                        "field": "details",
+                        "required-if": [
+                            {
+                                "any": [
+                                    {"field": "is-enabled", "value": True},
+                                    {"application-type": {"in": ["full"]}},
+                                ]
+                            }
+                        ],
+                    },
+                ]
+            }
+        }
+
+        has_no_errors = check_field_condition_references(
+            components,
+            fields={},
+            application_types={"full": {}},
+        )
+        assert has_no_errors

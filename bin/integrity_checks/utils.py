@@ -30,3 +30,34 @@ def has_reference_error(ref: str, element: str, seen_fields: list) -> bool:
         return True
 
     return False
+
+
+def get_object_field_names(field_definitions):
+    """Return set of field names defined on a module/component fields list."""
+    field_names = set()
+    for field_def in field_definitions or []:
+        if isinstance(field_def, dict):
+            field_name = field_def.get("field")
+            if isinstance(field_name, str):
+                field_names.add(field_name)
+    return field_names
+
+
+def iter_required_if_field_refs(required_if):
+    """Yield every `field` reference found within a required-if structure."""
+    if isinstance(required_if, list):
+        for item in required_if:
+            yield from iter_required_if_field_refs(item)
+        return
+
+    if isinstance(required_if, dict):
+        for key, value in required_if.items():
+            if key == "field":
+                if isinstance(value, str):
+                    yield value
+                elif isinstance(value, list):
+                    for item in value:
+                        if isinstance(item, str):
+                            yield item
+            else:
+                yield from iter_required_if_field_refs(value)
