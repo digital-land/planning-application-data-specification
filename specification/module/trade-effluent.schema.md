@@ -10,13 +10,13 @@ fields:
     or waste
   field: description
   required-if:
-  - field: disposal-required
+  - field: is-disposal-required
     value: true
 module: trade-effluent
 name: Trade effluent
 notes: This module should be included in all applications including full permission.
   For example, full and full+lbc
 rules:
-- rule: description is required when disposal-required is true
+- rule: description is required when is-disposal-required is true
 - rule: Module applies to full, extraction-oil-gas, and outline application types
 ---

@@ -8,7 +8,7 @@ fields:
   required: true
 - field: discharging-part-details
   required-if:
-  - field: discharging-part
+  - field: is-discharging-part
     value: true
 module: part-discharge
 name: Part discharge
