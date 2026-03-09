@@ -1,6 +1,7 @@
 # tests/test_integrity_checks.py
 import pytest
 from bin.integrity_checks.components import check_field_condition_references
+from bin.integrity_checks.codelists import check_codelist_source_data
 from bin.integrity_checks.modules import (
     check_all,
     check_applies_if_structure,
@@ -223,3 +224,66 @@ class TestRequiredIfFieldReferences:
             application_types={"full": {}},
         )
         assert has_no_errors
+
+
+class TestCodelistSourceData:
+    def test_parent_column_allows_valid_parent_reference(self, project_root):
+        source_path = project_root / "data" / "test-codelist-validation.csv"
+        source_path.write_text(
+            "\n".join(
+                [
+                    "reference,name,parent",
+                    "outline,Outline,",
+                    "outline-all,Outline all,outline",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        try:
+            codelists = {
+                "specification/codelist/test.schema.md": {
+                    "codelist": "test-codelist",
+                    "source": "data/test-codelist-validation.csv",
+                    "fields": [
+                        {"field": "reference"},
+                        {"field": "name"},
+                        {"field": "parent"},
+                    ],
+                    "key-field": "reference",
+                }
+            }
+
+            assert check_codelist_source_data(codelists)
+        finally:
+            source_path.unlink(missing_ok=True)
+
+    def test_parent_column_rejects_unknown_parent_reference(self, project_root):
+        source_path = project_root / "data" / "test-codelist-validation.csv"
+        source_path.write_text(
+            "\n".join(
+                [
+                    "reference,name,parent",
+                    "outline-all,Outline all,missing-parent",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        try:
+            codelists = {
+                "specification/codelist/test.schema.md": {
+                    "codelist": "test-codelist",
+                    "source": "data/test-codelist-validation.csv",
+                    "fields": [
+                        {"field": "reference"},
+                        {"field": "name"},
+                        {"field": "parent"},
+                    ],
+                    "key-field": "reference",
+                }
+            }
+
+            assert not check_codelist_source_data(codelists)
+        finally:
+            source_path.unlink(missing_ok=True)
