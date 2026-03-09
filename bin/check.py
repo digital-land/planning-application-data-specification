@@ -3,6 +3,11 @@
 from loader import load_content, load_needs
 
 
+def run_check_section(title, check_func, *args):
+    print(f"\nChecking {title}\n===========")
+    return check_func(*args)
+
+
 def perform_checks():
     from integrity_checks.applications import check_all as check_applications
     from integrity_checks.codelists import check_all as check_codelists
@@ -29,43 +34,32 @@ def perform_checks():
     needs = needs_content.get("need", {})
     justifications = needs_content.get("justification", {})
 
-    # Perform checks
-    print("\nChecking fields\n===========")
-    fields_valid = check_fields(fields, components, codelists)
-    print("\nChecking components\n===========")
-    components_valid = check_components(components, fields, applications)
-    print("\nChecking datasets\n===========")
-    datasets_valid = check_datasets(datasets, fields)
-    print("\nChecking modules\n===========")
-    modules_valid = check_modules(modules, fields)
+    sections = [
+        ("fields", check_fields, fields, components, codelists),
+        ("components", check_components, components, fields, applications),
+        ("datasets", check_datasets, datasets, fields),
+        ("modules", check_modules, modules, fields),
+        ("applications", check_applications, applications, fields, modules),
+        ("codelists", check_codelists, codelists),
+        ("needs", check_needs, needs),
+        (
+            "justification records",
+            check_justifications,
+            justifications,
+            needs,
+            datasets,
+            fields,
+        ),
+        ("specifications", check_specifications, specifications, datasets),
+    ]
 
-    print("\nChecking applications\n===========")
-    applications_valid = check_applications(applications, fields, modules)
-
-    print("\nChecking codelists\n===========")
-    codelists_valid = check_codelists(codelists)
-
-    print("\nChecking needs\n===========")
-    needs_valid = check_needs(needs)
-
-    print("\nChecking justification records\n===========")
-    justifications_valid = check_justifications(justifications, needs, datasets, fields)
-
-    print("\nChecking specifications\n===========")
-    specifications_valid = check_specifications(specifications, datasets)
+    results = [
+        run_check_section(title, check_func, *args)
+        for title, check_func, *args in sections
+    ]
 
     print("------------------------------------")
-    if (
-        fields_valid
-        and components_valid
-        and datasets_valid
-        and modules_valid
-        and applications_valid
-        and codelists_valid
-        and needs_valid
-        and justifications_valid
-        and specifications_valid
-    ):
+    if all(results):
         print("All integrity checks passed.")
     else:
         print("Integrity checks failed.")
