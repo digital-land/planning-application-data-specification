@@ -2,7 +2,7 @@
 codelist: application-subtype
 description: |
   A list of valid planning application subtypes grouped by application type
-end-date:
+end-date: 2026-03-09
 entry-date: 2025-10-29
 fields:
   - field: reference
@@ -15,7 +15,9 @@ github-discussion: 373
 key-field: reference
 licence: ogl3
 name: Application subtype
-notes:
+notes: |
+  Retired on 2026-03-09. The canonical hierarchy now lives in `application-type`,
+  with subtype rows folded in using `parent`.
 organisation: government-organisation:D1342
 plural: Application subtypes
 source: data/planning-application-subtype.csv
