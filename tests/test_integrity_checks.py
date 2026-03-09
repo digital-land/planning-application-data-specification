@@ -1,7 +1,12 @@
 # tests/test_integrity_checks.py
 import pytest
 from bin.integrity_checks.components import check_field_condition_references
-from bin.integrity_checks.codelists import check_codelist_source_data
+from bin.integrity_checks.codelists import (
+    check_codelist_blank_keys,
+    check_codelist_duplicate_keys,
+    check_codelist_parent_column,
+    check_codelist_parent_references,
+)
 from bin.integrity_checks.modules import (
     check_all,
     check_applies_if_structure,
@@ -254,7 +259,7 @@ class TestCodelistSourceData:
                 }
             }
 
-            assert check_codelist_source_data(codelists)
+            assert check_codelist_parent_references(codelists)
         finally:
             source_path.unlink(missing_ok=True)
 
@@ -284,6 +289,95 @@ class TestCodelistSourceData:
                 }
             }
 
-            assert not check_codelist_source_data(codelists)
+            assert not check_codelist_parent_references(codelists)
+        finally:
+            source_path.unlink(missing_ok=True)
+
+    def test_missing_parent_column_fails_when_declared(self, project_root):
+        source_path = project_root / "data" / "test-codelist-validation.csv"
+        source_path.write_text(
+            "\n".join(
+                [
+                    "reference,name",
+                    "outline,Outline",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        try:
+            codelists = {
+                "specification/codelist/test.schema.md": {
+                    "codelist": "test-codelist",
+                    "source": "data/test-codelist-validation.csv",
+                    "fields": [
+                        {"field": "reference"},
+                        {"field": "name"},
+                        {"field": "parent"},
+                    ],
+                    "key-field": "reference",
+                }
+            }
+
+            assert not check_codelist_parent_column(codelists)
+        finally:
+            source_path.unlink(missing_ok=True)
+
+    def test_blank_reference_fails(self, project_root):
+        source_path = project_root / "data" / "test-codelist-validation.csv"
+        source_path.write_text(
+            "\n".join(
+                [
+                    "reference,name",
+                    ",Outline",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        try:
+            codelists = {
+                "specification/codelist/test.schema.md": {
+                    "codelist": "test-codelist",
+                    "source": "data/test-codelist-validation.csv",
+                    "fields": [
+                        {"field": "reference"},
+                        {"field": "name"},
+                    ],
+                    "key-field": "reference",
+                }
+            }
+
+            assert not check_codelist_blank_keys(codelists)
+        finally:
+            source_path.unlink(missing_ok=True)
+
+    def test_duplicate_reference_fails(self, project_root):
+        source_path = project_root / "data" / "test-codelist-validation.csv"
+        source_path.write_text(
+            "\n".join(
+                [
+                    "reference,name",
+                    "outline,Outline",
+                    "outline,Outline duplicate",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        try:
+            codelists = {
+                "specification/codelist/test.schema.md": {
+                    "codelist": "test-codelist",
+                    "source": "data/test-codelist-validation.csv",
+                    "fields": [
+                        {"field": "reference"},
+                        {"field": "name"},
+                    ],
+                    "key-field": "reference",
+                }
+            }
+
+            assert not check_codelist_duplicate_keys(codelists)
         finally:
             source_path.unlink(missing_ok=True)
