@@ -1,3 +1,5 @@
+.PHONY: tests
+
 # current git branch
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 
@@ -20,6 +22,9 @@ init::
 
 checks:
 	python3 bin/check.py
+
+tests:
+	pytest -q
 
 
 codelists:
