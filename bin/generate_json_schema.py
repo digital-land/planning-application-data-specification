@@ -33,14 +33,10 @@ def get_codelists() -> Dict[str, List[str]]:
                 if codelist_name:
                     codelist_path = codelist_path_map.get(codelist_name)
                     if not codelist_path:
-                        # Handle cases where filename doesn't match codelist name
+                        # Handle the canonical application-type codelist filename.
                         if codelist_name == "application-type":
                             codelist_path = codelist_path_map.get(
                                 "planning-application-type"
-                            )
-                        elif codelist_name == "application-sub-type":
-                            codelist_path = codelist_path_map.get(
-                                "planning-application-sub-type"
                             )
 
                     if not codelist_path:
