@@ -61,3 +61,15 @@ def iter_required_if_field_refs(required_if):
                             yield item
             else:
                 yield from iter_required_if_field_refs(value)
+
+
+def run_checks(checks_with_args):
+    """Run a sequence of checks and return True only if all pass."""
+    all_passed = True
+
+    for check, args in checks_with_args:
+        print(f"\nRunning {check.__name__}...")
+        if not check(*args):
+            all_passed = False
+
+    return all_passed

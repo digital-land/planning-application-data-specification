@@ -1,4 +1,4 @@
-from integrity_checks.utils import has_reference_error, print_error
+from integrity_checks.utils import has_reference_error, print_error, run_checks
 from utils import check_kebab_case
 
 # FIELDS
@@ -205,13 +205,7 @@ def check_all(fields, components, codelists):
         (check_datetime_precision, [fields]),
     ]
 
-    all_passed = True
-    for check, args in checks_with_args:
-        print(f"\nRunning {check.__name__}...")
-        if not check(*args):
-            all_passed = False
-
-    return all_passed
+    return run_checks(checks_with_args)
 
 
 if __name__ == "__main__":

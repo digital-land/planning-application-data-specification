@@ -3,6 +3,7 @@ from integrity_checks.utils import (
     has_reference_error,
     iter_required_if_field_refs,
     print_error,
+    run_checks,
 )
 
 # MODULES (.schema.md files)
@@ -216,13 +217,7 @@ def check_all(modules, fields):
         (check_required_if_fields, [modules]),
     ]
 
-    all_passed = True
-    for check, args in checks_with_args:
-        print(f"\nRunning {check.__name__}...")
-        if not check(*args):
-            all_passed = False
-
-    return all_passed
+    return run_checks(checks_with_args)
 
 
 if __name__ == "__main__":
