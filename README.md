@@ -31,15 +31,13 @@ For help with the terminology used on this page, visit our [glossary of terms](h
 
 ## Application types
 
-Below is the list of official application types (and their subtypes where applicable) that we have produced specifications for.
-
-A [complete list of application types](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv) is available to download and use, and there is a dataset of application [subtypes](http://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-sub-type.csv).
+Below is the list of official application types that we have produced specifications for. Where a more specific classification is needed, the canonical [application type codelist](https://github.com/digital-land/planning-application-data-specification/blob/main/data/planning-application-type.csv) now uses a light parent/child hierarchy in a single dataset.
 
 We are prioritising the application types that lead to housing delivery.
 
 #### Applications affecting housing delivery
 
-| Application type | Sub type |
+| Application type | Child type |
 |---|---|
 | [Approval (discharge) of conditions](https://github.com/digital-land/planning-application-data-specification/discussions/173) | | 
 | [Full planning permission](https://github.com/digital-land/planning-application-data-specification/discussions/167) | | [see spec](https://github.com/digital-land/planning-application-data-specification/blob/main/generated/info_model/application/full.md) | |
@@ -61,7 +59,7 @@ We are prioritising the application types that lead to housing delivery.
 
 #### Other applications in scope
 
-| Application type | Sub type |
+| Application type | Child type |
 |---|---|
 | [Advertising](https://github.com/digital-land/planning-application-data-specification/discussions/171) | | 
 | [Consent under TPO](https://github.com/digital-land/planning-application-data-specification/discussions/220) | |
@@ -109,4 +107,3 @@ git tag -a v{version_number} -m "{release description}"
 # then
 git-chglog -o CHANGELOG.md
 ```
-

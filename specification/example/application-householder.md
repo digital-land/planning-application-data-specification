@@ -37,7 +37,7 @@ name: Householder application with minimal fee structure
 
 This example shows:
 * Householder application with simpler structure
-* No application sub-type (optional field)
+* Classification carried by `application-types`
 * Minimal document requirements
 * Fee structure without transactions (optional field)
 * File without optional metadata fields
