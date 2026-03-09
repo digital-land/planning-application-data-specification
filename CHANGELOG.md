@@ -1,4 +1,34 @@
 
+<a name="v0.1.60"></a>
+## [v0.1.60](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.59...v0.1.60) (2026-03-09)
+
+Minor refactoring
+
+### ⚒️ Tooling
+
+* make check runner easier to scan (commit [dcf669d](https://github.com/digital-land/planning-application-data-specification/commit/dcf669d33e28a8ee3a0f449fd1aca7ff6bfe68d7))
+* small refactor of specifciation check code (commit [ba78ce4](https://github.com/digital-land/planning-application-data-specification/commit/ba78ce41fa55fb51f0f503f80fe02ec8616a65c4))
+* link to form to propose need if search yields not results (commit [3ec184c](https://github.com/digital-land/planning-application-data-specification/commit/3ec184c310deae5f05a425589915cd655a0c1709))
+* add satisfied-by section to justification section on need pages (commit [ce93c75](https://github.com/digital-land/planning-application-data-specification/commit/ce93c758572e09cbfcadb14ebc855ab070af42a1))
+* make satisfied-by chips links (commit [bcca2fa](https://github.com/digital-land/planning-application-data-specification/commit/bcca2facb826c80baab424553b8537ad7bf69a18))
+* tweak layout of static site homepage for easier reading (commit [bd63035](https://github.com/digital-land/planning-application-data-specification/commit/bd63035a49a72923f85ff7226613d1bb81f890ee))
+* include listing codelists in outputs (commit [ef4c316](https://github.com/digital-land/planning-application-data-specification/commit/ef4c3166ee760bdb04c196605549edfb9603b8b1))
+* add make target to output lists of elements of spec (commit [98ef79c](https://github.com/digital-land/planning-application-data-specification/commit/98ef79c8ea6d2fbee8cfd447bbedc522933fab28))
+* output list of elements of the spec (commit [1e9fc33](https://github.com/digital-land/planning-application-data-specification/commit/1e9fc3342381d7d5cb11a4cb1ed112c4359f26f8))
+
+### 🐛 Bug Fixes
+
+* rename file to match field identifier (commit [125d9a5](https://github.com/digital-land/planning-application-data-specification/commit/125d9a5c0f8bd6009c7bd7b5ba566e5e79f7a6e6))
+* rename codelist field to match identifier (commit [8a303cc](https://github.com/digital-land/planning-application-data-specification/commit/8a303cc60086db3a725c684ba5323a054782d6cc))
+* required-if blocks refer to correct fields (commit [0b22798](https://github.com/digital-land/planning-application-data-specification/commit/0b22798f4c3222aecd5f9ff1f9b9eb244f1b3c2c))
+* integrity checks should match require-if field references to local fields list (commit [a7c06ca](https://github.com/digital-land/planning-application-data-specification/commit/a7c06ca5efc7a2166fd3db0fd5dfadcc8de852aa))
+
+### 📚 Documentation
+
+* add short description of dataset schema origin (commit [6618b4a](https://github.com/digital-land/planning-application-data-specification/commit/6618b4a68913a4466adf9a1bace6c63086c3547a))
+* save outputted element lists (commit [0685e4d](https://github.com/digital-land/planning-application-data-specification/commit/0685e4d35f228303b723b4f81555abf5f9dff399))
+
+
 <a name="v0.1.59"></a>
 ## [v0.1.59](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.58...v0.1.59) (2026-02-26)
 
