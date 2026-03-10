@@ -41,4 +41,92 @@
 
   </div>
 </div>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">Application types</h2>
+    <p class="govuk-body">Application types that are covered and not covered by the submission specification.</p>
+
+    <div class="govuk-tabs govuk-!-margin-bottom-6" data-module="govuk-tabs">
+      <h2 class="govuk-tabs__title">Coverage status</h2>
+      <ul class="govuk-tabs__list">
+        <li class="govuk-tabs__list-item govuk-tabs__list-item--selected">
+          <a class="govuk-tabs__tab" href="#covered-by-spec">Covered by specification</a>
+        </li>
+        <li class="govuk-tabs__list-item">
+          <a class="govuk-tabs__tab" href="#not-covered-by-spec">Not covered by specification</a>
+        </li>
+      </ul>
+
+      <div class="govuk-tabs__panel" id="covered-by-spec">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Application type</th>
+              <th scope="col" class="govuk-table__header">Volume</th>
+              <th scope="col" class="govuk-table__header">Covered</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for row in covered_rows %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <div>{{ row.display_name }}</div>
+                  {% if row.refs_with_href %}
+                    <p class="govuk-body-s govuk-!-margin-bottom-0">
+                      ({%- for ref in row.refs_with_href -%}
+                        <a class="govuk-link" href="{{ ref.href }}">{{ ref.ref }}</a>{% if not loop.last %}, {% endif %}
+                      {%- endfor -%})
+                    </p>
+                  {% endif %}
+                </td>
+                <td class="govuk-table__cell">
+                  {% if row.used_for_inheritance %}
+                    <span class="govuk-body-s">*used for inheritance</span>
+                  {% else %}
+                    {{ row.volume | commanum }}
+                  {% endif %}
+                </td>
+                <td class="govuk-table__cell">✓</td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="govuk-tabs__panel govuk-tabs__panel--hidden" id="not-covered-by-spec">
+        <table class="govuk-table">
+          <thead class="govuk-table__head">
+            <tr class="govuk-table__row">
+              <th scope="col" class="govuk-table__header">Application type</th>
+              <th scope="col" class="govuk-table__header">Volume</th>
+              <th scope="col" class="govuk-table__header">Covered</th>
+            </tr>
+          </thead>
+          <tbody class="govuk-table__body">
+            {% for row in not_covered_rows %}
+              <tr class="govuk-table__row">
+                <td class="govuk-table__cell">
+                  <div>{{ row.display_name }}</div>
+                  {% if row.refs %}
+                    <div class="govuk-hint govuk-!-margin-bottom-0">({{ row.refs | join(",") }})</div>
+                  {% endif %}
+                </td>
+                <td class="govuk-table__cell">
+                  {% if row.used_for_inheritance %}
+                    <span class="govuk-body-s">*used for inheritance</span>
+                  {% else %}
+                    {{ row.volume | commanum }}
+                  {% endif %}
+                </td>
+                <td class="govuk-table__cell"></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
 {% endblock %}

@@ -649,9 +649,37 @@ def render_submission_progress_page(
         input_path=input_path,
         combined_apps_covered=combined_apps_covered,
     )
+
+    def prepare_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+        prepared: List[Dict[str, Any]] = []
+        for row in rows:
+            refs = row.get("refs", []) or []
+            trailing = f"({','.join(refs)})" if refs else ""
+            display_name = row.get("label", "")
+            if trailing and display_name.endswith(trailing):
+                display_name = display_name[: -len(trailing)].rstrip()
+            prepared.append(
+                {
+                    **row,
+                    "display_name": display_name,
+                    "refs_with_href": [
+                        {
+                            "ref": ref,
+                            "href": renderer.url_for(f"/submission/application/{ref}"),
+                        }
+                        for ref in refs
+                    ],
+                    "used_for_inheritance": "Inheritance-only application type"
+                    in (row.get("notes") or ""),
+                }
+            )
+        return prepared
+
     progress_ctx = {
         "page_title": "Submission progress",
         "summary": progress_data["summary"],
+        "covered_rows": prepare_rows(progress_data["covered_by_spec"]),
+        "not_covered_rows": prepare_rows(progress_data["not_covered_by_spec"]),
         "links": {
             "home": renderer.url_for("/"),
             "back": renderer.url_for("/submission"),
