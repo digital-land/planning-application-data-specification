@@ -211,11 +211,34 @@ def form_url(application_type):
 
 
 @cli.group(invoke_without_command=True)
+@click.option(
+    "--input",
+    "input_path",
+    default="bin/admin_data/2024-application-volumes.csv",
+    show_default=True,
+    help="Path to completeness source CSV",
+)
+@click.option(
+    "--combined-apps-covered",
+    is_flag=True,
+    help="Treat combined application rows as covered when all component refs exist in the specification",
+)
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    help="Print in-scope rows split by covered-by-spec status, ordered by volume",
+)
 @click.pass_context
-def completeness(ctx):
+def completeness(ctx, input_path, combined_apps_covered, verbose):
     """Completeness reporting."""
     if ctx.invoked_subcommand is None:
-        ctx.invoke(completeness_summary)
+        ctx.invoke(
+            completeness_summary,
+            input_path=input_path,
+            combined_apps_covered=combined_apps_covered,
+            verbose=verbose,
+        )
 
 
 @completeness.command(name="summary")
@@ -231,7 +254,13 @@ def completeness(ctx):
     is_flag=True,
     help="Treat combined application rows as covered when all component refs exist in the specification",
 )
-def completeness_summary(input_path, combined_apps_covered):
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    help="Print in-scope rows split by covered-by-spec status, ordered by volume",
+)
+def completeness_summary(input_path, combined_apps_covered, verbose):
     """Print completeness summary including covered volume and percentage."""
     result = calculate_scope_summary(
         Path(input_path), combined_apps_covered=combined_apps_covered
@@ -247,6 +276,39 @@ def completeness_summary(input_path, combined_apps_covered):
     click.echo(f"In-scope 2024 volume: {result['in_scope_2024_volume']}")
     click.echo(f"Volume covered by spec: {result['covered_2024_volume']}")
     click.echo(f"Completeness: {result['completeness_pct']}%")
+
+    if not verbose:
+        return
+
+    scope = evaluate_scope(
+        Path(input_path), combined_apps_covered=combined_apps_covered
+    )
+    in_scope = scope["in_scope"]
+    covered = [item for item in in_scope if item.get("covered-by-spec")]
+    not_covered = [item for item in in_scope if not item.get("covered-by-spec")]
+
+    def sort_items(items):
+        return sorted(items, key=lambda i: (-int(i.get("volume", 0) or 0), i.get("name", "")))
+
+    def format_line(item):
+        app_types = ",".join(item.get("application-types", []))
+        name = item.get("name", "")
+        trailing = f"({app_types})"
+        if app_types and name.endswith(trailing):
+            name = name[: -len(trailing)].rstrip()
+        return f"{name} ({app_types}) | volume: {item.get('volume', 0)}"
+
+    click.echo()
+    click.echo("Covered by spec")
+    click.echo("===============")
+    for item in sort_items(covered):
+        click.echo(format_line(item))
+
+    click.echo()
+    click.echo("Not covered by spec")
+    click.echo("===================")
+    for item in sort_items(not_covered):
+        click.echo(format_line(item))
 
 
 @completeness.command()
