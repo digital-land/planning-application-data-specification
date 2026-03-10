@@ -56,7 +56,6 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
 application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum
-application-sub-type | Application sub type | Further classification of the application type for specific variations within the main application type | MAY | Select from the **application-subtype** enum
 planning-authority | Planning authority | A reference of the planning authority the application has been submitted to, e.g. local-authority:CMD for London borough of Camden | MUST | Select from the **planning-authority** enum. Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk
 submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST | 
 modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST | 
@@ -98,7 +97,6 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 
 - reference must be a valid UUID format
 - application-types must reference valid application type codelist values
-- application-sub-type must reference valid application sub-type codelist values
 - planning-authority must be a valid organisation reference
 - modules must reference existing module definitions
 - document references must be unique within the application
@@ -767,11 +765,11 @@ Details of any liquid waste produced by industial processes on the proposed site
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
 | is-disposal-required | Disposal required | Does the proposal involve the disposal of trade effluents or waste (true/false) | MUST |  |
-| description | Description | describe the nature, volume and means of disposal of trade effluents or waste | MAY | Rule: is a MUST if `disposal-required` is `True` |
+| description | Description | describe the nature, volume and means of disposal of trade effluents or waste | MAY | Rule: is a MUST if `is-disposal-required` is `True` |
 
 **Validation rules**
 
-- description is required when disposal-required is true
+- description is required when is-disposal-required is true
 - Module applies to full, extraction-oil-gas, and outline application types
 
 ## Trees and hedges information
