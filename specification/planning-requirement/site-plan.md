@@ -11,11 +11,8 @@ entry-date: 2025-03-30
 end-date: ''
 
 required-if:
-  any:
-    - application-type:
-        in: [full, reserved-matters, hh, outline, demolition-con-area]
-    - application-sub-type:
-        in: [ldc-proposed-work-lb, ldc-existing-use, pa-storey]
+  application-type:
+    in: [full, reserved-matters, hh, outline, demolition-con-area, ldc-proposed-work-lb, ldc-existing-use, pa-storey]
 ---
 
 "General requirement. For extraction of oil and gas, needed to show site layout, access, and safety zones."

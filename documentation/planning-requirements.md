@@ -164,4 +164,4 @@ Validation logic should enforce the following:
 * ✅ Local area requirements **must reference a planning requirement that exists** in `/planning-requirement/`
 * ✅ Any `field` used in a condition **should exist in the specification’s field list** (alignment pending)
 * ✅ `application-type` filters should only be included when the requirement is **not universal**
-* ✅ Values for `application-type` and `application-sub-type` must **match the standardised list** of application types and subtypes
+* ✅ Values for `application-type` must **match the standardised hierarchical list** of application types and child types

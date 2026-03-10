@@ -51,6 +51,9 @@ It describes the list and its columns but does not include the rows themselves.
 **Fields in a codelist CSV should match the `fields` attribute**  
 This allows automated validation to check that the source file has the expected structure.
 
+**A codelist row may optionally reference a parent code**  
+Where a light hierarchy is useful, a CSV can include a `parent` column. The value should reference the `key-field` of another row in the same canonical codelist. Currently, this is intended for simple one-level relationships such as application type to subtype, not deep trees or links across separate codelists.
+
 ## Still to decide
 
 * Should codelist definitions include version information beyond `entry-date` and `end-date`?  
@@ -87,5 +90,7 @@ github-discussion: 194
 * codelist, name, description, fields, source and key-field must be present
 * every field in fields must appear as a column in the source data
 * the key-field must be unique within the source data
+* if a codelist declares a `parent` field, the source CSV must include a `parent` column
+* if a `parent` column is present, each non-blank parent must reference another valid code in the same codelist and must not reference itself
 * if end-date is present, it must be on or after entry-date
 * `source` must be a valid URL

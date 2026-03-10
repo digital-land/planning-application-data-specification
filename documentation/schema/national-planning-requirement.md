@@ -3,17 +3,15 @@ dataset: national-planning-requirement
 name: National planning requirement
 plural: National planning requirements
 description: >
-  A dataset that maps national planning requirements to specific types and sub-types
+  A dataset that maps national planning requirements to specific application types
   of planning applications. This is used to determine which documents are required
   under national regulations depending on the application context.
 fields:
   - field: reference
     description: A unique reference identifier for the national planning requirement entry
   - field: application-type
-    description: The high-level type of application (e.g. full, outline, reserved-matters)
+    description: The application type code, including child codes where a more specific classification is needed.
     dataset: planning-application-type
-  - field: application-sub-type
-    description: A more specific sub-type of application, if applicable.
   - field: planning-requirement
     description: The identifier for the related planning requirement (e.g. site-plan, biodiversity-survey-report).
   - field: entry-date

@@ -8,7 +8,6 @@ name: Full planning application with documents and fee
   "application": {
     "reference": "550e8400-e29b-41d4-a716-446655440000",
     "application-types": ["full"],
-    "application-sub-type": "major-dwellings",
     "planning-authority": "LPA001",
     "submission-date": "2025-06-20",
     "modules": [
@@ -55,7 +54,7 @@ name: Full planning application with documents and fee
 
 This example shows:
 * Full planning application with complete metadata
-* Multiple application types and sub-type classification
+* Classification carried by `application-types`
 * Required modules for validation
 * Documents with both URL and base64 file storage options
 * Complete fee structure with payment information

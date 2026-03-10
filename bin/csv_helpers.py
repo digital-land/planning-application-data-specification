@@ -26,6 +26,15 @@ def read_csv(filename, encoding="utf-8", as_dict=False, include_row_num=False):
     return data
 
 
+def read_csv_with_headers(filename, encoding="utf-8"):
+    """
+    Read a CSV file and return its headers plus row dicts.
+    """
+    with open(filename, newline="", encoding=encoding) as csvfile:
+        reader = csv.DictReader(csvfile)
+        return reader.fieldnames or [], list(reader)
+
+
 # expects data to be list of dicts
 def write_csv(
     data,
