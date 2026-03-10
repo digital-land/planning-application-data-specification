@@ -71,10 +71,23 @@ def calculate_total_volume(items: list[dict[str, Any]]) -> int:
     return sum(int(item.get("volume", 0) or 0) for item in items)
 
 
+def load_spec_application_refs() -> set[str]:
+    # Local import keeps this module lightweight for reuse/testing.
+    from loader import load_content
+
+    spec = load_content()
+    applications = spec.get("application", {}) or {}
+    return set(applications.keys())
+
+
 def evaluate_scope(
-    input_path: Path, inheritance_only_refs: set[str] | None = None
+    input_path: Path,
+    inheritance_only_refs: set[str] | None = None,
+    combined_apps_covered: bool = False,
+    spec_application_refs: set[str] | None = None,
 ) -> dict[str, Any]:
     inheritance_only_refs = inheritance_only_refs or INHERITANCE_ONLY_REFS
+    spec_application_refs = spec_application_refs or load_spec_application_refs()
 
     with input_path.open(newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
@@ -103,37 +116,57 @@ def evaluate_scope(
             "application-types": app_types,
             "volume": volume,
             "notes": notes,
+            "covered-by-spec": False,
         }
 
         if has_form or has_positive_volume or is_inheritance_only:
+            if len(app_types) == 1:
+                item["covered-by-spec"] = app_types[0] in spec_application_refs
+            elif combined_apps_covered and app_types:
+                item["covered-by-spec"] = all(
+                    app_ref in spec_application_refs for app_ref in app_types
+                )
             item["name"] = in_scope_name(row, app_types)
             in_scope.append(item)
         else:
             item["name"] = out_scope_name(row, app_types)
             out_of_scope.append(item)
 
+    return {"in_scope": in_scope, "out_of_scope": out_of_scope}
+
+
+def calculate_scope_summary(
+    input_path: Path,
+    inheritance_only_refs: set[str] | None = None,
+    combined_apps_covered: bool = False,
+    spec_application_refs: set[str] | None = None,
+) -> dict[str, Any]:
+    scope = evaluate_scope(
+        input_path=input_path,
+        inheritance_only_refs=inheritance_only_refs,
+        combined_apps_covered=combined_apps_covered,
+        spec_application_refs=spec_application_refs,
+    )
+    in_scope = scope["in_scope"]
+    out_of_scope = scope["out_of_scope"]
+
+    total_rows = len(in_scope) + len(out_of_scope)
     total_volume = calculate_total_volume(in_scope + out_of_scope)
     in_scope_volume = calculate_total_volume(in_scope)
-    completeness_pct = (in_scope_volume / total_volume * 100) if total_volume else 0.0
+    covered_volume = calculate_total_volume(
+        [item for item in in_scope if item.get("covered-by-spec")]
+    )
+    completeness_pct = (covered_volume / total_volume * 100) if total_volume else 0.0
 
     return {
-        "summary": {
-            "input": str(input_path),
-            "total_rows": len(rows),
-            "in_scope_rows": len(in_scope),
-            "out_of_scope_rows": len(out_of_scope),
-            "total_2024_volume": total_volume,
-            "in_scope_2024_volume": in_scope_volume,
-            "completeness_pct": round(completeness_pct, 2),
-            "volume_treatment": "shared",
-            "scope_rules": {
-                "has_form": "form-name is non-empty",
-                "has_positive_volume": "2024-total > 0",
-                "inheritance_only_refs": sorted(inheritance_only_refs),
-            },
-        },
-        "in_scope": in_scope,
-        "out_of_scope": out_of_scope,
+        "input": str(input_path),
+        "total_rows": total_rows,
+        "in_scope_rows": len(in_scope),
+        "out_of_scope_rows": len(out_of_scope),
+        "total_2024_volume": total_volume,
+        "in_scope_2024_volume": in_scope_volume,
+        "covered_2024_volume": covered_volume,
+        "completeness_pct": round(completeness_pct, 2),
     }
 
 

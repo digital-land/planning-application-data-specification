@@ -10,7 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "bin"))
 
 import click
 from bin.applications import get_application_module_refs, get_applications_with_module
-from bin.completeness import evaluate_scope
+from bin.completeness import calculate_scope_summary, evaluate_scope
 from bin.csv_helpers import read_csv
 from bin.fields import find_field_usage
 from bin.loader import load_content, load_needs
@@ -210,10 +210,43 @@ def form_url(application_type):
     click.echo("\n\n".join(formatted))
 
 
-@cli.group()
-def completeness():
+@cli.group(invoke_without_command=True)
+@click.pass_context
+def completeness(ctx):
     """Completeness reporting."""
-    pass
+    if ctx.invoked_subcommand is None:
+        ctx.invoke(completeness_summary)
+
+
+@completeness.command(name="summary")
+@click.option(
+    "--input",
+    "input_path",
+    default="bin/admin_data/2024-application-volumes.csv",
+    show_default=True,
+    help="Path to completeness source CSV",
+)
+@click.option(
+    "--combined-apps-covered",
+    is_flag=True,
+    help="Treat combined application rows as covered when all component refs exist in the specification",
+)
+def completeness_summary(input_path, combined_apps_covered):
+    """Print completeness summary including covered volume and percentage."""
+    result = calculate_scope_summary(
+        Path(input_path), combined_apps_covered=combined_apps_covered
+    )
+
+    click.echo("Completeness summary")
+    click.echo("====================")
+    click.echo(f"Input CSV: {result['input']}")
+    click.echo(f"Total rows: {result['total_rows']}")
+    click.echo(f"In-scope rows: {result['in_scope_rows']}")
+    click.echo(f"Out-of-scope rows: {result['out_of_scope_rows']}")
+    click.echo(f"Total 2024 volume: {result['total_2024_volume']}")
+    click.echo(f"In-scope 2024 volume: {result['in_scope_2024_volume']}")
+    click.echo(f"Volume covered by spec: {result['covered_2024_volume']}")
+    click.echo(f"Completeness: {result['completeness_pct']}%")
 
 
 @completeness.command()
@@ -230,19 +263,36 @@ def completeness():
     is_flag=True,
     help="Print in-scope and out-of-scope lists",
 )
-def scope(input_path, verbose):
+@click.option(
+    "--combined-apps-covered",
+    is_flag=True,
+    help="Treat combined application rows as covered when all component refs exist in the specification",
+)
+def scope(input_path, verbose, combined_apps_covered):
     """Summarise in-scope and out-of-scope application types for completeness."""
-    result = evaluate_scope(Path(input_path))
-    summary = result["summary"]
+    result = evaluate_scope(
+        Path(input_path), combined_apps_covered=combined_apps_covered
+    )
+    in_scope = result["in_scope"]
+    out_of_scope = result["out_of_scope"]
+
+    total_rows = len(in_scope) + len(out_of_scope)
+    in_scope_rows = len(in_scope)
+    out_of_scope_rows = len(out_of_scope)
+    summary_data = calculate_scope_summary(
+        Path(input_path), combined_apps_covered=combined_apps_covered
+    )
+    total_volume = summary_data["total_2024_volume"]
+    in_scope_volume = summary_data["in_scope_2024_volume"]
 
     click.echo("Completeness scope summary")
     click.echo("==========================")
-    click.echo(f"Input CSV: {summary['input']}")
-    click.echo(f"Total rows: {summary['total_rows']}")
-    click.echo(f"In-scope rows: {summary['in_scope_rows']}")
-    click.echo(f"Out-of-scope rows: {summary['out_of_scope_rows']}")
-    click.echo(f"Total 2024 volume: {summary['total_2024_volume']}")
-    click.echo(f"In-scope 2024 volume: {summary['in_scope_2024_volume']}")
+    click.echo(f"Input CSV: {input_path}")
+    click.echo(f"Total rows: {total_rows}")
+    click.echo(f"In-scope rows: {in_scope_rows}")
+    click.echo(f"Out-of-scope rows: {out_of_scope_rows}")
+    click.echo(f"Total 2024 volume: {total_volume}")
+    click.echo(f"In-scope 2024 volume: {in_scope_volume}")
 
     if not verbose:
         return
@@ -250,18 +300,23 @@ def scope(input_path, verbose):
     click.echo()
     click.echo("In-scope application types")
     click.echo("==========================")
-    for item in result["in_scope"]:
+    for item in in_scope:
         app_types = ",".join(item["application-types"])
         notes = f" | notes: {item['notes']}" if item.get("notes") else ""
+        covered = "yes" if item.get("covered-by-spec") else "no"
         if item["name"].startswith("Form: ") or item["name"].endswith(f"({app_types})"):
-            click.echo(f"- {item['name']} | volume: {item['volume']}{notes}")
+            click.echo(
+                f"- {item['name']} | volume: {item['volume']} | covered-by-spec: {covered}{notes}"
+            )
         else:
-            click.echo(f"- {item['name']} ({app_types}) | volume: {item['volume']}{notes}")
+            click.echo(
+                f"- {item['name']} ({app_types}) | volume: {item['volume']} | covered-by-spec: {covered}{notes}"
+            )
 
     click.echo()
     click.echo("Out-of-scope application types")
     click.echo("==============================")
-    for item in result["out_of_scope"]:
+    for item in out_of_scope:
         app_types = ",".join(item["application-types"])
         notes = f" | notes: {item['notes']}" if item.get("notes") else ""
         click.echo(f"- {item['name']} ({app_types}){notes}")

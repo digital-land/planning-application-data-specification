@@ -1,6 +1,6 @@
 import csv
 
-from completeness import evaluate_scope
+from completeness import calculate_total_volume, evaluate_scope
 
 
 def write_rows(path, rows):
@@ -66,24 +66,35 @@ def test_evaluate_scope_applies_rules_and_shared_volume(tmp_path):
         ],
     )
 
-    result = evaluate_scope(csv_path)
-    summary = result["summary"]
+    spec_refs = {"hh", "full", "outline"}
+    result = evaluate_scope(csv_path, spec_application_refs=spec_refs)
+    in_scope = result["in_scope"]
+    out_of_scope = result["out_of_scope"]
 
-    assert summary["total_rows"] == 5
-    assert summary["in_scope_rows"] == 4
-    assert summary["out_of_scope_rows"] == 1
-    assert summary["total_2024_volume"] == 30
-    assert summary["in_scope_2024_volume"] == 30
-    assert summary["volume_treatment"] == "shared"
+    total_rows = len(in_scope) + len(out_of_scope)
+    in_scope_rows = len(in_scope)
+    out_of_scope_rows = len(out_of_scope)
+    total_volume = calculate_total_volume(in_scope + out_of_scope)
+    in_scope_volume = calculate_total_volume(in_scope)
+    covered_volume = calculate_total_volume(
+        [item for item in in_scope if item["covered-by-spec"]]
+    )
+    completeness_pct = (covered_volume / total_volume * 100) if total_volume else 0.0
+
+    assert total_rows == 5
+    assert in_scope_rows == 4
+    assert out_of_scope_rows == 1
+    assert total_volume == 30
+    assert in_scope_volume == 30
+    assert covered_volume == 20
+    assert round(completeness_pct, 2) == 66.67
 
     inheritance = [
-        item
-        for item in result["in_scope"]
-        if item["application-types"] == ["outline"]
+        item for item in in_scope if item["application-types"] == ["outline"]
     ][0]
     assert "Inheritance-only application type" in inheritance["notes"]
 
-    out_scope = result["out_of_scope"][0]
+    out_scope = out_of_scope[0]
     assert out_scope["application-types"] == ["waste-dev"]
 
 
@@ -103,9 +114,22 @@ def test_evaluate_scope_accepts_semicolon_delimited_application_types(tmp_path):
         ],
     )
 
-    result = evaluate_scope(csv_path)
+    result = evaluate_scope(csv_path, spec_application_refs={"hh", "demolition-con-area"})
     item = result["in_scope"][0]
 
     assert item["type"] == "combined"
     assert item["application-types"] == ["hh", "demolition-con-area"]
     assert item["volume"] == 12
+    assert item["covered-by-spec"] is False
+
+    result_with_combined = evaluate_scope(
+        csv_path,
+        spec_application_refs={"hh", "demolition-con-area"},
+        combined_apps_covered=True,
+    )
+    item_with_combined = result_with_combined["in_scope"][0]
+    assert item_with_combined["covered-by-spec"] is True
+    covered_volume = calculate_total_volume(
+        [item for item in result_with_combined["in_scope"] if item["covered-by-spec"]]
+    )
+    assert covered_volume == 12
