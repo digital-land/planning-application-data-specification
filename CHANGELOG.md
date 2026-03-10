@@ -1,4 +1,39 @@
 
+<a name="v0.1.61"></a>
+## [v0.1.61](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.60...v0.1.61) (2026-03-10)
+
+Combine application types and subtypes into one codelist
+
+### ⚒️ Tooling
+
+* make check runner easier to scan (commit [1169602](https://github.com/digital-land/planning-application-data-specification/commit/11696023e7e6a3720a3f6d810ea1c19fbfb4a096))
+* small refactor of specifciation check code (commit [9f2999d](https://github.com/digital-land/planning-application-data-specification/commit/9f2999dab37fc7f11c831a7d9d8446a90f60e4a4))
+* link to form to propose need if search yields not results (commit [7ad1cbe](https://github.com/digital-land/planning-application-data-specification/commit/7ad1cbe9b19242d01a08906bdc3af11dc46773c8))
+* remove subtype from json schema (commit [16e822e](https://github.com/digital-land/planning-application-data-specification/commit/16e822eb91e41d253b2813483a8a9503f2096c22))
+* expand codelist checker tests (commit [5175f97](https://github.com/digital-land/planning-application-data-specification/commit/5175f979ad9a2a7998525b1f4e446410b2cb0cf5))
+* Split codelist integrity checks (commit [3a4a3d3](https://github.com/digital-land/planning-application-data-specification/commit/3a4a3d31acdd051f4a4f1e2e9749a8b0d3bb102d))
+* add test to make sure parent field in codelist refers to existing entry in file (commit [48f8b66](https://github.com/digital-land/planning-application-data-specification/commit/48f8b6607679b9264c8ff38655e6dc6439f687c9))
+
+### 𝌭 Model changes
+
+* remove application-sub-type field (commit [ae58170](https://github.com/digital-land/planning-application-data-specification/commit/ae5817078b8b2de9cf7f1cd48fca3c45863c3451))
+* remove subtye condition (commit [07846f6](https://github.com/digital-land/planning-application-data-specification/commit/07846f68a88ef197365bffd26cad07c585887e17))
+* merge application type and subtype codelists (commit [750e668](https://github.com/digital-land/planning-application-data-specification/commit/750e6686f651c4156e7d554448b5063f01bd64ce))
+
+### 🐛 Bug Fixes
+
+* erroneous example (commit [f4c1dee](https://github.com/digital-land/planning-application-data-specification/commit/f4c1deeb1ebe4edfc6c7e9a3d5e6fc536d4b3ad3))
+
+### 👷‍♀️ Application changes
+
+* add remaining prior approval and change of use applications to codelist (commit [7a3883f](https://github.com/digital-land/planning-application-data-specification/commit/7a3883fcab2c3d6555a547d7c279cfe40096f5d1))
+
+### 📚 Documentation
+
+* remove reference to subtypes (commit [4bf0a67](https://github.com/digital-land/planning-application-data-specification/commit/4bf0a678228f3542392113adc518b97b12738f9f))
+* add hierarchical codelist pattern with parent field (commit [be73dde](https://github.com/digital-land/planning-application-data-specification/commit/be73dde602d8fa10884d729096b2d288bbd4ca01))
+
+
 <a name="v0.1.60"></a>
 ## [v0.1.60](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.59...v0.1.60) (2026-03-09)
 
