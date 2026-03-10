@@ -189,6 +189,70 @@ def calculate_scope_summary(
     }
 
 
+def sort_scope_items_by_volume(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return sorted(
+        items, key=lambda i: (-int(i.get("volume", 0) or 0), i.get("name", ""))
+    )
+
+
+def format_scope_item_label(item: dict[str, Any]) -> str:
+    app_types = ",".join(item.get("application-types", []))
+    name = item.get("name", "")
+    trailing = f"({app_types})"
+    if app_types and name.endswith(trailing):
+        name = name[: -len(trailing)].rstrip()
+    return f"{name} ({app_types})"
+
+
+def build_progress_view_model(
+    input_path: Path,
+    inheritance_only_refs: set[str] | None = None,
+    combined_apps_covered: bool = False,
+    spec_application_refs: set[str] | None = None,
+) -> dict[str, Any]:
+    scope = evaluate_scope(
+        input_path=input_path,
+        inheritance_only_refs=inheritance_only_refs,
+        combined_apps_covered=combined_apps_covered,
+        spec_application_refs=spec_application_refs,
+    )
+    summary = calculate_scope_summary(
+        input_path=input_path,
+        inheritance_only_refs=inheritance_only_refs,
+        combined_apps_covered=combined_apps_covered,
+        spec_application_refs=spec_application_refs,
+    )
+
+    in_scope = scope["in_scope"]
+    covered = sort_scope_items_by_volume(
+        [item for item in in_scope if item.get("covered-by-spec")]
+    )
+    not_covered = sort_scope_items_by_volume(
+        [item for item in in_scope if not item.get("covered-by-spec")]
+    )
+
+    def to_row(item: dict[str, Any]) -> dict[str, Any]:
+        refs = item.get("application-types", [])
+        return {
+            "name": item.get("name", ""),
+            "refs": refs,
+            "label": format_scope_item_label(item),
+            "volume": int(item.get("volume", 0) or 0),
+            "covered_by_spec": bool(item.get("covered-by-spec")),
+            "type": item.get("type", "single"),
+            "notes": item.get("notes", ""),
+        }
+
+    return {
+        "summary": summary,
+        "covered_by_spec": [to_row(item) for item in covered],
+        "not_covered_by_spec": [to_row(item) for item in not_covered],
+        "meta": {
+            "combined_apps_covered": combined_apps_covered,
+        },
+    }
+
+
 def main() -> None:
     result = evaluate_scope(DEFAULT_INPUT)
     print(json.dumps(result, indent=2))

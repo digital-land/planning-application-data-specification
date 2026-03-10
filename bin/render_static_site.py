@@ -23,6 +23,8 @@ if not hasattr(jinja_filters, "evalcontextfilter"):
 
 from digital_land_frontend import filters as dlf_filters  # noqa: E402
 from digital_land_frontend import globals as dlf_globals  # noqa: E402
+from completeness import build_progress_view_model
+from jinja_filters import commanum_filter
 from loader import load_needs, load_specification_model
 from models import FieldDef, ComponentInstance, FieldInstance
 from renderer import RenderContext
@@ -35,6 +37,7 @@ except ImportError:  # pragma: no cover
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_DIR = REPO_ROOT / "bin" / "templates"
+DEFAULT_PROGRESS_INPUT = REPO_ROOT / "bin" / "admin_data" / "2024-application-volumes.csv"
 
 
 def render_markdown(md_text: str) -> str:
@@ -474,7 +477,7 @@ def build_env(base_url: str) -> jinja2.Environment:
             "is_valid_uri": dlf_filters.is_valid_uri_filter,
             "make_link": dlf_filters.make_link_filter,
             "float_to_int": dlf_filters.float_to_int_filter,
-            "commanum": dlf_filters.commanum_filter,
+            "commanum": commanum_filter,
             "split_to_list": dlf_filters.split_to_list_filter,
             "readable_date": dlf_filters.readable_date_filter,
             "hex_to_rgb_string": dlf_filters.hex_to_rgb_string_filter,
@@ -612,6 +615,51 @@ def render_justifications_index(
         "justification_index.html", justification_index_ctx
     )
     renderer.write_page("justification/index.html", justification_index_template)
+
+
+def build_submission_progress_data(
+    input_path: Path = DEFAULT_PROGRESS_INPUT,
+    combined_apps_covered: bool = False,
+) -> Dict[str, Any]:
+    return build_progress_view_model(
+        input_path=input_path, combined_apps_covered=combined_apps_covered
+    )
+
+
+def render_submission_progress_data(
+    renderer: RenderContext,
+    input_path: Path = DEFAULT_PROGRESS_INPUT,
+    combined_apps_covered: bool = False,
+) -> None:
+    progress_data = build_submission_progress_data(
+        input_path=input_path,
+        combined_apps_covered=combined_apps_covered,
+    )
+    renderer.write_page(
+        "submissions/progress/data.json", json.dumps(progress_data, indent=2)
+    )
+
+
+def render_submission_progress_page(
+    renderer: RenderContext,
+    input_path: Path = DEFAULT_PROGRESS_INPUT,
+    combined_apps_covered: bool = False,
+) -> None:
+    progress_data = build_submission_progress_data(
+        input_path=input_path,
+        combined_apps_covered=combined_apps_covered,
+    )
+    progress_ctx = {
+        "page_title": "Submission progress",
+        "summary": progress_data["summary"],
+        "links": {
+            "home": renderer.url_for("/"),
+            "back": renderer.url_for("/submission"),
+            "application_types": renderer.url_for("/submission/application"),
+        },
+    }
+    progress_html = renderer.render("submission_progress.html", progress_ctx)
+    renderer.write_page("submissions/progress/index.html", progress_html)
 
 
 def build_site(args: argparse.Namespace) -> None:
@@ -807,6 +855,10 @@ def build_site(args: argparse.Namespace) -> None:
             **submission_ctx
         )
         renderer.write_page("submission/index.html", submission_html)
+
+        # Submission progress data seed for /submission/progress page build-out.
+        render_submission_progress_data(renderer)
+        render_submission_progress_page(renderer)
 
         # Submission module index and detail pages
         submission_modules = list(spec_model.get("modules", {}).values())
@@ -1050,6 +1102,7 @@ def build_site(args: argparse.Namespace) -> None:
                 for ds in decision_datasets
             ],
             "submission": "submission/index.html",
+            "submission_progress": "submissions/progress/index.html",
         }
         renderer.write_page("sitemap.json", json.dumps(site_map, indent=2))
 
