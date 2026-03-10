@@ -82,8 +82,8 @@ def test_evaluate_scope_applies_rules_and_shared_volume(tmp_path):
     completeness_pct = (covered_volume / total_volume * 100) if total_volume else 0.0
 
     assert total_rows == 5
-    assert in_scope_rows == 4
-    assert out_of_scope_rows == 1
+    assert in_scope_rows == 3
+    assert out_of_scope_rows == 2
     assert total_volume == 30
     assert in_scope_volume == 30
     assert covered_volume == 20
@@ -94,8 +94,9 @@ def test_evaluate_scope_applies_rules_and_shared_volume(tmp_path):
     ][0]
     assert "Inheritance-only application type" in inheritance["notes"]
 
-    out_scope = out_of_scope[0]
-    assert out_scope["application-types"] == ["waste-dev"]
+    out_scope_types = [item["application-types"] for item in out_of_scope]
+    assert ["waste-dev"] in out_scope_types
+    assert ["hh"] in out_scope_types
 
 
 def test_evaluate_scope_accepts_semicolon_delimited_application_types(tmp_path):
@@ -158,3 +159,24 @@ def test_tree_work_split_combination_is_covered_without_combined_flag(tmp_path):
     )
     item = result["in_scope"][0]
     assert item["covered-by-spec"] is True
+
+
+def test_form_with_explicit_zero_volume_is_out_of_scope(tmp_path):
+    csv_path = tmp_path / "volumes.csv"
+    write_rows(
+        csv_path,
+        [
+            {
+                "stats-app-name": "Zero volume with form",
+                "2024-total": "0",
+                "applications-types": "pa-fish-struct",
+                "application-name": "Tank cage or structure for fish farming",
+                "form-name": "Prior Approval: Tank/Cage/Structure for use in fish farming",
+                "notes": "",
+            }
+        ],
+    )
+
+    result = evaluate_scope(csv_path, spec_application_refs={"pa-fish-struct"})
+    assert len(result["in_scope"]) == 0
+    assert len(result["out_of_scope"]) == 1

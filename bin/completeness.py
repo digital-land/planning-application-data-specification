@@ -35,6 +35,10 @@ def parse_volume(value: str) -> int:
         return 0
 
 
+def is_blank(value: str | None) -> bool:
+    return not (value or "").strip()
+
+
 def append_note(existing: str, extra: str) -> str:
     existing = (existing or "").strip()
     extra = extra.strip()
@@ -100,11 +104,13 @@ def evaluate_scope(
 
     for row in rows:
         app_types = parse_application_types(row.get("applications-types", ""))
-        volume = parse_volume(row.get("2024-total", ""))
+        raw_volume = row.get("2024-total", "")
+        volume = parse_volume(raw_volume)
         form_name = (row.get("form-name") or "").strip()
         notes = (row.get("notes") or "").strip()
 
         has_form = bool(form_name)
+        has_blank_volume = is_blank(raw_volume)
         has_positive_volume = volume > 0
         is_inheritance_only = (
             len(app_types) == 1 and app_types[0] in inheritance_only_refs
@@ -124,7 +130,9 @@ def evaluate_scope(
             "covered-by-spec": False,
         }
 
-        if has_form or has_positive_volume or is_inheritance_only:
+        # Explicit zero-volume rows are out of scope unless inheritance-only.
+        # Form-only inclusion applies when volume is blank/unknown.
+        if has_positive_volume or is_inheritance_only or (has_form and has_blank_volume):
             if len(app_types) == 1:
                 item["covered-by-spec"] = app_types[0] in spec_application_refs
             elif app_types:
