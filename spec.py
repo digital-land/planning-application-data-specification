@@ -10,7 +10,11 @@ sys.path.insert(0, str(PROJECT_ROOT / "bin"))
 
 import click
 from bin.applications import get_application_module_refs, get_applications_with_module
-from bin.completeness import calculate_scope_summary, evaluate_scope
+from bin.completeness import (
+    build_progress_view_model,
+    calculate_scope_summary,
+    evaluate_scope,
+)
 from bin.csv_helpers import read_csv
 from bin.fields import find_field_usage
 from bin.loader import load_content, load_needs
@@ -280,35 +284,23 @@ def completeness_summary(input_path, combined_apps_covered, verbose):
     if not verbose:
         return
 
-    scope = evaluate_scope(
+    progress = build_progress_view_model(
         Path(input_path), combined_apps_covered=combined_apps_covered
     )
-    in_scope = scope["in_scope"]
-    covered = [item for item in in_scope if item.get("covered-by-spec")]
-    not_covered = [item for item in in_scope if not item.get("covered-by-spec")]
-
-    def sort_items(items):
-        return sorted(items, key=lambda i: (-int(i.get("volume", 0) or 0), i.get("name", "")))
-
-    def format_line(item):
-        app_types = ",".join(item.get("application-types", []))
-        name = item.get("name", "")
-        trailing = f"({app_types})"
-        if app_types and name.endswith(trailing):
-            name = name[: -len(trailing)].rstrip()
-        return f"{name} ({app_types}) | volume: {item.get('volume', 0)}"
+    covered = progress["covered_by_spec"]
+    not_covered = progress["not_covered_by_spec"]
 
     click.echo()
     click.echo("Covered by spec")
     click.echo("===============")
-    for item in sort_items(covered):
-        click.echo(format_line(item))
+    for row in covered:
+        click.echo(f"{row['label']} | volume: {row['volume']}")
 
     click.echo()
     click.echo("Not covered by spec")
     click.echo("===================")
-    for item in sort_items(not_covered):
-        click.echo(format_line(item))
+    for row in not_covered:
+        click.echo(f"{row['label']} | volume: {row['volume']}")
 
 
 @completeness.command()
