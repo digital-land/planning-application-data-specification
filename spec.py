@@ -10,6 +10,7 @@ sys.path.insert(0, str(PROJECT_ROOT / "bin"))
 
 import click
 from bin.applications import get_application_module_refs, get_applications_with_module
+from bin.completeness import evaluate_scope
 from bin.csv_helpers import read_csv
 from bin.fields import find_field_usage
 from bin.loader import load_content, load_needs
@@ -207,6 +208,63 @@ def form_url(application_type):
         formatted.append(f"- application-type: {app_types}\n  form: {url}")
 
     click.echo("\n\n".join(formatted))
+
+
+@cli.group()
+def completeness():
+    """Completeness reporting."""
+    pass
+
+
+@completeness.command()
+@click.option(
+    "--input",
+    "input_path",
+    default="bin/admin_data/2024-application-volumes.csv",
+    show_default=True,
+    help="Path to completeness source CSV",
+)
+@click.option(
+    "-v",
+    "--verbose",
+    is_flag=True,
+    help="Print in-scope and out-of-scope lists",
+)
+def scope(input_path, verbose):
+    """Summarise in-scope and out-of-scope application types for completeness."""
+    result = evaluate_scope(Path(input_path))
+    summary = result["summary"]
+
+    click.echo("Completeness scope summary")
+    click.echo("==========================")
+    click.echo(f"Input CSV: {summary['input']}")
+    click.echo(f"Total rows: {summary['total_rows']}")
+    click.echo(f"In-scope rows: {summary['in_scope_rows']}")
+    click.echo(f"Out-of-scope rows: {summary['out_of_scope_rows']}")
+    click.echo(f"Total 2024 volume: {summary['total_2024_volume']}")
+    click.echo(f"In-scope 2024 volume: {summary['in_scope_2024_volume']}")
+
+    if not verbose:
+        return
+
+    click.echo()
+    click.echo("In-scope application types")
+    click.echo("==========================")
+    for item in result["in_scope"]:
+        app_types = ",".join(item["application-types"])
+        notes = f" | notes: {item['notes']}" if item.get("notes") else ""
+        if item["name"].startswith("Form: ") or item["name"].endswith(f"({app_types})"):
+            click.echo(f"- {item['name']} | volume: {item['volume']}{notes}")
+        else:
+            click.echo(f"- {item['name']} ({app_types}) | volume: {item['volume']}{notes}")
+
+    click.echo()
+    click.echo("Out-of-scope application types")
+    click.echo("==============================")
+    for item in result["out_of_scope"]:
+        app_types = ",".join(item["application-types"])
+        notes = f" | notes: {item['notes']}" if item.get("notes") else ""
+        click.echo(f"- {item['name']} ({app_types}){notes}")
 
 
 if __name__ == "__main__":
