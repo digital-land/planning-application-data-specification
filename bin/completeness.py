@@ -10,6 +10,9 @@ from typing import Any
 
 # TODO: derive inheritance-only references from application-type parent relationships.
 INHERITANCE_ONLY_REFS = {"outline", "ldc", "prior-approval"}
+ALWAYS_COVERED_COMBINATIONS = {
+    frozenset({"consent-under-tpo", "notice-trees-in-con-area"})
+}
 DEFAULT_INPUT = Path("bin/admin_data/2024-application-volumes.csv")
 
 
@@ -103,7 +106,9 @@ def evaluate_scope(
 
         has_form = bool(form_name)
         has_positive_volume = volume > 0
-        is_inheritance_only = len(app_types) == 1 and app_types[0] in inheritance_only_refs
+        is_inheritance_only = (
+            len(app_types) == 1 and app_types[0] in inheritance_only_refs
+        )
 
         if is_inheritance_only:
             notes = append_note(
@@ -122,10 +127,16 @@ def evaluate_scope(
         if has_form or has_positive_volume or is_inheritance_only:
             if len(app_types) == 1:
                 item["covered-by-spec"] = app_types[0] in spec_application_refs
-            elif combined_apps_covered and app_types:
-                item["covered-by-spec"] = all(
-                    app_ref in spec_application_refs for app_ref in app_types
-                )
+            elif app_types:
+                app_type_set = frozenset(app_types)
+                if app_type_set in ALWAYS_COVERED_COMBINATIONS:
+                    item["covered-by-spec"] = all(
+                        app_ref in spec_application_refs for app_ref in app_types
+                    )
+                elif combined_apps_covered:
+                    item["covered-by-spec"] = all(
+                        app_ref in spec_application_refs for app_ref in app_types
+                    )
             item["name"] = in_scope_name(row, app_types)
             in_scope.append(item)
         else:
@@ -166,7 +177,7 @@ def calculate_scope_summary(
         "total_2024_volume": total_volume,
         "in_scope_2024_volume": in_scope_volume,
         "covered_2024_volume": covered_volume,
-        "completeness_pct": round(completeness_pct, 2),
+        "completeness_pct": round(completeness_pct, 1),
     }
 
 

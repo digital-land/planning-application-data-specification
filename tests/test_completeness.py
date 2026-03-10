@@ -133,3 +133,28 @@ def test_evaluate_scope_accepts_semicolon_delimited_application_types(tmp_path):
         [item for item in result_with_combined["in_scope"] if item["covered-by-spec"]]
     )
     assert covered_volume == 12
+
+
+def test_tree_work_split_combination_is_covered_without_combined_flag(tmp_path):
+    csv_path = tmp_path / "volumes.csv"
+    write_rows(
+        csv_path,
+        [
+            {
+                "stats-app-name": "Tree works split row",
+                "2024-total": "7",
+                "applications-types": "consent-under-tpo,notice-trees-in-con-area",
+                "application-name": "",
+                "form-name": "",
+                "notes": "",
+            }
+        ],
+    )
+
+    result = evaluate_scope(
+        csv_path,
+        spec_application_refs={"consent-under-tpo", "notice-trees-in-con-area"},
+        combined_apps_covered=False,
+    )
+    item = result["in_scope"][0]
+    assert item["covered-by-spec"] is True
