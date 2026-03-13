@@ -1,4 +1,32 @@
 
+<a name="v0.1.62"></a>
+## [v0.1.62](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.61...v0.1.62) (2026-03-13)
+
+Track level of completeness of submission spec relative to application volumes
+
+### ⚒️ Tooling
+
+* update spec.py to reuse structure in completeness.py (commit [96e42c2](https://github.com/digital-land/planning-application-data-specification/commit/96e42c20d5f45ebebf1e736e9db9ea3acd896e65))
+* add notes to progress page (commit [c1a05b9](https://github.com/digital-land/planning-application-data-specification/commit/c1a05b98bb6fe1fc1d460c201ccbecb1b466311b))
+* add a section explaining how scope was decided (commit [f19d69a](https://github.com/digital-land/planning-application-data-specification/commit/f19d69ad1f084bb44784e164f6549bd74461076a))
+* add breakdown by app type to progress page (commit [8026d62](https://github.com/digital-land/planning-application-data-specification/commit/8026d624a38430cb58f7553f6777d20a18f30600))
+* render progress page to display coverage (commit [742bd8e](https://github.com/digital-land/planning-application-data-specification/commit/742bd8e5620645f63f1995013d7dcc56b3531436))
+* provide verbose breakdown of what is and is not currently covered by spec (commit [90e95da](https://github.com/digital-land/planning-application-data-specification/commit/90e95da1719a2784d3e820923aac2f2788650351))
+* handle split of tree works app in completeness calc (commit [3faa807](https://github.com/digital-land/planning-application-data-specification/commit/3faa807c242208dd0001a4b98a3400b090a2c976))
+* add command to calc submission coverage of scope (commit [3ebb2bd](https://github.com/digital-land/planning-application-data-specification/commit/3ebb2bda086e44ddfcfb621d271a0f2183b2450f))
+* add script to workout which volume records are in scope based on scoping criteria (commit [f553c54](https://github.com/digital-land/planning-application-data-specification/commit/f553c54d82d61e76392c46f9bff336f196889ff6))
+
+### 🐛 Bug Fixes
+
+* logic of in or out scope evaluation (commit [8e5b6a1](https://github.com/digital-land/planning-application-data-specification/commit/8e5b6a1816e1e1c5221d9cf544961072f5c4d445))
+* remove duplicate form record (commit [a5335ad](https://github.com/digital-land/planning-application-data-specification/commit/a5335ad225961a197f778cbf84cb243055022caa))
+
+### 📚 Documentation
+
+* add volume data from 2024 (commit [e2728da](https://github.com/digital-land/planning-application-data-specification/commit/e2728daef5b12ba7c7b43793083867f6914157a0))
+* add decision record for hierarchical codelists (commit [0413d98](https://github.com/digital-land/planning-application-data-specification/commit/0413d98af9f6b1dd244d8ca7a5a874bffd7d1433))
+
+
 <a name="v0.1.61"></a>
 ## [v0.1.61](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.60...v0.1.61) (2026-03-10)
 
