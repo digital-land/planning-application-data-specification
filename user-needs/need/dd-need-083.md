@@ -1,7 +1,7 @@
 ---
 need: dd-need-083
 status: proposed
-priority: medium
+priority: high
 name: Access the officer report
 statement: >
   As a user of the planning system, I need access to the officer report or decision report so that I can understand the assessment, recommendation and reasoning behind the decision.
@@ -17,6 +17,6 @@ source:
 variations:
 next_step:
 notes: |
-  Confidence: medium. This is a clear missing artefact in the current set and closely matches how users try to understand why a decision was reached. Is a dense report what they are actually after?
-  Related needs: dd-need-027, dd-need-030, dd-need-077.
+  Confidence: high. The transcript strengthens this need by making clear that officer reports often contain most of the substantive reasoning for decisions and conditions, not just the final notice.
+  Related needs: dd-need-027, dd-need-030, dd-need-036, dd-need-077.
 ---

@@ -17,6 +17,6 @@ source:
 variations:
 next_step:
 notes: |
-  Confidence: high. This came through repeatedly in the February 2026 sessions and provides an umbrella need that complements several existing event-specific needs. Weakness is "full ... timeline" - that is a bit vague and could be interpreted differently. 
-  Related needs: dd-need-014, dd-need-063, dd-need-066, dd-need-069, dd-need-070, dd-need-071, dd-need-074, dd-need-075, dd-need-076.
+  Confidence: high. This came through repeatedly in the February 2026 sessions and provides an umbrella need that complements several existing event-specific needs. Weakness is "full ... timeline" - that is a bit vague and could be interpreted differently.
+  Related needs: dd-need-014, dd-need-055, dd-need-063, dd-need-065, dd-need-066, dd-need-067, dd-need-068, dd-need-069, dd-need-070, dd-need-071, dd-need-074, dd-need-075, dd-need-076.
 ---

@@ -15,7 +15,7 @@ themes:
   - compliance
 source:
   - type: community-session
-    notes: Planning permission time limits were discussed in the February 2026 decision-stage session as a useful point to capture explicitly.
+    notes: Planning permission time limits were discussed in the February 2026 decision-stage session as a useful point to capture explicitly and as something others need to access easily.
 variations:
 next_step: review
 notes: |
