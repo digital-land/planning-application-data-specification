@@ -1,4 +1,4 @@
-name: Daily issue tracking update
+name: Daily issue export update
 
 on:
   schedule:
@@ -7,7 +7,7 @@ on:
   workflow_dispatch:  # Allow manual triggering
 
 jobs:
-  update-issue-tracking:
+  update-issue-export:
     runs-on: ubuntu-latest
     
     steps:
@@ -26,19 +26,11 @@ jobs:
         python -m pip install --upgrade pip
         make init
         
-    - name: Set up environment variables
+    - name: Generate issue exports
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        echo "GITHUB_TOKEN=$GITHUB_TOKEN" > .env
-        
-    - name: Generate issue data
-      run: |
         make issue-tracking-data
-        
-    - name: Generate issue tracking index
-      run: |
-        make issue-tracking-reports
 
     - name: Generate declarative progress
       run: |

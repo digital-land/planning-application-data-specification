@@ -32,11 +32,7 @@ codelists:
 
 
 issue-tracking-data:
-	python3 bin/issue_tracking.py
-
-
-issue-tracking-reports:
-	python3 bin/issue_tracking_output.py
+	python3 bin/extract_github_issues.py
 
 
 declarative-progress:
