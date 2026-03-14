@@ -50,38 +50,35 @@ def get_open_issues(
     while True:
         try:
             response = requests.get(issues_url, headers=headers, params=params)
+        except requests.exceptions.RequestException as exc:
+            raise RuntimeError(f"Failed to fetch GitHub issues: {exc}") from exc
 
-            # Handle rate limiting
-            if response.status_code == 403:
-                print(f"Error 403: {response.json().get('message', 'Forbidden')}")
-                if "rate limit" in response.text.lower():
-                    print("You've hit the rate limit. Please:")
-                    print("1. Wait a bit and try again")
-                    print(
-                        "2. Add a GITHUB_TOKEN environment variable for higher limits"
-                    )
-                break
+        if response.status_code == 403:
+            message = response.json().get("message", "Forbidden")
+            if "rate limit" in response.text.lower():
+                message = (
+                    f"{message}. Add a GITHUB_TOKEN environment variable for higher limits."
+                )
+            raise RuntimeError(f"GitHub API returned 403: {message}")
 
+        try:
             response.raise_for_status()
-            issues = response.json()
+        except requests.exceptions.HTTPError as exc:
+            raise RuntimeError(
+                f"GitHub API request failed with {response.status_code}: {response.text}"
+            ) from exc
 
-            if not issues:
-                break
+        issues = response.json()
 
-            for issue in issues:
-                # Skip pull requests (they are also issues)
-                if "pull_request" not in issue:
-                    all_issues.append(issue)
-
-            params["page"] += 1
-
-        except requests.exceptions.HTTPError as e:
-            print(f"HTTP Error: {e}")
-            print(f"Response: {response.text}")
+        if not issues:
             break
-        except Exception as e:
-            print(f"Unexpected error: {e}")
-            break
+
+        for issue in issues:
+            # Skip pull requests (they are also issues)
+            if "pull_request" not in issue:
+                all_issues.append(issue)
+
+        params["page"] += 1
 
     return all_issues
 
