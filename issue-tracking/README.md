@@ -1,0 +1,14 @@
+# Issue exports
+
+This directory contains generated CSV exports of the repository's open GitHub issues.
+
+## Files
+
+- `open-issues-spreadsheet.csv`
+  The main file for Excel or Google Sheets users. It has one row per open issue and includes readable labels plus helper columns for filtering and sorting.
+- `open-issues-raw.csv`
+  The canonical raw issue export with repository and fetch metadata.
+- `open-issue-labels-raw.csv`
+  One row per issue-label pair for accurate label analysis.
+- `declarative-model-progress.md`
+  Separate output from the declarative progress pipeline.
