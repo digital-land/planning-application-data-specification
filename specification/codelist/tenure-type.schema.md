@@ -8,6 +8,8 @@ fields:
   - field: reference
   - field: name
   - field: description
+  - field: notes
+  - field: parent
 github-discussion: 162
 key-field: reference
 licence: ogl3
