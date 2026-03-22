@@ -171,6 +171,12 @@ Some codelists are:
 
 Using shared codelists across submission and decision stages ensures the same concepts mean the same thing throughout the process.
 
+#### Codelist usage
+
+When a codelist needs different valid subsets in different contexts, the preferred pattern is to keep one canonical codelist for the concepts and define context-specific allowed values in a separate usage table. 
+
+See the [codelist usage pattern note](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/codelist-usage.md) and related [design decision](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/design-decisions/0010-separate-usage-for-codelist-subsets.md) for details.
+
 ---
 
 ## Why this model is structured this way
