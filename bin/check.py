@@ -18,12 +18,14 @@ def perform_checks():
     from integrity_checks.modules import check_all as check_modules
     from integrity_checks.needs import check_all as check_needs
     from integrity_checks.specifications import check_all as check_specifications
+    from integrity_checks.usage import check_all as check_usage
 
     # Load from specification files
     specification = load_content()
     fields = specification["field"]
     codelists = specification["codelist"]
     components = specification["component"]
+    usage_tables = specification["data"]
     datasets = specification["dataset"]
     modules = specification["module"]
     applications = specification["application"]
@@ -37,6 +39,7 @@ def perform_checks():
     sections = [
         ("fields", check_fields, fields, components, codelists),
         ("components", check_components, components, fields, applications),
+        ("usage", check_usage, usage_tables, codelists, applications),
         ("datasets", check_datasets, datasets, fields),
         ("modules", check_modules, modules, fields),
         ("applications", check_applications, applications, fields, modules),

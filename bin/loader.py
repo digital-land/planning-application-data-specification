@@ -9,6 +9,7 @@ tables = {
     "application": {},
     "codelist": {},
     "component": {},
+    "data": {},
     "dataset": {},
     "field": {},
     "module": {},
@@ -21,7 +22,7 @@ needs_tables = {"need": {}, "justification": {}}
 
 def load_table_content(table):
     file_path = "*.md"
-    if table in ["application", "module", "codelist", "dataset"]:
+    if table in ["application", "module", "codelist", "dataset", "data"]:
         file_path = "*.schema.md"
 
     # specification files live directly under specification/
