@@ -1,6 +1,6 @@
 ---
 need: dd-need-085
-status: drafted
+status: draft
 priority: medium
 name: Know when permission expires
 statement: >

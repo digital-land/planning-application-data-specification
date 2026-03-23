@@ -1,6 +1,6 @@
 ---
 need: dd-need-086
-status: drafted
+status: draft
 priority: medium
 name: Distinguish permitted from implemented development
 statement: >
