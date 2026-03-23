@@ -21,7 +21,7 @@ name: Householder application with minimal fee structure
         "name": "Location Plan",
         "document-types": ["location-plan"],
         "file": {
-          "url": "https://storage.example.com/hh/location.pdf",
+          "base64-content": "JVBERi0xLjQKJcfsj6IKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwo+PgplbmRvYmoK",
           "filename": "location.pdf",
           "mime-type": "application/pdf"
         }
@@ -40,4 +40,4 @@ This example shows:
 * Classification carried by `application-types`
 * Minimal document requirements
 * Fee structure without transactions (optional field)
-* File without optional metadata fields
+* File using inline content without optional metadata fields

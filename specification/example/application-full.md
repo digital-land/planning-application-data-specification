@@ -23,10 +23,9 @@ name: Full planning application with documents and fee
         "description": "Plan showing the location of the application site",
         "document-types": ["location-plan"],
         "file": {
-          "url": "https://storage.example.com/documents/location-plan.pdf",
+          "base64-content": "JVBERi0xLjQKJcfsj6IKMSAwIG9iago8PAovVHlwZSAvQ2F0YWxvZwo+PgplbmRvYmoK",
           "filename": "location-plan.pdf",
           "mime-type": "application/pdf",
-          "checksum": "sha256:d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2",
           "file-size": 2048576
         }
       },
@@ -36,7 +35,7 @@ name: Full planning application with documents and fee
         "description": "Architectural drawings of the proposed development",
         "document-types": ["proposed-plans"],
         "file": {
-          "base64": "JVBERi0xLjQKJcfsj6IKNSAwIG9iago8PAovTGVuZ3RoIDYgMCBSCi9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4nFvzloEBCQACCw==",
+          "base64-content": "JVBERi0xLjQKJcfsj6IKNSAwIG9iago8PAovTGVuZ3RoIDYgMCBSCi9GaWx0ZXIgL0ZsYXRlRGVjb2RlCj4+CnN0cmVhbQp4nFvzloEBCQACCw==",
           "filename": "proposed-plans.pdf",
           "mime-type": "application/pdf",
           "file-size": 1024000
@@ -56,6 +55,6 @@ This example shows:
 * Full planning application with complete metadata
 * Classification carried by `application-types`
 * Required modules for validation
-* Documents with both URL and base64 file storage options
+* Documents using inline file content with `base64-content`
 * Complete fee structure with payment information
-* File metadata including checksums and sizes for validation
+* File metadata including size information for validation

@@ -24,7 +24,7 @@ validation:
   - rule: "planning-authority must be a valid organisation reference"
   - rule: "modules must reference existing module definitions"
   - rule: "document references must be unique within the application"
-  - rule: "file must contain either url or base64, but not both"
+  - rule: "file must contain base64-content"
   - rule: "document-types must reference valid planning requirement codelist values"
 entry-date: 2025-06-20
 end-date: ''
