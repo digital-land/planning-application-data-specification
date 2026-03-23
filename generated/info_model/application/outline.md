@@ -823,16 +823,30 @@ Below are the codelists required to support this specification:
 
 ### Tenure type
 
-| reference | name | description | application-types |
-| --- | --- | --- | --- |
-| market-housing | Market Housing | Private housing for sale or rent. | ldc;full;outline |
-| social-rented | Social Rented Housing | Public/social housing at below-market rents. | ldc |
-| intermediate-housing | Intermediate Housing | Housing with rents or ownership costs between social housing and market housing. | ldc |
-| key-worker-housing | Key Worker Housing | Housing for essential workers (e.g. teachers |  NHS staff). |
-| affordable-rent | Social |  Affordable |  or Intermediate Rent |
-| home-ownership | Affordable Home Ownership | Shared ownership or similar schemes. | full;outline |
-| starter-homes | Starter Homes | Discounted homes for first-time buyers. | full;outline |
-| custom-build | Self-Build and Custom Build | Homes built or commissioned by individuals. | full;outline |
+| reference | parent | name | description | notes |
+| --- | --- | --- | --- | --- |
+| market-housing |  | Market Housing | Private housing for sale or rent. |  |
+| social-rented |  | Social Rented Housing | Public/social housing at below-market rents. |  |
+| intermediate-housing |  | Intermediate Housing | Housing with rents or ownership costs between social housing and market housing. |  |
+| key-worker-housing |  | Key Worker Housing | Housing for essential workers (e.g. teachers, NHS staff). |  |
+| affordable-rent |  | Social, Affordable, or Intermediate Rent | Housing for below-market rent. |  |
+| home-ownership |  | Affordable Home Ownership | Shared ownership or similar schemes. |  |
+| starter-homes |  | Starter Homes | Discounted homes for first-time buyers. |  |
+| custom-build |  | Self-Build and Custom Build | Homes built or commissioned by individuals. |  |
+| market-for-sale | market-housing | Market for sale | Market housing for sale. | Used by GLA. |
+| market-for-rent | market-housing | Market for rent | Market housing for rent. | Used by GLA. |
+| self-build-and-custom-build | market-housing | Self-Build and Custom Build | Self-build or custom build housing. | Used by GLA. Provisional parent from slide grouping. |
+| shared-equity | affordable-rent | Shared Equity | Shared equity affordable home ownership product. | Used by GLA. Provisional parent from slide grouping. |
+| affordable-rent-not-lar-bm | affordable-rent | Affordable Rent (not at LAR benchmark rents) | Affordable rent product not set at London Affordable Rent benchmark rents. | Used by GLA. |
+| discount-market-sale | affordable-rent | Discount Market Sale | Discounted market sale product. | Used by GLA. Provisional parent from slide grouping. |
+| discount-market-rent | affordable-rent | Discount Market Rent | Discounted market rent product. | Used by GLA. Provisional parent from slide grouping. |
+| social-rent | affordable-rent | Social Rent | Social rent product. | Used by GLA. |
+| intermediate-other | affordable-rent | Intermediate Other | Other intermediate housing product. | Used by GLA. Provisional parent from slide grouping. |
+| discount-market-llr | affordable-rent | Discount Market Rent (charged at London Living Rents) | Discount market rent product charged at London Living Rent levels. | Used by GLA. |
+| london-living-rent | affordable-rent | London Living Rent | London Living Rent product. | Used by GLA. |
+| london-shared-ownership | affordable-rent | London Shared Ownership | London shared ownership product. | Used by GLA. Provisional parent from slide grouping. |
+| london-affordable-rent | affordable-rent | London Affordable Rent | London Affordable Rent product. | Used by GLA. |
+| starter-homes-gla | starter-homes | Starter Homes | Starter Homes product as used by GLA. | Used by GLA. |
 
 ### Use class
 
