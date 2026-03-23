@@ -1,4 +1,28 @@
 
+<a name="v0.1.64"></a>
+## [v0.1.64](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.63...v0.1.64) (2026-03-23)
+
+align tenure types with GLA
+
+### ⚒️ Tooling
+
+* add integrity checks for usage tables (commit [c7f17e1d](https://github.com/digital-land/planning-application-data-specification/commit/c7f17e1de1e08a061aad5f7ae87aafa079c523ad))
+
+### 𝌭 Model changes
+
+* remove application-types from tenure type codelist (commit [26f26a01](https://github.com/digital-land/planning-application-data-specification/commit/26f26a01ebeae8c9825e9e2da5a9eac9dd7d357b))
+* add tenure type usage details to usage table (commit [ca98373e](https://github.com/digital-land/planning-application-data-specification/commit/ca98373ee8f6eb6e170d0e015d92578c019d7b6d))
+* define the tenure type codelist usage table (commit [d79fb5ee](https://github.com/digital-land/planning-application-data-specification/commit/d79fb5ee3dbe1bb3b664aeb84ed78095ef154d2b))
+* add profile codelist (commit [b384d2cf](https://github.com/digital-land/planning-application-data-specification/commit/b384d2cf0db383129befbd2d6004fb8e059d9139))
+* add child GLA tenure types to tenure type codelist (commit [afa2c00f](https://github.com/digital-land/planning-application-data-specification/commit/afa2c00f03bdd46315dfac76adac73df651c7662))
+* add parent field to tenure-type codelist (commit [44e148eb](https://github.com/digital-land/planning-application-data-specification/commit/44e148eb4cfee765883ec3cd484f625465b3a55c))
+
+### 📚 Documentation
+
+* add note about codelist usage to main specification README (commit [630a3336](https://github.com/digital-land/planning-application-data-specification/commit/630a33363b4b0829c43ccc1d02cc9da5dd03a4d9))
+* document the codelist usage pattern, as seen in tenure-types (commit [2d72e881](https://github.com/digital-land/planning-application-data-specification/commit/2d72e88194b05db5c1043edf28c1acc82369d102))
+
+
 <a name="v0.1.63"></a>
 ## [v0.1.63](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.62...v0.1.63) (2026-03-17)
 
