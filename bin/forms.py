@@ -12,13 +12,30 @@ def load_2025_form_data():
 def get_2025_forms_by_app_type(app_type):
     if not app_type:
         return None
-    # get form data
     forms = load_2025_form_data()
 
-    # filter forms that cover the specified application type using in form['application-types']
     filtered_forms = [form for form in forms if app_type in form["application-types"]]
 
     return filtered_forms
+
+
+def get_2025_form(form_ref, forms=None):
+    if not form_ref:
+        return None
+
+    forms = forms if forms is not None else load_2025_form_data()
+    matches = [form for form in forms if form_ref == form.get("reference")]
+    if matches:
+        return matches[0]
+    return None
+
+
+def get_2025_forms_by_refs(form_refs, forms=None):
+    if not form_refs:
+        return []
+
+    forms = forms if forms is not None else load_2025_form_data()
+    return [form for form_ref in form_refs if (form := get_2025_form(form_ref, forms))]
 
 
 # add main

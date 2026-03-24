@@ -17,7 +17,7 @@ from bin.completeness import (
 )
 from bin.csv_helpers import read_csv
 from bin.fields import find_field_usage
-from bin.forms import FORMS_2025_FILEPATH
+from bin.forms import FORMS_2025_FILEPATH, get_2025_form, get_2025_forms_by_app_type
 from bin.loader import load_content, load_needs
 
 
@@ -213,6 +213,42 @@ def form_url(application_type):
         formatted.append(f"- application-type: {app_types}\n  form: {url}")
 
     click.echo("\n\n".join(formatted))
+
+
+@cli.command(name="forms")
+@click.argument("application_type")
+def forms_for_application_type(application_type):
+    """List 2025 forms that cover an application type or subtype."""
+    forms = get_2025_forms_by_app_type(application_type.strip().lower())
+
+    if not forms:
+        click.echo(f"No 2025 forms found for application type '{application_type}'")
+        return
+
+    click.echo(
+        f"Found {len(forms)} matching 2025 forms for application type '{application_type}':"
+    )
+    for form in forms:
+        click.echo(f"- {form['name']} ({form['reference']})")
+        click.echo(f"  form: {form['document-url']}")
+
+
+@cli.command(name="form")
+@click.argument("form_ref")
+def form_details(form_ref):
+    """Show core details for a 2025 form by reference."""
+    form = get_2025_form(form_ref.strip())
+
+    if not form:
+        click.echo(f"No 2025 form found with reference '{form_ref}'")
+        return
+
+    app_types = ", ".join(form.get("application-types", []))
+
+    click.echo(f"Form: {form['name']}")
+    click.echo(f"Reference: {form['reference']}")
+    click.echo(f"Application types: {app_types}")
+    click.echo(f"Document URL: {form['document-url']}")
 
 
 @cli.group(invoke_without_command=True)
