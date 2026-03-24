@@ -1,4 +1,35 @@
 
+<a name="v0.1.65"></a>
+## [v0.1.65](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.64...v0.1.65) (2026-03-24)
+
+refactor and refine
+
+### ⚒️ Tooling
+
+* commandline interface to find existing forms (commit [e9b613fd](https://github.com/digital-land/planning-application-data-specification/commit/e9b613fd9be7615c03d3191e622e2b453088748e))
+* Moved the two 2025 analysis CSVs (commit [b42cb31a](https://github.com/digital-land/planning-application-data-specification/commit/b42cb31a586a62dad266b6fa57c14cf1aa2ff64e))
+* return fresh loader data on each call (commit [07a73e81](https://github.com/digital-land/planning-application-data-specification/commit/07a73e810c75ce4125bd48487310871705c0c63a))
+* add integrity checks for usage tables (commit [af4e8b3c](https://github.com/digital-land/planning-application-data-specification/commit/af4e8b3c2be14753c50121ac4ed84dd4f9571fff))
+
+### 𝌭 Model changes
+
+* remove application-types from tenure type codelist (commit [86cda80c](https://github.com/digital-land/planning-application-data-specification/commit/86cda80c5f4e60a1e549b80746da96b3eb84518d))
+* add tenure type usage details to usage table (commit [c1a6d1c0](https://github.com/digital-land/planning-application-data-specification/commit/c1a6d1c0c33f9193e2e36861e85cf95bf374ec4d))
+* define the tenure type codelist usage table (commit [6f8b9fb6](https://github.com/digital-land/planning-application-data-specification/commit/6f8b9fb64a2506076edd54969cf8af785dc25ec6))
+* add profile codelist (commit [c6aed60f](https://github.com/digital-land/planning-application-data-specification/commit/c6aed60fc873e3bfb5f15adac9f1137f9d68771d))
+
+### 🐛 Bug Fixes
+
+* inconsistencies after file model change (commit [8b626a44](https://github.com/digital-land/planning-application-data-specification/commit/8b626a441b2c96c53a4a4139b1b2399836f1798b))
+* incorrect need status (commit [ee556073](https://github.com/digital-land/planning-application-data-specification/commit/ee556073ab0c61b07fb061cb528996993f860299))
+
+### 📚 Documentation
+
+* document the commandline interface (commit [c342d427](https://github.com/digital-land/planning-application-data-specification/commit/c342d4274ed30e9ac61fc8ac22746a9ddef75045))
+* add note about codelist usage to main specification README (commit [b1db6d41](https://github.com/digital-land/planning-application-data-specification/commit/b1db6d41f2b85e6e974c5cc6e40b6d708b8c60c3))
+* document the codelist usage pattern, as seen in tenure-types (commit [3322cc8c](https://github.com/digital-land/planning-application-data-specification/commit/3322cc8c9286fa1a63a7c7c6e2558a07b7b478db))
+
+
 <a name="v0.1.64"></a>
 ## [v0.1.64](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.63...v0.1.64) (2026-03-23)
 
