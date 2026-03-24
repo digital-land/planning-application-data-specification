@@ -2,7 +2,7 @@
 codelist: day-type
 description: |
   Specifies the type of day, such as Monday to Friday, Saturday, Sunday, or Bank holiday, that is used to set operating hours
-end-date:
+end-date: 2026-03-24
 entry-date: 2025-08-13
 fields:
   - field: reference
@@ -12,7 +12,8 @@ github-discussion: 204
 key-field: reference
 licence: ogl3
 name: Day type
-notes:
+notes: |
+  Retired in favour of the `schedule-day` codelist, which supports explicit day selection.
 organisation: government-organisation:D1342
 plural: Day types
 source: data/codelist/day-type.csv
