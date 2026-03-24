@@ -51,6 +51,8 @@ The usage table says where a codelist value is allowed.
 
 Each row says that one value is allowed in one context.
 
+If the same canonical codelist value is used in more than one profile or context, it should still appear only once in the codelist. It should then appear once per allowed profile or context in the usage table.
+
 A first version for `tenure-type` could include:
 
 - `reference`
@@ -73,6 +75,8 @@ Example:
 | `gla-full-london-affordable-rent` | `london-affordable-rent` | `gla` | `full` | `res-units` | `2026-03-18` |  |  | Used when the GLA profile applies. |
 
 For example, `market-for-sale` is to be used by GLA profiles in `full` applications as part of the `res-units` module.
+
+Different usage tables may need different context columns. For example, one usage table might use `application-types`, while another might only need `specification-profile`.
 
 The initial recommendation is to use separate usage tables for separate codelists, for example:
 
