@@ -18,6 +18,92 @@ These elements are then used to generate the following outputs
 * [compiled specifications](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/info_model/application) for each application type and sub-type
 * a [spreadsheet](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/spreadsheet) view of each application type
 
+## CLI
+
+The main command line entry point is [spec.py](spec.py).
+
+### Find and query
+
+Find applications that use a module
+
+```bash
+python spec.py find applications-with-module <module_ref>
+```
+
+Find modules used by an application
+
+```bash
+python spec.py find modules-in-application <application_ref>
+```
+
+Find where a field is used
+
+```bash
+python spec.py find field-usage <field_ref>
+```
+
+Find where a component is used
+
+```bash
+python spec.py find component-usage <component_ref>
+```
+
+### Decision-stage summary
+
+Summarise decision-stage needs coverage
+
+```bash
+python spec.py decision summary
+```
+
+List covered needs as well
+
+```bash
+python spec.py decision summary --list
+```
+
+### 2025 forms analysis
+
+Return matching 2025 form URLs for an application type or subtype
+
+```bash
+python spec.py form-url <application_type>
+```
+
+List matching 2025 forms for an application type or subtype
+
+```bash
+python spec.py forms <application_type>
+```
+
+Show core details for a 2025 form by reference
+
+```bash
+python spec.py form <form_ref>
+```
+
+These form commands use the analysed 2025 forms data under `data/analysis/`. They are not derived from the canonical specification model.
+
+### Completeness reporting
+
+Print the completeness summary
+
+```bash
+python spec.py completeness summary
+```
+
+Print the completeness summary with row-level detail
+
+```bash
+python spec.py completeness summary --verbose
+```
+
+Print the in-scope and out-of-scope split
+
+```bash
+python spec.py completeness scope
+```
+
 You can get involved by:
 
 * raising and commenting on [issues](https://github.com/digital-land/planning-application-data-specification/issues)
