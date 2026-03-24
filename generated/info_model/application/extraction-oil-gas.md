@@ -46,9 +46,9 @@ application.
 
 * [Application type](#application-type)
 * [Contact priority](#contact-priority)
-* [Day type](#day-type)
 * [Hazardous substance type](#hazardous-substance-type)
 * [Oil and gas permission type](#oil-and-gas-permission-type)
+* [Schedule day](#schedule-day)
 * [Use class](#use-class)
 * [User role type](#user-role-type)
 
@@ -107,7 +107,7 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 - planning-authority must be a valid organisation reference
 - modules must reference existing module definitions
 - document references must be unique within the application
-- file must contain either url or base64, but not both
+- file must contain base64-content
 - document-types must reference valid planning requirement codelist values
 
 ## Access and rights of way
@@ -547,7 +547,7 @@ hours-not-known | Hours not known | Applicant states they do not know the hours 
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-day-type | Day type | Day or type of day | MUST | Select from the **day-type** enum
+schedule-days | Schedule days[] | List of days or day categories that a schedule entry applies to | MUST | Select from the **schedule-day** enum
 closed | Closed | True or False - explicitly state when closed | MAY | If True, open-time and close-time must be empty
 time-ranges | Time ranges[]{} | Opening and closing times for the day | MAY | Rule: is a MUST if `closed` is `False`. Can have multiple ranges (e.g., morning and evening opening)
 
@@ -930,15 +930,6 @@ Hillside Parks Ltd v Snowdonia National Park Authority (2022) | 2025-01-07 |  | 
 | primary | Primary | The preferred item to use |
 | secondary | Secondary | The option to use if primary is not working |
 
-### Day type
-
-| reference | name | description |
-| --- | --- | --- |
-| monday-friday | Monday to Friday |  |
-| saturday | Saturday |  |
-| sunday | Sunday |  |
-| bank-holiday | Bank holiday |  |
-
 ### Hazardous substance type
 
 | reference | name | description |
@@ -968,6 +959,19 @@ Hillside Parks Ltd v Snowdonia National Park Authority (2022) | 2025-01-07 |  | 
 | variation-condition | Variation of condition(s) |  | Yes |
 | romp-review | Review of conditions for Mineral Permissions (ROMPs) |  | Yes |
 | minerals-development | Previous permissions for minerals development on the site |  | Yes |
+
+### Schedule day
+
+| reference | name | description |
+| --- | --- | --- |
+| monday | Monday |  |
+| tuesday | Tuesday |  |
+| wednesday | Wednesday |  |
+| thursday | Thursday |  |
+| friday | Friday |  |
+| saturday | Saturday |  |
+| sunday | Sunday |  |
+| bank-holiday | Bank holiday |  |
 
 ### Use class
 

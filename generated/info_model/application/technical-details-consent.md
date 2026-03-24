@@ -45,10 +45,10 @@ Technical Details Consent (TDC) is the second stage of the 'Permission in Princi
 * [BNG exemption type](#bng-exemption-type)
 * [Building element type](#building-element-type)
 * [Contact priority](#contact-priority)
-* [Day type](#day-type)
 * [Hazardous substance type](#hazardous-substance-type)
 * [Housing type](#housing-type)
 * [Parking space type](#parking-space-type)
+* [Schedule day](#schedule-day)
 * [Tenure type](#tenure-type)
 * [Use class](#use-class)
 * [Use class for accommodation](#use-class-for-accommodation)
@@ -111,7 +111,7 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 - planning-authority must be a valid organisation reference
 - modules must reference existing module definitions
 - document references must be unique within the application
-- file must contain either url or base64, but not both
+- file must contain base64-content
 - document-types must reference valid planning requirement codelist values
 
 ## Access and rights of way
@@ -885,15 +885,6 @@ Below are the codelists required to support this specification:
 | primary | Primary | The preferred item to use |
 | secondary | Secondary | The option to use if primary is not working |
 
-### Day type
-
-| reference | name | description |
-| --- | --- | --- |
-| monday-friday | Monday to Friday |  |
-| saturday | Saturday |  |
-| sunday | Sunday |  |
-| bank-holiday | Bank holiday |  |
-
 ### Hazardous substance type
 
 | reference | name | description |
@@ -913,16 +904,24 @@ Below are the codelists required to support this specification:
 
 ### Housing type
 
-| reference | name | description |
-| --- | --- | --- |
-| houses | Houses | Detached, semi-detached, or terraced houses. |
-| flats-maisonettes | Flats/Maisonettes | Self-contained apartments or maisonettes. |
-| sheltered-housing | Sheltered Housing | Housing with support for older or disabled people. |
-| bedsit-studio | Bedsit/Studio | Single-room living spaces. |
-| cluster-flats | Cluster Flats | Flats with shared communal areas. |
-| other | Other | Any other housing type not listed. |
-| live-work-units | Live-Work Units | Properties combining residential and workspace. |
-| unknown | Unknown | When the type of housing is uncertain. |
+| reference | parent | name | description | notes |
+| --- | --- | --- | --- | --- |
+| houses |  | Houses | Detached, semi-detached, or terraced houses. |  |
+| flats-maisonettes |  | Flats/Maisonettes | Self-contained apartments or maisonettes. |  |
+| sheltered-housing |  | Sheltered Housing | Housing with support for older or disabled people. | GLA treats this as a separate field rather than a housing type. |
+| bedsit-studio |  | Bedsit/Studio | Single-room living spaces. | Used by both MHCLG and GLA. |
+| cluster-flats |  | Cluster Flats | Flats with shared communal areas. | Used by both MHCLG and GLA. |
+| other |  | Other | Any other housing type not listed. | Used by both MHCLG and GLA. |
+| live-work-units | flats-maisonettes | Live-Work Units | Properties combining residential and workspace. | Used by both MHCLG and GLA. |
+| unknown |  | Unknown | When the type of housing is uncertain. |  |
+| terraced-home | houses | Terraced Home | Terraced house type. | Used by GLA. |
+| house-or-bungalow | houses | House or Bungalow | House or bungalow type. | Used by GLA. |
+| semi-detached-home | houses | Semi Detached Home | Semi-detached house type. | Used by GLA. |
+| flat-apartment-maisonette | flats-maisonettes | Flat Apartment Maisonette | Flat apartment or maisonette type. | Used by GLA. |
+| co-living-unit |  | Co Living Unit | Co-living unit. | Used by GLA only with no clear MHCLG parent. |
+| hmo |  | HMO | House in multiple occupation. | Used by GLA only with no clear MHCLG parent. |
+| student-accommodation |  | Student Accommodation | Student accommodation. | Used by GLA only with no clear MHCLG parent. |
+| communal-space |  | Communal Space | Communal space associated with residential use. | Used by GLA only with no clear MHCLG parent. |
 
 ### Parking space type
 
@@ -938,6 +937,19 @@ Below are the codelists required to support this specification:
 | car-club | Car Club | Parking spaces allocated for car club vehicles. | GLA | 2025-07-15 |  |
 | resi-off-street | Resi Only Off Street Parking | Private off-street parking for residents only. | GLA | 2025-07-15 |  |
 | other | Other | Other parking types not covered by the defined categories. | MHCLG;GLA | 2025-07-15 |  |
+
+### Schedule day
+
+| reference | name | description |
+| --- | --- | --- |
+| monday | Monday |  |
+| tuesday | Tuesday |  |
+| wednesday | Wednesday |  |
+| thursday | Thursday |  |
+| friday | Friday |  |
+| saturday | Saturday |  |
+| sunday | Sunday |  |
+| bank-holiday | Bank holiday |  |
 
 ### Tenure type
 

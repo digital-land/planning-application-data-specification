@@ -24,7 +24,7 @@ hours-not-known | Hours not known | Applicant states they do not know the hours 
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-day-type | Day type | Day or type of day | MUST | Select from the **day-type** enum
+schedule-days | Schedule days[] | List of days or day categories that a schedule entry applies to | MUST | Select from the **schedule-day** enum
 closed | Closed | True or False - explicitly state when closed | MAY | If True, open-time and close-time must be empty
 time-ranges | Time ranges[]{} | Opening and closing times for the day | MAY | Rule: is a MUST if `closed` is `False`. Can have multiple ranges (e.g., morning and evening opening)
 

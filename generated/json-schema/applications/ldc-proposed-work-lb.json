@@ -66,6 +66,43 @@
     "site-visit"
   ],
   "definitions": {
+    "site-location": {
+      "type": "object",
+      "properties": {
+        "site-boundary": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "easting": {
+          "type": "number"
+        },
+        "northing": {
+          "type": "number"
+        },
+        "latitude": {
+          "type": "number"
+        },
+        "longitude": {
+          "type": "number"
+        },
+        "description": {
+          "type": "string"
+        },
+        "uprns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": []
+    },
     "supporting-document": {
       "type": "object",
       "properties": {
@@ -75,6 +112,50 @@
       },
       "required": [
         "reference"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "other-contact": {
+      "type": "object",
+      "properties": {
+        "fullname": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fullname",
+        "number",
+        "email"
       ]
     },
     "ldc-owner-details": {
@@ -117,137 +198,6 @@
         "address-text"
       ]
     },
-    "site-location": {
-      "type": "object",
-      "properties": {
-        "site-boundary": {
-          "type": "string"
-        },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
-        },
-        "easting": {
-          "type": "number"
-        },
-        "northing": {
-          "type": "number"
-        },
-        "latitude": {
-          "type": "number"
-        },
-        "longitude": {
-          "type": "number"
-        },
-        "description": {
-          "type": "string"
-        },
-        "uprns": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": []
-    },
-    "other-contact": {
-      "type": "object",
-      "properties": {
-        "fullname": {
-          "type": "string"
-        },
-        "number": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "fullname",
-        "number",
-        "email"
-      ]
-    },
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
-    "applicant": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "phone-number": {
-      "type": "object",
-      "properties": {
-        "number": {
-          "type": "string"
-        },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
-    },
-    "agent": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
     "ldc-interested-person": {
       "type": "object",
       "properties": {
@@ -270,14 +220,89 @@
         "informed-of-application"
       ]
     },
-    "agent-details": {
+    "contact-details": {
       "type": "object",
       "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
         }
       },
       "required": []
+    },
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
+    "site-details": {
+      "type": "object",
+      "properties": {
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "site-locations"
+      ]
     },
     "lb-grade": {
       "type": "object",
@@ -301,62 +326,72 @@
         "listed-building-grade"
       ]
     },
-    "site-details": {
+    "interest-details": {
       "type": "object",
       "properties": {
-        "site-locations": {
+        "applicant-interest": {
+          "type": "string",
+          "enum": []
+        },
+        "owner-details": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/site-location"
+            "$ref": "#/definitions/ldc-owner-details"
+          },
+          "minItems": 1
+        },
+        "interested-persons": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ldc-interested-person"
           },
           "minItems": 1
         }
       },
       "required": [
-        "site-locations"
-      ]
-    },
-    "site-visit": {
-      "type": "object",
-      "properties": {
-        "can-be-seen-from": {
-          "type": "boolean"
-        },
-        "contact-type": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "agent"
-          ]
-        },
-        "contact-reference": {
-          "type": "string"
-        },
-        "other-contact": {
-          "$ref": "#/definitions/other-contact"
-        }
-      },
-      "required": [
-        "can-be-seen-from",
-        "contact-type"
+        "applicant-interest"
       ],
-      "if": {
-        "properties": {
-          "contact-type": {
-            "const": "other"
+      "allOf": [
+        {
+          "if": {
+            "anyOf": [
+              {
+                "properties": {
+                  "applicant-interest": {
+                    "const": "lessee"
+                  }
+                }
+              },
+              {
+                "properties": {
+                  "applicant-interest": {
+                    "const": "occupier"
+                  }
+                }
+              }
+            ]
+          },
+          "then": {
+            "required": [
+              "owner-details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "applicant-interest": {
+                "const": "none"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "interested-persons"
+            ]
           }
         }
-      },
-      "then": {
-        "required": [
-          "other-contact"
-        ]
-      }
-    },
-    "conflict-of-interest": {
-      "type": "object",
-      "properties": {},
-      "required": []
+      ]
     },
     "pre-app-advice": {
       "type": "object",
@@ -458,6 +493,17 @@
         "supporting-documents"
       ]
     },
+    "desc-proposed-works-lb-ldc": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "description"
+      ]
+    },
     "applicant-contact": {
       "type": "object",
       "properties": {
@@ -473,97 +519,56 @@
         "contact-details"
       ]
     },
-    "interest-details": {
+    "site-visit": {
       "type": "object",
       "properties": {
-        "applicant-interest": {
+        "can-be-seen-from": {
+          "type": "boolean"
+        },
+        "contact-type": {
           "type": "string",
-          "enum": []
+          "enum": [
+            "applicant",
+            "agent"
+          ]
         },
-        "owner-details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ldc-owner-details"
-          },
-          "minItems": 1
-        },
-        "interested-persons": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/ldc-interested-person"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicant-interest"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "anyOf": [
-              {
-                "properties": {
-                  "applicant-interest": {
-                    "const": "lessee"
-                  }
-                }
-              },
-              {
-                "properties": {
-                  "applicant-interest": {
-                    "const": "occupier"
-                  }
-                }
-              }
-            ]
-          },
-          "then": {
-            "required": [
-              "owner-details"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "applicant-interest": {
-                "const": "none"
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "interested-persons"
-            ]
-          }
-        }
-      ]
-    },
-    "checklist": {
-      "type": "object",
-      "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "national-req-types"
-      ]
-    },
-    "desc-proposed-works-lb-ldc": {
-      "type": "object",
-      "properties": {
-        "description": {
+        "contact-reference": {
           "type": "string"
+        },
+        "other-contact": {
+          "$ref": "#/definitions/other-contact"
         }
       },
       "required": [
-        "description"
+        "can-be-seen-from",
+        "contact-type"
+      ],
+      "if": {
+        "properties": {
+          "contact-type": {
+            "const": "other"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "other-contact"
+        ]
+      }
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
       ]
     },
     "agent-contact": {
@@ -581,39 +586,34 @@
         "contact-details"
       ]
     },
-    "applicant-details": {
+    "checklist": {
       "type": "object",
       "properties": {
-        "applicants": {
+        "national-req-types": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/applicant"
+            "type": "string"
           },
           "minItems": 1
         }
       },
       "required": [
-        "applicants"
+        "national-req-types"
       ]
     },
-    "declaration": {
+    "conflict-of-interest": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "agent-details": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
+        "agent": {
+          "$ref": "#/definitions/agent"
         }
       },
-      "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
+      "required": []
     }
   }
 }

@@ -81,7 +81,7 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 - planning-authority must be a valid organisation reference
 - modules must reference existing module definitions
 - document references must be unique within the application
-- file must contain either url or base64, but not both
+- file must contain base64-content
 - document-types must reference valid planning requirement codelist values
 
 ## Agent contact details
