@@ -1,4 +1,23 @@
 
+<a name="v0.1.67"></a>
+## [v0.1.67](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.66...v0.1.67) (2026-03-24)
+
+Align mhclg and gla housing types
+
+### ⚒️ Tooling
+
+* add housing type hierarchy (commit [256c1edb](https://github.com/digital-land/planning-application-data-specification/commit/256c1edbbc06b442381191bafc2f8f4241c428fa))
+
+### 𝌭 Model changes
+
+* add the housing-type usage table (commit [0a796506](https://github.com/digital-land/planning-application-data-specification/commit/0a7965069e7f667fa44ce6788c19ea00339d538a))
+* define housing type usage table (commit [2d9d5ed3](https://github.com/digital-land/planning-application-data-specification/commit/2d9d5ed3efc54204cb460b54b2fe91bf42ab9179))
+
+### 📚 Documentation
+
+* document the usage pattern when value used across multiple profiles (commit [4beb0bdc](https://github.com/digital-land/planning-application-data-specification/commit/4beb0bdc15d82c4aef6647a18c16c2829ed56ea9))
+
+
 <a name="v0.1.66"></a>
 ## [v0.1.66](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.65...v0.1.66) (2026-03-24)
 
