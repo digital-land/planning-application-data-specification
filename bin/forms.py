@@ -1,11 +1,11 @@
 from csv_helpers import read_csv
 from utils import split_field_in_dicts
 
+FORMS_2025_FILEPATH = "data/analysis/2025-planning-application-form.csv"
+
 
 def load_2025_form_data():
-    # use read_csv from csv_helpers to load from filepath
-    forms_2025_filepath = "data/planning-application-form.csv"
-    data = read_csv(forms_2025_filepath, as_dict=True)
+    data = read_csv(FORMS_2025_FILEPATH, as_dict=True)
     return split_field_in_dicts(data, "application-types")
 
 

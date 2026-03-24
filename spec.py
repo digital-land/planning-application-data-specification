@@ -17,6 +17,7 @@ from bin.completeness import (
 )
 from bin.csv_helpers import read_csv
 from bin.fields import find_field_usage
+from bin.forms import FORMS_2025_FILEPATH
 from bin.loader import load_content, load_needs
 
 
@@ -186,7 +187,7 @@ def summary(do_list):
 @click.argument("application_type")
 def form_url(application_type):
     """Return the PDF form URL for an application type or subtype."""
-    forms_path = PROJECT_ROOT / "data" / "planning-application-form.csv"
+    forms_path = PROJECT_ROOT / FORMS_2025_FILEPATH
     rows = read_csv(str(forms_path), as_dict=True)
     query = application_type.strip().lower()
     matches = []

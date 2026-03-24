@@ -1,5 +1,8 @@
 from bin.csv_helpers import read_csv
 
+FORMS_2025_FILEPATH = "../data/analysis/2025-planning-application-form.csv"
+MODULES_2025_FILEPATH = "../data/analysis/2025-planning-application-module.csv"
+
 
 def load_app_types():
     return read_csv("../data/planning-application-type.csv", as_dict=True)
@@ -11,11 +14,11 @@ def load_sub_types():
 
 
 def load_forms():
-    return read_csv("../data/planning-application-form.csv", as_dict=True)
+    return read_csv(FORMS_2025_FILEPATH, as_dict=True)
 
 
 def load_modules():
-    modules = read_csv("../data/planning-application-module.csv", as_dict=True)
+    modules = read_csv(MODULES_2025_FILEPATH, as_dict=True)
     return sorted(modules, key=lambda x: x["name"])
 
 
