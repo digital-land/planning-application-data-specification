@@ -5,22 +5,25 @@ import frontmatter
 # import here to avoid import-time cycles
 from models import ApplicationDef, ComponentDef, ComponentInstance, FieldDef, ModuleDef
 
-tables = {
-    "application": {},
-    "codelist": {},
-    "component": {},
-    "data": {},
-    "dataset": {},
-    "field": {},
-    "module": {},
-    "specification": {},
-    # "planning-requirement": {},
-}
+def make_tables():
+    return {
+        "application": {},
+        "codelist": {},
+        "component": {},
+        "data": {},
+        "dataset": {},
+        "field": {},
+        "module": {},
+        "specification": {},
+        # "planning-requirement": {},
+    }
 
-needs_tables = {"need": {}, "justification": {}}
+
+def make_needs_tables():
+    return {"need": {}, "justification": {}}
 
 
-def load_table_content(table):
+def load_table_content(table, target_tables):
     file_path = "*.md"
     if table in ["application", "module", "codelist", "dataset", "data"]:
         file_path = "*.schema.md"
@@ -33,12 +36,13 @@ def load_table_content(table):
 
     for path in glob(pattern):
         post = frontmatter.load(path)
-        tables[table][post[table]] = post
+        target_tables[table][post[table]] = post
 
 
 def load_content():
+    tables = make_tables()
     for table in tables.keys():
-        load_table_content(table)
+        load_table_content(table, tables)
     return tables
 
 
@@ -47,19 +51,20 @@ def load_needs():
     Load user need and justification records from user-needs/* directories.
     Needs use `need` as the identifier; justifications use `id`.
     """
+    needs_tables = make_needs_tables()
 
     # can probably refactor with load_table_content but keeping simple for now
-    def load_dir(target, pattern, key_fields):
+    def load_dir(target, pattern, key_fields, target_tables):
         for path in glob(pattern):
             post = frontmatter.load(path)
             # include body/content for downstream rendering
             post["__body__"] = post.content
             key = next((post.get(k) for k in key_fields if post.get(k)), None)
             if key:
-                needs_tables[target][key] = post
+                target_tables[target][key] = post
 
-    load_dir("need", "user-needs/need/*.md", ["need"])
-    load_dir("justification", "user-needs/justification/*.md", ["id"])
+    load_dir("need", "user-needs/need/*.md", ["need"], needs_tables)
+    load_dir("justification", "user-needs/justification/*.md", ["id"], needs_tables)
 
     return needs_tables
 
