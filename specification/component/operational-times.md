@@ -6,7 +6,7 @@ entry-date: 2025-07-16
 end-date: ''
 note: ''
 fields:
-  - field: day-type
+  - field: schedule-days
     required: true
   - field: closed
     default: true
@@ -20,7 +20,7 @@ fields:
 For example
 
 ```
-day-type: monday-friday
+schedule-days: [monday, tuesday, wednesday, thursday, friday]
 time-ranges: [
     { open-time: 0900, close-time: 1200 },
     { open-time: 1300, close-time: 1700 }
@@ -28,6 +28,6 @@ time-ranges: [
 ```
 and
 ```
-day-type: sunday
+schedule-days: [sunday]
 closed: closed
 ```
