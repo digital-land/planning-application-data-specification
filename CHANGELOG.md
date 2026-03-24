@@ -1,4 +1,25 @@
 
+<a name="v0.1.66"></a>
+## [v0.1.66](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.65...v0.1.66) (2026-03-24)
+
+Improve the operational days model
+
+### 𝌭 Model changes
+
+* retire day-type field and codelist (commit [ca923f31](https://github.com/digital-land/planning-application-data-specification/commit/ca923f31069159202796eea08144f3e5e11ceb47))
+* update operational-days to use schedule-days (commit [86397501](https://github.com/digital-land/planning-application-data-specification/commit/86397501c63382b50bbf758fe949a6da35dc4252))
+* define schedule-days field (commit [7455d42d](https://github.com/digital-land/planning-application-data-specification/commit/7455d42d5aec33775b1e1713ca07240f0e35b958))
+* add schedule-day codelist (commit [3ef399e6](https://github.com/digital-land/planning-application-data-specification/commit/3ef399e6eb727611d1b7001d216b395361fd8425))
+
+### 🐛 Bug Fixes
+
+* examples using operational-days (commit [ed59ab20](https://github.com/digital-land/planning-application-data-specification/commit/ed59ab2071cb3ce57dfd586bcda0bef088b6a08c))
+
+### 📚 Documentation
+
+* add decision record for operational days component change (commit [a8529ebb](https://github.com/digital-land/planning-application-data-specification/commit/a8529ebb509523c75b0eb641f56503d0c60183f9))
+
+
 <a name="v0.1.65"></a>
 ## [v0.1.65](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.64...v0.1.65) (2026-03-24)
 
