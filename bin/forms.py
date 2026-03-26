@@ -59,6 +59,19 @@ def get_2025_forms_for_module(module_ref, forms=None, modules=None):
     return get_2025_forms_by_refs(form_refs, forms)
 
 
+def get_2025_modules_for_form(form_ref, modules=None):
+    if not form_ref:
+        return []
+
+    modules = modules if modules is not None else load_2025_module_analysis_data()
+    matching_modules = [
+        module
+        for module in modules
+        if form_ref in [ref.strip() for ref in module.get("application-forms", "").split(";") if ref.strip()]
+    ]
+    return sorted(matching_modules, key=lambda module: module.get("name", ""))
+
+
 # add main
 if __name__ == "__main__":
     app_type = "hh"

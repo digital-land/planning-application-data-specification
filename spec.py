@@ -22,6 +22,7 @@ from bin.forms import (
     get_2025_form,
     get_2025_forms_by_app_type,
     get_2025_forms_for_module,
+    get_2025_modules_for_form,
 )
 from bin.loader import load_content, load_needs
 
@@ -277,6 +278,26 @@ def forms_for_module(module_ref):
     for form in forms:
         click.echo(f"- {form['name']} ({form['reference']})")
         click.echo(f"  form: {form['document-url']}")
+
+
+@cli.command(name="form-modules")
+@click.argument("form_ref")
+def modules_for_form(form_ref):
+    """List analysed 2025 modules found in a form."""
+    modules = get_2025_modules_for_form(form_ref.strip())
+
+    if not modules:
+        click.echo(f"No analysed 2025 modules found for form '{form_ref}'")
+        return
+
+    click.echo(
+        f"Found {len(modules)} analysed 2025 modules for form '{form_ref}':"
+    )
+    click.echo(
+        "These results come from the 2025 forms analysis data, not the specification model."
+    )
+    for module in modules:
+        click.echo(f"- {module['name']} ({module['reference']})")
 
 
 @cli.group(invoke_without_command=True)

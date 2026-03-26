@@ -124,3 +124,40 @@ def test_module_forms_command_handles_no_matches(monkeypatch):
 
     assert result.exit_code == 0
     assert "No analysed 2025 forms found for module 'missing-module'" in result.output
+
+
+def test_form_modules_command_lists_analysed_2025_modules(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "get_2025_modules_for_form",
+        lambda form_ref: [
+            {"name": "Agent contact details", "reference": "agent-contact"},
+            {"name": "Site address", "reference": "site-address"},
+        ]
+        if form_ref == "form-app-for-pp"
+        else [],
+    )
+
+    result = runner.invoke(spec.cli, ["form-modules", "form-app-for-pp"])
+
+    assert result.exit_code == 0
+    assert "Found 2 analysed 2025 modules for form 'form-app-for-pp':" in result.output
+    assert (
+        "These results come from the 2025 forms analysis data, not the specification model."
+        in result.output
+    )
+    assert "- Agent contact details (agent-contact)" in result.output
+    assert "- Site address (site-address)" in result.output
+
+
+def test_form_modules_command_handles_no_matches(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(spec, "get_2025_modules_for_form", lambda form_ref: [])
+
+    result = runner.invoke(spec.cli, ["form-modules", "missing-form"])
+
+    assert result.exit_code == 0
+    assert "No analysed 2025 modules found for form 'missing-form'" in result.output

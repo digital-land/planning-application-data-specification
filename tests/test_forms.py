@@ -51,3 +51,15 @@ def test_get_2025_forms_for_module_returns_matching_forms():
     result = forms.get_2025_forms_for_module("module-a", form_data, module_data)
 
     assert [form["reference"] for form in result] == ["form-b", "form-a"]
+
+
+def test_get_2025_modules_for_form_returns_matching_modules_sorted_by_name():
+    module_data = [
+        {"reference": "module-b", "name": "Beta", "application-forms": "form-a"},
+        {"reference": "module-a", "name": "Alpha", "application-forms": "form-b;form-a"},
+        {"reference": "module-c", "name": "Gamma", "application-forms": ""},
+    ]
+
+    result = forms.get_2025_modules_for_form("form-a", module_data)
+
+    assert [module["reference"] for module in result] == ["module-a", "module-b"]
