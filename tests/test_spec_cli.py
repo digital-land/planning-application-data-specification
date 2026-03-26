@@ -79,3 +79,48 @@ def test_form_command_handles_missing_form(monkeypatch):
 
     assert result.exit_code == 0
     assert "No 2025 form found with reference 'missing-form'" in result.output
+
+
+def test_module_forms_command_lists_analysed_2025_forms(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "get_2025_forms_for_module",
+        lambda module_ref: [
+            {
+                "name": "Application for planning permission",
+                "reference": "form-app-for-pp",
+                "document-url": "https://example.com/form-app-for-pp.pdf",
+            },
+            {
+                "name": "Outline application",
+                "reference": "form-outline",
+                "document-url": "https://example.com/form-outline.pdf",
+            },
+        ]
+        if module_ref == "agent-contact"
+        else [],
+    )
+
+    result = runner.invoke(spec.cli, ["module-forms", "agent-contact"])
+
+    assert result.exit_code == 0
+    assert "Found 2 analysed 2025 forms for module 'agent-contact':" in result.output
+    assert (
+        "These results come from the 2025 forms analysis data, not the specification model."
+        in result.output
+    )
+    assert "- Application for planning permission (form-app-for-pp)" in result.output
+    assert "- Outline application (form-outline)" in result.output
+
+
+def test_module_forms_command_handles_no_matches(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(spec, "get_2025_forms_for_module", lambda module_ref: [])
+
+    result = runner.invoke(spec.cli, ["module-forms", "missing-module"])
+
+    assert result.exit_code == 0
+    assert "No analysed 2025 forms found for module 'missing-module'" in result.output

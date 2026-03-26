@@ -36,3 +36,18 @@ def test_get_2025_forms_by_refs_returns_matches_in_requested_order():
     result = forms.get_2025_forms_by_refs(["form-b", "missing", "form-a"], form_data)
 
     assert [form["reference"] for form in result] == ["form-b", "form-a"]
+
+
+def test_get_2025_forms_for_module_returns_matching_forms():
+    form_data = [
+        {"reference": "form-a", "name": "Form A", "application-types": ["hh"]},
+        {"reference": "form-b", "name": "Form B", "application-types": ["full"]},
+    ]
+    module_data = [
+        {"reference": "module-a", "application-forms": "form-b;form-a"},
+        {"reference": "module-b", "application-forms": ""},
+    ]
+
+    result = forms.get_2025_forms_for_module("module-a", form_data, module_data)
+
+    assert [form["reference"] for form in result] == ["form-b", "form-a"]

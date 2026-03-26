@@ -17,7 +17,12 @@ from bin.completeness import (
 )
 from bin.csv_helpers import read_csv
 from bin.fields import find_field_usage
-from bin.forms import FORMS_2025_FILEPATH, get_2025_form, get_2025_forms_by_app_type
+from bin.forms import (
+    FORMS_2025_FILEPATH,
+    get_2025_form,
+    get_2025_forms_by_app_type,
+    get_2025_forms_for_module,
+)
 from bin.loader import load_content, load_needs
 
 
@@ -249,6 +254,29 @@ def form_details(form_ref):
     click.echo(f"Reference: {form['reference']}")
     click.echo(f"Application types: {app_types}")
     click.echo(f"Document URL: {form['document-url']}")
+
+
+@cli.command(name="module-forms")
+@click.argument("module_ref")
+def forms_for_module(module_ref):
+    """List analysed 2025 forms that include a module."""
+    forms = get_2025_forms_for_module(module_ref.strip())
+
+    if not forms:
+        click.echo(
+            f"No analysed 2025 forms found for module '{module_ref}'"
+        )
+        return
+
+    click.echo(
+        f"Found {len(forms)} analysed 2025 forms for module '{module_ref}':"
+    )
+    click.echo(
+        "These results come from the 2025 forms analysis data, not the specification model."
+    )
+    for form in forms:
+        click.echo(f"- {form['name']} ({form['reference']})")
+        click.echo(f"  form: {form['document-url']}")
 
 
 @cli.group(invoke_without_command=True)

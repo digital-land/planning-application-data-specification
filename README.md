@@ -82,6 +82,12 @@ Show core details for a 2025 form by reference
 python spec.py form <form_ref>
 ```
 
+List analysed 2025 forms that include a module
+
+```bash
+python spec.py module-forms <module_ref>
+```
+
 These form commands use the analysed 2025 forms data under `data/analysis/`. They are not derived from the canonical specification model.
 
 ### Completeness reporting
