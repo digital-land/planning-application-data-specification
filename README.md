@@ -64,37 +64,49 @@ python spec.py decision summary --list
 
 ### 2025 forms analysis
 
+Preferred grouped commands
+
 Return matching 2025 form URLs for an application type or subtype
 
 ```bash
-python spec.py form-url <application_type>
+python spec.py form-analysis urls <application_type>
 ```
 
 List matching 2025 forms for an application type or subtype
 
 ```bash
-python spec.py forms <application_type>
+python spec.py form-analysis list <application_type>
 ```
 
 Show core details for a 2025 form by reference
 
 ```bash
-python spec.py form <form_ref>
+python spec.py form-analysis show <form_ref>
 ```
 
 List analysed 2025 forms that include a module
 
 ```bash
-python spec.py module-forms <module_ref>
+python spec.py form-analysis for-module <module_ref>
 ```
 
 List analysed 2025 modules found in a form
 
 ```bash
-python spec.py form-modules <form_ref>
+python spec.py form-analysis modules <form_ref>
 ```
 
 These form commands use the analysed 2025 forms data under `data/analysis/`. They are not derived from the canonical specification model.
+
+Older shortcut commands still work:
+
+```bash
+python spec.py form-url <application_type>
+python spec.py forms <application_type>
+python spec.py form <form_ref>
+python spec.py module-forms <module_ref>
+python spec.py form-modules <form_ref>
+```
 
 ### Completeness reporting
 

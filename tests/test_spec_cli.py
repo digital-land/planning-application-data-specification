@@ -161,3 +161,47 @@ def test_form_modules_command_handles_no_matches(monkeypatch):
 
     assert result.exit_code == 0
     assert "No analysed 2025 modules found for form 'missing-form'" in result.output
+
+
+def test_form_analysis_list_command_reuses_forms_output(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "get_2025_forms_by_app_type",
+        lambda app_type: [
+            {
+                "name": "Householder application form",
+                "reference": "form-hh",
+                "document-url": "https://example.com/form-hh.pdf",
+            }
+        ]
+        if app_type == "hh"
+        else [],
+    )
+
+    result = runner.invoke(spec.cli, ["form-analysis", "list", "hh"])
+
+    assert result.exit_code == 0
+    assert "Found 1 matching 2025 forms for application type 'hh':" in result.output
+    assert "- Householder application form (form-hh)" in result.output
+
+
+def test_form_analysis_modules_command_reuses_module_output(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "get_2025_modules_for_form",
+        lambda form_ref: [
+            {"name": "Agent contact details", "reference": "agent-contact"}
+        ]
+        if form_ref == "form-app-for-pp"
+        else [],
+    )
+
+    result = runner.invoke(spec.cli, ["form-analysis", "modules", "form-app-for-pp"])
+
+    assert result.exit_code == 0
+    assert "Found 1 analysed 2025 modules for form 'form-app-for-pp':" in result.output
+    assert "- Agent contact details (agent-contact)" in result.output

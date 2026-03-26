@@ -27,6 +27,96 @@ from bin.forms import (
 from bin.loader import load_content, load_needs
 
 
+def print_2025_form_urls(application_type):
+    forms_path = PROJECT_ROOT / FORMS_2025_FILEPATH
+    rows = read_csv(str(forms_path), as_dict=True)
+    query = application_type.strip().lower()
+    matches = []
+
+    for row in rows:
+        raw_types = row.get("application-types", "")
+        types = [t.strip().lower() for t in raw_types.split(";") if t.strip()]
+        if query in types:
+            matches.append(row)
+
+    if not matches:
+        click.echo(f"No form found for application type '{application_type}'")
+        return
+
+    def format_types(raw: str) -> str:
+        items = [t.strip() for t in raw.split(";") if t.strip()]
+        return " + ".join(items) if items else raw.strip()
+
+    formatted = []
+    for row in matches:
+        url = row.get("document-url", "")
+        app_types = format_types(row.get("application-types", ""))
+        formatted.append(f"- application-type: {app_types}\n  form: {url}")
+
+    click.echo("\n\n".join(formatted))
+
+
+def print_2025_forms_for_application_type(application_type):
+    forms = get_2025_forms_by_app_type(application_type.strip().lower())
+
+    if not forms:
+        click.echo(f"No 2025 forms found for application type '{application_type}'")
+        return
+
+    click.echo(
+        f"Found {len(forms)} matching 2025 forms for application type '{application_type}':"
+    )
+    for form in forms:
+        click.echo(f"- {form['name']} ({form['reference']})")
+        click.echo(f"  form: {form['document-url']}")
+
+
+def print_2025_form_details(form_ref):
+    form = get_2025_form(form_ref.strip())
+
+    if not form:
+        click.echo(f"No 2025 form found with reference '{form_ref}'")
+        return
+
+    app_types = ", ".join(form.get("application-types", []))
+
+    click.echo(f"Form: {form['name']}")
+    click.echo(f"Reference: {form['reference']}")
+    click.echo(f"Application types: {app_types}")
+    click.echo(f"Document URL: {form['document-url']}")
+
+
+def print_2025_forms_for_module(module_ref):
+    forms = get_2025_forms_for_module(module_ref.strip())
+
+    if not forms:
+        click.echo(f"No analysed 2025 forms found for module '{module_ref}'")
+        return
+
+    click.echo(f"Found {len(forms)} analysed 2025 forms for module '{module_ref}':")
+    click.echo(
+        "These results come from the 2025 forms analysis data, not the specification model."
+    )
+    for form in forms:
+        click.echo(f"- {form['name']} ({form['reference']})")
+        click.echo(f"  form: {form['document-url']}")
+
+
+def print_2025_modules_for_form(form_ref):
+    modules = get_2025_modules_for_form(form_ref.strip())
+
+    if not modules:
+        click.echo(f"No analysed 2025 modules found for form '{form_ref}'")
+        return
+
+    click.echo(f"Found {len(modules)} analysed 2025 modules for form '{form_ref}':")
+    click.echo(
+        "These results come from the 2025 forms analysis data, not the specification model."
+    )
+    for module in modules:
+        click.echo(f"- {module['name']} ({module['reference']})")
+
+
 @click.group()
 @click.option(
     "--spec-dir", default="specification", help="Path to specification directory"
@@ -189,115 +279,80 @@ def summary(do_list):
             click.echo(f"  • {nid}{jlabel}")
 
 
+@cli.group(name="form-analysis")
+def form_analysis():
+    """2025 forms analysis commands."""
+    pass
+
+
+@form_analysis.command(name="urls")
+@click.argument("application_type")
+def form_analysis_urls(application_type):
+    """Return matching 2025 form URLs for an application type or subtype."""
+    print_2025_form_urls(application_type)
+
+
+@form_analysis.command(name="list")
+@click.argument("application_type")
+def form_analysis_list(application_type):
+    """List 2025 forms that cover an application type or subtype."""
+    print_2025_forms_for_application_type(application_type)
+
+
+@form_analysis.command(name="show")
+@click.argument("form_ref")
+def form_analysis_show(form_ref):
+    """Show core details for a 2025 form by reference."""
+    print_2025_form_details(form_ref)
+
+
+@form_analysis.command(name="for-module")
+@click.argument("module_ref")
+def form_analysis_for_module(module_ref):
+    """List analysed 2025 forms that include a module."""
+    print_2025_forms_for_module(module_ref)
+
+
+@form_analysis.command(name="modules")
+@click.argument("form_ref")
+def form_analysis_modules(form_ref):
+    """List analysed 2025 modules found in a form."""
+    print_2025_modules_for_form(form_ref)
+
+
 @cli.command()
 @click.argument("application_type")
 def form_url(application_type):
     """Return the PDF form URL for an application type or subtype."""
-    forms_path = PROJECT_ROOT / FORMS_2025_FILEPATH
-    rows = read_csv(str(forms_path), as_dict=True)
-    query = application_type.strip().lower()
-    matches = []
-
-    for row in rows:
-        raw_types = row.get("application-types", "")
-        types = [t.strip().lower() for t in raw_types.split(";") if t.strip()]
-        if query in types:
-            matches.append(row)
-
-    if not matches:
-        click.echo(f"No form found for application type '{application_type}'")
-        return
-
-    def format_types(raw: str) -> str:
-        items = [t.strip() for t in raw.split(";") if t.strip()]
-        return " + ".join(items) if items else raw.strip()
-
-    formatted = []
-    for row in matches:
-        url = row.get("document-url", "")
-        app_types = format_types(row.get("application-types", ""))
-        formatted.append(f"- application-type: {app_types}\n  form: {url}")
-
-    click.echo("\n\n".join(formatted))
+    print_2025_form_urls(application_type)
 
 
 @cli.command(name="forms")
 @click.argument("application_type")
 def forms_for_application_type(application_type):
     """List 2025 forms that cover an application type or subtype."""
-    forms = get_2025_forms_by_app_type(application_type.strip().lower())
-
-    if not forms:
-        click.echo(f"No 2025 forms found for application type '{application_type}'")
-        return
-
-    click.echo(
-        f"Found {len(forms)} matching 2025 forms for application type '{application_type}':"
-    )
-    for form in forms:
-        click.echo(f"- {form['name']} ({form['reference']})")
-        click.echo(f"  form: {form['document-url']}")
+    print_2025_forms_for_application_type(application_type)
 
 
 @cli.command(name="form")
 @click.argument("form_ref")
 def form_details(form_ref):
     """Show core details for a 2025 form by reference."""
-    form = get_2025_form(form_ref.strip())
-
-    if not form:
-        click.echo(f"No 2025 form found with reference '{form_ref}'")
-        return
-
-    app_types = ", ".join(form.get("application-types", []))
-
-    click.echo(f"Form: {form['name']}")
-    click.echo(f"Reference: {form['reference']}")
-    click.echo(f"Application types: {app_types}")
-    click.echo(f"Document URL: {form['document-url']}")
+    print_2025_form_details(form_ref)
 
 
 @cli.command(name="module-forms")
 @click.argument("module_ref")
 def forms_for_module(module_ref):
     """List analysed 2025 forms that include a module."""
-    forms = get_2025_forms_for_module(module_ref.strip())
-
-    if not forms:
-        click.echo(
-            f"No analysed 2025 forms found for module '{module_ref}'"
-        )
-        return
-
-    click.echo(
-        f"Found {len(forms)} analysed 2025 forms for module '{module_ref}':"
-    )
-    click.echo(
-        "These results come from the 2025 forms analysis data, not the specification model."
-    )
-    for form in forms:
-        click.echo(f"- {form['name']} ({form['reference']})")
-        click.echo(f"  form: {form['document-url']}")
+    print_2025_forms_for_module(module_ref)
 
 
 @cli.command(name="form-modules")
 @click.argument("form_ref")
 def modules_for_form(form_ref):
     """List analysed 2025 modules found in a form."""
-    modules = get_2025_modules_for_form(form_ref.strip())
-
-    if not modules:
-        click.echo(f"No analysed 2025 modules found for form '{form_ref}'")
-        return
-
-    click.echo(
-        f"Found {len(modules)} analysed 2025 modules for form '{form_ref}':"
-    )
-    click.echo(
-        "These results come from the 2025 forms analysis data, not the specification model."
-    )
-    for module in modules:
-        click.echo(f"- {module['name']} ({module['reference']})")
+    print_2025_modules_for_form(form_ref)
 
 
 @cli.group(invoke_without_command=True)
