@@ -1,4 +1,44 @@
 
+<a name="v0.1.68"></a>
+## [v0.1.68](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.67...v0.1.68) (2026-03-27)
+
+Remove legacy explorer code
+
+### ⚒️ Tooling
+
+* remove legacy explorer code (commit [1be90f96](https://github.com/digital-land/planning-application-data-specification/commit/1be90f96339dcaaff36c0560bd992250aa2acc09))
+* add couple of markdown format helpers (commit [64523d88](https://github.com/digital-land/planning-application-data-specification/commit/64523d887d8a6e1157903e88bbe70ecee540f1db))
+* extract markdown helpers into markdown utils (commit [74b00d28](https://github.com/digital-land/planning-application-data-specification/commit/74b00d28d57ea9fb90be858ac7868f307efde418))
+* group 2025 forms analysis commands under spec cli (commit [ccafcf45](https://github.com/digital-land/planning-application-data-specification/commit/ccafcf45567518bca16e3b9ff7c4011cc3d5e113))
+* add analysed 2025 module and form lookup commands (commit [7fec5ad4](https://github.com/digital-land/planning-application-data-specification/commit/7fec5ad472f092e90f5c62fad87de5927c32ba42))
+* add 2025 forms lookup commands to spec cli (commit [367c2649](https://github.com/digital-land/planning-application-data-specification/commit/367c2649805ecdae57fb93e48e0557cfaf36a053))
+* add housing type hierarchy (commit [a12bd48c](https://github.com/digital-land/planning-application-data-specification/commit/a12bd48cc817dda7c5caca6e9bead57a2d00ed90))
+* commandline interface to find existing forms (commit [c44ffb57](https://github.com/digital-land/planning-application-data-specification/commit/c44ffb57e354d4f4b0f4a9573499e7c1ad6b6a79))
+* Moved the two 2025 analysis CSVs (commit [1a69d459](https://github.com/digital-land/planning-application-data-specification/commit/1a69d45985dec8d107522dcef735c22f0632df36))
+* return fresh loader data on each call (commit [4ff1a99d](https://github.com/digital-land/planning-application-data-specification/commit/4ff1a99dad975a989a948c4c517fe2f15a2f95b9))
+
+### 𝌭 Model changes
+
+* add the housing-type usage table (commit [a5a98820](https://github.com/digital-land/planning-application-data-specification/commit/a5a988204f927b1554fc316dae66dddd148677bb))
+* define housing type usage table (commit [ef024c52](https://github.com/digital-land/planning-application-data-specification/commit/ef024c5274c4b947f58fda30f46650c3ccff3c6d))
+* retire day-type field and codelist (commit [db0b4e2b](https://github.com/digital-land/planning-application-data-specification/commit/db0b4e2b69c4d86b1257e309057602948e9a58da))
+* update operational-days to use schedule-days (commit [4d329a2a](https://github.com/digital-land/planning-application-data-specification/commit/4d329a2a78a52f68b4b6245154d467054e3db63b))
+* define schedule-days field (commit [61eefb09](https://github.com/digital-land/planning-application-data-specification/commit/61eefb093bffe3f1a9b45ebb392a25f8ebffcdca))
+* add schedule-day codelist (commit [0fa72719](https://github.com/digital-land/planning-application-data-specification/commit/0fa72719c712178f7101890a313f99a34e7f13b6))
+
+### 🐛 Bug Fixes
+
+* examples using operational-days (commit [8a96be98](https://github.com/digital-land/planning-application-data-specification/commit/8a96be9884003e67beae275b45fb47c459919e97))
+* inconsistencies after file model change (commit [8c41c6f4](https://github.com/digital-land/planning-application-data-specification/commit/8c41c6f48bc858f7708608021434263a5a34e4cb))
+* incorrect need status (commit [7518dc58](https://github.com/digital-land/planning-application-data-specification/commit/7518dc58ae1d9c7a312bf347e5f29f69ac16bc06))
+
+### 📚 Documentation
+
+* document the usage pattern when value used across multiple profiles (commit [fed20432](https://github.com/digital-land/planning-application-data-specification/commit/fed2043264017fe2354893584c86fe56bfa0fb9a))
+* add decision record for operational days component change (commit [f67f304f](https://github.com/digital-land/planning-application-data-specification/commit/f67f304f163dee1cd1efb085b61f145127bfdb00))
+* document the commandline interface (commit [c24cbb07](https://github.com/digital-land/planning-application-data-specification/commit/c24cbb07d69ca515fa4652d0020a5a2c77b2075a))
+
+
 <a name="v0.1.67"></a>
 ## [v0.1.67](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.66...v0.1.67) (2026-03-24)
 
