@@ -1,10 +1,39 @@
 from pathlib import Path
 
-from bin.markdown_utils import csv_to_markdown, markdown_link
+from bin.markdown_utils import (
+    csv_to_markdown,
+    markdown_bullet_list,
+    markdown_link,
+    markdown_table,
+)
 
 
 def test_markdown_link_returns_markdown_link():
     assert markdown_link("Example", "https://example.com") == "[Example](https://example.com)"
+
+
+def test_markdown_table_returns_markdown_table():
+    result = markdown_table(
+        ["Name", "Reference"],
+        [["Householder", "hh"], ["Full", "full"]],
+    )
+
+    assert result == (
+        "| Name | Reference |\n"
+        "| --- | --- |\n"
+        "| Householder | hh |\n"
+        "| Full | full |\n"
+    )
+
+
+def test_markdown_bullet_list_returns_markdown_list():
+    result = markdown_bullet_list(["one", "two"])
+
+    assert result == "* one\n* two\n"
+
+
+def test_markdown_bullet_list_returns_empty_string_for_empty_input():
+    assert markdown_bullet_list([]) == ""
 
 
 def test_csv_to_markdown_renders_selected_fields(tmp_path):

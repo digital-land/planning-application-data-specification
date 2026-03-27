@@ -6,6 +6,28 @@ def markdown_link(text, url):
     return f"[{text}]({url})"
 
 
+def markdown_table(headers, rows):
+    """Return a markdown table string from headers and row values."""
+    lines = [
+        "| " + " | ".join(headers) + " |",
+        "| " + " | ".join(["---"] * len(headers)) + " |",
+    ]
+
+    for row in rows:
+        values = [str(value) for value in row]
+        lines.append("| " + " | ".join(values) + " |")
+
+    return "\n".join(lines) + "\n"
+
+
+def markdown_bullet_list(items):
+    """Return a markdown bullet list string."""
+    if not items:
+        return ""
+
+    return "\n".join(f"* {item}" for item in items) + "\n"
+
+
 def csv_to_markdown(
     filename="data/output.csv",
     fields=None,
