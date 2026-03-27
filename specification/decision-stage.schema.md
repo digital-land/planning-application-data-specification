@@ -18,6 +18,9 @@ datasets:
         description: the description of the proposed development
       - field: application-types
         description: one or more codelist values describing the application type
+      - field: site
+        description: the <a href="#reference">reference</a> for the related site
+        dataset: site
       - field: received-date
         description: the date the planning authority received the application
       - field: document-url
