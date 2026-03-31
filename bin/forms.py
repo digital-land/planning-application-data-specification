@@ -1,5 +1,5 @@
 from csv_helpers import read_csv
-from utils import split_field_in_dicts
+from utils import get_record, split_field_in_dicts, split_string
 
 FORMS_2025_FILEPATH = "data/analysis/2025-planning-application-form.csv"
 MODULES_2025_FILEPATH = "data/analysis/2025-planning-application-module.csv"
@@ -25,10 +25,7 @@ def get_2025_form(form_ref, forms=None):
         return None
 
     forms = forms if forms is not None else load_2025_form_data()
-    matches = [form for form in forms if form_ref == form.get("reference")]
-    if matches:
-        return matches[0]
-    return None
+    return get_record(forms, form_ref)
 
 
 def get_2025_forms_by_refs(form_refs, forms=None):
@@ -50,12 +47,12 @@ def get_2025_forms_for_module(module_ref, forms=None, modules=None):
     forms = forms if forms is not None else load_2025_form_data()
     modules = modules if modules is not None else load_2025_module_analysis_data()
 
-    module = next((item for item in modules if item.get("reference") == module_ref), None)
+    module = get_record(modules, module_ref)
     if not module:
         return []
 
     raw_form_refs = module.get("application-forms", "")
-    form_refs = [ref.strip() for ref in raw_form_refs.split(";") if ref.strip()]
+    form_refs = split_string(raw_form_refs)
     return get_2025_forms_by_refs(form_refs, forms)
 
 
@@ -67,7 +64,7 @@ def get_2025_modules_for_form(form_ref, modules=None):
     matching_modules = [
         module
         for module in modules
-        if form_ref in [ref.strip() for ref in module.get("application-forms", "").split(";") if ref.strip()]
+        if form_ref in split_string(module.get("application-forms", ""))
     ]
     return sorted(matching_modules, key=lambda module: module.get("name", ""))
 

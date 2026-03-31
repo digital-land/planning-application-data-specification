@@ -1,5 +1,5 @@
 import pytest
-from bin.utils import split_field_in_dicts, split_string, to_anchor
+from bin.utils import get_record, split_field_in_dicts, split_string, to_anchor
 
 
 @pytest.fixture
@@ -39,6 +39,34 @@ def test_split_string_empty():
 
 def test_split_string_other_separator():
     assert split_string("test,string", ",") == ["test", "string"]
+
+
+def test_get_record_from_list_uses_reference_by_default():
+    records = [{"reference": "one", "name": "One"}, {"reference": "two", "name": "Two"}]
+
+    assert get_record(records, "two") == {"reference": "two", "name": "Two"}
+
+
+def test_get_record_from_list_supports_multiple_lookup_keys():
+    records = [{"module": "module-a", "name": "Module A"}]
+
+    assert get_record(records, "module-a", keys=("reference", "module")) == {
+        "module": "module-a",
+        "name": "Module A",
+    }
+
+
+def test_get_record_from_dict_uses_direct_lookup():
+    records = {"item-a": {"reference": "item-a", "name": "Item A"}}
+
+    assert get_record(records, "item-a") == {"reference": "item-a", "name": "Item A"}
+
+
+def test_get_record_returns_none_for_missing_or_blank_ref():
+    records = [{"reference": "one", "name": "One"}]
+
+    assert get_record(records, "missing") is None
+    assert get_record(records, "") is None
 
 
 def test_split_field_in_dicts_in_place_mutates(sample_dicts):

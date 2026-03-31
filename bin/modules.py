@@ -1,32 +1,21 @@
 from collections import OrderedDict, deque
 
 from fields import get_applicable_app_types
+from utils import get_record
 
 
 def get_module(modules, ref):
     """
     Get a module by its reference.
     """
-    if isinstance(modules, dict):
-        return modules.get(ref)
-    else:
-        for module in modules:
-            if module.get("reference") == ref or module.get("module") == ref:
-                return module
-        return None
+    return get_record(modules, ref, keys=("reference", "module"))
 
 
 def get_field(fields, ref):
     """
     Get a field by its reference.
     """
-    if isinstance(fields, dict):
-        return fields.get(ref)
-    else:
-        for field in fields:
-            if field.get("reference") == ref or field.get("field") == ref:
-                return field
-        return None
+    return get_record(fields, ref, keys=("reference", "field"))
 
 
 def get_field_metadata(field_def):

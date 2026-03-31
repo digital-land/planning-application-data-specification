@@ -77,6 +77,33 @@ def split_field_in_dicts(
     return target_list
 
 
+def get_record(records, ref: str, keys: tuple[str, ...] = ("reference",)):
+    """
+    Return the first matching record for `ref` from a dict or a list of dicts.
+
+    If `records` is a dict keyed by reference, a direct lookup is used first.
+    For list inputs, each key in `keys` is checked in order.
+    """
+    if not ref or records is None:
+        return None
+
+    if isinstance(records, dict):
+        if ref in records:
+            return records.get(ref)
+        iterable = records.values()
+    else:
+        iterable = records
+
+    for record in iterable:
+        if not isinstance(record, dict):
+            continue
+        for key in keys:
+            if record.get(key) == ref:
+                return record
+
+    return None
+
+
 def make_hyperlink_cell(name: str, url: str) -> str:
     """
     Create a Google Sheets HYPERLINK formula string.
