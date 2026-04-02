@@ -94,6 +94,121 @@
     "site-visit"
   ],
   "definitions": {
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "residential-unit-summary": {
+      "type": "object",
+      "properties": {
+        "tenure-type": {
+          "type": "string",
+          "enum": [
+            "market-housing",
+            "social-rented",
+            "intermediate-housing",
+            "key-worker-housing",
+            "affordable-rent",
+            "home-ownership",
+            "starter-homes",
+            "custom-build",
+            "market-for-sale",
+            "market-for-rent",
+            "self-build-and-custom-build",
+            "shared-equity",
+            "affordable-rent-not-lar-bm",
+            "discount-market-sale",
+            "discount-market-rent",
+            "social-rent",
+            "intermediate-other",
+            "discount-market-llr",
+            "london-living-rent",
+            "london-shared-ownership",
+            "london-affordable-rent",
+            "starter-homes-gla"
+          ]
+        },
+        "housing-type": {
+          "type": "string",
+          "enum": [
+            "houses",
+            "flats-maisonettes",
+            "sheltered-housing",
+            "bedsit-studio",
+            "cluster-flats",
+            "other",
+            "live-work-units",
+            "unknown",
+            "terraced-home",
+            "house-or-bungalow",
+            "semi-detached-home",
+            "flat-apartment-maisonette",
+            "co-living-unit",
+            "hmo",
+            "student-accommodation",
+            "communal-space"
+          ]
+        },
+        "existing-unit-breakdown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/unit-quantities"
+          },
+          "minItems": 1
+        },
+        "proposed-unit-breakdown": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/unit-quantities"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "tenure-type",
+        "housing-type"
+      ]
+    },
     "site-location": {
       "type": "object",
       "properties": {
@@ -131,48 +246,29 @@
       },
       "required": []
     },
-    "employees": {
+    "person": {
       "type": "object",
       "properties": {
-        "full-time": {
-          "type": "number"
+        "title": {
+          "type": "string"
         },
-        "part-time": {
-          "type": "number"
+        "first-name": {
+          "type": "string"
         },
-        "total-fte": {
-          "type": "number"
+        "last-name": {
+          "type": "string"
+        },
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
         }
       },
       "required": [
-        "full-time",
-        "part-time",
-        "total-fte"
-      ]
-    },
-    "agent": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
-        }
-      },
-      "required": [
-        "reference",
-        "person"
+        "first-name",
+        "last-name",
+        "address-text"
       ]
     },
     "existing-use-detail": {
@@ -249,23 +345,43 @@
         ]
       }
     },
-    "waste-streams": {
+    "other-contact": {
       "type": "object",
       "properties": {
-        "municipal": {
+        "fullname": {
+          "type": "string"
+        },
+        "number": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "fullname",
+        "number",
+        "email"
+      ]
+    },
+    "employees": {
+      "type": "object",
+      "properties": {
+        "full-time": {
           "type": "number"
         },
-        "construction-demolition": {
+        "part-time": {
           "type": "number"
         },
-        "commercial-industrial": {
-          "type": "number"
-        },
-        "hazardous": {
+        "total-fte": {
           "type": "number"
         }
       },
-      "required": []
+      "required": [
+        "full-time",
+        "part-time",
+        "total-fte"
+      ]
     },
     "waste-management": {
       "type": "object",
@@ -376,68 +492,38 @@
         }
       ]
     },
-    "other-contact": {
+    "applicant": {
       "type": "object",
       "properties": {
-        "fullname": {
+        "reference": {
           "type": "string"
         },
-        "number": {
-          "type": "string"
-        },
-        "email": {
-          "type": "string"
+        "person": {
+          "$ref": "#/definitions/person"
         }
       },
       "required": [
-        "fullname",
-        "number",
-        "email"
+        "reference",
+        "person"
       ]
     },
-    "person": {
+    "waste-streams": {
       "type": "object",
       "properties": {
-        "title": {
-          "type": "string"
+        "municipal": {
+          "type": "number"
         },
-        "first-name": {
-          "type": "string"
+        "construction-demolition": {
+          "type": "number"
         },
-        "last-name": {
-          "type": "string"
+        "commercial-industrial": {
+          "type": "number"
         },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
+        "hazardous": {
+          "type": "number"
         }
       },
-      "required": [
-        "first-name",
-        "last-name",
-        "address-text"
-      ]
-    },
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
+      "required": []
     },
     "phone-number": {
       "type": "object",
@@ -454,92 +540,6 @@
         }
       },
       "required": []
-    },
-    "applicant": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "residential-unit-summary": {
-      "type": "object",
-      "properties": {
-        "tenure-type": {
-          "type": "string",
-          "enum": [
-            "market-housing",
-            "social-rented",
-            "intermediate-housing",
-            "key-worker-housing",
-            "affordable-rent",
-            "home-ownership",
-            "starter-homes",
-            "custom-build",
-            "market-for-sale",
-            "market-for-rent",
-            "self-build-and-custom-build",
-            "shared-equity",
-            "affordable-rent-not-lar-bm",
-            "discount-market-sale",
-            "discount-market-rent",
-            "social-rent",
-            "intermediate-other",
-            "discount-market-llr",
-            "london-living-rent",
-            "london-shared-ownership",
-            "london-affordable-rent",
-            "starter-homes-gla"
-          ]
-        },
-        "housing-type": {
-          "type": "string",
-          "enum": [
-            "houses",
-            "flats-maisonettes",
-            "sheltered-housing",
-            "bedsit-studio",
-            "cluster-flats",
-            "other",
-            "live-work-units",
-            "unknown",
-            "terraced-home",
-            "house-or-bungalow",
-            "semi-detached-home",
-            "flat-apartment-maisonette",
-            "co-living-unit",
-            "hmo",
-            "student-accommodation",
-            "communal-space"
-          ]
-        },
-        "existing-unit-breakdown": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/unit-quantities"
-          },
-          "minItems": 1
-        },
-        "proposed-unit-breakdown": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/unit-quantities"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "tenure-type",
-        "housing-type"
-      ]
     },
     "unit-quantities": {
       "type": "object",
@@ -608,158 +608,6 @@
         ]
       }
     },
-    "declaration": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
-    "flood-risk-assessment": {
-      "type": "object",
-      "properties": {
-        "flood-risk-area": {
-          "type": "boolean"
-        },
-        "data-provided-by": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "system"
-          ]
-        },
-        "flood-risk-assessment": {
-          "type": "string"
-        },
-        "within-20m-watercourse": {
-          "type": "boolean"
-        },
-        "increases-flood-risk": {
-          "type": "boolean"
-        },
-        "surface-water-disposal": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "sustainable-drainage",
-              "soakaway",
-              "main-sewer",
-              "existing-watercourse",
-              "pond-lake"
-            ]
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "flood-risk-area",
-        "within-20m-watercourse",
-        "increases-flood-risk",
-        "surface-water-disposal"
-      ],
-      "if": {
-        "properties": {
-          "flood-risk-area": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "flood-risk-assessment"
-        ]
-      }
-    },
-    "bng": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    },
-    "hrs-operation": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    },
-    "res-units": {
-      "type": "object",
-      "properties": {
-        "will-residential-units-change": {
-          "type": "boolean"
-        },
-        "residential-unit-summary": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/residential-unit-summary"
-          },
-          "minItems": 1
-        },
-        "total-existing-units": {
-          "type": "number"
-        },
-        "total-proposed-units": {
-          "type": "number"
-        },
-        "net-change": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "will-residential-units-change",
-        "total-existing-units",
-        "total-proposed-units",
-        "net-change"
-      ],
-      "if": {
-        "properties": {
-          "will-residential-units-change": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "residential-unit-summary"
-        ]
-      }
-    },
-    "processes-machinery-waste": {
-      "type": "object",
-      "properties": {
-        "site-activity-details": {
-          "type": "string"
-        },
-        "proposal-waste-management": {
-          "type": "boolean"
-        },
-        "waste-management": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/waste-management"
-          },
-          "minItems": 1
-        },
-        "waste-streams": {
-          "$ref": "#/definitions/waste-streams"
-        }
-      },
-      "required": [
-        "site-activity-details",
-        "proposal-waste-management"
-      ]
-    },
     "site-details": {
       "type": "object",
       "properties": {
@@ -775,111 +623,10 @@
         "site-locations"
       ]
     },
-    "non-res-floorspace": {
+    "ownership-certs": {
       "type": "object",
       "properties": {},
       "required": []
-    },
-    "pre-app-advice": {
-      "type": "object",
-      "properties": {
-        "advice-sought": {
-          "type": "boolean"
-        },
-        "officer-name": {
-          "type": "string"
-        },
-        "reference": {
-          "type": "string"
-        },
-        "advice-date": {
-          "type": "string"
-        },
-        "advice-summary": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "advice-sought"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "officer-name"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "reference"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "advice-date"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "advice-summary"
-            ]
-          }
-        }
-      ]
-    },
-    "proposal-details": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
     },
     "existing-use": {
       "type": "object",
@@ -983,22 +730,19 @@
         }
       ]
     },
-    "site-area": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "site-area-in-hectares": {
-          "type": "number"
+        "agent-reference": {
+          "type": "string"
         },
-        "site-area-provided-by": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "system"
-          ]
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "site-area-in-hectares"
+        "agent-reference",
+        "contact-details"
       ]
     },
     "site-visit": {
@@ -1038,58 +782,83 @@
         ]
       }
     },
-    "applicant-details": {
+    "proposal-details": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "flood-risk-assessment": {
       "type": "object",
       "properties": {
-        "applicants": {
+        "flood-risk-area": {
+          "type": "boolean"
+        },
+        "data-provided-by": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "system"
+          ]
+        },
+        "flood-risk-assessment": {
+          "type": "string"
+        },
+        "within-20m-watercourse": {
+          "type": "boolean"
+        },
+        "increases-flood-risk": {
+          "type": "boolean"
+        },
+        "surface-water-disposal": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/applicant"
+            "type": "string",
+            "enum": [
+              "sustainable-drainage",
+              "soakaway",
+              "main-sewer",
+              "existing-watercourse",
+              "pond-lake"
+            ]
           },
           "minItems": 1
         }
       },
       "required": [
-        "applicants"
-      ]
-    },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
+        "flood-risk-area",
+        "within-20m-watercourse",
+        "increases-flood-risk",
+        "surface-water-disposal"
+      ],
+      "if": {
+        "properties": {
+          "flood-risk-area": {
+            "const": true
+          }
         }
       },
-      "required": []
+      "then": {
+        "required": [
+          "flood-risk-assessment"
+        ]
+      }
     },
-    "agent-contact": {
+    "site-area": {
       "type": "object",
       "properties": {
-        "agent-reference": {
-          "type": "string"
+        "site-area-in-hectares": {
+          "type": "number"
         },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
+        "site-area-provided-by": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "system"
+          ]
         }
       },
       "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
-    "employment": {
-      "type": "object",
-      "properties": {
-        "existing-employees": {
-          "$ref": "#/definitions/employees"
-        },
-        "proposed-employees": {
-          "$ref": "#/definitions/employees"
-        }
-      },
-      "required": [
-        "existing-employees",
-        "proposed-employees"
+        "site-area-in-hectares"
       ]
     },
     "checklist": {
@@ -1107,15 +876,246 @@
         "national-req-types"
       ]
     },
+    "res-units": {
+      "type": "object",
+      "properties": {
+        "will-residential-units-change": {
+          "type": "boolean"
+        },
+        "residential-unit-summary": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/residential-unit-summary"
+          },
+          "minItems": 1
+        },
+        "total-existing-units": {
+          "type": "number"
+        },
+        "total-proposed-units": {
+          "type": "number"
+        },
+        "net-change": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "will-residential-units-change",
+        "total-existing-units",
+        "total-proposed-units",
+        "net-change"
+      ],
+      "if": {
+        "properties": {
+          "will-residential-units-change": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "residential-unit-summary"
+        ]
+      }
+    },
+    "pre-app-advice": {
+      "type": "object",
+      "properties": {
+        "advice-sought": {
+          "type": "boolean"
+        },
+        "officer-name": {
+          "type": "string"
+        },
+        "reference": {
+          "type": "string"
+        },
+        "advice-date": {
+          "type": "string"
+        },
+        "advice-summary": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "advice-sought"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "officer-name"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "reference"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "advice-date"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "advice-sought": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "advice-summary"
+            ]
+          }
+        }
+      ]
+    },
     "conflict-of-interest": {
       "type": "object",
       "properties": {},
       "required": []
     },
-    "ownership-certs": {
+    "non-res-floorspace": {
       "type": "object",
       "properties": {},
       "required": []
+    },
+    "bng": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "hrs-operation": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
+      ]
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
+    "employment": {
+      "type": "object",
+      "properties": {
+        "existing-employees": {
+          "$ref": "#/definitions/employees"
+        },
+        "proposed-employees": {
+          "$ref": "#/definitions/employees"
+        }
+      },
+      "required": [
+        "existing-employees",
+        "proposed-employees"
+      ]
+    },
+    "processes-machinery-waste": {
+      "type": "object",
+      "properties": {
+        "site-activity-details": {
+          "type": "string"
+        },
+        "proposal-waste-management": {
+          "type": "boolean"
+        },
+        "waste-management": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/waste-management"
+          },
+          "minItems": 1
+        },
+        "waste-streams": {
+          "$ref": "#/definitions/waste-streams"
+        }
+      },
+      "required": [
+        "site-activity-details",
+        "proposal-waste-management"
+      ]
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
+    },
+    "applicant-contact": {
+      "type": "object",
+      "properties": {
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "applicant-reference",
+        "contact-details"
+      ]
     }
   }
 }
