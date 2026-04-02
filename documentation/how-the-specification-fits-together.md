@@ -133,9 +133,3 @@ These are useful reading views, but they are generated from the underlying speci
 For example:
 
 - [Full planning permission compiled view](https://github.com/digital-land/planning-application-data-specification/blob/main/generated/info_model/application/full.md)
-
-## Short version you can reuse
-
-If useful, you can send suppliers the following summary:
-
-> Every field in the specification has a field definition. That definition shows the field datatype. If the field uses a controlled list, the same definition also names the codelist. The easiest way to browse these is via the specification viewer, especially the [fields](https://digital-land.github.io/planning-application-data-specification/fields/) and [codelists](https://digital-land.github.io/planning-application-data-specification/codelist/) sections. The underlying canonical files are in the GitHub repository under [`specification/field`](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/field) and [`specification/codelist`](https://github.com/digital-land/planning-application-data-specification/tree/main/specification/codelist).
