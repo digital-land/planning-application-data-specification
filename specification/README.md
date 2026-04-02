@@ -13,6 +13,8 @@ Together, these specifications describe **what data is required at different sta
 
 This README explains the different elements in this folder, how they fit together, and why they exist.
 
+For a shorter primer on how the specification fits together and where to find fields, datatypes and codelists, see [how the specification fits together](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/how-the-specification-fits-together.md).
+
 ---
 
 ## Two stages, two models

@@ -18,6 +18,8 @@ These elements are then used to generate the following outputs
 * [compiled specifications](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/info_model/application) for each application type and sub-type
 * a [spreadsheet](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/spreadsheet) view of each application type
 
+If you are new to the repository, start with [how the specification fits together](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/how-the-specification-fits-together.md).
+
 ## CLI
 
 The main command line entry point is [spec.py](spec.py).
