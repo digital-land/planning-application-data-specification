@@ -3,6 +3,69 @@ from click.testing import CliRunner
 import spec
 
 
+def test_summary_command_prints_loaded_record_counts(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "load_content",
+        lambda: {
+            "application": {"a": {}, "b": {}},
+            "module": {"m1": {}, "m2": {}, "m3": {}},
+            "field": {"f1": {}},
+            "component": {"c1": {}, "c2": {}},
+            "codelist": {"cl1": {}},
+            "dataset": {"d1": {}, "d2": {}, "d3": {}, "d4": {}},
+            "specification": {"s1": {}},
+        },
+    )
+
+    result = runner.invoke(spec.cli, ["summary"])
+
+    assert result.exit_code == 0
+    assert result.output == (
+        "applications: 2\n"
+        "modules: 3\n"
+        "fields: 1\n"
+        "components: 2\n"
+        "codelists: 1\n"
+        "datasets: 4\n"
+        "specifications: 1\n"
+    )
+
+
+def test_summary_command_supports_markdown_output(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "load_content",
+        lambda: {
+            "application": {"a": {}},
+            "module": {"m1": {}},
+            "field": {"f1": {}, "f2": {}},
+            "component": {},
+            "codelist": {"cl1": {}, "cl2": {}},
+            "dataset": {"d1": {}},
+            "specification": {"s1": {}, "s2": {}},
+        },
+    )
+
+    result = runner.invoke(spec.cli, ["summary", "--markdown"])
+
+    assert result.exit_code == 0
+    assert result.output == (
+        "# Specification summary\n\n"
+        "- **Applications**: 1\n"
+        "- **Modules**: 1\n"
+        "- **Fields**: 2\n"
+        "- **Components**: 0\n"
+        "- **Codelists**: 2\n"
+        "- **Datasets**: 1\n"
+        "- **Specifications**: 2\n"
+    )
+
+
 def test_forms_command_lists_matching_2025_forms(monkeypatch):
     runner = CliRunner()
 

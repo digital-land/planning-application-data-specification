@@ -27,6 +27,31 @@ from bin.forms import (
 from bin.loader import load_content, load_needs
 
 
+def get_spec_summary_counts():
+    spec = load_content()
+    keys = [
+        ("applications", "application"),
+        ("modules", "module"),
+        ("fields", "field"),
+        ("components", "component"),
+        ("codelists", "codelist"),
+        ("datasets", "dataset"),
+        ("specifications", "specification"),
+    ]
+    return [(label, len(spec.get(table_name, {}) or {})) for label, table_name in keys]
+
+
+def format_spec_summary(markdown=False):
+    counts = get_spec_summary_counts()
+
+    if markdown:
+        lines = ["# Specification summary", ""]
+        lines.extend(f"- **{label.capitalize()}**: {count}" for label, count in counts)
+        return "\n".join(lines)
+
+    return "\n".join(f"{label}: {count}" for label, count in counts)
+
+
 def print_2025_form_urls(application_type):
     forms_path = PROJECT_ROOT / FORMS_2025_FILEPATH
     rows = read_csv(str(forms_path), as_dict=True)
@@ -251,6 +276,13 @@ def component_usage(component_ref):
 def decision():
     """Decision-stage reporting."""
     pass
+
+
+@cli.command(name="summary")
+@click.option("--markdown", is_flag=True, help="Print the summary in markdown format")
+def spec_summary(markdown):
+    """Print a summary of loaded specification record counts."""
+    click.echo(format_spec_summary(markdown=markdown))
 
 
 @decision.command()
