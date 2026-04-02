@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: string
+datatype: datetime
 description: The date when the decision was made, in YYYY-MM-DD format
 end-date: ''
 entry-date: 2025-06-12
