@@ -1,4 +1,34 @@
 
+<a name="v0.1.69"></a>
+## [v0.1.69](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.68...v0.1.69) (2026-04-07)
+
+Tooling and documentation
+
+### ⚒️ Tooling
+
+* Add spec summary command with markdown output (commit [12cba703](https://github.com/digital-land/planning-application-data-specification/commit/12cba7038a08772ad011c97a00b43695cef1ba6c))
+* Refactor shared record lookup helpers in forms and modules (commit [e13a7d88](https://github.com/digital-land/planning-application-data-specification/commit/e13a7d8818a58e0b68e6ee08997307f00301a5e0))
+* remove legacy explorer code (commit [59ce32dc](https://github.com/digital-land/planning-application-data-specification/commit/59ce32dc69b309e40f7100630a9e97137c79c7bc))
+* add couple of markdown format helpers (commit [602b83c9](https://github.com/digital-land/planning-application-data-specification/commit/602b83c95e3507d2b5189eb049f3def56b7dbbe8))
+* extract markdown helpers into markdown utils (commit [49b0bdc1](https://github.com/digital-land/planning-application-data-specification/commit/49b0bdc1251d1e32a25f85d9bb9bb9f4c5319019))
+* group 2025 forms analysis commands under spec cli (commit [927c6765](https://github.com/digital-land/planning-application-data-specification/commit/927c676565c39e7dbd44387d6b9052ea1e68ce8c))
+* add analysed 2025 module and form lookup commands (commit [cb4b496f](https://github.com/digital-land/planning-application-data-specification/commit/cb4b496f398191d10d362fcf8101c1f7c1817e5d))
+* add 2025 forms lookup commands to spec cli (commit [805d04b2](https://github.com/digital-land/planning-application-data-specification/commit/805d04b2305f6d8a90622db7890759395d942278))
+
+### 𝌭 Model changes
+
+* correct datatype of decision-date (commit [226d4b90](https://github.com/digital-land/planning-application-data-specification/commit/226d4b90370bfb90e472596dd07c178e8790ddfc))
+
+### 🐛 Bug Fixes
+
+* site field was missing from the planning-application dataset in the spec (commit [d3b7da13](https://github.com/digital-land/planning-application-data-specification/commit/d3b7da13d641f1616bf597417e41c40e83db734c))
+
+### 📚 Documentation
+
+* remove repetitive section (commit [8db42455](https://github.com/digital-land/planning-application-data-specification/commit/8db42455a4796b5132dd3dc974047a52045eff74))
+* explainer on How the specification fits together (commit [6dd623a3](https://github.com/digital-land/planning-application-data-specification/commit/6dd623a3fba7f2f5a78e5a66d10169be8cd6d87f))
+
+
 <a name="v0.1.68"></a>
 ## [v0.1.68](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.67...v0.1.68) (2026-03-27)
 
