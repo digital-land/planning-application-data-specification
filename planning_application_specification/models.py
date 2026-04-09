@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Optional, Union
 
 
 @dataclass
@@ -13,7 +13,7 @@ class FieldDef:
     description: str = ""
     notes: str = ""
     component: Optional[str] = None
-    resolved_component: Optional["ComponentInstance"] = None
+    resolved_component: Optional["ComponentUsage"] = None
     cardinality: str = "1"
     entry_date: Optional[str] = None
     end_date: Optional[str] = None
@@ -51,15 +51,15 @@ class FieldDef:
 
 
 @dataclass
-class FieldInstance:
+class FieldUsage:
     original: FieldDef
     overrides: Dict[str, Any]
 
 
 @dataclass
-class ComponentInstance:
+class ComponentUsage:
     component: "ComponentDef"
-    referenced_by_field: Optional[FieldInstance] = None
+    referenced_by_field: Optional[Union["FieldUsage", FieldDef]] = None
 
 
 @dataclass
@@ -68,8 +68,8 @@ class ComponentDef:
     name: str
     description: str = ""
     items: List[Any] = field(default_factory=list)
-    fields: List[FieldDef] = field(default_factory=list)
-    components: List["ComponentDef"] = field(default_factory=list)
+    field_usages: List[FieldUsage] = field(default_factory=list)
+    component_usages: List["ComponentUsage"] = field(default_factory=list)
     entry_date: Optional[str] = None
     end_date: Optional[str] = None
 
@@ -95,7 +95,7 @@ class ComponentDef:
             original_field_def = field_defs.get(field_ref) if field_defs else None
 
             if original_field_def:
-                field_instance = FieldInstance(
+                field_usage = FieldUsage(
                     original=original_field_def, overrides=field_item
                 )
                 if original_field_def.component:
@@ -104,18 +104,18 @@ class ComponentDef:
                     )
                     if component_item:
                         items.append(
-                            ComponentInstance(
+                            ComponentUsage(
                                 component=cls.from_spec(
                                     component_item, field_defs, component_index
                                 ),
-                                referenced_by_field=field_instance,
+                                referenced_by_field=field_usage,
                             )
                         )
                 else:
-                    items.append(field_instance)
+                    items.append(field_usage)
 
-        fields = [item for item in items if isinstance(item, FieldDef)]
-        components = [item for item in items if isinstance(item, ComponentDef)]
+        field_usages = [item for item in items if isinstance(item, FieldUsage)]
+        component_usages = [item for item in items if isinstance(item, ComponentUsage)]
 
         entry_date = component_def.get("entry-date")
         end_date = component_def.get("end-date")
@@ -124,8 +124,8 @@ class ComponentDef:
             name=name,
             description=description,
             items=items,
-            fields=fields,
-            components=components,
+            field_usages=field_usages,
+            component_usages=component_usages,
             entry_date=entry_date,
             end_date=end_date,
         )
@@ -137,8 +137,8 @@ class ModuleDef:
     name: str
     description: str = ""
     items: List[Any] = field(default_factory=list)
-    fields: List[FieldDef] = field(default_factory=list)
-    components: List[ComponentDef] = field(default_factory=list)
+    field_usages: List[FieldUsage] = field(default_factory=list)
+    component_usages: List[ComponentUsage] = field(default_factory=list)
     entry_date: Optional[str] = None
     end_date: Optional[str] = None
 
@@ -158,8 +158,8 @@ class ModuleDef:
         raw_fields = module_content.get("fields") or []
         items = resolve_items(raw_fields, field_defs, component_defs)
 
-        fields = [item for item in items if isinstance(item, FieldDef)]
-        components = [item for item in items if isinstance(item, ComponentDef)]
+        field_usages = [item for item in items if isinstance(item, FieldUsage)]
+        component_usages = [item for item in items if isinstance(item, ComponentUsage)]
 
         entry_date = module_content.get("entry-date")
         end_date = module_content.get("end-date")
@@ -169,8 +169,8 @@ class ModuleDef:
             name=name,
             description=description,
             items=items,
-            fields=fields,
-            components=components,
+            field_usages=field_usages,
+            component_usages=component_usages,
             entry_date=entry_date,
             end_date=end_date,
         )
@@ -183,8 +183,8 @@ class DatasetDef:
     name: str
     description: str = ""
     items: List[Any] = field(default_factory=list)
-    fields: List[Any] = field(default_factory=list)
-    components: List[ComponentDef] = field(default_factory=list)
+    field_usages: List[Any] = field(default_factory=list)
+    component_usages: List[ComponentUsage] = field(default_factory=list)
     entry_date: Optional[str] = None
     start_date: Optional[str] = None
     end_date: Optional[str] = None
@@ -206,7 +206,9 @@ class DatasetDef:
         raw_fields = dataset_content.get("fields") or []
         items = resolve_items(raw_fields, field_defs, component_defs)
 
-        components = [item.component for item in items if isinstance(item, ComponentInstance)]
+        component_usages = [
+            item for item in items if isinstance(item, ComponentUsage)
+        ]
 
         entry_date = dataset_content.get("entry-date")
         start_date = dataset_content.get("start-date")
@@ -218,8 +220,8 @@ class DatasetDef:
             name=name,
             description=description,
             items=items,
-            fields=items,
-            components=components,
+            field_usages=items,
+            component_usages=component_usages,
             entry_date=entry_date,
             start_date=start_date,
             end_date=end_date,
@@ -241,8 +243,8 @@ class ApplicationDef:
     start_date: Optional[str] = None
     end_date: Optional[str] = None
     items: List[Any] = field(default_factory=list)
-    fields: List[FieldDef] = field(default_factory=list)
-    components: List[ComponentDef] = field(default_factory=list)
+    field_usages: List[FieldUsage] = field(default_factory=list)
+    component_usages: List[ComponentUsage] = field(default_factory=list)
     modules: List[str] = field(default_factory=list)
     resolved_modules: List[ModuleDef] = field(default_factory=list)
 
@@ -271,8 +273,8 @@ class ApplicationDef:
         raw_fields = app_content.get("fields") or []
         items = resolve_items(raw_fields, field_defs, component_defs)
 
-        fields = [item for item in items if isinstance(item, FieldDef)]
-        components = [item for item in items if isinstance(item, ComponentDef)]
+        field_usages = [item for item in items if isinstance(item, FieldUsage)]
+        component_usages = [item for item in items if isinstance(item, ComponentUsage)]
 
         modules = [
             module_defs.get(module["module"]) for module in (app_content.get("modules") or [])
@@ -292,8 +294,8 @@ class ApplicationDef:
             start_date=start_date,
             end_date=end_date,
             items=items,
-            fields=fields,
-            components=components,
+            field_usages=field_usages,
+            component_usages=component_usages,
             modules=modules,
         )
 
@@ -305,18 +307,23 @@ def resolve_items(raw_fields, field_defs, component_defs):
         original_field_def = field_defs.get(field_ref) if field_defs else None
 
         if original_field_def:
-            field_instance = FieldInstance(
+            field_usage = FieldUsage(
                 original=original_field_def, overrides=field_item
             )
             if original_field_def.component:
                 component_def = component_defs.get(original_field_def.component)
                 if component_def:
                     items.append(
-                        ComponentInstance(
+                        ComponentUsage(
                             component=component_def,
-                            referenced_by_field=field_instance,
+                            referenced_by_field=field_usage,
                         )
                     )
             else:
-                items.append(field_instance)
+                items.append(field_usage)
     return items
+
+
+# Temporary aliases while the package surface settles.
+FieldInstance = FieldUsage
+ComponentInstance = ComponentUsage

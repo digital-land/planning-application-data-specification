@@ -6,7 +6,7 @@ from pathlib import Path
 import frontmatter
 
 from .applications import get_application_module_refs
-from .models import ApplicationDef, ComponentDef, ComponentInstance, FieldDef, ModuleDef
+from .models import ApplicationDef, ComponentDef, ComponentUsage, FieldDef, ModuleDef
 
 
 def make_tables():
@@ -108,7 +108,7 @@ def load_specification_model(root_path: str | Path | None = None):
         if field.component:
             component = component_defs.get(field.component)
             if component:
-                field.resolved_component = ComponentInstance(
+                field.resolved_component = ComponentUsage(
                     component=component, referenced_by_field=field
                 )
 

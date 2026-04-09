@@ -43,9 +43,10 @@ The implemented package currently supports:
 
 - loading the specification model from a local repo checkout
 - canonical codelist lookup
+- canonical field, component and module lookup
 - applicable codelist filtering using selection context
 
-It does not yet provide the planned field, component, module or resolved field query APIs.
+It does not yet provide resolved field query APIs.
 
 ## API index
 
@@ -97,6 +98,84 @@ Example:
 ```python
 tenure_type = spec.codelist("tenure-type")
 ```
+
+### `Specification.field(ref: str)`
+
+Return a canonical field definition by reference.
+
+Arguments:
+
+- `ref`: field reference, for example `"description"`
+
+Returns:
+
+- the compiled field definition object
+
+Raises:
+
+- `KeyError` if the field is not defined
+
+Example:
+
+```python
+field = spec.field("description")
+```
+
+### `Specification.component(ref: str)`
+
+Return a canonical component definition by reference.
+
+Arguments:
+
+- `ref`: component reference, for example `"bedroom-count"`
+
+Returns:
+
+- the compiled component definition object
+
+Raises:
+
+- `KeyError` if the component is not defined
+
+Example:
+
+```python
+component = spec.component("bedroom-count")
+```
+
+Returned component definitions currently expose:
+
+- `items`: ordered mixed usage list
+- `field_usages`: field usages contained by the component
+- `component_usages`: nested component usages contained by the component
+
+### `Specification.module(ref: str)`
+
+Return a canonical module definition by reference.
+
+Arguments:
+
+- `ref`: module reference, for example `"proposal-details"`
+
+Returns:
+
+- the compiled module definition object
+
+Raises:
+
+- `KeyError` if the module is not defined
+
+Example:
+
+```python
+module = spec.module("proposal-details")
+```
+
+Returned module definitions currently expose:
+
+- `items`: ordered mixed usage list
+- `field_usages`: field usages contained by the module
+- `component_usages`: component usages contained by the module
 
 ### `Specification` attributes
 
@@ -201,6 +280,5 @@ These modules are currently part of the implementation surface for migration wor
 
 Expected next additions include:
 
-- canonical `field`, `component` and `module` lookups
 - `spec.resolve_field(...)`
 - clearer public distinction between canonical definitions, usages and resolved views

@@ -37,3 +37,32 @@ def test_applicable_codelist_filters_by_profile_and_application_type(project_roo
     assert "london-affordable-rent" in item_refs
     assert "market-housing" not in item_refs
     assert "social-rented" not in item_refs
+
+
+def test_canonical_field_lookup_returns_field_definition(project_root):
+    spec = Specification.load(project_root)
+
+    field = spec.field("description")
+
+    assert field.ref == "description"
+    assert field.name == "Description"
+
+
+def test_canonical_component_lookup_returns_component_definition(project_root):
+    spec = Specification.load(project_root)
+
+    component = spec.component("bedroom-count")
+
+    assert component.ref == "bedroom-count"
+    assert component.name == "Bedroom count"
+    assert len(component.field_usages) > 0
+
+
+def test_canonical_module_lookup_returns_module_definition(project_root):
+    spec = Specification.load(project_root)
+
+    module = spec.module("proposal-details")
+
+    assert module.ref == "proposal-details"
+    assert module.name == "Description of the proposal"
+    assert len(module.field_usages) > 0

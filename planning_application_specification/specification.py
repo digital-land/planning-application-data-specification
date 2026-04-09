@@ -121,6 +121,24 @@ class Specification:
             items=items,
         )
 
+    def field(self, ref: str):
+        field = self.fields.get(ref)
+        if not field:
+            raise KeyError(f"Unknown field: {ref}")
+        return field
+
+    def component(self, ref: str):
+        component = self.components.get(ref)
+        if not component:
+            raise KeyError(f"Unknown component: {ref}")
+        return component
+
+    def module(self, ref: str):
+        module = self.modules.get(ref)
+        if not module:
+            raise KeyError(f"Unknown module: {ref}")
+        return module
+
     def _load_csv_rows(self, relative_path: str) -> list[dict]:
         csv_path = self.source_path / relative_path
         with csv_path.open(newline="", encoding="utf-8") as csv_file:
