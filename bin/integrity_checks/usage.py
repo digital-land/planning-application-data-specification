@@ -2,6 +2,7 @@ from pathlib import Path
 
 from csv_helpers import read_csv_with_headers
 from integrity_checks.utils import print_error, run_checks
+from planning_application_specification import Specification
 from utils import check_kebab_case
 
 
@@ -41,26 +42,16 @@ def _iter_local_usage_tables(usage_tables):
 
 
 def _load_codelist_keys(codelists, codelist_name):
-    for _path, meta in codelists.items():
-        if meta.get("codelist") != codelist_name:
-            continue
-
-        source_path = _source_path(meta)
-        if not source_path or not source_path.exists():
-            return set()
-
-        headers, rows = read_csv_with_headers(source_path)
-        key_field = meta.get("key-field")
-        if not key_field or key_field not in headers:
-            return set()
-
+    _ = codelists
+    try:
+        spec = Specification.load()
         return {
-            (row.get(key_field) or "").strip()
-            for row in rows
-            if (row.get(key_field) or "").strip()
+            (item.reference or "").strip()
+            for item in spec.codelist(codelist_name).items
+            if (item.reference or "").strip()
         }
-
-    return set()
+    except (FileNotFoundError, KeyError):
+        return set()
 
 
 def check_usage_names(usage_tables):
