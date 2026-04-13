@@ -6,7 +6,10 @@ entry-date: 2025-07-02
 fields:
 - field: development-phase
   required: true
-- field: development-description
+- description: Brief description of the development, including main oils, gases,
+    and machinery
+  field: description
+  name: Development description
   required: true
 - field: quantity-cubic-metres
   required: true

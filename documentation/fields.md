@@ -39,6 +39,14 @@ Avoids context-dependent logic in the field definition
 **Modules can override field attributes**
 But this should be done sparingly. It's better to create distinct field names for significantly different uses. [Example needed]
 
+In practice this is most useful for presentation text:
+
+* override `name` when a reused field needs a different label in a specific module
+* override `description` when the module needs tighter context-specific guidance
+* use `notes` for extra implementation guidance rather than for labels
+
+For example, a shared `description` field can be reused in different modules while each module supplies the label and wording that fit that context.
+
 **Use `component` for substructures**
 Semantically accurate for nested objects (like Person, Document, etc.)
 

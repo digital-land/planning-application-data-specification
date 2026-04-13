@@ -12,7 +12,10 @@ fields:
       - hh
       - lbc
       - outline
-  field: proposal-description
+  description: A description of what is being proposed, including the development,
+    works, or change of use
+  field: description
+  name: Proposal description
   required: true
 - applies-if:
     application-type:
@@ -89,7 +92,7 @@ fields:
 module: proposal-details
 name: Description of the proposal
 rules:
-- rule: proposal-description must be clear and concise
+- rule: description must be clear and concise
 - rule: proposal-started-date must not be in the future
 - rule: proposal-completed-date must be after proposal-started-date if both provided
 - rule: reserved-matters must be valid types from the codelist

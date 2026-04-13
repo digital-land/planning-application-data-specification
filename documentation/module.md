@@ -53,6 +53,17 @@ Each field item will need include the requirement level and, probably, a level o
 **Modules should reference fields by ID**
 With the field definitions living elsewhere.
 
+**Modules may override field presentation text where needed**
+Module field entries can override `name`, `description`, and `notes` from the shared field definition when a reused field needs clearer wording in a specific context.
+
+Use this sparingly:
+
+* use `name` when the field label shown in the module should differ from the shared field name
+* use `description` when the module needs context-specific help text or scope
+* use `notes` for extra implementation guidance that should not change the label or core description
+
+This allows a shared field such as `description` to be reused across modules without losing the label or guidance that makes sense in that module.
+
 **Use of `applies-if`**
 Use of `applies-if` allows conditional inclusion without bloating the model.
 
@@ -83,6 +94,21 @@ fields:
   - field: contact-details
     required: true
 entry-date: 2025-05-30
+end-date: ''
+```
+
+A module reusing a shared field with module-specific label and help text
+```yaml
+module: proposal-details
+name: Description of the proposal
+description: |
+  What development, works or change of use is proposed
+fields:
+  - field: description
+    name: Proposal description
+    description: A description of what is being proposed, including the development, works, or change of use
+    required: true
+entry-date: 2025-06-12
 end-date: ''
 ```
 

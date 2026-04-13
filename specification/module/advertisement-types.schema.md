@@ -3,7 +3,9 @@ description: What type of advertisements are proposed and how many there will be
 end-date: ''
 entry-date: 2025-07-08
 fields:
-- field: advertisement-proposal-description
+- description: Description of the advertisement proposal
+  field: description
+  name: Advertisement proposal description
   required: true
 - field: advertisement-proposal-type
   required: true
