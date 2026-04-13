@@ -52,7 +52,7 @@ The implemented package currently supports:
 - canonical field, component and module lookup
 - applicable codelist filtering using selection context
 - resolved field lookup for module or component context with static override merging
-- resolved module item lookup that preserves mixed module order for plain fields and component-reference rows
+- resolved container item lookup that preserves mixed authored order for plain fields and component-reference rows
 
 Current V1 boundary:
 
@@ -72,7 +72,7 @@ Use contextual lookup when you want the specification as it applies in a particu
 
 - `spec.codelist(ref).applicable(selection=...)` when codelist items may vary by profile or application type
 - `spec.resolve_field(...)` when a field may carry local usage overrides or conditional applicability inside a module or component
-- `spec.resolve_module_items(...)` when you need the ordered mixed rows of a module, including top-level rows that point to nested components
+- `spec.resolve_container_items(...)` when you need the ordered mixed rows of a module or component as authored
 
 ## API index
 
@@ -256,15 +256,16 @@ resolved = spec.resolve_field(
 )
 ```
 
-### `Specification.resolve_module_items(module: str, selection: SelectionContext | None = None) -> tuple[ResolvedField | ResolvedComponentReference, ...]`
+### `Specification.resolve_container_items(module: str | None = None, component: str | None = None, selection: SelectionContext | None = None) -> tuple[ResolvedField | ResolvedComponentReference, ...]`
 
-Return the ordered resolved items for a module.
+Return the ordered resolved items for a module or component.
 
-Use this when you need the module as authored, rather than a direct lookup by field reference.
+Use this when you need the container as authored, rather than a direct lookup by field reference.
 
 Current behaviour:
 
-- preserves module item order
+- requires exactly one of `module` or `component`
+- preserves authored item order
 - returns a mixed tuple of `ResolvedField` and `ResolvedComponentReference`
 - applies the same `application-type` based `applies-if` handling used by `resolve_field(...)`
 - keeps component-reference rows visible as first-class items rather than dropping them during resolution
@@ -272,9 +273,13 @@ Current behaviour:
 Example:
 
 ```python
-items = spec.resolve_module_items(
-    "tree-work-details",
+items = spec.resolve_container_items(
+    module="tree-work-details",
     selection=SelectionContext(application_type="notice-trees-in-con-area"),
+)
+
+items = spec.resolve_container_items(
+    component="bedroom-count",
 )
 ```
 
@@ -314,7 +319,7 @@ Attributes:
 
 ## `ResolvedComponentReference`
 
-Represents a top-level module row that points to a nested component.
+Represents a container row that points to a nested component.
 
 This is a contextual view of the referencing field usage plus the target component definition.
 

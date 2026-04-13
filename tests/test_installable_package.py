@@ -119,10 +119,10 @@ def test_resolve_field_respects_applies_if_selection(project_root):
     assert isinstance(applicable.required_if, type(None))
 
 
-def test_resolve_module_items_returns_mixed_items_in_order(project_root):
+def test_resolve_container_items_returns_mixed_module_items_in_order(project_root):
     spec = Specification.load(project_root)
 
-    items = spec.resolve_module_items("tree-work-details")
+    items = spec.resolve_container_items(module="tree-work-details")
 
     assert len(items) == 2
     assert isinstance(items[0], ResolvedField)
@@ -134,15 +134,27 @@ def test_resolve_module_items_returns_mixed_items_in_order(project_root):
     assert items[1].container_ref == "tree-work-details"
 
 
-def test_resolve_module_items_applies_selection_to_component_reference_rows(project_root):
+def test_resolve_container_items_returns_component_items(project_root):
     spec = Specification.load(project_root)
 
-    applicable_items = spec.resolve_module_items(
-        "proposal-details",
+    items = spec.resolve_container_items(component="bedroom-count")
+
+    assert len(items) > 0
+    assert all(isinstance(item, ResolvedField) for item in items)
+    assert any(item.ref == "no-bedrooms-unknown" for item in items)
+    assert all(item.container_kind == "component" for item in items)
+    assert all(item.container_ref == "bedroom-count" for item in items)
+
+
+def test_resolve_container_items_applies_selection_to_component_reference_rows(project_root):
+    spec = Specification.load(project_root)
+
+    applicable_items = spec.resolve_container_items(
+        module="proposal-details",
         selection=SelectionContext(application_type="reserved-matters"),
     )
-    not_applicable_items = spec.resolve_module_items(
-        "proposal-details",
+    not_applicable_items = spec.resolve_container_items(
+        module="proposal-details",
         selection=SelectionContext(application_type="full"),
     )
 
@@ -154,3 +166,21 @@ def test_resolve_module_items_applies_selection_to_component_reference_rows(proj
     assert isinstance(applicable, ResolvedComponentReference)
     assert applicable.applies is True
     assert not_applicable.applies is False
+
+
+def test_resolve_container_items_requires_exactly_one_container(project_root):
+    spec = Specification.load(project_root)
+
+    try:
+        spec.resolve_container_items()
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Expected ValueError when no container is provided")
+
+    try:
+        spec.resolve_container_items(module="proposal-details", component="bedroom-count")
+    except ValueError:
+        pass
+    else:
+        raise AssertionError("Expected ValueError when both containers are provided")

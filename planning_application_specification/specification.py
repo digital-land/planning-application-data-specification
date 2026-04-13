@@ -237,21 +237,35 @@ class Specification:
             selection=selection,
         )
 
-    def resolve_module_items(
+    def resolve_container_items(
         self,
-        module: str,
+        module: str | None = None,
+        component: str | None = None,
         selection: SelectionContext | None = None,
     ) -> tuple[ResolvedField | ResolvedComponentReference, ...]:
-        module_def = self.module(module)
+        if bool(module) == bool(component):
+            raise ValueError(
+                "resolve_container_items(...) requires exactly one of module=... or component=..."
+            )
+
+        if module:
+            container_def = self.module(module)
+            container_ref = module
+            container_kind = "module"
+        else:
+            container_def = self.component(component)
+            container_ref = component
+            container_kind = "component"
+
         resolved_items = []
 
-        for item in module_def.items:
+        for item in container_def.items:
             if isinstance(item, FieldUsage):
                 resolved_items.append(
                     self._build_resolved_field(
                         field_usage=item,
-                        container_ref=module,
-                        container_kind="module",
+                        container_ref=container_ref,
+                        container_kind=container_kind,
                         selection=selection,
                     )
                 )
@@ -259,8 +273,8 @@ class Specification:
                 resolved_items.append(
                     self._build_resolved_component_reference(
                         component_usage=item,
-                        container_ref=module,
-                        container_kind="module",
+                        container_ref=container_ref,
+                        container_kind=container_kind,
                         selection=selection,
                     )
                 )
