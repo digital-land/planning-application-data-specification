@@ -2,13 +2,6 @@ import os
 
 from applications import get_application_module_refs
 from csv_helpers import csv_to_markdown
-from fields import (
-    format_field_display_name,
-    get_applicable_app_types,
-    get_notes_for_info_model,
-    get_requirement_str,
-    is_field_applicable_to_app_type,
-)
 from modules import (
     collect_related_components_bfs,
     get_codelists_for_module,
@@ -17,79 +10,6 @@ from modules import (
 from planning_application_specification import Specification
 from planning_application_specification.specification import SelectionContext
 from utils import save_string_to_file
-
-
-def format_fields_table(field_entries, fields_spec, table_type="main", app_type=None):
-    """
-    Generic formatter for field tables.
-    table_type: "main" or "component"
-    field_entries: list of field entry dicts (module or component fields)
-    """
-    lines = []
-    if table_type == "main":
-        if app_type:
-            lines = [
-                "| reference | name | description | requirement | notes |",
-                "| --- | --- | --- | --- | --- |",
-            ]
-        else:
-            lines = [
-                "| reference | name | description | only for application | requirement | notes |",
-                "| --- | --- | --- | --- | --- | --- |",
-            ]
-    else:  # component table
-        # include application column only if any field has applies-if
-        has_applies_if = any("applies-if" in fe for fe in field_entries)
-        if has_applies_if:
-            lines = [
-                "field | name | description | required | notes | only for application",
-                "-- | -- | -- | -- | -- | --",
-            ]
-        else:
-            lines = [
-                "field | name | description | required | notes",
-                "-- | -- | -- | -- | --",
-            ]
-
-    for field_entry in field_entries:
-        if app_type:
-            if not is_field_applicable_to_app_type(field_entry, app_type):
-                continue
-        ref = field_entry["field"]
-        field_def = fields_spec.get(ref, {})
-        name = format_field_display_name(field_entry, field_def)
-        description = field_entry.get("description") or field_def.get("description", "")
-        only_for = get_applicable_app_types(field_entry)
-        only_for_md_str = ", ".join(only_for) if isinstance(only_for, list) else ""
-        requirement = get_requirement_str(field_entry)
-        notes = get_notes_for_info_model(field_entry, field_def)
-        # ensure notes is a string for joining
-        if isinstance(notes, (list, tuple)):
-            notes_md_str = ". ".join(str(n) for n in notes)
-        else:
-            notes_md_str = str(notes or "")
-
-        if table_type == "main":
-            if app_type:
-                lines.append(
-                    f"| {ref} | {name} | {description} | {requirement} | {notes_md_str} |"
-                )
-            else:
-                lines.append(
-                    f"| {ref} | {name} | {description} | {only_for_md_str} | {requirement} | {notes_md_str} |"
-                )
-        else:
-            if len(lines[0].split("|")) > 5:
-                # has only-for column
-                lines.append(
-                    f"{ref} | {name} | {description} | {requirement} | {notes_md_str} | {only_for_md_str}"
-                )
-            else:
-                lines.append(
-                    f"{ref} | {name} | {description} | {requirement} | {notes_md_str}"
-                )
-
-    return "\n".join(lines)
 
 
 def format_resolved_field_display_name(resolved_field):
@@ -119,6 +39,20 @@ def get_notes_for_resolved_field(field_def, resolved_field):
     return notes
 
 
+def get_only_for_application_str(resolved_item):
+    applies_if = resolved_item.usage.applies_if
+    if not isinstance(applies_if, dict):
+        return ""
+
+    app_type_condition = applies_if.get("application-type")
+    if isinstance(app_type_condition, dict):
+        allowed = app_type_condition.get("in")
+        if isinstance(allowed, list):
+            return ", ".join(allowed)
+
+    return ""
+
+
 def format_main_module_table(module, fields_spec, app_type=None, package_spec=None):
     lines = []
     if app_type:
@@ -137,8 +71,8 @@ def format_main_module_table(module, fields_spec, app_type=None, package_spec=No
 
     selection = SelectionContext(application_type=app_type) if app_type else None
 
-    for resolved in package_spec.resolve_module_items(
-        module["module"],
+    for resolved in package_spec.resolve_container_items(
+        module=module["module"],
         selection=selection,
     ):
         if app_type and not resolved.applies:
@@ -151,14 +85,7 @@ def format_main_module_table(module, fields_spec, app_type=None, package_spec=No
         description = resolved.description or ""
         requirement = "MUST" if resolved.required else "MAY"
         notes = get_notes_for_resolved_field(field_def, resolved)
-        only_for = resolved.usage.applies_if
-        only_for_md_str = ""
-        if isinstance(only_for, dict):
-            app_type_condition = only_for.get("application-type")
-            if isinstance(app_type_condition, dict):
-                allowed = app_type_condition.get("in")
-                if isinstance(allowed, list):
-                    only_for_md_str = ", ".join(allowed)
+        only_for_md_str = get_only_for_application_str(resolved)
         notes_md_str = ". ".join(str(n) for n in notes) if notes else ""
 
         if app_type:
@@ -173,13 +100,51 @@ def format_main_module_table(module, fields_spec, app_type=None, package_spec=No
     return "\n".join(lines)
 
 
-def format_component_table(component, fields_spec, app_type=None):
-    return format_fields_table(
-        component.get("fields", []),
-        fields_spec,
-        table_type="component",
-        app_type=app_type,
+def format_component_table(component, fields_spec, app_type=None, package_spec=None):
+    if package_spec is None:
+        package_spec = Specification.load()
+
+    selection = SelectionContext(application_type=app_type) if app_type else None
+    resolved_items = package_spec.resolve_container_items(
+        component=component["component"],
+        selection=selection,
     )
+
+    has_applies_if = any(item.usage.applies_if for item in resolved_items)
+    if has_applies_if:
+        lines = [
+            "field | name | description | required | notes | only for application",
+            "-- | -- | -- | -- | -- | --",
+        ]
+    else:
+        lines = [
+            "field | name | description | required | notes",
+            "-- | -- | -- | -- | --",
+        ]
+
+    for resolved in resolved_items:
+        if app_type and not resolved.applies:
+            continue
+
+        ref = resolved.ref
+        field_def = fields_spec.get(ref, {})
+        name = format_resolved_field_display_name(resolved)
+        description = resolved.description or ""
+        requirement = "MUST" if resolved.required else "MAY"
+        notes = get_notes_for_resolved_field(field_def, resolved)
+        notes_md_str = ". ".join(str(n) for n in notes) if notes else ""
+        only_for_md_str = get_only_for_application_str(resolved)
+
+        if has_applies_if:
+            lines.append(
+                f"{ref} | {name} | {description} | {requirement} | {notes_md_str} | {only_for_md_str}"
+            )
+        else:
+            lines.append(
+                f"{ref} | {name} | {description} | {requirement} | {notes_md_str}"
+            )
+
+    return "\n".join(lines)
 
 
 def format_rules_md_str(rules):
@@ -204,6 +169,8 @@ def generate_module(module_ref, specification, app_type=None, package_spec=None)
     if not module_parts:
         print(f"Module '{module_ref}' not found in specification.")
         return None
+    if package_spec is None:
+        package_spec = Specification.load()
     module = module_parts.get("module", {})
     related_components = module_parts.get("related-components", {})
     rules = module_parts.get("rules", [])
@@ -228,7 +195,13 @@ def generate_module(module_ref, specification, app_type=None, package_spec=None)
     for cname, component in related_components.items():
         out.append(f"\n**{component.get('name', cname)} component**\n")
         out.append(
-            format_component_table(component, fields_spec, app_type=app_type) + "\n"
+            format_component_table(
+                component,
+                fields_spec,
+                app_type=app_type,
+                package_spec=package_spec,
+            )
+            + "\n"
         )
     # Validation rules
     out.append(format_rules_md_str(rules))
@@ -350,8 +323,14 @@ def generate_application_fields_section(specification, app_type=None):
         else f"{heading_title} fields"
     )
     out.append(f"**{module_label} module**\n")
+    package_spec = Specification.load()
     out.append(
-        format_component_table(application_component, fields_spec, app_type=app_type)
+        format_component_table(
+            application_component,
+            fields_spec,
+            app_type=app_type,
+            package_spec=package_spec,
+        )
         + "\n"
     )
 
@@ -364,7 +343,13 @@ def generate_application_fields_section(specification, app_type=None):
     for cname, component in related_components.items():
         out.append(f"\n**{component.get('name', cname)} component**\n")
         out.append(
-            format_component_table(component, fields_spec, app_type=app_type) + "\n"
+            format_component_table(
+                component,
+                fields_spec,
+                app_type=app_type,
+                package_spec=package_spec,
+            )
+            + "\n"
         )
 
     validation_rules = application_component.get("validation")

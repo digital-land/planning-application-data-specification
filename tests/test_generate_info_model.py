@@ -18,3 +18,11 @@ def test_generate_module_keeps_component_reference_rows():
     module_markdown = generate_module("tree-work-details", specification)
 
     assert "| tree-details | Tree details[]{} |" in module_markdown
+
+
+def test_generate_module_keeps_component_table_application_conditions():
+    specification = load_content()
+
+    module_markdown = generate_module("tree-work-details", specification)
+
+    assert "reason | Reason | Explain the reason for the work | MAY |  | consent-under-tpo" in module_markdown
