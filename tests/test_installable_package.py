@@ -1,5 +1,5 @@
 from planning_application_specification import Specification
-from planning_application_specification.specification import SelectionContext
+from planning_application_specification.specification import ResolvedField, SelectionContext
 
 
 def test_specification_load_reads_local_checkout(project_root):
@@ -66,3 +66,50 @@ def test_canonical_module_lookup_returns_module_definition(project_root):
     assert module.ref == "proposal-details"
     assert module.name == "Description of the proposal"
     assert len(module.field_usages) > 0
+
+
+def test_resolve_field_returns_module_level_override(project_root):
+    spec = Specification.load(project_root)
+
+    resolved = spec.resolve_field("description", module="tree-work-details")
+
+    assert isinstance(resolved, ResolvedField)
+    assert resolved.ref == "description"
+    assert (
+        resolved.description
+        == "Description of work applicant wishes to carry out, including identifying the trees, species and setting out the work"
+    )
+    assert resolved.required is True
+    assert resolved.container_kind == "module"
+    assert resolved.container_ref == "tree-work-details"
+
+
+def test_resolve_field_returns_component_level_override(project_root):
+    spec = Specification.load(project_root)
+
+    resolved = spec.resolve_field("no-bedrooms-unknown", component="bedroom-count")
+
+    assert resolved.ref == "no-bedrooms-unknown"
+    assert resolved.required is True
+    assert resolved.container_kind == "component"
+    assert resolved.container_ref == "bedroom-count"
+
+
+def test_resolve_field_respects_applies_if_selection(project_root):
+    spec = Specification.load(project_root)
+
+    applicable = spec.resolve_field(
+        "is-psi",
+        module="proposal-details",
+        selection=SelectionContext(application_type="full"),
+    )
+    not_applicable = spec.resolve_field(
+        "is-psi",
+        module="proposal-details",
+        selection=SelectionContext(application_type="outline"),
+    )
+
+    assert applicable.applies is True
+    assert not_applicable.applies is False
+    assert applicable.required is True
+    assert isinstance(applicable.required_if, type(None))

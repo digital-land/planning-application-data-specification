@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Optional
 
 from .loader import _resolve_repo_root, load_specification_model
+from .models import ComponentUsage, FieldUsage
 
 
 @dataclass(frozen=True)
@@ -31,6 +32,32 @@ class ApplicableCodelist:
     items: tuple[CodelistItem, ...]
     selection: SelectionContext | None
     usage_rules_applied: bool
+
+
+@dataclass(frozen=True)
+class ResolvedFieldUsage:
+    overrides: dict
+    applies_if: dict | list | None
+    required_if: dict | list | None
+
+
+@dataclass(frozen=True)
+class ResolvedField:
+    ref: str
+    name: str
+    description: str
+    datatype: str
+    required: bool
+    notes: str
+    component: Optional[str]
+    cardinality: str
+    applies: bool
+    applies_if: dict | list | None
+    required_if: dict | list | None
+    base: object
+    usage: ResolvedFieldUsage
+    container_ref: str
+    container_kind: str
 
 
 @dataclass
@@ -139,6 +166,57 @@ class Specification:
             raise KeyError(f"Unknown module: {ref}")
         return module
 
+    def resolve_field(
+        self,
+        ref: str,
+        module: str | None = None,
+        component: str | None = None,
+        selection: SelectionContext | None = None,
+    ) -> ResolvedField:
+        if not module and not component:
+            raise ValueError("resolve_field(...) requires module=... or component=...")
+
+        if module:
+            module_def = self.module(module)
+            if component:
+                component_usage = self._find_component_usage(module_def.items, component)
+                if not component_usage:
+                    raise KeyError(
+                        f"Component '{component}' not found in module '{module}'"
+                    )
+                field_usage = self._find_field_usage(component_usage.component.items, ref)
+                if not field_usage:
+                    raise KeyError(
+                        f"Field '{ref}' not found in component '{component}' within module '{module}'"
+                    )
+                return self._build_resolved_field(
+                    field_usage=field_usage,
+                    container_ref=component,
+                    container_kind="component",
+                    selection=selection,
+                )
+
+            field_usage = self._find_field_usage(module_def.items, ref)
+            if not field_usage:
+                raise KeyError(f"Field '{ref}' not found in module '{module}'")
+            return self._build_resolved_field(
+                field_usage=field_usage,
+                container_ref=module,
+                container_kind="module",
+                selection=selection,
+            )
+
+        component_def = self.component(component)
+        field_usage = self._find_field_usage(component_def.items, ref)
+        if not field_usage:
+            raise KeyError(f"Field '{ref}' not found in component '{component}'")
+        return self._build_resolved_field(
+            field_usage=field_usage,
+            container_ref=component,
+            container_kind="component",
+            selection=selection,
+        )
+
     def _load_csv_rows(self, relative_path: str) -> list[dict]:
         csv_path = self.source_path / relative_path
         with csv_path.open(newline="", encoding="utf-8") as csv_file:
@@ -163,3 +241,73 @@ class Specification:
                     return False
 
         return True
+
+    def _find_field_usage(self, items, ref: str) -> FieldUsage | None:
+        for item in items:
+            if isinstance(item, FieldUsage) and item.original.ref == ref:
+                return item
+            if isinstance(item, ComponentUsage):
+                match = self._find_field_usage(item.component.items, ref)
+                if match:
+                    return match
+        return None
+
+    def _find_component_usage(self, items, component_ref: str) -> ComponentUsage | None:
+        for item in items:
+            if isinstance(item, ComponentUsage):
+                if item.component.ref == component_ref:
+                    return item
+                match = self._find_component_usage(item.component.items, component_ref)
+                if match:
+                    return match
+        return None
+
+    def _usage_applies(
+        self, usage: FieldUsage, selection: SelectionContext | None
+    ) -> bool:
+        applies_if = usage.overrides.get("applies-if")
+        if not applies_if or not selection:
+            return True
+        if not isinstance(applies_if, dict):
+            return True
+
+        if selection.application_type:
+            app_type_condition = applies_if.get("application-type")
+            if isinstance(app_type_condition, dict):
+                allowed = app_type_condition.get("in")
+                if isinstance(allowed, list):
+                    return selection.application_type in allowed
+        return True
+
+    def _build_resolved_field(
+        self,
+        field_usage: FieldUsage,
+        container_ref: str,
+        container_kind: str,
+        selection: SelectionContext | None,
+    ) -> ResolvedField:
+        base = field_usage.original
+        overrides = field_usage.overrides or {}
+        applies_if = overrides.get("applies-if")
+        required_if = overrides.get("required-if")
+        return ResolvedField(
+            ref=base.ref,
+            name=overrides.get("name") or base.name,
+            description=overrides.get("description") or base.description,
+            datatype=overrides.get("datatype") or base.datatype,
+            required=overrides.get("required", base.required),
+            notes=overrides.get("notes") or base.notes,
+            component=overrides.get("component", base.component),
+            cardinality=str(overrides.get("cardinality", base.cardinality)),
+            applies=self._usage_applies(field_usage, selection),
+            applies_if=applies_if,
+            required_if=required_if,
+            base=base,
+            usage=ResolvedFieldUsage(
+                overrides=overrides,
+                applies_if=applies_if,
+                required_if=required_if,
+            ),
+            container_ref=container_ref,
+            container_kind=container_kind,
+        )

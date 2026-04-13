@@ -4,6 +4,12 @@ Python package for loading and querying the planning application specification f
 
 This package is being introduced gradually so existing `/bin` scripts can move onto it in small safe steps. The current interface is intentionally small.
 
+The current package has three kinds of query:
+
+- canonical lookup for definitions as they exist in the source data
+- applicable views for codelists filtered by selection context
+- resolved views for fields as used within a module or component
+
 ## Getting started
 
 For now, the package works against a local checkout of this repository.
@@ -45,8 +51,26 @@ The implemented package currently supports:
 - canonical codelist lookup
 - canonical field, component and module lookup
 - applicable codelist filtering using selection context
+- resolved field lookup for module or component context with static override merging
 
-It does not yet provide resolved field query APIs.
+Current V1 boundary:
+
+- works against a local checkout of this repository
+- evaluates codelist applicability from usage data using selection context
+- evaluates field `applies-if` only for `application-type` conditions
+- exposes `required-if` as raw rule data and does not execute answer-dependent rules
+
+## Choosing the right method
+
+Use canonical lookup when you want the base definition:
+
+- `spec.codelist(ref)` for the source codelist
+- `spec.field(ref)`, `spec.component(ref)` and `spec.module(ref)` for canonical definitions
+
+Use contextual lookup when you want the specification as it applies in a particular situation:
+
+- `spec.codelist(ref).applicable(selection=...)` when codelist items may vary by profile or application type
+- `spec.resolve_field(...)` when a field may carry local usage overrides or conditional applicability inside a module or component
 
 ## API index
 
@@ -81,6 +105,8 @@ spec = Specification.load("/path/to/repo")
 
 Return a canonical codelist by reference.
 
+This returns the source codelist definition without applying usage rules. To get the filtered set of items for a particular profile or application type, call `.applicable(selection=...)` on the returned object.
+
 Arguments:
 
 - `ref`: codelist reference, for example `"tenure-type"`
@@ -102,6 +128,8 @@ tenure_type = spec.codelist("tenure-type")
 ### `Specification.field(ref: str)`
 
 Return a canonical field definition by reference.
+
+This does not apply module or component usage overrides. Use `spec.resolve_field(...)` when you need the field as used in context.
 
 Arguments:
 
@@ -177,6 +205,89 @@ Returned module definitions currently expose:
 - `field_usages`: field usages contained by the module
 - `component_usages`: component usages contained by the module
 
+### `Specification.resolve_field(ref: str, module: str | None = None, component: str | None = None, selection: SelectionContext | None = None) -> ResolvedField`
+
+Return a resolved field view for a specific structural context.
+
+Use this when canonical lookup is not enough and you need the field as used within a module or component.
+
+Arguments:
+
+- `ref`: field reference
+- `module`: optional module reference
+- `component`: optional component reference
+- `selection`: optional selection context used for `applies-if`
+
+Rules:
+
+- at least one of `module` or `component` must be provided
+- if `module` is provided, the field is resolved in that module context
+- if `component` is provided without a module, the field is resolved in that canonical component context
+- if both are provided, the field is resolved in that component as reached within the module
+
+Current behaviour:
+
+- merges static override attributes from the field usage on top of the canonical field definition
+- returns `required-if` as raw rule data
+- evaluates `applies-if` only for `application-type` conditions
+- returns a resolved field even when it does not apply, with `applies=False`
+
+This method currently aims to answer: "what does this field look like here?" It does not yet answer answer-dependent questions such as whether the field becomes required based on other submitted values.
+
+Examples:
+
+```python
+resolved = spec.resolve_field(
+    "description",
+    module="tree-work-details",
+)
+
+resolved = spec.resolve_field(
+    "no-bedrooms-unknown",
+    component="bedroom-count",
+)
+
+resolved = spec.resolve_field(
+    "related-application",
+    module="proposal-details",
+    selection=SelectionContext(application_type="full"),
+)
+```
+
+## `ResolvedField`
+
+Represents a field definition resolved in a usage context.
+
+This is a contextual view. It combines the canonical field definition with the usage-level override and condition data for the selected module or component context.
+
+Attributes:
+
+- `ref`
+- `name`
+- `description`
+- `datatype`
+- `required`
+- `notes`
+- `component`
+- `cardinality`
+- `applies`
+- `applies_if`
+- `required_if`
+- `base`: canonical field definition
+- `usage`: slim public usage view containing override and condition data
+- `container_ref`
+- `container_kind`
+
+## `ResolvedFieldUsage`
+
+Represents the usage-specific part of a resolved field without repeating the canonical base definition.
+
+Attributes:
+
+- `overrides`
+- `applies_if`
+- `required_if`
+
 ### `Specification` attributes
 
 These are currently available on the loaded object:
@@ -224,6 +335,8 @@ Attributes:
 
 Return an applicable codelist view for a given selection context.
 
+Use this when the canonical codelist exists globally but the allowed items vary by usage context.
+
 Behaviour:
 
 - if no usage rules are defined for the codelist, returns all canonical items
@@ -231,6 +344,8 @@ Behaviour:
 - current filtering understands:
   - `specification-profile`
   - `application-types`
+
+This is a selection-time filter over the canonical codelist. It does not change the underlying canonical definition.
 
 Example:
 
@@ -280,5 +395,4 @@ These modules are currently part of the implementation surface for migration wor
 
 Expected next additions include:
 
-- `spec.resolve_field(...)`
 - clearer public distinction between canonical definitions, usages and resolved views
