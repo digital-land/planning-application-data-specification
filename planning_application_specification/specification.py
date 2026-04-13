@@ -60,6 +60,26 @@ class ResolvedField:
     container_kind: str
 
 
+@dataclass(frozen=True)
+class ResolvedComponentReference:
+    ref: str
+    name: str
+    description: str
+    datatype: str
+    required: bool
+    notes: str
+    component_ref: str
+    cardinality: str
+    applies: bool
+    applies_if: dict | list | None
+    required_if: dict | list | None
+    base: object
+    usage: ResolvedFieldUsage
+    component: object
+    container_ref: str
+    container_kind: str
+
+
 @dataclass
 class Codelist:
     specification: "Specification"
@@ -217,6 +237,36 @@ class Specification:
             selection=selection,
         )
 
+    def resolve_module_items(
+        self,
+        module: str,
+        selection: SelectionContext | None = None,
+    ) -> tuple[ResolvedField | ResolvedComponentReference, ...]:
+        module_def = self.module(module)
+        resolved_items = []
+
+        for item in module_def.items:
+            if isinstance(item, FieldUsage):
+                resolved_items.append(
+                    self._build_resolved_field(
+                        field_usage=item,
+                        container_ref=module,
+                        container_kind="module",
+                        selection=selection,
+                    )
+                )
+            elif isinstance(item, ComponentUsage):
+                resolved_items.append(
+                    self._build_resolved_component_reference(
+                        component_usage=item,
+                        container_ref=module,
+                        container_kind="module",
+                        selection=selection,
+                    )
+                )
+
+        return tuple(resolved_items)
+
     def _load_csv_rows(self, relative_path: str) -> list[dict]:
         csv_path = self.source_path / relative_path
         with csv_path.open(newline="", encoding="utf-8") as csv_file:
@@ -308,6 +358,45 @@ class Specification:
                 applies_if=applies_if,
                 required_if=required_if,
             ),
+            container_ref=container_ref,
+            container_kind=container_kind,
+        )
+
+    def _build_resolved_component_reference(
+        self,
+        component_usage: ComponentUsage,
+        container_ref: str,
+        container_kind: str,
+        selection: SelectionContext | None,
+    ) -> ResolvedComponentReference:
+        referenced_by_field = component_usage.referenced_by_field
+        if not isinstance(referenced_by_field, FieldUsage):
+            raise ValueError("Component usage is missing the referencing field usage")
+
+        base = referenced_by_field.original
+        overrides = referenced_by_field.overrides or {}
+        applies_if = overrides.get("applies-if")
+        required_if = overrides.get("required-if")
+
+        return ResolvedComponentReference(
+            ref=base.ref,
+            name=overrides.get("name") or base.name,
+            description=overrides.get("description") or base.description,
+            datatype=overrides.get("datatype") or base.datatype,
+            required=overrides.get("required", base.required),
+            notes=overrides.get("notes") or base.notes,
+            component_ref=component_usage.component.ref,
+            cardinality=str(overrides.get("cardinality", base.cardinality)),
+            applies=self._usage_applies(referenced_by_field, selection),
+            applies_if=applies_if,
+            required_if=required_if,
+            base=base,
+            usage=ResolvedFieldUsage(
+                overrides=overrides,
+                applies_if=applies_if,
+                required_if=required_if,
+            ),
+            component=component_usage.component,
             container_ref=container_ref,
             container_kind=container_kind,
         )

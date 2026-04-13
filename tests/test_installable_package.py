@@ -1,5 +1,9 @@
 from planning_application_specification import Specification
-from planning_application_specification.specification import ResolvedField, SelectionContext
+from planning_application_specification.specification import (
+    ResolvedComponentReference,
+    ResolvedField,
+    SelectionContext,
+)
 
 
 def test_specification_load_reads_local_checkout(project_root):
@@ -113,3 +117,40 @@ def test_resolve_field_respects_applies_if_selection(project_root):
     assert not_applicable.applies is False
     assert applicable.required is True
     assert isinstance(applicable.required_if, type(None))
+
+
+def test_resolve_module_items_returns_mixed_items_in_order(project_root):
+    spec = Specification.load(project_root)
+
+    items = spec.resolve_module_items("tree-work-details")
+
+    assert len(items) == 2
+    assert isinstance(items[0], ResolvedField)
+    assert isinstance(items[1], ResolvedComponentReference)
+    assert items[0].ref == "description"
+    assert items[1].ref == "tree-details"
+    assert items[1].component_ref == "tree-details"
+    assert items[1].container_kind == "module"
+    assert items[1].container_ref == "tree-work-details"
+
+
+def test_resolve_module_items_applies_selection_to_component_reference_rows(project_root):
+    spec = Specification.load(project_root)
+
+    applicable_items = spec.resolve_module_items(
+        "proposal-details",
+        selection=SelectionContext(application_type="reserved-matters"),
+    )
+    not_applicable_items = spec.resolve_module_items(
+        "proposal-details",
+        selection=SelectionContext(application_type="full"),
+    )
+
+    applicable = next(item for item in applicable_items if item.ref == "related-application")
+    not_applicable = next(
+        item for item in not_applicable_items if item.ref == "related-application"
+    )
+
+    assert isinstance(applicable, ResolvedComponentReference)
+    assert applicable.applies is True
+    assert not_applicable.applies is False

@@ -52,6 +52,7 @@ The implemented package currently supports:
 - canonical field, component and module lookup
 - applicable codelist filtering using selection context
 - resolved field lookup for module or component context with static override merging
+- resolved module item lookup that preserves mixed module order for plain fields and component-reference rows
 
 Current V1 boundary:
 
@@ -71,6 +72,7 @@ Use contextual lookup when you want the specification as it applies in a particu
 
 - `spec.codelist(ref).applicable(selection=...)` when codelist items may vary by profile or application type
 - `spec.resolve_field(...)` when a field may carry local usage overrides or conditional applicability inside a module or component
+- `spec.resolve_module_items(...)` when you need the ordered mixed rows of a module, including top-level rows that point to nested components
 
 ## API index
 
@@ -254,6 +256,28 @@ resolved = spec.resolve_field(
 )
 ```
 
+### `Specification.resolve_module_items(module: str, selection: SelectionContext | None = None) -> tuple[ResolvedField | ResolvedComponentReference, ...]`
+
+Return the ordered resolved items for a module.
+
+Use this when you need the module as authored, rather than a direct lookup by field reference.
+
+Current behaviour:
+
+- preserves module item order
+- returns a mixed tuple of `ResolvedField` and `ResolvedComponentReference`
+- applies the same `application-type` based `applies-if` handling used by `resolve_field(...)`
+- keeps component-reference rows visible as first-class items rather than dropping them during resolution
+
+Example:
+
+```python
+items = spec.resolve_module_items(
+    "tree-work-details",
+    selection=SelectionContext(application_type="notice-trees-in-con-area"),
+)
+```
+
 ## `ResolvedField`
 
 Represents a field definition resolved in a usage context.
@@ -287,6 +311,31 @@ Attributes:
 - `overrides`
 - `applies_if`
 - `required_if`
+
+## `ResolvedComponentReference`
+
+Represents a top-level module row that points to a nested component.
+
+This is a contextual view of the referencing field usage plus the target component definition.
+
+Attributes:
+
+- `ref`
+- `name`
+- `description`
+- `datatype`
+- `required`
+- `notes`
+- `component_ref`
+- `cardinality`
+- `applies`
+- `applies_if`
+- `required_if`
+- `base`: canonical field definition
+- `usage`: slim public usage view containing override and condition data
+- `component`: canonical component definition reached by this row
+- `container_ref`
+- `container_kind`
 
 ### `Specification` attributes
 
