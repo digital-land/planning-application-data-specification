@@ -3,7 +3,9 @@ description: Details of any hedgerows being removed as part of the development
 end-date: ''
 entry-date: 2025-07-17
 fields:
-- field: removal-reasons
+- description: Reasons for the proposed removal of hedgerow(s)
+  field: reason
+  name: Removal reasons
   required: true
 - field: supporting-documents
   description: References to plans or drawings showing the stretches of hedgerow to be removed

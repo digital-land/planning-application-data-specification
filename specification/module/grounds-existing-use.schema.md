@@ -4,7 +4,10 @@ description: Supporting inforation for a Lawful Development Certificate applicat
 end-date: ''
 entry-date: 2025-06-26
 fields:
-- field: use-lawful-reason
+- description: Explanation of why the existing or last use is considered lawful,
+    providing justification for a lawful development certificate application
+  field: reason
+  name: Use lawful reason
   required: true
 - field: supporting-documents
   required: false
@@ -20,7 +23,7 @@ module: grounds-existing-use
 name: Grounds for application (information about the existing use(s))
 rules:
 - description: Use lawful reason must be provided to justify the existing use
-  rule: use-lawful-reason.length > 0
+  rule: reason.length > 0
 - description: Specified use must be provided when use is 'sui' or 'other'
   rule: use IN ['sui', 'other'] REQUIRES specified-use.length > 0
 - description: Supporting documents must reference uploaded application documents
