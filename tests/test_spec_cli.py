@@ -1,6 +1,7 @@
 from click.testing import CliRunner
 
 import spec
+from planning_application_specification.models import ComponentDef, ComponentUsage, FieldDef, FieldUsage
 
 
 def test_summary_command_prints_loaded_record_counts(monkeypatch):
@@ -188,6 +189,86 @@ def test_form_url_command_normalises_combined_application_type_order(monkeypatch
     assert result.exit_code == 0
     assert "application-type: hh + lbc" in result.output
     assert "https://example.com/form-hh-lbc.pdf" in result.output
+
+
+def test_find_application_command_shows_single_application_summary(monkeypatch):
+    runner = CliRunner()
+
+    class StubApplication:
+        ref = "hh"
+        name = "Householder planning application"
+        description = "Single application description"
+        application_types = ["hh"]
+        is_combined = False
+        notes = ""
+        items = [FieldUsage(original=FieldDef(ref="application", name="Application"), overrides={"required": True})]
+        modules = [type("ModuleDef", (), {"ref": "site-details", "name": "Site details"})()]
+
+    class StubSpecification:
+        def application(self, application_ref):
+            assert application_ref == "hh"
+            return StubApplication()
+
+    monkeypatch.setattr(spec, "Specification", type("SpecificationModule", (), {"load": staticmethod(lambda path=None: StubSpecification())}))
+
+    result = runner.invoke(spec.cli, ["find", "application", "hh"])
+
+    assert result.exit_code == 0
+    assert "Application: hh" in result.output
+    assert "Name: Householder planning application" in result.output
+    assert "Description: Single application description" in result.output
+    assert "Application types: hh" in result.output
+    assert "Combined: no" in result.output
+    assert "Application items:" in result.output
+    assert "- field: application (required)" in result.output
+    assert "Modules:" in result.output
+    assert "- site-details: Site details" in result.output
+
+
+def test_find_application_command_shows_combined_application_summary(monkeypatch):
+    runner = CliRunner()
+
+    class StubApplication:
+        ref = "hh;lbc"
+        name = "Householder planning permission and listed building consent"
+        description = "Combined application description"
+        application_types = ["hh", "lbc"]
+        is_combined = True
+        notes = "Connected consent case"
+        items = [
+            ComponentUsage(
+                component=ComponentDef(ref="application", name="Application"),
+                referenced_by_field=FieldUsage(
+                    original=FieldDef(ref="application", name="Application"),
+                    overrides={},
+                ),
+            )
+        ]
+        modules = [
+            type("ModuleDef", (), {"ref": "site-details", "name": "Site details"})(),
+            type("ModuleDef", (), {"ref": "lb-grade", "name": "Listed building grade"})(),
+        ]
+
+    class StubSpecification:
+        def application(self, application_ref):
+            assert application_ref == "hh;lbc"
+            return StubApplication()
+
+    monkeypatch.setattr(spec, "Specification", type("SpecificationModule", (), {"load": staticmethod(lambda path=None: StubSpecification())}))
+
+    result = runner.invoke(spec.cli, ["find", "application", "hh;lbc"])
+
+    assert result.exit_code == 0
+    assert "Application: hh;lbc" in result.output
+    assert "Name: Householder planning permission and listed building consent" in result.output
+    assert "Application types: hh, lbc" in result.output
+    assert "Combined: yes" in result.output
+    assert "Notes: Connected consent case" in result.output
+    assert "Application items:" in result.output
+    assert "- component: application (via field: application)" in result.output
+    assert "Modules:" in result.output
+    assert "- site-details: Site details" in result.output
+    assert "- lb-grade: Listed building grade" in result.output
 
 
 def test_module_forms_command_lists_analysed_2025_forms(monkeypatch):

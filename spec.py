@@ -23,6 +23,8 @@ from bin.forms import (
     get_2025_modules_for_form,
 )
 from bin.loader import load_content, load_needs
+from planning_application_specification import Specification
+from planning_application_specification.models import ComponentUsage, FieldUsage
 
 
 def get_spec_summary_counts():
@@ -86,6 +88,51 @@ def print_2025_forms_for_application_type(application_type):
     for form in forms:
         click.echo(f"- {form['name']} ({form['reference']})")
         click.echo(f"  form: {form['document-url']}")
+
+
+def _format_application_item(item) -> str:
+    if isinstance(item, FieldUsage):
+        field_ref = item.original.ref
+        required = item.overrides.get("required")
+        suffix = " (required)" if required is True else ""
+        return f"- field: {field_ref}{suffix}"
+
+    if isinstance(item, ComponentUsage):
+        component_ref = item.component.ref
+        referenced_by = item.referenced_by_field
+        if isinstance(referenced_by, FieldUsage):
+            return f"- component: {component_ref} (via field: {referenced_by.original.ref})"
+        return f"- component: {component_ref}"
+
+    return f"- item: {item}"
+
+
+def print_application_details(application_ref):
+    spec = Specification.load(PROJECT_ROOT)
+    application = spec.application(application_ref)
+
+    click.echo(f"Application: {application.ref}")
+    click.echo(f"Name: {application.name}")
+    if application.description:
+        click.echo(f"Description: {application.description}")
+    click.echo(f"Application types: {', '.join(application.application_types)}")
+    click.echo(f"Combined: {'yes' if application.is_combined else 'no'}")
+    if application.notes:
+        click.echo(f"Notes: {application.notes}")
+
+    click.echo("Application items:")
+    if application.items:
+        for item in application.items:
+            click.echo(_format_application_item(item))
+    else:
+        click.echo("- none")
+
+    click.echo("Modules:")
+    if application.modules:
+        for module in application.modules:
+            click.echo(f"- {module.ref}: {module.name}")
+    else:
+        click.echo("- none")
 
 
 def print_2025_form_details(form_ref):
@@ -184,6 +231,13 @@ def modules_in_application(application_ref):
             click.echo(f"  • {mod_ref}: {name}")
     else:
         click.echo(f"No modules found for application '{application_ref}'")
+
+
+@find.command(name="application")
+@click.argument("application_ref")
+def find_application(application_ref):
+    """Show a resolved application definition."""
+    print_application_details(application_ref)
 
 
 @find.command()
