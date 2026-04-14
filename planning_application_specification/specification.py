@@ -14,7 +14,32 @@ from .models import ApplicationDef, ComponentUsage, FieldUsage
 @dataclass(frozen=True)
 class SelectionContext:
     specification_profile: Optional[str] = None
-    application_type: Optional[str] = None
+    application_type: Optional[str | list[str] | tuple[str, ...] | set[str]] = None
+
+    def application_types(self) -> tuple[str, ...]:
+        raw_value = self.application_type
+        if raw_value is None:
+            return ()
+
+        values: list[str] = []
+
+        if isinstance(raw_value, str):
+            candidates = [raw_value]
+        elif isinstance(raw_value, (list, tuple, set)):
+            candidates = list(raw_value)
+        else:
+            return ()
+
+        for candidate in candidates:
+            if not isinstance(candidate, str):
+                continue
+            parts = candidate.split(";")
+            for part in parts:
+                value = part.strip()
+                if value:
+                    values.append(value)
+
+        return tuple(sorted(set(values)))
 
 
 @dataclass(frozen=True)
@@ -398,11 +423,12 @@ class Specification:
             if profile and profile != selection.specification_profile:
                 return False
 
-        if selection.application_type:
+        selection_application_types = selection.application_types()
+        if selection_application_types:
             app_types = row.get("application-types")
             if app_types:
                 allowed = {value.strip() for value in app_types.split(";") if value.strip()}
-                if selection.application_type not in allowed:
+                if not any(app_type in allowed for app_type in selection_application_types):
                     return False
 
         return True
@@ -436,12 +462,13 @@ class Specification:
         if not isinstance(applies_if, dict):
             return True
 
-        if selection.application_type:
+        selection_application_types = selection.application_types()
+        if selection_application_types:
             app_type_condition = applies_if.get("application-type")
             if isinstance(app_type_condition, dict):
                 allowed = app_type_condition.get("in")
                 if isinstance(allowed, list):
-                    return selection.application_type in allowed
+                    return any(app_type in allowed for app_type in selection_application_types)
         return True
 
     def _build_resolved_field(

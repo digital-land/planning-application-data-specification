@@ -216,6 +216,40 @@ def test_resolve_field_respects_applies_if_selection(project_root):
     assert isinstance(applicable.required_if, type(None))
 
 
+def test_resolve_field_supports_combined_application_selection_with_or_semantics(
+    project_root,
+):
+    spec = Specification.load(project_root)
+
+    applicable = spec.resolve_field(
+        "has-falling-trees-risk",
+        module="trees-hedges",
+        selection=SelectionContext(application_type=["hh", "lbc"]),
+    )
+    not_applicable = spec.resolve_field(
+        "has-falling-trees-risk",
+        module="trees-hedges",
+        selection=SelectionContext(application_type="lbc"),
+    )
+
+    assert applicable.applies is True
+    assert not_applicable.applies is False
+
+
+def test_resolve_field_supports_semicolon_delimited_combined_application_selection(
+    project_root,
+):
+    spec = Specification.load(project_root)
+
+    applicable = spec.resolve_field(
+        "has-falling-trees-risk",
+        module="trees-hedges",
+        selection=SelectionContext(application_type="hh;lbc"),
+    )
+
+    assert applicable.applies is True
+
+
 def test_resolve_container_items_returns_mixed_module_items_in_order(project_root):
     spec = Specification.load(project_root)
 
