@@ -53,75 +53,7 @@ def get_only_for_application_str(resolved_item):
     return ""
 
 
-def format_main_module_table(module, fields_spec, app_type=None, package_spec=None):
-    lines = []
-    if app_type:
-        lines = [
-            "| reference | name | description | requirement | notes |",
-            "| --- | --- | --- | --- | --- |",
-        ]
-    else:
-        lines = [
-            "| reference | name | description | only for application | requirement | notes |",
-            "| --- | --- | --- | --- | --- | --- |",
-        ]
-
-    if package_spec is None:
-        package_spec = Specification.load()
-
-    selection = SelectionContext(application_type=app_type) if app_type else None
-
-    for resolved in package_spec.resolve_container_items(
-        module=module["module"],
-        selection=selection,
-    ):
-        if app_type and not resolved.applies:
-            continue
-
-        ref = resolved.ref
-        field_def = fields_spec.get(ref, {})
-
-        name = format_resolved_field_display_name(resolved)
-        description = resolved.description or ""
-        requirement = "MUST" if resolved.required else "MAY"
-        notes = get_notes_for_resolved_field(field_def, resolved)
-        only_for_md_str = get_only_for_application_str(resolved)
-        notes_md_str = ". ".join(str(n) for n in notes) if notes else ""
-
-        if app_type:
-            lines.append(
-                f"| {ref} | {name} | {description} | {requirement} | {notes_md_str} |"
-            )
-        else:
-            lines.append(
-                f"| {ref} | {name} | {description} | {only_for_md_str} | {requirement} | {notes_md_str} |"
-            )
-
-    return "\n".join(lines)
-
-
-def format_component_table(component, fields_spec, app_type=None, package_spec=None):
-    if package_spec is None:
-        package_spec = Specification.load()
-
-    selection = SelectionContext(application_type=app_type) if app_type else None
-    resolved_items = package_spec.resolve_container_items(
-        component=component["component"],
-        selection=selection,
-    )
-
-    has_applies_if = any(item.usage.applies_if for item in resolved_items)
-    if has_applies_if:
-        lines = [
-            "field | name | description | required | notes | only for application",
-            "-- | -- | -- | -- | -- | --",
-        ]
-    else:
-        lines = [
-            "field | name | description | required | notes",
-            "-- | -- | -- | -- | --",
-        ]
-
+def iter_display_rows(resolved_items, fields_spec, app_type=None):
     for resolved in resolved_items:
         if app_type and not resolved.applies:
             continue
@@ -132,16 +64,87 @@ def format_component_table(component, fields_spec, app_type=None, package_spec=N
         description = resolved.description or ""
         requirement = "MUST" if resolved.required else "MAY"
         notes = get_notes_for_resolved_field(field_def, resolved)
-        notes_md_str = ". ".join(str(n) for n in notes) if notes else ""
-        only_for_md_str = get_only_for_application_str(resolved)
+        yield {
+            "ref": ref,
+            "name": name,
+            "description": description,
+            "requirement": requirement,
+            "notes_md_str": ". ".join(str(n) for n in notes) if notes else "",
+            "only_for_md_str": get_only_for_application_str(resolved),
+        }
 
-        if has_applies_if:
+
+def format_main_module_table(module, fields_spec, app_type=None, package_spec=None):
+    if package_spec is None:
+        package_spec = Specification.load()
+
+    selection = SelectionContext(application_type=app_type) if app_type else None
+    rows = list(
+        iter_display_rows(
+            package_spec.resolve_container_items(
+                module=module["module"],
+                selection=selection,
+            ),
+            fields_spec,
+            app_type=app_type,
+        )
+    )
+
+    if app_type:
+        lines = [
+            "| reference | name | description | requirement | notes |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+        for row in rows:
             lines.append(
-                f"{ref} | {name} | {description} | {requirement} | {notes_md_str} | {only_for_md_str}"
+                f"| {row['ref']} | {row['name']} | {row['description']} | {row['requirement']} | {row['notes_md_str']} |"
             )
-        else:
+    else:
+        lines = [
+            "| reference | name | description | only for application | requirement | notes |",
+            "| --- | --- | --- | --- | --- | --- |",
+        ]
+        for row in rows:
             lines.append(
-                f"{ref} | {name} | {description} | {requirement} | {notes_md_str}"
+                f"| {row['ref']} | {row['name']} | {row['description']} | {row['only_for_md_str']} | {row['requirement']} | {row['notes_md_str']} |"
+            )
+
+    return "\n".join(lines)
+
+
+def format_component_table(component, fields_spec, app_type=None, package_spec=None):
+    if package_spec is None:
+        package_spec = Specification.load()
+
+    selection = SelectionContext(application_type=app_type) if app_type else None
+    rows = list(
+        iter_display_rows(
+            package_spec.resolve_container_items(
+                component=component["component"],
+                selection=selection,
+            ),
+            fields_spec,
+            app_type=app_type,
+        )
+    )
+    has_applies_if = any(row["only_for_md_str"] for row in rows)
+    if has_applies_if:
+        lines = [
+            "field | name | description | required | notes | only for application",
+            "-- | -- | -- | -- | -- | --",
+        ]
+        for row in rows:
+            lines.append(
+                f"{row['ref']} | {row['name']} | {row['description']} | {row['requirement']} | {row['notes_md_str']} | {row['only_for_md_str']}"
+            )
+    else:
+        lines = [
+            "field | name | description | required | notes",
+            "-- | -- | -- | -- | --",
+        ]
+        for row in rows:
+            lines.append(
+                f"{row['ref']} | {row['name']} | {row['description']} | {row['requirement']} | {row['notes_md_str']}"
             )
 
     return "\n".join(lines)
@@ -164,6 +167,31 @@ def format_rules_md_str(rules):
     return "\n".join(lines)
 
 
+def append_titled_table_section(out, title, table_markdown, leading_newline=False):
+    heading = f"**{title}**\n"
+    if leading_newline:
+        heading = "\n" + heading
+    out.append(heading)
+    out.append(table_markdown + "\n")
+
+
+def append_component_sections(
+    out, components, fields_spec, app_type=None, package_spec=None
+):
+    for cname, component in components.items():
+        append_titled_table_section(
+            out,
+            f"{component.get('name', cname)} component",
+            format_component_table(
+                component,
+                fields_spec,
+                app_type=app_type,
+                package_spec=package_spec,
+            ),
+            leading_newline=True,
+        )
+
+
 def generate_module(module_ref, specification, app_type=None, package_spec=None):
     module_parts = get_module_parts(specification, module_ref, app_type)
     if not module_parts:
@@ -180,30 +208,23 @@ def generate_module(module_ref, specification, app_type=None, package_spec=None)
         f"# {module.get('name', module_ref)}\n",
         module.get("description", "") + "\n",
     ]
-    # Top-level fields table
-    out.append(f"**{module.get('name', module_ref)} module**\n")
-    out.append(
+    append_titled_table_section(
+        out,
+        f"{module.get('name', module_ref)} module",
         format_main_module_table(
             module,
             fields_spec,
             app_type=app_type,
             package_spec=package_spec,
-        )
-        + "\n"
+        ),
     )
-    # Component tables
-    for cname, component in related_components.items():
-        out.append(f"\n**{component.get('name', cname)} component**\n")
-        out.append(
-            format_component_table(
-                component,
-                fields_spec,
-                app_type=app_type,
-                package_spec=package_spec,
-            )
-            + "\n"
-        )
-    # Validation rules
+    append_component_sections(
+        out,
+        related_components,
+        fields_spec,
+        app_type=app_type,
+        package_spec=package_spec,
+    )
     out.append(format_rules_md_str(rules))
     return "\n".join(out)
 
@@ -283,7 +304,7 @@ def generate_codelist_md_str(codelists):
     return "\n".join(lines)
 
 
-def generate_application_fields_section(specification, app_type=None):
+def generate_application_fields_section(specification, app_type=None, package_spec=None):
     fields_spec = specification.get("field", {})
     components = specification.get("component", {})
 
@@ -322,16 +343,17 @@ def generate_application_fields_section(specification, app_type=None):
         if heading_title.lower().endswith("fields")
         else f"{heading_title} fields"
     )
-    out.append(f"**{module_label} module**\n")
-    package_spec = Specification.load()
-    out.append(
+    if package_spec is None:
+        package_spec = Specification.load()
+    append_titled_table_section(
+        out,
+        f"{module_label} module",
         format_component_table(
             application_component,
             fields_spec,
             app_type=app_type,
             package_spec=package_spec,
-        )
-        + "\n"
+        ),
     )
 
     related_components = collect_related_components_bfs(
@@ -340,17 +362,13 @@ def generate_application_fields_section(specification, app_type=None):
         fields_spec,
         app_type=app_type,
     )
-    for cname, component in related_components.items():
-        out.append(f"\n**{component.get('name', cname)} component**\n")
-        out.append(
-            format_component_table(
-                component,
-                fields_spec,
-                app_type=app_type,
-                package_spec=package_spec,
-            )
-            + "\n"
-        )
+    append_component_sections(
+        out,
+        related_components,
+        fields_spec,
+        app_type=app_type,
+        package_spec=package_spec,
+    )
 
     validation_rules = application_component.get("validation")
     rules_str = format_rules_md_str(validation_rules)
@@ -417,7 +435,7 @@ def generate_application(app_ref, specification):
 
     # 5. Application Data Specification
     application_fields_section = generate_application_fields_section(
-        specification, app_type=app_ref
+        specification, app_type=app_ref, package_spec=package_spec
     )
     if application_fields_section:
         out.append(application_fields_section)
