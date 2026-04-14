@@ -201,6 +201,144 @@ def make_row(
     return row
 
 
+def build_flat_rows(
+    app: ApplicationDef,
+    incl_app_details: bool = True,
+    incl_references: bool = False,
+) -> List[Dict[str, Any]]:
+    app_ref = app.application
+    app_desc = app.description
+    app_name = app.name
+
+    flat_rows: List[Dict[str, Any]] = []
+
+    # 1) Application-level items (fields and possibly embedded components)
+    for item in app.items:
+        if isinstance(item, FieldDef):
+            top = item.name
+            top_ref = item.ref if incl_references else None
+            top_desc = item.description
+            field_chain = [format_field_name(item)]
+            field_chain_refs = [item.ref] if incl_references else []
+
+            flat_rows.append(
+                make_row(
+                    app_name,
+                    app_ref,
+                    app_desc,
+                    top,
+                    top_ref,
+                    top_desc,
+                    field_chain,
+                    field_chain_refs,
+                    item,
+                    incl_app_details=incl_app_details,
+                    incl_references=incl_references,
+                )
+            )
+        elif isinstance(item, ComponentInstance):
+            ref_field = item.referenced_by_field
+            top = ref_field.original.name
+            top_ref = ref_field.original.ref if incl_references else None
+            top_desc = (
+                ref_field.overrides.get("description") or ref_field.original.description
+            )
+
+            for comp_path_names, comp_path_refs, f in walk_component_paths(
+                item, ([], []), app_ref
+            ):
+                field_name = format_field_name(f)
+                field_chain = comp_path_names + [field_name]
+                field_chain_refs = (
+                    (comp_path_refs + [f.original.ref]) if incl_references else []
+                )
+
+                flat_rows.append(
+                    make_row(
+                        app_name,
+                        app_ref,
+                        app_desc,
+                        top,
+                        top_ref,
+                        top_desc,
+                        field_chain,
+                        field_chain_refs,
+                        f,
+                        incl_app_details=incl_app_details,
+                        incl_references=incl_references,
+                    )
+                )
+        else:
+            continue
+
+    # 2) Modules: each module is a top-level block in the sheet
+    for mod in app.modules:
+        if not mod:
+            continue
+
+        mod_rows = flatten_module_to_rows(mod, app_ref)
+
+        if not mod_rows:
+            row = {
+                "top_level": mod.name,
+                "top_description": mod.description,
+                "field_chain": [""],
+                "description": "",
+                "datatype": "",
+                "requirement": "",
+            }
+            if incl_references:
+                row["top_level_ref"] = mod.ref
+                row["field_chain_refs"] = []
+            if incl_app_details:
+                row["application"] = app_ref
+                row["application_description"] = app_desc
+                if incl_references:
+                    row["application_ref"] = app_ref
+            flat_rows.append(row)
+        else:
+            for comp_path_names, comp_path_refs, f in mod_rows:
+                top = mod.name
+                top_ref = mod.ref if incl_references else None
+                field_name = format_field_name(f)
+                field_chain = comp_path_names + [field_name]
+                field_chain_refs = (
+                    (comp_path_refs + [f.original.ref]) if incl_references else []
+                )
+
+                flat_rows.append(
+                    make_row(
+                        app_name,
+                        app_ref,
+                        app_desc,
+                        top,
+                        top_ref,
+                        mod.description,
+                        field_chain,
+                        field_chain_refs,
+                        f,
+                        incl_app_details=incl_app_details,
+                        incl_references=incl_references,
+                    )
+                )
+
+    if not flat_rows:
+        row = {
+            "top_level": "",
+            "top_description": "",
+            "field_chain": [""],
+            "description": "",
+            "datatype": "",
+            "requirement": "",
+        }
+        if incl_app_details:
+            row["application"] = app_ref or ""
+            row["application_description"] = app_desc or ""
+        flat_rows.append(row)
+
+    return flat_rows
+
+
 def auto_width(ws):
     widths = defaultdict(int)
     for row in ws.iter_rows(values_only=True):
@@ -301,142 +439,11 @@ def write_application_excel(
     app_desc = app.description
     app_name = app.name
 
-    # Build flat rows
-    flat_rows: List[Dict[str, Any]] = []
-
-    # 1) Application-level items (fields and possibly embedded components)
-    for item in app.items:
-        if isinstance(item, FieldDef):
-            # Simple application-level field
-            top = item.name
-            top_ref = item.ref if incl_references else None
-            top_desc = item.description
-            field_chain = [format_field_name(item)]
-            field_chain_refs = [item.ref] if incl_references else []
-
-            flat_rows.append(
-                make_row(
-                    app_name,
-                    app_ref,
-                    app_desc,
-                    top,
-                    top_ref,
-                    top_desc,
-                    field_chain,
-                    field_chain_refs,
-                    item,
-                    incl_app_details=incl_app_details,
-                    incl_references=incl_references,
-                )
-            )
-        elif isinstance(item, ComponentInstance):
-            # Application-level field that references a component - expand it
-            ref_field = item.referenced_by_field  # FieldInstance
-            top = ref_field.original.name
-            top_ref = ref_field.original.ref if incl_references else None
-            top_desc = (
-                ref_field.overrides.get("description") or ref_field.original.description
-            )
-
-            # Walk the component and get all nested fields
-            for comp_path_names, comp_path_refs, f in walk_component_paths(
-                item, ([], []), app_ref
-            ):
-                # Build field chain: component path + field name
-                field_name = format_field_name(f)
-                field_chain = comp_path_names + [field_name]
-                field_chain_refs = (
-                    (comp_path_refs + [f.original.ref]) if incl_references else []
-                )
-
-                flat_rows.append(
-                    make_row(
-                        app_name,
-                        app_ref,
-                        app_desc,
-                        top,
-                        top_ref,
-                        top_desc,
-                        field_chain,
-                        field_chain_refs,
-                        f,
-                        incl_app_details=incl_app_details,
-                        incl_references=incl_references,
-                    )
-                )
-        else:
-            # defensive: skip unknown item types
-            continue
-
-    # 2) Modules: each module is a top-level block in the sheet
-    for mod in app.modules:
-        if not mod:
-            continue
-
-        # Produce rows for this module
-        mod_rows = flatten_module_to_rows(mod, app_ref)
-
-        # If a module has zero fields/components, still emit a placeholder row
-        if not mod_rows:
-            row = {
-                "top_level": mod.name,
-                "top_description": mod.description,
-                "field_chain": [""],  # no field
-                "description": "",
-                "datatype": "",
-                "requirement": "",
-            }
-            if incl_references:
-                row["top_level_ref"] = mod.ref
-                row["field_chain_refs"] = []
-            if incl_app_details:
-                row["application"] = app_ref
-                row["application_description"] = app_desc
-                if incl_references:
-                    row["application_ref"] = app_ref
-            flat_rows.append(row)
-        else:
-            for comp_path_names, comp_path_refs, f in mod_rows:
-                # top-level is the module name
-                top = mod.name
-                top_ref = mod.ref if incl_references else None
-                # field_chain is the component path + field name
-                field_name = format_field_name(f)
-                field_chain = comp_path_names + [field_name]
-                field_chain_refs = (
-                    (comp_path_refs + [f.original.ref]) if incl_references else []
-                )
-
-                flat_rows.append(
-                    make_row(
-                        app_name,
-                        app_ref,
-                        app_desc,
-                        top,
-                        top_ref,
-                        mod.description,
-                        field_chain,
-                        field_chain_refs,
-                        f,
-                        incl_app_details=incl_app_details,
-                        incl_references=incl_references,
-                    )
-                )
-
-    # If there are no rows, add a single empty placeholder so headers still render
-    if not flat_rows:
-        row = {
-            "top_level": "",
-            "top_description": "",
-            "field_chain": [""],
-            "description": "",
-            "datatype": "",
-            "requirement": "",
-        }
-        if incl_app_details:
-            row["application"] = app_ref or ""
-            row["application_description"] = app_desc or ""
-        flat_rows.append(row)
+    flat_rows = build_flat_rows(
+        app,
+        incl_app_details=incl_app_details,
+        incl_references=incl_references,
+    )
 
     # Figure out max depth of field_chain to create field1..N columns
     max_depth = max((len(r["field_chain"]) for r in flat_rows), default=1)
