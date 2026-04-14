@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional, Tuple
 
 from models import (
     ApplicationDef,
-    ComponentDef,
     ComponentInstance,
     FieldDef,
     FieldInstance,
@@ -22,118 +21,6 @@ from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, Side
 from openpyxl.utils import get_column_letter
 from utils import to_anchor
-
-# ---------- Traversal helpers ----------
-
-
-def is_node_applicable(node: Any, application_type: Optional[str] = None):
-
-    if not application_type:
-        # there is no application type specified so all apply
-        return True
-
-    if isinstance(node, FieldInstance):
-        overrides = node.overrides
-        field = node.original
-
-    if isinstance(node, ComponentInstance):
-        overrides = node.referenced_by_field.overrides
-        field = node.referenced_by_field.original
-
-    applies_if_conditions = overrides.get("applies-if")
-
-    # assuming applies_if_conditions is dict with key "application-type"
-    if applies_if_conditions:
-        for k, app_type_cond in applies_if_conditions.items():
-            if not k == "application-type":
-                print("no an application-type condition")
-            allowed_types = app_type_cond.get("in", [])
-
-            if application_type not in allowed_types:
-                print(f"for {field.ref}", application_type, " not ", app_type_cond)
-                return False
-    else:
-        # if no applies-if condition then universally apply
-        return True
-    return True
-
-
-def walk_component_paths(
-    node: Any, prefix: List[str], application_type: Optional[str] = None
-) -> List[Tuple[List[str], List[str], FieldInstance]]:
-    """
-    Return list of (path_names, path_refs, field) where:
-    - path_names: display names for components
-    - path_refs: reference names for components
-    - field: the FieldInstance
-    """
-    rows: List[Tuple[List[str], List[str], FieldInstance]] = []
-    # node can be a ComponentInstance, ComponentDef, or unexpectedly a FieldInstance
-    if isinstance(node, ComponentInstance):
-        # check if node is applicable to this application type (if provided)
-        if is_node_applicable(node, application_type):
-            comp_def = node.component
-            ref_field = node.referenced_by_field  # FieldInstance
-
-            # Display name (with cardinality)
-            base_name = ref_field.original.name
-            if ref_field.original.cardinality == "n":
-                base_name += "[]"
-
-            # Reference name
-            base_ref = ref_field.original.ref
-
-            # comp_def.items preserves author-specified order; each item is FieldInstance or ComponentInstance
-            for item in getattr(comp_def, "items", []):
-                level_prefix_names = prefix[0] + [base_name]
-                level_prefix_refs = prefix[1] + [base_ref]
-                # handle leaf nodes
-                if isinstance(item, FieldInstance):
-                    if is_node_applicable(item, application_type):
-                        rows.append((level_prefix_names, level_prefix_refs, item))
-                else:
-                    # handle nested nodes
-                    # do we need to repeat this check?
-                    if is_node_applicable(item, application_type):
-                        rows.extend(
-                            walk_component_paths(
-                                item,
-                                (level_prefix_names, level_prefix_refs),
-                                application_type,
-                            )
-                        )
-                    else:
-                        # component instance not applicable for this application type
-                        pass
-
-    else:
-        # unknown node type
-        print("unknown node type")
-
-    return rows
-
-
-def flatten_module_to_rows(
-    mod: ModuleDef, application_type: Optional[str] = None
-) -> List[Tuple[List[str], List[str], FieldInstance]]:
-    """
-    Produce rows for a module returning (path_names, path_refs, field).
-    """
-    rows: List[Tuple[List[str], List[str], FieldInstance]] = []
-    # module-level items may include fields and embedded components; preserve order
-    for item in mod.items:
-        if isinstance(item, FieldInstance):
-            # simple module-level field instance: no component path
-            if is_node_applicable(item, application_type):
-                rows.append(([], [], item))
-        else:
-            # item may be ComponentDef or ComponentInstance; return its component path
-            for comp_path_names, comp_path_refs, f in walk_component_paths(
-                item, ([], []), application_type
-            ):
-                rows.append((comp_path_names, comp_path_refs, f))
-    return rows
-
 
 def extract_field_references(
     field_chain: List[str], path_refs: List[str]
@@ -155,7 +42,7 @@ def format_resolved_path_name(item: ResolvedComponentReference) -> str:
 
 
 def walk_resolved_component_paths(
-    item: ResolvedComponentReference,
+    component_ref: str,
     package_spec: Specification,
     prefix: Tuple[List[str], List[str]],
     application_type: Optional[str] = None,
@@ -164,21 +51,21 @@ def walk_resolved_component_paths(
     selection = (
         SelectionContext(application_type=application_type) if application_type else None
     )
-    level_prefix_names = prefix[0] + [format_resolved_path_name(item)]
-    level_prefix_refs = prefix[1] + [item.base.ref]
 
     for resolved_item in package_spec.resolve_container_items(
-        component=item.component_ref,
+        component=component_ref,
         selection=selection,
     ):
         if not resolved_item.applies:
             continue
         if isinstance(resolved_item, ResolvedField):
-            rows.append((level_prefix_names, level_prefix_refs, resolved_item))
+            rows.append((prefix[0], prefix[1], resolved_item))
         else:
+            level_prefix_names = prefix[0] + [format_resolved_path_name(resolved_item)]
+            level_prefix_refs = prefix[1] + [resolved_item.base.ref]
             rows.extend(
                 walk_resolved_component_paths(
-                    resolved_item,
+                    resolved_item.component_ref,
                     package_spec,
                     (level_prefix_names, level_prefix_refs),
                     application_type,
@@ -206,7 +93,10 @@ def flatten_module_to_rows_with_package(
         else:
             rows.extend(
                 walk_resolved_component_paths(
-                    item, package_spec, ([], []), application_type
+                    item.component_ref,
+                    package_spec,
+                    ([format_resolved_path_name(item)], [item.base.ref]),
+                    application_type,
                 )
             )
 
@@ -325,13 +215,18 @@ def build_flat_rows(
                 ref_field.overrides.get("description") or ref_field.original.description
             )
 
-            for comp_path_names, comp_path_refs, f in walk_component_paths(
-                item, ([], []), app_ref
+            prefix_names = [format_field_name(ref_field)]
+            prefix_refs = [ref_field.original.ref]
+            for comp_path_names, comp_path_refs, f in walk_resolved_component_paths(
+                item.component.ref,
+                package_spec,
+                (prefix_names, prefix_refs),
+                app_ref,
             ):
                 field_name = format_field_name(f)
                 field_chain = comp_path_names + [field_name]
                 field_chain_refs = (
-                    (comp_path_refs + [f.original.ref]) if incl_references else []
+                    (comp_path_refs + [f.base.ref]) if incl_references else []
                 )
 
                 flat_rows.append(
