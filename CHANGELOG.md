@@ -1,4 +1,33 @@
 
+<a name="v0.1.73"></a>
+## [v0.1.73](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.72...v0.1.73) (2026-04-14)
+
+Refactor spreadsheet tool using package
+
+### ⚒️ Tooling
+
+* remove dead spreadsheet helper (commit [f0fc5f5c](https://github.com/digital-land/planning-application-data-specification/commit/f0fc5f5cabe9a7c7e7713dfcfe4f735c594c4ee7))
+* remove model imports from spreadsheet generator (commit [406d5c51](https://github.com/digital-land/planning-application-data-specification/commit/406d5c51e137834f89d23c1db90214da3cd63335))
+* use package traversal for spreadsheet rows (commit [cac5f967](https://github.com/digital-land/planning-application-data-specification/commit/cac5f9670f32234d03bea8b34a8d2425a7e836f3))
+* use package traversal for spreadsheet modules (commit [b0cb808b](https://github.com/digital-land/planning-application-data-specification/commit/b0cb808b33a3fd8afade6da7265df63aecd6e6a3))
+* extract spreadsheet row builder (commit [5fcdd137](https://github.com/digital-land/planning-application-data-specification/commit/5fcdd137f25e5611004cd52f2ce2017bb2202684))
+* add spreadsheet generator regression tests (commit [58ac124a](https://github.com/digital-land/planning-application-data-specification/commit/58ac124a5f6a8d714cb9a9f6c689379194e7bd32))
+* simplify info model section assembly (commit [613cc8b5](https://github.com/digital-land/planning-application-data-specification/commit/613cc8b5b79d07c23b3b5104a3dd717481f01b8d))
+* use generic container resolver in info model generator (commit [2d62ba90](https://github.com/digital-land/planning-application-data-specification/commit/2d62ba90f8f7f81ec7825d005f0b8d125933ad91))
+* add generic container item resolver (commit [54d12699](https://github.com/digital-land/planning-application-data-specification/commit/54d12699605fc1318d6efc4a2f3cb3802efe8d95))
+* use resolved module items in info model generator (commit [6b9c098f](https://github.com/digital-land/planning-application-data-specification/commit/6b9c098f7a784c40e2aef98c6cfe0116933423d8))
+* add resolved module items API (commit [d716f489](https://github.com/digital-land/planning-application-data-specification/commit/d716f4894daf406d91f1733401dcc1999e37d9a6))
+* add resolved field query API: (commit [60052c35](https://github.com/digital-land/planning-application-data-specification/commit/60052c355e89466b255c2a637c0a57c392ef9111))
+* Rename package container contents to usage collections (commit [558cb1da](https://github.com/digital-land/planning-application-data-specification/commit/558cb1dab1450679ad460386702c6e2280c0118a))
+* Use package codelist lookup in usage integrity checks (commit [34530c90](https://github.com/digital-land/planning-application-data-specification/commit/34530c906aca6426e4669a39050bbfca77d1d87c))
+* Add initial planning_application_specification loader and codelist API (commit [18db810f](https://github.com/digital-land/planning-application-data-specification/commit/18db810fb00e18e733e2918bbb132479e3c0bf86))
+
+### 𝌭 Model changes
+
+* rationalise reason field usage (commit [63033414](https://github.com/digital-land/planning-application-data-specification/commit/630334142eacfb49553c3d35d7fe9921f38d6879))
+* rationalise proposal and development description field usage (commit [3bfa0bbc](https://github.com/digital-land/planning-application-data-specification/commit/3bfa0bbcd279440a464ce5c377330f0ff23e2a54))
+
+
 <a name="v0.1.72"></a>
 ## [v0.1.72](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.71...v0.1.72) (2026-04-14)
 
