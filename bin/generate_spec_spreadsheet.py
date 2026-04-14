@@ -15,17 +15,6 @@ from openpyxl.styles import Alignment, Border, Font, Side
 from openpyxl.utils import get_column_letter
 from utils import to_anchor
 
-def extract_field_references(
-    field_chain: List[str], path_refs: List[str]
-) -> Tuple[List[str], List[str]]:
-    """
-    Extract field names and references from a field chain.
-    Returns (display_names, field_refs)
-    """
-    display_names = field_chain.copy()
-    field_refs = path_refs.copy() if path_refs else [""] * len(field_chain)
-    return display_names, field_refs
-
 
 def format_resolved_path_name(item: ResolvedComponentReference) -> str:
     name = item.base.name
