@@ -1,5 +1,7 @@
 # tests/test_integrity_checks.py
 import pytest
+
+from bin.integrity_checks import applications as application_checks
 from bin.integrity_checks.components import check_field_condition_references
 from bin.integrity_checks.codelists import (
     check_codelist_blank_keys,
@@ -8,7 +10,6 @@ from bin.integrity_checks.codelists import (
     check_codelist_parent_references,
 )
 from bin.integrity_checks.modules import (
-    check_all,
     check_applies_if_structure,
     check_required_if_fields,
 )
@@ -229,6 +230,207 @@ class TestRequiredIfFieldReferences:
             application_types={"full": {}},
         )
         assert has_no_errors
+
+
+class TestCombinedApplicationTypeIntegrityChecks:
+    def write_combined_csv(self, tmp_path, rows):
+        csv_path = tmp_path / "combined-application-types.csv"
+        headers = [
+            "application-types",
+            "name",
+            "description",
+            "notes",
+            "entry-date",
+            "start-date",
+            "end-date",
+        ]
+        lines = [",".join(headers)]
+        lines.extend(rows)
+        csv_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+        return csv_path
+
+    def patch_combined_paths(self, monkeypatch, csv_path, planning_types_path=None):
+        monkeypatch.setattr(application_checks, "COMBINED_APPLICATION_TYPES_PATH", csv_path)
+        if planning_types_path is None:
+            planning_types_path = csv_path.parent / "planning-application-type.csv"
+        monkeypatch.setattr(
+            application_checks,
+            "PLANNING_APPLICATION_TYPE_PATH",
+            planning_types_path,
+        )
+
+    def test_valid_combined_application_row_passes(self, tmp_path, monkeypatch):
+        csv_path = self.write_combined_csv(
+            tmp_path,
+            [
+                "hh;lbc,Householder and listed building consent,Valid combo,,2026-04-14,2026-04-14,"
+            ],
+        )
+        self.patch_combined_paths(monkeypatch, csv_path)
+
+        errors = []
+        warnings = []
+        monkeypatch.setattr(
+            application_checks, "print_error", lambda element, name, message: errors.append(message)
+        )
+        monkeypatch.setattr(
+            application_checks,
+            "print_warning",
+            lambda element, name, message: warnings.append(message),
+        )
+
+        result = application_checks.check_combined_application_type_rows(
+            {"hh": {}, "lbc": {}}
+        )
+
+        assert result is True
+        assert errors == []
+        assert warnings == []
+
+    def test_non_canonical_order_fails(self, tmp_path, monkeypatch):
+        csv_path = self.write_combined_csv(
+            tmp_path,
+            [
+                "lbc;hh,Householder and listed building consent,Wrong order,,2026-04-14,2026-04-14,"
+            ],
+        )
+        self.patch_combined_paths(monkeypatch, csv_path)
+
+        errors = []
+        monkeypatch.setattr(
+            application_checks, "print_error", lambda element, name, message: errors.append(message)
+        )
+        monkeypatch.setattr(application_checks, "print_warning", lambda *args: None)
+
+        result = application_checks.check_combined_application_type_rows(
+            {"hh": {}, "lbc": {}}
+        )
+
+        assert result is False
+        assert any("canonical alphabetical order 'hh;lbc'" in message for message in errors)
+
+    def test_unknown_application_type_fails(self, tmp_path, monkeypatch):
+        csv_path = self.write_combined_csv(
+            tmp_path,
+            [
+                "hh;missing,Householder and missing type,Unknown member,,2026-04-14,2026-04-14,"
+            ],
+        )
+        self.patch_combined_paths(monkeypatch, csv_path)
+
+        errors = []
+        monkeypatch.setattr(
+            application_checks, "print_error", lambda element, name, message: errors.append(message)
+        )
+        monkeypatch.setattr(application_checks, "print_warning", lambda *args: None)
+
+        result = application_checks.check_combined_application_type_rows({"hh": {}})
+
+        assert result is False
+        assert any("references unknown application type 'missing'" in message for message in errors)
+
+    def test_duplicate_combination_fails(self, tmp_path, monkeypatch):
+        csv_path = self.write_combined_csv(
+            tmp_path,
+            [
+                "hh;lbc,Householder and listed building consent,First row,,2026-04-14,2026-04-14,",
+                "hh;lbc,Householder and listed building consent,Duplicate row,,2026-04-14,2026-04-14,",
+            ],
+        )
+        self.patch_combined_paths(monkeypatch, csv_path)
+
+        errors = []
+        monkeypatch.setattr(
+            application_checks, "print_error", lambda element, name, message: errors.append(message)
+        )
+        monkeypatch.setattr(application_checks, "print_warning", lambda *args: None)
+
+        result = application_checks.check_combined_application_type_rows(
+            {"hh": {}, "lbc": {}}
+        )
+
+        assert result is False
+        assert any("duplicate combined application type 'hh;lbc'" in message for message in errors)
+
+    def test_blank_start_date_warns_but_passes(self, tmp_path, monkeypatch):
+        csv_path = self.write_combined_csv(
+            tmp_path,
+            [
+                "hh;lbc,Householder and listed building consent,Inactive combo,,2026-04-14,,"
+            ],
+        )
+        self.patch_combined_paths(monkeypatch, csv_path)
+
+        errors = []
+        warnings = []
+        monkeypatch.setattr(
+            application_checks, "print_error", lambda element, name, message: errors.append(message)
+        )
+        monkeypatch.setattr(
+            application_checks,
+            "print_warning",
+            lambda element, name, message: warnings.append(message),
+        )
+
+        result = application_checks.check_combined_application_type_rows(
+            {"hh": {}, "lbc": {}}
+        )
+
+        assert result is True
+        assert errors == []
+        assert any("recognised but inactive" in message for message in warnings)
+
+    def test_three_or_more_application_types_warns_but_passes(
+        self, tmp_path, monkeypatch
+    ):
+        csv_path = self.write_combined_csv(
+            tmp_path,
+            [
+                "advertising;full;lbc,Three-way combo,Three members,,2026-04-14,2026-04-14,"
+            ],
+        )
+        self.patch_combined_paths(monkeypatch, csv_path)
+
+        errors = []
+        warnings = []
+        monkeypatch.setattr(
+            application_checks, "print_error", lambda element, name, message: errors.append(message)
+        )
+        monkeypatch.setattr(
+            application_checks,
+            "print_warning",
+            lambda element, name, message: warnings.append(message),
+        )
+
+        result = application_checks.check_combined_application_type_rows(
+            {"advertising": {}, "full": {}, "lbc": {}}
+        )
+
+        assert result is True
+        assert errors == []
+        assert any("three or more application types" in message for message in warnings)
+
+    def test_invalid_date_ordering_fails(self, tmp_path, monkeypatch):
+        csv_path = self.write_combined_csv(
+            tmp_path,
+            [
+                "hh;lbc,Householder and listed building consent,Bad dates,,2026-04-14,2026-04-15,2026-04-13"
+            ],
+        )
+        self.patch_combined_paths(monkeypatch, csv_path)
+
+        errors = []
+        monkeypatch.setattr(
+            application_checks, "print_error", lambda element, name, message: errors.append(message)
+        )
+        monkeypatch.setattr(application_checks, "print_warning", lambda *args: None)
+
+        result = application_checks.check_combined_application_type_rows(
+            {"hh": {}, "lbc": {}}
+        )
+
+        assert result is False
+        assert any("'end-date' must not be earlier than 'start-date'" in message for message in errors)
 
 
 class TestCodelistSourceData:

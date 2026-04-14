@@ -271,6 +271,35 @@ def test_find_application_command_shows_combined_application_summary(monkeypatch
     assert "- lb-grade: Listed building grade" in result.output
 
 
+def test_modules_in_application_command_supports_combined_application_type(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "load_content",
+        lambda: {
+            "module": {
+                "site-details": {"name": "Site details"},
+                "lb-grade": {"name": "Listed building grade"},
+            }
+        },
+    )
+    monkeypatch.setattr(
+        spec,
+        "get_application_module_refs",
+        lambda application_ref, specification: ["site-details", "lb-grade"]
+        if application_ref == "hh;lbc"
+        else [],
+    )
+
+    result = runner.invoke(spec.cli, ["find", "modules-in-application", "hh;lbc"])
+
+    assert result.exit_code == 0
+    assert "Modules in application 'hh;lbc':" in result.output
+    assert "site-details: Site details" in result.output
+    assert "lb-grade: Listed building grade" in result.output
+
+
 def test_module_forms_command_lists_analysed_2025_forms(monkeypatch):
     runner = CliRunner()
 
