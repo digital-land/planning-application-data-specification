@@ -151,6 +151,110 @@ def make_row(
     return row
 
 
+def make_empty_top_level_row(
+    top: str,
+    top_description: str,
+    incl_app_details: bool,
+    incl_references: bool,
+    app_ref: str,
+    app_desc: str,
+) -> Dict[str, Any]:
+    row = {
+        "top_level": top,
+        "top_description": top_description,
+        "field_chain": [""],
+        "description": "",
+        "datatype": "",
+        "requirement": "",
+    }
+    if incl_references:
+        row["top_level_ref"] = None
+        row["field_chain_refs"] = []
+    if incl_app_details:
+        row["application"] = app_ref
+        row["application_description"] = app_desc
+        if incl_references:
+            row["application_ref"] = app_ref
+    return row
+
+
+def flatten_application_item_rows(
+    item: Any,
+    package_spec: Specification,
+    application_type: str,
+) -> List[Tuple[str, str, List[str], List[str], ResolvedField | Any]]:
+    if is_component_reference_instance(item):
+        ref_field = item.referenced_by_field
+        top = ref_field.original.name
+        top_description = (
+            ref_field.overrides.get("description") or ref_field.original.description
+        )
+        prefix_names = [format_field_name(ref_field)]
+        prefix_refs = [ref_field.original.ref]
+
+        rows = []
+        for comp_path_names, comp_path_refs, resolved_field in walk_resolved_component_paths(
+            item.component.ref,
+            package_spec,
+            (prefix_names, prefix_refs),
+            application_type,
+        ):
+            rows.append(
+                (
+                    top,
+                    top_description,
+                    comp_path_names + [format_field_name(resolved_field)],
+                    comp_path_refs + [resolved_field.base.ref],
+                    resolved_field,
+                )
+            )
+        return rows
+
+    if hasattr(item, "ref") and hasattr(item, "name"):
+        return [
+            (
+                item.name,
+                item.description,
+                [format_field_name(item)],
+                [item.ref],
+                item,
+            )
+        ]
+
+    return []
+
+
+def append_flat_row(
+    flat_rows: List[Dict[str, Any]],
+    app_name: str,
+    app_ref: str,
+    app_desc: str,
+    top: str,
+    top_ref: Optional[str],
+    top_desc: str,
+    field_chain: List[str],
+    field_chain_refs: List[str],
+    row_item: Any,
+    incl_app_details: bool,
+    incl_references: bool,
+) -> None:
+    flat_rows.append(
+        make_row(
+            app_name,
+            app_ref,
+            app_desc,
+            top,
+            top_ref,
+            top_desc,
+            field_chain,
+            field_chain_refs if incl_references else [],
+            row_item,
+            incl_app_details=incl_app_details,
+            incl_references=incl_references,
+        )
+    )
+
+
 def build_flat_rows(
     app: Any,
     incl_app_details: bool = True,
@@ -165,67 +269,24 @@ def build_flat_rows(
 
     # 1) Application-level items (fields and possibly embedded components)
     for item in app.items:
-        if is_component_reference_instance(item):
-            ref_field = item.referenced_by_field
-            top = ref_field.original.name
-            top_ref = ref_field.original.ref if incl_references else None
-            top_desc = (
-                ref_field.overrides.get("description") or ref_field.original.description
-            )
-
-            prefix_names = [format_field_name(ref_field)]
-            prefix_refs = [ref_field.original.ref]
-            for comp_path_names, comp_path_refs, f in walk_resolved_component_paths(
-                item.component.ref,
-                package_spec,
-                (prefix_names, prefix_refs),
+        for top, top_desc, field_chain, field_chain_refs, row_item in (
+            flatten_application_item_rows(item, package_spec, app_ref)
+        ):
+            top_ref = field_chain_refs[0] if incl_references and field_chain_refs else None
+            append_flat_row(
+                flat_rows,
+                app_name,
                 app_ref,
-            ):
-                field_name = format_field_name(f)
-                field_chain = comp_path_names + [field_name]
-                field_chain_refs = (
-                    (comp_path_refs + [f.base.ref]) if incl_references else []
-                )
-
-                flat_rows.append(
-                    make_row(
-                        app_name,
-                        app_ref,
-                        app_desc,
-                        top,
-                        top_ref,
-                        top_desc,
-                        field_chain,
-                        field_chain_refs,
-                        f,
-                        incl_app_details=incl_app_details,
-                        incl_references=incl_references,
-                    )
-                )
-        elif hasattr(item, "ref") and hasattr(item, "name"):
-            top = item.name
-            top_ref = item.ref if incl_references else None
-            top_desc = item.description
-            field_chain = [format_field_name(item)]
-            field_chain_refs = [item.ref] if incl_references else []
-
-            flat_rows.append(
-                make_row(
-                    app_name,
-                    app_ref,
-                    app_desc,
-                    top,
-                    top_ref,
-                    top_desc,
-                    field_chain,
-                    field_chain_refs,
-                    item,
-                    incl_app_details=incl_app_details,
-                    incl_references=incl_references,
-                )
+                app_desc,
+                top,
+                top_ref,
+                top_desc,
+                field_chain,
+                field_chain_refs,
+                row_item,
+                incl_app_details,
+                incl_references,
             )
-        else:
-            continue
 
     # 2) Modules: each module is a top-level block in the sheet
     for mod in app.modules:
@@ -235,22 +296,16 @@ def build_flat_rows(
         mod_rows = flatten_module_to_rows_with_package(mod, package_spec, app_ref)
 
         if not mod_rows:
-            row = {
-                "top_level": mod.name,
-                "top_description": mod.description,
-                "field_chain": [""],
-                "description": "",
-                "datatype": "",
-                "requirement": "",
-            }
+            row = make_empty_top_level_row(
+                mod.name,
+                mod.description,
+                incl_app_details,
+                incl_references,
+                app_ref,
+                app_desc,
+            )
             if incl_references:
                 row["top_level_ref"] = mod.ref
-                row["field_chain_refs"] = []
-            if incl_app_details:
-                row["application"] = app_ref
-                row["application_description"] = app_desc
-                if incl_references:
-                    row["application_ref"] = app_ref
             flat_rows.append(row)
         else:
             for comp_path_names, comp_path_refs, f in mod_rows:
@@ -262,34 +317,30 @@ def build_flat_rows(
                     (comp_path_refs + [f.base.ref]) if incl_references else []
                 )
 
-                flat_rows.append(
-                    make_row(
-                        app_name,
-                        app_ref,
-                        app_desc,
-                        top,
-                        top_ref,
-                        mod.description,
-                        field_chain,
-                        field_chain_refs,
-                        f,
-                        incl_app_details=incl_app_details,
-                        incl_references=incl_references,
-                    )
+                append_flat_row(
+                    flat_rows,
+                    app_name,
+                    app_ref,
+                    app_desc,
+                    top,
+                    top_ref,
+                    mod.description,
+                    field_chain,
+                    field_chain_refs,
+                    f,
+                    incl_app_details,
+                    incl_references,
                 )
 
     if not flat_rows:
-        row = {
-            "top_level": "",
-            "top_description": "",
-            "field_chain": [""],
-            "description": "",
-            "datatype": "",
-            "requirement": "",
-        }
-        if incl_app_details:
-            row["application"] = app_ref or ""
-            row["application_description"] = app_desc or ""
+        row = make_empty_top_level_row(
+            "",
+            "",
+            incl_app_details,
+            incl_references,
+            app_ref or "",
+            app_desc or "",
+        )
         flat_rows.append(row)
 
     return flat_rows
