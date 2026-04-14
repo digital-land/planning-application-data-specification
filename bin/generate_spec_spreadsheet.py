@@ -4,13 +4,6 @@ from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
 
-from models import (
-    ApplicationDef,
-    ComponentInstance,
-    FieldDef,
-    FieldInstance,
-    ModuleDef,
-)
 from planning_application_specification import Specification
 from planning_application_specification.specification import (
     ResolvedComponentReference,
@@ -76,7 +69,7 @@ def walk_resolved_component_paths(
 
 
 def flatten_module_to_rows_with_package(
-    mod: ModuleDef,
+    mod: Any,
     package_spec: Specification,
     application_type: Optional[str] = None,
 ) -> List[Tuple[List[str], List[str], ResolvedField]]:
@@ -106,19 +99,22 @@ def flatten_module_to_rows_with_package(
 # ---------- Excel writing ----------
 
 
+def get_base_and_overrides(item: Any) -> Tuple[Any, Dict[str, Any]]:
+    if isinstance(item, ResolvedField):
+        return item.base, item.usage.overrides
+    if hasattr(item, "original") and hasattr(item, "overrides"):
+        return item.original, item.overrides
+    return item, {}
+
+
+def is_component_reference_instance(item: Any) -> bool:
+    return hasattr(item, "component") and hasattr(item, "referenced_by_field")
+
+
 def format_field_name(f: Any) -> str:
-    # Accept either FieldDef or FieldInstance
-    if isinstance(f, FieldInstance):
-        orig = f.original
-        name = f.overrides.get("name") or orig.name
-        cardinality = f.overrides.get("cardinality") or orig.cardinality
-    elif isinstance(f, ResolvedField):
-        orig = f.base
-        name = f.usage.overrides.get("name") or orig.name
-        cardinality = f.usage.overrides.get("cardinality") or orig.cardinality
-    else:
-        name = getattr(f, "name", "")
-        cardinality = getattr(f, "cardinality", None)
+    orig, overrides = get_base_and_overrides(f)
+    name = overrides.get("name") or getattr(orig, "name", "")
+    cardinality = overrides.get("cardinality") or getattr(orig, "cardinality", None)
     if cardinality == "n":
         name += "[]"
     return name
@@ -137,16 +133,11 @@ def make_row(
     top_desc,
     field_chain,
     field_chain_refs,
-    f: FieldInstance,
+    f: Any,
     incl_app_details: bool = True,
     incl_references: bool = False,
 ):
-    if isinstance(f, ResolvedField):
-        orig = f.base
-        overrides = f.usage.overrides
-    else:
-        orig = f.original
-        overrides = f.overrides
+    orig, overrides = get_base_and_overrides(f)
     requirement_level = overrides.get("required", orig.required)
 
     row = {
@@ -172,7 +163,7 @@ def make_row(
 
 
 def build_flat_rows(
-    app: ApplicationDef,
+    app: Any,
     incl_app_details: bool = True,
     incl_references: bool = False,
 ) -> List[Dict[str, Any]]:
@@ -185,29 +176,7 @@ def build_flat_rows(
 
     # 1) Application-level items (fields and possibly embedded components)
     for item in app.items:
-        if isinstance(item, FieldDef):
-            top = item.name
-            top_ref = item.ref if incl_references else None
-            top_desc = item.description
-            field_chain = [format_field_name(item)]
-            field_chain_refs = [item.ref] if incl_references else []
-
-            flat_rows.append(
-                make_row(
-                    app_name,
-                    app_ref,
-                    app_desc,
-                    top,
-                    top_ref,
-                    top_desc,
-                    field_chain,
-                    field_chain_refs,
-                    item,
-                    incl_app_details=incl_app_details,
-                    incl_references=incl_references,
-                )
-            )
-        elif isinstance(item, ComponentInstance):
+        if is_component_reference_instance(item):
             ref_field = item.referenced_by_field
             top = ref_field.original.name
             top_ref = ref_field.original.ref if incl_references else None
@@ -244,6 +213,28 @@ def build_flat_rows(
                         incl_references=incl_references,
                     )
                 )
+        elif hasattr(item, "ref") and hasattr(item, "name"):
+            top = item.name
+            top_ref = item.ref if incl_references else None
+            top_desc = item.description
+            field_chain = [format_field_name(item)]
+            field_chain_refs = [item.ref] if incl_references else []
+
+            flat_rows.append(
+                make_row(
+                    app_name,
+                    app_ref,
+                    app_desc,
+                    top,
+                    top_ref,
+                    top_desc,
+                    field_chain,
+                    field_chain_refs,
+                    item,
+                    incl_app_details=incl_app_details,
+                    incl_references=incl_references,
+                )
+            )
         else:
             continue
 
@@ -395,7 +386,7 @@ def create_header_row(
 
 
 def write_application_excel(
-    app: ApplicationDef,
+    app: Any,
     out_dir: Path,
     incl_app_details: bool = True,
     incl_references: bool = False,
