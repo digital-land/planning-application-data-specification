@@ -64,6 +64,7 @@ def load_content(root_path: str | Path | None = None):
     tables = make_tables()
     for table in tables.keys():
         load_table_content(table, tables, root_path=root_path)
+    tables["__root_path__"] = _resolve_repo_root(root_path)
     return tables
 
 

@@ -1,4 +1,5 @@
 from glob import glob
+from pathlib import Path
 
 import frontmatter
 
@@ -43,6 +44,7 @@ def load_content():
     tables = make_tables()
     for table in tables.keys():
         load_table_content(table, tables)
+    tables["__root_path__"] = Path.cwd()
     return tables
 
 
