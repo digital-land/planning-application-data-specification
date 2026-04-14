@@ -6,8 +6,9 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+from .applications import resolve_application
 from .loader import _resolve_repo_root, load_specification_model
-from .models import ComponentUsage, FieldUsage
+from .models import ApplicationDef, ComponentUsage, FieldUsage
 
 
 @dataclass(frozen=True)
@@ -186,6 +187,16 @@ class Specification:
             raise KeyError(f"Unknown module: {ref}")
         return module
 
+    def application(self, ref: str | list[str]) -> ApplicationDef:
+        application = resolve_application(ref, self.tables)
+        if not application:
+            raise KeyError(f"Unknown application: {ref}")
+        if isinstance(application, ApplicationDef):
+            return application
+        if hasattr(application, "get") and callable(getattr(application, "get")):
+            return self._build_application_view(application)
+        raise TypeError(f"Unexpected application shape for {ref!r}")
+
     def resolve_field(
         self,
         ref: str,
@@ -285,6 +296,96 @@ class Specification:
         csv_path = self.source_path / relative_path
         with csv_path.open(newline="", encoding="utf-8") as csv_file:
             return list(csv.DictReader(csv_file))
+
+    def _build_application_view(self, application: dict) -> ApplicationDef:
+        application_types = application.get("application-types") or []
+        if isinstance(application_types, str):
+            application_types = [item for item in application_types.split(";") if item]
+
+        if not application_types:
+            application_ref = application.get("application") or application.get("ref") or ""
+            if application_ref:
+                application_types = [application_ref]
+
+        canonical_ref = ";".join(application_types)
+        member_applications = [
+            self.applications[app_type]
+            for app_type in application_types
+            if app_type in self.applications
+        ]
+        module_defs = []
+        for module_entry in application.get("modules") or []:
+            if isinstance(module_entry, str):
+                module_ref = module_entry
+            elif isinstance(module_entry, dict):
+                module_ref = module_entry.get("module")
+            else:
+                module_ref = None
+
+            if not module_ref:
+                continue
+
+            module = self.modules.get(module_ref)
+            if module:
+                module_defs.append(module)
+
+        items = self._merge_application_items(member_applications)
+        field_usages = [item for item in items if isinstance(item, FieldUsage)]
+        component_usages = [item for item in items if isinstance(item, ComponentUsage)]
+
+        if member_applications:
+            allow_additional_properties = all(
+                bool(app.allow_additional_properties) for app in member_applications
+            )
+        else:
+            allow_additional_properties = bool(
+                application.get("allow-additional-properties", False)
+            )
+
+        return ApplicationDef(
+            application=canonical_ref,
+            ref=canonical_ref,
+            name=application.get("name") or canonical_ref,
+            description=application.get("description", "") or "",
+            application_types=list(application_types),
+            is_combined=len(application_types) > 1,
+            notes=application.get("notes", "") or "",
+            entry_date=application.get("entry-date"),
+            start_date=application.get("start-date"),
+            end_date=application.get("end-date"),
+            allow_additional_properties=allow_additional_properties,
+            items=items,
+            field_usages=field_usages,
+            component_usages=component_usages,
+            modules=module_defs,
+        )
+
+    def _merge_application_items(
+        self, applications: list[ApplicationDef]
+    ) -> list[FieldUsage | ComponentUsage]:
+        merged_items = []
+        seen_keys = set()
+
+        for application in applications:
+            for item in application.items:
+                item_key = self._application_item_key(item)
+                if item_key in seen_keys:
+                    continue
+                seen_keys.add(item_key)
+                merged_items.append(item)
+
+        return merged_items
+
+    def _application_item_key(self, item: FieldUsage | ComponentUsage) -> tuple:
+        if isinstance(item, FieldUsage):
+            return ("field", item.original.ref)
+        if isinstance(item, ComponentUsage):
+            referenced_by_field = item.referenced_by_field
+            field_ref = None
+            if isinstance(referenced_by_field, FieldUsage):
+                field_ref = referenced_by_field.original.ref
+            return ("component", item.component.ref, field_ref)
+        return ("other", id(item))
 
     def _row_matches_selection(
         self, row: dict, selection: SelectionContext | None

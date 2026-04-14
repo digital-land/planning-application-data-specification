@@ -9,6 +9,7 @@ The current package has three kinds of query:
 - canonical lookup for definitions as they exist in the source data
 - applicable views for codelists filtered by selection context
 - resolved views for fields as used within a module or component
+- application lookup for canonical single application types and controlled combined application types
 
 ## Getting started
 
@@ -33,6 +34,14 @@ gla_full_tenure_type = tenure_type.applicable(
     )
 )
 print(len(gla_full_tenure_type.items))
+
+householder = spec.application("hh")
+print(householder.name)
+print(householder.application_types)
+
+householder_listed = spec.application(["hh", "lbc"])
+print(householder_listed.name)
+print(householder_listed.application_types)
 ```
 
 You can also load from an explicit repo path:
@@ -48,6 +57,7 @@ If the package cannot detect the repository root automatically, `Specification.l
 The implemented package currently supports:
 
 - loading the specification model from a local repo checkout
+- canonical single-application lookup and controlled combined-application lookup
 - canonical codelist lookup
 - canonical field, component and module lookup
 - applicable codelist filtering using selection context
@@ -65,11 +75,13 @@ Current V1 boundary:
 
 Use canonical lookup when you want the base definition:
 
+- `spec.application(ref)` for an application view over a canonical single application definition
 - `spec.codelist(ref)` for the source codelist
 - `spec.field(ref)`, `spec.component(ref)` and `spec.module(ref)` for canonical definitions
 
 Use contextual lookup when you want the specification as it applies in a particular situation:
 
+- `spec.application([ref1, ref2])` for an active controlled combined application type using the same public shape
 - `spec.codelist(ref).applicable(selection=...)` when codelist items may vary by profile or application type
 - `spec.resolve_field(...)` when a field may carry local usage overrides or conditional applicability inside a module or component
 - `spec.resolve_container_items(...)` when you need the ordered mixed rows of a module or component as authored
@@ -125,6 +137,35 @@ Example:
 
 ```python
 tenure_type = spec.codelist("tenure-type")
+```
+
+### `Specification.application(ref: str | list[str])`
+
+Return an application view for either a canonical single application or a derived controlled combined application.
+
+Arguments:
+
+- `ref`: a single application type reference such as `"hh"`, or a list of application type references such as `["hh", "lbc"]`
+
+Returns:
+
+- an `ApplicationDef` view for a single or combined application
+- `application_types`, `name`, `description` and `modules` are available in both cases
+- combined applications set `is_combined=True`
+- combined applications also expose lifecycle metadata carried in `combined-application-types.csv`, such as `entry_date`, `start_date`, `end_date`, and `notes`
+- combined applications derive `allow_additional_properties` with AND semantics across member applications
+- combined applications expose a deduped union of application-level `items`, `field_usages`, and `component_usages`
+
+Raises:
+
+- `KeyError` if the single application or combined application is unknown
+- `ValueError` if the combined application is recognised but not yet active
+
+Example:
+
+```python
+householder = spec.application("hh")
+householder_listed = spec.application(["hh", "lbc"])
 ```
 
 ### `Specification.field(ref: str)`

@@ -234,6 +234,8 @@ class ApplicationDef:
     ref: str
     name: str
     description: str = ""
+    application_types: List[str] = field(default_factory=list)
+    is_combined: bool = False
     extends: Optional[str] = None
     allow_additional_properties: Optional[bool] = False
     synonyms: List[str] = field(default_factory=list)
@@ -285,6 +287,8 @@ class ApplicationDef:
             ref=app,
             name=name,
             description=description,
+            application_types=[app] if app else [],
+            is_combined=False,
             extends=extends,
             allow_additional_properties=allow_additional_properties,
             synonyms=synonyms,

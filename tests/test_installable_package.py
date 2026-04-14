@@ -1,4 +1,5 @@
 from planning_application_specification import Specification
+from planning_application_specification.models import ApplicationDef
 from planning_application_specification.specification import (
     ResolvedComponentReference,
     ResolvedField,
@@ -70,6 +71,44 @@ def test_canonical_module_lookup_returns_module_definition(project_root):
     assert module.ref == "proposal-details"
     assert module.name == "Description of the proposal"
     assert len(module.field_usages) > 0
+
+
+def test_application_returns_uniform_application_view_for_single_type(project_root):
+    spec = Specification.load(project_root)
+
+    application = spec.application("hh")
+
+    assert isinstance(application, ApplicationDef)
+    assert application.ref == "hh"
+    assert application.application_types == ["hh"]
+    assert application.is_combined is False
+    assert application.allow_additional_properties is True
+    assert len(application.items) == 1
+    assert len(application.component_usages) == 1
+    assert len(application.modules) > 0
+    assert application.modules[0].ref
+
+
+def test_application_returns_uniform_application_view_for_combined_type(project_root):
+    spec = Specification.load(project_root)
+
+    application = spec.application(["hh", "lbc"])
+
+    assert isinstance(application, ApplicationDef)
+    assert application.ref == "hh;lbc"
+    assert application.application_types == ["hh", "lbc"]
+    assert application.is_combined is True
+    assert application.entry_date == "2026-04-14"
+    assert application.start_date == "2026-04-14"
+    assert application.end_date == ""
+    assert "connected consent" in application.description
+    assert application.allow_additional_properties is True
+    assert len(application.items) == 1
+    assert len(application.field_usages) == 0
+    assert len(application.component_usages) == 1
+    assert application.component_usages[0].component.ref == "application"
+    assert len(application.modules) > 0
+    assert all(hasattr(module, "ref") for module in application.modules)
 
 
 def test_resolve_field_returns_module_level_override(project_root):

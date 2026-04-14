@@ -59,7 +59,11 @@ def _coerce_application_type_list(application: object) -> list[str] | None:
     return None
 
 
-def _extract_module_ref(entry):
+def _canonical_application_ref(application_types: list[str]) -> str:
+    return ";".join(application_types)
+
+
+def _extract_module_ref(entry) -> str | None:
     if isinstance(entry, str):
         return entry
     if isinstance(entry, dict):
@@ -72,29 +76,34 @@ def _extract_module_ref(entry):
     return None
 
 
+def _iter_module_entries(app_obj: dict) -> list:
+    modules = app_obj.get("modules")
+    if modules is None:
+        modules = app_obj.get("module", [])
+    if isinstance(modules, dict):
+        return list(modules.values())
+    return list(modules or [])
+
+
+def _iter_parent_application_refs(app_obj: dict) -> list[str]:
+    extends = app_obj.get("extends")
+    if not extends:
+        return []
+    parent_refs = extends if isinstance(extends, list) else [extends]
+    return [ref for ref in parent_refs if isinstance(ref, str) and ref]
+
+
 def _collect_single_application_module_refs(app_obj: dict, applications: dict) -> list[str]:
     collected = set()
     visited_apps = set()
 
-    def collect_from_app(current_app):
-        mods = current_app.get("modules", None)
-        if mods is None:
-            mods = current_app.get("module", [])
-        mods_iter = list(mods.values()) if isinstance(mods, dict) else (mods or [])
-
-        for module_entry in mods_iter:
+    def collect_from_app(current_app: dict) -> None:
+        for module_entry in _iter_module_entries(current_app):
             module_ref = _extract_module_ref(module_entry)
-            if isinstance(module_ref, str) and module_ref:
+            if module_ref:
                 collected.add(module_ref)
 
-        extends = current_app.get("extends")
-        if not extends:
-            return
-
-        parent_refs = extends if isinstance(extends, list) else [extends]
-        for parent_ref in parent_refs:
-            if not isinstance(parent_ref, str) or not parent_ref:
-                continue
+        for parent_ref in _iter_parent_application_refs(current_app):
             if parent_ref in visited_apps:
                 continue
             visited_apps.add(parent_ref)
@@ -104,6 +113,51 @@ def _collect_single_application_module_refs(app_obj: dict, applications: dict) -
 
     collect_from_app(app_obj)
     return sorted(collected)
+
+
+def _find_combined_application_row(
+    canonical_ref: str, specification: dict
+) -> dict | None:
+    for row in _read_combined_application_rows(specification):
+        raw_application_types = row.get("application-types") or ""
+        candidate_types = _normalise_application_types(raw_application_types.split(";"))
+        if candidate_types and _canonical_application_ref(candidate_types) == canonical_ref:
+            return row
+    return None
+
+
+def _resolve_component_applications(
+    application_types: list[str], applications: dict
+) -> list[dict]:
+    resolved = []
+    for application_type in application_types:
+        app_obj = applications.get(application_type)
+        if not app_obj:
+            raise KeyError(f"Unknown application type '{application_type}'")
+        resolved.append(app_obj)
+    return resolved
+
+
+def _build_combined_application(
+    application_types: list[str], combo_row: dict, applications: dict
+) -> dict:
+    module_refs = set()
+    for app_obj in _resolve_component_applications(application_types, applications):
+        module_refs.update(_collect_single_application_module_refs(app_obj, applications))
+
+    canonical_ref = _canonical_application_ref(application_types)
+    return {
+        "application": canonical_ref,
+        "ref": canonical_ref,
+        "application-types": application_types,
+        "name": combo_row.get("name", canonical_ref) or canonical_ref,
+        "description": combo_row.get("description", "") or "",
+        "notes": combo_row.get("notes", "") or "",
+        "entry-date": combo_row.get("entry-date"),
+        "start-date": combo_row.get("start-date"),
+        "end-date": combo_row.get("end-date"),
+        "modules": [{"module": module_ref} for module_ref in sorted(module_refs)],
+    }
 
 
 def resolve_application(application: object | str | list[str], specification: dict) -> dict | None:
@@ -123,15 +177,8 @@ def resolve_application(application: object | str | list[str], specification: di
     if len(application_types) == 1:
         return applications.get(application_types[0])
 
-    canonical_ref = ";".join(application_types)
-    combo_row = None
-    for row in _read_combined_application_rows(specification):
-        raw_application_types = row.get("application-types") or ""
-        candidate_types = _normalise_application_types(raw_application_types.split(";"))
-        if candidate_types and ";".join(candidate_types) == canonical_ref:
-            combo_row = row
-            break
-
+    canonical_ref = _canonical_application_ref(application_types)
+    combo_row = _find_combined_application_row(canonical_ref, specification)
     if combo_row is None:
         raise KeyError(f"Unknown combined application type '{canonical_ref}'")
 
@@ -140,19 +187,7 @@ def resolve_application(application: object | str | list[str], specification: di
             f"Combined application type '{canonical_ref}' is recognised but not yet active"
         )
 
-    module_refs = set()
-    for application_type in application_types:
-        app_obj = applications.get(application_type)
-        if not app_obj:
-            raise KeyError(f"Unknown application type '{application_type}'")
-        module_refs.update(_collect_single_application_module_refs(app_obj, applications))
-
-    return {
-        "application-types": application_types,
-        "name": combo_row.get("name", canonical_ref) or canonical_ref,
-        "description": combo_row.get("description", "") or "",
-        "modules": [{"module": module_ref} for module_ref in sorted(module_refs)],
-    }
+    return _build_combined_application(application_types, combo_row, applications)
 
 
 def get_application_module_refs(application: object | str | list[str], specification: dict) -> list:
@@ -164,12 +199,5 @@ def get_application_module_refs(application: object | str | list[str], specifica
     app_obj = resolve_application(application, specification)
     if not app_obj:
         return []
-
-    if "application-types" in app_obj and "application" not in app_obj:
-        return [
-            _extract_module_ref(module_entry)
-            for module_entry in app_obj.get("modules", [])
-            if _extract_module_ref(module_entry)
-        ]
 
     return _collect_single_application_module_refs(app_obj, applications)
