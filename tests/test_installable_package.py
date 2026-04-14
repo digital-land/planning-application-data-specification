@@ -111,6 +111,64 @@ def test_application_returns_uniform_application_view_for_combined_type(project_
     assert all(hasattr(module, "ref") for module in application.modules)
 
 
+def test_application_rejects_unknown_combined_type(project_root):
+    spec = Specification.load(project_root)
+
+    try:
+        spec.application(["hh", "full"])
+    except KeyError as exc:
+        assert "Unknown combined application type" in str(exc)
+    else:
+        raise AssertionError("Expected KeyError for unknown combined application type")
+
+
+def test_application_rejects_inactive_combined_type(project_root):
+    spec = Specification.load(project_root)
+
+    try:
+        spec.application(["full", "haz-substance-consent"])
+    except ValueError as exc:
+        assert "recognised but not yet active" in str(exc)
+    else:
+        raise AssertionError("Expected ValueError for inactive combined application type")
+
+
+def test_combined_application_uses_false_allow_additional_properties_if_either_member_is_false(
+    project_root,
+):
+    spec = Specification.load(project_root)
+
+    original_value = spec.applications["lbc"].allow_additional_properties
+    spec.applications["lbc"].allow_additional_properties = False
+    try:
+        application = spec.application(["hh", "lbc"])
+    finally:
+        spec.applications["lbc"].allow_additional_properties = original_value
+
+    assert application.allow_additional_properties is False
+
+
+def test_combined_application_dedupes_application_level_items(project_root):
+    spec = Specification.load(project_root)
+
+    application = spec.application(["hh", "lbc"])
+
+    item_keys = []
+    for item in application.items:
+        if hasattr(item, "original"):
+            item_keys.append(("field", item.original.ref))
+        else:
+            item_keys.append(
+                (
+                    "component",
+                    item.component.ref,
+                    item.referenced_by_field.original.ref,
+                )
+            )
+
+    assert item_keys == [("component", "application", "application")]
+
+
 def test_resolve_field_returns_module_level_override(project_root):
     spec = Specification.load(project_root)
 
