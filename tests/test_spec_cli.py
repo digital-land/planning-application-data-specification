@@ -144,6 +144,52 @@ def test_form_command_handles_missing_form(monkeypatch):
     assert "No 2025 form found with reference 'missing-form'" in result.output
 
 
+def test_form_url_command_supports_combined_application_type(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "get_2025_forms_by_app_type",
+        lambda application_type: [
+            {
+                "application-types": ["hh", "lbc"],
+                "document-url": "https://example.com/form-hh-lbc.pdf",
+            }
+        ]
+        if application_type == "hh;lbc"
+        else [],
+    )
+
+    result = runner.invoke(spec.cli, ["form-url", "hh;lbc"])
+
+    assert result.exit_code == 0
+    assert "application-type: hh + lbc" in result.output
+    assert "https://example.com/form-hh-lbc.pdf" in result.output
+
+
+def test_form_url_command_normalises_combined_application_type_order(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "get_2025_forms_by_app_type",
+        lambda application_type: [
+            {
+                "application-types": ["hh", "lbc"],
+                "document-url": "https://example.com/form-hh-lbc.pdf",
+            }
+        ]
+        if application_type == "lbc;hh"
+        else [],
+    )
+
+    result = runner.invoke(spec.cli, ["form-url", "lbc;hh"])
+
+    assert result.exit_code == 0
+    assert "application-type: hh + lbc" in result.output
+    assert "https://example.com/form-hh-lbc.pdf" in result.output
+
+
 def test_module_forms_command_lists_analysed_2025_forms(monkeypatch):
     runner = CliRunner()
 

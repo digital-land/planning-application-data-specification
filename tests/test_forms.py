@@ -53,6 +53,39 @@ def test_get_2025_forms_for_module_returns_matching_forms():
     assert [form["reference"] for form in result] == ["form-b", "form-a"]
 
 
+def test_get_2025_forms_by_app_type_returns_matching_combined_form(monkeypatch):
+    form_data = [
+        {"reference": "form-a", "name": "Form A", "application-types": ["hh"]},
+        {
+            "reference": "form-combo",
+            "name": "Combined form",
+            "application-types": ["hh", "lbc"],
+        },
+    ]
+
+    monkeypatch.setattr(forms, "load_2025_form_data", lambda: form_data)
+
+    result = forms.get_2025_forms_by_app_type("hh;lbc")
+
+    assert [form["reference"] for form in result] == ["form-combo"]
+
+
+def test_get_2025_forms_by_app_type_normalises_combined_query_order(monkeypatch):
+    form_data = [
+        {
+            "reference": "form-combo",
+            "name": "Combined form",
+            "application-types": ["hh", "lbc"],
+        }
+    ]
+
+    monkeypatch.setattr(forms, "load_2025_form_data", lambda: form_data)
+
+    result = forms.get_2025_forms_by_app_type("lbc;hh")
+
+    assert [form["reference"] for form in result] == ["form-combo"]
+
+
 def test_get_2025_modules_for_form_returns_matching_modules_sorted_by_name():
     module_data = [
         {"reference": "module-b", "name": "Beta", "application-forms": "form-a"},

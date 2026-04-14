@@ -15,10 +15,8 @@ from bin.completeness import (
     calculate_scope_summary,
     evaluate_scope,
 )
-from bin.csv_helpers import read_csv
 from bin.fields import find_field_usage
 from bin.forms import (
-    FORMS_2025_FILEPATH,
     get_2025_form,
     get_2025_forms_by_app_type,
     get_2025_forms_for_module,
@@ -53,29 +51,23 @@ def format_spec_summary(markdown=False):
 
 
 def print_2025_form_urls(application_type):
-    forms_path = PROJECT_ROOT / FORMS_2025_FILEPATH
-    rows = read_csv(str(forms_path), as_dict=True)
-    query = application_type.strip().lower()
-    matches = []
-
-    for row in rows:
-        raw_types = row.get("application-types", "")
-        types = [t.strip().lower() for t in raw_types.split(";") if t.strip()]
-        if query in types:
-            matches.append(row)
+    matches = get_2025_forms_by_app_type(application_type)
 
     if not matches:
         click.echo(f"No form found for application type '{application_type}'")
         return
 
-    def format_types(raw: str) -> str:
-        items = [t.strip() for t in raw.split(";") if t.strip()]
-        return " + ".join(items) if items else raw.strip()
+    def format_types(values) -> str:
+        if isinstance(values, list):
+            items = values
+        else:
+            items = [t.strip() for t in str(values).split(";") if t.strip()]
+        return " + ".join(items) if items else str(values).strip()
 
     formatted = []
-    for row in matches:
-        url = row.get("document-url", "")
-        app_types = format_types(row.get("application-types", ""))
+    for form in matches:
+        url = form.get("document-url", "")
+        app_types = format_types(form.get("application-types", ""))
         formatted.append(f"- application-type: {app_types}\n  form: {url}")
 
     click.echo("\n\n".join(formatted))

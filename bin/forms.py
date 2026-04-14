@@ -5,6 +5,21 @@ FORMS_2025_FILEPATH = "data/analysis/2025-planning-application-form.csv"
 MODULES_2025_FILEPATH = "data/analysis/2025-planning-application-module.csv"
 
 
+def _normalise_application_types(values):
+    cleaned = []
+    for value in values:
+        if not isinstance(value, str):
+            continue
+        item = value.strip().lower()
+        if item:
+            cleaned.append(item)
+    return sorted(cleaned)
+
+
+def _canonical_application_types(values):
+    return ";".join(_normalise_application_types(values))
+
+
 def load_2025_form_data():
     data = read_csv(FORMS_2025_FILEPATH, as_dict=True)
     return split_field_in_dicts(data, "application-types")
@@ -13,9 +28,20 @@ def load_2025_form_data():
 def get_2025_forms_by_app_type(app_type):
     if not app_type:
         return None
-    forms = load_2025_form_data()
 
-    filtered_forms = [form for form in forms if app_type in form["application-types"]]
+    forms = load_2025_form_data()
+    query = app_type.strip().lower()
+
+    if ";" in query:
+        canonical_query = _canonical_application_types(query.split(";"))
+        return [
+            form
+            for form in forms
+            if canonical_query
+            == _canonical_application_types(form.get("application-types", []))
+        ]
+
+    filtered_forms = [form for form in forms if query in form["application-types"]]
 
     return filtered_forms
 
