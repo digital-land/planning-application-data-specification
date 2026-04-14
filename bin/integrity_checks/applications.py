@@ -1,4 +1,13 @@
-from integrity_checks.utils import has_reference_error, print_error, run_checks
+from datetime import date
+from pathlib import Path
+
+from csv_helpers import read_csv, read_csv_with_headers
+from integrity_checks.utils import (
+    has_reference_error,
+    print_error,
+    print_warning,
+    run_checks,
+)
 
 # APPLICATIONS
 # ============
@@ -15,6 +24,217 @@ from integrity_checks.utils import has_reference_error, print_error, run_checks
 # 7. define which fields are overridden and which are added to
 # 8. listing app types should list base types and their 'children' applications
 # 9. check the application is part of the official application or sub application dataset
+
+COMBINED_APPLICATION_TYPES_PATH = (
+    Path(__file__).resolve().parents[2] / "specification" / "combined-application-types.csv"
+)
+PLANNING_APPLICATION_TYPE_PATH = (
+    Path(__file__).resolve().parents[2] / "data" / "planning-application-type.csv"
+)
+COMBINED_APPLICATION_REQUIRED_HEADERS = [
+    "application-types",
+    "name",
+    "description",
+    "notes",
+    "entry-date",
+    "start-date",
+    "end-date",
+]
+
+
+def parse_iso_date(value, element_name, field_name):
+    if value == "":
+        return None
+
+    try:
+        return date.fromisoformat(value)
+    except ValueError:
+        print_error(
+            "combined application type",
+            element_name,
+            f"invalid {field_name} '{value}', expected YYYY-MM-DD",
+        )
+        return False
+
+
+def split_application_types(raw_value):
+    return [item.strip() for item in raw_value.split(";") if item.strip()]
+
+
+def get_row_value(row, key):
+    value = row.get(key, "")
+    return value.strip() if isinstance(value, str) else ""
+
+
+def get_known_application_types(applications):
+    known = set(applications.keys())
+
+    if PLANNING_APPLICATION_TYPE_PATH.exists():
+        for row in read_csv(PLANNING_APPLICATION_TYPE_PATH, as_dict=True):
+            reference = row.get("reference", "")
+            if isinstance(reference, str) and reference.strip():
+                known.add(reference.strip())
+
+    return known
+
+
+def check_combined_application_types_headers():
+    if not COMBINED_APPLICATION_TYPES_PATH.exists():
+        print_error(
+            "combined application type",
+            str(COMBINED_APPLICATION_TYPES_PATH),
+            "missing combined application types csv",
+        )
+        return False
+
+    headers, _ = read_csv_with_headers(COMBINED_APPLICATION_TYPES_PATH)
+    has_errors = False
+
+    for header in COMBINED_APPLICATION_REQUIRED_HEADERS:
+        if header not in headers:
+            print_error(
+                "combined application type",
+                str(COMBINED_APPLICATION_TYPES_PATH),
+                f"missing required column '{header}'",
+            )
+            has_errors = True
+
+    return not has_errors
+
+
+def check_combined_application_type_rows(applications):
+    if not COMBINED_APPLICATION_TYPES_PATH.exists():
+        return False
+
+    _, rows = read_csv_with_headers(COMBINED_APPLICATION_TYPES_PATH)
+    has_errors = False
+    seen_combinations = set()
+    known_application_types = get_known_application_types(applications)
+
+    for row_num, row in enumerate(rows, start=2):
+        combo_ref = get_row_value(row, "application-types")
+        element_name = combo_ref or f"row {row_num}"
+
+        if combo_ref == "":
+            print_error(
+                "combined application type",
+                element_name,
+                "missing 'application-types' value",
+            )
+            has_errors = True
+            continue
+
+        app_types = split_application_types(combo_ref)
+        canonical_app_types = sorted(app_types)
+        canonical_ref = ";".join(canonical_app_types)
+
+        if get_row_value(row, "name") == "":
+            print_error("combined application type", element_name, "missing 'name' value")
+            has_errors = True
+
+        if get_row_value(row, "description") == "":
+            print_error(
+                "combined application type",
+                element_name,
+                "missing 'description' value",
+            )
+            has_errors = True
+
+        if get_row_value(row, "entry-date") == "":
+            print_error(
+                "combined application type",
+                element_name,
+                "missing 'entry-date' value",
+            )
+            has_errors = True
+
+        if app_types != canonical_app_types:
+            print_error(
+                "combined application type",
+                element_name,
+                f"'application-types' must be in canonical alphabetical order '{canonical_ref}'",
+            )
+            has_errors = True
+
+        if len(app_types) != len(set(app_types)):
+            print_error(
+                "combined application type",
+                element_name,
+                "contains duplicate application types",
+            )
+            has_errors = True
+
+        if canonical_ref in seen_combinations:
+            print_error(
+                "combined application type",
+                element_name,
+                f"duplicate combined application type '{canonical_ref}'",
+            )
+            has_errors = True
+        seen_combinations.add(canonical_ref)
+
+        if len(app_types) >= 3:
+            print_warning(
+                "combined application type",
+                element_name,
+                "contains three or more application types; current implementation expects pairs",
+            )
+
+        if get_row_value(row, "start-date") == "":
+            print_warning(
+                "combined application type",
+                element_name,
+                "blank 'start-date' means this combination is recognised but inactive",
+            )
+
+        for app_type in app_types:
+            if app_type not in known_application_types:
+                print_error(
+                    "combined application type",
+                    element_name,
+                    f"references unknown application type '{app_type}'",
+                )
+                has_errors = True
+
+        entry_date = parse_iso_date(
+            get_row_value(row, "entry-date"), element_name, "entry-date"
+        )
+        start_date = parse_iso_date(
+            get_row_value(row, "start-date"), element_name, "start-date"
+        )
+        end_date = parse_iso_date(
+            get_row_value(row, "end-date"), element_name, "end-date"
+        )
+
+        if False in (entry_date, start_date, end_date):
+            has_errors = True
+            continue
+
+        if entry_date and start_date and start_date < entry_date:
+            print_error(
+                "combined application type",
+                element_name,
+                "'start-date' must not be earlier than 'entry-date'",
+            )
+            has_errors = True
+
+        if start_date and end_date and end_date < start_date:
+            print_error(
+                "combined application type",
+                element_name,
+                "'end-date' must not be earlier than 'start-date'",
+            )
+            has_errors = True
+
+        if entry_date and end_date and end_date < entry_date:
+            print_error(
+                "combined application type",
+                element_name,
+                "'end-date' must not be earlier than 'entry-date'",
+            )
+            has_errors = True
+
+    return not has_errors
 
 
 def check_application_names(applications):
@@ -128,6 +348,8 @@ def check_all(applications, fields, modules):
         (check_application_field_present, [applications, fields]),
         (check_modules_attr_present, [applications]),
         (check_module_references_exist, [applications, modules]),
+        (check_combined_application_types_headers, []),
+        (check_combined_application_type_rows, [applications]),
     ]
 
     return run_checks(checks_with_args)
