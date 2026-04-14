@@ -1,4 +1,61 @@
 
+<a name="v0.1.72"></a>
+## [v0.1.72](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.71...v0.1.72) (2026-04-14)
+
+Initial installable package and proof
+
+### ⚒️ Tooling
+
+* simplify info model section assembly (commit [555d145a](https://github.com/digital-land/planning-application-data-specification/commit/555d145abe5d38a68e9c8ed4c5ec40b5ec25a50e))
+* use generic container resolver in info model generator (commit [4e8eac4c](https://github.com/digital-land/planning-application-data-specification/commit/4e8eac4c2c1c2879a3648fca03d396ae88800b3f))
+* add generic container item resolver (commit [1921d831](https://github.com/digital-land/planning-application-data-specification/commit/1921d831dc03e82ec8c5115591f65249e8d82589))
+* use resolved module items in info model generator (commit [f7c46661](https://github.com/digital-land/planning-application-data-specification/commit/f7c466611f28f8872e0336c296acc27d56aa3521))
+* add resolved module items API (commit [e3f881b8](https://github.com/digital-land/planning-application-data-specification/commit/e3f881b8074440852dd69d6c4e129082cfc728ad))
+* add resolved field query API: (commit [742c6e2f](https://github.com/digital-land/planning-application-data-specification/commit/742c6e2fd0e6e1298c08937156db20a605e291e3))
+* Rename package container contents to usage collections (commit [469b1d7f](https://github.com/digital-land/planning-application-data-specification/commit/469b1d7fef8854a9ade4f30d24fb8bf5ab58ad0e))
+* Use package codelist lookup in usage integrity checks (commit [b2202491](https://github.com/digital-land/planning-application-data-specification/commit/b22024914a8f7983c7247f37ccb449b10491ec15))
+* Add initial planning_application_specification loader and codelist API (commit [8ae7e725](https://github.com/digital-land/planning-application-data-specification/commit/8ae7e725c0e05e0dce0d6711b6c76569061e6f99))
+* summary of elements in specification now comes from spec.py (commit [48694cad](https://github.com/digital-land/planning-application-data-specification/commit/48694cad98572fba723c5f416c84f6d4a1ad7254))
+
+### 𝌭 Model changes
+
+* rationalise reason field usage (commit [37c1635b](https://github.com/digital-land/planning-application-data-specification/commit/37c1635bdf2bdb1bc81fcde3c01778a1ff63b5c8))
+* rationalise proposal and development description field usage (commit [62f9f156](https://github.com/digital-land/planning-application-data-specification/commit/62f9f1568fd6214e264ea96459583c8defabf56e))
+* make london-shared-ownership and shared-equity children of intermediate-housing (commit [8d6f8d59](https://github.com/digital-land/planning-application-data-specification/commit/8d6f8d598169c7ab2f50d9cd70893171ba098236))
+* mhclg and gla custom-build tenure type is the same (commit [ff68170f](https://github.com/digital-land/planning-application-data-specification/commit/ff68170f30d26c4f1ed04a44fa008fe7c423a30a))
+* mhclg and gla starter-homes tenure type is the same (commit [38a99eca](https://github.com/digital-land/planning-application-data-specification/commit/38a99ecaae4444eef74b0a9e233c3468f0b2c771))
+
+### 📚 Documentation
+
+* add couple of needs around publishing what was submitted (commit [ddef942a](https://github.com/digital-land/planning-application-data-specification/commit/ddef942a244ef9a7dc68b4ba29c1207a89db825e))
+
+
+<a name="v0.1.71"></a>
+## [v0.1.71](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.70...v0.1.71) (2026-04-08)
+
+Tenure type codelist refinement
+
+### 𝌭 Model changes
+
+* make london-shared-ownership and shared-equity children of intermediate-housing (commit [8d2a7d5e](https://github.com/digital-land/planning-application-data-specification/commit/8d2a7d5e82a0b179dd185c9f9cee80f0b33b63d1))
+* mhclg and gla custom-build tenure type is the same (commit [1f008d17](https://github.com/digital-land/planning-application-data-specification/commit/1f008d17f3049eba5730fe6b40cd6ef797eb1735))
+* mhclg and gla starter-homes tenure type is the same (commit [87f9e974](https://github.com/digital-land/planning-application-data-specification/commit/87f9e974d30a61a116bfb5642b1f82b20e886fc7))
+
+
+<a name="v0.1.70"></a>
+## [v0.1.70](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.69...v0.1.70) (2026-04-08)
+
+Tweaks
+
+### ⚒️ Tooling
+
+* summary of elements in specification now comes from spec.py (commit [0724db1f](https://github.com/digital-land/planning-application-data-specification/commit/0724db1fdc5af07c3efb73a33561e1413f2edbe4))
+
+### 📚 Documentation
+
+* add couple of needs around publishing what was submitted (commit [39ef456e](https://github.com/digital-land/planning-application-data-specification/commit/39ef456e7b466fab32a673e11b4771f745e24e30))
+
+
 <a name="v0.1.69"></a>
 ## [v0.1.69](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.68...v0.1.69) (2026-04-07)
 
