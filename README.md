@@ -32,6 +32,12 @@ Find applications that use a module
 python spec.py find applications-with-module <module_ref>
 ```
 
+Show a resolved application definition
+
+```bash
+python spec.py find application <application_ref>
+```
+
 Find modules used by an application
 
 ```bash
@@ -48,6 +54,14 @@ Find where a component is used
 
 ```bash
 python spec.py find component-usage <component_ref>
+```
+
+Examples:
+
+```bash
+python spec.py find application hh
+python spec.py find application 'hh;lbc'
+python spec.py find modules-in-application 'hh;lbc'
 ```
 
 ### Decision-stage summary
@@ -108,6 +122,13 @@ python spec.py forms <application_type>
 python spec.py form <form_ref>
 python spec.py module-forms <module_ref>
 python spec.py form-modules <form_ref>
+```
+
+Combined application types use semicolon-separated refs, for example:
+
+```bash
+python spec.py form-url 'hh;lbc'
+python spec.py forms 'hh;lbc'
 ```
 
 ### Completeness reporting

@@ -71,6 +71,34 @@ Current V1 boundary:
 - evaluates field `applies-if` only for `application-type` conditions
 - exposes `required-if` as raw rule data and does not execute answer-dependent rules
 
+## Combined applications
+
+Combined applications are supported as a controlled list of active combinations defined in `specification/combined-application-types.csv`.
+
+Use:
+
+- `spec.application("hh")` for a canonical single application type
+- `spec.application(["hh", "lbc"])` for a controlled combined application type
+
+Combined applications currently:
+
+- normalise member order before lookup
+- reject unknown combinations with `KeyError`
+- reject recognised but inactive combinations with `ValueError`
+- expose a deduped union of member modules
+- expose merged application-level items
+
+Example:
+
+```python
+householder = spec.application("hh")
+householder_listed = spec.application(["hh", "lbc"])
+
+print(householder.ref)  # hh
+print(householder_listed.ref)  # hh;lbc
+print(householder_listed.is_combined)  # True
+```
+
 ## Choosing the right method
 
 Use canonical lookup when you want the base definition:
@@ -155,6 +183,7 @@ Returns:
 - combined applications also expose lifecycle metadata carried in `combined-application-types.csv`, such as `entry_date`, `start_date`, `end_date`, and `notes`
 - combined applications derive `allow_additional_properties` with AND semantics across member applications
 - combined applications expose a deduped union of application-level `items`, `field_usages`, and `component_usages`
+- input order does not matter for combined applications, so `["lbc", "hh"]` resolves as `hh;lbc`
 
 Raises:
 
@@ -403,7 +432,7 @@ Defines selection context for context-sensitive queries.
 Fields:
 
 - `specification_profile: str | None = None`
-- `application_type: str | None = None`
+- `application_type: str | list[str] | tuple[str, ...] | set[str] | None = None`
 
 Example:
 
@@ -412,6 +441,21 @@ selection = SelectionContext(
     specification_profile="gla",
     application_type="full",
 )
+```
+
+`application_type` may be:
+
+- a single application type string such as `"hh"`
+- a semicolon-delimited combined string such as `"hh;lbc"`
+- a Python collection such as `["hh", "lbc"]`
+
+For combined application selections, `application-type` checks use OR semantics. A row or field applies if it matches at least one of the selected application types.
+
+Examples:
+
+```python
+selection = SelectionContext(application_type="hh;lbc")
+selection = SelectionContext(application_type=["hh", "lbc"])
 ```
 
 ## `Codelist`
