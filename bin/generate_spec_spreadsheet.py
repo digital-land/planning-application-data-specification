@@ -12,6 +12,12 @@ from models import (
     FieldInstance,
     ModuleDef,
 )
+from planning_application_specification import Specification
+from planning_application_specification.specification import (
+    ResolvedComponentReference,
+    ResolvedField,
+    SelectionContext,
+)
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, Side
 from openpyxl.utils import get_column_letter
@@ -141,6 +147,72 @@ def extract_field_references(
     return display_names, field_refs
 
 
+def format_resolved_path_name(item: ResolvedComponentReference) -> str:
+    name = item.base.name
+    if item.base.cardinality == "n":
+        name += "[]"
+    return name
+
+
+def walk_resolved_component_paths(
+    item: ResolvedComponentReference,
+    package_spec: Specification,
+    prefix: Tuple[List[str], List[str]],
+    application_type: Optional[str] = None,
+) -> List[Tuple[List[str], List[str], ResolvedField]]:
+    rows: List[Tuple[List[str], List[str], ResolvedField]] = []
+    selection = (
+        SelectionContext(application_type=application_type) if application_type else None
+    )
+    level_prefix_names = prefix[0] + [format_resolved_path_name(item)]
+    level_prefix_refs = prefix[1] + [item.base.ref]
+
+    for resolved_item in package_spec.resolve_container_items(
+        component=item.component_ref,
+        selection=selection,
+    ):
+        if not resolved_item.applies:
+            continue
+        if isinstance(resolved_item, ResolvedField):
+            rows.append((level_prefix_names, level_prefix_refs, resolved_item))
+        else:
+            rows.extend(
+                walk_resolved_component_paths(
+                    resolved_item,
+                    package_spec,
+                    (level_prefix_names, level_prefix_refs),
+                    application_type,
+                )
+            )
+
+    return rows
+
+
+def flatten_module_to_rows_with_package(
+    mod: ModuleDef,
+    package_spec: Specification,
+    application_type: Optional[str] = None,
+) -> List[Tuple[List[str], List[str], ResolvedField]]:
+    rows: List[Tuple[List[str], List[str], ResolvedField]] = []
+    selection = (
+        SelectionContext(application_type=application_type) if application_type else None
+    )
+
+    for item in package_spec.resolve_container_items(module=mod.ref, selection=selection):
+        if not item.applies:
+            continue
+        if isinstance(item, ResolvedField):
+            rows.append(([], [], item))
+        else:
+            rows.extend(
+                walk_resolved_component_paths(
+                    item, package_spec, ([], []), application_type
+                )
+            )
+
+    return rows
+
+
 # ---------- Excel writing ----------
 
 
@@ -150,6 +222,10 @@ def format_field_name(f: Any) -> str:
         orig = f.original
         name = f.overrides.get("name") or orig.name
         cardinality = f.overrides.get("cardinality") or orig.cardinality
+    elif isinstance(f, ResolvedField):
+        orig = f.base
+        name = f.usage.overrides.get("name") or orig.name
+        cardinality = f.usage.overrides.get("cardinality") or orig.cardinality
     else:
         name = getattr(f, "name", "")
         cardinality = getattr(f, "cardinality", None)
@@ -175,8 +251,12 @@ def make_row(
     incl_app_details: bool = True,
     incl_references: bool = False,
 ):
-    orig = f.original
-    overrides = f.overrides
+    if isinstance(f, ResolvedField):
+        orig = f.base
+        overrides = f.usage.overrides
+    else:
+        orig = f.original
+        overrides = f.overrides
     requirement_level = overrides.get("required", orig.required)
 
     row = {
@@ -209,6 +289,7 @@ def build_flat_rows(
     app_ref = app.application
     app_desc = app.description
     app_name = app.name
+    package_spec = Specification.load()
 
     flat_rows: List[Dict[str, Any]] = []
 
@@ -276,7 +357,7 @@ def build_flat_rows(
         if not mod:
             continue
 
-        mod_rows = flatten_module_to_rows(mod, app_ref)
+        mod_rows = flatten_module_to_rows_with_package(mod, package_spec, app_ref)
 
         if not mod_rows:
             row = {
@@ -303,7 +384,7 @@ def build_flat_rows(
                 field_name = format_field_name(f)
                 field_chain = comp_path_names + [field_name]
                 field_chain_refs = (
-                    (comp_path_refs + [f.original.ref]) if incl_references else []
+                    (comp_path_refs + [f.base.ref]) if incl_references else []
                 )
 
                 flat_rows.append(
