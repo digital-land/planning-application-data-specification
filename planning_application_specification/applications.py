@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import csv
 from pathlib import Path
-from typing import Iterable
+
+from .application_types import canonical_application_ref, normalise_application_types
 
 
 def _resolve_repo_root_from_specification(specification: dict) -> Path:
@@ -36,31 +37,16 @@ def _read_combined_application_rows(specification: dict) -> list[dict]:
         return list(csv.DictReader(csvfile))
 
 
-def _normalise_application_types(values: Iterable[object]) -> list[str]:
-    cleaned = []
-    for value in values:
-        if not isinstance(value, str):
-            continue
-        item = value.strip()
-        if item:
-            cleaned.append(item)
-    return sorted(cleaned)
-
-
 def _coerce_application_type_list(application: object) -> list[str] | None:
     if isinstance(application, str):
         if ";" in application:
-            return _normalise_application_types(application.split(";"))
+            return list(normalise_application_types(application))
         return None
 
     if isinstance(application, (list, tuple, set)):
-        return _normalise_application_types(application)
+        return list(normalise_application_types(application))
 
     return None
-
-
-def _canonical_application_ref(application_types: list[str]) -> str:
-    return ";".join(application_types)
 
 
 def _extract_module_ref(entry) -> str | None:
@@ -120,8 +106,8 @@ def _find_combined_application_row(
 ) -> dict | None:
     for row in _read_combined_application_rows(specification):
         raw_application_types = row.get("application-types") or ""
-        candidate_types = _normalise_application_types(raw_application_types.split(";"))
-        if candidate_types and _canonical_application_ref(candidate_types) == canonical_ref:
+        candidate_types = normalise_application_types(raw_application_types)
+        if candidate_types and canonical_application_ref(candidate_types) == canonical_ref:
             return row
     return None
 
@@ -145,7 +131,7 @@ def _build_combined_application(
     for app_obj in _resolve_component_applications(application_types, applications):
         module_refs.update(_collect_single_application_module_refs(app_obj, applications))
 
-    canonical_ref = _canonical_application_ref(application_types)
+    canonical_ref = canonical_application_ref(application_types)
     return {
         "application": canonical_ref,
         "ref": canonical_ref,
@@ -177,7 +163,7 @@ def resolve_application(application: object | str | list[str], specification: di
     if len(application_types) == 1:
         return applications.get(application_types[0])
 
-    canonical_ref = _canonical_application_ref(application_types)
+    canonical_ref = canonical_application_ref(application_types)
     combo_row = _find_combined_application_row(canonical_ref, specification)
     if combo_row is None:
         raise KeyError(f"Unknown combined application type '{canonical_ref}'")

@@ -1,10 +1,20 @@
 from planning_application_specification import Specification
+from planning_application_specification.application_types import (
+    canonical_application_ref,
+    normalise_application_types,
+)
 from planning_application_specification.models import ApplicationDef
 from planning_application_specification.specification import (
     ResolvedComponentReference,
     ResolvedField,
     SelectionContext,
 )
+
+
+def test_application_type_normalisation_is_shared_and_stable():
+    assert normalise_application_types(" lbc ; hh ; hh ") == ("hh", "lbc")
+    assert normalise_application_types(["hh;lbc", "full"]) == ("full", "hh", "lbc")
+    assert canonical_application_ref(["lbc", "hh"]) == "hh;lbc"
 
 
 def test_specification_load_reads_local_checkout(project_root):

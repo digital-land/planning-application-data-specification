@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
-from typing import Any, Dict, List, Optional, Union
+from typing import Any, Callable, Dict, List, Optional, Union
 
 
 @dataclass
@@ -88,31 +88,13 @@ class ComponentDef:
         name = component_def.get("name") or ref
         description = component_def.get("description", "") or ""
         raw_fields = component_def.get("fields") or []
-        items: List[Any] = []
-
-        for field_item in raw_fields:
-            field_ref = field_item.get("field")
-            original_field_def = field_defs.get(field_ref) if field_defs else None
-
-            if original_field_def:
-                field_usage = FieldUsage(
-                    original=original_field_def, overrides=field_item
-                )
-                if original_field_def.component:
-                    component_item = dict(
-                        component_index.get(original_field_def.component)
-                    )
-                    if component_item:
-                        items.append(
-                            ComponentUsage(
-                                component=cls.from_spec(
-                                    component_item, field_defs, component_index
-                                ),
-                                referenced_by_field=field_usage,
-                            )
-                        )
-                else:
-                    items.append(field_usage)
+        items = resolve_items(
+            raw_fields,
+            field_defs,
+            lambda component_ref: _build_component_from_index(
+                component_ref, cls, field_defs, component_index
+            ),
+        )
 
         field_usages = [item for item in items if isinstance(item, FieldUsage)]
         component_usages = [item for item in items if isinstance(item, ComponentUsage)]
@@ -247,8 +229,7 @@ class ApplicationDef:
     items: List[Any] = field(default_factory=list)
     field_usages: List[FieldUsage] = field(default_factory=list)
     component_usages: List[ComponentUsage] = field(default_factory=list)
-    modules: List[str] = field(default_factory=list)
-    resolved_modules: List[ModuleDef] = field(default_factory=list)
+    modules: List["ModuleDef"] = field(default_factory=list)
 
     @classmethod
     def from_spec(
@@ -279,7 +260,9 @@ class ApplicationDef:
         component_usages = [item for item in items if isinstance(item, ComponentUsage)]
 
         modules = [
-            module_defs.get(module["module"]) for module in (app_content.get("modules") or [])
+            module_defs.get(module["module"])
+            for module in (app_content.get("modules") or [])
+            if module_defs.get(module["module"])
         ]
 
         return cls(
@@ -304,27 +287,51 @@ class ApplicationDef:
         )
 
 
+def _build_component_from_index(
+    component_ref: str,
+    component_class: type[ComponentDef],
+    field_defs: Dict[str, FieldDef],
+    component_index: Dict[str, object],
+) -> Optional[ComponentDef]:
+    component_item = component_index.get(component_ref)
+    if not component_item:
+        return None
+    return component_class.from_spec(dict(component_item), field_defs, component_index)
+
+
+def _build_item_usage(
+    field_item: dict,
+    field_defs: Dict[str, FieldDef],
+    component_resolver: Callable[[str], Optional[ComponentDef]],
+) -> FieldUsage | ComponentUsage | None:
+    field_ref = field_item.get("field")
+    original_field_def = field_defs.get(field_ref) if field_defs else None
+
+    if not original_field_def:
+        return None
+
+    field_usage = FieldUsage(original=original_field_def, overrides=field_item)
+    if not original_field_def.component:
+        return field_usage
+
+    component_def = component_resolver(original_field_def.component)
+    if not component_def:
+        return None
+
+    return ComponentUsage(component=component_def, referenced_by_field=field_usage)
+
+
 def resolve_items(raw_fields, field_defs, component_defs):
+    if callable(component_defs):
+        component_resolver = component_defs
+    else:
+        component_resolver = component_defs.get
+
     items = []
     for field_item in raw_fields:
-        field_ref = field_item.get("field")
-        original_field_def = field_defs.get(field_ref) if field_defs else None
-
-        if original_field_def:
-            field_usage = FieldUsage(
-                original=original_field_def, overrides=field_item
-            )
-            if original_field_def.component:
-                component_def = component_defs.get(original_field_def.component)
-                if component_def:
-                    items.append(
-                        ComponentUsage(
-                            component=component_def,
-                            referenced_by_field=field_usage,
-                        )
-                    )
-            else:
-                items.append(field_usage)
+        item = _build_item_usage(field_item, field_defs, component_resolver)
+        if item:
+            items.append(item)
     return items
 
 

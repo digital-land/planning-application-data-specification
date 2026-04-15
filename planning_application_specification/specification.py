@@ -6,6 +6,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Optional
 
+from .application_types import canonical_application_ref, normalise_application_types
 from .applications import resolve_application
 from .loader import _resolve_repo_root, load_specification_model
 from .models import ApplicationDef, ComponentUsage, FieldUsage
@@ -17,29 +18,7 @@ class SelectionContext:
     application_type: Optional[str | list[str] | tuple[str, ...] | set[str]] = None
 
     def application_types(self) -> tuple[str, ...]:
-        raw_value = self.application_type
-        if raw_value is None:
-            return ()
-
-        values: list[str] = []
-
-        if isinstance(raw_value, str):
-            candidates = [raw_value]
-        elif isinstance(raw_value, (list, tuple, set)):
-            candidates = list(raw_value)
-        else:
-            return ()
-
-        for candidate in candidates:
-            if not isinstance(candidate, str):
-                continue
-            parts = candidate.split(";")
-            for part in parts:
-                value = part.strip()
-                if value:
-                    values.append(value)
-
-        return tuple(sorted(set(values)))
+        return normalise_application_types(self.application_type)
 
 
 @dataclass(frozen=True)
@@ -332,7 +311,17 @@ class Specification:
             if application_ref:
                 application_types = [application_ref]
 
-        canonical_ref = ";".join(application_types)
+        if len(application_types) == 1:
+            canonical_application = self.applications.get(application_types[0])
+            if canonical_application:
+                return canonical_application
+
+        return self._build_combined_application_view(application, application_types)
+
+    def _build_combined_application_view(
+        self, application: dict, application_types: list[str]
+    ) -> ApplicationDef:
+        canonical_ref = canonical_application_ref(application_types)
         member_applications = [
             self.applications[app_type]
             for app_type in application_types
@@ -425,11 +414,11 @@ class Specification:
 
         selection_application_types = selection.application_types()
         if selection_application_types:
-            app_types = row.get("application-types")
-            if app_types:
-                allowed = {value.strip() for value in app_types.split(";") if value.strip()}
-                if not any(app_type in allowed for app_type in selection_application_types):
-                    return False
+            allowed = set(normalise_application_types(row.get("application-types")))
+            if allowed and not any(
+                app_type in allowed for app_type in selection_application_types
+            ):
+                return False
 
         return True
 
@@ -466,8 +455,8 @@ class Specification:
         if selection_application_types:
             app_type_condition = applies_if.get("application-type")
             if isinstance(app_type_condition, dict):
-                allowed = app_type_condition.get("in")
-                if isinstance(allowed, list):
+                allowed = normalise_application_types(app_type_condition.get("in"))
+                if allowed:
                     return any(app_type in allowed for app_type in selection_application_types)
         return True
 
@@ -479,9 +468,8 @@ class Specification:
         selection: SelectionContext | None,
     ) -> ResolvedField:
         base = field_usage.original
-        overrides = field_usage.overrides or {}
-        applies_if = overrides.get("applies-if")
-        required_if = overrides.get("required-if")
+        resolved_usage = self._build_resolved_usage(field_usage)
+        overrides = resolved_usage.overrides
         return ResolvedField(
             ref=base.ref,
             name=overrides.get("name") or base.name,
@@ -492,14 +480,10 @@ class Specification:
             component=overrides.get("component", base.component),
             cardinality=str(overrides.get("cardinality", base.cardinality)),
             applies=self._usage_applies(field_usage, selection),
-            applies_if=applies_if,
-            required_if=required_if,
+            applies_if=resolved_usage.applies_if,
+            required_if=resolved_usage.required_if,
             base=base,
-            usage=ResolvedFieldUsage(
-                overrides=overrides,
-                applies_if=applies_if,
-                required_if=required_if,
-            ),
+            usage=resolved_usage,
             container_ref=container_ref,
             container_kind=container_kind,
         )
@@ -516,9 +500,8 @@ class Specification:
             raise ValueError("Component usage is missing the referencing field usage")
 
         base = referenced_by_field.original
-        overrides = referenced_by_field.overrides or {}
-        applies_if = overrides.get("applies-if")
-        required_if = overrides.get("required-if")
+        resolved_usage = self._build_resolved_usage(referenced_by_field)
+        overrides = resolved_usage.overrides
 
         return ResolvedComponentReference(
             ref=base.ref,
@@ -530,15 +513,19 @@ class Specification:
             component_ref=component_usage.component.ref,
             cardinality=str(overrides.get("cardinality", base.cardinality)),
             applies=self._usage_applies(referenced_by_field, selection),
-            applies_if=applies_if,
-            required_if=required_if,
+            applies_if=resolved_usage.applies_if,
+            required_if=resolved_usage.required_if,
             base=base,
-            usage=ResolvedFieldUsage(
-                overrides=overrides,
-                applies_if=applies_if,
-                required_if=required_if,
-            ),
+            usage=resolved_usage,
             component=component_usage.component,
             container_ref=container_ref,
             container_kind=container_kind,
+        )
+
+    def _build_resolved_usage(self, field_usage: FieldUsage) -> ResolvedFieldUsage:
+        overrides = field_usage.overrides or {}
+        return ResolvedFieldUsage(
+            overrides=overrides,
+            applies_if=overrides.get("applies-if"),
+            required_if=overrides.get("required-if"),
         )
