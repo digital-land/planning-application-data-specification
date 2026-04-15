@@ -201,6 +201,14 @@ class Specification:
             return self._build_application_view(application)
         raise TypeError(f"Unexpected application shape for {ref!r}")
 
+    def applications_with_module(self, ref: str) -> tuple[ApplicationDef, ...]:
+        self.module(ref)
+        matching_applications = []
+        for application in self.applications.values():
+            if any(module.ref == ref for module in application.modules):
+                matching_applications.append(application)
+        return tuple(sorted(matching_applications, key=lambda application: application.ref))
+
     def resolve_field(
         self,
         ref: str,

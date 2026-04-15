@@ -121,6 +121,30 @@ def test_application_returns_uniform_application_view_for_combined_type(project_
     assert all(hasattr(module, "ref") for module in application.modules)
 
 
+def test_applications_with_module_returns_canonical_applications_in_sorted_order(project_root):
+    spec = Specification.load(project_root)
+
+    applications = spec.applications_with_module("proposal-details")
+
+    refs = [application.ref for application in applications]
+    assert refs == sorted(refs)
+    assert "hh" in refs
+    assert "lbc" in refs
+    assert "technical-details-consent" in refs
+    assert "hh;lbc" not in refs
+
+
+def test_applications_with_module_rejects_unknown_module(project_root):
+    spec = Specification.load(project_root)
+
+    try:
+        spec.applications_with_module("not-a-real-module")
+    except KeyError as exc:
+        assert "Unknown module" in str(exc)
+    else:
+        raise AssertionError("Expected KeyError for unknown module")
+
+
 def test_application_rejects_unknown_combined_type(project_root):
     spec = Specification.load(project_root)
 
