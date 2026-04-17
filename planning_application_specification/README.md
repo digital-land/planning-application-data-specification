@@ -105,6 +105,7 @@ Use canonical lookup when you want the base definition:
 
 - `spec.application(ref)` for an application view over a canonical single application definition
 - `spec.applications_with_module(ref)` when you want the canonical application types that include a given module
+- `spec.field_usages(ref)` when you want the modules and components that directly use a field
 - `spec.codelist(ref)` for the source codelist
 - `spec.field(ref)`, `spec.component(ref)` and `spec.module(ref)` for canonical definitions
 
@@ -222,6 +223,32 @@ Example:
 ```python
 applications = spec.applications_with_module("proposal-details")
 refs = [application.ref for application in applications]
+```
+
+### `Specification.field_usages(ref: str) -> FieldUsages`
+
+Return the canonical module and component definitions that directly use a given field, along with the matching authored `FieldUsage`.
+
+This is a discovery query over the loaded specification model. It reports direct usages inside module and component contents. It does not resolve one selected contextual view and it does not recurse through nested component contents on behalf of a container.
+
+Arguments:
+
+- `ref`: field reference, for example `"description"`
+
+Returns:
+
+- a `FieldUsages` object with `modules` and `components`
+- each entry is a `FieldUsageMatch` containing the containing definition object and the matching `FieldUsage`
+
+Raises:
+
+- `KeyError` if the field is not defined
+
+Example:
+
+```python
+usages = spec.field_usages("description")
+module_refs = [match.container.ref for match in usages.modules]
 ```
 
 ### `Specification.field(ref: str)`

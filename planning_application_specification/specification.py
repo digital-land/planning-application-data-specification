@@ -40,6 +40,19 @@ class ApplicableCodelist:
 
 
 @dataclass(frozen=True)
+class FieldUsageMatch:
+    container_type: str
+    container: object
+    usage: FieldUsage
+
+
+@dataclass(frozen=True)
+class FieldUsages:
+    modules: tuple[FieldUsageMatch, ...]
+    components: tuple[FieldUsageMatch, ...]
+
+
+@dataclass(frozen=True)
 class ResolvedFieldUsage:
     overrides: dict
     applies_if: dict | list | None
@@ -208,6 +221,14 @@ class Specification:
             if any(module.ref == ref for module in application.modules):
                 matching_applications.append(application)
         return tuple(sorted(matching_applications, key=lambda application: application.ref))
+
+    def field_usages(self, ref: str) -> FieldUsages:
+        self.field(ref)
+        module_matches = self._collect_field_usage_matches(self.modules.values(), ref, "module")
+        component_matches = self._collect_field_usage_matches(
+            self.components.values(), ref, "component"
+        )
+        return FieldUsages(modules=module_matches, components=component_matches)
 
     def resolve_field(
         self,
@@ -448,6 +469,28 @@ class Specification:
                 match = self._find_component_usage(item.component.items, component_ref)
                 if match:
                     return match
+        return None
+
+    def _collect_field_usage_matches(
+        self, containers, field_ref: str, container_type: str
+    ) -> tuple[FieldUsageMatch, ...]:
+        matches = []
+        for container in containers:
+            usage = self._find_direct_field_usage(container.items, field_ref)
+            if usage:
+                matches.append(
+                    FieldUsageMatch(
+                        container_type=container_type,
+                        container=container,
+                        usage=usage,
+                    )
+                )
+        return tuple(sorted(matches, key=lambda match: match.container.ref))
+
+    def _find_direct_field_usage(self, items, ref: str) -> FieldUsage | None:
+        for item in items:
+            if isinstance(item, FieldUsage) and item.original.ref == ref:
+                return item
         return None
 
     def _usage_applies(

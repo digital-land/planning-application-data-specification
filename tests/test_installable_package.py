@@ -5,6 +5,7 @@ from planning_application_specification.application_types import (
 )
 from planning_application_specification.models import ApplicationDef
 from planning_application_specification.specification import (
+    FieldUsages,
     ResolvedComponentReference,
     ResolvedField,
     SelectionContext,
@@ -143,6 +144,42 @@ def test_applications_with_module_rejects_unknown_module(project_root):
         assert "Unknown module" in str(exc)
     else:
         raise AssertionError("Expected KeyError for unknown module")
+
+
+def test_field_usages_returns_grouped_def_and_usage_matches(project_root):
+    spec = Specification.load(project_root)
+
+    usages = spec.field_usages("description")
+
+    assert isinstance(usages, FieldUsages)
+    assert len(usages.modules) > 0
+    assert all(match.container_type == "module" for match in usages.modules)
+    assert all(match.container.ref for match in usages.modules)
+    assert all(match.usage.original.ref == "description" for match in usages.modules)
+    assert any(match.container.ref == "proposal-details" for match in usages.modules)
+    assert all(match.container_type == "component" for match in usages.components)
+    assert all(match.usage.original.ref == "description" for match in usages.components)
+
+
+def test_field_usages_returns_component_matches(project_root):
+    spec = Specification.load(project_root)
+
+    usages = spec.field_usages("reference")
+
+    assert len(usages.components) > 0
+    assert all(match.container_type == "component" for match in usages.components)
+    assert all(match.usage.original.ref == "reference" for match in usages.components)
+
+
+def test_field_usages_rejects_unknown_field(project_root):
+    spec = Specification.load(project_root)
+
+    try:
+        spec.field_usages("not-a-real-field")
+    except KeyError as exc:
+        assert "Unknown field" in str(exc)
+    else:
+        raise AssertionError("Expected KeyError for unknown field")
 
 
 def test_application_rejects_unknown_combined_type(project_root):
