@@ -15,7 +15,6 @@ from bin.completeness import (
     calculate_scope_summary,
     evaluate_scope,
 )
-from bin.fields import find_field_usage
 from bin.forms import (
     get_2025_form,
     get_2025_forms_by_app_type,
@@ -244,10 +243,10 @@ def find_application(application_ref):
 @click.argument("field_ref")
 def field_usage(field_ref):
     """Find modules and components that include a given field."""
-    spec = load_content()
-    usage = find_field_usage(field_ref, spec)
-    module_hits = usage["modules"]
-    component_hits = usage["components"]
+    spec = Specification.load(PROJECT_ROOT)
+    usage = spec.field_usages(field_ref)
+    module_hits = usage.modules
+    component_hits = usage.components
 
     if not module_hits and not component_hits:
         click.echo(f"No modules or components found using field '{field_ref}'")
@@ -255,15 +254,15 @@ def field_usage(field_ref):
 
     if module_hits:
         click.echo(f"Modules using field '{field_ref}':")
-        for ref, name in module_hits:
-            click.echo(f"  • {ref}: {name}")
+        for match in module_hits:
+            click.echo(f"  • {match.container.ref}: {match.container.name}")
 
     if component_hits:
         if module_hits:
             click.echo()
         click.echo(f"Components using field '{field_ref}':")
-        for ref, name in component_hits:
-            click.echo(f"  • {ref}: {name}")
+        for match in component_hits:
+            click.echo(f"  • {match.container.ref}: {match.container.name}")
 
 
 @find.command()
