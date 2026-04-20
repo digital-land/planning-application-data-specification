@@ -324,7 +324,13 @@ def decision():
     pass
 
 
-@cli.command(name="summary")
+@cli.group()
+def report():
+    """Repository reporting commands."""
+    pass
+
+
+@report.command(name="summary")
 @click.option("--markdown", is_flag=True, help="Print the summary in markdown format")
 def spec_summary(markdown):
     """Print a summary of loaded specification record counts."""

@@ -36,7 +36,7 @@ issue-tracking-data:
 
 
 declarative-progress:
-	python spec.py summary --markdown > issue-tracking/declarative-model-progress.md
+	python spec.py report summary --markdown > issue-tracking/declarative-model-progress.md
 
 
 specification::

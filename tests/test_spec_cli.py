@@ -4,7 +4,7 @@ import spec
 from planning_application_specification.models import ComponentDef, ComponentUsage, FieldDef, FieldUsage
 
 
-def test_summary_command_prints_loaded_record_counts(monkeypatch):
+def test_report_summary_command_prints_loaded_record_counts(monkeypatch):
     runner = CliRunner()
 
     monkeypatch.setattr(
@@ -21,7 +21,7 @@ def test_summary_command_prints_loaded_record_counts(monkeypatch):
         },
     )
 
-    result = runner.invoke(spec.cli, ["summary"])
+    result = runner.invoke(spec.cli, ["report", "summary"])
 
     assert result.exit_code == 0
     assert result.output == (
@@ -35,7 +35,7 @@ def test_summary_command_prints_loaded_record_counts(monkeypatch):
     )
 
 
-def test_summary_command_supports_markdown_output(monkeypatch):
+def test_report_summary_command_supports_markdown_output(monkeypatch):
     runner = CliRunner()
 
     monkeypatch.setattr(
@@ -52,7 +52,7 @@ def test_summary_command_supports_markdown_output(monkeypatch):
         },
     )
 
-    result = runner.invoke(spec.cli, ["summary", "--markdown"])
+    result = runner.invoke(spec.cli, ["report", "summary", "--markdown"])
 
     assert result.exit_code == 0
     assert result.output == (
@@ -295,7 +295,7 @@ def test_modules_in_application_command_supports_combined_application_type(monke
     result = runner.invoke(spec.cli, ["find", "modules-in-application", "hh;lbc"])
 
     assert result.exit_code == 0
-    assert "Modules in application 'hh;lbc':" in result.output
+    assert "Modules in application 'hh;lbc' (2):" in result.output
     assert "site-details: Site details" in result.output
     assert "lb-grade: Listed building grade" in result.output
 
