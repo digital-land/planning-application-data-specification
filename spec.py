@@ -319,14 +319,14 @@ def component_usage(component_ref):
 
 
 @cli.group()
-def decision():
-    """Decision-stage reporting."""
+def report():
+    """Repository reporting commands."""
     pass
 
 
-@cli.group()
-def report():
-    """Repository reporting commands."""
+@report.group()
+def decision():
+    """Decision-stage reporting."""
     pass
 
 
@@ -360,7 +360,12 @@ def summary(do_list):
         for nid in sorted(covered.keys()):
             jids = sorted(covered[nid])
             jlabel = f" ({', '.join(jids)})" if jids else ""
-            click.echo(f"  • {nid}{jlabel}")
+            need = needs.get(nid, {})
+            name = need.get("name", "")
+            if name:
+                click.echo(f"  • {nid}: {name}{jlabel}")
+            else:
+                click.echo(f"  • {nid}{jlabel}")
 
 
 @cli.group(name="form-analysis")

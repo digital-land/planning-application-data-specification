@@ -67,6 +67,34 @@ def test_report_summary_command_supports_markdown_output(monkeypatch):
     )
 
 
+def test_report_decision_summary_lists_covered_needs(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "load_needs",
+        lambda: {
+            "need": {
+                "need-1": {"need": "need-1", "name": "First need"},
+                "need-2": {"need": "need-2", "name": "Second need"},
+                "need-3": {"need": "need-3"},
+            },
+            "justification": {
+                "just-1": {"needs": ["need-1", "need-2"]},
+                "just-2": {"needs": ["need-2"]},
+            },
+        },
+    )
+
+    result = runner.invoke(spec.cli, ["report", "decision", "summary", "--list"])
+
+    assert result.exit_code == 0
+    assert "Decision-stage needs covered by justifications: 2/3" in result.output
+    assert "Covered needs:" in result.output
+    assert "• need-1: First need (just-1)" in result.output
+    assert "• need-2: Second need (just-1, just-2)" in result.output
+
+
 def test_forms_command_lists_matching_2025_forms(monkeypatch):
     runner = CliRunner()
 
