@@ -24,132 +24,15 @@ If you are new to the repository, start with [how the specification fits togethe
 
 The main command line entry point is [spec.py](spec.py).
 
-### Find and query
+`spec.py` is the human-facing project CLI for inspecting and understanding the planning application specification repository.
 
-Find applications that use a module
+It is intended to help contributors and users:
 
-```bash
-python spec.py find applications-with-module <module_ref>
-```
+* inspect the canonical specification model
+* access a small number of repeatable project reports
+* explore clearly labelled analysis data that sits alongside the canonical specification
 
-Show a resolved application definition
-
-```bash
-python spec.py find application <application_ref>
-```
-
-Find modules used by an application
-
-```bash
-python spec.py find modules-in-application <application_ref>
-```
-
-Find where a field is used
-
-```bash
-python spec.py find field-usage <field_ref>
-```
-
-Find where a component is used
-
-```bash
-python spec.py find component-usage <component_ref>
-```
-
-Examples:
-
-```bash
-python spec.py find application hh
-python spec.py find application 'hh;lbc'
-python spec.py find modules-in-application 'hh;lbc'
-```
-
-### Decision-stage summary
-
-Summarise decision-stage needs coverage
-
-```bash
-python spec.py decision summary
-```
-
-List covered needs as well
-
-```bash
-python spec.py decision summary --list
-```
-
-### 2025 forms analysis
-
-Preferred grouped commands
-
-Return matching 2025 form URLs for an application type or subtype
-
-```bash
-python spec.py form-analysis urls <application_type>
-```
-
-List matching 2025 forms for an application type or subtype
-
-```bash
-python spec.py form-analysis list <application_type>
-```
-
-Show core details for a 2025 form by reference
-
-```bash
-python spec.py form-analysis show <form_ref>
-```
-
-List analysed 2025 forms that include a module
-
-```bash
-python spec.py form-analysis for-module <module_ref>
-```
-
-List analysed 2025 modules found in a form
-
-```bash
-python spec.py form-analysis modules <form_ref>
-```
-
-These form commands use the analysed 2025 forms data under `data/analysis/`. They are not derived from the canonical specification model.
-
-Older shortcut commands still work:
-
-```bash
-python spec.py form-url <application_type>
-python spec.py forms <application_type>
-python spec.py form <form_ref>
-python spec.py module-forms <module_ref>
-python spec.py form-modules <form_ref>
-```
-
-Combined application types use semicolon-separated refs, for example:
-
-```bash
-python spec.py form-url 'hh;lbc'
-python spec.py forms 'hh;lbc'
-```
-
-### Completeness reporting
-
-Print the completeness summary
-
-```bash
-python spec.py completeness summary
-```
-
-Print the completeness summary with row-level detail
-
-```bash
-python spec.py completeness summary --verbose
-```
-
-Print the in-scope and out-of-scope split
-
-```bash
-python spec.py completeness scope
-```
+For the CLI purpose, command taxonomy and intended command tree, see [spec CLI](documentation/spec-cli.md).
 
 You can get involved by:
 
