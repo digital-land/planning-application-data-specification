@@ -126,7 +126,8 @@ def print_application_details(application_ref):
     else:
         click.echo("- none")
 
-    click.echo("Modules:")
+    module_count = len(application.modules)
+    click.echo(f"Modules: {module_count}")
     if application.modules:
         for module in application.modules:
             click.echo(f"- {module.ref}: {module.name}")
@@ -223,7 +224,7 @@ def modules_in_application(application_ref):
     modules = get_application_module_refs(application_ref, spec)
 
     if modules:
-        click.echo(f"Modules in application '{application_ref}':")
+        click.echo(f"Modules in application '{application_ref}' ({len(modules)}):")
         for mod_ref in modules:
             mod = spec.get("module", {}).get(mod_ref, {})
             name = mod.get("name", mod_ref)
