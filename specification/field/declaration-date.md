@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: string
+datatype: datetime
 description: The date the declaration was made
 end-date: ''
 entry-date: 2025-06-12

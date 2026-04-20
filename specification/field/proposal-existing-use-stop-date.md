@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: string
+datatype: datetime
 description: Date when the existing use stopped or will stop
 end-date: ''
 entry-date: 2025-07-17
