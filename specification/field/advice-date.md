@@ -1,6 +1,7 @@
 ---
 cardinality: 1
 datatype: datetime
+date_precision: day
 description: Date when pre-application advice was received, in YYYY-MM-DD format
 end-date: ''
 entry-date: 2025-06-12
