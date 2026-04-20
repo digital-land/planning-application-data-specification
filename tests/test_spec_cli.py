@@ -95,6 +95,37 @@ def test_report_decision_summary_lists_covered_needs(monkeypatch):
     assert "• need-2: Second need (just-1, just-2)" in result.output
 
 
+def test_report_completeness_summary_command_prints_scope_totals(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "calculate_scope_summary",
+        lambda input_path: {
+            "input": str(input_path),
+            "total_rows": 10,
+            "in_scope_rows": 7,
+            "out_of_scope_rows": 3,
+            "total_2024_volume": 1000,
+            "in_scope_2024_volume": 900,
+            "covered_2024_volume": 750,
+            "completeness_pct": 75.0,
+        },
+    )
+
+    result = runner.invoke(spec.cli, ["report", "completeness", "summary"])
+
+    assert result.exit_code == 0
+    assert "Completeness summary" in result.output
+    assert "Total rows: 10" in result.output
+    assert "In-scope rows: 7" in result.output
+    assert "Out-of-scope rows: 3" in result.output
+    assert "Total 2024 volume: 1000" in result.output
+    assert "In-scope 2024 volume: 900" in result.output
+    assert "Volume covered by spec: 750" in result.output
+    assert "Completeness: 75.0%" in result.output
+
+
 def test_forms_command_lists_matching_2025_forms(monkeypatch):
     runner = CliRunner()
 

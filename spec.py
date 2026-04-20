@@ -444,7 +444,7 @@ def modules_for_form(form_ref):
     print_2025_modules_for_form(form_ref)
 
 
-@cli.group(invoke_without_command=True)
+@report.group(invoke_without_command=True)
 @click.option(
     "--input",
     "input_path",
