@@ -193,13 +193,13 @@ def cli(ctx, spec_dir):
 
 
 @cli.group()
-def find():
-    """Find and query specification elements."""
+def inspect():
+    """Inspect canonical specification elements."""
     pass
 
 
-# Find subcommands
-@find.command()
+# Inspect subcommands
+@inspect.command()
 @click.argument("module_ref")
 def applications_with_module(module_ref):
     """Find applications that use a specific module."""
@@ -216,7 +216,7 @@ def applications_with_module(module_ref):
         click.echo(f"No applications found using module '{module_ref}'")
 
 
-@find.command()
+@inspect.command()
 @click.argument("application_ref")
 def modules_in_application(application_ref):
     """Find all modules used by a specific application."""
@@ -233,14 +233,14 @@ def modules_in_application(application_ref):
         click.echo(f"No modules found for application '{application_ref}'")
 
 
-@find.command(name="application")
+@inspect.command(name="application")
 @click.argument("application_ref")
 def find_application(application_ref):
     """Show a resolved application definition."""
     print_application_details(application_ref)
 
 
-@find.command()
+@inspect.command()
 @click.argument("field_ref")
 def field_usage(field_ref):
     """Find modules and components that include a given field."""
@@ -266,7 +266,7 @@ def field_usage(field_ref):
             click.echo(f"  • {match.container.ref}: {match.container.name}")
 
 
-@find.command()
+@inspect.command()
 @click.argument("component_ref")
 def component_usage(component_ref):
     """Find fields and modules that use a given component."""

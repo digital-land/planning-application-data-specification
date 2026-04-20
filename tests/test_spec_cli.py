@@ -250,7 +250,7 @@ def test_form_url_command_normalises_combined_application_type_order(monkeypatch
     assert "https://example.com/form-hh-lbc.pdf" in result.output
 
 
-def test_find_application_command_shows_single_application_summary(monkeypatch):
+def test_inspect_application_command_shows_single_application_summary(monkeypatch):
     runner = CliRunner()
 
     class StubApplication:
@@ -270,7 +270,7 @@ def test_find_application_command_shows_single_application_summary(monkeypatch):
 
     monkeypatch.setattr(spec, "Specification", type("SpecificationModule", (), {"load": staticmethod(lambda path=None: StubSpecification())}))
 
-    result = runner.invoke(spec.cli, ["find", "application", "hh"])
+    result = runner.invoke(spec.cli, ["inspect", "application", "hh"])
 
     assert result.exit_code == 0
     assert "Application: hh" in result.output
@@ -284,7 +284,7 @@ def test_find_application_command_shows_single_application_summary(monkeypatch):
     assert "- site-details: Site details" in result.output
 
 
-def test_find_application_command_shows_combined_application_summary(monkeypatch):
+def test_inspect_application_command_shows_combined_application_summary(monkeypatch):
     runner = CliRunner()
 
     class StubApplication:
@@ -315,7 +315,7 @@ def test_find_application_command_shows_combined_application_summary(monkeypatch
 
     monkeypatch.setattr(spec, "Specification", type("SpecificationModule", (), {"load": staticmethod(lambda path=None: StubSpecification())}))
 
-    result = runner.invoke(spec.cli, ["find", "application", "hh;lbc"])
+    result = runner.invoke(spec.cli, ["inspect", "application", "hh;lbc"])
 
     assert result.exit_code == 0
     assert "Application: hh;lbc" in result.output
@@ -351,7 +351,7 @@ def test_modules_in_application_command_supports_combined_application_type(monke
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["find", "modules-in-application", "hh;lbc"])
+    result = runner.invoke(spec.cli, ["inspect", "modules-in-application", "hh;lbc"])
 
     assert result.exit_code == 0
     assert "Modules in application 'hh;lbc' (2):" in result.output
