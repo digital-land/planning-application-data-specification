@@ -115,25 +115,127 @@ def test_evaluate_scope_accepts_semicolon_delimited_application_types(tmp_path):
         ],
     )
 
-    result = evaluate_scope(csv_path, spec_application_refs={"hh", "demolition-con-area"})
+    result = evaluate_scope(
+        csv_path,
+        spec_application_refs={"hh", "demolition-con-area"},
+        active_combined_application_refs={"demolition-con-area;hh"},
+    )
     item = result["in_scope"][0]
 
     assert item["type"] == "combined"
     assert item["application-types"] == ["hh", "demolition-con-area"]
     assert item["volume"] == 12
-    assert item["covered-by-spec"] is False
+    assert item["covered-by-spec"] is True
 
-    result_with_combined = evaluate_scope(
-        csv_path,
-        spec_application_refs={"hh", "demolition-con-area"},
-        combined_apps_covered=True,
-    )
-    item_with_combined = result_with_combined["in_scope"][0]
-    assert item_with_combined["covered-by-spec"] is True
     covered_volume = calculate_total_volume(
-        [item for item in result_with_combined["in_scope"] if item["covered-by-spec"]]
+        [item for item in result["in_scope"] if item["covered-by-spec"]]
     )
     assert covered_volume == 12
+
+
+def test_active_approved_combination_is_order_insensitive(tmp_path):
+    csv_path = tmp_path / "volumes.csv"
+    write_rows(
+        csv_path,
+        [
+            {
+                "stats-app-name": "Combined row",
+                "2024-total": "9",
+                "applications-types": "lbc,hh",
+                "application-name": "",
+                "form-name": "",
+                "notes": "",
+            }
+        ],
+    )
+
+    result = evaluate_scope(
+        csv_path,
+        spec_application_refs={"hh", "lbc"},
+        active_combined_application_refs={"hh;lbc"},
+    )
+    item = result["in_scope"][0]
+
+    assert item["application-types"] == ["lbc", "hh"]
+    assert item["covered-by-spec"] is True
+
+
+def test_inactive_recognised_combination_is_not_covered(tmp_path):
+    csv_path = tmp_path / "volumes.csv"
+    write_rows(
+        csv_path,
+        [
+            {
+                "stats-app-name": "Inactive combined row",
+                "2024-total": "6",
+                "applications-types": "full,haz-substance-consent",
+                "application-name": "",
+                "form-name": "",
+                "notes": "",
+            }
+        ],
+    )
+
+    result = evaluate_scope(
+        csv_path,
+        spec_application_refs={"full", "haz-substance-consent"},
+        active_combined_application_refs={"hh;lbc"},
+    )
+    item = result["in_scope"][0]
+
+    assert item["covered-by-spec"] is False
+
+
+def test_active_combination_is_not_covered_if_member_type_is_missing(tmp_path):
+    csv_path = tmp_path / "volumes.csv"
+    write_rows(
+        csv_path,
+        [
+            {
+                "stats-app-name": "Partially defined combined row",
+                "2024-total": "6",
+                "applications-types": "hh,lbc",
+                "application-name": "",
+                "form-name": "",
+                "notes": "",
+            }
+        ],
+    )
+
+    result = evaluate_scope(
+        csv_path,
+        spec_application_refs={"hh"},
+        active_combined_application_refs={"hh;lbc"},
+    )
+    item = result["in_scope"][0]
+
+    assert item["covered-by-spec"] is False
+
+
+def test_unrecognised_combination_is_not_covered(tmp_path):
+    csv_path = tmp_path / "volumes.csv"
+    write_rows(
+        csv_path,
+        [
+            {
+                "stats-app-name": "Unrecognised combined row",
+                "2024-total": "8",
+                "applications-types": "full,outline-all",
+                "application-name": "",
+                "form-name": "",
+                "notes": "",
+            }
+        ],
+    )
+
+    result = evaluate_scope(
+        csv_path,
+        spec_application_refs={"full", "outline-all"},
+        active_combined_application_refs={"hh;lbc"},
+    )
+    item = result["in_scope"][0]
+
+    assert item["covered-by-spec"] is False
 
 
 def test_tree_work_split_combination_is_covered_without_combined_flag(tmp_path):
@@ -155,7 +257,7 @@ def test_tree_work_split_combination_is_covered_without_combined_flag(tmp_path):
     result = evaluate_scope(
         csv_path,
         spec_application_refs={"consent-under-tpo", "notice-trees-in-con-area"},
-        combined_apps_covered=False,
+        active_combined_application_refs=set(),
     )
     item = result["in_scope"][0]
     assert item["covered-by-spec"] is True

@@ -441,24 +441,18 @@ def modules_for_form(form_ref):
     help="Path to completeness source CSV",
 )
 @click.option(
-    "--combined-apps-covered",
-    is_flag=True,
-    help="Treat combined application rows as covered when all component refs exist in the specification",
-)
-@click.option(
     "-v",
     "--verbose",
     is_flag=True,
     help="Print in-scope rows split by covered-by-spec status, ordered by volume",
 )
 @click.pass_context
-def completeness(ctx, input_path, combined_apps_covered, verbose):
+def completeness(ctx, input_path, verbose):
     """Completeness reporting."""
     if ctx.invoked_subcommand is None:
         ctx.invoke(
             completeness_summary,
             input_path=input_path,
-            combined_apps_covered=combined_apps_covered,
             verbose=verbose,
         )
 
@@ -472,21 +466,14 @@ def completeness(ctx, input_path, combined_apps_covered, verbose):
     help="Path to completeness source CSV",
 )
 @click.option(
-    "--combined-apps-covered",
-    is_flag=True,
-    help="Treat combined application rows as covered when all component refs exist in the specification",
-)
-@click.option(
     "-v",
     "--verbose",
     is_flag=True,
     help="Print in-scope rows split by covered-by-spec status, ordered by volume",
 )
-def completeness_summary(input_path, combined_apps_covered, verbose):
+def completeness_summary(input_path, verbose):
     """Print completeness summary including covered volume and percentage."""
-    result = calculate_scope_summary(
-        Path(input_path), combined_apps_covered=combined_apps_covered
-    )
+    result = calculate_scope_summary(Path(input_path))
 
     click.echo("Completeness summary")
     click.echo("====================")
@@ -502,9 +489,7 @@ def completeness_summary(input_path, combined_apps_covered, verbose):
     if not verbose:
         return
 
-    progress = build_progress_view_model(
-        Path(input_path), combined_apps_covered=combined_apps_covered
-    )
+    progress = build_progress_view_model(Path(input_path))
     covered = progress["covered_by_spec"]
     not_covered = progress["not_covered_by_spec"]
 
@@ -535,25 +520,16 @@ def completeness_summary(input_path, combined_apps_covered, verbose):
     is_flag=True,
     help="Print in-scope and out-of-scope lists",
 )
-@click.option(
-    "--combined-apps-covered",
-    is_flag=True,
-    help="Treat combined application rows as covered when all component refs exist in the specification",
-)
-def scope(input_path, verbose, combined_apps_covered):
+def scope(input_path, verbose):
     """Summarise in-scope and out-of-scope application types for completeness."""
-    result = evaluate_scope(
-        Path(input_path), combined_apps_covered=combined_apps_covered
-    )
+    result = evaluate_scope(Path(input_path))
     in_scope = result["in_scope"]
     out_of_scope = result["out_of_scope"]
 
     total_rows = len(in_scope) + len(out_of_scope)
     in_scope_rows = len(in_scope)
     out_of_scope_rows = len(out_of_scope)
-    summary_data = calculate_scope_summary(
-        Path(input_path), combined_apps_covered=combined_apps_covered
-    )
+    summary_data = calculate_scope_summary(Path(input_path))
     total_volume = summary_data["total_2024_volume"]
     in_scope_volume = summary_data["in_scope_2024_volume"]
 

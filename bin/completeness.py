@@ -8,6 +8,11 @@ import json
 from pathlib import Path
 from typing import Any
 
+from planning_application_specification.application_types import canonical_application_ref
+from planning_application_specification.applications import (
+    get_active_combined_application_refs,
+)
+
 # TODO: derive inheritance-only references from application-type parent relationships.
 INHERITANCE_ONLY_REFS = {"outline", "ldc", "prior-approval"}
 ALWAYS_COVERED_COMBINATIONS = {
@@ -87,14 +92,45 @@ def load_spec_application_refs() -> set[str]:
     return set(applications.keys())
 
 
+def load_active_combined_application_refs(
+    specification: dict | None = None,
+) -> set[str]:
+    if specification is None:
+        from loader import load_content
+
+        specification = load_content()
+    return get_active_combined_application_refs(specification)
+
+
+def combination_counts_as_covered(
+    app_types: list[str],
+    spec_application_refs: set[str],
+    active_combined_application_refs: set[str],
+) -> bool:
+    if not app_types:
+        return False
+
+    if not all(app_ref in spec_application_refs for app_ref in app_types):
+        return False
+
+    app_type_set = frozenset(app_types)
+    if app_type_set in ALWAYS_COVERED_COMBINATIONS:
+        return True
+
+    canonical_ref = canonical_application_ref(app_types)
+    return canonical_ref in active_combined_application_refs
+
+
 def evaluate_scope(
     input_path: Path,
     inheritance_only_refs: set[str] | None = None,
-    combined_apps_covered: bool = False,
     spec_application_refs: set[str] | None = None,
+    active_combined_application_refs: set[str] | None = None,
 ) -> dict[str, Any]:
     inheritance_only_refs = inheritance_only_refs or INHERITANCE_ONLY_REFS
     spec_application_refs = spec_application_refs or load_spec_application_refs()
+    if active_combined_application_refs is None:
+        active_combined_application_refs = load_active_combined_application_refs()
 
     with input_path.open(newline="", encoding="utf-8") as f:
         rows = list(csv.DictReader(f))
@@ -136,15 +172,11 @@ def evaluate_scope(
             if len(app_types) == 1:
                 item["covered-by-spec"] = app_types[0] in spec_application_refs
             elif app_types:
-                app_type_set = frozenset(app_types)
-                if app_type_set in ALWAYS_COVERED_COMBINATIONS:
-                    item["covered-by-spec"] = all(
-                        app_ref in spec_application_refs for app_ref in app_types
-                    )
-                elif combined_apps_covered:
-                    item["covered-by-spec"] = all(
-                        app_ref in spec_application_refs for app_ref in app_types
-                    )
+                item["covered-by-spec"] = combination_counts_as_covered(
+                    app_types=app_types,
+                    spec_application_refs=spec_application_refs,
+                    active_combined_application_refs=active_combined_application_refs,
+                )
             item["name"] = in_scope_name(row, app_types)
             in_scope.append(item)
         else:
@@ -157,14 +189,14 @@ def evaluate_scope(
 def calculate_scope_summary(
     input_path: Path,
     inheritance_only_refs: set[str] | None = None,
-    combined_apps_covered: bool = False,
     spec_application_refs: set[str] | None = None,
+    active_combined_application_refs: set[str] | None = None,
 ) -> dict[str, Any]:
     scope = evaluate_scope(
         input_path=input_path,
         inheritance_only_refs=inheritance_only_refs,
-        combined_apps_covered=combined_apps_covered,
         spec_application_refs=spec_application_refs,
+        active_combined_application_refs=active_combined_application_refs,
     )
     in_scope = scope["in_scope"]
     out_of_scope = scope["out_of_scope"]
@@ -207,20 +239,20 @@ def format_scope_item_label(item: dict[str, Any]) -> str:
 def build_progress_view_model(
     input_path: Path,
     inheritance_only_refs: set[str] | None = None,
-    combined_apps_covered: bool = False,
     spec_application_refs: set[str] | None = None,
+    active_combined_application_refs: set[str] | None = None,
 ) -> dict[str, Any]:
     scope = evaluate_scope(
         input_path=input_path,
         inheritance_only_refs=inheritance_only_refs,
-        combined_apps_covered=combined_apps_covered,
         spec_application_refs=spec_application_refs,
+        active_combined_application_refs=active_combined_application_refs,
     )
     summary = calculate_scope_summary(
         input_path=input_path,
         inheritance_only_refs=inheritance_only_refs,
-        combined_apps_covered=combined_apps_covered,
         spec_application_refs=spec_application_refs,
+        active_combined_application_refs=active_combined_application_refs,
     )
 
     in_scope = scope["in_scope"]
@@ -247,9 +279,7 @@ def build_progress_view_model(
         "summary": summary,
         "covered_by_spec": [to_row(item) for item in covered],
         "not_covered_by_spec": [to_row(item) for item in not_covered],
-        "meta": {
-            "combined_apps_covered": combined_apps_covered,
-        },
+        "meta": {},
     }
 
 

@@ -619,22 +619,15 @@ def render_justifications_index(
 
 def build_submission_progress_data(
     input_path: Path = DEFAULT_PROGRESS_INPUT,
-    combined_apps_covered: bool = False,
 ) -> Dict[str, Any]:
-    return build_progress_view_model(
-        input_path=input_path, combined_apps_covered=combined_apps_covered
-    )
+    return build_progress_view_model(input_path=input_path)
 
 
 def render_submission_progress_data(
     renderer: RenderContext,
     input_path: Path = DEFAULT_PROGRESS_INPUT,
-    combined_apps_covered: bool = False,
 ) -> None:
-    progress_data = build_submission_progress_data(
-        input_path=input_path,
-        combined_apps_covered=combined_apps_covered,
-    )
+    progress_data = build_submission_progress_data(input_path=input_path)
     renderer.write_page(
         "submissions/progress/data.json", json.dumps(progress_data, indent=2)
     )
@@ -643,12 +636,8 @@ def render_submission_progress_data(
 def render_submission_progress_page(
     renderer: RenderContext,
     input_path: Path = DEFAULT_PROGRESS_INPUT,
-    combined_apps_covered: bool = False,
 ) -> None:
-    progress_data = build_submission_progress_data(
-        input_path=input_path,
-        combined_apps_covered=combined_apps_covered,
-    )
+    progress_data = build_submission_progress_data(input_path=input_path)
 
     def prepare_rows(rows: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
         prepared: List[Dict[str, Any]] = []

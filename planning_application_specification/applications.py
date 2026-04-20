@@ -37,6 +37,17 @@ def _read_combined_application_rows(specification: dict) -> list[dict]:
         return list(csv.DictReader(csvfile))
 
 
+def get_active_combined_application_refs(specification: dict) -> set[str]:
+    active_refs = set()
+    for row in _read_combined_application_rows(specification):
+        if not (row.get("start-date") or "").strip():
+            continue
+        canonical_ref = canonical_application_ref(row.get("application-types"))
+        if canonical_ref:
+            active_refs.add(canonical_ref)
+    return active_refs
+
+
 def _coerce_application_type_list(application: object) -> list[str] | None:
     if isinstance(application, str):
         if ";" in application:

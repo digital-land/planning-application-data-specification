@@ -3,6 +3,9 @@ from planning_application_specification.application_types import (
     canonical_application_ref,
     normalise_application_types,
 )
+from planning_application_specification.applications import (
+    get_active_combined_application_refs,
+)
 from planning_application_specification.models import ApplicationDef
 from planning_application_specification.specification import (
     FieldUsages,
@@ -202,6 +205,16 @@ def test_application_rejects_inactive_combined_type(project_root):
         assert "recognised but not yet active" in str(exc)
     else:
         raise AssertionError("Expected ValueError for inactive combined application type")
+
+
+def test_package_exposes_active_combined_application_refs(project_root):
+    spec = Specification.load(project_root)
+
+    refs = get_active_combined_application_refs(spec.tables)
+
+    assert "hh;lbc" in refs
+    assert "full;lbc" in refs
+    assert "full;haz-substance-consent" not in refs
 
 
 def test_combined_application_uses_false_allow_additional_properties_if_either_member_is_false(
