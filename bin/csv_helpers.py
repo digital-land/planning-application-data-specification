@@ -41,19 +41,37 @@ def read_csv_with_headers(filename, encoding="utf-8"):
 def write_csv(
     data,
     output_file="data/output.csv",
-    first_headers=["reference"],
-    final_headers=["entry-date", "start-date", "end-date"],
+    first_headers=None,
+    final_headers=None,
 ):
+    if first_headers is None:
+        first_headers = ["reference"]
+    if final_headers is None:
+        final_headers = ["entry-date", "start-date", "end-date"]
+    if not data:
+        raise ValueError("write_csv requires at least one row")
+
     # Determine the headers
     # Start with 'reference', then sort the rest alphabetically, excluding the last 3 specified columns
-    first_headers = first_headers
-    final_headers = final_headers
+    all_columns = set()
+    for row in data:
+        if hasattr(row, "keys"):
+            all_columns.update(row.keys())
+
     other_columns = sorted(
-        k for k in data[0].keys() if k not in first_headers + final_headers
+        k for k in all_columns if k not in first_headers + final_headers
     )
 
     # Combine the columns in the desired order
-    headers = first_headers + other_columns + final_headers
+    headers = [header for header in first_headers if header in all_columns]
+    headers.extend(
+        header for header in other_columns if header not in headers
+    )
+    headers.extend(
+        header
+        for header in final_headers
+        if header in all_columns and header not in headers
+    )
 
     # Write to a CSV file
     with open(output_file, "w", newline="") as file:
