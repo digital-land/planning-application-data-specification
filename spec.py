@@ -89,6 +89,24 @@ def print_2025_forms_for_application_type(application_type):
         click.echo(f"  form: {form['document-url']}")
 
 
+def _load_specification():
+    return Specification.load(PROJECT_ROOT)
+
+
+def _echo_optional(label: str, value):
+    if value:
+        click.echo(f"{label}: {value}")
+
+
+def _echo_formatted_list(title: str, items, formatter):
+    click.echo(f"{title}: {len(items)}")
+    if items:
+        for item in items:
+            click.echo(formatter(item))
+    else:
+        click.echo("- none")
+
+
 def _format_application_item(item) -> str:
     if isinstance(item, FieldUsage):
         field_ref = item.original.ref
@@ -127,36 +145,24 @@ def _format_container_item(item) -> str:
 
 
 def print_application_details(application_ref):
-    spec = Specification.load(PROJECT_ROOT)
+    spec = _load_specification()
     application = spec.application(application_ref)
 
     click.echo(f"Application: {application.ref}")
     click.echo(f"Name: {application.name}")
-    if application.description:
-        click.echo(f"Description: {application.description}")
+    _echo_optional("Description", application.description)
     click.echo(f"Application types: {', '.join(application.application_types)}")
     click.echo(f"Combined: {'yes' if application.is_combined else 'no'}")
-    if application.notes:
-        click.echo(f"Notes: {application.notes}")
+    _echo_optional("Notes", application.notes)
 
-    click.echo("Application items:")
-    if application.items:
-        for item in application.items:
-            click.echo(_format_application_item(item))
-    else:
-        click.echo("- none")
-
-    module_count = len(application.modules)
-    click.echo(f"Modules: {module_count}")
-    if application.modules:
-        for module in application.modules:
-            click.echo(f"- {module.ref}: {module.name}")
-    else:
-        click.echo("- none")
+    _echo_formatted_list("Application items", application.items, _format_application_item)
+    _echo_formatted_list(
+        "Modules", application.modules, lambda module: f"- {module.ref}: {module.name}"
+    )
 
 
 def print_field_details(field_ref):
-    spec = Specification.load(PROJECT_ROOT)
+    spec = _load_specification()
     field = spec.field(field_ref)
 
     click.echo(f"Field: {field.ref}")
@@ -164,72 +170,50 @@ def print_field_details(field_ref):
     click.echo(f"Datatype: {field.datatype}")
     click.echo(f"Required: {'yes' if field.required else 'no'}")
     click.echo(f"Cardinality: {field.cardinality}")
-    if field.component:
-        click.echo(f"Component: {field.component}")
-    if field.description:
-        click.echo(f"Description: {field.description}")
-    if field.notes:
-        click.echo(f"Notes: {field.notes}")
-    if field.entry_date:
-        click.echo(f"Entry date: {field.entry_date}")
-    if field.end_date:
-        click.echo(f"End date: {field.end_date}")
+    _echo_optional("Component", field.component)
+    _echo_optional("Description", field.description)
+    _echo_optional("Notes", field.notes)
+    _echo_optional("Entry date", field.entry_date)
+    _echo_optional("End date", field.end_date)
 
 
 def print_module_details(module_ref):
-    spec = Specification.load(PROJECT_ROOT)
+    spec = _load_specification()
     module = spec.module(module_ref)
 
     click.echo(f"Module: {module.ref}")
     click.echo(f"Name: {module.name}")
-    if module.description:
-        click.echo(f"Description: {module.description}")
+    _echo_optional("Description", module.description)
     click.echo(f"Field usages: {len(module.field_usages)}")
     click.echo(f"Component usages: {len(module.component_usages)}")
-    if module.entry_date:
-        click.echo(f"Entry date: {module.entry_date}")
-    if module.end_date:
-        click.echo(f"End date: {module.end_date}")
+    _echo_optional("Entry date", module.entry_date)
+    _echo_optional("End date", module.end_date)
 
-    click.echo("Top-level items:")
-    if module.items:
-        for item in module.items:
-            click.echo(_format_container_item(item))
-    else:
-        click.echo("- none")
+    _echo_formatted_list("Top-level items", module.items, _format_container_item)
 
 
 def print_component_details(component_ref):
-    spec = Specification.load(PROJECT_ROOT)
+    spec = _load_specification()
     component = spec.component(component_ref)
 
     click.echo(f"Component: {component.ref}")
     click.echo(f"Name: {component.name}")
-    if component.description:
-        click.echo(f"Description: {component.description}")
+    _echo_optional("Description", component.description)
     click.echo(f"Field usages: {len(component.field_usages)}")
     click.echo(f"Component usages: {len(component.component_usages)}")
-    if component.entry_date:
-        click.echo(f"Entry date: {component.entry_date}")
-    if component.end_date:
-        click.echo(f"End date: {component.end_date}")
+    _echo_optional("Entry date", component.entry_date)
+    _echo_optional("End date", component.end_date)
 
-    click.echo("Top-level items:")
-    if component.items:
-        for item in component.items:
-            click.echo(_format_container_item(item))
-    else:
-        click.echo("- none")
+    _echo_formatted_list("Top-level items", component.items, _format_container_item)
 
 
 def print_codelist_details(codelist_ref):
-    spec = Specification.load(PROJECT_ROOT)
+    spec = _load_specification()
     codelist = spec.codelist(codelist_ref)
 
     click.echo(f"Codelist: {codelist.ref}")
     click.echo(f"Name: {codelist.name}")
-    if codelist.description:
-        click.echo(f"Description: {codelist.description}")
+    _echo_optional("Description", codelist.description)
     click.echo(f"Items: {len(codelist.items)}")
 
     click.echo("Items preview:")
@@ -382,7 +366,7 @@ def inspect_codelist(codelist_ref):
 @click.argument("field_ref")
 def field_usage(field_ref):
     """Find modules and components that include a given field."""
-    spec = Specification.load(PROJECT_ROOT)
+    spec = _load_specification()
     usage = spec.field_usages(field_ref)
     module_hits = usage.modules
     component_hits = usage.components
