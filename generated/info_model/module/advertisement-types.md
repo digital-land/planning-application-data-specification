@@ -6,7 +6,7 @@ What type of advertisements are proposed and how many there will be.
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| advertisement-proposal-description | Advertisement proposal description | Description of the advertisement proposal |  | MUST |  |
+| description | Advertisement proposal description | Description of the advertisement proposal |  | MUST |  |
 | advertisement-proposal-type | Advertisement proposal type[]{} | Expected to provide counts for each advertisement type |  | MUST |  |
 
 
@@ -14,7 +14,7 @@ What type of advertisements are proposed and how many there will be.
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-advertisement-type | Advertisement type | One of the advertisement-types or other | MUST | Select from the **advertisement-type** enum
+advertisement-type | Advertisement type | One of the advertisement-types or other | MUST | 
 advertisement-count | Advertisement count | Number of this type of advertisement | MUST | 
 advertisement-other-description | Advertisement other description | Details required if other advertisement type is selected | MAY | Rule: is a MUST if `advertisement-type` is `other`
 

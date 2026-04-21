@@ -13,7 +13,7 @@ Details of current parking facilities at the site and any changes that would be 
 
 field | name | description | required | notes | only for application
 -- | -- | -- | -- | -- | --
-parking-space-type | Parking space type | Type of parking space or vehicle type | MUST | Select from the **parking-space-type** enum | 
+parking-space-type | Parking space type | Type of parking space or vehicle type | MUST |  | 
 vehicle-type-other | Vehicle type other | Vehicle type when parking space type is 'other' | MAY | Rule: is a MUST if `parking-space-type` is `other` | 
 total-existing | Total existing | Total number of existing parking spaces | MUST |  | 
 total-proposed | Total proposed | Total number of proposed parking spaces | MUST |  | 

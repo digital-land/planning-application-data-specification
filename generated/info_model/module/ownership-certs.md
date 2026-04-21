@@ -10,9 +10,9 @@ Who will be affected by the proposal and whether they have been notified, such a
 | agricultural-tenants | Agricultural tenants | Are there any agricultural tenants on the land? | hh, full, outline, demolition-con-area, s73, extraction-oil-gas | MUST |  |
 | owners-and-tenants | Owners and tenants[]{} | List of known owners and agricultural tenants | hh, full, outline, demolition-con-area, s73, extraction-oil-gas | MAY |  |
 | lbc-owners | Owners of listed building[]{} | List of known owners | lbc | MAY |  |
-| steps-taken | Steps taken | Description of steps taken to identify unknown owners or tenants | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
-| newspaper-notices | Newspaper notices[]{} | Details of notices published in papers | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
-| ownership-cert-option | Ownership certificate type | The type of ownership certificate based on ownership and tenancy status | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY | Select from the **ownership-cert-type** enum |
+| steps-taken | Steps taken | Description of steps taken to identify unknown owners or tenants | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY | Required for Certificate-C or Certificate-D |
+| newspaper-notices | Newspaper notices[]{} | Details of notices published in papers | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY | Required for Certificate-C or Certificate-D |
+| ownership-cert-option | Ownership certificate type | The type of ownership certificate based on ownership and tenancy status | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY | Certificate type determined by ownership and notification status |
 | applicant-signature | Applicant signature | Digital signature of the applicant | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
 | agent-signature | Agent signature | Digital signature of the agent (if applicable) | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |
 | declaration-date | Declaration date | The date the declaration was made | hh, full, outline, demolition-con-area, lbc, s73, extraction-oil-gas | MAY |  |

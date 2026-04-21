@@ -16,7 +16,7 @@ How any natural habitats on the development site will be improved by the propose
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-exemption-type | Exemption type | The type of biodiversity gain exemption from the bng-exemption-type enum | MUST | Select from the **bng-exemption-type** enum
+exemption-type | Exemption type | The type of biodiversity gain exemption from the bng-exemption-type enum | MUST | 
 reason | Reason | The reason the exemption applies to this proposal | MUST | 
 
 

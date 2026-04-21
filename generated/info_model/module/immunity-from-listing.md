@@ -6,7 +6,7 @@ Whether the applicant has obtained a Certificate of Immunity (COI) meaning the b
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| cert-of-immunity-sought | Certificate of immunity sought | Has a certificate of immunity been sought |  | MUST | Select from the **yes-no-unknown** enum |
+| cert-of-immunity-sought | Certificate of immunity sought | Has a certificate of immunity been sought |  | MUST |  |
 | application-result | Application result | Provide the result of the application for a certificate of immunity |  | MAY |  |
 
 **Validation rules**

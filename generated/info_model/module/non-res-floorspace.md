@@ -7,7 +7,7 @@ Details of changes to non-residential floorspace in the proposed development.
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
 | non-residential-change | Non residential change | Does the proposal involve the loss, gain, or change of non-residential floorspace? | full | MUST |  |
-| non-residential-change-outline | Non residential change | Does the proposal involve the loss, gain, or change of non-residential floorspace? | outline | MUST | Select from the **yes-no-unknown** enum. this is only used in outline applications where unknown is an option |
+| non-residential-change-outline | Non residential change | Does the proposal involve the loss, gain, or change of non-residential floorspace? | outline | MUST | this is only used in outline applications where unknown is an option |
 | floorspace-details | Floorspace details[]{} | List of non-residential floorspace changes by use class | full | MAY | Rule: is a MUST if `non-residential-change` is `True` |
 | floorspace-details-outline | Floorspace details[]{} | List of non-residential floorspace changes by use class. | outline | MAY | Rule: is a MUST if `non-residential-change-outline` is `True`. This field is used solely for outline applications |
 | room-details | Room details[]{} | List of room changes for hotels, residential institutions and hostels | full | MAY | Required if change to hotels, residential institutions and hostel floorspace (C1, C2, C2A use classes) |
@@ -18,7 +18,7 @@ Details of changes to non-residential floorspace in the proposed development.
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
+use | Use | A use class or type of use | MUST | an option needs to be "other"
 specified-use | Specified use | A specified use if no applicable use class is available | MAY | 
 existing-gross-floorspace | Existing gross floorspace | Existing gross internal floorspace, in sqm | MUST | 
 floorspace-lost | Floorspace lost | Gross floorspace to be lost by change of use, in sqm | MUST | 
@@ -30,7 +30,7 @@ net-additional-floorspace | Net additional floorspace | Net additional gross int
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
+use | Use | A use class or type of use | MUST | an option needs to be "other"
 specified-use | Specified use | A specified use if no applicable use class is available | MAY | 
 not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
 existing-gross-floorspace | Existing gross floorspace | Existing gross internal floorspace, in sqm | MUST | 
@@ -45,7 +45,7 @@ net-additional-floorspace | Net additional floorspace | Net additional gross int
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Select from the **use-class-accommodation** enum. Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
+use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
 
 use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use-class-accommodation` is `other`. Required if use is "other"
 existing-rooms-lost | Existing rooms lost | Existing rooms to be lost by change of use | MUST | Must be 0 or positive
@@ -57,7 +57,7 @@ net-additional-rooms | Net additional rooms | Net additional rooms following dev
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Select from the **use-class-accommodation** enum. Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
+use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
 
 use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use-class-accommodation` is `other`. Required if use is "other"
 not-applicable | Not applicable | Used to explicitly state the use class does not apply to the proposal | MAY | 

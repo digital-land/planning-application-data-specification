@@ -7,7 +7,7 @@ How big the site is including relevant measurements
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
 | site-area-in-hectares | Site area in hectares | The size of the site in hectares |  | MUST |  |
-| site-area-provided-by | Site area provided by | Who provided the site area value |  | MAY | Select from the **provided-by** enum |
+| site-area-provided-by | Site area provided by | Who provided the site area value |  | MAY |  |
 
 **Validation rules**
 

@@ -13,7 +13,7 @@ How the development site is used, including use class information
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
+use | Use | A use class or type of use | MUST | an option needs to be "other"
 use-details | Use details | Further detail of the use | MAY | Rule: is a MUST if `use` is `sui`. Rule: is a MUST if `use` is `other`
 land-part | Land part | Which part of the land the use relates to | MUST | 
 

@@ -12,7 +12,7 @@ How a proposal to build an extension meets relevant criteria.
 | is-extension-beyond-rear-wall | Extension beyond rear wall | Will the extension extend beyond the rear wall of the original dwelling |  | MUST |  |
 | extension-length | Extension length | Length of rear extension in metres |  | MUST |  |
 | is-within-site-constraints | Within site constraints | Is the dwellinghouse within any restricted area |  | MUST |  |
-| site-constraints | Site constraints[] | List of specific site constraints that restrict development |  | MAY | Select from the **designation** enum |
+| site-constraints | Site constraints[] | List of specific site constraints that restrict development |  | MAY |  |
 
 **Validation rules**
 

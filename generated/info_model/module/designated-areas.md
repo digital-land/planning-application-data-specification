@@ -6,7 +6,7 @@ Details of any 'designated area' the develpoment site is on, such as a Conservat
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| designations | Designations[] | List of designated areas that apply to the site |  | MUST | Select from the **designation** enum |
+| designations | Designations[] | List of designated areas that apply to the site |  | MUST |  |
 
 **Validation rules**
 

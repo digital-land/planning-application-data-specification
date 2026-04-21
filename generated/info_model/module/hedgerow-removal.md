@@ -6,12 +6,12 @@ Details of any hedgerows being removed as part of the development
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| removal-reasons | Removal reasons | Reasons for the proposed removal of hedgerow(s) |  | MUST |  |
+| reason | Removal reasons | Reasons for the proposed removal of hedgerow(s) |  | MUST |  |
 | supporting-documents | Supporting documents[]{} | References to plans or drawings showing the stretches of hedgerow to be removed |  | MUST |  |
 | hedgerow-length | Hedgerow length | Total length, in metres, of hedgerow proposed for removal |  | MUST |  |
 | hedgerow-less-than-30-years | Hedgerow less than 30 years | Is the hedgerow less than 30 years old? |  | MUST |  |
 | planting-evidence-attached | Planting evidence attached | Is evidence of the date of planting attached? |  | MAY |  |
-| interest-declaration | Interest declaration | The applicant's interest or ownership in the hedgerow |  | MUST | Select from the **hedgerow-interest-type** enum |
+| interest-declaration | Interest declaration | The applicant's interest or ownership in the hedgerow |  | MUST |  |
 
 
 **Supporting document component**

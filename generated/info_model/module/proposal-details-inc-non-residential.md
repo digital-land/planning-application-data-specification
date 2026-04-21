@@ -16,7 +16,7 @@ Details of the residential and non-residential parts of the proposed development
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-non-residential-measurement-type | Non-residential measurement type | Type of measurement being provided (floorspace or site-area) | MUST | Select from the **non-residential-measurement-type** enum
+non-residential-measurement-type | Non-residential measurement type | Type of measurement being provided (floorspace or site-area) | MUST | 
 exact-value | Exact value | Exact figure of non-residential use | MAY | 
 min | Minimum value | Lower bound of non-residential use for ranges | MAY | 
 max | Maximum value | Upper bound of non-residential use for ranges | MAY | 

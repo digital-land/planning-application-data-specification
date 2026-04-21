@@ -6,9 +6,9 @@ The grade of any listed building affected by the proposed development.
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| listed-building-grade | Listed building grade | The grade of the listed building, selected from the listed-building-grade codelist or "don't know" |  | MUST | Select from the **listed-building-grade** enum |
+| listed-building-grade | Listed building grade | The grade of the listed building, selected from the listed-building-grade codelist or "don't know" |  | MUST |  |
 | listed-building | Listed building | Listed building reference for cross-referencing with listed building records |  | MAY |  |
-| provided-by | Provided by | Source of the listed building grade information |  | MAY | Select from the **provided-by** enum |
+| provided-by | Provided by | Source of the listed building grade information |  | MAY |  |
 
 **Validation rules**
 

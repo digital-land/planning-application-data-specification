@@ -6,8 +6,8 @@ What development, works or change of use is proposed
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| proposal-description | Proposal description | A description of what is being proposed, including the development, works, or change of use | advertising, demolition-con-area, full, hh, lbc, outline | MUST |  |
-| reserved-matters | Reserved matters[] | Identifies which reserved matters are being submitted for approval as part of this application | outline, reserved-matters | MUST | Select from the **reserved-matter-type** enum |
+| description | Proposal description | A description of what is being proposed, including the development, works, or change of use | advertising, demolition-con-area, full, hh, lbc, outline | MUST |  |
+| reserved-matters | Reserved matters[] | Identifies which reserved matters are being submitted for approval as part of this application | outline, reserved-matters | MUST |  |
 | related-application | Related application{} | Details about the approved development, as shown in the decision letter | reserved-matters | MUST |  |
 | proposal-started | Proposal started | Has any work on the proposal already been started | advertising, demolition-con-area, full, hh, lbc, outline | MUST |  |
 | proposal-started-date | Proposal start date | The date when work on the proposal started, in YYYY-MM-DD format | advertising, demolition-con-area, full, hh, lbc, outline | MAY | Rule: is a MUST if `proposal-started` is `True` |
@@ -27,7 +27,7 @@ decision-date | Decision date | The date when the decision was made, in YYYY-MM-
 
 **Validation rules**
 
-- proposal-description must be clear and concise
+- description must be clear and concise
 - proposal-started-date must not be in the future
 - proposal-completed-date must be after proposal-started-date if both provided
 - reserved-matters must be valid types from the codelist

@@ -8,7 +8,7 @@ Any additional relevant information about the development site.
 | --- | --- | --- | --- | --- | --- |
 | site-area | Site area{} | The total area of the site where development is proposed |  | MUST |  |
 | existing-use | Existing use[]{} | Structured information on the current use of the site |  | MUST |  |
-| known-constraints | Known constraints[] | A list of the known constraints affecting the site |  | MUST | Select from the **site-constraint** enum |
+| known-constraints | Known constraints[] | A list of the known constraints affecting the site |  | MUST |  |
 | supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application |  | MAY |  |
 
 
@@ -18,7 +18,7 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 value | Value | Numeric value representing a measurement or quantity | MUST | 
 unit | Unit | Unit of measurement for a value | MUST | 
-provided-by | Provided by | Whether the information was provided by the applicant or calculated by the system | MAY | Select from the **provided-by** enum
+provided-by | Provided by | Whether the information was provided by the applicant or calculated by the system | MAY | 
 
 
 **Existing use component**
@@ -41,7 +41,7 @@ details | Details | Additional details or information about an item | MAY |  | p
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
+use | Use | A use class or type of use | MUST | an option needs to be "other"
 specified-use | Specified use | A specified use if no applicable use class is available | MAY | Rule: is a MUST if `use` is `sui`. Rule: is a MUST if `use` is `other`
 
 **Validation rules**

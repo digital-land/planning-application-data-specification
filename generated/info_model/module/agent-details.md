@@ -16,7 +16,7 @@ field | name | description | required | notes
 reference | Reference | A unique reference for the data item | MUST | 
 person | Person{} | Detail to help identify a person | MUST | 
 company | Company | The name of a company (that the agent works for) | MAY | 
-user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
+user-role | User role | The role of the named individual. Agent or proxy | MAY | 
 
 
 **Person obj component**

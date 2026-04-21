@@ -58,48 +58,32 @@
     "application"
   ],
   "definitions": {
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
-    "agent": {
+    "tree-details": {
       "type": "object",
       "properties": {
         "reference": {
           "type": "string"
         },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
+        "species": {
           "type": "string"
         },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
+        "description-of-works": {
+          "type": "string"
         }
       },
       "required": [
-        "reference",
-        "person"
+        "reference"
+      ]
+    },
+    "supporting-document": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference"
       ]
     },
     "site-location": {
@@ -139,15 +123,29 @@
       },
       "required": []
     },
-    "supporting-document": {
+    "agent": {
       "type": "object",
       "properties": {
         "reference": {
           "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
         }
       },
       "required": [
-        "reference"
+        "reference",
+        "person"
       ]
     },
     "person": {
@@ -175,6 +173,20 @@
         "address-text"
       ]
     },
+    "owner": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "person"
+      ]
+    },
     "applicant": {
       "type": "object",
       "properties": {
@@ -188,6 +200,25 @@
       "required": [
         "reference",
         "person"
+      ]
+    },
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
       ]
     },
     "phone-number": {
@@ -206,54 +237,74 @@
       },
       "required": []
     },
-    "owner": {
+    "agent-details": {
       "type": "object",
       "properties": {
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
+        "agent": {
+          "$ref": "#/definitions/agent"
         }
       },
-      "required": [
-        "person"
-      ]
+      "required": []
     },
-    "tree-details": {
+    "trees-location": {
       "type": "object",
       "properties": {
-        "reference": {
-          "type": "string"
+        "is-site-different": {
+          "type": "boolean"
         },
-        "species": {
-          "type": "string"
-        },
-        "description-of-works": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference"
-      ]
-    },
-    "tree-work-details": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "tree-details": {
+        "site-locations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/tree-details"
+            "$ref": "#/definitions/site-location"
           },
           "minItems": 1
         }
       },
       "required": [
-        "description"
-      ]
+        "is-site-different"
+      ],
+      "if": {
+        "properties": {
+          "is-site-different": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "site-locations"
+        ]
+      }
+    },
+    "trees-ownership": {
+      "type": "object",
+      "properties": {
+        "is-applicant-owner": {
+          "type": "boolean"
+        },
+        "owner": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/owner"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "is-applicant-owner"
+      ],
+      "if": {
+        "properties": {
+          "is-applicant-owner": {
+            "const": false
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "owner"
+        ]
+      }
     },
     "checklist": {
       "type": "object",
@@ -268,24 +319,6 @@
       },
       "required": [
         "national-req-types"
-      ]
-    },
-    "trees-additional": {
-      "type": "object",
-      "properties": {
-        "advice-from-authority": {
-          "type": "string"
-        },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "supporting-documents"
       ]
     },
     "conflict-of-interest": {
@@ -335,34 +368,22 @@
         }
       ]
     },
-    "agent-contact": {
+    "tree-work-details": {
       "type": "object",
       "properties": {
-        "agent-reference": {
+        "description": {
           "type": "string"
         },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
+        "tree-details": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/applicant"
+            "$ref": "#/definitions/tree-details"
           },
           "minItems": 1
         }
       },
       "required": [
-        "applicants"
+        "description"
       ]
     },
     "declaration": {
@@ -384,75 +405,6 @@
         "declaration-date"
       ]
     },
-    "trees-ownership": {
-      "type": "object",
-      "properties": {
-        "is-applicant-owner": {
-          "type": "boolean"
-        },
-        "owner": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/owner"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "is-applicant-owner"
-      ],
-      "if": {
-        "properties": {
-          "is-applicant-owner": {
-            "const": false
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "owner"
-        ]
-      }
-    },
-    "trees-location": {
-      "type": "object",
-      "properties": {
-        "is-site-different": {
-          "type": "boolean"
-        },
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "is-site-different"
-      ],
-      "if": {
-        "properties": {
-          "is-site-different": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "site-locations"
-        ]
-      }
-    },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
-    },
     "applicant-contact": {
       "type": "object",
       "properties": {
@@ -465,6 +417,54 @@
       },
       "required": [
         "applicant-reference",
+        "contact-details"
+      ]
+    },
+    "trees-additional": {
+      "type": "object",
+      "properties": {
+        "advice-from-authority": {
+          "type": "string"
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "supporting-documents"
+      ]
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
+      ]
+    },
+    "agent-contact": {
+      "type": "object",
+      "properties": {
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "agent-reference",
         "contact-details"
       ]
     },
@@ -1011,28 +1011,6 @@
         "documents"
       ]
     },
-    "fee": {
-      "type": "object",
-      "properties": {
-        "amount": {
-          "type": "number"
-        },
-        "amount-paid": {
-          "type": "number"
-        },
-        "transactions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "amount",
-        "amount-paid"
-      ]
-    },
     "document": {
       "type": "object",
       "properties": {
@@ -1137,6 +1115,28 @@
       },
       "required": [
         "filename"
+      ]
+    },
+    "fee": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "amount-paid": {
+          "type": "number"
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "amount",
+        "amount-paid"
       ]
     }
   }

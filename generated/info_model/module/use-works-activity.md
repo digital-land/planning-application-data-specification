@@ -6,8 +6,8 @@ Why a Lawful Development Certificate is required regarding how the development s
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| ldc-need | LDC need[] | What is the lawful development certificate needed for? |  | MUST | Select from the **lawful-dev-cert-need** enum. At least one value must be provided |
-| use | Use | A use class or type of use |  | MAY | Select from the **use-class** enum. an option needs to be "other" |
+| ldc-need | LDC need[] | What is the lawful development certificate needed for? |  | MUST | At least one value must be provided |
+| use | Use | A use class or type of use |  | MAY | an option needs to be "other" |
 | specified-use | Specified use | A specified use if no applicable use class is available |  | MAY |  |
 
 **Validation rules**

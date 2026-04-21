@@ -66,23 +66,30 @@
     "site-visit"
   ],
   "definitions": {
-    "contact-details": {
+    "ldc-owner-details": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string"
+        "person": {
+          "$ref": "#/definitions/person"
         },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
+        "informed-of-application": {
+          "type": "boolean"
         }
       },
       "required": [
-        "email",
-        "phone-numbers"
+        "person",
+        "informed-of-application"
+      ]
+    },
+    "supporting-document": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference"
       ]
     },
     "agent": {
@@ -108,6 +115,28 @@
       "required": [
         "reference",
         "person"
+      ]
+    },
+    "ldc-interested-person": {
+      "type": "object",
+      "properties": {
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "nature-of-interest": {
+          "type": "string"
+        },
+        "informed-of-application": {
+          "type": "boolean"
+        },
+        "reason-not-informed": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "person",
+        "nature-of-interest",
+        "informed-of-application"
       ]
     },
     "site-location": {
@@ -147,32 +176,6 @@
       },
       "required": []
     },
-    "supporting-document": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference"
-      ]
-    },
-    "ldc-owner-details": {
-      "type": "object",
-      "properties": {
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "informed-of-application": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "person",
-        "informed-of-application"
-      ]
-    },
     "person": {
       "type": "object",
       "properties": {
@@ -198,59 +201,6 @@
         "address-text"
       ]
     },
-    "applicant": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "ldc-interested-person": {
-      "type": "object",
-      "properties": {
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "nature-of-interest": {
-          "type": "string"
-        },
-        "informed-of-application": {
-          "type": "boolean"
-        },
-        "reason-not-informed": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "person",
-        "nature-of-interest",
-        "informed-of-application"
-      ]
-    },
-    "phone-number": {
-      "type": "object",
-      "properties": {
-        "number": {
-          "type": "string"
-        },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
-    },
     "other-contact": {
       "type": "object",
       "properties": {
@@ -270,20 +220,64 @@
         "email"
       ]
     },
-    "site-details": {
+    "applicant": {
       "type": "object",
       "properties": {
-        "site-locations": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/site-location"
+            "$ref": "#/definitions/phone-number"
           },
           "minItems": 1
         }
       },
       "required": [
-        "site-locations"
+        "email",
+        "phone-numbers"
       ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
     },
     "checklist": {
       "type": "object",
@@ -300,9 +294,19 @@
         "national-req-types"
       ]
     },
-    "grounds-proposed-use": {
+    "grounds-existing-use": {
       "type": "object",
       "properties": {
+        "reason": {
+          "type": "string"
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
+          },
+          "minItems": 1
+        },
         "use": {
           "type": "string",
           "enum": [
@@ -341,27 +345,13 @@
         },
         "specified-use": {
           "type": "string"
-        },
-        "operation-type": {
-          "type": "string",
-          "enum": [
-            "permanent",
-            "temporary"
-          ]
-        },
-        "temporary-details": {
-          "type": "string"
-        },
-        "reason": {
-          "type": "string"
         }
       },
       "required": [
-        "operation-type",
         "reason"
       ],
       "if": {
-        "anyOf": [
+        "allOf": [
           {
             "properties": {
               "use": {
@@ -470,21 +460,6 @@
       "properties": {},
       "required": []
     },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
     "site-visit": {
       "type": "object",
       "properties": {
@@ -521,6 +496,40 @@
           "other-contact"
         ]
       }
+    },
+    "site-details": {
+      "type": "object",
+      "properties": {
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "site-locations"
+      ]
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
     },
     "applicant-details": {
       "type": "object",
@@ -626,105 +635,6 @@
         }
       ]
     },
-    "grounds-existing-use": {
-      "type": "object",
-      "properties": {
-        "use-lawful-reason": {
-          "type": "string"
-        },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
-        },
-        "use": {
-          "type": "string",
-          "enum": [
-            "b2",
-            "b8",
-            "c1",
-            "c2",
-            "c2a",
-            "c3",
-            "c4",
-            "e-a",
-            "e-b",
-            "e-c-i",
-            "e-c-ii",
-            "e-c-iii",
-            "e-d",
-            "e-e",
-            "e-f",
-            "e-g-i",
-            "e-g-ii",
-            "e-g-iii",
-            "f1-a",
-            "f1-b",
-            "f1-c",
-            "f1-d",
-            "f1-e",
-            "f1-f",
-            "f1-g",
-            "f2-a",
-            "f2-b",
-            "f2-c",
-            "f2-d",
-            "sui",
-            "other"
-          ]
-        },
-        "specified-use": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "use-lawful-reason"
-      ],
-      "if": {
-        "allOf": [
-          {
-            "properties": {
-              "use": {
-                "const": "sui"
-              }
-            }
-          },
-          {
-            "properties": {
-              "use": {
-                "const": "other"
-              }
-            }
-          }
-        ]
-      },
-      "then": {
-        "required": [
-          "specified-use"
-        ]
-      }
-    },
-    "declaration": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
     "interest-details": {
       "type": "object",
       "properties": {
@@ -792,15 +702,6 @@
         }
       ]
     },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
-    },
     "applicant-contact": {
       "type": "object",
       "properties": {
@@ -813,6 +714,105 @@
       },
       "required": [
         "applicant-reference",
+        "contact-details"
+      ]
+    },
+    "grounds-proposed-use": {
+      "type": "object",
+      "properties": {
+        "use": {
+          "type": "string",
+          "enum": [
+            "b2",
+            "b8",
+            "c1",
+            "c2",
+            "c2a",
+            "c3",
+            "c4",
+            "e-a",
+            "e-b",
+            "e-c-i",
+            "e-c-ii",
+            "e-c-iii",
+            "e-d",
+            "e-e",
+            "e-f",
+            "e-g-i",
+            "e-g-ii",
+            "e-g-iii",
+            "f1-a",
+            "f1-b",
+            "f1-c",
+            "f1-d",
+            "f1-e",
+            "f1-f",
+            "f1-g",
+            "f2-a",
+            "f2-b",
+            "f2-c",
+            "f2-d",
+            "sui",
+            "other"
+          ]
+        },
+        "specified-use": {
+          "type": "string"
+        },
+        "operation-type": {
+          "type": "string",
+          "enum": [
+            "permanent",
+            "temporary"
+          ]
+        },
+        "temporary-details": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "operation-type",
+        "reason"
+      ],
+      "if": {
+        "anyOf": [
+          {
+            "properties": {
+              "use": {
+                "const": "sui"
+              }
+            }
+          },
+          {
+            "properties": {
+              "use": {
+                "const": "other"
+              }
+            }
+          }
+        ]
+      },
+      "then": {
+        "required": [
+          "specified-use"
+        ]
+      }
+    },
+    "agent-contact": {
+      "type": "object",
+      "properties": {
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "agent-reference",
         "contact-details"
       ]
     }
