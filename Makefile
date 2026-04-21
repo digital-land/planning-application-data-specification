@@ -40,11 +40,11 @@ declarative-progress:
 
 
 specification::
-	python3 bin/specification_data.py
+	python3 -m bin.specification_data
 
 
 spreadsheets::
-	python3 bin/generate_spec_spreadsheet.py
+	python3 -m bin.generate_spec_spreadsheet
 
 export-elements::
 	python3 bin/export_elements.py
@@ -53,7 +53,7 @@ export-elements-xlsx::
 	python3 bin/export_elements.py --xlsx data/element-index/elements.xlsx
 
 jsonschema::
-	python3 bin/generate_json_schema.py
+	python3 -m bin.generate_json_schema
 
 clean-static-site::
 	rm -rf docs
@@ -64,10 +64,10 @@ copy-assets::
 	cp -r bin/assets/javascripts docs/static/
 
 render-local-site:: clean-static-site copy-assets
-	python3 bin/render_static_site.py --output docs --base-url ""
+	python3 -m bin.render_static_site --output docs --base-url ""
 
 render-github-pages:: clean-static-site copy-assets
-	python3 bin/render_static_site.py --output docs
+	python3 -m bin.render_static_site --output docs
 
 serve-github-pages::
 	# Local preview: serve docs at root; URLs will use whatever base-url you rendered with

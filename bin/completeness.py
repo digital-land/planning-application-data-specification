@@ -85,7 +85,7 @@ def calculate_total_volume(items: list[dict[str, Any]]) -> int:
 
 def load_spec_application_refs() -> set[str]:
     # Local import keeps this module lightweight for reuse/testing.
-    from loader import load_content
+    from bin.loader import load_content
 
     spec = load_content()
     applications = spec.get("application", {}) or {}
@@ -96,7 +96,7 @@ def load_active_combined_application_refs(
     specification: dict | None = None,
 ) -> set[str]:
     if specification is None:
-        from loader import load_content
+        from bin.loader import load_content
 
         specification = load_content()
     return get_active_combined_application_refs(specification)

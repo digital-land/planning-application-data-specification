@@ -1,7 +1,7 @@
 from pathlib import Path
 from typing import Any, Dict
 
-from utils import ensure_dir
+from bin.utils import ensure_dir
 
 
 def url_for(base_url: str, path: str) -> str:

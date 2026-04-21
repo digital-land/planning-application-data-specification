@@ -1,5 +1,5 @@
-from csv_helpers import write_csv
-from loader import load_content
+from bin.csv_helpers import write_csv
+from bin.loader import load_content
 
 
 def generate_field_data():

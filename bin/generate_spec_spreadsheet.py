@@ -13,7 +13,7 @@ from planning_application_specification.specification import (
 from openpyxl import Workbook
 from openpyxl.styles import Alignment, Border, Font, Side
 from openpyxl.utils import get_column_letter
-from utils import to_anchor
+from bin.utils import to_anchor
 
 
 def format_resolved_path_name(item: ResolvedComponentReference) -> str:
@@ -553,7 +553,7 @@ def write_application_excel(
 
 # ---------- Run for all applications ----------
 if __name__ == "__main__":
-    from loader import load_specification_model
+    from bin.loader import load_specification_model
 
     model = load_specification_model()
     output_dir = Path("generated/spreadsheet")

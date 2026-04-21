@@ -5,10 +5,10 @@ from glob import glob
 from pathlib import Path
 from typing import Any, Dict, List, Set, Tuple
 
-from json_schema_helpers import parse_and_generate_required_if_rules
-from loader import load_content
-from models import ComponentInstance, FieldDef, FieldInstance
-from utils import save_string_to_file
+from bin.json_schema_helpers import parse_and_generate_required_if_rules
+from bin.loader import load_content
+from bin.models import ComponentInstance, FieldDef, FieldInstance
+from bin.utils import save_string_to_file
 
 OUTPUT_DIR = "generated/json-schema"
 APPLICATIONS_OUTPUT_DIR = f"{OUTPUT_DIR}/applications"
@@ -332,7 +332,7 @@ def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
 
 def generate_json_schemas():
     """Main function to generate all JSON schemas"""
-    from loader import load_specification_model
+    from bin.loader import load_specification_model
 
     print("Loading specification model...")
     specification = load_specification_model()

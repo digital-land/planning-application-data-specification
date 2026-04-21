@@ -23,12 +23,12 @@ if not hasattr(jinja_filters, "evalcontextfilter"):
 
 from digital_land_frontend import filters as dlf_filters  # noqa: E402
 from digital_land_frontend import globals as dlf_globals  # noqa: E402
-from completeness import build_progress_view_model
-from jinja_filters import commanum_filter
-from loader import load_needs, load_specification_model
-from models import FieldDef, ComponentInstance, FieldInstance
-from renderer import RenderContext
-from utils import ensure_dir
+from bin.completeness import build_progress_view_model
+from bin.jinja_filters import commanum_filter
+from bin.loader import load_needs, load_specification_model
+from bin.models import FieldDef, ComponentInstance, FieldInstance
+from bin.renderer import RenderContext
+from bin.utils import ensure_dir
 
 try:
     import markdown as markdown_lib
@@ -343,7 +343,7 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
         return field_entry
 
     # Handle FieldInstance (from models)
-    from models import FieldInstance, FieldDef as FD  # type: ignore
+    from bin.models import FieldInstance, FieldDef as FD  # type: ignore
 
     if isinstance(field_entry, FieldInstance):
         orig = field_entry.original
