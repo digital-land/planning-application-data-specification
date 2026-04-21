@@ -588,9 +588,40 @@ def test_modules_in_application_command_supports_combined_application_type(monke
     result = runner.invoke(spec.cli, ["inspect", "modules-in-application", "hh;lbc"])
 
     assert result.exit_code == 0
-    assert "Modules in application 'hh;lbc' (2):" in result.output
-    assert "site-details: Site details" in result.output
-    assert "lb-grade: Listed building grade" in result.output
+    assert "Application type: hh;lbc" in result.output
+    assert "Modules: 2" in result.output
+    assert "- site-details: Site details" in result.output
+    assert "- lb-grade: Listed building grade" in result.output
+
+
+def test_applications_with_module_command_uses_new_inspect_output_shape(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "load_content",
+        lambda: {
+            "application": {
+                "hh": {"name": "Householder planning application"},
+                "full": {"name": "Full planning application"},
+            }
+        },
+    )
+    monkeypatch.setattr(
+        spec,
+        "get_applications_with_module",
+        lambda module_ref, specification: ["hh", "full"]
+        if module_ref == "site-details"
+        else [],
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "applications-with-module", "site-details"])
+
+    assert result.exit_code == 0
+    assert "Module: site-details" in result.output
+    assert "Applications: 2" in result.output
+    assert "- hh: Householder planning application" in result.output
+    assert "- full: Full planning application" in result.output
 
 
 def test_module_forms_command_lists_analysed_2025_forms(monkeypatch):

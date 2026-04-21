@@ -301,11 +301,12 @@ def applications_with_module(module_ref):
     apps = get_applications_with_module(module_ref, spec)
 
     if apps:
-        click.echo(f"Applications using module '{module_ref}':")
+        click.echo(f"Module: {module_ref}")
+        click.echo(f"Applications: {len(apps)}")
         for app_ref in apps:
             app = spec["application"].get(app_ref, {})
             name = app.get("name", app_ref)
-            click.echo(f"  • {app_ref}: {name}")
+            click.echo(f"- {app_ref}: {name}")
     else:
         click.echo(f"No applications found using module '{module_ref}'")
 
@@ -318,11 +319,12 @@ def modules_in_application(application_ref):
     modules = get_application_module_refs(application_ref, spec)
 
     if modules:
-        click.echo(f"Modules in application '{application_ref}' ({len(modules)}):")
+        click.echo(f"Application type: {application_ref}")
+        click.echo(f"Modules: {len(modules)}")
         for mod_ref in modules:
             mod = spec.get("module", {}).get(mod_ref, {})
             name = mod.get("name", mod_ref)
-            click.echo(f"  • {mod_ref}: {name}")
+            click.echo(f"- {mod_ref}: {name}")
     else:
         click.echo(f"No modules found for application '{application_ref}'")
 
