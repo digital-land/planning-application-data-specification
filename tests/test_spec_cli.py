@@ -148,7 +148,7 @@ def test_forms_command_lists_matching_2025_forms(monkeypatch):
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["forms", "hh"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "list", "hh"])
 
     assert result.exit_code == 0
     assert "Found 2 matching 2025 forms for application type 'hh':" in result.output
@@ -162,7 +162,7 @@ def test_forms_command_handles_no_matches(monkeypatch):
 
     monkeypatch.setattr(spec, "get_2025_forms_by_app_type", lambda app_type: [])
 
-    result = runner.invoke(spec.cli, ["forms", "unknown"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "list", "unknown"])
 
     assert result.exit_code == 0
     assert "No 2025 forms found for application type 'unknown'" in result.output
@@ -184,7 +184,7 @@ def test_form_command_shows_core_2025_form_details(monkeypatch):
         else None,
     )
 
-    result = runner.invoke(spec.cli, ["form", "form-app-for-pp"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "show", "form-app-for-pp"])
 
     assert result.exit_code == 0
     assert "Form: Application for planning permission" in result.output
@@ -198,7 +198,7 @@ def test_form_command_handles_missing_form(monkeypatch):
 
     monkeypatch.setattr(spec, "get_2025_form", lambda form_ref: None)
 
-    result = runner.invoke(spec.cli, ["form", "missing-form"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "show", "missing-form"])
 
     assert result.exit_code == 0
     assert "No 2025 form found with reference 'missing-form'" in result.output
@@ -220,7 +220,7 @@ def test_form_url_command_supports_combined_application_type(monkeypatch):
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["form-url", "hh;lbc"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "urls", "hh;lbc"])
 
     assert result.exit_code == 0
     assert "application-type: hh + lbc" in result.output
@@ -243,7 +243,7 @@ def test_form_url_command_normalises_combined_application_type_order(monkeypatch
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["form-url", "lbc;hh"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "urls", "lbc;hh"])
 
     assert result.exit_code == 0
     assert "application-type: hh + lbc" in result.output
@@ -615,7 +615,7 @@ def test_module_forms_command_lists_analysed_2025_forms(monkeypatch):
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["module-forms", "agent-contact"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "for-module", "agent-contact"])
 
     assert result.exit_code == 0
     assert "Found 2 analysed 2025 forms for module 'agent-contact':" in result.output
@@ -632,7 +632,7 @@ def test_module_forms_command_handles_no_matches(monkeypatch):
 
     monkeypatch.setattr(spec, "get_2025_forms_for_module", lambda module_ref: [])
 
-    result = runner.invoke(spec.cli, ["module-forms", "missing-module"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "for-module", "missing-module"])
 
     assert result.exit_code == 0
     assert "No analysed 2025 forms found for module 'missing-module'" in result.output
@@ -652,7 +652,7 @@ def test_form_modules_command_lists_analysed_2025_modules(monkeypatch):
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["form-modules", "form-app-for-pp"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "modules", "form-app-for-pp"])
 
     assert result.exit_code == 0
     assert "Found 2 analysed 2025 modules for form 'form-app-for-pp':" in result.output
@@ -669,13 +669,13 @@ def test_form_modules_command_handles_no_matches(monkeypatch):
 
     monkeypatch.setattr(spec, "get_2025_modules_for_form", lambda form_ref: [])
 
-    result = runner.invoke(spec.cli, ["form-modules", "missing-form"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "modules", "missing-form"])
 
     assert result.exit_code == 0
     assert "No analysed 2025 modules found for form 'missing-form'" in result.output
 
 
-def test_form_analysis_list_command_reuses_forms_output(monkeypatch):
+def test_analysis_forms_list_command_reuses_forms_output(monkeypatch):
     runner = CliRunner()
 
     monkeypatch.setattr(
@@ -692,14 +692,14 @@ def test_form_analysis_list_command_reuses_forms_output(monkeypatch):
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["form-analysis", "list", "hh"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "list", "hh"])
 
     assert result.exit_code == 0
     assert "Found 1 matching 2025 forms for application type 'hh':" in result.output
     assert "- Householder application form (form-hh)" in result.output
 
 
-def test_form_analysis_modules_command_reuses_module_output(monkeypatch):
+def test_analysis_forms_modules_command_reuses_module_output(monkeypatch):
     runner = CliRunner()
 
     monkeypatch.setattr(
@@ -712,7 +712,7 @@ def test_form_analysis_modules_command_reuses_module_output(monkeypatch):
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["form-analysis", "modules", "form-app-for-pp"])
+    result = runner.invoke(spec.cli, ["analysis", "forms", "modules", "form-app-for-pp"])
 
     assert result.exit_code == 0
     assert "Found 1 analysed 2025 modules for form 'form-app-for-pp':" in result.output

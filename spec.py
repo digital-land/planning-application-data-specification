@@ -506,78 +506,49 @@ def summary(do_list):
                 click.echo(f"  • {nid}{jlabel}")
 
 
-@cli.group(name="form-analysis")
-def form_analysis():
+@cli.group()
+def analysis():
+    """Analysis and non-canonical data commands."""
+    pass
+
+
+@analysis.group()
+def forms():
     """2025 forms analysis commands."""
     pass
 
 
-@form_analysis.command(name="urls")
+@forms.command(name="urls")
 @click.argument("application_type")
-def form_analysis_urls(application_type):
+def analysis_forms_urls(application_type):
     """Return matching 2025 form URLs for an application type or subtype."""
     print_2025_form_urls(application_type)
 
 
-@form_analysis.command(name="list")
+@forms.command(name="list")
 @click.argument("application_type")
-def form_analysis_list(application_type):
+def analysis_forms_list(application_type):
     """List 2025 forms that cover an application type or subtype."""
     print_2025_forms_for_application_type(application_type)
 
 
-@form_analysis.command(name="show")
+@forms.command(name="show")
 @click.argument("form_ref")
-def form_analysis_show(form_ref):
+def analysis_forms_show(form_ref):
     """Show core details for a 2025 form by reference."""
     print_2025_form_details(form_ref)
 
 
-@form_analysis.command(name="for-module")
+@forms.command(name="for-module")
 @click.argument("module_ref")
-def form_analysis_for_module(module_ref):
+def analysis_forms_for_module(module_ref):
     """List analysed 2025 forms that include a module."""
     print_2025_forms_for_module(module_ref)
 
 
-@form_analysis.command(name="modules")
+@forms.command(name="modules")
 @click.argument("form_ref")
-def form_analysis_modules(form_ref):
-    """List analysed 2025 modules found in a form."""
-    print_2025_modules_for_form(form_ref)
-
-
-@cli.command()
-@click.argument("application_type")
-def form_url(application_type):
-    """Return the PDF form URL for an application type or subtype."""
-    print_2025_form_urls(application_type)
-
-
-@cli.command(name="forms")
-@click.argument("application_type")
-def forms_for_application_type(application_type):
-    """List 2025 forms that cover an application type or subtype."""
-    print_2025_forms_for_application_type(application_type)
-
-
-@cli.command(name="form")
-@click.argument("form_ref")
-def form_details(form_ref):
-    """Show core details for a 2025 form by reference."""
-    print_2025_form_details(form_ref)
-
-
-@cli.command(name="module-forms")
-@click.argument("module_ref")
-def forms_for_module(module_ref):
-    """List analysed 2025 forms that include a module."""
-    print_2025_forms_for_module(module_ref)
-
-
-@cli.command(name="form-modules")
-@click.argument("form_ref")
-def modules_for_form(form_ref):
+def analysis_forms_modules(form_ref):
     """List analysed 2025 modules found in a form."""
     print_2025_modules_for_form(form_ref)
 
