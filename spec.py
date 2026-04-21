@@ -135,6 +135,27 @@ def print_application_details(application_ref):
         click.echo("- none")
 
 
+def print_field_details(field_ref):
+    spec = Specification.load(PROJECT_ROOT)
+    field = spec.field(field_ref)
+
+    click.echo(f"Field: {field.ref}")
+    click.echo(f"Name: {field.name}")
+    click.echo(f"Datatype: {field.datatype}")
+    click.echo(f"Required: {'yes' if field.required else 'no'}")
+    click.echo(f"Cardinality: {field.cardinality}")
+    if field.component:
+        click.echo(f"Component: {field.component}")
+    if field.description:
+        click.echo(f"Description: {field.description}")
+    if field.notes:
+        click.echo(f"Notes: {field.notes}")
+    if field.entry_date:
+        click.echo(f"Entry date: {field.entry_date}")
+    if field.end_date:
+        click.echo(f"End date: {field.end_date}")
+
+
 def print_2025_form_details(form_ref):
     form = get_2025_form(form_ref.strip())
 
@@ -238,6 +259,13 @@ def modules_in_application(application_ref):
 def find_application(application_ref):
     """Show a resolved application definition."""
     print_application_details(application_ref)
+
+
+@inspect.command(name="field")
+@click.argument("field_ref")
+def inspect_field(field_ref):
+    """Show a canonical field definition."""
+    print_field_details(field_ref)
 
 
 @inspect.command()

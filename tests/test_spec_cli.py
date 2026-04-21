@@ -284,6 +284,49 @@ def test_inspect_application_command_shows_single_application_summary(monkeypatc
     assert "- site-details: Site details" in result.output
 
 
+def test_inspect_field_command_shows_canonical_field_summary(monkeypatch):
+    runner = CliRunner()
+
+    class StubField:
+        ref = "description"
+        name = "Description"
+        datatype = "string"
+        required = True
+        cardinality = "1"
+        component = None
+        description = "Describe the proposal."
+        notes = "Keep this concise."
+        entry_date = "2026-01-01"
+        end_date = ""
+
+    class StubSpecification:
+        def field(self, field_ref):
+            assert field_ref == "description"
+            return StubField()
+
+    monkeypatch.setattr(
+        spec,
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "field", "description"])
+
+    assert result.exit_code == 0
+    assert "Field: description" in result.output
+    assert "Name: Description" in result.output
+    assert "Datatype: string" in result.output
+    assert "Required: yes" in result.output
+    assert "Cardinality: 1" in result.output
+    assert "Description: Describe the proposal." in result.output
+    assert "Notes: Keep this concise." in result.output
+    assert "Entry date: 2026-01-01" in result.output
+
+
 def test_inspect_application_command_shows_combined_application_summary(monkeypatch):
     runner = CliRunner()
 
