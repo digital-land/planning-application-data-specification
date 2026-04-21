@@ -377,17 +377,19 @@ def field_usage(field_ref):
         click.echo(f"No modules or components found using field '{field_ref}'")
         return
 
+    click.echo(f"Field: {field_ref}")
+
     if module_hits:
-        click.echo(f"Modules using field '{field_ref}':")
+        click.echo(f"Modules: {len(module_hits)}")
         for match in module_hits:
-            click.echo(f"  • {match.container.ref}: {match.container.name}")
+            click.echo(f"- {match.container.ref}: {match.container.name}")
 
     if component_hits:
         if module_hits:
             click.echo()
-        click.echo(f"Components using field '{field_ref}':")
+        click.echo(f"Components: {len(component_hits)}")
         for match in component_hits:
-            click.echo(f"  • {match.container.ref}: {match.container.name}")
+            click.echo(f"- {match.container.ref}: {match.container.name}")
 
 
 @inspect.command()

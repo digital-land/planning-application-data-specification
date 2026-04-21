@@ -518,6 +518,67 @@ def test_inspect_codelist_command_shows_canonical_codelist_summary(monkeypatch):
     )
 
 
+def test_field_usage_command_uses_canonical_summary_shape(monkeypatch):
+    runner = CliRunner()
+
+    usage = type(
+        "StubFieldUsageResult",
+        (),
+        {
+            "modules": [
+                type(
+                    "StubContainerUsage",
+                    (),
+                    {
+                        "container": type(
+                            "StubModule",
+                            (),
+                            {"ref": "proposal-details", "name": "Proposal details"},
+                        )()
+                    },
+                )()
+            ],
+            "components": [
+                type(
+                    "StubContainerUsage",
+                    (),
+                    {
+                        "container": type(
+                            "StubComponent",
+                            (),
+                            {"ref": "site-area", "name": "Site area"},
+                        )()
+                    },
+                )()
+            ],
+        },
+    )()
+
+    class StubSpecification:
+        def field_usages(self, field_ref):
+            assert field_ref == "description"
+            return usage
+
+    monkeypatch.setattr(
+        spec,
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "field-usage", "description"])
+
+    assert result.exit_code == 0
+    assert "Field: description" in result.output
+    assert "Modules: 1" in result.output
+    assert "- proposal-details: Proposal details" in result.output
+    assert "Components: 1" in result.output
+    assert "- site-area: Site area" in result.output
+
+
 def test_inspect_application_command_shows_combined_application_summary(monkeypatch):
     runner = CliRunner()
 
