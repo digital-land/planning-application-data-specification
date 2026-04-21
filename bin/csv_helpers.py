@@ -1,7 +1,7 @@
 import csv
 from pathlib import Path
 
-from markdown_utils import csv_to_markdown
+from bin.markdown_utils import csv_to_markdown
 
 
 def read_csv(filename, encoding="utf-8", as_dict=False, include_row_num=False):

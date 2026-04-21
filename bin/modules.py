@@ -1,7 +1,7 @@
 from collections import OrderedDict, deque
 
-from fields import get_applicable_app_types
-from utils import get_record
+from bin.fields import get_applicable_app_types
+from bin.utils import get_record
 
 
 def get_module(modules, ref):
@@ -186,7 +186,7 @@ if __name__ == "__main__":
 
     # Simple test to verify the function works
     try:
-        from loader import load_content
+        from bin.loader import load_content
 
         print("Loader imported successfully")
 

@@ -4,7 +4,13 @@ from pathlib import Path
 import frontmatter
 
 # import here to avoid import-time cycles
-from models import ApplicationDef, ComponentDef, ComponentInstance, FieldDef, ModuleDef
+from bin.models import (
+    ApplicationDef,
+    ComponentDef,
+    ComponentInstance,
+    FieldDef,
+    ModuleDef,
+)
 
 def make_tables():
     return {
@@ -133,7 +139,7 @@ def load_specification_model():
             application_defs[a.ref] = a
 
     # Resolve inheritance for all applications - import here because of circular import issues
-    from applications import get_application_module_refs
+    from bin.applications import get_application_module_refs
 
     for app_ref, app_def in application_defs.items():
         if app_def.extends:

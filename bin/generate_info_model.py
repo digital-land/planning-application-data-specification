@@ -1,15 +1,15 @@
 import os
 
-from applications import get_application_module_refs
-from csv_helpers import csv_to_markdown
-from modules import (
+from bin.applications import get_application_module_refs
+from bin.csv_helpers import csv_to_markdown
+from bin.modules import (
     collect_related_components_bfs,
     get_codelists_for_module,
     get_module_parts,
 )
 from planning_application_specification import Specification
 from planning_application_specification.specification import SelectionContext
-from utils import save_string_to_file
+from bin.utils import save_string_to_file
 
 
 def format_resolved_field_display_name(resolved_field):
@@ -469,7 +469,7 @@ if __name__ == "__main__":
     print("Testing information model generation script.")
 
     try:
-        from loader import load_content
+        from bin.loader import load_content
 
         specification = load_content()
         print("Specification loaded successfully")

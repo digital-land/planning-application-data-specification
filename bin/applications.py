@@ -1,5 +1,5 @@
-from csv_helpers import read_csv
-from loader import load_content
+from bin.csv_helpers import read_csv
+from bin.loader import load_content
 from planning_application_specification.applications import (
     get_application_module_refs as package_get_application_module_refs,
 )

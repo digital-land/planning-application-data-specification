@@ -1,8 +1,8 @@
 from pathlib import Path
 
-from generate_info_model import generate_application, generate_module
-from loader import load_content
-from utils import save_string_to_file
+from bin.generate_info_model import generate_application, generate_module
+from bin.loader import load_content
+from bin.utils import save_string_to_file
 
 OUTPUT_DIR = "generated"
 INFO_MODULE_OUTPUT_DIR = f"{OUTPUT_DIR}/info_model"
