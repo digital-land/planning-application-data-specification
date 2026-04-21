@@ -426,17 +426,19 @@ def component_usage(component_ref):
         click.echo(f"No fields or modules found using component '{component_ref}'")
         return
 
+    click.echo(f"Component: {component_ref}")
+
     if field_hits:
-        click.echo(f"Fields using component '{component_ref}':")
+        click.echo(f"Fields: {len(field_hits)}")
         for ref, name in field_hits:
-            click.echo(f"  • {ref}: {name}")
+            click.echo(f"- {ref}: {name}")
 
     if module_hits:
         if field_hits:
             click.echo()
-        click.echo(f"Modules using component '{component_ref}':")
+        click.echo(f"Modules: {len(module_hits)}")
         for ref, name in module_hits:
-            click.echo(f"  • {ref}: {name}")
+            click.echo(f"- {ref}: {name}")
 
 
 # TODO: find all fields that reference a given codelist

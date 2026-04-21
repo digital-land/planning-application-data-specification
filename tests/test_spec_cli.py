@@ -579,6 +579,42 @@ def test_field_usage_command_uses_canonical_summary_shape(monkeypatch):
     assert "- site-area: Site area" in result.output
 
 
+def test_component_usage_command_uses_canonical_summary_shape(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "load_content",
+        lambda: {
+            "field": {
+                "site-area": {"name": "Site area", "component": "site-dimensions"},
+                "floor-area": {"name": "Floor area", "component": "site-dimensions"},
+            },
+            "module": {
+                "site-details": {
+                    "name": "Site details",
+                    "fields": ["site-area", "postcode"],
+                },
+                "proposal-details": {
+                    "name": "Proposal details",
+                    "fields": [{"field": "floor-area"}],
+                },
+            },
+        },
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "component-usage", "site-dimensions"])
+
+    assert result.exit_code == 0
+    assert "Component: site-dimensions" in result.output
+    assert "Fields: 2" in result.output
+    assert "- floor-area: Floor area" in result.output
+    assert "- site-area: Site area" in result.output
+    assert "Modules: 2" in result.output
+    assert "- proposal-details: Proposal details" in result.output
+    assert "- site-details: Site details" in result.output
+
+
 def test_inspect_application_command_shows_combined_application_summary(monkeypatch):
     runner = CliRunner()
 
