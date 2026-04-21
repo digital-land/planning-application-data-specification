@@ -106,6 +106,26 @@ def _format_application_item(item) -> str:
     return f"- item: {item}"
 
 
+def _format_container_item(item) -> str:
+    if isinstance(item, FieldUsage):
+        field_ref = item.original.ref
+        field_name = item.overrides.get("name") or item.original.name
+        return f"- field: {field_ref} ({field_name})"
+
+    if isinstance(item, ComponentUsage):
+        component_ref = item.component.ref
+        component_name = item.component.name
+        referenced_by = item.referenced_by_field
+        if isinstance(referenced_by, FieldUsage):
+            return (
+                f"- component: {component_ref} ({component_name}) "
+                f"(via field: {referenced_by.original.ref})"
+            )
+        return f"- component: {component_ref} ({component_name})"
+
+    return f"- item: {item}"
+
+
 def print_application_details(application_ref):
     spec = Specification.load(PROJECT_ROOT)
     application = spec.application(application_ref)
@@ -154,6 +174,75 @@ def print_field_details(field_ref):
         click.echo(f"Entry date: {field.entry_date}")
     if field.end_date:
         click.echo(f"End date: {field.end_date}")
+
+
+def print_module_details(module_ref):
+    spec = Specification.load(PROJECT_ROOT)
+    module = spec.module(module_ref)
+
+    click.echo(f"Module: {module.ref}")
+    click.echo(f"Name: {module.name}")
+    if module.description:
+        click.echo(f"Description: {module.description}")
+    click.echo(f"Field usages: {len(module.field_usages)}")
+    click.echo(f"Component usages: {len(module.component_usages)}")
+    if module.entry_date:
+        click.echo(f"Entry date: {module.entry_date}")
+    if module.end_date:
+        click.echo(f"End date: {module.end_date}")
+
+    click.echo("Top-level items:")
+    if module.items:
+        for item in module.items:
+            click.echo(_format_container_item(item))
+    else:
+        click.echo("- none")
+
+
+def print_component_details(component_ref):
+    spec = Specification.load(PROJECT_ROOT)
+    component = spec.component(component_ref)
+
+    click.echo(f"Component: {component.ref}")
+    click.echo(f"Name: {component.name}")
+    if component.description:
+        click.echo(f"Description: {component.description}")
+    click.echo(f"Field usages: {len(component.field_usages)}")
+    click.echo(f"Component usages: {len(component.component_usages)}")
+    if component.entry_date:
+        click.echo(f"Entry date: {component.entry_date}")
+    if component.end_date:
+        click.echo(f"End date: {component.end_date}")
+
+    click.echo("Top-level items:")
+    if component.items:
+        for item in component.items:
+            click.echo(_format_container_item(item))
+    else:
+        click.echo("- none")
+
+
+def print_codelist_details(codelist_ref):
+    spec = Specification.load(PROJECT_ROOT)
+    codelist = spec.codelist(codelist_ref)
+
+    click.echo(f"Codelist: {codelist.ref}")
+    click.echo(f"Name: {codelist.name}")
+    if codelist.description:
+        click.echo(f"Description: {codelist.description}")
+    click.echo(f"Items: {len(codelist.items)}")
+
+    click.echo("Items preview:")
+    if codelist.items:
+        for item in codelist.items[:10]:
+            line = f"- {item.reference}: {item.name}"
+            if item.parent:
+                line += f" (parent: {item.parent})"
+            click.echo(line)
+        if len(codelist.items) > 10:
+            click.echo(f"- ... {len(codelist.items) - 10} more")
+    else:
+        click.echo("- none")
 
 
 def print_2025_form_details(form_ref):
@@ -261,11 +350,32 @@ def find_application(application_ref):
     print_application_details(application_ref)
 
 
+@inspect.command(name="module")
+@click.argument("module_ref")
+def inspect_module(module_ref):
+    """Show a canonical module definition."""
+    print_module_details(module_ref)
+
+
+@inspect.command(name="component")
+@click.argument("component_ref")
+def inspect_component(component_ref):
+    """Show a canonical component definition."""
+    print_component_details(component_ref)
+
+
 @inspect.command(name="field")
 @click.argument("field_ref")
 def inspect_field(field_ref):
     """Show a canonical field definition."""
     print_field_details(field_ref)
+
+
+@inspect.command(name="codelist")
+@click.argument("codelist_ref")
+def inspect_codelist(codelist_ref):
+    """Show a canonical codelist definition."""
+    print_codelist_details(codelist_ref)
 
 
 @inspect.command()

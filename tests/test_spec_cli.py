@@ -327,6 +327,197 @@ def test_inspect_field_command_shows_canonical_field_summary(monkeypatch):
     assert "Entry date: 2026-01-01" in result.output
 
 
+def test_inspect_module_command_shows_canonical_module_summary(monkeypatch):
+    runner = CliRunner()
+
+    module = type(
+        "StubModule",
+        (),
+        {
+            "ref": "proposal-details",
+            "name": "Proposal details",
+            "description": "Information about the proposal.",
+            "field_usages": [
+                FieldUsage(
+                    original=FieldDef(ref="description", name="Description"),
+                    overrides={},
+                )
+            ],
+            "component_usages": [
+                ComponentUsage(
+                    component=ComponentDef(ref="site-area", name="Site area"),
+                    referenced_by_field=FieldUsage(
+                        original=FieldDef(ref="site-area", name="Site area"),
+                        overrides={},
+                    ),
+                )
+            ],
+            "entry_date": "2026-01-01",
+            "end_date": "",
+            "items": [
+                FieldUsage(
+                    original=FieldDef(ref="description", name="Description"),
+                    overrides={},
+                ),
+                ComponentUsage(
+                    component=ComponentDef(ref="site-area", name="Site area"),
+                    referenced_by_field=FieldUsage(
+                        original=FieldDef(ref="site-area", name="Site area"),
+                        overrides={},
+                    ),
+                ),
+            ],
+        },
+    )()
+
+    class StubSpecification:
+        def module(self, module_ref):
+            assert module_ref == "proposal-details"
+            return module
+
+    monkeypatch.setattr(
+        spec,
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "module", "proposal-details"])
+
+    assert result.exit_code == 0
+    assert "Module: proposal-details" in result.output
+    assert "Name: Proposal details" in result.output
+    assert "Description: Information about the proposal." in result.output
+    assert "Field usages: 1" in result.output
+    assert "Component usages: 1" in result.output
+    assert "Entry date: 2026-01-01" in result.output
+    assert "Top-level items:" in result.output
+    assert "- field: description (Description)" in result.output
+    assert "- component: site-area (Site area) (via field: site-area)" in result.output
+
+
+def test_inspect_component_command_shows_canonical_component_summary(monkeypatch):
+    runner = CliRunner()
+
+    component = type(
+        "StubComponent",
+        (),
+        {
+            "ref": "site-area",
+            "name": "Site area",
+            "description": "Measurements for the site.",
+            "field_usages": [
+                FieldUsage(
+                    original=FieldDef(ref="area", name="Area"),
+                    overrides={},
+                )
+            ],
+            "component_usages": [],
+            "entry_date": "2026-01-01",
+            "end_date": "",
+            "items": [
+                FieldUsage(
+                    original=FieldDef(ref="area", name="Area"),
+                    overrides={},
+                )
+            ],
+        },
+    )()
+
+    class StubSpecification:
+        def component(self, component_ref):
+            assert component_ref == "site-area"
+            return component
+
+    monkeypatch.setattr(
+        spec,
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "component", "site-area"])
+
+    assert result.exit_code == 0
+    assert "Component: site-area" in result.output
+    assert "Name: Site area" in result.output
+    assert "Description: Measurements for the site." in result.output
+    assert "Field usages: 1" in result.output
+    assert "Component usages: 0" in result.output
+    assert "Entry date: 2026-01-01" in result.output
+    assert "Top-level items:" in result.output
+    assert "- field: area (Area)" in result.output
+
+
+def test_inspect_codelist_command_shows_canonical_codelist_summary(monkeypatch):
+    runner = CliRunner()
+
+    codelist = type(
+        "StubCodelist",
+        (),
+        {
+            "ref": "tenure-type",
+            "name": "Tenure type",
+            "description": "Types of housing tenure.",
+            "items": [
+                type(
+                    "StubCodelistItem",
+                    (),
+                    {
+                        "reference": "market-housing",
+                        "name": "Market housing",
+                        "parent": None,
+                    },
+                )(),
+                type(
+                    "StubCodelistItem",
+                    (),
+                    {
+                        "reference": "london-affordable-rent",
+                        "name": "London affordable rent",
+                        "parent": "affordable-housing",
+                    },
+                )(),
+            ],
+        },
+    )()
+
+    class StubSpecification:
+        def codelist(self, codelist_ref):
+            assert codelist_ref == "tenure-type"
+            return codelist
+
+    monkeypatch.setattr(
+        spec,
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "codelist", "tenure-type"])
+
+    assert result.exit_code == 0
+    assert "Codelist: tenure-type" in result.output
+    assert "Name: Tenure type" in result.output
+    assert "Description: Types of housing tenure." in result.output
+    assert "Items: 2" in result.output
+    assert "Items preview:" in result.output
+    assert "- market-housing: Market housing" in result.output
+    assert (
+        "- london-affordable-rent: London affordable rent (parent: affordable-housing)"
+        in result.output
+    )
+
+
 def test_inspect_application_command_shows_combined_application_summary(monkeypatch):
     runner = CliRunner()
 
