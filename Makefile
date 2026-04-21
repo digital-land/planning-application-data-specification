@@ -81,7 +81,7 @@ copy-output-docs:
 	cp documentation/generating-outputs-from-model.md generated/README.md
 
 build: clean copy-output-docs
-	python3 bin/build.py
+	python3 -m bin.build
 
 
 status:
