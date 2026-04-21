@@ -569,7 +569,7 @@ def test_field_usage_command_uses_canonical_summary_shape(monkeypatch):
         ),
     )
 
-    result = runner.invoke(spec.cli, ["inspect", "field-usage", "description"])
+    result = runner.invoke(spec.cli, ["inspect", "uses", "field", "description"])
 
     assert result.exit_code == 0
     assert "Field: description" in result.output
@@ -603,7 +603,9 @@ def test_component_usage_command_uses_canonical_summary_shape(monkeypatch):
         },
     )
 
-    result = runner.invoke(spec.cli, ["inspect", "component-usage", "site-dimensions"])
+    result = runner.invoke(
+        spec.cli, ["inspect", "uses", "component", "site-dimensions"]
+    )
 
     assert result.exit_code == 0
     assert "Component: site-dimensions" in result.output
@@ -682,7 +684,7 @@ def test_modules_in_application_command_supports_combined_application_type(monke
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["inspect", "modules-in-application", "hh;lbc"])
+    result = runner.invoke(spec.cli, ["inspect", "uses", "application", "hh;lbc"])
 
     assert result.exit_code == 0
     assert "Application type: hh;lbc" in result.output
@@ -712,7 +714,7 @@ def test_applications_with_module_command_uses_new_inspect_output_shape(monkeypa
         else [],
     )
 
-    result = runner.invoke(spec.cli, ["inspect", "applications-with-module", "site-details"])
+    result = runner.invoke(spec.cli, ["inspect", "uses", "module", "site-details"])
 
     assert result.exit_code == 0
     assert "Module: site-details" in result.output

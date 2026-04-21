@@ -100,6 +100,7 @@ spec.py
     field <ref>
     codelist <ref>
     uses
+      application <application_ref>
       module <module_ref>
       field <field_ref>
       component <component_ref>

@@ -292,8 +292,13 @@ def inspect():
     pass
 
 
-# Inspect subcommands
-@inspect.command()
+@inspect.group()
+def uses():
+    """Reverse lookups over canonical specification elements."""
+    pass
+
+
+@uses.command(name="module")
 @click.argument("module_ref")
 def applications_with_module(module_ref):
     """Find applications that use a specific module."""
@@ -311,7 +316,7 @@ def applications_with_module(module_ref):
         click.echo(f"No applications found using module '{module_ref}'")
 
 
-@inspect.command()
+@uses.command(name="application")
 @click.argument("application_ref")
 def modules_in_application(application_ref):
     """Find all modules used by a specific application."""
@@ -364,7 +369,7 @@ def inspect_codelist(codelist_ref):
     print_codelist_details(codelist_ref)
 
 
-@inspect.command()
+@uses.command(name="field")
 @click.argument("field_ref")
 def field_usage(field_ref):
     """Find modules and components that include a given field."""
@@ -392,7 +397,7 @@ def field_usage(field_ref):
             click.echo(f"- {match.container.ref}: {match.container.name}")
 
 
-@inspect.command()
+@uses.command(name="component")
 @click.argument("component_ref")
 def component_usage(component_ref):
     """Find fields and modules that use a given component."""
