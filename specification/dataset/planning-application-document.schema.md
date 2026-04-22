@@ -10,6 +10,9 @@ fields:
     description: Unique identifier for the document record
   - field: planning-application
     description: Reference to the planning application this document relates to
+  - field: replaces
+    description: Reference to an earlier document record replaced by this document
+    dataset: planning-application-document
   - field: document-url
   - field: documentation-url
 entry-date: 2026-01-28
@@ -18,7 +21,12 @@ entity-maximum: ''
 entity-minimum: ''
 key-field: ''
 licence: ogl3
-notes: 
+notes: |
+  `replaces` is a self-reference within the `planning-application-document` dataset.
+  The explicit `dataset: planning-application-document` on the field usage is
+  intentional and shows that the field must reference another document record in
+  the same dataset, rather than an arbitrary string or a record from a different
+  dataset.
 phase: alpha
 plural: Planning application document
 prefix: ''
@@ -53,8 +61,29 @@ semantics:
       target_field: reference
       description: >
         Each document is part of a planning application and supports its assessment.
+    - predicate: "http://purl.org/dc/terms/replaces"
+      target_dataset: planning-application-document
+      via_field: replaces
+      target_field: reference
+      description: >
+        Where present, this document replaces an earlier planning-application-document
+        record for the same planning application.
 ---
 
 A record of a document submitted as part of a planning application
 One row per file
 Plans, reports, statements, drawings, notices, certificates, etc.
+
+Example:
+
+```yaml
+dataset: planning-application-document
+reference: doc-002
+planning-application: pa-1001
+document-url: https://example.org/documents/proposed-plans-v2.pdf
+documentation-url: https://example.org/applications/pa-1001/documents/doc-002
+replaces: doc-001
+```
+
+In this example `doc-002` is the newer document record and it replaces the
+earlier document record `doc-001` for the same planning application.

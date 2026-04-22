@@ -50,6 +50,17 @@ For example, a shared `description` field can be reused in different modules whi
 **Use `component` for substructures**
 Semantically accurate for nested objects (like Person, Document, etc.)
 
+**Make dataset-constrained field usage explicit**
+When a field usage in a dataset is constrained to records from a specific dataset,
+include `dataset:` explicitly on that field usage.
+
+This includes self-references. For example, if a field in
+`planning-application-document` must point to another record in the same dataset,
+that dataset constraint should still be written explicitly rather than left implicit.
+
+This makes it clear that the field is not just a free string and helps readers and
+tooling understand the intended target of the reference.
+
 
 ### Still to decide
 
