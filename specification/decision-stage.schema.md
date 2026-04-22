@@ -112,6 +112,9 @@ datasets:
         description: the URL to the document file
       - field: documentation-url
         description: the URL of the page where the document can be found
+      - field: replaces
+        description: Reference to an earlier document record replaced by this document
+        dataset: planning-application-document
   - dataset: planning-permission-timeline
     name: planning permission timeline
     fields:
