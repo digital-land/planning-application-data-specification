@@ -112,6 +112,8 @@ datasets:
         description: the URL to the document file
       - field: documentation-url
         description: the URL of the page where the document can be found
+      - field: name
+        description: Title or label used to identify the document
       - field: replaces
         description: Reference to an earlier document record replaced by this document
         dataset: planning-application-document
