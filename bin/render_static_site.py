@@ -317,6 +317,7 @@ class FieldView:
         description,
         cardinality,
         datatype,
+        codelist,
         required,
         children=None,
         target_dataset=None,
@@ -329,6 +330,7 @@ class FieldView:
         self.description = description
         self.cardinality = cardinality
         self.datatype = datatype
+        self.codelist = codelist
         self.required = required
         self.children = children or []
         self.target_dataset = target_dataset
@@ -352,6 +354,7 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
         description = overrides.get("description") or orig.description
         cardinality = overrides.get("cardinality") or orig.cardinality
         datatype = overrides.get("datatype") or orig.datatype
+        codelist = overrides.get("codelist") or orig.codelist
         required = overrides.get("required")
         if required is None:
             required = orig.required
@@ -366,6 +369,7 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
             description=description,
             cardinality=cardinality,
             datatype=datatype,
+            codelist=codelist,
             required=required,
             children=children,
             component_name=comp_name,
@@ -381,6 +385,7 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
     description = field_entry.get("description") or fd.description or ""
     cardinality = field_entry.get("cardinality") or fd.cardinality
     datatype = field_entry.get("datatype") or fd.datatype
+    codelist = field_entry.get("codelist") or fd.codelist
     comp_name = None
     if fd.resolved_component:
         comp = fd.resolved_component.component
@@ -391,6 +396,7 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
         description=description,
         cardinality=cardinality,
         datatype=datatype,
+        codelist=codelist,
         required=field_entry.get("required"),
         children=field_entry.get("children", []),
         component_name=comp_name,

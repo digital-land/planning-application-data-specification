@@ -9,6 +9,7 @@ class FieldDef:
     ref: str
     name: str
     datatype: str = "string"
+    codelist: Optional[str] = None
     required: bool = False
     description: str = ""
     notes: str = ""
@@ -35,6 +36,7 @@ class FieldDef:
         ref = spec.get("field") or spec.get("ref") or ""
         name = spec.get("name") or spec.get("title") or ref
         datatype = spec.get("datatype") or spec.get("type") or "string"
+        codelist = spec.get("codelist")
         required = bool(spec.get("required", False))
         description = spec.get("description", "") or ""
         notes = spec.get("notes", "") or ""
@@ -46,6 +48,7 @@ class FieldDef:
             ref=ref,
             name=name,
             datatype=datatype,
+            codelist=codelist,
             required=required,
             description=description,
             notes=notes,
