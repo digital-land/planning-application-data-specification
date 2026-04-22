@@ -10,6 +10,8 @@ fields:
     description: Unique identifier for the document record
   - field: planning-application
     description: Reference to the planning application this document relates to
+  - field: name
+    description: Title or label used to identify the document
   - field: replaces
     description: Reference to an earlier document record replaced by this document
     dataset: planning-application-document
@@ -80,10 +82,13 @@ Example:
 dataset: planning-application-document
 reference: doc-002
 planning-application: pa-1001
+name: Proposed plans revision B
 document-url: https://example.org/documents/proposed-plans-v2.pdf
 documentation-url: https://example.org/applications/pa-1001/documents/doc-002
 replaces: doc-001
 ```
 
 In this example `doc-002` is the newer document record and it replaces the
-earlier document record `doc-001` for the same planning application.
+earlier document record `doc-001` for the same planning application. The `name`
+field gives a readable title so users can recognise the document without having
+to inspect the file directly.
