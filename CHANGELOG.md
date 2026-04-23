@@ -1,4 +1,201 @@
 
+<a name="v0.1.84"></a>
+## [v0.1.84](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.83...v0.1.84) (2026-04-23)
+
+Documentation extras
+
+### ⚒️ Tooling
+
+* link enum codelists on static site field breakdowns (commit [53c200c1](https://github.com/digital-land/planning-application-data-specification/commit/53c200c1ae5c23f418c50c8ff7213dfe18273f74))
+
+### 📚 Documentation
+
+* add a draft decision record for when to use not applicable fields (commit [38a8f443](https://github.com/digital-land/planning-application-data-specification/commit/38a8f4436b2c0a0a5da16cea694e905a7284e06d))
+* add further needs from ps1 ps2 analysis (commit [9fe56a51](https://github.com/digital-land/planning-application-data-specification/commit/9fe56a51fb4e0b171d32fbdbbd139506867dab54))
+
+
+<a name="v0.1.83"></a>
+## [v0.1.83](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.82...v0.1.83) (2026-04-23)
+
+Develop document dataset
+
+### 𝌭 Model changes
+
+* include name field in decision stage spec (commit [3427112b](https://github.com/digital-land/planning-application-data-specification/commit/3427112b904fc2a8f323642b56bab4972badbe35))
+* add name field to planning-document dataset (commit [d223591c](https://github.com/digital-land/planning-application-data-specification/commit/d223591c3b5d90736733bf1b45c8f0741c7f9d59))
+* include new replaces field in decision stage spec (commit [7d6b15b1](https://github.com/digital-land/planning-application-data-specification/commit/7d6b15b1aad9d5689426ad3accbe1d7924c763a3))
+* add replaces field to application document dataset (commit [fd9e83e2](https://github.com/digital-land/planning-application-data-specification/commit/fd9e83e2b18875d565878695b45135897d21a699))
+
+
+<a name="v0.1.82"></a>
+## [v0.1.82](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.81...v0.1.82) (2026-04-21)
+
+CLI tool command clean up
+
+### ⚒️ Tooling
+
+* group inspect reverse lookups under uses (commit [08afe511](https://github.com/digital-land/planning-application-data-specification/commit/08afe511c53d2e675213d81c74dd3932f3ff4c0b))
+* align component usage output with inspect summaries (commit [340765dc](https://github.com/digital-land/planning-application-data-specification/commit/340765dc1addb35bd0d6fb5835efbed946b7b040))
+* align field usage output with inspect summaries (commit [db5a2053](https://github.com/digital-land/planning-application-data-specification/commit/db5a2053e57f7b17765745adcdab373db2f9069f))
+* align inspect lookup output with canonical summaries (commit [8548059d](https://github.com/digital-land/planning-application-data-specification/commit/8548059db4bc43d03e97edd5f074f374ccfe3624))
+
+
+<a name="v0.1.81"></a>
+## [v0.1.81](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.80...v0.1.81) (2026-04-21)
+
+Improve combined app descriptions
+
+### 𝌭 Model changes
+
+* update descriptions of combined application types (commit [0ea84b2a](https://github.com/digital-land/planning-application-data-specification/commit/0ea84b2a2baea8ec216e3e3a43107535fa497591))
+
+
+<a name="v0.1.80"></a>
+## [v0.1.80](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.79...v0.1.80) (2026-04-21)
+
+Simple CLI - part 2
+
+### ⚒️ Tooling
+
+* extract inspect display helpers in spec cli (commit [85cc1db3](https://github.com/digital-land/planning-application-data-specification/commit/85cc1db31272ff799ce6a1f4b1878ddfa3438a4e))
+* add analysis command to CLI (commit [f33c5681](https://github.com/digital-land/planning-application-data-specification/commit/f33c56819ac3b7d6d16d26e4c91d745e53505479))
+
+
+<a name="v0.1.79"></a>
+## [v0.1.79](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.78...v0.1.79) (2026-04-21)
+
+Fix github action errors
+
+### ⚒️ Tooling
+
+* include extra fields when writing csvs (commit [98e458d7](https://github.com/digital-land/planning-application-data-specification/commit/98e458d70ee1bcd99c9cdb9162af08d4431cad1b))
+* update Makefile to run python via modules (commit [a7ff0cdd](https://github.com/digital-land/planning-application-data-specification/commit/a7ff0cdd0c4bdf87ff8d6bba1773d2260b82bcb9))
+* run build via bin module imports (commit [d44392a4](https://github.com/digital-land/planning-application-data-specification/commit/d44392a4fa886d0b634cffe81fd498ac92a13bac))
+
+### 🐛 Bug Fixes
+
+* run more bin entry points as modules (commit [aac3acb7](https://github.com/digital-land/planning-application-data-specification/commit/aac3acb71687211f49f9c9543242bbcaea9ebfee))
+
+
+<a name="v0.1.78"></a>
+## [v0.1.78](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.77...v0.1.78) (2026-04-21)
+
+Create simple CLI interface
+
+### ⚒️ Tooling
+
+* add inspect commands for module component and codelist (commit [762eee18](https://github.com/digital-land/planning-application-data-specification/commit/762eee18611f189a2afb0f92e3ec278e06fd301e))
+* add inspect field command (commit [d04c2b26](https://github.com/digital-land/planning-application-data-specification/commit/d04c2b26324eb85b278d6db5bcf1e0b2479edc20))
+* rename find group to inspect (commit [7c95af9b](https://github.com/digital-land/planning-application-data-specification/commit/7c95af9b0821f796b4b90df11a716c8a01001318))
+* move completeness under report (commit [dae191d3](https://github.com/digital-land/planning-application-data-specification/commit/dae191d304466b37838951c326bb036bec647644))
+* include need names in decision summary output (commit [76b4d570](https://github.com/digital-land/planning-application-data-specification/commit/76b4d57013af6c9a6ada5cef922a4ea8943595d2))
+* move cli summary command under report (commit [2ea7e452](https://github.com/digital-land/planning-application-data-specification/commit/2ea7e452f3654544c5e0a9120311251d5f4e313f))
+* include module count in output (commit [4f520d3b](https://github.com/digital-land/planning-application-data-specification/commit/4f520d3be47e3ebf0c0520fca52df55512ac38a9))
+* align completeness coverage with approved combined applications (commit [c4e99980](https://github.com/digital-land/planning-application-data-specification/commit/c4e999802b49a7596ef2296c0b77900e9e78c752))
+* use package field usage query in spec cli (commit [5851896b](https://github.com/digital-land/planning-application-data-specification/commit/5851896b828b234463fd8e20c411f946da8977a2))
+* add canonical field usage query (commit [9079423c](https://github.com/digital-land/planning-application-data-specification/commit/9079423c3ae074fdee898147933ae9557d54f42b))
+* add application lookup by module (commit [0958b093](https://github.com/digital-land/planning-application-data-specification/commit/0958b093924e660e38b6f3ff3356ba402f588ff8))
+* simplify internal package models and selection helpers (commit [8cde1f4c](https://github.com/digital-land/planning-application-data-specification/commit/8cde1f4c57411e9c1a4709a8e4cda3f71c06358a))
+* tests to cover combined application integrity and cli paths (commit [788f0dfd](https://github.com/digital-land/planning-application-data-specification/commit/788f0dfd1b6602bbc95580cd23eb5c1f066eaf7d))
+* add application inspection command (commit [c608716a](https://github.com/digital-land/planning-application-data-specification/commit/c608716aeff55888b899533953d56eebd06d6c5a))
+* support combined application form-url lookup (commit [ba56052d](https://github.com/digital-land/planning-application-data-specification/commit/ba56052d99c930b686523db14faafda9d728c76f))
+* upport OR semantics for combined application selection (commit [76bfe9fb](https://github.com/digital-land/planning-application-data-specification/commit/76bfe9fb305e204d006d6a919e9cc6d7ddf70026))
+* simplify spreadsheet row flattening (commit [2a87d34d](https://github.com/digital-land/planning-application-data-specification/commit/2a87d34d7912339426276666f831bfaca3c86567))
+* cover combined package application lookups (commit [c7ddced2](https://github.com/digital-land/planning-application-data-specification/commit/c7ddced259a51ff88a38817f69230b40733b8e99))
+* unify and simplify package application lookups (commit [ad3d328a](https://github.com/digital-land/planning-application-data-specification/commit/ad3d328a18fe0f86ac75313bf32e0b921f3323c9))
+* add shared combined application resolver (commit [ea2ea061](https://github.com/digital-land/planning-application-data-specification/commit/ea2ea0610cab1fa64c3b7139dae75b3e99a7332b))
+* validate combined application types csv (commit [6b756330](https://github.com/digital-land/planning-application-data-specification/commit/6b7563305a76cad58f64aa5c626cdd46d9a0610d))
+
+### 𝌭 Model changes
+
+* add date_precision: day to date fields (commit [7eab7f01](https://github.com/digital-land/planning-application-data-specification/commit/7eab7f01e7e119b74327d96f8b6edfe9576a787e))
+* add missing date_precision attr to decision-date field (commit [7ce4743e](https://github.com/digital-land/planning-application-data-specification/commit/7ce4743e77012f8c7a6f8e25d268908198c21541))
+* add controlled combined application types csv (commit [dbd023c8](https://github.com/digital-land/planning-application-data-specification/commit/dbd023c81f70c5ac208cfb789360bfbc60877b22))
+
+### 🐛 Bug Fixes
+
+* incorrect datatypes on date fields (commit [8e93805f](https://github.com/digital-land/planning-application-data-specification/commit/8e93805f3885187b131da8dca4300daf56a89cb8))
+
+### 📚 Documentation
+
+* point README CLI section to spec CLI note (commit [bd091434](https://github.com/digital-land/planning-application-data-specification/commit/bd09143435f3bc68da745238b10dbd8aaf632c80))
+* add spec CLI design note (commit [075616db](https://github.com/digital-land/planning-application-data-specification/commit/075616dbe30e8e7e3afdb7e11198a44947d3cee6))
+* add a decision record for the controlled list of combined app types (commit [6bed4ae9](https://github.com/digital-land/planning-application-data-specification/commit/6bed4ae9c13f7791b150c98cee55b9a05204d644))
+* document combined application cli and package usage (commit [62d7d11f](https://github.com/digital-land/planning-application-data-specification/commit/62d7d11f36c94a8d0d57e745fc3119137c7052a9))
+
+
+<a name="v0.1.77"></a>
+## [v0.1.77](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.76...v0.1.77) (2026-04-20)
+
+Refine spec metadata and output
+
+### ⚒️ Tooling
+
+* include module count in output (commit [a0f479ea](https://github.com/digital-land/planning-application-data-specification/commit/a0f479ea52f5aa1d5ac48fa2818038e52c96805f))
+
+### 𝌭 Model changes
+
+* add date_precision: day to date fields (commit [9173a023](https://github.com/digital-land/planning-application-data-specification/commit/9173a02357241805a410cbc335884b9c52913e5d))
+
+
+<a name="v0.1.76"></a>
+## [v0.1.76](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.75...v0.1.76) (2026-04-20)
+
+Datatype fixes
+
+### 🐛 Bug Fixes
+
+* incorrect datatypes on date fields (commit [f271fd05](https://github.com/digital-land/planning-application-data-specification/commit/f271fd0546e5b26994dc0d0ac027857b84686566))
+
+
+<a name="v0.1.75"></a>
+## [v0.1.75](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.74...v0.1.75) (2026-04-20)
+
+Include combined apps in coverage calculation
+
+### ⚒️ Tooling
+
+* align completeness coverage with approved combined applications (commit [39c6c6b8](https://github.com/digital-land/planning-application-data-specification/commit/39c6c6b891e4488455672c60d64aeb6624cc7f2c))
+
+
+<a name="v0.1.74"></a>
+## [v0.1.74](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.73...v0.1.74) (2026-04-17)
+
+Handle combined applications
+
+### ⚒️ Tooling
+
+* use package field usage query in spec cli (commit [b66d5c80](https://github.com/digital-land/planning-application-data-specification/commit/b66d5c80e0834c4e3741bc6439d14a06d33b618a))
+* add canonical field usage query (commit [19441fcf](https://github.com/digital-land/planning-application-data-specification/commit/19441fcf733734455d17d83c8b7d419dae2762b6))
+* add application lookup by module (commit [eca23e14](https://github.com/digital-land/planning-application-data-specification/commit/eca23e14fb61df1257e42f7b51923efbaee4de47))
+* simplify internal package models and selection helpers (commit [7e63a063](https://github.com/digital-land/planning-application-data-specification/commit/7e63a063b51d1de71abedec0c28b46cf86337b7b))
+* tests to cover combined application integrity and cli paths (commit [4123b13b](https://github.com/digital-land/planning-application-data-specification/commit/4123b13bf7dc847bc6a7cfe9841f71c17476df10))
+* add application inspection command (commit [2b03cfaf](https://github.com/digital-land/planning-application-data-specification/commit/2b03cfaf923e8e963a2724b5972bf70311a87ca8))
+* support combined application form-url lookup (commit [c0492b1c](https://github.com/digital-land/planning-application-data-specification/commit/c0492b1ca478604884a72b861923803a10f500fd))
+* upport OR semantics for combined application selection (commit [e27164df](https://github.com/digital-land/planning-application-data-specification/commit/e27164df8dbf1e71e687be2b50d74b68d1b13c92))
+* simplify spreadsheet row flattening (commit [95aebfe1](https://github.com/digital-land/planning-application-data-specification/commit/95aebfe1cc056bd7f57c054143a6ea1630e45521))
+* cover combined package application lookups (commit [9221830a](https://github.com/digital-land/planning-application-data-specification/commit/9221830aae7745657b19c238892fe7a1361b8abf))
+* unify and simplify package application lookups (commit [e3b37399](https://github.com/digital-land/planning-application-data-specification/commit/e3b3739904c4b8268a88dee9e837817d3cc472b9))
+* add shared combined application resolver (commit [78529e4a](https://github.com/digital-land/planning-application-data-specification/commit/78529e4ac4318907064c1172a9dcabeaf5d06e7f))
+* validate combined application types csv (commit [ba71f237](https://github.com/digital-land/planning-application-data-specification/commit/ba71f237c5a268fa18ed6659b8b869ab520cf3d5))
+* remove dead spreadsheet helper (commit [aa8df7e5](https://github.com/digital-land/planning-application-data-specification/commit/aa8df7e5924bb8d936fdcf2c380ef923c09b5b12))
+* remove model imports from spreadsheet generator (commit [5c5eed3e](https://github.com/digital-land/planning-application-data-specification/commit/5c5eed3ed24044ce08f8342f2be613d578662c0a))
+* use package traversal for spreadsheet rows (commit [45864446](https://github.com/digital-land/planning-application-data-specification/commit/458644469d4216a7679ecc234dcbfb3cba423b5b))
+* use package traversal for spreadsheet modules (commit [ca0ab99a](https://github.com/digital-land/planning-application-data-specification/commit/ca0ab99ae623edb7eacc12283aa512c451fdff01))
+* extract spreadsheet row builder (commit [2024802e](https://github.com/digital-land/planning-application-data-specification/commit/2024802e3c2d2eb8bd672d3b18a40aa6444b12a7))
+* add spreadsheet generator regression tests (commit [4dbd1da2](https://github.com/digital-land/planning-application-data-specification/commit/4dbd1da21915bb2f278b3d6d02021a616b7a5f50))
+
+### 𝌭 Model changes
+
+* add missing date_precision attr to decision-date field (commit [5a489148](https://github.com/digital-land/planning-application-data-specification/commit/5a489148730600c06dfcee0eb784c2507f363eee))
+* add controlled combined application types csv (commit [9efd23ad](https://github.com/digital-land/planning-application-data-specification/commit/9efd23ad46424ca4f4cfbcce77905427e6c9f6c3))
+
+### 📚 Documentation
+
+* add a decision record for the controlled list of combined app types (commit [67d8c04a](https://github.com/digital-land/planning-application-data-specification/commit/67d8c04a0f4c351b314cc017a55a4eba29387234))
+* document combined application cli and package usage (commit [e1a6981b](https://github.com/digital-land/planning-application-data-specification/commit/e1a6981b304051cba3f3ad2466d77e971af62c50))
+
+
 <a name="v0.1.73"></a>
 ## [v0.1.73](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.72...v0.1.73) (2026-04-14)
 
