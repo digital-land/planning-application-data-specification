@@ -4,7 +4,10 @@ status: proposed
 priority: high
 name: Access all documents in a planning application
 statement: >
-  As a user of the planning system, I need access to all documents that form a complete planning application so that I can fully understand the proposal, its impacts, and the evidence submitted.
+  As a user of the planning system, I need access to all documents that form a
+  complete planning application, including the plans, reports and technical
+  information considered in decision-making, so that I can fully understand the
+  proposal, its impacts and the evidence relevant to the decision.
 actors:
   - planning-officer
   - member of public
