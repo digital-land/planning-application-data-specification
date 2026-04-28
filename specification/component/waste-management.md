@@ -2,28 +2,20 @@
 component: waste-management
 name: Waste management
 description: |
-  Details of waste management facilities including type, capacity, and throughput information
+  Details of applicable waste management facilities including type, capacity, and throughput information.
 fields:
   - field: waste-management-facility-type
     required: true
-  - field: not-applicable
   - field: total-capacity
-    required-if:
-      - field: not-applicable
-        value: false
+    required: true
   - field: unit-type
-    required-if:
-      - field: not-applicable
-        value: false
+    required: true
   - field: annual-throughput
-    required-if:
-      - field: not-applicable
-        value: false
+    required: true
   - field: unit-type
     codelist: waste-throughput-unit
-    required-if:
-      - field: not-applicable
-        value: false
+    required: true
 entry-date: 2025-07-09
 end-date: ''
+notes: Applicants should only include entries for facilities that are applicable to the proposal.
 ---

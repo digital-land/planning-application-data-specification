@@ -55,3 +55,7 @@ This gives a better balance than either extreme of always requiring explicit `no
 - Keep every explicit `not applicable` field from the paper forms -> rejected because it reproduces paper-form burden in digital services and can add many superfluous inputs.  
 - Always infer `not applicable` from blank input -> rejected because in some cases blank data is genuinely ambiguous and an explicit declaration is still useful.  
 - Use a simple numeric threshold, such as removing explicit `not applicable` when there are many options -> rejected because burden matters, but the main test should be ambiguity versus usefulness rather than count alone.  
+
+**Where this pattern is used:**  
+
+- [Processes machinery waste](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/module/processes-machinery-waste.schema.md) and [outline variant](https://github.com/digital-land/planning-application-data-specification/blob/main/specification/module/processes-machinery-waste-outline.schema.md): applicants only provide entries for relevant waste management facilities. They do not work through all 21 facility types marking each remaining one `not applicable`, because that would be unnecessarily burdensome.  
