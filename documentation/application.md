@@ -1,7 +1,5 @@
 # Applications
 
-_Note: how we define applications is still being worked on_
-
 As we move from narrative specifications to declarative models, we need a consistent way to describe applications. 
 
 The application interface defines the application, what legislation underpins it and what is required to submit an application of that type - including any specific fields for that application and the required modules.
@@ -37,6 +35,8 @@ For suppliers and community:
 
 **Applications should be defined by MHCLG**
 Each application is defined in legislation and MHCLG should use that to define what is required to be submitted for the application
+
+Some application types can be submitted together as a combined application. These combinations are not open-ended. They come from a controlled list of policy-approved combinations, and the specification derives the combined application from the member application types rather than maintaining a separate hand-written definition for each combination. See [decision record 0012](design-decisions/0012-use-a-controlled-list-for-combined-application-types.md).
 
 **Attributes of module definitions**
 
