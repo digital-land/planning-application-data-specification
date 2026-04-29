@@ -1,104 +1,167 @@
 # spec CLI
 
-## What the CLI is for
+`spec.py` is the command line tool for exploring this repository.
 
-`spec.py` is the human-facing project CLI for inspecting and understanding the planning application specification repository.
+Use it when you want to inspect the specification, check how specification elements are connected, or run the small set of project reports that are maintained with the repository.
 
-It provides:
+Run commands from the repository root:
 
-- human-readable inspection of the canonical specification model
-- lightweight project reporting views derived from the repository
-- clearly labelled access to selected non-canonical analysis datasets
+```bash
+python spec.py --help
+```
 
-It does not replace the Python package interface.
-Reusable Python queries belong in `planning_application_specification/`.
-`spec.py` is the project CLI built on top of those queries.
+The CLI has three main command groups:
 
-## Why this CLI is needed
+- `inspect` for the canonical specification model
+- `report` for repository summaries and progress reports
+- `analysis` for useful side datasets, such as the 2025 forms analysis
 
-The repository contains the canonical source material for the specification, but the source files are not the easiest way to answer everyday questions about it.
+## Inspect the specification
 
-Contributors and users need a simple way to:
+Use `inspect` when you want to look up something in the canonical specification.
 
-- inspect the current specification model
-- understand how applications, modules, fields, components and codelists relate to each other
-- access a small number of repeatable project reports
-- explore clearly labelled analysis data that sits alongside the canonical specification
+```bash
+python spec.py inspect application full
+python spec.py inspect module agent-details
+python spec.py inspect component supporting-document
+python spec.py inspect field application-type
+python spec.py inspect codelist application-type
+```
 
-`spec.py` provides that human-facing interface.
+These commands print a readable summary of the selected item.
 
-It exists to make the specification easier to explore, understand and use from the command line, while the reusable Python package remains the main interface for building software on top of the specification.
+For example:
 
-This supports production readiness by making the repository easier to use in practice for:
+```bash
+python spec.py inspect field application-type
+```
 
-- contributors maintaining the specification
-- people reviewing how the specification fits together
-- implementers building tools, forms, services and validations from the specification
+shows the field name, datatype, whether it is required, cardinality and any descriptive notes held in the specification.
 
-## Design principles
+```bash
+python spec.py inspect application full
+```
 
-- optimise for human exploration rather than exposing every internal script
-- group commands by user intent
-- prefer package-backed queries for canonical specification inspection
-- keep workflow-specific reporting and output assembly outside the package
-- label non-canonical analysis data clearly
-- keep the top-level CLI small and memorable
-- avoid compatibility aliases as part of the long-term interface
-- keep `spec.py` focused on command structure and dispatch
-- move reusable presentation helpers into `bin/markdown_utils.py` where that keeps the CLI readable
-- do not move specification-query logic into formatting modules
+shows the resolved application definition, including the modules used by that application.
 
-## Command taxonomy
+## Find where things are used
 
-The CLI should be organised around three top-level purposes.
+Use `inspect uses` for reverse lookups.
 
-### `inspect`
+```bash
+python spec.py inspect uses application full
+python spec.py inspect uses module agent-details
+python spec.py inspect uses field application-type
+python spec.py inspect uses component address
+```
 
-Use `inspect` for questions about the canonical specification model.
+The commands answer different relationship questions:
 
-This includes:
+| Command | Use it to find |
+| --- | --- |
+| `inspect uses application <application_ref>` | modules used by an application |
+| `inspect uses module <module_ref>` | applications that use a module |
+| `inspect uses field <field_ref>` | modules and components that include a field |
+| `inspect uses component <component_ref>` | fields and modules that use a component |
 
-- looking up a specific application, module, component, field or codelist
-- understanding how canonical elements relate to each other
-- finding where a field, module or component is used
+## Run repository reports
 
-`inspect` should be mostly backed by `planning_application_specification/`.
+Use `report` for maintained summary views over the repository.
 
-### `report`
+```bash
+python spec.py report summary
+python spec.py report summary --markdown
+```
 
-Use `report` for repository-derived summaries and progress views.
+`report summary` prints counts for the main specification record types: applications, modules, fields, components, codelists, datasets and specifications.
 
-This includes:
+The markdown option is useful when you want to write the summary into a document:
 
-- overall specification summaries
-- completeness reporting
-- decision-stage reporting
+```bash
+python spec.py report summary --markdown > issue-tracking/declarative-model-progress.md
+```
 
-`report` is project reporting logic. It may use package queries, but the reporting layer belongs in the CLI and `bin/`.
+## Check completeness
 
-### `analysis`
+Use `report completeness` to inspect the completeness report based on the application volume CSV.
 
-Use `analysis` for non-canonical or derived datasets that are useful to explore but are not the core specification model.
+```bash
+python spec.py report completeness
+python spec.py report completeness summary
+python spec.py report completeness summary --verbose
+python spec.py report completeness scope
+python spec.py report completeness scope --verbose
+```
 
-This includes:
-
-- analysed 2025 forms data
-- any future sidecar analysis datasets that need CLI access
-
-Analysis commands must always make their status clear and should not be presented as canonical specification truth.
-
-## Intended command tree
-
-The long-term command tree should be:
+By default these commands use:
 
 ```text
-spec.py
+bin/admin_data/2024-application-volumes.csv
+```
+
+You can pass a different CSV with `--input`:
+
+```bash
+python spec.py report completeness summary --input path/to/application-volumes.csv
+```
+
+`summary` reports volumes and the percentage covered by the specification.
+
+`scope` reports which application types are treated as in scope or out of scope for the completeness calculation.
+
+Add `--verbose` when you need the row-level lists behind the summary.
+
+## Check decision-stage needs coverage
+
+Use the decision report to see how many decision-stage needs are covered by justifications.
+
+```bash
+python spec.py report decision summary
+python spec.py report decision summary --list
+```
+
+`--list` prints the covered need ids and the justification ids that cover them.
+
+## Explore 2025 forms analysis
+
+Use `analysis forms` to query the analysed 2025 form data.
+
+This data is useful context, but it is not the canonical specification model. The commands are grouped under `analysis` to keep that distinction clear.
+
+```bash
+python spec.py analysis forms list full
+python spec.py analysis forms urls full
+python spec.py analysis forms show form-app-for-pp
+python spec.py analysis forms for-module agent-details
+python spec.py analysis forms modules form-app-for-pp
+```
+
+The forms commands answer these questions:
+
+| Command | Use it to find |
+| --- | --- |
+| `analysis forms list <application_type>` | analysed 2025 forms that cover an application type or subtype |
+| `analysis forms urls <application_type>` | matching form URLs for an application type or subtype |
+| `analysis forms show <form_ref>` | core details for one analysed form |
+| `analysis forms for-module <module_ref>` | analysed forms that include a module |
+| `analysis forms modules <form_ref>` | analysed modules found in one form |
+
+For combined forms, pass the combined application type as one argument:
+
+```bash
+python spec.py analysis forms urls "hh;lbc"
+```
+
+## Command reference
+
+```text
+python spec.py
   inspect
-    application <ref>
-    module <ref>
-    component <ref>
-    field <ref>
-    codelist <ref>
+    application <application_ref>
+    module <module_ref>
+    component <component_ref>
+    field <field_ref>
+    codelist <codelist_ref>
     uses
       application <application_ref>
       module <module_ref>
@@ -106,54 +169,28 @@ spec.py
       component <component_ref>
 
   report
-    summary
-    completeness
-      summary
-      scope
+    summary [--markdown]
+    completeness [--input <csv>] [--verbose]
+    completeness summary [--input <csv>] [--verbose]
+    completeness scope [--input <csv>] [--verbose]
     decision
-      summary
+      summary [--list]
 
   analysis
     forms
-      urls <application_type>
       list <application_type>
+      urls <application_type>
       show <form_ref>
       for-module <module_ref>
       modules <form_ref>
 ```
 
-## Boundaries
+You can also ask for help at any level:
 
-### What belongs in the package
-
-Reusable domain queries over the specification, for example:
-
-- application lookup
-- field lookup
-- module lookup
-- field usage lookup
-- applications using a module
-- resolved container traversal
-
-### What belongs in the CLI and `bin/`
-
-Workflow-specific behaviour, for example:
-
-- command structure
-- output formatting
-- report assembly
-- markdown rendering
-- analysis-data presentation
-- file-writing and export tasks
-
-## Current live dependencies to review during migration
-
-At the time of writing, the current `spec.py` interface is used by:
-
-- `Makefile` target `declarative-progress`
-- `.github/workflows/daily-issue-tracking.yml` via `make declarative-progress`
-- `.github/workflows/generate-spec-outputs.yml` via `make declarative-progress`
-- `tests/test_spec_cli.py`
-- `README.md`
-
-These need to be updated as part of any CLI restructure.
+```bash
+python spec.py --help
+python spec.py inspect --help
+python spec.py inspect uses --help
+python spec.py report completeness --help
+python spec.py analysis forms --help
+```

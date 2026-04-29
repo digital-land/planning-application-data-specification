@@ -32,7 +32,7 @@ It is intended to help contributors and users:
 * access a small number of repeatable project reports
 * explore clearly labelled analysis data that sits alongside the canonical specification
 
-For the CLI purpose, command taxonomy and intended command tree, see [spec CLI](documentation/spec-cli.md).
+For usage examples and the command reference, see [spec CLI](documentation/spec-cli.md).
 
 You can get involved by:
 
