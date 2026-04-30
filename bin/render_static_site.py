@@ -448,6 +448,8 @@ def build_codelist_source_link(codelist_ref: str, raw_codelist: Dict[str, Any]) 
             # if source is a simple string
             src = str(src_obj)
     if src:
+        if src.startswith("data/"):
+            return f"https://github.com/digital-land/planning-application-data-specification/blob/main/{src}"
         return src
     # default to GitHub CSV
     return f"https://github.com/digital-land/planning-application-data-specification/blob/main/data/codelist/{codelist_ref}.csv"
@@ -504,6 +506,7 @@ def create_renderer(
     env = build_env(base_url or "")
     env.globals["base_url"] = base_url
     renderer = RenderContext(env, base_url, output_dir)
+    env.globals["url_for"] = renderer.url_for
     return env, renderer
 
 
@@ -576,6 +579,7 @@ def render_index(renderer: RenderContext) -> None:
     # render the main Index page
     index_ctx = {
         "page_title": "Planning application data specification",
+        "isHomepage": True,
         "links": {
             "submission": renderer.url_for("/submission"),
             "decision_stage": renderer.url_for("/decision-stage"),
@@ -890,6 +894,7 @@ def build_site(args: argparse.Namespace) -> None:
         submission_modules.sort(key=lambda m: m.name or m.ref)
         module_index_ctx = {
             "page_title": "Submission modules",
+            "links": {"back": renderer.url_for("/submission")},
             "modules": [
                 {
                     "ref": m.ref,
