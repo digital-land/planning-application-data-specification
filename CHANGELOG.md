@@ -1,4 +1,49 @@
 
+<a name="v0.1.86"></a>
+## [v0.1.86](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.85...v0.1.86) (2026-04-30)
+
+Refine modules using non applicable pattern
+
+### 𝌭 Model changes
+
+* make providing material information optional by prefacing with applicability question (commit [34c269f5](https://github.com/digital-land/planning-application-data-specification/commit/34c269f5b020e6edb650bbd90f98869496380847))
+* simplify waste management facility entries (commit [cdaf7fff](https://github.com/digital-land/planning-application-data-specification/commit/cdaf7ffff67659e4db6e48bb6440bdb446ecf945))
+
+### 📚 Documentation
+
+* add note on combined applications to documentation (commit [e2629907](https://github.com/digital-land/planning-application-data-specification/commit/e26299070d9f43749f68a8e1f088041d6ae85bb6))
+* refine dd-need-077 (commit [16b5c6c6](https://github.com/digital-land/planning-application-data-specification/commit/16b5c6c6dda36ea60fc3a9d9dc3a2fd824f51485))
+* add user needs obtained from the march community session (commit [e42582c2](https://github.com/digital-land/planning-application-data-specification/commit/e42582c2a3727eef7f33722229d4608dff3e2d6a))
+
+
+<a name="v0.1.85"></a>
+## [v0.1.85](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.84...v0.1.85) (2026-04-28)
+
+Draft and refine needs based on march community session
+
+### ⚒️ Tooling
+
+* link enum codelists on static site field breakdowns (commit [970c704b](https://github.com/digital-land/planning-application-data-specification/commit/970c704b2f0d9bc3d9e2463169d7745302dc7293))
+* group inspect reverse lookups under uses (commit [2110b658](https://github.com/digital-land/planning-application-data-specification/commit/2110b658e92f561c598b71df5e252b7d88a85634))
+* align component usage output with inspect summaries (commit [21569f15](https://github.com/digital-land/planning-application-data-specification/commit/21569f15c1ecab4051de160d5b5f672da78eaaf2))
+* align field usage output with inspect summaries (commit [3b675bff](https://github.com/digital-land/planning-application-data-specification/commit/3b675bff18e878d8ea6781505cd680e4a61f76c4))
+* align inspect lookup output with canonical summaries (commit [26d0bc2d](https://github.com/digital-land/planning-application-data-specification/commit/26d0bc2d677c33cd5e771c279536850a6741862a))
+
+### 𝌭 Model changes
+
+* include name field in decision stage spec (commit [fde1fb18](https://github.com/digital-land/planning-application-data-specification/commit/fde1fb18b6e65820b5758cd7cca753144765fd04))
+* add name field to planning-document dataset (commit [6162f078](https://github.com/digital-land/planning-application-data-specification/commit/6162f07854fe7930bb9f61e7de5df3d6485b2d87))
+* include new replaces field in decision stage spec (commit [c4445758](https://github.com/digital-land/planning-application-data-specification/commit/c44457582bdcdba5cca7466e9687e9ea9f033fd2))
+* add replaces field to application document dataset (commit [9bfbefde](https://github.com/digital-land/planning-application-data-specification/commit/9bfbefde9234a9600efeec57879639f7a2d84d9c))
+
+### 📚 Documentation
+
+* refine dd-need-077 (commit [531b75e2](https://github.com/digital-land/planning-application-data-specification/commit/531b75e2faeb53d91805a9d3592bca89a20e5fcd))
+* add user needs obtained from the march community session (commit [174aacb8](https://github.com/digital-land/planning-application-data-specification/commit/174aacb8a9966ca68caceaa95a1ada041068bb64))
+* add a draft decision record for when to use not applicable fields (commit [eb8fe63a](https://github.com/digital-land/planning-application-data-specification/commit/eb8fe63aad14300663274565f6c4fc05383db65a))
+* add further needs from ps1 ps2 analysis (commit [23e363ab](https://github.com/digital-land/planning-application-data-specification/commit/23e363abddde1eede7f9de1c1c8d1a08fa0ad879))
+
+
 <a name="v0.1.84"></a>
 ## [v0.1.84](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.83...v0.1.84) (2026-04-23)
 
