@@ -22,6 +22,7 @@ Use `inspect` when you want to look up something in the canonical specification.
 
 ```bash
 python spec.py inspect application full
+python spec.py inspect application "hh;lbc"
 python spec.py inspect module agent-details
 python spec.py inspect component supporting-document
 python spec.py inspect field application-type
@@ -44,12 +45,23 @@ python spec.py inspect application full
 
 shows the resolved application definition, including the modules used by that application.
 
+For controlled combined applications, pass the combined application type as one argument:
+
+```bash
+python spec.py inspect application "hh;lbc"
+```
+
+This resolves the controlled combination from `specification/combined-application-types.csv`, prints `Combined: yes`, and shows the deduplicated module list derived from the member application types. Input order is normalised, so `"lbc;hh"` resolves to `"hh;lbc"`.
+
+Only combinations that are active in `specification/combined-application-types.csv` can be resolved this way. Unknown combinations are rejected, and recognised but inactive combinations are not treated as available application definitions.
+
 ## Find where things are used
 
 Use `inspect uses` for reverse lookups.
 
 ```bash
 python spec.py inspect uses application full
+python spec.py inspect uses application "hh;lbc"
 python spec.py inspect uses module agent-details
 python spec.py inspect uses field application-type
 python spec.py inspect uses component address
@@ -59,7 +71,7 @@ The commands answer different relationship questions:
 
 | Command | Use it to find |
 | --- | --- |
-| `inspect uses application <application_ref>` | modules used by an application |
+| `inspect uses application <application_ref>` | modules used by a single or controlled combined application |
 | `inspect uses module <module_ref>` | applications that use a module |
 | `inspect uses field <field_ref>` | modules and components that include a field |
 | `inspect uses component <component_ref>` | fields and modules that use a component |
