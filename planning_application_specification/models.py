@@ -70,6 +70,7 @@ class ComponentDef:
     ref: str
     name: str
     description: str = ""
+    rules: List[Any] = field(default_factory=list)
     items: List[Any] = field(default_factory=list)
     field_usages: List[FieldUsage] = field(default_factory=list)
     component_usages: List["ComponentUsage"] = field(default_factory=list)
@@ -90,6 +91,7 @@ class ComponentDef:
         ref = component_def.get("component") or ""
         name = component_def.get("name") or ref
         description = component_def.get("description", "") or ""
+        rules = component_def.get("rules") or component_def.get("validation") or []
         raw_fields = component_def.get("fields") or []
         items = resolve_items(
             raw_fields,
@@ -108,6 +110,7 @@ class ComponentDef:
             ref=ref,
             name=name,
             description=description,
+            rules=rules,
             items=items,
             field_usages=field_usages,
             component_usages=component_usages,

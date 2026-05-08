@@ -18,13 +18,11 @@ def format_resolved_field_display_name(resolved_field):
     return name
 
 
-def get_notes_for_resolved_field(field_def, resolved_field):
+def get_notes_for_resolved_field(resolved_field):
     notes = []
     codelist = None
     if hasattr(resolved_field.base, "codelist"):
         codelist = resolved_field.base.codelist
-    elif isinstance(field_def, dict):
-        codelist = field_def.get("codelist")
     if codelist:
         notes.append(f"Select from the **{codelist}** enum")
     required_if = resolved_field.required_if
@@ -54,17 +52,16 @@ def get_only_for_application_str(resolved_item):
     return ""
 
 
-def iter_display_rows(resolved_items, fields_spec, app_type=None):
+def iter_display_rows(resolved_items, app_type=None):
     for resolved in resolved_items:
         if app_type and not resolved.applies:
             continue
 
         ref = resolved.ref
-        field_def = fields_spec.get(ref, {})
         name = format_resolved_field_display_name(resolved)
         description = resolved.description or ""
         requirement = "MUST" if resolved.required else "MAY"
-        notes = get_notes_for_resolved_field(field_def, resolved)
+        notes = get_notes_for_resolved_field(resolved)
         yield {
             "ref": ref,
             "name": name,
@@ -165,7 +162,7 @@ def get_component_codelists(component):
     return codelists
 
 
-def format_main_module_table(module, fields_spec, app_type=None, package_spec=None):
+def format_main_module_table(module, app_type=None, package_spec=None):
     if package_spec is None:
         package_spec = Specification.load()
 
@@ -176,7 +173,6 @@ def format_main_module_table(module, fields_spec, app_type=None, package_spec=No
                 module=get_container_ref(module),
                 selection=selection,
             ),
-            fields_spec,
             app_type=app_type,
         )
     )
@@ -203,7 +199,7 @@ def format_main_module_table(module, fields_spec, app_type=None, package_spec=No
     return "\n".join(lines)
 
 
-def format_component_table(component, fields_spec, app_type=None, package_spec=None):
+def format_component_table(component, app_type=None, package_spec=None):
     if package_spec is None:
         package_spec = Specification.load()
 
@@ -214,7 +210,6 @@ def format_component_table(component, fields_spec, app_type=None, package_spec=N
                 component=get_container_ref(component),
                 selection=selection,
             ),
-            fields_spec,
             app_type=app_type,
         )
     )
@@ -266,9 +261,7 @@ def append_titled_table_section(out, title, table_markdown, leading_newline=Fals
     out.append(table_markdown + "\n")
 
 
-def append_component_sections(
-    out, components, fields_spec, app_type=None, package_spec=None
-):
+def append_component_sections(out, components, app_type=None, package_spec=None):
     component_iter = components.values() if hasattr(components, "values") else components
     for component in component_iter:
         cref = get_container_ref(component)
@@ -277,7 +270,6 @@ def append_component_sections(
             f"{get_container_name(component, cref)} component",
             format_component_table(
                 component,
-                fields_spec,
                 app_type=app_type,
                 package_spec=package_spec,
             ),
@@ -303,7 +295,6 @@ def generate_module(module_ref, specification, app_type=None, package_spec=None)
         )
     ]
     rules = module.rules
-    fields_spec = specification.get("field", {})
     # Header
     out = [
         f"# {get_container_name(module, module_ref)}\n",
@@ -314,7 +305,6 @@ def generate_module(module_ref, specification, app_type=None, package_spec=None)
         f"{get_container_name(module, module_ref)} module",
         format_main_module_table(
             module,
-            fields_spec,
             app_type=app_type,
             package_spec=package_spec,
         ),
@@ -322,7 +312,6 @@ def generate_module(module_ref, specification, app_type=None, package_spec=None)
     append_component_sections(
         out,
         related_components,
-        fields_spec,
         app_type=app_type,
         package_spec=package_spec,
     )
@@ -402,7 +391,6 @@ def generate_codelist_md_str(codelists):
 
 
 def generate_application_fields_section(specification, app_type=None, package_spec=None):
-    fields_spec = specification.get("field", {})
     if package_spec is None:
         package_spec = Specification.load()
 
@@ -444,7 +432,6 @@ def generate_application_fields_section(specification, app_type=None, package_sp
         f"{module_label} module",
         format_component_table(
             application_component,
-            fields_spec,
             app_type=app_type,
             package_spec=package_spec,
         ),
@@ -461,12 +448,11 @@ def generate_application_fields_section(specification, app_type=None, package_sp
     append_component_sections(
         out,
         related_components,
-        fields_spec,
         app_type=app_type,
         package_spec=package_spec,
     )
 
-    validation_rules = specification.get("component", {}).get(component_ref, {}).get("validation")
+    validation_rules = application_component.rules
     rules_str = format_rules_md_str(validation_rules)
     if rules_str:
         out.append(rules_str)

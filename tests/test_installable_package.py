@@ -87,6 +87,16 @@ def test_canonical_component_lookup_returns_component_definition(project_root):
     assert len(component.field_usages) > 0
 
 
+def test_canonical_component_lookup_exposes_rules_and_validation(project_root):
+    spec = Specification.load(project_root)
+
+    application_component = spec.component("application")
+    owner_component = spec.component("owner")
+
+    assert application_component.rules[0]["rule"] == "reference must be a valid UUID format"
+    assert owner_component.rules[0]["rule"] == "person details must be complete for identification purposes"
+
+
 def test_canonical_module_lookup_returns_module_definition(project_root):
     spec = Specification.load(project_root)
 

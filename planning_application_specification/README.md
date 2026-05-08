@@ -299,6 +299,10 @@ component = spec.component("bedroom-count")
 
 Returned component definitions currently expose:
 
+- `ref`
+- `name`
+- `description`
+- `rules`: canonical component rule list from `rules` or `validation`
 - `items`: ordered mixed usage list
 - `field_usages`: field usages contained by the component
 - `component_usages`: nested component usages contained by the component
