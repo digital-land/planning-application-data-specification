@@ -2,13 +2,12 @@ import os
 
 from bin.applications import get_application_module_refs
 from bin.csv_helpers import csv_to_markdown
-from bin.modules import (
-    collect_related_components_bfs,
-    get_codelists_for_module,
-    get_module_parts,
-)
+from bin.modules import collect_related_components_bfs, get_codelists_for_module
 from planning_application_specification import Specification
-from planning_application_specification.specification import SelectionContext
+from planning_application_specification.specification import (
+    ResolvedComponentReference,
+    SelectionContext,
+)
 from bin.utils import save_string_to_file
 
 
@@ -23,7 +22,11 @@ def format_resolved_field_display_name(resolved_field):
 
 def get_notes_for_resolved_field(field_def, resolved_field):
     notes = []
-    codelist = field_def.get("codelist") if isinstance(field_def, dict) else None
+    codelist = None
+    if hasattr(resolved_field.base, "codelist"):
+        codelist = resolved_field.base.codelist
+    elif isinstance(field_def, dict):
+        codelist = field_def.get("codelist")
     if codelist:
         notes.append(f"Select from the **{codelist}** enum")
     required_if = resolved_field.required_if
@@ -74,6 +77,63 @@ def iter_display_rows(resolved_items, fields_spec, app_type=None):
         }
 
 
+def get_container_ref(container):
+    if hasattr(container, "ref"):
+        return container.ref
+    if isinstance(container, dict):
+        return container.get("module") or container.get("component") or ""
+    return ""
+
+
+def get_container_name(container, default_ref=""):
+    if hasattr(container, "name"):
+        return container.name or default_ref
+    if isinstance(container, dict):
+        return container.get("name", default_ref)
+    return default_ref
+
+
+def get_container_description(container):
+    if hasattr(container, "description"):
+        return container.description or ""
+    if isinstance(container, dict):
+        return container.get("description", "")
+    return ""
+
+
+def iter_module_component_refs(module_ref, package_spec, app_type=None):
+    selection = SelectionContext(application_type=app_type) if app_type else None
+    seen = set()
+    queue = []
+
+    def enqueue_from_items(resolved_items):
+        for item in resolved_items:
+            if not isinstance(item, ResolvedComponentReference):
+                continue
+            if app_type and not item.applies:
+                continue
+            if item.component_ref in seen:
+                continue
+            seen.add(item.component_ref)
+            queue.append(item.component_ref)
+
+    enqueue_from_items(
+        package_spec.resolve_container_items(module=module_ref, selection=selection)
+    )
+
+    idx = 0
+    while idx < len(queue):
+        component_ref = queue[idx]
+        idx += 1
+        yield component_ref
+        enqueue_from_items(
+            package_spec.resolve_container_items(
+                component=component_ref,
+                selection=selection,
+            )
+        )
+
+
 def format_main_module_table(module, fields_spec, app_type=None, package_spec=None):
     if package_spec is None:
         package_spec = Specification.load()
@@ -82,7 +142,7 @@ def format_main_module_table(module, fields_spec, app_type=None, package_spec=No
     rows = list(
         iter_display_rows(
             package_spec.resolve_container_items(
-                module=module["module"],
+                module=get_container_ref(module),
                 selection=selection,
             ),
             fields_spec,
@@ -120,7 +180,7 @@ def format_component_table(component, fields_spec, app_type=None, package_spec=N
     rows = list(
         iter_display_rows(
             package_spec.resolve_container_items(
-                component=component["component"],
+                component=get_container_ref(component),
                 selection=selection,
             ),
             fields_spec,
@@ -178,10 +238,12 @@ def append_titled_table_section(out, title, table_markdown, leading_newline=Fals
 def append_component_sections(
     out, components, fields_spec, app_type=None, package_spec=None
 ):
-    for cname, component in components.items():
+    component_iter = components.values() if hasattr(components, "values") else components
+    for component in component_iter:
+        cref = get_container_ref(component)
         append_titled_table_section(
             out,
-            f"{component.get('name', cname)} component",
+            f"{get_container_name(component, cref)} component",
             format_component_table(
                 component,
                 fields_spec,
@@ -193,24 +255,32 @@ def append_component_sections(
 
 
 def generate_module(module_ref, specification, app_type=None, package_spec=None):
-    module_parts = get_module_parts(specification, module_ref, app_type)
-    if not module_parts:
-        print(f"Module '{module_ref}' not found in specification.")
-        return None
     if package_spec is None:
         package_spec = Specification.load()
-    module = module_parts.get("module", {})
-    related_components = module_parts.get("related-components", {})
-    rules = module_parts.get("rules", [])
+    try:
+        module = package_spec.module(module_ref)
+    except KeyError:
+        print(f"Module '{module_ref}' not found in specification.")
+        return None
+
+    related_components = [
+        package_spec.component(component_ref)
+        for component_ref in iter_module_component_refs(
+            module_ref,
+            package_spec,
+            app_type=app_type,
+        )
+    ]
+    rules = module.rules
     fields_spec = specification.get("field", {})
     # Header
     out = [
-        f"# {module.get('name', module_ref)}\n",
-        module.get("description", "") + "\n",
+        f"# {get_container_name(module, module_ref)}\n",
+        get_container_description(module) + "\n",
     ]
     append_titled_table_section(
         out,
-        f"{module.get('name', module_ref)} module",
+        f"{get_container_name(module, module_ref)} module",
         format_main_module_table(
             module,
             fields_spec,
