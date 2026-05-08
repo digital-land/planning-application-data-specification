@@ -1,5 +1,5 @@
 from loader import load_content
-from generate_info_model import generate_module
+from generate_info_model import generate_application, generate_module
 
 
 def test_generate_module_uses_resolved_field_name_for_top_level_rows():
@@ -38,3 +38,14 @@ def test_generate_module_keeps_validation_rules_section():
         "- Reason must explain why the applicant wishes condition(s) to be removed or changed"
         in module_markdown
     )
+
+
+def test_generate_application_keeps_application_field_codelists_and_rules():
+    specification = load_content()
+
+    application_markdown = generate_application("advertising", specification)
+
+    assert "application-types | Application types[] |" in application_markdown
+    assert "Select from the **application-type** enum" in application_markdown
+    assert "**Validation rules**" in application_markdown
+    assert "- modules must reference existing module definitions" in application_markdown

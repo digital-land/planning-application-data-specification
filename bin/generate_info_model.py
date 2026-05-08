@@ -1,8 +1,6 @@
 import os
 
-from bin.applications import get_application_module_refs
 from bin.csv_helpers import csv_to_markdown
-from bin.modules import collect_related_components_bfs, get_codelists_for_module
 from planning_application_specification import Specification
 from planning_application_specification.specification import (
     ResolvedComponentReference,
@@ -101,7 +99,7 @@ def get_container_description(container):
     return ""
 
 
-def iter_module_component_refs(module_ref, package_spec, app_type=None):
+def _iter_nested_component_refs_from_items(resolved_items, package_spec, app_type=None):
     selection = SelectionContext(application_type=app_type) if app_type else None
     seen = set()
     queue = []
@@ -117,9 +115,7 @@ def iter_module_component_refs(module_ref, package_spec, app_type=None):
             seen.add(item.component_ref)
             queue.append(item.component_ref)
 
-    enqueue_from_items(
-        package_spec.resolve_container_items(module=module_ref, selection=selection)
-    )
+    enqueue_from_items(resolved_items)
 
     idx = 0
     while idx < len(queue):
@@ -132,6 +128,41 @@ def iter_module_component_refs(module_ref, package_spec, app_type=None):
                 selection=selection,
             )
         )
+
+
+def iter_module_component_refs(module_ref, package_spec, app_type=None):
+    selection = SelectionContext(application_type=app_type) if app_type else None
+    resolved_items = package_spec.resolve_container_items(
+        module=module_ref,
+        selection=selection,
+    )
+    yield from _iter_nested_component_refs_from_items(
+        resolved_items,
+        package_spec,
+        app_type=app_type,
+    )
+
+
+def iter_component_component_refs(component_ref, package_spec, app_type=None):
+    selection = SelectionContext(application_type=app_type) if app_type else None
+    resolved_items = package_spec.resolve_container_items(
+        component=component_ref,
+        selection=selection,
+    )
+    yield from _iter_nested_component_refs_from_items(
+        resolved_items,
+        package_spec,
+        app_type=app_type,
+    )
+
+
+def get_component_codelists(component):
+    codelists = set()
+    for field_usage in getattr(component, "field_usages", []):
+        codelist = getattr(field_usage.original, "codelist", None)
+        if codelist:
+            codelists.add(codelist)
+    return codelists
 
 
 def format_main_module_table(module, fields_spec, app_type=None, package_spec=None):
@@ -299,16 +330,12 @@ def generate_module(module_ref, specification, app_type=None, package_spec=None)
     return "\n".join(out)
 
 
-def get_codelists_for_app(module_refs, fields, specification):
+def get_codelists_for_app(module_refs, package_spec):
     codelists = set()
     for module_ref in module_refs:
-        module_parts = get_module_parts(specification, module_ref)
-        if not module_parts:
-            print(f"Module '{module_ref}' not found in specification.")
-            continue
-        related_components = module_parts.get("related-components", {})
-        for component in related_components.values():
-            codelists.update(get_codelists_for_module(component, fields))
+        for component_ref in iter_module_component_refs(module_ref, package_spec):
+            component = package_spec.component(component_ref)
+            codelists.update(get_component_codelists(component))
     return codelists
 
 
@@ -376,22 +403,23 @@ def generate_codelist_md_str(codelists):
 
 def generate_application_fields_section(specification, app_type=None, package_spec=None):
     fields_spec = specification.get("field", {})
-    components = specification.get("component", {})
+    if package_spec is None:
+        package_spec = Specification.load()
 
-    application_field = fields_spec.get("application")
-    if not application_field:
+    try:
+        application_field = package_spec.field("application")
+    except KeyError:
         print("Field definition for 'application' not found in specification.")
         return None
 
-    component_ref = application_field.get("component") or "application"
-    application_component = components.get(component_ref) or components.get(
-        "application"
-    )
-    if not application_component:
+    component_ref = application_field.component or "application"
+    try:
+        application_component = package_spec.component(component_ref)
+    except KeyError:
         print("Component definition for application fields not found in specification.")
         return None
 
-    heading_name = application_field.get("name", "Application").strip()
+    heading_name = (application_field.name or "Application").strip()
     if not heading_name:
         heading_name = "Application"
     heading_title = (
@@ -402,9 +430,7 @@ def generate_application_fields_section(specification, app_type=None, package_sp
 
     out = [f"## {heading_title}\n"]
 
-    description = application_component.get("description") or application_field.get(
-        "description", ""
-    )
+    description = get_container_description(application_component) or application_field.description
     if description:
         out.append(description.strip() + "\n")
 
@@ -413,8 +439,6 @@ def generate_application_fields_section(specification, app_type=None, package_sp
         if heading_title.lower().endswith("fields")
         else f"{heading_title} fields"
     )
-    if package_spec is None:
-        package_spec = Specification.load()
     append_titled_table_section(
         out,
         f"{module_label} module",
@@ -426,12 +450,14 @@ def generate_application_fields_section(specification, app_type=None, package_sp
         ),
     )
 
-    related_components = collect_related_components_bfs(
-        application_component.get("fields", []),
-        components,
-        fields_spec,
-        app_type=app_type,
-    )
+    related_components = [
+        package_spec.component(component_ref)
+        for component_ref in iter_component_component_refs(
+            component_ref,
+            package_spec,
+            app_type=app_type,
+        )
+    ]
     append_component_sections(
         out,
         related_components,
@@ -440,7 +466,7 @@ def generate_application_fields_section(specification, app_type=None, package_sp
         package_spec=package_spec,
     )
 
-    validation_rules = application_component.get("validation")
+    validation_rules = specification.get("component", {}).get(component_ref, {}).get("validation")
     rules_str = format_rules_md_str(validation_rules)
     if rules_str:
         out.append(rules_str)
@@ -452,21 +478,18 @@ def generate_application(app_ref, specification):
     """
     Generate the information model for a specific application type.
     """
-    applications = specification.get("application", {})
-    fields = specification.get("field", {})
     codelists = specification.get("codelist", {})
 
-    app = applications.get(app_ref)
-    if not app:
+    package_spec = Specification.load()
+    try:
+        app = package_spec.application(app_ref)
+    except KeyError:
         print(f"Application '{app_ref}' not found in specification.")
         return None
 
-    package_spec = Specification.load()
-
     # get the modules that are part of the application
-    modules = app.get("modules", [])
-    module_refs = [m["module"] if isinstance(m, dict) else m for m in modules]
-    inc_codelists = get_codelists_for_app(module_refs, fields, specification)
+    module_refs = [module.ref for module in app.modules]
+    inc_codelists = get_codelists_for_app(module_refs, package_spec)
     # Sort codelists by their 'name' attribute
     inc_codelist_objs = sorted(
         [codelists.get(ref) for ref in inc_codelists if codelists.get(ref)],
@@ -475,15 +498,14 @@ def generate_application(app_ref, specification):
 
     # generate output
     # 1. Heading and Description
-    out = [f"# {app.get('name', app_ref)}\n"]
-    if app.get("description"):
-        out.append(app["description"] + "\n")
+    out = [f"# {app.name or app_ref}\n"]
+    if app.description:
+        out.append(app.description + "\n")
 
     # 2. Contents
     out.append("## Contents\n")
     out.append("* [Application data specification](#application-data-specification)")
     # get full list of applicable modules
-    module_refs = get_application_module_refs(app, specification)
     out.append("")
 
     # 3. Modules List (contents)
