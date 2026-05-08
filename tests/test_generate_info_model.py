@@ -26,3 +26,15 @@ def test_generate_module_keeps_component_table_application_conditions():
     module_markdown = generate_module("tree-work-details", specification)
 
     assert "reason | Reason | Explain the reason for the work | MAY |  | consent-under-tpo" in module_markdown
+
+
+def test_generate_module_keeps_validation_rules_section():
+    specification = load_content()
+
+    module_markdown = generate_module("con-remove-vary", specification)
+
+    assert "**Validation rules**" in module_markdown
+    assert (
+        "- Reason must explain why the applicant wishes condition(s) to be removed or changed"
+        in module_markdown
+    )
