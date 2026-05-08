@@ -49,3 +49,13 @@ def test_generate_application_keeps_application_field_codelists_and_rules():
     assert "Select from the **application-type** enum" in application_markdown
     assert "**Validation rules**" in application_markdown
     assert "- modules must reference existing module definitions" in application_markdown
+
+
+def test_generate_application_keeps_required_codelist_section():
+    specification = load_content()
+
+    application_markdown = generate_application("advertising", specification)
+
+    assert "## Required codelists" in application_markdown
+    assert "### Advertisement type" in application_markdown
+    assert "| fascia | Fascia |" in application_markdown
