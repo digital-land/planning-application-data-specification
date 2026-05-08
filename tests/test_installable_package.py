@@ -65,6 +65,16 @@ def test_canonical_field_lookup_returns_field_definition(project_root):
 
     assert field.ref == "description"
     assert field.name == "Description"
+    assert field.codelist is None
+
+
+def test_canonical_field_lookup_exposes_codelist_when_defined(project_root):
+    spec = Specification.load(project_root)
+
+    field = spec.field("decision-maker")
+
+    assert field.ref == "decision-maker"
+    assert field.codelist == "decision-maker"
 
 
 def test_canonical_component_lookup_returns_component_definition(project_root):
@@ -85,6 +95,17 @@ def test_canonical_module_lookup_returns_module_definition(project_root):
     assert module.ref == "proposal-details"
     assert module.name == "Description of the proposal"
     assert len(module.field_usages) > 0
+
+
+def test_canonical_module_lookup_exposes_rules(project_root):
+    spec = Specification.load(project_root)
+
+    module = spec.module("con-remove-vary")
+
+    assert module.rules == [
+        "Reason must explain why the applicant wishes condition(s) to be removed or changed",
+        "Condition change should specify how the condition should vary if modification is sought",
+    ]
 
 
 def test_application_returns_uniform_application_view_for_single_type(project_root):
@@ -115,7 +136,7 @@ def test_application_returns_uniform_application_view_for_combined_type(project_
     assert application.entry_date == "2026-04-14"
     assert application.start_date == "2026-04-14"
     assert application.end_date == ""
-    assert "connected consent" in application.description
+    assert "householder planning permission" in application.description
     assert application.allow_additional_properties is True
     assert len(application.items) == 1
     assert len(application.field_usages) == 0

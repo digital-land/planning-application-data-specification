@@ -9,6 +9,7 @@ class FieldDef:
     ref: str
     name: str
     datatype: str = "string"
+    codelist: Optional[str] = None
     required: bool = False
     description: str = ""
     notes: str = ""
@@ -29,6 +30,7 @@ class FieldDef:
         ref = spec.get("field") or spec.get("ref") or ""
         name = spec.get("name") or spec.get("title") or ref
         datatype = spec.get("datatype") or spec.get("type") or "string"
+        codelist = spec.get("codelist")
         required = bool(spec.get("required", False))
         description = spec.get("description", "") or ""
         notes = spec.get("notes", "") or ""
@@ -40,6 +42,7 @@ class FieldDef:
             ref=ref,
             name=name,
             datatype=datatype,
+            codelist=codelist,
             required=required,
             description=description,
             notes=notes,
@@ -118,6 +121,7 @@ class ModuleDef:
     ref: str
     name: str
     description: str = ""
+    rules: List[Any] = field(default_factory=list)
     items: List[Any] = field(default_factory=list)
     field_usages: List[FieldUsage] = field(default_factory=list)
     component_usages: List[ComponentUsage] = field(default_factory=list)
@@ -136,6 +140,7 @@ class ModuleDef:
         ref = module_content.get("module") or ""
         name = module_content.get("name") or ""
         description = module_content.get("description") or ""
+        rules = module_content.get("rules") or []
 
         raw_fields = module_content.get("fields") or []
         items = resolve_items(raw_fields, field_defs, component_defs)
@@ -150,6 +155,7 @@ class ModuleDef:
             ref=ref,
             name=name,
             description=description,
+            rules=rules,
             items=items,
             field_usages=field_usages,
             component_usages=component_usages,

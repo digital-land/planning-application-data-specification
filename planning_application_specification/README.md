@@ -327,9 +327,25 @@ module = spec.module("proposal-details")
 
 Returned module definitions currently expose:
 
+- `ref`
+- `name`
+- `description`
+- `rules`: canonical module rule list from the module definition
 - `items`: ordered mixed usage list
 - `field_usages`: field usages contained by the module
 - `component_usages`: component usages contained by the module
+
+Returned field definitions currently expose canonical field metadata including:
+
+- `ref`
+- `name`
+- `datatype`
+- `codelist`
+- `required`
+- `description`
+- `notes`
+- `component`
+- `cardinality`
 
 ### `Specification.resolve_field(ref: str, module: str | None = None, component: str | None = None, selection: SelectionContext | None = None) -> ResolvedField`
 
