@@ -542,6 +542,7 @@ Attributes:
 - `ref`: codelist reference
 - `name`: human-readable name
 - `description`: schema description text
+- `source`: canonical source path or URL
 - `items`: tuple of canonical `CodelistItem` objects
 
 ### `Codelist.applicable(selection: SelectionContext | None = None) -> ApplicableCodelist`

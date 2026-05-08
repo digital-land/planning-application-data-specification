@@ -104,6 +104,7 @@ class Codelist:
     ref: str
     name: str
     description: str
+    source: str
     items: tuple[CodelistItem, ...]
 
     def applicable(self, selection: SelectionContext | None = None) -> ApplicableCodelist:
@@ -183,6 +184,7 @@ class Specification:
             ref=ref,
             name=codelist_meta.get("name", ref),
             description=codelist_meta.get("description", "") or "",
+            source=codelist_meta.get("source", "") or "",
             items=items,
         )
 

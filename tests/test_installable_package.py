@@ -118,6 +118,15 @@ def test_canonical_module_lookup_exposes_rules(project_root):
     ]
 
 
+def test_canonical_codelist_lookup_exposes_source_metadata(project_root):
+    spec = Specification.load(project_root)
+
+    codelist = spec.codelist("application-type")
+
+    assert codelist.ref == "application-type"
+    assert codelist.source == "data/planning-application-type.csv"
+
+
 def test_application_returns_uniform_application_view_for_single_type(project_root):
     spec = Specification.load(project_root)
 
