@@ -275,7 +275,7 @@ def append_component_sections(out, components, app_type=None, package_spec=None)
         )
 
 
-def generate_module(module_ref, specification, app_type=None, package_spec=None):
+def generate_module(module_ref, _specification=None, app_type=None, package_spec=None):
     if package_spec is None:
         package_spec = Specification.load()
     try:
@@ -390,7 +390,7 @@ def generate_codelist_md_str(codelists):
     return "\n".join(lines)
 
 
-def generate_application_fields_section(specification=None, app_type=None, package_spec=None):
+def generate_application_fields_section(app_type=None, package_spec=None):
     if package_spec is None:
         package_spec = Specification.load()
 
@@ -460,7 +460,7 @@ def generate_application_fields_section(specification=None, app_type=None, packa
     return "\n".join(out)
 
 
-def generate_application(app_ref, specification):
+def generate_application(app_ref, _specification=None):
     """
     Generate the information model for a specific application type.
     """
@@ -509,7 +509,7 @@ def generate_application(app_ref, specification):
 
     # 5. Application Data Specification
     application_fields_section = generate_application_fields_section(
-        specification, app_type=app_ref, package_spec=package_spec
+        app_type=app_ref, package_spec=package_spec
     )
     if application_fields_section:
         out.append(application_fields_section)
@@ -519,7 +519,6 @@ def generate_application(app_ref, specification):
     for mod in module_refs:
         module_md = generate_module(
             mod,
-            specification,
             app_type=app_ref,
             package_spec=package_spec,
         )
