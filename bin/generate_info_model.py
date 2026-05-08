@@ -1,6 +1,4 @@
-import os
-
-from bin.csv_helpers import csv_to_markdown
+from bin.markdown_utils import markdown_link, markdown_table
 from planning_application_specification import Specification
 from planning_application_specification.specification import (
     ResolvedComponentReference,
@@ -328,11 +326,19 @@ def get_codelists_for_app(module_refs, package_spec):
     return codelists
 
 
+def codelist_item_rows(codelist_obj):
+    rows = [item.row for item in codelist_obj.items if item.row]
+    if not rows:
+        return [], []
+
+    headers = list(rows[0].keys())
+    return headers, [[row.get(header, "") for header in headers] for row in rows]
+
+
 def create_codelist_table(codelist_obj):
     lines = []
-    name = codelist_obj.get("name", "Unknown")
-
-    source = codelist_obj.get("source", "")
+    name = getattr(codelist_obj, "name", None) or "Unknown"
+    source = getattr(codelist_obj, "source", "") or ""
 
     # Heading
     heading = f"### {name}"
@@ -345,23 +351,17 @@ def create_codelist_table(codelist_obj):
         if isinstance(source, str) and (
             source.startswith("http://") or source.startswith("https://")
         ):
-            lines.append(f"\nThis codelist is sourced from [{source}]({source})\n")
+            lines.append(
+                f"\nThis codelist is sourced from {markdown_link(source, source)}\n"
+            )
         else:
-            path = source
-            if not os.path.isabs(path):
-                repo_root = os.getcwd()
-                path = os.path.join(repo_root, path)
-
-            if not os.path.exists(path):
-                lines.append(f"\nSource file not found: {source}\n")
-                return "\n".join(lines)
-
-            try:
-                md_table = csv_to_markdown(path)
+            headers, rows = codelist_item_rows(codelist_obj)
+            if not headers:
+                lines.append(f"\nNo codelist rows available from: {source}\n")
+            else:
                 lines.append("")
-                lines.append(md_table)
-            except Exception as e:
-                lines.append(f"\nError reading source file {source}: {e}\n")
+                lines.append(markdown_table(headers, rows).rstrip())
+                lines.append("")
 
     return "\n".join(lines) if lines else ""
 
@@ -390,7 +390,7 @@ def generate_codelist_md_str(codelists):
     return "\n".join(lines)
 
 
-def generate_application_fields_section(specification, app_type=None, package_spec=None):
+def generate_application_fields_section(specification=None, app_type=None, package_spec=None):
     if package_spec is None:
         package_spec = Specification.load()
 
@@ -464,8 +464,6 @@ def generate_application(app_ref, specification):
     """
     Generate the information model for a specific application type.
     """
-    codelists = specification.get("codelist", {})
-
     package_spec = Specification.load()
     try:
         app = package_spec.application(app_ref)
@@ -476,10 +474,9 @@ def generate_application(app_ref, specification):
     # get the modules that are part of the application
     module_refs = [module.ref for module in app.modules]
     inc_codelists = get_codelists_for_app(module_refs, package_spec)
-    # Sort codelists by their 'name' attribute
     inc_codelist_objs = sorted(
-        [codelists.get(ref) for ref in inc_codelists if codelists.get(ref)],
-        key=lambda c: c.get("name", ""),
+        [package_spec.codelist(ref) for ref in inc_codelists],
+        key=lambda c: c.name,
     )
 
     # generate output
@@ -497,8 +494,7 @@ def generate_application(app_ref, specification):
     # 3. Modules List (contents)
     out.append("### Modules\n")
     for mod in module_refs:
-        mod_schema = specification.get("module", {}).get(mod, {})
-        mod_name = mod_schema.get("name", mod.replace("-", " ").capitalize())
+        mod_name = package_spec.module(mod).name or mod.replace("-", " ").capitalize()
         anchor = mod_name.lower().replace(" ", "-")
         out.append(f"* [{mod_name}](#{anchor})")
     out.append("")
@@ -506,7 +502,7 @@ def generate_application(app_ref, specification):
     # 4. Codelists (contents)
     out.append("### Codelists\n")
     for codelist in inc_codelist_objs:
-        codelist_name = codelist.get("name", "Name unknown")
+        codelist_name = codelist.name or "Name unknown"
         anchor = codelist_name.lower().replace(" ", "-")
         out.append(f"* [{codelist_name}](#{anchor})")
     out.append("")
