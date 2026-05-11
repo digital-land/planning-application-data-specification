@@ -1,0 +1,13 @@
+---
+application: agricultural-forestry-building
+extends: prior-approval
+name: Agricultural or forestry building development
+description: Prior apporval for building development related to agricultural and forestry buildings
+entry-date: 2026-05-11
+start-date: ''
+end-date: ''
+modules:
+  - module: agri-forest-dev-elig
+  - module: proposed-building
+allow-additional-properties: true
+---
