@@ -1,7 +1,7 @@
 ---
-application: agricultural-forestry-building
+application: pa-build-agri-forest
 extends: prior-approval
-name: Agricultural or forestry building development
+name: "Prior approval: Agricultural or forestry building development"
 description: Prior apporval for building development related to agricultural and forestry buildings
 entry-date: 2026-05-11
 start-date: ''
