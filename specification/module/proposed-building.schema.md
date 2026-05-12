@@ -1,5 +1,6 @@
 ---
-description: Agricultural or forestry building details
+description: |
+  Details of the proposed agricultural or forestry building, including operation type, dimensions, materials
 end-date: ''
 entry-date: 2026-05-11
 module: proposed-building

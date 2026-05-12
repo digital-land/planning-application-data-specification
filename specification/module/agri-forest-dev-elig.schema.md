@@ -1,9 +1,10 @@
 ---
-description: 
+description: |
+  Information needed to assess agricultural unit, land parcel, agricultural purpose and wider site constraints
 end-date: ''
 entry-date: 2026-05-11
 module: agri-forest-dev-elig
-name: 
+name: Agricultural and forestry development eligibility
 fields:
   - field: agri-unit-area
     required: true
