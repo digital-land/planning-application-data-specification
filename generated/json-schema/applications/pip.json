@@ -54,6 +54,25 @@
     "application"
   ],
   "definitions": {
+    "existing-use": {
+      "type": "object",
+      "properties": {
+        "uses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/use"
+          },
+          "minItems": 1
+        },
+        "floorspace": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "uses",
+        "floorspace"
+      ]
+    },
     "contact-details": {
       "type": "object",
       "properties": {
@@ -73,61 +92,28 @@
         "phone-numbers"
       ]
     },
-    "phone-number": {
+    "non-residential-use": {
       "type": "object",
       "properties": {
-        "number": {
-          "type": "string"
-        },
-        "contact-priority": {
+        "non-residential-measurement-type": {
           "type": "string",
           "enum": [
-            "primary",
-            "secondary"
+            "floorspace",
+            "site-area"
           ]
-        }
-      },
-      "required": []
-    },
-    "site-area": {
-      "type": "object",
-      "properties": {
-        "value": {
+        },
+        "exact-value": {
           "type": "number"
         },
-        "unit": {
-          "type": "string"
+        "min": {
+          "type": "number"
         },
-        "provided-by": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "system"
-          ]
-        }
-      },
-      "required": [
-        "value",
-        "unit"
-      ]
-    },
-    "existing-use": {
-      "type": "object",
-      "properties": {
-        "uses": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/use"
-          },
-          "minItems": 1
-        },
-        "floorspace": {
+        "max": {
           "type": "number"
         }
       },
       "required": [
-        "uses",
-        "floorspace"
+        "non-residential-measurement-type"
       ]
     },
     "use": {
@@ -200,6 +186,60 @@
         ]
       }
     },
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "supporting-document": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference"
+      ]
+    },
     "site-location": {
       "type": "object",
       "properties": {
@@ -237,69 +277,6 @@
       },
       "required": []
     },
-    "agent": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "non-residential-use": {
-      "type": "object",
-      "properties": {
-        "non-residential-measurement-type": {
-          "type": "string",
-          "enum": [
-            "floorspace",
-            "site-area"
-          ]
-        },
-        "exact-value": {
-          "type": "number"
-        },
-        "min": {
-          "type": "number"
-        },
-        "max": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "non-residential-measurement-type"
-      ]
-    },
-    "supporting-document": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "details": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference"
-      ]
-    },
     "person": {
       "type": "object",
       "properties": {
@@ -325,96 +302,67 @@
         "address-text"
       ]
     },
-    "applicant": {
+    "phone-number": {
       "type": "object",
       "properties": {
-        "reference": {
+        "number": {
           "type": "string"
         },
-        "person": {
-          "$ref": "#/definitions/person"
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
+    },
+    "site-area": {
+      "type": "object",
+      "properties": {
+        "value": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "provided-by": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "system"
+          ]
         }
       },
       "required": [
-        "reference",
-        "person"
+        "value",
+        "unit"
       ]
     },
-    "applicant-contact": {
+    "site-details": {
       "type": "object",
       "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
-    "proposal-details-inc-non-residential": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "net-dwellings-min": {
-          "type": "number"
-        },
-        "net-dwellings-max": {
-          "type": "number"
-        },
-        "non-residential-use": {
+        "site-locations": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/non-residential-use"
+            "$ref": "#/definitions/site-location"
           },
           "minItems": 1
         }
       },
       "required": [
-        "description",
-        "net-dwellings-min",
-        "net-dwellings-max",
-        "non-residential-use"
+        "site-locations"
       ]
     },
-    "declaration": {
+    "agent-details": {
       "type": "object",
       "properties": {
-        "name": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
+        "agent": {
+          "$ref": "#/definitions/agent"
         }
       },
-      "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
-      ]
+      "required": []
     },
     "site-info": {
       "type": "object",
@@ -459,19 +407,34 @@
         "known-constraints"
       ]
     },
-    "checklist": {
+    "applicant-details": {
       "type": "object",
       "properties": {
-        "national-req-types": {
+        "applicants": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/applicant"
           },
           "minItems": 1
         }
       },
       "required": [
-        "national-req-types"
+        "applicants"
+      ]
+    },
+    "applicant-contact": {
+      "type": "object",
+      "properties": {
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "applicant-reference",
+        "contact-details"
       ]
     },
     "agent-contact": {
@@ -487,6 +450,48 @@
       "required": [
         "agent-reference",
         "contact-details"
+      ]
+    },
+    "checklist": {
+      "type": "object",
+      "properties": {
+        "national-req-types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "national-req-types"
+      ]
+    },
+    "proposal-details-inc-non-residential": {
+      "type": "object",
+      "properties": {
+        "description": {
+          "type": "string"
+        },
+        "net-dwellings-min": {
+          "type": "number"
+        },
+        "net-dwellings-max": {
+          "type": "number"
+        },
+        "non-residential-use": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/non-residential-use"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "description",
+        "net-dwellings-min",
+        "net-dwellings-max",
+        "non-residential-use"
       ]
     },
     "conflict-of-interest": {
@@ -536,29 +541,24 @@
         }
       ]
     },
-    "site-details": {
+    "declaration": {
       "type": "object",
       "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
+        "name": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
         }
       },
       "required": [
-        "site-locations"
+        "name",
+        "declaration-confirmed",
+        "declaration-date"
       ]
-    },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
     },
     "application": {
       "type": "object",
@@ -1103,28 +1103,6 @@
         "documents"
       ]
     },
-    "fee": {
-      "type": "object",
-      "properties": {
-        "amount": {
-          "type": "number"
-        },
-        "amount-paid": {
-          "type": "number"
-        },
-        "transactions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "amount",
-        "amount-paid"
-      ]
-    },
     "document": {
       "type": "object",
       "properties": {
@@ -1229,6 +1207,28 @@
       },
       "required": [
         "filename"
+      ]
+    },
+    "fee": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "amount-paid": {
+          "type": "number"
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "amount",
+        "amount-paid"
       ]
     }
   }
