@@ -17,8 +17,8 @@ Details of the residential units that make up both the current and proposed deve
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-tenure-type | Tenure type | Category of housing tenure | MUST | 
-housing-type | Housing type | Type of housing | MUST | 
+tenure-type | Tenure type | Category of housing tenure | MUST | Select from the **tenure-type** enum
+housing-type | Housing type | Type of housing | MUST | Select from the **housing-type** enum
 existing-unit-breakdown | Existing unit breakdown[]{} | Number of existing units by bedroom count | MAY | 
 proposed-unit-breakdown | Proposed unit breakdown[]{} | Number of proposed units by bedroom count | MAY | 
 

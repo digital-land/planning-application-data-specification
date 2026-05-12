@@ -11,7 +11,7 @@ Details of any hedgerows being removed as part of the development
 | hedgerow-length | Hedgerow length | Total length, in metres, of hedgerow proposed for removal |  | MUST |  |
 | hedgerow-less-than-30-years | Hedgerow less than 30 years | Is the hedgerow less than 30 years old? |  | MUST |  |
 | planting-evidence-attached | Planting evidence attached | Is evidence of the date of planting attached? |  | MAY |  |
-| interest-declaration | Interest declaration | The applicant's interest or ownership in the hedgerow |  | MUST |  |
+| interest-declaration | Interest declaration | The applicant's interest or ownership in the hedgerow |  | MUST | Select from the **hedgerow-interest-type** enum |
 
 
 **Supporting document component**

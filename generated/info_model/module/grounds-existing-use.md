@@ -8,7 +8,7 @@ Supporting inforation for a Lawful Development Certificate application relating 
 | --- | --- | --- | --- | --- | --- |
 | reason | Use lawful reason | Explanation of why the existing or last use is considered lawful, providing justification for a lawful development certificate application |  | MUST |  |
 | supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application |  | MAY |  |
-| use | Use | A use class or type of use |  | MAY | an option needs to be "other" |
+| use | Use | A use class or type of use |  | MAY | Select from the **use-class** enum. an option needs to be "other" |
 | specified-use | Specified use | A specified use if no applicable use class is available |  | MAY | Rule: is a MUST if `use` is `sui`. Rule: is a MUST if `use` is `other` |
 
 

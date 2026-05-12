@@ -6,9 +6,9 @@ What the new site will be used for
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| use | Use | State proposed use class |  | MAY | an option needs to be "other" |
+| use | Use | State proposed use class |  | MAY | Select from the **use-class** enum. an option needs to be "other" |
 | specified-use | Specified use | A specified use if no applicable use class is available |  | MAY |  |
-| operation-type | Operation type | Whether the proposed use is temporary or permanent |  | MUST |  |
+| operation-type | Operation type | Whether the proposed use is temporary or permanent |  | MUST | Select from the **operation-type** enum |
 | temporary-details | Temporary details | Details of temporary use including duration and specific arrangements |  | MAY |  |
 | reason | Reason | A textual reason |  | MUST |  |
 

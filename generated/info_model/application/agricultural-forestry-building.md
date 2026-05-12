@@ -1,6 +1,6 @@
-# Consent under TPO
+# Agricultural or forestry building development
 
-An application that will affect a protected tree including those covered by a Tree Preservation Order (TPO) or those which grow in a conservation area
+Prior apporval for building development related to agricultural and forestry buildings
 
 ## Contents
 
@@ -10,15 +10,14 @@ An application that will affect a protected tree including those covered by a Tr
 
 * [Agent contact details](#agent-contact-details)
 * [Agent details](#agent-details)
+* [Agri forest dev elig](#agri-forest-dev-elig)
 * [Applicant contact details](#applicant-contact-details)
 * [Applicant details](#applicant-details)
 * [Checklist](#checklist)
 * [Conflict of interest](#conflict-of-interest)
 * [Declaration](#declaration)
-* [Tree preservation order details](#tree-preservation-order-details)
-* [Identification of tree(s) and description of works](#identification-of-tree(s)-and-description-of-works)
-* [Trees additional information](#trees-additional-information)
-* [Trees ownership](#trees-ownership)
+* [Agricultural or forestry building details](#agricultural-or-forestry-building-details)
+* [Site details](#site-details)
 
 ### Codelists
 
@@ -145,6 +144,31 @@ postcode | Postcode | The postal code | MAY |
 
 
 
+## agri-forest-dev-elig
+
+
+
+**agri-forest-dev-elig module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| agri-unit-area | Agricultural unit area | Total area of the entire agricultural unit | MUST | This seems to be semantically similar to site-area |
+| land-parcel-area | Land parcel area | The size category for a given land parcel | MUST | Select from the **land-parcel-area** enum |
+| agri-start-date | Agricultural use start date | The month and year when the land started being used for agriculture | MUST |  |
+| is-necessary-for-agri | Is necessary for agriculture | Is the proposed development reasonably necessary for the purposes of agriculture? | MUST |  |
+| details | Details | Explanation of why the proposed development is reasonably necessary for the purposes of agriculture. | MAY | Rule: is a MUST if `is-necessary-for-agri` is `True` |
+| is-designed-agri | Is designed for agricultural purposes | Is the proposed development designed for the purposes of agriculture? | MUST |  |
+| design-details | Design details | Explanation of why the proposed development is designed for the purposes of agriculture.
+ | MAY | Rule: is a MUST if `is-designed-agri` is `True` |
+| dwelling-alteration | Dwelling alteration | Whether the proposed development involves any alteration to a dwelling. | MUST |  |
+| away-from-road | Is over 25 metres from road | Whether the proposed development is more than 25 metres from a metalled part of a trunk or classified road | MUST |  |
+| close-to-aerodrome | Within 3km of aerodrome | Whether the proposed development is within 3 kilometres of an aerodrome | MUST |  |
+| proposed-height | Proposed height | Height of the proposed agricultural or forestry development in metres | MUST |  |
+| affects-heritage | Affects heritage or nature conservation | Whether the proposed development would affect local hertiage or nature considerations | MUST |  |
+| heritage-nature-impact-details | Heritage and nature impact details | Details of how the proposed development would affect an ancient monument, archaeological site or listed building, or relate to a Site of Special Scientific Interest or local nature reserve. | MAY | Rule: is a MUST if `affects-heritage` is `True` |
+
+
+
 ## Applicant contact details
 
 Telephone number and email address of the applicant.
@@ -234,9 +258,6 @@ Details of any conflict of interest that may exist between the applicant and pla
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
-| conflict-person-name | Conflict person name | Name of the individual with the conflict of interest that matches one of the names provided in applicants/agent section | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
-| conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
 
 **Validation rules**
 
@@ -260,128 +281,78 @@ Signed and dated verification of the application's accuracy.
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
 
-## Tree preservation order details
+## Agricultural or forestry building details
 
-Details of any Tree Preservation Orders (TPO) affecting the development site
+Agricultural or forestry building details
 
-**Tree preservation order details module**
-
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| tpo-reference | TPO reference[] | Reference for a Tree Preservation Order covering affected trees | MAY |  |
-| tpo-provided-by | TPO provided by | How was the list of TPO references generated - by the applicant or system/service | MAY | Select from the **provided-by** enum |
-
-**Validation rules**
-
-- TPO references should be verified by the authority if provided by applicant
-- Authority can use tpo-provided-by to determine validation requirements
-
-## Identification of tree(s) and description of works
-
-Details of trees affected by the proposed development and what work is being done to them.
-
-**Identification of tree(s) and description of works module**
+**Agricultural or forestry building details module**
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| description | Description | Description of work applicant wishes to carry out, including identifying the trees, species and setting out the work | MUST |  |
-| tree-details | Tree details[]{} | Details of each tree that is part of the proposal | MAY |  |
+| development-operation-types | Development operation types[] | The types of building operation included in the agricultural or forestry proposal. | MUST | Select from the **development-operation-type** enum |
+| proposed-building-details | Proposed building details{} |  | MUST |  |
+| building-wall-materials | Wall materials | Details of the wall materials | MUST |  |
+| building-wall-colour | Wall colour | Colour of the wall | MUST |  |
+| building-roof-materials | Roof materials | Details of the roof materials | MUST |  |
+| building-roof-colour | Roof colour | Colour of the roof | MUST |  |
+| has-agri-building-2-yrs | Agricultural building built within 2 years | Whether an agricultural building has been constructed on the agricultural unit within the last two years | MUST |  |
+| agri-building-area | Agricultural building ground area | Overall ground area of the agricultural building constructed within the last two years, in square metres | MAY | Rule: is a MUST if `has-agri-building-2-yrs` is `True` |
+| agri-building-distance | Agricultural building distance | Distance from the recent agricultural building to the proposed new building (in metres) | MAY | Rule: is a MUST if `has-agri-building-2-yrs` is `True` |
+| house-livestock | Houses livestock, slurry or sewage sludge | Whether the proposed building would be used to house livestock, slurry or sewage sludge
+ | MUST |  |
+| livestock-building-400m | Livestock building distance from homes | Whether livestock building more than 400 metres from the nearest house, excluding the farmhouse | MAY | Rule: is a MUST if `house-livestock` is `True` |
+| exceeds-threshold | Exceeds threhold | Whether the ground area covered by the proposed building exceeds the relevant Part 6 threshold | MUST |  |
+| related-work-distance | Related work distance | Whether specified related works have been erected within 90 metres of the proposed development within the last two years | MUST |  |
+| engineering-operations-threshold | Engineering operations threshold | Whether engineering operations exceed 1,000 square metres where the agricultural unit is 5 hectares or more | MUST | Select from the **yes-no-not-applicable** enum |
+| within-scheduled-monument | Within Scheduled Momument | Would the erection, extension, or alteration be carried out on land or a building that is, or is within the curtilage of, a scheduled monument | MUST |  |
 
 
-**Tree details component**
-
-field | name | description | required | notes | only for application
--- | -- | -- | -- | -- | --
-reference | Reference | Identifier for the tree, use the TPO identifier if applicable | MUST |  | 
-species | Species | The species of the tree | MAY |  | 
-description-of-works | Description of works | Description of the nature of the work to be carried out on this tree | MAY |  | 
-reason | Reason | Explain the reason for the work | MAY |  | consent-under-tpo
-replanting-description | Replanting description | Details of replanting arrangements if applicable | MAY |  | consent-under-tpo
-
-**Validation rules**
-
-- Tree identifiers should use TPO reference numbers where applicable
-- Description must include tree identification, species and work details
-
-## Trees additional information
-
-Further details of any issues relating to trees on the site
-
-**Trees additional information module**
-
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-| advice-from-authority | Advice from authority | Any advice provided on-site by a Local Planning Authority (LPA) officer | MAY |  |
-| condition-concerns | Condition concerns | Whether there are concerns the tree(s) are diseased or might break or fall | MUST |  |
-| causing-subsidence | Causing subsidence | Whether subsidence damage is being caused by the tree(s) | MUST |  |
-| causing-structural-damage | Causing structural damage | Whether structural damage is being caused by the tree(s) | MUST |  |
-| supporting-documents | Supporting documents[]{} | Documents supporting the work required to trees | MUST |  |
-
-
-**Supporting document component**
+**Building details component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+details | Details | Additional details or information about an item | MUST | 
+building-length | Building length | Length of the proposed agricultural or forestry building in metres. | MUST | 
+eaves-height | Eaves height | Height at the eaves of the extension, measured externally from natural ground level in metres | MUST | 
+building-breadth | Building breadth | Breadth of the proposed agricultural or forestry building in metres | MUST | 
+building-ridge-height | Building ridge height | Height to the ridge of the proposed agricultural or forestry building (in metres) | MUST | 
 
-**Validation rules**
 
-- If condition-concerns is true then Arboricultural impact assessment document is required
-- If causing-subsidence is true then Subsidence Report is required
-- If causing-structural-damage is true then a Structural damage report is required
-- supporting-documents must include sketch plan, supporting documents, reports, or photographs
-- supporting-documents must include any documents required based on condition concerns, subsidence, or structural damage
-- each document in supporting-documents must have a `reference` that matches a document in application.documents
 
-## Trees ownership
+## Site details
 
-Who owns any trees affected by the proposed development.
+Where the proposed development will be built.
 
-**Trees ownership module**
+**Site details module**
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| is-applicant-owner | Is applicant owner | Whether the applicant owns the trees affected by the proposed works | MUST |  |
-| owner | Tree owner[]{} | Details of the tree owner when applicant is not the owner | MAY | Rule: is a MUST if `is-applicant-owner` is `False` |
+| site-locations | Site locations[]{} | Details of the sites where development or works are proposed | MUST |  |
 
 
-**Tree owner component**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-person | Person{} | Personal identification details of the tree owner | MUST | 
-contact-details | Contact details{} | Contact information for the tree owner | MAY | 
-
-
-**Person obj component**
+**Site location component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-title | Title | The title of the individual | MAY | 
-first-name | First Name | The first name of the individual | MUST | 
-last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
+site-boundary | Site boundary | Geometry of the site of the development, typically in GeoJSON format | MAY | 
+address-text | Address Text | Flexible field for capturing addresses | MAY | 
 postcode | Postcode | The postal code | MAY | 
-
-
-**Contact details component**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
-phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
-
-
-**Phone number component**
-
-field | name | description | required | notes
--- | -- | -- | -- | --
-number | Phone number | A phone number | MAY | 
-contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
+easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | MAY | 
+northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
+latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
+longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
+description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | uprns are not needed in case of notification for work to trees in conservation area
 
 **Validation rules**
 
-- owner details required when is-applicant-owner is false
+- {'description': 'At least one site-location must be provided for tree works applications', 'field': 'site-locations', 'require': {'min': 1}, 'type': 'count-constraint', 'when': {'application-type': {'in': ['tree-works']}}}
+- {'description': 'Exactly one site-location for all other applications types', 'field': 'site-locations', 'require': {'exact': 1}, 'type': 'count-constraint', 'when': {'application-type': {'not': ['tree-works']}}}
+- If easting is provided, northing must also be provided and vice versa
+- If latitude is provided, longitude must also be provided and vice versa
+- Site boundary must be valid GeoJSON
+- UPRNs must be valid format
+- Post code must be valid UK format
 
 ## Required codelists
 

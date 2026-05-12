@@ -6,10 +6,10 @@ Details of potential impacts to the biodiversity of the site, or any noteable ar
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| protected-species-impact | Protected species impact | Where is there a likelihood of protected and priority species being affected? |  | MUST |  |
-| biodiversity-features-impact | Biodiversity features impact | Where is there a likelihood of important habitats or biodiversity features being affected? |  | MUST |  |
-| geological-features-impact | Geological features impact | Where is there a likelihood of features of geological conservation importance being affected? |  | MUST |  |
-| archaeological-features-impact | Archaeological features impact | Where is there a likelihood of features of archaeological conservation importance being affected? | extraction-oil-gas | MUST |  |
+| protected-species-impact | Protected species impact | Where is there a likelihood of protected and priority species being affected? |  | MUST | Select from the **affected-area-type** enum |
+| biodiversity-features-impact | Biodiversity features impact | Where is there a likelihood of important habitats or biodiversity features being affected? |  | MUST | Select from the **affected-area-type** enum |
+| geological-features-impact | Geological features impact | Where is there a likelihood of features of geological conservation importance being affected? |  | MUST | Select from the **affected-area-type** enum |
+| archaeological-features-impact | Archaeological features impact | Where is there a likelihood of features of archaeological conservation importance being affected? | extraction-oil-gas | MUST | Select from the **affected-area-type** enum |
 
 **Validation rules**
 

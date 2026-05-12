@@ -42,7 +42,7 @@ phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact i
 field | name | description | required | notes
 -- | -- | -- | -- | --
 number | Phone number | A phone number | MAY | 
-contact-priority | Contact priority | The priority of a number | MAY | 
+contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
 
 **Validation rules**
 

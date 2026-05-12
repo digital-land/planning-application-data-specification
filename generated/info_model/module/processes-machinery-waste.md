@@ -2,13 +2,14 @@
 
 How waste will be managed on the site
 
+
 **Processes machinery waste module**
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
 | site-activity-details | Site activity details | Description of activities, processes, and end products including site operations, plant, ventilation, and machinery |  | MUST |  |
-| proposal-waste-management | Proposal waste management | Whether the proposal involves waste management development |  | MUST |  |
-| waste-management | Waste management[]{} | List of waste management facilities involved in the proposal |  | MAY |  |
+| proposal-waste-management | Proposal waste management | Whether the proposal involves any waste management facility that is relevant to the proposal |  | MUST |  |
+| waste-management | Waste management[]{} | List of applicable waste management facilities involved in the proposal |  | MAY | Applicants should only include entries for facilities that are applicable to the proposal. |
 | waste-streams | Waste streams throughput{} | Annual throughput for waste streams by waste type |  | MAY |  |
 
 
@@ -16,12 +17,11 @@ How waste will be managed on the site
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-waste-management-facility-type | Waste management facility type | Type of waste management facility | MUST | 
-not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
-total-capacity | Total capacity | Total capacity of void in cubic metres (or tonnes/litres) | MAY | Rule: is a MUST if `not-applicable` is `False`
-unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Rule: is a MUST if `not-applicable` is `False`
-annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MAY | Rule: is a MUST if `not-applicable` is `False`
-unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Rule: is a MUST if `not-applicable` is `False`
+waste-management-facility-type | Waste management facility type | Type of waste management facility being described in this entry | MUST | Select from the **waste-management-type** enum
+total-capacity | Total capacity | Total capacity of void in cubic metres (or tonnes/litres) | MUST | 
+unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MUST | Select from the **waste-capacity-unit** enum
+annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MUST | 
+unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MUST | Select from the **waste-capacity-unit** enum
 
 
 **Waste streams component**
@@ -37,6 +37,4 @@ hazardous | Hazardous | Maximum throughput for hazardous waste (annual throughpu
 
 - if proposal-waste-management == true then waste-management is required
 - if proposal-waste-management == true then waste-streams is required
-- if not-applicable == false then total-capacity is required
-- if not-applicable == false then annual-throughput is required
 - is-total-capacity-known and is-annual-throughput-known only apply to outline applications

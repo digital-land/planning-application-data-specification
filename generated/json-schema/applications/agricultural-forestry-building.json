@@ -1,9 +1,9 @@
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
-  "$id": "pa-storey.json",
-  "title": "Additional storeys",
+  "$id": "agricultural-forestry-building.json",
+  "title": "Agricultural or forestry building development",
   "additionalProperties": true,
-  "description": "Enlargement of a dwellinghouse by construction of additional storeys",
+  "description": "Prior apporval for building development related to agricultural and forestry buildings",
   "type": "object",
   "properties": {
     "agent-contact": {
@@ -11,6 +11,9 @@
     },
     "agent-details": {
       "$ref": "#/definitions/agent-details"
+    },
+    "agri-forest-dev-elig": {
+      "$ref": "#/definitions/agri-forest-dev-elig"
     },
     "applicant-contact": {
       "$ref": "#/definitions/applicant-contact"
@@ -27,17 +30,8 @@
     "declaration": {
       "$ref": "#/definitions/declaration"
     },
-    "desc-work-impacts-risks": {
-      "$ref": "#/definitions/desc-work-impacts-risks"
-    },
-    "eligibility-current-building": {
-      "$ref": "#/definitions/eligibility-current-building"
-    },
-    "eligibility-proposal": {
-      "$ref": "#/definitions/eligibility-proposal"
-    },
-    "eligibility-related-works": {
-      "$ref": "#/definitions/eligibility-related-works"
+    "proposed-building": {
+      "$ref": "#/definitions/proposed-building"
     },
     "site-details": {
       "$ref": "#/definitions/site-details"
@@ -46,18 +40,43 @@
   "required": [
     "agent-contact",
     "agent-details",
+    "agri-forest-dev-elig",
     "applicant-contact",
     "applicant-details",
     "checklist",
     "conflict-of-interest",
     "declaration",
-    "desc-work-impacts-risks",
-    "eligibility-current-building",
-    "eligibility-proposal",
-    "eligibility-related-works",
+    "proposed-building",
     "site-details"
   ],
   "definitions": {
+    "building-details": {
+      "type": "object",
+      "properties": {
+        "details": {
+          "type": "string"
+        },
+        "building-length": {
+          "type": "number"
+        },
+        "eaves-height": {
+          "type": "number"
+        },
+        "building-breadth": {
+          "type": "number"
+        },
+        "building-ridge-height": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "details",
+        "building-length",
+        "eaves-height",
+        "building-breadth",
+        "building-ridge-height"
+      ]
+    },
     "agent": {
       "type": "object",
       "properties": {
@@ -195,17 +214,6 @@
       },
       "required": []
     },
-    "eligibility-related-works": {
-      "type": "object",
-      "properties": {
-        "external-support-required": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "external-support-required"
-      ]
-    },
     "applicant-contact": {
       "type": "object",
       "properties": {
@@ -236,37 +244,6 @@
         "applicants"
       ]
     },
-    "desc-work-impacts-risks": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "dwellinghouse-height": {
-          "type": "number"
-        },
-        "proposed-height": {
-          "type": "number"
-        },
-        "impact-on-amenity": {
-          "type": "string"
-        },
-        "air-traffic-defence-impacts": {
-          "type": "string"
-        },
-        "protected-view-impact": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "description",
-        "dwellinghouse-height",
-        "proposed-height",
-        "impact-on-amenity",
-        "air-traffic-defence-impacts",
-        "protected-view-impact"
-      ]
-    },
     "declaration": {
       "type": "object",
       "properties": {
@@ -286,6 +263,111 @@
         "declaration-date"
       ]
     },
+    "agri-forest-dev-elig": {
+      "type": "object",
+      "properties": {
+        "agri-unit-area": {
+          "type": "number"
+        },
+        "land-parcel-area": {
+          "type": "string",
+          "enum": [
+            "1-hec-or-more",
+            "less-1-more-point4-hec",
+            "less-point4.hec"
+          ]
+        },
+        "agri-start-date": {
+          "type": "string"
+        },
+        "is-necessary-for-agri": {
+          "type": "boolean"
+        },
+        "details": {
+          "type": "string"
+        },
+        "is-designed-agri": {
+          "type": "boolean"
+        },
+        "design-details": {
+          "type": "string"
+        },
+        "dwelling-alteration": {
+          "type": "boolean"
+        },
+        "away-from-road": {
+          "type": "boolean"
+        },
+        "close-to-aerodrome": {
+          "type": "boolean"
+        },
+        "proposed-height": {
+          "type": "number"
+        },
+        "affects-heritage": {
+          "type": "boolean"
+        },
+        "heritage-nature-impact-details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "agri-unit-area",
+        "land-parcel-area",
+        "agri-start-date",
+        "is-necessary-for-agri",
+        "is-designed-agri",
+        "dwelling-alteration",
+        "away-from-road",
+        "close-to-aerodrome",
+        "proposed-height",
+        "affects-heritage"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "is-necessary-for-agri": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "is-designed-agri": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "design-details"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "affects-heritage": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "heritage-nature-impact-details"
+            ]
+          }
+        }
+      ]
+    },
     "checklist": {
       "type": "object",
       "properties": {
@@ -301,6 +383,128 @@
         "national-req-types"
       ]
     },
+    "proposed-building": {
+      "type": "object",
+      "properties": {
+        "development-operation-types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "new-build",
+              "extension",
+              "alteration"
+            ]
+          },
+          "minItems": 1
+        },
+        "proposed-building-details": {
+          "$ref": "#/definitions/building-details"
+        },
+        "building-wall-materials": {
+          "type": "string"
+        },
+        "building-wall-colour": {
+          "type": "string"
+        },
+        "building-roof-materials": {
+          "type": "string"
+        },
+        "building-roof-colour": {
+          "type": "string"
+        },
+        "has-agri-building-2-yrs": {
+          "type": "boolean"
+        },
+        "agri-building-area": {
+          "type": "number"
+        },
+        "agri-building-distance": {
+          "type": "number"
+        },
+        "house-livestock": {
+          "type": "boolean"
+        },
+        "livestock-building-400m": {
+          "type": "boolean"
+        },
+        "exceeds-threshold": {
+          "type": "boolean"
+        },
+        "related-work-distance": {
+          "type": "boolean"
+        },
+        "engineering-operations-threshold": {
+          "type": "string",
+          "enum": [
+            "yes",
+            "no",
+            "not-applicable"
+          ]
+        },
+        "within-scheduled-monument": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "development-operation-types",
+        "proposed-building-details",
+        "building-wall-materials",
+        "building-wall-colour",
+        "building-roof-materials",
+        "building-roof-colour",
+        "has-agri-building-2-yrs",
+        "house-livestock",
+        "exceeds-threshold",
+        "related-work-distance",
+        "engineering-operations-threshold",
+        "within-scheduled-monument"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "has-agri-building-2-yrs": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agri-building-area"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "has-agri-building-2-yrs": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "agri-building-distance"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "house-livestock": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "livestock-building-400m"
+            ]
+          }
+        }
+      ]
+    },
     "agent-contact": {
       "type": "object",
       "properties": {
@@ -314,93 +518,6 @@
       "required": [
         "agent-reference",
         "contact-details"
-      ]
-    },
-    "eligibility-proposal": {
-      "type": "object",
-      "properties": {
-        "principal-part-only": {
-          "type": "boolean"
-        },
-        "ceiling-height-exceeds-3m": {
-          "type": "boolean"
-        },
-        "existing-ceiling-height-exceeds-3m": {
-          "type": "boolean"
-        },
-        "building-height-exceeds-18m": {
-          "type": "boolean"
-        },
-        "roof-height-exceeds-3-5m": {
-          "type": "boolean"
-        },
-        "roof-height-exceeds-7m": {
-          "type": "boolean"
-        },
-        "is-dwelling-detached": {
-          "type": "boolean"
-        },
-        "extension-on-attached-dwelling": {
-          "type": "boolean"
-        },
-        "extension-below-terrace-roof": {
-          "type": "boolean"
-        },
-        "roof-pitch-matching": {
-          "type": "boolean"
-        },
-        "window-on-side-elevation": {
-          "type": "boolean"
-        },
-        "materials-similar-exterior": {
-          "type": "boolean"
-        },
-        "dwellinghouse-use": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "principal-part-only",
-        "ceiling-height-exceeds-3m",
-        "existing-ceiling-height-exceeds-3m",
-        "building-height-exceeds-18m",
-        "roof-height-exceeds-3-5m",
-        "roof-height-exceeds-7m",
-        "is-dwelling-detached",
-        "roof-pitch-matching",
-        "window-on-side-elevation",
-        "materials-similar-exterior",
-        "dwellinghouse-use"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "is-dwelling-detached": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "extension-on-attached-dwelling"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "is-dwelling-detached": {
-                "const": false
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "extension-below-terrace-roof"
-            ]
-          }
-        }
       ]
     },
     "conflict-of-interest": {
@@ -421,29 +538,6 @@
       },
       "required": [
         "site-locations"
-      ]
-    },
-    "eligibility-current-building": {
-      "type": "object",
-      "properties": {
-        "was-constructed-btw-1948-2018": {
-          "type": "boolean"
-        },
-        "has-additional-storeys": {
-          "type": "boolean"
-        },
-        "was-use-granted-by-pdr": {
-          "type": "boolean"
-        },
-        "is-site-in-restricted-area": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "was-constructed-btw-1948-2018",
-        "has-additional-storeys",
-        "was-use-granted-by-pdr",
-        "is-site-in-restricted-area"
       ]
     },
     "agent-details": {

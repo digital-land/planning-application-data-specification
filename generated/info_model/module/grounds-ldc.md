@@ -6,8 +6,8 @@ Evidence and explanations relating to a Lawful Development Certificate (LDC) app
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| grounds-pre-2024 | Grounds pre 2024[] | List of grounds pre 2024-04-25 under which the certificate is sought |  | MAY |  |
-| grounds-post-2024 | Grounds post 2024[] | List of grounds post 2024-04-25 under which the certificate is sought |  | MAY |  |
+| grounds-pre-2024 | Grounds pre 2024[] | List of grounds pre 2024-04-25 under which the certificate is sought |  | MAY | Select from the **grounds-ldc-pre-apr-2024** enum |
+| grounds-post-2024 | Grounds post 2024[] | List of grounds post 2024-04-25 under which the certificate is sought |  | MAY | Select from the **grounds-ldc-post-apr-2024** enum |
 | other-details | Other details | Explanation if other ground is selected |  | MAY |  |
 | supporting-applications | Supporting applications[]{} | List of supporting planning permissions, certificates, or notices affecting the application site |  | MAY |  |
 | reason | Reason | A textual reason |  | MUST |  |

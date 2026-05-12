@@ -14,7 +14,7 @@ Proposed operating hours if the proposed development is intended for non-residen
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-use | Use | A use class or type of use | MUST | an option needs to be "other"
+use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
 use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use` is `other`. Required if use is "other"
 operational-times | Operational times[]{} | Structured data for operational hours by day | MAY | Rule: is a MUST if `hours-not-known` is `True`. Must be completed if hours-not-known is not provided
 hours-not-known | Hours not known | Applicant states they do not know the hours of operation | MAY | 
@@ -24,7 +24,7 @@ hours-not-known | Hours not known | Applicant states they do not know the hours 
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-schedule-days | Schedule days[] | List of days or day categories that a schedule entry applies to | MUST | 
+schedule-days | Schedule days[] | List of days or day categories that a schedule entry applies to | MUST | Select from the **schedule-day** enum
 closed | Closed | True or False - explicitly state when closed | MAY | If True, open-time and close-time must be empty
 time-ranges | Time ranges[]{} | Opening and closing times for the day | MAY | Rule: is a MUST if `closed` is `False`. Can have multiple ranges (e.g., morning and evening opening)
 

@@ -7,7 +7,7 @@ Whether certain eligibility criteria has been met and the right people notified
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
 | applicant-land-interest | Applicant land interest | Does the applicant have an interest in the land |  | MUST |  |
-| ownership-notification | Ownership notification | If not the sole owner, has notification been given under Article 10 |  | MAY |  |
+| ownership-notification | Ownership notification | If not the sole owner, has notification been given under Article 10 |  | MAY | Select from the **yes-no-not-applicable** enum |
 | notified-persons | Notified persons[]{} | List of persons notified, including address and date |  | MAY | Rule: is a MUST if `ownership-notification` is `True` |
 
 
