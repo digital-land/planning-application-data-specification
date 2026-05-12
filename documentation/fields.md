@@ -47,6 +47,15 @@ In practice this is most useful for presentation text:
 
 For example, a shared `description` field can be reused in different modules while each module supplies the label and wording that fit that context.
 
+**Reuse fields when the semantic meaning holds**
+Reuse a field when it describes the same real-world concept, not just when the wording on a form overlaps.
+
+This means an existing field can be reused where only the label, description, guidance, requiredness, validation, cardinality or presentation changes in a particular module. Those differences should be handled with module-level field attributes or overrides.
+
+Do not reuse a field where its current meaning is tied to a different domain and would import the wrong assumptions. In that case, either generalise the existing field deliberately or create a new field with a clearer meaning.
+
+For example, a generic `addresses` field can be reused where a form asks for multiple premises addresses, with the module making the context and `cardinality: n` explicit. However, an advertisement-specific `height` field should not be reused for telecommunications apparatus just because both forms ask for a height.
+
 **Use `component` for substructures**
 Semantically accurate for nested objects (like Person, Document, etc.)
 
