@@ -15,4 +15,5 @@ rules:
 - rule: name must match one of the named individuals in the application
 - rule: declaration-date must be in YYYY-MM-DD format
 - rule: declaration-date must not be in the future
+- rule: `declaration-confirmed` must be `true` for a submission to be valid
 ---
