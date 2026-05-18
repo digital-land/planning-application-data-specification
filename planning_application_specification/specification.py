@@ -9,7 +9,7 @@ from typing import Optional
 from .application_types import canonical_application_ref, normalise_application_types
 from .applications import resolve_application
 from .loader import _resolve_repo_root, load_specification_model
-from .models import ApplicationDef, ComponentUsage, FieldUsage
+from .models import ApplicationDef, ComponentUsage, FieldDef, FieldUsage
 
 
 @dataclass(frozen=True)
@@ -48,6 +48,13 @@ class FieldUsageMatch:
 
 @dataclass(frozen=True)
 class FieldUsages:
+    modules: tuple[FieldUsageMatch, ...]
+    components: tuple[FieldUsageMatch, ...]
+
+
+@dataclass(frozen=True)
+class CodelistUsages:
+    fields: tuple[FieldDef, ...]
     modules: tuple[FieldUsageMatch, ...]
     components: tuple[FieldUsageMatch, ...]
 
@@ -231,6 +238,30 @@ class Specification:
             self.components.values(), ref, "component"
         )
         return FieldUsages(modules=module_matches, components=component_matches)
+
+    def codelist_usages(self, ref: str) -> CodelistUsages:
+        self.codelist(ref)
+        fields = tuple(
+            sorted(
+                (
+                    field
+                    for field in self.fields.values()
+                    if field.codelist == ref
+                ),
+                key=lambda field: field.ref,
+            )
+        )
+        module_matches = self._collect_codelist_usage_matches(
+            self.modules.values(), ref, "module"
+        )
+        component_matches = self._collect_codelist_usage_matches(
+            self.components.values(), ref, "component"
+        )
+        return CodelistUsages(
+            fields=fields,
+            modules=module_matches,
+            components=component_matches,
+        )
 
     def resolve_field(
         self,
@@ -489,11 +520,47 @@ class Specification:
                 )
         return tuple(sorted(matches, key=lambda match: match.container.ref))
 
+    def _collect_codelist_usage_matches(
+        self, containers, codelist_ref: str, container_type: str
+    ) -> tuple[FieldUsageMatch, ...]:
+        matches = []
+        for container in containers:
+            for usage in self._find_direct_codelist_usages(container.items, codelist_ref):
+                matches.append(
+                    FieldUsageMatch(
+                        container_type=container_type,
+                        container=container,
+                        usage=usage,
+                    )
+                )
+        return tuple(
+            sorted(
+                matches,
+                key=lambda match: (
+                    match.container.ref,
+                    match.usage.original.ref,
+                ),
+            )
+        )
+
     def _find_direct_field_usage(self, items, ref: str) -> FieldUsage | None:
         for item in items:
             if isinstance(item, FieldUsage) and item.original.ref == ref:
                 return item
         return None
+
+    def _find_direct_codelist_usages(
+        self, items, codelist_ref: str
+    ) -> tuple[FieldUsage, ...]:
+        return tuple(
+            item
+            for item in items
+            if isinstance(item, FieldUsage)
+            and self._field_usage_codelist(item) == codelist_ref
+        )
+
+    def _field_usage_codelist(self, usage: FieldUsage) -> str | None:
+        return usage.overrides.get("codelist", usage.original.codelist)
 
     def _usage_applies(
         self, usage: FieldUsage, selection: SelectionContext | None
