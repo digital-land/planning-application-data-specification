@@ -69,6 +69,37 @@ def export_components(model):
     write_csv(components, output_file=OUTPUT_DIR / "components.csv")
 
 
+def export_applications(model):
+    applications = []
+    application_tables = model.get("tables", {}).get("application", {})
+
+    for app in model.get("applications", {}).values():
+        app_meta = application_tables.get(app.ref, {})
+        if app_meta.get("base-type"):
+            continue
+
+        applications.append(
+            {
+                "reference": app.ref,
+                "name": app.name,
+                "description": app.description,
+                "extends": app.extends or "",
+                "allow-additional-properties": app.allow_additional_properties,
+                "entry-date": getattr(app, "entry_date", ""),
+                "start-date": getattr(app, "start_date", ""),
+                "end-date": getattr(app, "end_date", ""),
+                "module-count": len(getattr(app, "modules", []) or []),
+                "field-count": len(getattr(app, "items", []) or []),
+            }
+        )
+
+    applications = sorted(applications, key=lambda app: app.get("reference") or "")
+
+    if applications:
+        OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+        write_csv(applications, output_file=OUTPUT_DIR / "applications.csv")
+
+
 def export_codelists(model, sort=True):
     codelists = []
     for c in model.get("tables", {}).get("codelist", {}).values():
@@ -112,6 +143,7 @@ def main():
     export_fields(model)
     export_modules(model)
     export_components(model)
+    export_applications(model)
     export_codelists(model, sort=not args.no_sort_codelists)
 
     if args.xlsx:
@@ -119,6 +151,7 @@ def main():
             OUTPUT_DIR / "fields.csv",
             OUTPUT_DIR / "modules.csv",
             OUTPUT_DIR / "components.csv",
+            OUTPUT_DIR / "applications.csv",
             OUTPUT_DIR / "codelists.csv",
         ]
         csvs_to_excel(csvs, args.xlsx)
