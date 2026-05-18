@@ -4,9 +4,10 @@ Python package for loading and querying the planning application specification f
 
 This package is being introduced gradually so existing `/bin` scripts can move onto it in small safe steps. The current interface is intentionally small.
 
-The current package has three kinds of query:
+The current package has four kinds of query:
 
 - canonical lookup for definitions as they exist in the source data
+- discovery queries for where specification elements are used
 - applicable views for codelists filtered by selection context
 - resolved views for fields as used within a module or component
 - application lookup for canonical single application types and controlled combined application types
@@ -60,6 +61,7 @@ The implemented package currently supports:
 - canonical single-application lookup and controlled combined-application lookup
 - canonical codelist lookup
 - canonical field, component and module lookup
+- codelist usage lookup across canonical field definitions and direct module/component field usages
 - applicable codelist filtering using selection context
 - resolved field lookup for module or component context with static override merging
 - resolved container item lookup that preserves mixed authored order for plain fields and component-reference rows
@@ -106,6 +108,7 @@ Use canonical lookup when you want the base definition:
 - `spec.application(ref)` for an application view over a canonical single application definition
 - `spec.applications_with_module(ref)` when you want the canonical application types that include a given module
 - `spec.field_usages(ref)` when you want the modules and components that directly use a field
+- `spec.codelist_usages(ref)` when you want to find fields, modules and components that use a codelist, including usage-level codelist overrides
 - `spec.codelist(ref)` for the source codelist
 - `spec.field(ref)`, `spec.component(ref)` and `spec.module(ref)` for canonical definitions
 
@@ -250,6 +253,59 @@ Example:
 usages = spec.field_usages("description")
 module_refs = [match.container.ref for match in usages.modules]
 ```
+
+### `Specification.codelist_usages(ref: str) -> CodelistUsages`
+
+Return the fields, modules and components that use a given codelist.
+
+This is a discovery query over the loaded specification model. It reports both canonical field definitions and direct module or component usages where the effective codelist is the requested codelist.
+
+A codelist can come from either:
+
+- the canonical field definition, via `FieldDef.codelist`
+- a module or component field usage override, via `FieldUsage.overrides["codelist"]`
+
+For usage matches, the effective codelist is read as:
+
+```python
+usage.overrides.get("codelist", usage.original.codelist)
+```
+
+This means `codelist_usages(...)` can find cases where a field does not have a canonical codelist, but is used as an enum in a specific module or component.
+
+Arguments:
+
+- `ref`: codelist reference, for example `"applicant-interest-type"`
+
+Returns:
+
+- a `CodelistUsages` object with `fields`, `modules` and `components`
+- `fields` contains canonical `FieldDef` objects whose base definition references the codelist
+- `modules` contains `FieldUsageMatch` entries for module field usages whose effective codelist matches
+- `components` contains `FieldUsageMatch` entries for component field usages whose effective codelist matches
+
+Raises:
+
+- `KeyError` if the codelist is not defined
+
+Example:
+
+```python
+usages = spec.codelist_usages("applicant-interest-type")
+
+field_refs = [field.ref for field in usages.fields]
+module_refs = [match.container.ref for match in usages.modules]
+
+for match in usages.modules:
+    field_ref = match.usage.original.ref
+    codelist_ref = match.usage.overrides.get(
+        "codelist",
+        match.usage.original.codelist,
+    )
+    print(match.container.ref, field_ref, codelist_ref)
+```
+
+For example, `applicant-interest` is canonically a string field, but in the `interest-details` module it is used with `codelist: applicant-interest-type`. That match appears in `usages.modules`, not `usages.fields`.
 
 ### `Specification.field(ref: str)`
 
