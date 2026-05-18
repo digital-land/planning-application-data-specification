@@ -229,6 +229,45 @@ def print_codelist_details(codelist_ref):
         click.echo("- none")
 
 
+def _format_field_usage_match(match) -> str:
+    return (
+        f"- {match.container.ref}: {match.container.name} "
+        f"(field: {match.usage.original.ref})"
+    )
+
+
+def print_codelist_usages(codelist_ref):
+    spec = _load_specification()
+    usages = spec.codelist_usages(codelist_ref)
+
+    if not usages.fields and not usages.modules and not usages.components:
+        click.echo(
+            f"No fields, modules or components found using codelist '{codelist_ref}'"
+        )
+        return
+
+    click.echo(f"Codelist: {codelist_ref}")
+
+    if usages.fields:
+        click.echo(f"Fields: {len(usages.fields)}")
+        for field in usages.fields:
+            click.echo(f"- {field.ref}: {field.name}")
+
+    if usages.modules:
+        if usages.fields:
+            click.echo()
+        click.echo(f"Modules: {len(usages.modules)}")
+        for match in usages.modules:
+            click.echo(_format_field_usage_match(match))
+
+    if usages.components:
+        if usages.fields or usages.modules:
+            click.echo()
+        click.echo(f"Components: {len(usages.components)}")
+        for match in usages.components:
+            click.echo(_format_field_usage_match(match))
+
+
 def print_2025_form_details(form_ref):
     form = get_2025_form(form_ref.strip())
 
@@ -397,6 +436,13 @@ def field_usage(field_ref):
             click.echo(f"- {match.container.ref}: {match.container.name}")
 
 
+@uses.command(name="codelist")
+@click.argument("codelist_ref")
+def codelist_usage(codelist_ref):
+    """Find fields, modules and components that use a given codelist."""
+    print_codelist_usages(codelist_ref)
+
+
 @uses.command(name="component")
 @click.argument("component_ref")
 def component_usage(component_ref):
@@ -446,7 +492,6 @@ def component_usage(component_ref):
             click.echo(f"- {ref}: {name}")
 
 
-# TODO: find all fields that reference a given codelist
 # TODO: find all fields that reference a given component
 # TODO: find all fields that are not used anywhere
 
