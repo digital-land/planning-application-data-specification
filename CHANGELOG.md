@@ -1,4 +1,129 @@
 
+<a name="v0.1.90"></a>
+## [v0.1.90](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.89...v0.1.90) (2026-05-18)
+
+Improving package coverage
+
+### ⚒️ Tooling
+
+* remove unused generator scripts (commit [5802d353](https://github.com/digital-land/planning-application-data-specification/commit/5802d3538530eba5d18d9394e13975438f40db88))
+* export list of applications to csv too (commit [021826a1](https://github.com/digital-land/planning-application-data-specification/commit/021826a14ae69f25885fcce136daa72be944fec6))
+* expose codelist usage CLI (commit [b3cfbd7f](https://github.com/digital-land/planning-application-data-specification/commit/b3cfbd7fe0f6856c8cbc4dcc12687bedf9940b9e))
+* add codelist usage query (commit [5f785814](https://github.com/digital-land/planning-application-data-specification/commit/5f785814fd8313328bfa3cc02b2cf19e1b35b14d))
+* cover codelist usage lookup with tests (commit [8fa7fe3f](https://github.com/digital-land/planning-application-data-specification/commit/8fa7fe3fc315f2f222dd4dff36c1f340e5601097))
+* remove raw specification lookups from info model generation (commit [5e2f7e99](https://github.com/digital-land/planning-application-data-specification/commit/5e2f7e99da3c2300fd54501c977d7bb3b135daaf))
+* use package codelists in info model generation (commit [1d57b971](https://github.com/digital-land/planning-application-data-specification/commit/1d57b9716545e0b832be22e5d9b91d1405cb49fa))
+* expose canonical codelist metadata in package (commit [e877bd2f](https://github.com/digital-land/planning-application-data-specification/commit/e877bd2f09558dfe444f885cd07c93bbba7a3252))
+* add codelist coverage for info model generation (commit [007d28ee](https://github.com/digital-land/planning-application-data-specification/commit/007d28ee29485ae33f4c7ecd3334014f1135272a))
+* expose component rules for package-backed info model output (commit [ddb747f8](https://github.com/digital-land/planning-application-data-specification/commit/ddb747f8ce8859ab66186453914bfe6bbbf6007d))
+* use package metadata in application info model output (commit [d1cca7b4](https://github.com/digital-land/planning-application-data-specification/commit/d1cca7b4e830e0be42ba88c3227741ee7e1a5168))
+* use package traversal in info model generation (commit [b460c5b0](https://github.com/digital-land/planning-application-data-specification/commit/b460c5b0ab3433986d9932175c506b43d47cf53b))
+* expose canonical field and module metadata in package (commit [2ca55029](https://github.com/digital-land/planning-application-data-specification/commit/2ca550290721102642114a2179337938629bcae4))
+* add rule coverage for info model generation (commit [a755813e](https://github.com/digital-land/planning-application-data-specification/commit/a755813eff50dd3a6926683ed6dd8920a89ed45f))
+* flesh out unit tests for integrity checks (commit [88206360](https://github.com/digital-land/planning-application-data-specification/commit/882063601e342ad675706460705674ce5b263ca0))
+
+### 𝌭 Model changes
+
+* update descriptions of newest modules (commit [1a7077c6](https://github.com/digital-land/planning-application-data-specification/commit/1a7077c696ed21c47c33e4f9dfdaed230544516e))
+* add prior approval app - agricultural and forestry building development (commit [73b1a449](https://github.com/digital-land/planning-application-data-specification/commit/73b1a44979854420c8c5a7fe7ba42c85b76aa503))
+* add the proposed-building module used for agricultural and forestry proposals (commit [d7fdb831](https://github.com/digital-land/planning-application-data-specification/commit/d7fdb83142263b2081ced3e39b6cb95bd5e0e232))
+* add fields for if agricultural building near scheduled mon (commit [bfeed4b8](https://github.com/digital-land/planning-application-data-specification/commit/bfeed4b8a217686459fb28dee3a986c577e96fbd))
+* add fields about ground area and distance details (commit [95f147c7](https://github.com/digital-land/planning-application-data-specification/commit/95f147c741a5dea32a61d21b4f4bf75dec446d1a))
+* add livestock-building-400m field (commit [50fdf52f](https://github.com/digital-land/planning-application-data-specification/commit/50fdf52fe6847dce3bc27118d8675cedabad5e9a))
+* add house-livestock field (commit [c73f31b3](https://github.com/digital-land/planning-application-data-specification/commit/c73f31b3c68788736919d59396cad7be0d995f0f))
+* add fields for recent agricultural building development (commit [de1a4c43](https://github.com/digital-land/planning-application-data-specification/commit/de1a4c434224dce0d83ac4f26f8a77f87bd086ce))
+* add fields for wall and roof materials and colour (commit [0f4feae6](https://github.com/digital-land/planning-application-data-specification/commit/0f4feae6f279ea934a047f8efdef81de20f1c58e))
+* add component for initial details of proposed agricultural or forestry building (commit [a29d5c1a](https://github.com/digital-land/planning-application-data-specification/commit/a29d5c1acb66a86091d65d417cbbe1d1e0049ea6))
+* add module for eligibility of agricultural and foresty building developments (commit [3e982086](https://github.com/digital-land/planning-application-data-specification/commit/3e98208610d030980684462db3f5ee12dfc35f42))
+* add heritage-nature-impact-details field (commit [5088283c](https://github.com/digital-land/planning-application-data-specification/commit/5088283c01c1d345a186091d15d568ee61f9dd50))
+* add various boolean fields for argicultural eligibility section (commit [8e892425](https://github.com/digital-land/planning-application-data-specification/commit/8e8924251bb25e635b4552eec66b2c6dd2de29ab))
+* add fields for designed for agriculture info (commit [644d926a](https://github.com/digital-land/planning-application-data-specification/commit/644d926ad13faead2eaf6fcabf6d9748882bc63b))
+* add is-necessary-for-agri field (commit [7ce1ff9d](https://github.com/digital-land/planning-application-data-specification/commit/7ce1ff9d13fc6a61213c0ce8d4c42e4b91453624))
+* add agri-start-date field (commit [8fd75a81](https://github.com/digital-land/planning-application-data-specification/commit/8fd75a816ec441243b662ba0ed868e016cf9a808))
+* add a land-parcel-area codelist (commit [aac60a5b](https://github.com/digital-land/planning-application-data-specification/commit/aac60a5b164c79c832520cfa794d3ac1bffe2ff2))
+* add agri-unit-area field (commit [d154a8c9](https://github.com/digital-land/planning-application-data-specification/commit/d154a8c9a7883d26fe7fe7d58ce22cf2c36fe55f))
+* remove deprecated subtype codelist (commit [c2bfb366](https://github.com/digital-land/planning-application-data-specification/commit/c2bfb366b37d8a76f9a194f74cb48f7cce4531dd))
+
+### 🐛 Bug Fixes
+
+* reference and filename for Agricultural or forestry building development app (commit [8e433336](https://github.com/digital-land/planning-application-data-specification/commit/8e433336ff243df1bb73aef13df38336a9fb2d09))
+* name of codelist data file (commit [b307b005](https://github.com/digital-land/planning-application-data-specification/commit/b307b0058f884e3b662f4be5bd74b3258dddbf4e))
+* link paths in local version of static site (commit [08bbe879](https://github.com/digital-land/planning-application-data-specification/commit/08bbe8798ff53ed4a43021370e0735df8210066c))
+
+### 📚 Documentation
+
+* describe codelist usage query (commit [83817b07](https://github.com/digital-land/planning-application-data-specification/commit/83817b070b63f62d6c16d376f61d93c3e7501d5b))
+* on reusing fields (commit [84e495c4](https://github.com/digital-land/planning-application-data-specification/commit/84e495c47f7d0bd9b1ee4238e802d0603702f01b))
+* update cli docs to include details of combined app types (commit [56d5cb6b](https://github.com/digital-land/planning-application-data-specification/commit/56d5cb6b2883cfe9ccd25a809500fae210dd595a))
+
+
+<a name="v0.1.89"></a>
+## [v0.1.89](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.88...v0.1.89) (2026-05-12)
+
+Add Building for agricultural or forestry use prior approval app
+
+### 𝌭 Model changes
+
+* add prior approval app - agricultural and forestry building development (commit [9ba3caf0](https://github.com/digital-land/planning-application-data-specification/commit/9ba3caf0f054798a57482cd344045f6f36975b6b))
+* add the proposed-building module used for agricultural and forestry proposals (commit [e4bf5dbc](https://github.com/digital-land/planning-application-data-specification/commit/e4bf5dbc18d209aafc72151933a43d7e89fa1aef))
+* add fields for if agricultural building near scheduled mon (commit [d82550e3](https://github.com/digital-land/planning-application-data-specification/commit/d82550e3f7ff1c1e1240a30ff048ebc35622c6eb))
+* add fields about ground area and distance details (commit [e7be1817](https://github.com/digital-land/planning-application-data-specification/commit/e7be18179ba605d785f82d766ef1c7168d114878))
+* add livestock-building-400m field (commit [5e9f003e](https://github.com/digital-land/planning-application-data-specification/commit/5e9f003e4b454025cec39b82a2c2f4f6180bd43a))
+* add house-livestock field (commit [ab280ff3](https://github.com/digital-land/planning-application-data-specification/commit/ab280ff3215832c0afbddc37b1030bebaef840ea))
+* add fields for recent agricultural building development (commit [a1e79baf](https://github.com/digital-land/planning-application-data-specification/commit/a1e79baf93c5187b2a2b72dde6abfd00192b25fe))
+* add fields for wall and roof materials and colour (commit [45f78ba9](https://github.com/digital-land/planning-application-data-specification/commit/45f78ba9a77158f12556edd38695b1bd0dc51fbf))
+* add component for initial details of proposed agricultural or forestry building (commit [1e463384](https://github.com/digital-land/planning-application-data-specification/commit/1e4633842bea2bd66356428488be989aad231b80))
+* add module for eligibility of agricultural and foresty building developments (commit [a91e544f](https://github.com/digital-land/planning-application-data-specification/commit/a91e544f146258c2952d8460b6d39cff37686ab2))
+* add heritage-nature-impact-details field (commit [a63a7b62](https://github.com/digital-land/planning-application-data-specification/commit/a63a7b62ff0d74bdec4a3822e10a23106e1b8ac0))
+* add various boolean fields for argicultural eligibility section (commit [6f8225b9](https://github.com/digital-land/planning-application-data-specification/commit/6f8225b9cec1d991974b34e408bbdfdb9503ef60))
+* add fields for designed for agriculture info (commit [4e1dbb9e](https://github.com/digital-land/planning-application-data-specification/commit/4e1dbb9ef7877a23749e08408ed21add58fb0d3a))
+* add is-necessary-for-agri field (commit [9bc74afc](https://github.com/digital-land/planning-application-data-specification/commit/9bc74afcdca4684ce9a4abec5b852a76571be81a))
+* add agri-start-date field (commit [b7e9535f](https://github.com/digital-land/planning-application-data-specification/commit/b7e9535fdcadf88f8cd6bdf021d874e5d312ee6e))
+* add a land-parcel-area codelist (commit [94019ae6](https://github.com/digital-land/planning-application-data-specification/commit/94019ae67b910eed3ec741645f83f7b7e626a3f7))
+* add agri-unit-area field (commit [9e9e0f1b](https://github.com/digital-land/planning-application-data-specification/commit/9e9e0f1b8d569ca87d76e23946c95ecc5ca17661))
+
+
+<a name="v0.1.88"></a>
+## [v0.1.88](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.87...v0.1.88) (2026-05-12)
+
+refactor generate info model
+
+### ⚒️ Tooling
+
+* remove raw specification lookups from info model generation (commit [a5d0dc26](https://github.com/digital-land/planning-application-data-specification/commit/a5d0dc265ee06046d528155856e74e11b4849c1c))
+* use package codelists in info model generation (commit [92466305](https://github.com/digital-land/planning-application-data-specification/commit/92466305e115f4ed695cb98849557b33269532da))
+* expose canonical codelist metadata in package (commit [68a0d344](https://github.com/digital-land/planning-application-data-specification/commit/68a0d3444d2e50c5584d049916bb906422e183d3))
+* add codelist coverage for info model generation (commit [4d66a129](https://github.com/digital-land/planning-application-data-specification/commit/4d66a129fb19b0183eaa6bc6f932a6172d0ea9af))
+* expose component rules for package-backed info model output (commit [920d02ac](https://github.com/digital-land/planning-application-data-specification/commit/920d02aca97d27752a4707940c0def6e1041e64e))
+* use package metadata in application info model output (commit [eeecc4d9](https://github.com/digital-land/planning-application-data-specification/commit/eeecc4d953e6160025e8c891362dc29d65a82556))
+* use package traversal in info model generation (commit [4e5fb114](https://github.com/digital-land/planning-application-data-specification/commit/4e5fb1143bdde9d9ac603a969d6842097b1322b9))
+* expose canonical field and module metadata in package (commit [242ecb22](https://github.com/digital-land/planning-application-data-specification/commit/242ecb2212e5c0bce96e8468606cca6f8a19a2d1))
+* add rule coverage for info model generation (commit [91c282fc](https://github.com/digital-land/planning-application-data-specification/commit/91c282fc44674a36d58bed28f06d396881abbe22))
+
+
+<a name="v0.1.87"></a>
+## [v0.1.87](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.86...v0.1.87) (2026-05-08)
+
+Improve combined application tooling and documentation
+
+### ⚒️ Tooling
+
+* flesh out unit tests for integrity checks (commit [3a9aa6b0](https://github.com/digital-land/planning-application-data-specification/commit/3a9aa6b0c7b71d19a72003ed6f9af55caf3a16fb))
+
+### 𝌭 Model changes
+
+* remove deprecated subtype codelist (commit [ba31517e](https://github.com/digital-land/planning-application-data-specification/commit/ba31517ecf2020fb69637a53dcfb3503decf848c))
+
+### 🐛 Bug Fixes
+
+* link paths in local version of static site (commit [b8373af6](https://github.com/digital-land/planning-application-data-specification/commit/b8373af6a4d05bed6ef6149c3761ee65cd9e2f0a))
+
+### 📚 Documentation
+
+* update cli docs to include details of combined app types (commit [b72ef6fa](https://github.com/digital-land/planning-application-data-specification/commit/b72ef6fa73a68a91826a34cc94824515c9c2ee93))
+* improve documentation of CLI tool (commit [4f8413c9](https://github.com/digital-land/planning-application-data-specification/commit/4f8413c9290ef62a87db7a6b051246ab4f6dc33d))
+
+
 <a name="v0.1.86"></a>
 ## [v0.1.86](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.85...v0.1.86) (2026-04-30)
 
