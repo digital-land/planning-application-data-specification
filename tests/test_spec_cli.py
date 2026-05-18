@@ -579,6 +579,121 @@ def test_field_usage_command_uses_canonical_summary_shape(monkeypatch):
     assert "- site-area: Site area" in result.output
 
 
+def test_codelist_usage_command_uses_package_query(monkeypatch):
+    runner = CliRunner()
+
+    usages = type(
+        "StubCodelistUsages",
+        (),
+        {
+            "fields": [
+                FieldDef(
+                    ref="decision-maker",
+                    name="Decision maker",
+                    codelist="decision-maker",
+                )
+            ],
+            "modules": [
+                type(
+                    "StubContainerUsage",
+                    (),
+                    {
+                        "container": type(
+                            "StubModule",
+                            (),
+                            {"ref": "decision-notice", "name": "Decision notice"},
+                        )(),
+                        "usage": FieldUsage(
+                            original=FieldDef(ref="decision-maker", name="Decision maker"),
+                            overrides={"field": "decision-maker"},
+                        ),
+                    },
+                )()
+            ],
+            "components": [
+                type(
+                    "StubContainerUsage",
+                    (),
+                    {
+                        "container": type(
+                            "StubComponent",
+                            (),
+                            {"ref": "decision-summary", "name": "Decision summary"},
+                        )(),
+                        "usage": FieldUsage(
+                            original=FieldDef(ref="decision-maker", name="Decision maker"),
+                            overrides={
+                                "field": "decision-maker",
+                                "codelist": "decision-maker",
+                            },
+                        ),
+                    },
+                )()
+            ],
+        },
+    )()
+
+    class StubSpecification:
+        def codelist_usages(self, codelist_ref):
+            assert codelist_ref == "decision-maker"
+            return usages
+
+    monkeypatch.setattr(
+        spec,
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "uses", "codelist", "decision-maker"])
+
+    assert result.exit_code == 0
+    assert "Codelist: decision-maker" in result.output
+    assert "Fields: 1" in result.output
+    assert "- decision-maker: Decision maker" in result.output
+    assert "Modules: 1" in result.output
+    assert "- decision-notice: Decision notice (field: decision-maker)" in result.output
+    assert "Components: 1" in result.output
+    assert "- decision-summary: Decision summary (field: decision-maker)" in result.output
+
+
+def test_codelist_usage_command_handles_no_matches(monkeypatch):
+    runner = CliRunner()
+
+    usages = type(
+        "StubCodelistUsages",
+        (),
+        {
+            "fields": [],
+            "modules": [],
+            "components": [],
+        },
+    )()
+
+    class StubSpecification:
+        def codelist_usages(self, codelist_ref):
+            assert codelist_ref == "unused-codelist"
+            return usages
+
+    monkeypatch.setattr(
+        spec,
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
+    )
+
+    result = runner.invoke(spec.cli, ["inspect", "uses", "codelist", "unused-codelist"])
+
+    assert result.exit_code == 0
+    assert "No fields, modules or components found using codelist 'unused-codelist'" in result.output
+
+
 def test_component_usage_command_uses_canonical_summary_shape(monkeypatch):
     runner = CliRunner()
 

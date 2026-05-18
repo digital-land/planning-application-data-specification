@@ -8,6 +8,7 @@ from planning_application_specification.applications import (
 )
 from planning_application_specification.models import ApplicationDef
 from planning_application_specification.specification import (
+    CodelistUsages,
     FieldUsages,
     ResolvedComponentReference,
     ResolvedField,
@@ -223,6 +224,64 @@ def test_field_usages_rejects_unknown_field(project_root):
         assert "Unknown field" in str(exc)
     else:
         raise AssertionError("Expected KeyError for unknown field")
+
+
+def test_codelist_usages_returns_canonical_field_matches(project_root):
+    spec = Specification.load(project_root)
+
+    usages = spec.codelist_usages("decision-maker")
+
+    assert isinstance(usages, CodelistUsages)
+    assert [field.ref for field in usages.fields] == ["decision-maker"]
+
+
+def test_codelist_usages_returns_module_usage_override_matches(project_root):
+    spec = Specification.load(project_root)
+
+    usages = spec.codelist_usages("applicant-interest-type")
+
+    assert usages.fields == ()
+
+    module_matches = {
+        match.container.ref: match for match in usages.modules
+    }
+    assert "interest-details" in module_matches
+    assert "ldc-interest" in module_matches
+
+    interest_details = module_matches["interest-details"]
+    assert interest_details.container_type == "module"
+    assert interest_details.usage.original.ref == "applicant-interest"
+    assert interest_details.usage.original.codelist is None
+    assert interest_details.usage.overrides["codelist"] == "applicant-interest-type"
+    assert interest_details.usage.overrides["datatype"] == "enum"
+
+
+def test_codelist_usages_returns_component_usage_override_matches(project_root):
+    spec = Specification.load(project_root)
+
+    usages = spec.codelist_usages("waste-throughput-unit")
+
+    component_matches = {
+        match.container.ref: match for match in usages.components
+    }
+    assert "waste-management" in component_matches
+
+    waste_management = component_matches["waste-management"]
+    assert waste_management.container_type == "component"
+    assert waste_management.usage.original.ref == "unit-type"
+    assert waste_management.usage.original.codelist == "waste-capacity-unit"
+    assert waste_management.usage.overrides["codelist"] == "waste-throughput-unit"
+
+
+def test_codelist_usages_rejects_unknown_codelist(project_root):
+    spec = Specification.load(project_root)
+
+    try:
+        spec.codelist_usages("not-a-real-codelist")
+    except KeyError as exc:
+        assert "Unknown codelist" in str(exc)
+    else:
+        raise AssertionError("Expected KeyError for unknown codelist")
 
 
 def test_application_rejects_unknown_combined_type(project_root):
