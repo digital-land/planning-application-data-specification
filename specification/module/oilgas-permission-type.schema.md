@@ -7,7 +7,7 @@ fields:
   - field: oilgas-permission-types
     required: true
   - field: related-permissions
-    require-if:
+    required-if:
       - field: oilgas-permission-types
         in: 
           - renewal-unimplemented
