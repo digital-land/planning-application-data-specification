@@ -81,7 +81,7 @@ fields:
 - field: person-reference
   description: Declaration must be made by an applicant or agent making the application
   required: true
-- field: declaration-confirmation
+- field: declaration-confirmed
   required: true
 - field: declaration-date
   required: true
