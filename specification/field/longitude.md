@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: longitude
 description: Longitude coordinate in WGS84 (EPSG:4326)
 end-date: ''
 entry-date: 2025-06-13
