@@ -3,15 +3,23 @@ description: Who had a say in whether the proposal should go ahead
 end-date: ''
 entry-date: 2025-01-17
 fields:
-- codelist: applicant-interest-type
+- field: applicant-interest
+  codelist: applicant-interest-type
   datatype: enum
   description: Applicant's interest in the listed building
-  field: applicant-interest
   required: true
-- description: Details of the owner if the applicant is a lessee or occupier
-  field: owner-details
-- description: Details of other interested persons in the listed building
-  field: interested-persons
+- field: owner-details
+  description: Details of the owner if the applicant is a lessee or occupier
+  required-if:
+  - field: applicant-interest
+    in:
+    - lessee
+    - occupier
+- field: interested-persons
+  description: Details of other interested persons in the listed building
+  required-if:
+  - field: applicant-interest
+    value: none
 module: ldc-interest
 name: LDC Interest
 rules:
