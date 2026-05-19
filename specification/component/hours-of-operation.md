@@ -21,7 +21,7 @@ fields:
   - field: hours-not-known
     required-if:
       - field: operational-times
-        is: empty
+        operator: empty
         description: required if `operational-times` field is empty
           
 ---
