@@ -78,39 +78,13 @@ fields:
       - extraction-oil-gas
   field: ownership-cert-option
   notes: Certificate type determined by ownership and notification status
-- applies-if:
-    application-type:
-      in:
-      - hh
-      - full
-      - outline
-      - demolition-con-area
-      - lbc
-      - s73
-      - extraction-oil-gas
-  field: applicant-signature
-- applies-if:
-    application-type:
-      in:
-      - hh
-      - full
-      - outline
-      - demolition-con-area
-      - lbc
-      - s73
-      - extraction-oil-gas
-  field: agent-signature
-- applies-if:
-    application-type:
-      in:
-      - hh
-      - full
-      - outline
-      - demolition-con-area
-      - lbc
-      - s73
-      - extraction-oil-gas
-  field: declaration-date
+- field: person-reference
+  description: Declaration must be made by an applicant or agent making the application
+  required: true
+- field: declaration-confirmation
+  required: true
+- field: declaration-date
+  required: true
 module: ownership-certs
 name: Ownership certificates and agricultural land declaration
 ---
