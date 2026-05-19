@@ -13,7 +13,7 @@ rules:
     applies-to: phone-numbers
     condition:
       field: contact-priority
-      equals: primary
+      value: primary
       minimum-occurrences: 1
 entry-date: 2025-05-30
 end-date: ''

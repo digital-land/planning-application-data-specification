@@ -17,8 +17,8 @@ fields:
   required: true
 - field: site-constraints
   required-if:
-  - equals: true
-    field: is-within-site-constraints
+  - field: is-within-site-constraints
+    value: true
 module: eligibility-extension
 name: Eligibility extension
 rules:

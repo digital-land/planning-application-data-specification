@@ -8,8 +8,8 @@ fields:
   required: true
 - field: application-result
   required-if:
-  - equals: 'yes'
-    field: cert-of-immunity-sought
+  - field: cert-of-immunity-sought
+    value: yes
 module: immunity-from-listing
 name: Immunity from listing
 rules:
