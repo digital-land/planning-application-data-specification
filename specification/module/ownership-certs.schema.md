@@ -87,4 +87,9 @@ fields:
   required: true
 module: ownership-certs
 name: Ownership certificates and agricultural land declaration
+rules:
+- rule: person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
+- rule: declaration-date must be in YYYY-MM-DD format
+- rule: declaration-date must not be in the future
+- rule: declaration-confirmed must be `true` for a submission to be valid
 ---
