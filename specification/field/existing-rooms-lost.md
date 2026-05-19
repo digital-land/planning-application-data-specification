@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: integer
 description: Existing rooms to be lost by change of use
 end-date: ''
 entry-date: 2025-07-17

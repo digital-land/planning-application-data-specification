@@ -1,6 +1,6 @@
 ---
 cardinality: '1'
-datatype: number
+datatype: integer
 description: Net change in parking spaces (proposed minus existing)
 end-date: ''
 entry-date: '2025-07-08'
