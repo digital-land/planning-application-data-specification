@@ -38,6 +38,15 @@ They are also useful for testing whether example submissions match the model.
 * Code: [/bin/generate_json_schema.py](https://github.com/digital-land/planning-application-data-specification/blob/main/bin/generate_json_schema.py)
 * Output folder: [/generated/json-schema](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/json-schema)
 
+📚 **Field datatype documentation**
+
+A generated catalogue of the field datatypes used in this specification, cross-referenced with the planning.data.gov.uk datatypes available to reuse.
+It helps maintainers spot local-only datatypes and inconsistencies in field definitions.
+
+* Status: Alpha
+* Code: [/bin/generate_field_datatypes_doc.py](https://github.com/digital-land/planning-application-data-specification/blob/main/bin/generate_field_datatypes_doc.py)
+* Output: [/documentation/field-datatypes.md](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/field-datatypes.md)
+
 <hr />
 
 ### Contribute or build your own

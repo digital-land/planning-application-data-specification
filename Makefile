@@ -31,6 +31,10 @@ codelists:
 	python3 bin/build_codelists.py
 
 
+field-datatypes:
+	python3 bin/generate_field_datatypes_doc.py
+
+
 issue-tracking-data:
 	python3 bin/extract_github_issues.py
 

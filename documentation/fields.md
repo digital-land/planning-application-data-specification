@@ -33,6 +33,10 @@ Each field has a canonical definition in a shared repository.
 * `entry-date`
 * `end-date` - for deprecating fields
 
+The `datatype` value should reuse the planning.data.gov.uk datatypes where possible. This specification also uses local JSON payload datatypes where needed, such as `object`, `enum`, `boolean` and `number`.
+
+The generated [field datatype catalogue](field-datatypes.md) lists the datatypes currently used by field definitions and the upstream datatypes available to reuse.
+
 **`required` is specified in the module, not the field**
 Avoids context-dependent logic in the field definition
 
