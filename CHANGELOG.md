@@ -1,4 +1,57 @@
 
+<a name="v0.1.92"></a>
+## [v0.1.92](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.91...v0.1.92) (2026-05-19)
+
+Document and use available datatypes
+
+### 𝌭 Model changes
+
+* fields to reuse specific datatypes latitude and longitude (commit [89c09f1a](https://github.com/digital-land/planning-application-data-specification/commit/89c09f1a81bade352415e14622dfa903e071d954))
+* datatype of some fields should be more specific integer, not number (commit [1ee4f045](https://github.com/digital-land/planning-application-data-specification/commit/1ee4f0455236a5bb066b9fa5effc30dabe44effb))
+
+### 🐛 Bug Fixes
+
+* Boolean should be boolean (commit [b900752f](https://github.com/digital-land/planning-application-data-specification/commit/b900752f9ff6c7920a35481dfdd1bd08a9a8dbf5))
+
+### 📚 Documentation
+
+* generate field datatype catalogue (commit [94139cd5](https://github.com/digital-land/planning-application-data-specification/commit/94139cd5b5663cc88d410bec24024cdeda2e5bc7))
+
+
+<a name="v0.1.91"></a>
+## [v0.1.91](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.90...v0.1.91) (2026-05-19)
+
+Modelling declarations
+
+### ⚒️ Tooling
+
+* remove unused generator scripts (commit [86d10390](https://github.com/digital-land/planning-application-data-specification/commit/86d103903de504429aeed2f3b1e7ecb6174da8ca))
+* export list of applications to csv too (commit [8c96ac77](https://github.com/digital-land/planning-application-data-specification/commit/8c96ac777d6521ec2327c12dbe3d9305791d9205))
+* expose codelist usage CLI (commit [7b7b88c1](https://github.com/digital-land/planning-application-data-specification/commit/7b7b88c1dbb9df45e04db7f37cd4f99b8c1be07c))
+* add codelist usage query (commit [9e6650f3](https://github.com/digital-land/planning-application-data-specification/commit/9e6650f320184415c1a8fea503ae97ff050ecbb1))
+* cover codelist usage lookup with tests (commit [b98d905c](https://github.com/digital-land/planning-application-data-specification/commit/b98d905c679d1562e0f442a6113ef5e804efde27))
+
+### 𝌭 Model changes
+
+* use person-reference field in conflict-of-interest module (commit [6d182f19](https://github.com/digital-land/planning-application-data-specification/commit/6d182f19bce50fbdd439a1a2b4274615cb560c83))
+* add validation rules to ownership-certs module (commit [b98d2b5e](https://github.com/digital-land/planning-application-data-specification/commit/b98d2b5eaee7ede09ca20fc2f1e7c19c8a309129))
+* replace signatures with declaration pattern in ownership certs module (commit [9824541d](https://github.com/digital-land/planning-application-data-specification/commit/9824541d2ff30b40b6736c0f9318f7b8ff2bd952))
+* update declaration model to use person-reference field (commit [f2b4f69a](https://github.com/digital-land/planning-application-data-specification/commit/f2b4f69a4ad2cd8f189c1ab2a4e71329cec4298d))
+* add person-reference field (commit [b93de79f](https://github.com/digital-land/planning-application-data-specification/commit/b93de79fca618001297e409a81468b6b59296edb))
+* add validation rule to declaration module (commit [5f920e32](https://github.com/digital-land/planning-application-data-specification/commit/5f920e321ead1703be5a8de660e5a7953d0ad17e))
+
+### 🐛 Bug Fixes
+
+* incorrectly named codelist files (commit [21ce500d](https://github.com/digital-land/planning-application-data-specification/commit/21ce500dad26d9d50fc7db7325b9e14eab2c0ac4))
+* field name typo (commit [84568bee](https://github.com/digital-land/planning-application-data-specification/commit/84568bee84f39f4ce828df4cb9d6e96b875d5a07))
+* syntax error with validation rule (commit [21b98574](https://github.com/digital-land/planning-application-data-specification/commit/21b98574c3787d5df88439e3f4f6c91f58c429b4))
+
+### 📚 Documentation
+
+* add draft decision records for person references and declarations (commit [6d319ce0](https://github.com/digital-land/planning-application-data-specification/commit/6d319ce0c241f62cb5fb67851b0c6acb2bf32170))
+* describe codelist usage query (commit [45c2a37d0](https://github.com/digital-land/planning-application-data-specification/commit/45c2a37d00249bf029506613c9322b477f7f25dd))
+
+
 <a name="v0.1.90"></a>
 ## [v0.1.90](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.89...v0.1.90) (2026-05-18)
 
