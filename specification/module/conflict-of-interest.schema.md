@@ -38,7 +38,8 @@ fields:
       - pip
       - extraction-oil-gas
       - notice-trees-in-con-area
-  field: conflict-person-name
+  field: person-reference
+  description: Reference to the applicant or agent with the conflict
   required-if:
   - field: conflict-to-declare
     value: true
@@ -65,5 +66,5 @@ fields:
 module: conflict-of-interest
 name: Conflict of interest
 rules:
-- rule: conflict-person-name must match a name provided in applicants or agent sections
+- rule: person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
 ---
