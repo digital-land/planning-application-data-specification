@@ -4,9 +4,13 @@ end-date: ''
 entry-date: 2025-05-30
 fields:
 - field: agent-reference
-  required: true
+  required-if: 
+    - field: agent-details.agent.reference
+      operator: not_empty
 - field: contact-details
-  required: true
+  required-if: 
+    - field: agent-details.agent.reference
+      operator: not_empty
 module: agent-contact
 name: Agent contact details
 ---
