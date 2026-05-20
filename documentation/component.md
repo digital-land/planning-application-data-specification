@@ -5,3 +5,5 @@ Components are reusable substructures or data shapes made up of multiple [fields
 They group fields into logical, structured units that can be reused across contexts.
 
 Having a consistent structure for how components are described and reused across modules enables shared definitions, clarity, and better validation
+
+For conditional rules that affect whether component fields apply or become required, see [co-constraints](co-constraints.md).

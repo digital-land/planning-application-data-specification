@@ -44,12 +44,15 @@ At a high level the specification works like this:
 - a field defines an individual data item, including its datatype
 - if the field is controlled, the field definition points to a codelist
 - the codelist defines the allowed values
+- co-constraints describe conditional rules, such as when a field applies or becomes required
 
 In other words:
 
 `application -> module -> field -> datatype / codelist`
 
 This is why the field definition is the key place to look when you want to know how a field is defined.
+
+For conditional field rules, see [co-constraints](co-constraints.md).
 
 ## Where to find the datatype or format for a field
 

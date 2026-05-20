@@ -67,6 +67,8 @@ This allows a shared field such as `description` to be reused across modules wit
 **Use of `applies-if`**
 Use of `applies-if` allows conditional inclusion without bloating the model.
 
+For the current conditional rule vocabulary, see [co-constraints](co-constraints.md).
+
 ### Still to decide
 
 * Should `applies-if` support complex conditions or be limited to simple key-value checks?
