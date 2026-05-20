@@ -54,6 +54,13 @@ This allows automated validation to check that the source file has the expected 
 **A codelist row may optionally reference a parent code**  
 Where a light hierarchy is useful, a CSV can include a `parent` column. The value should reference the `key-field` of another row in the same canonical codelist. Currently, this is intended for simple one-level relationships such as application type to subtype, not deep trees or links across separate codelists.
 
+**Usage tables define context-specific subsets**  
+Some codelists need different valid subsets in different contexts. For example, the same `housing-type` codelist can support both the MHCLG core profile and the GLA profile, while allowing different values for each.
+
+In these cases, keep the codelist focused on the values and their meanings. Put the context-specific allowed values in a separate usage table, such as `data/usage/housing-type-usage.csv`.
+
+For the full pattern, see [codelist usage](codelist-usage.md).
+
 ## Still to decide
 
 * Should codelist definitions include version information beyond `entry-date` and `end-date`?  

@@ -57,8 +57,8 @@ A first version for `tenure-type` could include:
 
 - `reference`
 - `tenure-type`
-- `profile`
-- `application-type`
+- `specification-profile`
+- `application-types`
 - `module`
 - `entry-date`
 - `start-date`
@@ -67,7 +67,7 @@ A first version for `tenure-type` could include:
 
 Example:
 
-| reference | tenure-type | profile | application-type | module | entry-date | start-date | end-date | notes |
+| reference | tenure-type | specification-profile | application-types | module | entry-date | start-date | end-date | notes |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | `mhclg-full-market-housing` | `market-housing` | `mhclg-core` | `full` | `res-units` | `2026-03-18` |  |  | Used in the national full permission context. |
 | `mhclg-ldc-social-rented` | `social-rented` | `mhclg-core` | `ldc` | `res-units` | `2026-03-18` |  |  | Used in the national lawful development certificate context. |
@@ -83,18 +83,24 @@ The initial recommendation is to use separate usage tables for separate codelist
 - `tenure-type-usage.csv`
 - `housing-type-usage.csv`
 
+Current examples:
+
+- [housing-type-usage schema](../specification/data/housing-type-usage.schema.md) and [housing-type-usage CSV](../data/usage/housing-type-usage.csv)
+- [tenure-type-usage schema](../specification/data/tenure-type-usage.schema.md) and [tenure-type-usage CSV](../data/usage/tenure-type-usage.csv)
+- [specification-profile codelist](../specification/codelist/specification-profile.schema.md)
+
 This is clearer and easier to maintain than one generic usage table.
 
 ## Routing rules
 
 The usage table says which values are allowed for a given profile or context.
 
-There may also need to be a short explanation of how an application ends up on that profile.
+There may also need to be a short explanation of how an application ends up on that profile. Where the profile affects validation or allowed values in a submitted application, the `specification-profile` field should make that context explicit.
 
 In plain English:
 
 - the usage table answers: what is allowed once you are in profile `X`?
-- the routing rule answers: how do you know you are in profile `X`?
+- the `specification-profile` field or routing rule answers: how do you know you are in profile `X`?
 
 Examples:
 
