@@ -105,7 +105,6 @@ In plain English:
 Examples:
 
 - today: if `planning-authority` is in GLA jurisdiction, use profile `gla`; otherwise use `mhclg-core`
-- possible future: if the application uses a GLA replacement module, use profile `gla`; otherwise use `mhclg-core`
 
 For now, this can stay as a short prose explanation rather than a formal artefact.
 
