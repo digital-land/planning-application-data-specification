@@ -13,7 +13,9 @@ fields:
     required: true
   - field: planning-authority
     required: true
-  - field: submission-date
+  - field: submitted-at
+    required: true
+  - field: created-at
     required: true
   - field: documents
     required: true
