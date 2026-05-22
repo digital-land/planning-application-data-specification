@@ -9,7 +9,8 @@ name: Householder application with minimal fee structure
     "reference": "550e8400-e29b-41d4-a716-446655440001",
     "application-types": ["hh"],
     "planning-authority": "LPA002",
-    "submission-date": "2025-06-20",
+    "submitted-at": "2025-06-20T10:00:00Z",
+    "created-at": "2025-06-20T09:30:00Z",
     "modules": [
       "applicant-details",
       "site-details",
