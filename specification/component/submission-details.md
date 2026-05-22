@@ -15,8 +15,6 @@ fields:
     required: true
   - field: submission-date
     required: true
-  - field: modules
-    required: true
   - field: documents
     required: true
   - field: fee
