@@ -5,6 +5,7 @@ This note is a short primer on the structure of the planning application data sp
 In particular, it explains:
 
 - how applications, modules, fields and codelists relate to each other
+- where submission-level details fit in the application payload
 - where to find field datatypes and formats
 - where to find controlled vocabularies and the codelists linked to fields
 - where to use the specification viewer and where to use the GitHub repository
@@ -39,6 +40,7 @@ The underlying canonical files are in GitHub:
 At a high level the specification works like this:
 
 - an application definition says what is needed for a given application type
+- every application includes `submission-details` for submission-level information
 - an application uses modules
 - a module groups related fields
 - a field defines an individual data item, including its datatype
@@ -51,6 +53,8 @@ In other words:
 `application -> module -> field -> datatype / codelist`
 
 This is why the field definition is the key place to look when you want to know how a field is defined.
+
+For the submission-level part of the payload, see [submission details](submission-details.md).
 
 For conditional field rules, see [co-constraints](co-constraints.md).
 

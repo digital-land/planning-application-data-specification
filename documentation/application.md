@@ -38,6 +38,8 @@ Each application is defined in legislation and MHCLG should use that to define w
 
 Some application types can be submitted together as a combined application. These combinations are not open-ended. They come from a controlled list of policy-approved combinations, and the specification derives the combined application from the member application types rather than maintaining a separate hand-written definition for each combination. See [decision record 0012](design-decisions/0012-use-a-controlled-list-for-combined-application-types.md).
 
+Every application includes the `submission-details` field for information about the submitted payload itself, such as the submission reference, application types, planning authority, submitted time and uploaded documents. See [submission details](submission-details.md).
+
 **Attributes of module definitions**
 
 * `application` -  unique identifier for the application (e.g. `hh`)
@@ -45,7 +47,7 @@ Some application types can be submitted together as a combined application. Thes
 * `description`
 * `synonyms` - other names used for the application type
 * `legislation` - provides a link for legal context
-* `fields[]` - list of field references
+* `fields[]` - list of field references, currently including `submission-details`
 * `modules` - a list of modules an applicant needs to complete
 * `entry-date`
 * `end-date` - for deprecating applications
@@ -56,7 +58,7 @@ With the field and modules definitions defined elsewhere.
 
 ### Still to decide
 
-* If we need `fields` and `modules` need to be separate lists. The `fields` list is always going to reference the `submission-details` field. And arguably the `modules` are top-level fields that break down into substructures. Our current thinking is:
+* If `fields` and `modules` need to be separate lists. The `fields` list is always going to reference the `submission-details` field. And arguably the `modules` are top-level fields that break down into substructures. Our current thinking is:
   * Field components describe reusable data shapes — what structured data looks like.
   * Modules define reusable form sections — where and when that data is collected in an application.
   * The two work together: fields define structure, modules define context.
@@ -104,7 +106,7 @@ modules:
 
 ### Validation rules for module (or component) definitions
 
-* `fields` attribute must have `application`
+* `fields` attribute must include `submission-details`
 * each `field` of `fields` must be defined in the set of specification fields
 * `modules` attribute must have 1 or more entries
 * each `module` must be defined in the list of modules
