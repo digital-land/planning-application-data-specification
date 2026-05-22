@@ -5,7 +5,7 @@ name: Householder application with minimal fee structure
 
 ```json
 {
-  "application": {
+  "submission-details": {
     "reference": "550e8400-e29b-41d4-a716-446655440001",
     "application-types": ["hh"],
     "planning-authority": "LPA002",

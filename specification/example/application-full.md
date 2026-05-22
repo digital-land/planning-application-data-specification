@@ -5,7 +5,7 @@ name: Full planning application with documents and fee
 
 ```json
 {
-  "application": {
+  "submission-details": {
     "reference": "550e8400-e29b-41d4-a716-446655440000",
     "application-types": ["full"],
     "planning-authority": "LPA001",
