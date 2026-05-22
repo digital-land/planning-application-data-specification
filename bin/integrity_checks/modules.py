@@ -189,6 +189,10 @@ def check_required_if_fields(modules):
                 continue
 
             for ref_field in iter_required_if_field_refs(required_if):
+                # TODO: resolve dotted field paths against the full application
+                # structure once cross-module path semantics are formalised.
+                if "." in ref_field:
+                    continue
                 if ref_field not in module_field_names:
                     print_error(
                         "module",

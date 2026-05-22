@@ -197,6 +197,50 @@ class TestRequiredIfFieldReferences:
         has_no_errors = check_required_if_fields(modules)
         assert has_no_errors
 
+    def test_module_required_if_dotted_field_path_is_allowed_for_now(self):
+        modules = {
+            "agent-contact": {
+                "fields": [
+                    {
+                        "field": "contact-details",
+                        "required-if": [
+                            {
+                                "field": "agent-details.agent.reference",
+                                "operator": "not_empty",
+                            }
+                        ],
+                    },
+                ]
+            }
+        }
+
+        has_no_errors = check_required_if_fields(modules)
+        assert has_no_errors
+
+    def test_module_required_if_nested_contains_selector_is_allowed_for_now(self):
+        modules = {
+            "non-res-floorspace": {
+                "fields": [
+                    {"field": "floorspace-details"},
+                    {
+                        "field": "room-details",
+                        "required-if": [
+                            {
+                                "field": "floorspace-details",
+                                "contains": {
+                                    "field": "use",
+                                    "in": ["c1", "c2", "c2a", "other"],
+                                },
+                            }
+                        ],
+                    },
+                ]
+            }
+        }
+
+        has_no_errors = check_required_if_fields(modules)
+        assert has_no_errors
+
     def test_component_required_if_field_must_exist_in_same_component(self):
         components = {
             "test-component": {
@@ -241,6 +285,30 @@ class TestRequiredIfFieldReferences:
             components,
             fields={},
             application_types={"full": {}},
+        )
+        assert has_no_errors
+
+    def test_component_required_if_dotted_field_path_is_allowed_for_now(self):
+        components = {
+            "contact-details": {
+                "fields": [
+                    {
+                        "field": "email",
+                        "required-if": [
+                            {
+                                "field": "agent-details.agent.reference",
+                                "operator": "not_empty",
+                            }
+                        ],
+                    },
+                ]
+            }
+        }
+
+        has_no_errors = check_field_condition_references(
+            components,
+            fields={},
+            application_types={},
         )
         assert has_no_errors
 

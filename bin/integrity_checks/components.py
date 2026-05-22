@@ -149,6 +149,10 @@ def check_condition(cond, fields, field, component_name, application_types):
                     field_refs = []
 
                 for field_ref in field_refs:
+                    # TODO: resolve dotted field paths against the full application
+                    # structure once cross-component path semantics are formalised.
+                    if "." in field_ref:
+                        continue
                     if field_ref not in fields:
                         print_error(
                             component_name,
@@ -201,6 +205,10 @@ def check_field_condition_references(
             required_if = field_def.get("required-if", [])
 
             for field_ref in iter_required_if_field_refs(required_if):
+                # TODO: resolve dotted field paths against the full application
+                # structure once cross-component path semantics are formalised.
+                if "." in field_ref:
+                    continue
                 if field_ref not in component_field_names:
                     print_error(
                         component_name,

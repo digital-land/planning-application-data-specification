@@ -43,24 +43,29 @@ def get_object_field_names(field_definitions):
     return field_names
 
 
-def iter_required_if_field_refs(required_if):
-    """Yield every `field` reference found within a required-if structure."""
+def iter_required_if_field_refs(required_if, *, inside_contains=False):
+    """Yield top-level `field` references found within a required-if structure."""
     if isinstance(required_if, list):
         for item in required_if:
-            yield from iter_required_if_field_refs(item)
+            yield from iter_required_if_field_refs(item, inside_contains=inside_contains)
         return
 
     if isinstance(required_if, dict):
         for key, value in required_if.items():
-            if key == "field":
+            if key == "field" and not inside_contains:
                 if isinstance(value, str):
                     yield value
                 elif isinstance(value, list):
                     for item in value:
                         if isinstance(item, str):
                             yield item
+            elif key == "contains":
+                # TODO: resolve nested selectors such as `contains.field` against the
+                # component referenced by the parent field when component paths are
+                # modelled explicitly enough for integrity checks.
+                yield from iter_required_if_field_refs(value, inside_contains=True)
             else:
-                yield from iter_required_if_field_refs(value)
+                yield from iter_required_if_field_refs(value, inside_contains=inside_contains)
 
 
 def run_checks(checks_with_args):
