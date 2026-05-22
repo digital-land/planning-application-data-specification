@@ -342,7 +342,7 @@ All modules and components are treated uniformly as properties with inline defin
     "agent-details": {"$ref": "#/definitions/agent-details"},
     "proposal-details": {"$ref": "#/definitions/proposal-details"},
     "supporting-document": {"$ref": "#/definitions/supporting-document"},
-    "application": {"$ref": "#/definitions/application"}
+    "submission-details": {"$ref": "#/definitions/submission-details"}
   },
   "definitions": {
     "agent-details": {
@@ -357,7 +357,7 @@ All modules and components are treated uniformly as properties with inline defin
       "type": "object",
       "properties": {...}
     },
-    "application": {
+    "submission-details": {
       "type": "object",
       "properties": {...}
     }
@@ -431,5 +431,4 @@ Each application JSON Schema file contains:
 
 The current generation approach leverages the existing structured specification model and provides the basis for JSON Schema generation 
 while maintaining the integrity and conditional logic present in the current markdown based specifications.
-
 

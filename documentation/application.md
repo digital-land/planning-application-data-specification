@@ -56,7 +56,7 @@ With the field and modules definitions defined elsewhere.
 
 ### Still to decide
 
-* If we need `fields` and `modules` need to be separate lists. The `fields` list is always going to reference the `application` field. And arguably the `modules` are top-level fields that break down into substructures. Out current thinking is:
+* If we need `fields` and `modules` need to be separate lists. The `fields` list is always going to reference the `submission-details` field. And arguably the `modules` are top-level fields that break down into substructures. Our current thinking is:
   * Field components describe reusable data shapes — what structured data looks like.
   * Modules define reusable form sections — where and when that data is collected in an application.
   * The two work together: fields define structure, modules define context.
@@ -79,7 +79,7 @@ entry-date: 2025-01-07
 start-date: ''
 end-date: ''
 fields:
-  - field: application
+  - field: submission-details
     required: true
 modules:
   - module: access-rights-of-way
