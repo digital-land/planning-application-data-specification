@@ -48,7 +48,7 @@ def test_generate_application_keeps_application_field_codelists_and_rules():
     assert "application-types | Application types[] |" in application_markdown
     assert "Select from the **application-type** enum" in application_markdown
     assert "**Validation rules**" in application_markdown
-    assert "- modules must reference existing module definitions" in application_markdown
+    assert "- submission-reference must identify the submitted payload" in application_markdown
 
 
 def test_generate_application_keeps_required_codelist_section():

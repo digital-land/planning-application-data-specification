@@ -94,7 +94,7 @@ def test_canonical_component_lookup_exposes_rules_and_validation(project_root):
     submission_details_component = spec.component("submission-details")
     owner_component = spec.component("owner")
 
-    assert submission_details_component.rules[0]["rule"] == "reference must be a valid UUID format"
+    assert submission_details_component.rules[0]["rule"] == "submission-reference must identify the submitted payload"
     assert owner_component.rules[0]["rule"] == "person details must be complete for identification purposes"
 
 
