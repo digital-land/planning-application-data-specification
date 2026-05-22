@@ -3,58 +3,72 @@ description: Details of changes to non-residential floorspace in the proposed de
 end-date: ''
 entry-date: 2025-07-17
 fields:
-- applies-if:
+- field: non-residential-change
+  applies-if:
     application-type:
       in:
       - full
-  field: non-residential-change
   required: true
-- applies-if:
+- field: non-residential-change-outline
+  applies-if:
     application-type:
       in:
       - outline
-  field: non-residential-change-outline
   required: true
-- applies-if:
+- field: floorspace-details
+  applies-if:
     application-type:
       in:
       - full
-  field: floorspace-details
   required-if:
   - field: non-residential-change
     value: true
-- applies-if:
+- field: floorspace-details-outline
+  applies-if:
     application-type:
       in:
       - outline
-  field: floorspace-details-outline
   required-if:
   - field: non-residential-change-outline
     value: true
-- applies-if:
+- field: room-details
+  applies-if:
     application-type:
       in:
       - full
-  field: room-details
   required-if:
-    - condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
-- applies-if:
+  - field: floorspace-details
+    description: if floorspace-details contains an item where use is c1, c2, c2a or other
+    contains:
+      field: use
+      in:
+      - c1
+      - c2
+      - c2a
+      - other
+- field: room-details-outline
+  applies-if:
     application-type:
       in:
       - outline
-  field: room-details-outline
   required-if:
-    - condition: floorspace-details contains use-class in ["C1", "C2", "C2A", "other"]
+  - field: floorspace-details-outline
+    description: if floorspace-details-outline contains an item where use is c1, c2, c2a or other
+    contains:
+      field: use
+      in:
+      - c1
+      - c2
+      - c2a
+      - other
 module: non-res-floorspace
 name: Non residential floorspace
 notes: ''
 rules:
 - condition: non-residential-change != true OR floorspace-details is not empty
   rule: floorspace-details is required when non-residential-change is true
-- condition: If any floorspace-details.use-class in ['C1', 'C2', 'C2A', 'other'],
-    then room-details must be provided
-  rule: room-details is required when floorspace involves C1, C2, C2A, or other use
-    classes
+- rule: room-details is required when floorspace-details involves C1, C2, C2A, or "other" use classes
+- rule: room-details-outline is required when floorspace-details-outline involves C1, C2, C2A, or "other" use classes
 - condition: 'For each floorspace-details: use != ''other'' AND use != ''sui'' OR
     specified-use is not empty'
   rule: specified-use is required when use is other or sui generis
