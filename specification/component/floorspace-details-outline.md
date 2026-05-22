@@ -17,23 +17,22 @@ fields:
           contains: sui
         - field: use
           contains: other
-  - field: not-applicable
   - field: existing-gross-floorspace
     required: true
   - field: is-floorspace-lost-known
   - field: floorspace-lost
     required-if:
-      - field: not-applicable
-        value: false
       - field: is-floorspace-lost-known
         value: true
   - field: is-total-gross-proposed-known
   - field: total-gross-proposed
     required-if:
-      - field: not-applicable
-        value: false
       - field: is-total-gross-proposed-known
         value: true
   - field: net-additional-floorspace
     required: true
 ---
+
+Floorspace detail entries are only expected where the use class applies to the proposal.
+
+Generated PDF or paper forms may still render "not applicable" controls for each possible option. That is presentation and capture logic, rather than a requirement for the canonical submission data model.

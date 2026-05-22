@@ -13,22 +13,20 @@ fields:
     - field: use-class-accommodation
       value: other
       description: if use-class-accommodation == "other"
-  - field: not-applicable
-    description: Used to explicitly state the use class does not apply to the proposal
   - field: is-existing-rooms-lost-known
   - field: existing-rooms-lost
     required-if:
-      - field: not-applicable
-        value: false
       - field: is-existing-rooms-lost-known
         value: true
   - field: is-total-rooms-proposed-known
   - field: total-rooms-proposed
     required-if:
-      - field: not-applicable
-        value: false
       - field: is-total-rooms-proposed-known
         value: true
   - field: net-additional-rooms
     required: true
 ---
+
+Room detail entries are only expected where the accommodation use class applies to the proposal.
+
+Generated PDF or paper forms may still render "not applicable" controls for each possible option. That is presentation and capture logic, rather than a requirement for the canonical submission data model.

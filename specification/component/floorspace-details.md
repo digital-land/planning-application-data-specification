@@ -26,3 +26,7 @@ fields:
   - field: net-additional-floorspace
     required: true
 ---
+
+Floorspace detail entries are only expected where the use class applies to the proposal.
+
+Generated PDF or paper forms may still render "not applicable" controls for each possible option. That is presentation and capture logic, rather than a requirement for the canonical submission data model.
