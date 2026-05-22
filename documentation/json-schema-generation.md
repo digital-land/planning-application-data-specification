@@ -106,7 +106,7 @@ Application (hh, full, lbc, etc.)
 
 #### 1. **Applications** (`specification/application/*.schema.md`)
 - Define application types (householder, full planning, listed building consent, etc.)
-- Include application-level fields (typically core application data like reference, submission-date)
+- Include application-level fields (typically core submission data like reference, submitted-at)
 - Reference modules for specific functional areas
 - Include application-specific metadata (legislation, synonyms, dates)
 
@@ -431,4 +431,3 @@ Each application JSON Schema file contains:
 
 The current generation approach leverages the existing structured specification model and provides the basis for JSON Schema generation 
 while maintaining the integrity and conditional logic present in the current markdown based specifications.
-
