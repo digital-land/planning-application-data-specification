@@ -39,9 +39,9 @@ def test_write_application_excel_preserves_filtered_rows_and_merge_ranges(projec
         "requirement",
     )
     assert rows[1] == (
-        "Application",
-        "The details of the application payload to be submitted",
-        "Application",
+        "Submission details",
+        "Details about the submitted payload, including how it is identified, routed, validated, handled and traced",
+        "Submission details",
         "Reference",
         None,
         None,
@@ -95,11 +95,11 @@ def test_write_application_excel_verbose_includes_reference_columns(tmp_path):
         "requirement",
     )
     assert rows[1] == (
-        "Application",
-        "application",
-        "The details of the application payload to be submitted",
-        "application",
-        "Application",
+        "Submission details",
+        "submission-details",
+        "Details about the submitted payload, including how it is identified, routed, validated, handled and traced",
+        "submission-details",
+        "Submission details",
         "reference",
         "Reference",
         None,
@@ -128,7 +128,7 @@ def test_write_application_excel_preserves_application_level_component_rows(tmp_
     assert (
         None,
         None,
-        "Application",
+        "Submission details",
         "Documents[]",
         "Reference",
         None,

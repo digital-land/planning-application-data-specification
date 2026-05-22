@@ -5,7 +5,7 @@ description: An application for any minor changes to proposals that have already
 end-date: ''
 entry-date: 2025-01-07
 fields:
-- field: application
+- field: submission-details
   required: true
 legislation:
 - https://www.legislation.gov.uk/ukpga/1990/8/section/96A

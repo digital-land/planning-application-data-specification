@@ -260,7 +260,12 @@ def test_inspect_application_command_shows_single_application_summary(monkeypatc
         application_types = ["hh"]
         is_combined = False
         notes = ""
-        items = [FieldUsage(original=FieldDef(ref="application", name="Application"), overrides={"required": True})]
+        items = [
+            FieldUsage(
+                original=FieldDef(ref="submission-details", name="Submission details"),
+                overrides={"required": True},
+            )
+        ]
         modules = [type("ModuleDef", (), {"ref": "site-details", "name": "Site details"})()]
 
     class StubSpecification:
@@ -279,7 +284,7 @@ def test_inspect_application_command_shows_single_application_summary(monkeypatc
     assert "Application types: hh" in result.output
     assert "Combined: no" in result.output
     assert "Application items:" in result.output
-    assert "- field: application (required)" in result.output
+    assert "- field: submission-details (required)" in result.output
     assert "Modules:" in result.output
     assert "- site-details: Site details" in result.output
 
@@ -744,9 +749,9 @@ def test_inspect_application_command_shows_combined_application_summary(monkeypa
         notes = "Connected consent case"
         items = [
             ComponentUsage(
-                component=ComponentDef(ref="application", name="Application"),
+                component=ComponentDef(ref="submission-details", name="Submission details"),
                 referenced_by_field=FieldUsage(
-                    original=FieldDef(ref="application", name="Application"),
+                    original=FieldDef(ref="submission-details", name="Submission details"),
                     overrides={},
                 ),
             )
@@ -772,7 +777,7 @@ def test_inspect_application_command_shows_combined_application_summary(monkeypa
     assert "Combined: yes" in result.output
     assert "Notes: Connected consent case" in result.output
     assert "Application items:" in result.output
-    assert "- component: application (via field: application)" in result.output
+    assert "- component: submission-details (via field: submission-details)" in result.output
     assert "Modules:" in result.output
     assert "- site-details: Site details" in result.output
     assert "- lb-grade: Listed building grade" in result.output

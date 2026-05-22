@@ -6,7 +6,7 @@ description: An application for works for the demolition of a listed building or
 end-date: ''
 entry-date: 2025-01-07
 fields:
-- field: application
+- field: submission-details
   required: true
 legislation:
 - https://www.legislation.gov.uk/ukpga/1990/9/contents

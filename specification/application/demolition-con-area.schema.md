@@ -5,7 +5,7 @@ description: An application for planning permission involving the demolition of 
 end-date: ''
 entry-date: 2025-07-22
 fields:
-- field: application
+- field: submission-details
   required: true
 legislation:
 - https://www.legislation.gov.uk/uksi/2015/595/article/2/made

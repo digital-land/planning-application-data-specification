@@ -91,10 +91,10 @@ def test_canonical_component_lookup_returns_component_definition(project_root):
 def test_canonical_component_lookup_exposes_rules_and_validation(project_root):
     spec = Specification.load(project_root)
 
-    application_component = spec.component("application")
+    submission_details_component = spec.component("submission-details")
     owner_component = spec.component("owner")
 
-    assert application_component.rules[0]["rule"] == "reference must be a valid UUID format"
+    assert submission_details_component.rules[0]["rule"] == "reference must be a valid UUID format"
     assert owner_component.rules[0]["rule"] == "person details must be complete for identification purposes"
 
 
@@ -161,7 +161,7 @@ def test_application_returns_uniform_application_view_for_combined_type(project_
     assert len(application.items) == 1
     assert len(application.field_usages) == 0
     assert len(application.component_usages) == 1
-    assert application.component_usages[0].component.ref == "application"
+    assert application.component_usages[0].component.ref == "submission-details"
     assert len(application.modules) > 0
     assert all(hasattr(module, "ref") for module in application.modules)
 
@@ -349,7 +349,9 @@ def test_combined_application_dedupes_application_level_items(project_root):
                 )
             )
 
-    assert item_keys == [("component", "application", "application")]
+    assert item_keys == [
+        ("component", "submission-details", "submission-details")
+    ]
 
 
 def test_resolve_field_returns_module_level_override(project_root):

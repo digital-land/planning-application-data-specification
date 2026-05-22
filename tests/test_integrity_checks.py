@@ -563,7 +563,7 @@ class TestApplicationIntegrityChecks:
 
         assert not application_checks.check_application_field_present(
             applications,
-            fields={"application": {}, "site-address": {}},
+            fields={"submission-details": {}, "site-address": {}},
         )
 
     def test_application_field_not_required_when_application_extends(self):
@@ -582,33 +582,33 @@ class TestApplicationIntegrityChecks:
     def test_application_field_references_must_exist(self):
         applications = {
             "householder": {
-                "fields": [{"field": "application"}, {"field": "missing-field"}],
+                "fields": [{"field": "submission-details"}, {"field": "missing-field"}],
                 "modules": [{"module": "site-details"}],
             }
         }
 
         assert not application_checks.check_application_field_present(
             applications,
-            fields={"application": {}},
+            fields={"submission-details": {}},
         )
 
     def test_application_field_check_passes_with_application_field_and_known_references(self):
         applications = {
             "householder": {
-                "fields": [{"field": "application"}, {"field": "site-address"}],
+                "fields": [{"field": "submission-details"}, {"field": "site-address"}],
                 "modules": [{"module": "site-details"}],
             }
         }
 
         assert application_checks.check_application_field_present(
             applications,
-            fields={"application": {}, "site-address": {}},
+            fields={"submission-details": {}, "site-address": {}},
         )
 
     def test_modules_attribute_required_when_application_does_not_extend(self):
         applications = {
             "householder": {
-                "fields": [{"field": "application"}],
+                "fields": [{"field": "submission-details"}],
             }
         }
 
@@ -618,7 +618,7 @@ class TestApplicationIntegrityChecks:
         applications = {
             "householder-amendment": {
                 "extends": "householder",
-                "fields": [{"field": "application"}],
+                "fields": [{"field": "submission-details"}],
             }
         }
 

@@ -9,7 +9,7 @@ legislation:
   - https://www.legislation.gov.uk/ukpga/1990/9/section/26H
   - https://www.legislation.gov.uk/ukpga/1990/9/section/26I
 fields:
-  - field: application
+  - field: submission-details
     required: true
 modules:
   - module: agent-contact

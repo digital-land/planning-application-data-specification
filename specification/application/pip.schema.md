@@ -11,7 +11,7 @@ entry-date: 2025-06-26
 start-date: ''
 end-date: ''
 fields:
-  - field: application
+  - field: submission-details
     required: true
 modules:
   - module: agent-details

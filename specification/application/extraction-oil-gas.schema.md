@@ -20,7 +20,7 @@ entry-date: 2025-09-12
 start-date: ''
 end-date: ''
 fields:
-  - field: application
+  - field: submission-details
     required: true
 modules:
   - module: agent-contact

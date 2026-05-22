@@ -13,7 +13,7 @@ from integrity_checks.utils import (
 # ============
 
 # 1. application must be a string, kebab-case and unique
-# 2. each application schema must have the application field in the fields list
+# 2. each application schema must have the submission-details field in the fields list
 # 3. each application schema must have a modules attr
 # 4. each module in modules list must have a module_name.schema.md file in specification/module/
 
@@ -255,7 +255,7 @@ def check_application_names(applications):
 
 def check_application_field_present(applications, fields):
     """
-    Check rule 2: each application schema must have the application field in the fields list
+    Check rule 2: each application schema must have the submission-details field in the fields list
     """
     has_errors = False
 
@@ -263,20 +263,20 @@ def check_application_field_present(applications, fields):
         app_fields = application.get("fields", [])
         has_extends = "extends" in application
 
-        # If 'extends' is not present, 'application' field must be present in fields list
+        # If 'extends' is not present, 'submission-details' field must be present in fields list
         if not has_extends:
-            # Check if 'application' field is present in the fields list
-            application_field_found = False
+            # Check if 'submission-details' field is present in the fields list
+            submission_details_field_found = False
             for field_def in app_fields:
-                if field_def.get("field") == "application":
-                    application_field_found = True
+                if field_def.get("field") == "submission-details":
+                    submission_details_field_found = True
                     break
 
-            if not application_field_found:
+            if not submission_details_field_found:
                 print_error(
                     "application",
                     app_name,
-                    "missing 'application' field in fields list",
+                    "missing 'submission-details' field in fields list",
                 )
                 has_errors = True
 

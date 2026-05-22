@@ -5,7 +5,7 @@ description: An application that will affect a protected tree including those co
 end-date: ''
 entry-date: 2025-01-07
 fields:
-- field: application
+- field: submission-details
   required: true
 legislation:
 - https://www.legislation.gov.uk/ukpga/1990/8/part/VIII/chapter/I

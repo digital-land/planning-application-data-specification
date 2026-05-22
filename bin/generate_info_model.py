@@ -395,21 +395,21 @@ def generate_application_fields_section(app_type=None, package_spec=None):
         package_spec = Specification.load()
 
     try:
-        application_field = package_spec.field("application")
+        submission_details_field = package_spec.field("submission-details")
     except KeyError:
-        print("Field definition for 'application' not found in specification.")
+        print("Field definition for 'submission-details' not found in specification.")
         return None
 
-    component_ref = application_field.component or "application"
+    component_ref = submission_details_field.component or "submission-details"
     try:
-        application_component = package_spec.component(component_ref)
+        submission_details_component = package_spec.component(component_ref)
     except KeyError:
-        print("Component definition for application fields not found in specification.")
+        print("Component definition for submission-details fields not found in specification.")
         return None
 
-    heading_name = (application_field.name or "Application").strip()
+    heading_name = (submission_details_field.name or "Submission details").strip()
     if not heading_name:
-        heading_name = "Application"
+        heading_name = "Submission details"
     heading_title = (
         heading_name
         if heading_name.lower().endswith("fields")
@@ -418,7 +418,10 @@ def generate_application_fields_section(app_type=None, package_spec=None):
 
     out = [f"## {heading_title}\n"]
 
-    description = get_container_description(application_component) or application_field.description
+    description = (
+        get_container_description(submission_details_component)
+        or submission_details_field.description
+    )
     if description:
         out.append(description.strip() + "\n")
 
@@ -431,7 +434,7 @@ def generate_application_fields_section(app_type=None, package_spec=None):
         out,
         f"{module_label} module",
         format_component_table(
-            application_component,
+            submission_details_component,
             app_type=app_type,
             package_spec=package_spec,
         ),
@@ -452,7 +455,7 @@ def generate_application_fields_section(app_type=None, package_spec=None):
         package_spec=package_spec,
     )
 
-    validation_rules = application_component.rules
+    validation_rules = submission_details_component.rules
     rules_str = format_rules_md_str(validation_rules)
     if rules_str:
         out.append(rules_str)

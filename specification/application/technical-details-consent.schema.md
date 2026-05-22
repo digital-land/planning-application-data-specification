@@ -12,7 +12,7 @@ entry-date: 2025-11-12
 start-date: ''
 end-date: ''
 fields:
-  - field: application
+  - field: submission-details
     required: true
 modules:
   - module: access-rights-of-way

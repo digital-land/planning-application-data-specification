@@ -10,7 +10,7 @@ entry-date: 2025-01-07
 start-date: ''
 end-date: ''
 fields:
-  - field: application
+  - field: submission-details
     required: true
 modules:
   - module: applicant-contact

@@ -1,9 +1,9 @@
 ---
-component: application
-name: Planning application
+component: submission-details
+name: Submission details
 description: |
-  Core planning application structure containing reference information,
-  application types, submission details, modules, documents, and fees
+  Details about the submitted payload, including reference information,
+  application types, specification profile, destination, modules, documents, and fees
 fields:
   - field: reference
     required: true
@@ -26,7 +26,7 @@ validation:
   - rule: "specification-profile must reference a valid specification profile codelist value"
   - rule: "planning-authority must be a valid organisation reference"
   - rule: "modules must reference existing module definitions"
-  - rule: "document references must be unique within the application"
+  - rule: "document references must be unique within the submission"
   - rule: "file must contain base64-content"
   - rule: "document-types must reference valid planning requirement codelist values"
 entry-date: 2025-06-20
