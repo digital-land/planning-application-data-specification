@@ -1,4 +1,137 @@
 
+<a name="v0.1.99"></a>
+## [v0.1.99](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.98...v0.1.99) (2026-05-25)
+
+Flesh out submission details part
+
+### 𝌭 Model changes
+
+* add submission-reference field (commit [e5754322](https://github.com/digital-land/planning-application-data-specification/commit/e575432259b987fc8a489bf7cb261257431aff68))
+* rename field from submission-date to submitted-at (commit [36aae3ba](https://github.com/digital-land/planning-application-data-specification/commit/36aae3babed5734f58dcc87043cf419f7abf9752))
+* define a created-at field (commit [36f957ed](https://github.com/digital-land/planning-application-data-specification/commit/36f957edf57cc297fd2d5f1ee898adde2ebeeeb4))
+* remove modules field from submission-details (commit [8f2d0925](https://github.com/digital-land/planning-application-data-specification/commit/8f2d0925644f6382a25af36cd1f3f15df34e73c1))
+* rename component from application to submission-details (commit [86ea2761](https://github.com/digital-land/planning-application-data-specification/commit/86ea27615945f8d319b6026944b2315bcfa3d432))
+
+### 🐛 Bug Fixes
+
+* entry-date of created-at field (commit [a4dbc3ee](https://github.com/digital-land/planning-application-data-specification/commit/a4dbc3ee150ad0cd514cf001fea0c03d0ee43922))
+
+### 📚 Documentation
+
+* tie more of the documentation together (commit [75abfc8d](https://github.com/digital-land/planning-application-data-specification/commit/75abfc8d4496d02b2d1babd2794286ad617892bc))
+* document the submission-details section (commit [1eace76b](https://github.com/digital-land/planning-application-data-specification/commit/1eace76bae86185b404d1654db97f8f332f1d27f))
+* update examples (commit [d4ed1d85](https://github.com/digital-land/planning-application-data-specification/commit/d4ed1d85ac31177b5a1965053717a9f6591fec03))
+* update the examples (commit [85915808](https://github.com/digital-land/planning-application-data-specification/commit/85915808f5ddde399e929d5d1678ab8ede8d59ac))
+* correct json schema documentation (commit [dca0a508](https://github.com/digital-land/planning-application-data-specification/commit/dca0a5085ff1acdf746580cb09a12bb73f7c5269))
+* update docs to reflect change to submission-details (commit [b316c9fb](https://github.com/digital-land/planning-application-data-specification/commit/b316c9fb0d9df26dd886fe545868362747c138aa))
+* update examples to use submission-details (commit [cbaa4b89](https://github.com/digital-land/planning-application-data-specification/commit/cbaa4b8917999ea8f19b4b3a1c8d9c4129c746f3))
+
+
+<a name="v0.1.98"></a>
+## [v0.1.98](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.97...v0.1.98) (2026-05-25)
+
+Split LDC LB out
+
+### 𝌭 Model changes
+
+* separate out listed building lawful works certificate (commit [c67078b9](https://github.com/digital-land/planning-application-data-specification/commit/c67078b9c38eec42ab0404afd63e6511dcb02530))
+
+
+<a name="v0.1.97"></a>
+## [v0.1.97](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.96...v0.1.97) (2026-05-25)
+
+Add planning requirements
+
+### ⚒️ Tooling
+
+* handle emerging co-constraint field paths in integrity checker (commit [e4d6f045](https://github.com/digital-land/planning-application-data-specification/commit/e4d6f04566251930eb897cabdea0a683390d5c7d))
+* add tests for generating the datatype documentation (commit [4a39acc3](https://github.com/digital-land/planning-application-data-specification/commit/4a39acc3d323cae71c9c503460951d02697e9988))
+
+### 𝌭 Model changes
+
+* add 4 more planning requirements to list (commit [3755b0a1](https://github.com/digital-land/planning-application-data-specification/commit/3755b0a1a1705129c1c610cf4be457fe1630c7c6))
+* remove not-applicable fields from floorspace details and room details components (commit [366c1688](https://github.com/digital-land/planning-application-data-specification/commit/366c168819c3cac5e11130c21b9d4d25201a7d1b))
+* add proper co-constraint structures to non-res-floorspace module (commit [16bdae5c](https://github.com/digital-land/planning-application-data-specification/commit/16bdae5c5e23c367f4aed4163697e76b37727bd3))
+
+### 📚 Documentation
+
+* add decision record about keeping form generation details outside of spec (commit [0000d4f3](https://github.com/digital-land/planning-application-data-specification/commit/0000d4f310b9ac11c823150078589e485b4e90a2))
+* explain specification profile codelist usage (commit [8c7e8f62](https://github.com/digital-land/planning-application-data-specification/commit/8c7e8f62bdeff1cf1d7644f21b5158b769b4e3a3))
+
+
+<a name="v0.1.96"></a>
+## [v0.1.96](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.95...v0.1.96) (2026-05-22)
+
+Remove not applicable fields
+
+### ⚒️ Tooling
+
+* handle emerging co-constraint field paths in integrity checker (commit [4c7c1497](https://github.com/digital-land/planning-application-data-specification/commit/4c7c1497545baf806f3ca3a47eda9c49f908c29f))
+
+### 𝌭 Model changes
+
+* remove not-applicable fields from floorspace details and room details components (commit [69c73b0f](https://github.com/digital-land/planning-application-data-specification/commit/69c73b0f433b30b44d456627f8d55edc79cd9ba8))
+* add proper co-constraint structures to non-res-floorspace module (commit [e1dd9464](https://github.com/digital-land/planning-application-data-specification/commit/e1dd9464b0abf0d7b8d66f4f87e51ee528121591))
+
+### 📚 Documentation
+
+* add decision record about keeping form generation details outside of spec (commit [82eb326a](https://github.com/digital-land/planning-application-data-specification/commit/82eb326a32b59325896846d3792ccf9f6983a26d))
+
+
+<a name="v0.1.95"></a>
+## [v0.1.95](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.94...v0.1.95) (2026-05-22)
+
+Add specification-profile field for codelist usage
+
+### ⚒️ Tooling
+
+* add tests for generating the datatype documentation (commit [0885b07e](https://github.com/digital-land/planning-application-data-specification/commit/0885b07e2f322b595040cb8565584f003469947a))
+
+### 𝌭 Model changes
+
+* add specification-profile field to application component (commit [d474a686](https://github.com/digital-land/planning-application-data-specification/commit/d474a6863d6d18ca50f4666d8a4907ee3f2301fa))
+
+### 📚 Documentation
+
+* explain specification profile codelist usage (commit [af46b9fa](https://github.com/digital-land/planning-application-data-specification/commit/af46b9fab5151c36488b800950b98a03ee1d8d27))
+* flesh out the usage of codelists by specification profile pattern (commit [8aa3aead](https://github.com/digital-land/planning-application-data-specification/commit/8aa3aead1ec522990793eb92bb1bfe42b0eba85b))
+
+
+<a name="v0.1.94"></a>
+## [v0.1.94](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.93...v0.1.94) (2026-05-22)
+
+Documentation improvements
+
+### 📚 Documentation
+
+* add documentation about how we use co-constraints (commit [55c6fa1f](https://github.com/digital-land/planning-application-data-specification/commit/55c6fa1f63801318410d13ab2880a2cf4714463f))
+* write up of our appoach to aligning with existing standards (commit [577977b1](https://github.com/digital-land/planning-application-data-specification/commit/577977b16f4eba8493d0d5fca535767d0b8f8a29))
+
+
+<a name="v0.1.93"></a>
+## [v0.1.93](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.92...v0.1.93) (2026-05-20)
+
+Make current co-constraints consistent
+
+### 𝌭 Model changes
+
+* agent-contact fields only required if agent details have been provided (commit [12271237](https://github.com/digital-land/planning-application-data-specification/commit/1227123772f31d4f6a30928db6fedfe5c0b85ce4))
+* add the required co-constraints for ldc-interest module (commit [f543fba7](https://github.com/digital-land/planning-application-data-specification/commit/f543fba7ad514933458e3d1930d9c7718f25a35f))
+* fields to reuse specific datatypes latitude and longitude (commit [1b7a7284](https://github.com/digital-land/planning-application-data-specification/commit/1b7a728401ae359aa25b2106c0f2c0241a62d4c3))
+* datatype of some fields should be more specific integer, not number (commit [f8ee0a54](https://github.com/digital-land/planning-application-data-specification/commit/f8ee0a54079c8f864f669b0cfffb66ad00b2011b))
+
+### 🐛 Bug Fixes
+
+* keep current co-constraint vocab consistent (commit [fa33b9ab](https://github.com/digital-land/planning-application-data-specification/commit/fa33b9ab4a4f40ddb0dd1dec859dea922cc8877a))
+* incorrect co-constraint vocab used, should be value not equals (commit [306f6fb3](https://github.com/digital-land/planning-application-data-specification/commit/306f6fb38faf44e79724098523d89c8bef07e9a8))
+* typo require-if should be required-if (commit [374d289c](https://github.com/digital-land/planning-application-data-specification/commit/374d289cb4a8fd0db9fbbd5137b9a6e8893a862b))
+* Boolean should be boolean (commit [32e12991](https://github.com/digital-land/planning-application-data-specification/commit/32e129912d09298adfef62f17e39629339fd0e18))
+
+### 📚 Documentation
+
+* generate field datatype catalogue (commit [5f47abb2](https://github.com/digital-land/planning-application-data-specification/commit/5f47abb212ed284a583681362d2491ed5a6825dd))
+
+
 <a name="v0.1.92"></a>
 ## [v0.1.92](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.91...v0.1.92) (2026-05-19)
 
