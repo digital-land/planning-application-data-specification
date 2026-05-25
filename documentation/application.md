@@ -40,6 +40,32 @@ Some application types can be submitted together as a combined application. Thes
 
 Every application includes the `submission-details` field for information about the submitted payload itself, such as the submission reference, application types, planning authority, submitted time and uploaded documents. See [submission details](submission-details.md).
 
+## Resolving application definitions
+
+Some application definitions extend a broader parent application. For example, `outline-some` extends `outline`.
+
+When building or validating a payload for a concrete application type, resolve the application definition before deciding the expected payload shape:
+
+* start with the parent application's `fields` and `modules`
+* add the child application's `fields` and `modules`
+* de-duplicate repeated references
+* treat the resulting field and module references as top-level payload properties
+
+For `outline-some`, this means the payload includes the inherited `submission-details` field and inherited outline modules, plus the additional modules listed on `outline-some`.
+
+The resulting JSON payload is keyed by field or module reference, for example:
+
+```json
+{
+  "submission-details": {},
+  "applicant-details": {},
+  "proposal-details": {},
+  "access-rights-of-way": {}
+}
+```
+
+If the application definition has `allow-additional-properties: true`, the root payload may include extra top-level properties beyond the resolved field and module references.
+
 **Attributes of module definitions**
 
 * `application` -  unique identifier for the application (e.g. `hh`)
