@@ -72,9 +72,8 @@ rules:
 - condition: 'For each floorspace-details: use != ''other'' AND use != ''sui'' OR
     specified-use is not empty'
   rule: specified-use is required when use is other or sui generis
-- condition: All existing-gross-floorspace, floorspace-lost, total-gross-proposed,
-    net-additional-floorspace >= 0
-  rule: All floorspace values must be 0 or positive
+- condition: floorspace-details.existing-gross-floorspace, floorspace-details.floorspace-lost and floorspace-details.total-gross-proposed values >= 0
+  rule: Existing, lost and proposed floorspace values must be >= 0
 - condition: All existing-rooms-lost, total-rooms-proposed, net-additional-rooms >=
     0
   rule: All room values must be 0 or positive
