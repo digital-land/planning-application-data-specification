@@ -2,9 +2,9 @@
 need: dd-need-088
 status: proposed
 priority: low
-name: Publish the submitted application record
+name: Publish the validated application record
 statement: >
-  As a planning authority, I need to make the submitted planning application record publicly available in the form that should be published, so that I meet my duty to publish the application and provide a reliable public record of what was applied for.
+  As a planning authority, I need to make the validated planning application record publicly available in the form that should be published, so that I meet my duty to make the application available and provide a reliable public record of what was applied for.
 actors:
   - planning-authority
 scope: in
@@ -13,7 +13,7 @@ themes:
   - transparency
 source:
   - type: data-design
-    notes: Inferred from from belief we should treat the submitted application record as the authoritative upstream record that decisions rely on.
+    notes: Inferred from from belief we should treat the submitted application record as the authoritative upstream record that decisions rely on. Edited to be validated application record because thats the point planning authorities would publish it.
 variations:
   - dd-need-050
   - dd-need-077
