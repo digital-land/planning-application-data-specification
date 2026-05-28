@@ -2,19 +2,21 @@
 need: dd-need-068
 status: proposed
 priority: medium
-name: Know when additional information was received
+name: Measure time taken to supply additional information
 statement: >
-  As a user of the planning system, I need to know when the requested information was supplied so that I can judge whether the application can progress.
+  As a planning service manager or a government analyst, I need to know when additional information was requested and when it was supplied so that I can understand how long information requests take to resolve and assess delays in the planning process.
 actors:
-  - planning-system-user
+  - planning-service-manager
+  - central-government-analyst
 scope: in
 themes:
   - processing
-  - transparency
+  - performance
+  - monitoring
 source:
   - type: interview
     notes:
 variations:
 next_step: review
-notes: We are less certain about the scope of this need; may be refined after feedback.
+notes:
 ---
