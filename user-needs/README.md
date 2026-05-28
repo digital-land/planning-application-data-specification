@@ -93,23 +93,45 @@ Use this sparingly. It is most useful where:
 	•	legacy and new approaches coexist
 	•	different producers support different capabilities
 
-4. Combination with code list requirements
+4. Combination with codelist requirements
 
-Sometimes a need is only satisfied when a field exists **and** a specific code (or set of codes) exists in a codelist.
+Sometimes a need is only satisfied when a field exists **and** a specific value, or set of values, exists in a codelist.
+
+Use this for controlled codelists where the values define standard reportable states, events, categories, obligations or decisions that affect public transparency, statutory or process accountability, validation, routing, eligibility or cross-authority comparison.
+
+This is not required for every value in every codelist. It is for codelists where changing the vocabulary changes what the specification can recognise, compare or explain. For example, `permission-process-event` values define the planning process events that can be recorded consistently across authorities.
 
 ```
 satisfied_by:
-  - dataset: planning-application-timeline
-    field: application-event
-  - codelist: planning-application-event
-    includes: [invalid]
+  allOf:
+    - dataset: planning-permission-timeline
+      field: permission-process-event
+      codelist: permission-process-event
+      includes:
+        - found-invalid
+    - dataset: planning-permission-timeline
+      field: event-date
 
 notes: >
-  Need is met when the application-event field exists and the codelist
-  includes the `invalid` code (so that “found invalid” can be recorded).
+  Need is met when the timeline can record that an application was found
+  invalid and when that happened.
 ```
 
-Use this when the codelist contents are essential to satisfying the need. Keep `includes` minimal and specific.
+The codelist value is not justified in isolation. The justification should name the consuming dataset and field, plus enough companion fields to make the value useful. For timeline events, `event-date` is usually essential.
+
+Use `includes` consistently, even for a single value. `includes` means these values must exist in the codelist vocabulary. It does not mean that a single data record must contain all those values at once.
+
+A justification record should justify the need, not the codelist row. If one value satisfies the need, include one value. If the need requires a set of values, include the set. For example, a need to understand a consultation window may require both `consultation-start` and `consultation-end`.
+
+The body of the justification should explain what would be lost if the value was absent from the controlled vocabulary.
+
+Do not write needs that simply restate the existence of the code. A need must identify a real user task, policy or process accountability point, statutory milestone, interoperability requirement, or repeated cross-authority reporting use.
+
+Use the existing `status`, `satisfaction` and `confidence` fields for these records. Use `satisfaction: partial` where the codelist value is useful but the current model does not fully meet the need.
+
+If a need changes, review all justification records that refer to that need. That review may lead to model or codelist changes.
+
+Codelist CSV columns such as `need` are convenience text for community review, not the canonical source of rationale. The canonical traceability belongs in `user-needs/justification/`. If a codelist has a `notes` property, it may say that the codelist is treated as a controlled codelist whose values should be justified through these records.
 
 5. Rule (general requirement)
 
