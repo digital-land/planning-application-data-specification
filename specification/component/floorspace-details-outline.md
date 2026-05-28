@@ -4,12 +4,12 @@ name: Floorspace details
 description: Details of non-residential floorspace changes by use class including existing, lost, and proposed amounts. Specifically for outline applications
 entry-date: '2025-07-17'
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: use
     required: true
   - field: specified-use
-    note: should this be use-other?
+    notes: should this be use-other?
     required-if:
       description: use == "other" OR use == "sui"
       any:

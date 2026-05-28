@@ -4,7 +4,7 @@ name: Hours of operation
 description: Hours of operation structure for non-residential use
 entry-date: 2025-07-16
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: use
     required: true

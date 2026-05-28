@@ -4,7 +4,7 @@ name: Operational times
 description: Opening times structure for operational hours by day
 entry-date: 2025-07-16
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: schedule-days
     required: true

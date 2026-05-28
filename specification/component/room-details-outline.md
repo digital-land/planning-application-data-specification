@@ -4,7 +4,7 @@ name: Room details
 description: Details of room changes for hotels, residential institutions and hostels (C1, C2, C2A use classes)
 entry-date: 2025-08-28
 end-date: ''
-note: 'Used solely for outline applications'
+notes: 'Used solely for outline applications'
 fields:
   - field: use-class-accommodation
     required: true

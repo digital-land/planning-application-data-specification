@@ -4,7 +4,7 @@ name: Advertisement
 description: Details of a proposed advertisement including dimensions, materials, and illumination
 entry-date: 2025-07-17
 end-date: ''
-note: ''
+notes: ''
 fields:
   - field: height-from-ground
   - field: height
