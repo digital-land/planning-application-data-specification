@@ -23,6 +23,8 @@ datasets:
         dataset: site
       - field: received-date
         description: the date the planning authority received the application
+      - field: withdrawn-date
+        description: the date the planning application was withdrawn
       - field: document-url
         description: a URL to the completed application form
       - field: documentation-url

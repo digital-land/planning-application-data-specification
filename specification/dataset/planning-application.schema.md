@@ -19,6 +19,7 @@ fields:
 - field: site
 - field: received-date
   description: Date the planning authority received the application
+- field: withdrawn-date
 - field: reference
 key-field: ''
 licence: ogl3

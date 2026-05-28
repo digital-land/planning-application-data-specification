@@ -37,6 +37,7 @@ Keeping core dates on the dataset that owns the record:
 
 - `application-received` should not be a `permission-process-event` because `received-date` is already recorded on `planning-application`.
 - `decision-date` should remain on `decision-notice` and should not be duplicated as a timeline event.
+- `withdrawn-date` should be recorded on `planning-application` and should not be duplicated as a timeline event, because withdrawal is a fundamental fact about the application rather than a repeatable process event.
 - A complete chronological timeline should be treated as a derived view. It may combine dates and events from `planning-application`, `planning-permission-timeline`, `decision-notice` and other decision-stage datasets without duplicating those facts in the canonical datasets.
 - `application-submitted` can remain as a `permission-process-event` because the decision-stage specification does not otherwise hold submitted date as a first-class field.
 
