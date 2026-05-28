@@ -15,6 +15,6 @@ source:
   - type: ps1-ps2
     notes:
 variations:
-next_step:
-notes:
+next_step: review
+notes: Ps1-ps2 requirement is broader than Mayoral call-ins so this might need updating.
 ---
