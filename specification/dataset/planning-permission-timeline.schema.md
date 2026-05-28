@@ -15,6 +15,8 @@ fields:
   - field: planning-application
   - field: permission-process-event
   - field: event-date
+  - field: notes
+    description: Optional notes that provide additional context about the timeline event
 key-field: ''
 licence: ogl3
 name: Planning permission timeline

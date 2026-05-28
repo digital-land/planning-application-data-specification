@@ -129,4 +129,6 @@ datasets:
         description: the type of event in the permission process
       - field: event-date
         description: the date the event occurred
+      - field: notes
+        description: Optional notes that provide additional context about the timeline event
 ---
