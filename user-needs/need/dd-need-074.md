@@ -4,9 +4,10 @@ status: proposed
 priority: high
 name: Know when an application is going to committee
 statement: >
-  As a user of the planning system, I need to know when an application is going to committee so that I can follow decision-making and prepare representations.
+  As a planning officer or interested party, I need to know when an application is going to committee so that officers can prepare the committee report and participants can prepare representations.
 actors:
-  - planning-system-user
+  - planning-officer
+  - interested-party
 scope: in
 themes:
   - processing
