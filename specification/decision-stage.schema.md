@@ -36,6 +36,8 @@ datasets:
         description: the <a href="#reference">reference</a> for the site
       - field: name
         description: Plain-language name for the site so it can be referenced in discussions and reports
+      - field: address-text
+        description: Plain-language address for the site, where one is available
       - field: site-boundary
         description: the boundary geometry for the site
   - dataset: decision-notice

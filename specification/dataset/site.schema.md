@@ -12,6 +12,8 @@ fields:
 - field: name
   description: Plain-language name for the site so it can be referenced in discussions and reports
 - field: reference
+- field: address-text
+  description: Plain-language address for the site, where one is available
 - field: site-boundary
   notes: should this field be geometry?
 key-field: ''
