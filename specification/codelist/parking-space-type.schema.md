@@ -8,7 +8,6 @@ fields:
   - field: reference
   - field: name
   - field: description
-  - field: used-by
   - field: entry-date
   - field: end-date
 github-discussion: 199

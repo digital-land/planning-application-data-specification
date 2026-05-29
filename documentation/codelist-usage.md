@@ -86,6 +86,7 @@ The initial recommendation is to use separate usage tables for separate codelist
 Current examples:
 
 - [housing-type-usage schema](../specification/data/housing-type-usage.schema.md) and [housing-type-usage CSV](../data/usage/housing-type-usage.csv)
+- [parking-space-type-usage schema](../specification/data/parking-space-type-usage.schema.md) and [parking-space-type-usage CSV](../data/usage/parking-space-type-usage.csv)
 - [tenure-type-usage schema](../specification/data/tenure-type-usage.schema.md) and [tenure-type-usage CSV](../data/usage/tenure-type-usage.csv)
 - [specification-profile codelist](../specification/codelist/specification-profile.schema.md)
 
