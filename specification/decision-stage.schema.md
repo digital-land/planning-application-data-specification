@@ -40,6 +40,8 @@ datasets:
         description: Plain-language address for the site, where one is available
       - field: postcode
         description: Postcode for the site, where one is available
+      - field: description
+        description: Plain-language description of the site, where this helps identify the land or buildings
       - field: site-boundary
         description: the boundary geometry for the site
   - dataset: decision-notice
