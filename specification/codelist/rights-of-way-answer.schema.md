@@ -8,7 +8,7 @@ fields:
   - field: reference
   - field: name
   - field: description
-  - field: applications-types
+  - field: application-types
 github-discussion: 210
 key-field: reference
 licence: ogl3
