@@ -14,6 +14,8 @@ fields:
 - field: reference
 - field: address-text
   description: Plain-language address for the site, where one is available
+- field: postcode
+  description: Postcode for the site, where one is available
 - field: site-boundary
   notes: should this field be geometry?
 key-field: ''
