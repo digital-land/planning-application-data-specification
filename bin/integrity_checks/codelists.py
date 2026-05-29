@@ -92,6 +92,25 @@ def check_codelist_end_date(codelists):
     return True
 
 
+def check_codelist_declared_fields_present(codelists):
+    """
+    Check codelist field declarations are present in the source CSV.
+    """
+    has_errors = False
+
+    for path, meta, source, headers, _rows in _iter_local_csv_codelists(codelists):
+        for field_name in _declared_field_names(meta):
+            if field_name not in headers:
+                print_error(
+                    "codelist",
+                    path,
+                    f"declares field '{field_name}' but source CSV {source} does not include that column",
+                )
+                has_errors = True
+
+    return not has_errors
+
+
 def _declared_field_names(meta):
     fields = meta.get("fields", [])
     names = []
@@ -253,6 +272,7 @@ def check_all(codelists):
         (check_codelist_entry_date, [codelists]),
         (check_codelist_name_plural, [codelists]),
         (check_codelist_end_date, [codelists]),
+        (check_codelist_declared_fields_present, [codelists]),
         (check_codelist_key_field_present, [codelists]),
         (check_codelist_blank_keys, [codelists]),
         (check_codelist_duplicate_keys, [codelists]),

@@ -12,6 +12,7 @@ from bin.integrity_checks import usage as usage_checks
 from bin.integrity_checks.components import check_field_condition_references
 from bin.integrity_checks.codelists import (
     check_codelist_blank_keys,
+    check_codelist_declared_fields_present,
     check_codelist_duplicate_keys,
     check_codelist_parent_column,
     check_codelist_parent_references,
@@ -1655,6 +1656,62 @@ class TestCombinedApplicationTypeIntegrityChecks:
 
 
 class TestCodelistSourceData:
+    def test_codelist_declared_fields_pass_when_source_columns_exist(self, project_root):
+        source_path = project_root / "data" / "test-codelist-validation.csv"
+        source_path.write_text(
+            "\n".join(
+                [
+                    "reference,name",
+                    "outline,Outline",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        try:
+            codelists = {
+                "specification/codelist/test.schema.md": {
+                    "source": "data/test-codelist-validation.csv",
+                    "fields": [
+                        {"field": "reference"},
+                        {"field": "name"},
+                    ],
+                }
+            }
+
+            assert check_codelist_declared_fields_present(codelists)
+        finally:
+            source_path.unlink(missing_ok=True)
+
+    def test_codelist_declared_fields_fail_when_source_column_missing(
+        self, project_root
+    ):
+        source_path = project_root / "data" / "test-codelist-validation.csv"
+        source_path.write_text(
+            "\n".join(
+                [
+                    "reference,name",
+                    "outline,Outline",
+                ]
+            ),
+            encoding="utf-8",
+        )
+
+        try:
+            codelists = {
+                "specification/codelist/test.schema.md": {
+                    "source": "data/test-codelist-validation.csv",
+                    "fields": [
+                        {"field": "reference"},
+                        {"field": "missing-field"},
+                    ],
+                }
+            }
+
+            assert not check_codelist_declared_fields_present(codelists)
+        finally:
+            source_path.unlink(missing_ok=True)
+
     def test_parent_column_allows_valid_parent_reference(self, project_root):
         source_path = project_root / "data" / "test-codelist-validation.csv"
         source_path.write_text(
