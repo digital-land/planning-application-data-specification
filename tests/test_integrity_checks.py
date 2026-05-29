@@ -14,6 +14,7 @@ from bin.integrity_checks.codelists import (
     check_codelist_blank_keys,
     check_codelist_declared_fields_present,
     check_codelist_duplicate_keys,
+    check_codelist_field_references,
     check_codelist_parent_column,
     check_codelist_parent_references,
 )
@@ -1656,6 +1657,36 @@ class TestCombinedApplicationTypeIntegrityChecks:
 
 
 class TestCodelistSourceData:
+    def test_codelist_field_references_pass_when_fields_exist(self):
+        codelists = {
+            "specification/codelist/test.schema.md": {
+                "fields": [
+                    {"field": "reference"},
+                    {"field": "name"},
+                ],
+            }
+        }
+
+        assert check_codelist_field_references(
+            codelists,
+            fields={"reference": {}, "name": {}},
+        )
+
+    def test_codelist_field_references_fail_when_field_missing(self):
+        codelists = {
+            "specification/codelist/test.schema.md": {
+                "fields": [
+                    {"field": "reference"},
+                    {"field": "missing-field"},
+                ],
+            }
+        }
+
+        assert not check_codelist_field_references(
+            codelists,
+            fields={"reference": {}},
+        )
+
     def test_codelist_declared_fields_pass_when_source_columns_exist(self, project_root):
         source_path = project_root / "data" / "test-codelist-validation.csv"
         source_path.write_text(

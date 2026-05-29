@@ -50,7 +50,7 @@ def perform_checks():
         ("datasets", check_datasets, datasets, fields),
         ("modules", check_modules, modules, fields),
         ("applications", check_applications, applications, fields, modules),
-        ("codelists", check_codelists, codelists),
+        ("codelists", check_codelists, codelists, fields),
         ("needs", check_needs, needs),
         (
             "justification records",
