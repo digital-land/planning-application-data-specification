@@ -1,4 +1,120 @@
 
+<a name="v0.2.06"></a>
+## [v0.2.06](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.05...v0.2.06) (2026-05-29)
+
+Add events to permission-process-events codelist
+
+### 𝌭 Model changes
+
+* add validation-completed and application-published to permission-process-event codelist (commit [ed3b0f7c](https://github.com/digital-land/planning-application-data-specification/commit/ed3b0f7c397e2b70fc294ef4b0727b72122b5ec1))
+
+### 🐛 Bug Fixes
+
+* reference of need record (commit [856325b3](https://github.com/digital-land/planning-application-data-specification/commit/856325b3b2d05ce0f51027a148cf8713281bc83d))
+
+### 📚 Documentation
+
+* add need about know when application published (commit [871f2093](https://github.com/digital-land/planning-application-data-specification/commit/871f2093cc185e54ba63b433e9347abe928f051e))
+
+
+<a name="v0.2.05"></a>
+## [v0.2.05](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.04...v0.2.05) (2026-05-29)
+
+Define missing fields needed in codelists
+
+### ⚒️ Tooling
+
+* codelist integrity checks to check against defined fields (commit [28a7d365](https://github.com/digital-land/planning-application-data-specification/commit/28a7d36583dcb65deae921360c50dce58fee2149))
+* Check codelist field references (commit [11e8ba95](https://github.com/digital-land/planning-application-data-specification/commit/11e8ba952daa0aac7110b910e52e85a378483dbc))
+
+### 𝌭 Model changes
+
+* add usage table for parking-space-type codelist (commit [3df7040e](https://github.com/digital-land/planning-application-data-specification/commit/3df7040efd598623ad2df554c8b103ba9ede25f4))
+* define synonyms field (commit [9a6c973d](https://github.com/digital-land/planning-application-data-specification/commit/9a6c973d15f365e60222d5c2c4be5d988c77cd01))
+* define source field (commit [04276138](https://github.com/digital-land/planning-application-data-specification/commit/04276138c6a96446ef0041dc865977d9239fc4e2))
+* define boolean field needed for oilgas-permission-type codelist (commit [c5ae5cf0](https://github.com/digital-land/planning-application-data-specification/commit/c5ae5cf0e20a29a34b9d559580165a535d35f684))
+* define parent field used in hierarchical codelists (commit [92c99334](https://github.com/digital-land/planning-application-data-specification/commit/92c99334e51dad66bdc63457b0081651950115a1))
+* add document-type field needed by planning-requirement codelist (commit [8f9594ef](https://github.com/digital-land/planning-application-data-specification/commit/8f9594ef3564e220c3f189e22a2bdb7894aceeec))
+* add local-planning-authority field (commit [fd7b3c5a](https://github.com/digital-land/planning-application-data-specification/commit/fd7b3c5a959d5025826fec21390fbddd76e21eec))
+* define the fields needed by organisations codelist (commit [ca896315](https://github.com/digital-land/planning-application-data-specification/commit/ca896315fa1dda1b19b6e29a4cd33926e1017974))
+
+### 🐛 Bug Fixes
+
+* remove need column (commit [5dd55b55](https://github.com/digital-land/planning-application-data-specification/commit/5dd55b55fd078ce5e24c6df426d9602749107363))
+* swap need column to notes (commit [923f7b52](https://github.com/digital-land/planning-application-data-specification/commit/923f7b526fb02433a8d4857d98567766707de81e))
+* column name should be description not notes (commit [2bcc6b6a](https://github.com/digital-land/planning-application-data-specification/commit/2bcc6b6a6a11aae40a48b6688096fbaad940fdd4))
+* type in field name (commit [655c36ab](https://github.com/digital-land/planning-application-data-specification/commit/655c36ab243c7e18cb10bb6b76dff6fa871a5a1f))
+* typo, note should be notes (commit [10b5a72e](https://github.com/digital-land/planning-application-data-specification/commit/10b5a72e36d19362ee956c36a898c6d55625c1ff))
+
+
+<a name="v0.2.04"></a>
+## [v0.2.04](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.03...v0.2.04) (2026-05-29)
+
+Refine available timeline events
+
+### 𝌭 Model changes
+
+* move withdrawn property to planning-application dataset (commit [9be73737](https://github.com/digital-land/planning-application-data-specification/commit/9be73737819da2b33c4186bf06dc04a24c406b19))
+* remove application-received event from permission-process-events codelist (commit [6476cb30](https://github.com/digital-land/planning-application-data-specification/commit/6476cb30ddb25af3a183b455b1ce5e30b490ae8c))
+* add notes field to planning-permission-timeline dataset (commit [18e2446c](https://github.com/digital-land/planning-application-data-specification/commit/18e2446c7b30faae7c34e10b8e36d906a9e33f29))
+* Clarify valid and invalid process event dates (commit [36aa0a4a](https://github.com/digital-land/planning-application-data-specification/commit/36aa0a4aafe94183220185a051d3a1d91adb862a))
+
+### 📚 Documentation
+
+* justify time extension timeline event (commit [23924f45](https://github.com/digital-land/planning-application-data-specification/commit/23924f4573cd6a195e0c8bde7d5ba3269e705d8a))
+* justify committee meeting timeline event (commit [e6391e05](https://github.com/digital-land/planning-application-data-specification/commit/e6391e052822442d050185c3d9b69768bddaf6d4))
+* tweak dd-need-074 so user is clearer (commit [b1ecf68e](https://github.com/digital-land/planning-application-data-specification/commit/b1ecf68e867a8665cef7cc40068af0f0294754ed))
+* justify call-in direction timeline event (commit [ccc61fdd](https://github.com/digital-land/planning-application-data-specification/commit/ccc61fdde93ee1f3f6034123bb158325adb3ceb3))
+* add note to dd-need-072 (commit [3d6b02b8](https://github.com/digital-land/planning-application-data-specification/commit/3d6b02b81335d08f99edf9de77cfd0218f795979))
+* justify consultees contacted timeline event (commit [cd28b0d3](https://github.com/digital-land/planning-application-data-specification/commit/cd28b0d396d6858aa8b8913d340bb273d074e874))
+* justify consultation end timeline event (commit [68f306bd](https://github.com/digital-land/planning-application-data-specification/commit/68f306bd4d4fcc829705bcb4d1f52e1d7f3f6d4a))
+* justify consultation start timeline event (commit [c2069810](https://github.com/digital-land/planning-application-data-specification/commit/c2069810c2ecc614d85ab0d3da24337555f5e8c3))
+* update needs dd-need-068 (commit [e8671d12](https://github.com/digital-land/planning-application-data-specification/commit/e8671d12fda0d42c1c3a51826b3267956b498636))
+* justifying additional-information-requested and additional-information-received for dd-need-068 (commit [b4565710](https://github.com/digital-land/planning-application-data-specification/commit/b4565710a8db06bebab78c6d9064ae8d7334b43b))
+* justify information request timeline event (commit [01ab58c2](https://github.com/digital-land/planning-application-data-specification/commit/01ab58c20dfce50327b9245663ce6e6a1f13a6a5))
+* justify valid application timeline event (commit [0b6c7634](https://github.com/digital-land/planning-application-data-specification/commit/0b6c7634d535c89eb281537784795ed3bdff7666))
+* justify invalid application timeline event (commit [db5cc049](https://github.com/digital-land/planning-application-data-specification/commit/db5cc04922675d074aee2a29a825ad172d08f87d))
+* justify submitted application timeline event (commit [5f9f47b2](https://github.com/digital-land/planning-application-data-specification/commit/5f9f47b2f913a98860fe9eab29e442810ab86a42))
+
+
+<a name="v0.2.03"></a>
+## [v0.2.03](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.02...v0.2.03) (2026-05-29)
+
+Documentation and needs
+
+### 📚 Documentation
+
+* explain how to use codelist values in justification records (commit [fcb87e70](https://github.com/digital-land/planning-application-data-specification/commit/fcb87e70a9540b4002ff66245e7ebb2599fcb427))
+* add needs recently emerging from community sessions (commit [fe93015a](https://github.com/digital-land/planning-application-data-specification/commit/fe93015a58fd33328485e8111fc9540e84dd37f1))
+* update need about what is made available based on recent conversations with community (commit [1b53c5b4](https://github.com/digital-land/planning-application-data-specification/commit/1b53c5b4b7d7bdd477107a7cb04cf0d0fb3e760b))
+
+
+<a name="v0.2.02"></a>
+## [v0.2.02](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.01...v0.2.02) (2026-05-29)
+
+Fix datatype
+
+### 𝌭 Model changes
+
+* correct datatype to decimal for floorspace fields (commit [0bfaf18a](https://github.com/digital-land/planning-application-data-specification/commit/0bfaf18a5da1314ad4de717caddac925938f2b1e))
+
+### 📚 Documentation
+
+* add example data for application 2025/1674 (commit [269e69de](https://github.com/digital-land/planning-application-data-specification/commit/269e69de717c56cc8998fd16c27d50793bb7260a))
+
+
+<a name="v0.2.01"></a>
+## [v0.2.01](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.99...v0.2.01) (2026-05-27)
+
+Add couple of examples
+
+### 📚 Documentation
+
+* add example data for application 2025/1674 (commit [7d340dcc](https://github.com/digital-land/planning-application-data-specification/commit/7d340dccb9aa55f038af44644dddaac359cdd007))
+* add example data for application 2011/7034 (commit [a49a1260](https://github.com/digital-land/planning-application-data-specification/commit/a49a126004bdb9f897a72e4d39b3511342b4eb4c))
+* add section about how to resolve application (commit [a5e8f1ef](https://github.com/digital-land/planning-application-data-specification/commit/a5e8f1efb6ffb82984ce88a073e17692ae9c7cd5))
+
+
 <a name="v0.1.99"></a>
 ## [v0.1.99](https://github.com/digital-land/planning-application-data-specification/compare/v0.1.98...v0.1.99) (2026-05-25)
 
