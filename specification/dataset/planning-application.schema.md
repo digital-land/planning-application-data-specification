@@ -19,6 +19,13 @@ fields:
 - field: site
 - field: received-date
   description: Date the planning authority received the application
+- field: development-scale
+  applies-if:
+    application-types:
+      in:
+      - full
+      - outline-all
+      - outline-some
 - field: planning-performance-agreement
 - field: withdrawn-date
 - field: reference

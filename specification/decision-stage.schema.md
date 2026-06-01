@@ -23,6 +23,14 @@ datasets:
         dataset: site
       - field: received-date
         description: the date the planning authority received the application
+      - field: development-scale
+        description: the local planning authority's classification of a full or outline planning application by development scale
+        applies-if:
+          application-types:
+            in:
+              - full
+              - outline-all
+              - outline-some
       - field: planning-performance-agreement
         description: whether the application was subject to a Planning Performance Agreement
       - field: withdrawn-date
