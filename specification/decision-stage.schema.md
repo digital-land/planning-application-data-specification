@@ -23,6 +23,8 @@ datasets:
         dataset: site
       - field: received-date
         description: the date the planning authority received the application
+      - field: planning-performance-agreement
+        description: whether the application was subject to a Planning Performance Agreement
       - field: withdrawn-date
         description: the date the planning application was withdrawn
       - field: document-url
