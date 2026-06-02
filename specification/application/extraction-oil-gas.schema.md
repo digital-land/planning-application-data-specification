@@ -39,7 +39,7 @@ modules:
   - module: foul-sewage
   - module: haz-substances
   - module: hrs-operation
-  - module: ownership-certs
+  - module: oil-gas-ownership-notices
   - module: access-rights-of-way
   - module: plans-drawings-supporting-materials
   - module: pre-app-advice

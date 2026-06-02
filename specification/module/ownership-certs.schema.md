@@ -16,7 +16,6 @@ fields:
       - outline
       - demolition-con-area
       - s73
-      - extraction-oil-gas
   required: true
 - field: owners-and-tenants
   applies-if:
@@ -28,7 +27,6 @@ fields:
       - outline
       - demolition-con-area
       - s73
-      - extraction-oil-gas
 - field: lbc-owners
   applies-if:
     application-type:
