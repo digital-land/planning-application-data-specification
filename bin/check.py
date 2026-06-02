@@ -48,7 +48,7 @@ def perform_checks():
         ("components", check_components, components, fields, applications),
         ("usage", check_usage, usage_tables, codelists, applications),
         ("datasets", check_datasets, datasets, fields),
-        ("modules", check_modules, modules, fields),
+        ("modules", check_modules, modules, fields, applications),
         ("applications", check_applications, applications, fields, modules),
         ("codelists", check_codelists, codelists, fields),
         ("needs", check_needs, needs),

@@ -13,7 +13,7 @@ from integrity_checks.utils import (
 # 2. each field in fields attr must be a field reference in /fields
 # 3. every module must have entry-date and end-date attrs
 
-# . if applies-if attr with `application-type` then must be a valid application type TODO
+# . if applies-if attr with `application-type` then must be a valid application type
 # applies-if condition should be a dict not a list TODO
 # . if required-if attr with `application-type` then must be a valid application type TODO
 # . if required-if attr with `field` then must be a valid field TODO
@@ -126,7 +126,7 @@ def check_attrs(modules):
     return not has_errors
 
 
-def check_applies_if_structure(modules):
+def check_applies_if_structure(modules, application_types=None):
     """
     Ensure that any `applies-if` condition in module field entries is a dict
     (not a list). The model expects a mapping of conditions, for example:
@@ -138,6 +138,9 @@ def check_applies_if_structure(modules):
     Some authors use a list of condition objects; flag those as errors.
     """
     has_errors = False
+    valid_application_types = (
+        set(application_types) if application_types is not None else None
+    )
 
     for module_name, module in modules.items():
         module_fields = module.get("fields", [])
@@ -153,6 +156,7 @@ def check_applies_if_structure(modules):
                     f"field #{field_def.get('field')} has 'applies-if' as a list; expected mapping/dict",
                 )
                 has_errors = True
+                continue
             # also reject other non-dict types
             elif not isinstance(applies_if, dict):
                 print_error(
@@ -161,6 +165,21 @@ def check_applies_if_structure(modules):
                     f"field #{field_def.get('field')} has 'applies-if' with unexpected type {type(applies_if).__name__}",
                 )
                 has_errors = True
+                continue
+
+            application_type = applies_if.get("application-type")
+            if application_type is None or valid_application_types is None:
+                continue
+
+            application_type_refs = application_type.get("in", [])
+            for application_type_ref in application_type_refs:
+                if application_type_ref not in valid_application_types:
+                    print_error(
+                        "module",
+                        module_name,
+                        f"field #{field_def.get('field')} references unknown applies-if application-type '{application_type_ref}'",
+                    )
+                    has_errors = True
 
     return not has_errors
 
@@ -204,12 +223,13 @@ def check_required_if_fields(modules):
     return not has_errors
 
 
-def check_all(modules, fields):
+def check_all(modules, fields, applications=None):
     """Run all module integrity checks.
 
     Args:
         modules: Dictionary of module definitions
         fields: Dictionary of field definitions
+        applications: Dictionary of application definitions
     """
     # Define checks and their required arguments
     checks_with_args = [
@@ -217,7 +237,7 @@ def check_all(modules, fields):
         (check_field_references, [modules, fields]),
         (check_dates, [modules]),
         (check_attrs, [modules]),
-        (check_applies_if_structure, [modules]),
+        (check_applies_if_structure, [modules, applications]),
         (check_required_if_fields, [modules]),
     ]
 

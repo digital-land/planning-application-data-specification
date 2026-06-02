@@ -106,6 +106,27 @@ class TestAppliesIfStructure:
         has_no_errors = check_applies_if_structure(valid_applies_if_module)
         assert has_no_errors
 
+    def test_application_type_must_exist(self):
+        modules = {
+            "test-module": {
+                "fields": [
+                    {
+                        "field": "test-field",
+                        "applies-if": {
+                            "application-type": {
+                                "in": ["full", "tehcnical-details-consent"]
+                            }
+                        },
+                    }
+                ]
+            }
+        }
+
+        has_no_errors = check_applies_if_structure(
+            modules, application_types={"full": {}, "technical-details-consent": {}}
+        )
+        assert not has_no_errors
+
     def test_invalid_structure_fails(self, invalid_applies_if_module):
         """Test that invalid applies-if structure fails."""
         has_no_errors = check_applies_if_structure(invalid_applies_if_module)
