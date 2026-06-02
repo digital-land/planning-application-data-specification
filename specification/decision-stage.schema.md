@@ -35,6 +35,8 @@ datasets:
         description: whether the application was subject to a Planning Performance Agreement
       - field: withdrawn-date
         description: the date the planning application was withdrawn
+      - field: linked-applications
+        description: references to earlier applications this application directly links to
       - field: document-url
         description: a URL to the completed application form
       - field: documentation-url

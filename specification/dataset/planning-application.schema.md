@@ -28,6 +28,7 @@ fields:
       - outline-some
 - field: planning-performance-agreement
 - field: withdrawn-date
+- field: linked-applications
 - field: reference
 key-field: ''
 licence: ogl3
