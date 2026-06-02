@@ -8,41 +8,44 @@ fields:
   required: true
 - field: new-altered-pedestrian
   required: true
-- applies-if:
+- field: change-right-of-way
+  applies-if:
     application-type:
       in:
       - full
       - hh
       - outline
-  field: change-right-of-way
+      - technical-details-consent
   required: true
-- applies-if:
+- field: new-right-of-way
+  applies-if:
     application-type:
       in:
       - full
       - extraction-oil-gas
       - outline
-  field: new-right-of-way
+      - technical-details-consent
   required: true
-- applies-if:
+- field: new-public-road
+  applies-if:
     application-type:
       in:
       - full
       - extraction-oil-gas
       - outline
-  field: new-public-road
+      - technical-details-consent
   required: true
-- applies-if:
+- field: temp-right-of-way
+  applies-if:
     application-type:
       in:
       - extraction-oil-gas
-  field: temp-right-of-way
   required: true
-- applies-if:
+- field: future-new-right-of-way
+  applies-if:
     application-type:
       in:
       - extraction-oil-gas
-  field: future-new-right-of-way
   required: true
 - field: supporting-documents
   required-if:
