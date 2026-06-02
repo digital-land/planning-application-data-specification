@@ -3,7 +3,8 @@ description: What development, works or change of use is proposed
 end-date: ''
 entry-date: 2025-06-12
 fields:
-- applies-if:
+- field: description
+  applies-if:
     application-type:
       in:
       - advertising
@@ -12,25 +13,26 @@ fields:
       - hh
       - lbc
       - outline
+      - technical-details-consent
   description: A description of what is being proposed, including the development,
     works, or change of use
-  field: description
   name: Proposal description
   required: true
-- applies-if:
+- field: reserved-matters
+  applies-if:
     application-type:
       in:
       - outline
       - reserved-matters
-  field: reserved-matters
   required: true
-- applies-if:
+- field: related-application
+  applies-if:
     application-type:
       in:
       - reserved-matters
-  field: related-application
   required: true
-- applies-if:
+- field: proposal-started
+  applies-if:
     application-type:
       in:
       - advertising
@@ -39,9 +41,10 @@ fields:
       - hh
       - lbc
       - outline
-  field: proposal-started
+      - technical-details-consent
   required: true
-- applies-if:
+- field: proposal-started-date
+  applies-if:
     application-type:
       in:
       - advertising
@@ -50,11 +53,12 @@ fields:
       - hh
       - lbc
       - outline
-  field: proposal-started-date
+      - technical-details-consent
   required-if:
   - field: proposal-started
     value: true
-- applies-if:
+- field: proposal-completed
+  applies-if:
     application-type:
       in:
       - advertising
@@ -63,9 +67,10 @@ fields:
       - hh
       - lbc
       - outline
-  field: proposal-completed
+      - technical-details-consent
   required: true
-- applies-if:
+- field: proposal-completed-date
+  applies-if:
     application-type:
       in:
       - advertising
@@ -74,20 +79,21 @@ fields:
       - hh
       - lbc
       - outline
-  field: proposal-completed-date
+      - technical-details-consent
   required-if:
   - field: proposal-completed
     value: true
-- applies-if:
+- field: pip-reference
+  applies-if:
+    application-type:
+      in:
+      - technical-details-consent
+- field: is-psi
+  applies-if:
     application-type:
       in:
       - full
-  field: pip-reference
-- applies-if:
-    application-type:
-      in:
-      - full
-  field: is-psi
+      - technical-details-consent
   required: true
 module: proposal-details
 name: Description of the proposal
