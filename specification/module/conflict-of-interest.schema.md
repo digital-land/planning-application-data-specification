@@ -9,6 +9,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - reserved-matters
       - demolition-con-area
@@ -27,6 +28,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - reserved-matters
       - demolition-con-area
@@ -48,6 +50,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - reserved-matters
       - demolition-con-area

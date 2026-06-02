@@ -8,6 +8,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
       - outline
       - extraction-oil-gas
   field: hours-of-operation

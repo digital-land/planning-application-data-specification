@@ -9,6 +9,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
       - lbc
@@ -21,6 +22,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
       - s73
@@ -32,6 +34,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
       - s73
@@ -47,6 +50,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
       - lbc
@@ -59,6 +63,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
       - lbc
@@ -71,6 +76,7 @@ fields:
       in:
       - hh
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
       - lbc

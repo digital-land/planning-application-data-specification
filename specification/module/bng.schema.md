@@ -14,6 +14,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
   field: bng-condition-applies
@@ -22,6 +23,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
   field: bng-condition-exemption-reasons
@@ -32,6 +34,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
       - outline
       - demolition-con-area
   field: bng-details

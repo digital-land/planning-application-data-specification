@@ -8,6 +8,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
       - outline-some
       - extraction-oil-gas
   field: trees-on-site
@@ -16,6 +17,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
       - outline-some
       - extraction-oil-gas
   field: trees-on-adj-land

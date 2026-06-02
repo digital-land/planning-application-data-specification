@@ -8,6 +8,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
       - outline
   required: true
 - field: substance-types
@@ -15,6 +16,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
       - outline
   required-if:
   - field: involves-hazardous-substances

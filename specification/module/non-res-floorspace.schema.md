@@ -8,6 +8,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
   required: true
 - field: non-residential-change-outline
   applies-if:
@@ -20,6 +21,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
   required-if:
   - field: non-residential-change
     value: true
@@ -36,6 +38,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
   required-if:
   - field: floorspace-details
     description: if floorspace-details contains an item where use is c1, c2, c2a or other

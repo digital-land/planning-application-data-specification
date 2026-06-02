@@ -8,6 +8,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
   field: needs-waste-storage-area
   required: true
 - applies-if:
@@ -24,6 +25,7 @@ fields:
     application-type:
       in:
       - full
+      - technical-details-consent
   field: separate-recycling-arrangements
   required: true
 - applies-if:
