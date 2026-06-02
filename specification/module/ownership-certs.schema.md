@@ -37,6 +37,7 @@ fields:
 - field: ownership-cert-option
   notes: Certificate type determined by ownership and notification status
 - field: steps-taken
+  description: Description of steps taken to identify unknown owners or tenants
   required-if:
     - description: Required for Certificate-C or Certificate-D
       field: ownership-cert-option
