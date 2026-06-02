@@ -1,4 +1,73 @@
 
+<a name="v0.2.09"></a>
+## [v0.2.09](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.08...v0.2.09) (2026-06-02)
+
+Improve justification records for needs covered
+
+### 📚 Documentation
+
+* needs related to minor classification developments partially covered (commit [40f508e6](https://github.com/digital-land/planning-application-data-specification/commit/40f508e6c2f02471b54a7d2ce4b5614d58170d6d))
+* document partial coverage for PiP progression (commit [bee97ea9](https://github.com/digital-land/planning-application-data-specification/commit/bee97ea910e443d04078ef7bb232cf7ed7638a20))
+* split development scale reporting justifications (commit [f7b51102](https://github.com/digital-land/planning-application-data-specification/commit/f7b5110222a54833398343f444a6687ba8f69afc))
+* knowing about demolition in conservation areas is covered (commit [952cabe3](https://github.com/digital-land/planning-application-data-specification/commit/952cabe32090aa33520d87a5e8d0c1ab002012d3))
+* knowing decisions on lbc applications is covered (commit [d8f88692](https://github.com/digital-land/planning-application-data-specification/commit/d8f8869250fb6eb82369d8d2bed4ddefedfb2bb1))
+* advertising consent apps and decisions is covered (commit [216d393b](https://github.com/digital-land/planning-application-data-specification/commit/216d393bce56d7740052bb81d0c7f52bac4825d7))
+* householder apps and decisions volume is covered (commit [4ad320ae](https://github.com/digital-land/planning-application-data-specification/commit/4ad320ae2b9a9e804b5f7a40e516702980cb7caa))
+* need-ps-027 is partially satisfied (commit [c14b0dfc](https://github.com/digital-land/planning-application-data-specification/commit/c14b0dfcf01043178ac7ae505f678dad2d999313))
+* capture justification records for what the minor major categorisation supports (commit [d4e4fbba](https://github.com/digital-land/planning-application-data-specification/commit/d4e4fbba340485933bdb6fa98e462966af3f3cd1))
+
+
+<a name="v0.2.08"></a>
+## [v0.2.08](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.07...v0.2.08) (2026-06-02)
+
+PPAs and major/minor classification recorded
+
+### 𝌭 Model changes
+
+* add a development-scale field with accompanying codelist (commit [5eca6086](https://github.com/digital-land/planning-application-data-specification/commit/5eca6086ffe318d854f6391ba5c554a094eb56d8))
+* add planning-performance-agreement to planning-application dataset (commit [5c3c26da](https://github.com/digital-land/planning-application-data-specification/commit/5c3c26dad4efa6bf87ce6b287648bc440b934b32))
+
+
+<a name="v0.2.07"></a>
+## [v0.2.07](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.06...v0.2.07) (2026-06-02)
+
+Add location idenitifers to site dataset
+
+### ⚒️ Tooling
+
+* codelist integrity checks to check against defined fields (commit [435ed883](https://github.com/digital-land/planning-application-data-specification/commit/435ed883a2f3d1698a5aab4ac4877a8f55408d90))
+* Check codelist field references (commit [c1b3c9f6](https://github.com/digital-land/planning-application-data-specification/commit/c1b3c9f634be6de04fd10931ac5d525014527d56))
+
+### 𝌭 Model changes
+
+* add description field to site dataset (commit [e45b8995](https://github.com/digital-land/planning-application-data-specification/commit/e45b89955e65e55827824b4ec6fc4a4b18aac97e))
+* update description of the description field (commit [eea09ef8](https://github.com/digital-land/planning-application-data-specification/commit/eea09ef844f8e537c6655c041ea3c4047131fae4))
+* add postcode to site dataset (commit [2408d5b1](https://github.com/digital-land/planning-application-data-specification/commit/2408d5b1920e978751d51d9d6e9a6fa2b4b1fa22))
+* add site-address field to site dataset (commit [b85e57cb](https://github.com/digital-land/planning-application-data-specification/commit/b85e57cb2b44efc3c6f2e0b773c1c10245b89c28))
+* add validation-completed and application-published to permission-process-event codelist (commit [6cf94b19](https://github.com/digital-land/planning-application-data-specification/commit/6cf94b1902356ad737dec969c5875b42b8969302))
+* add usage table for parking-space-type codelist (commit [b08a859e](https://github.com/digital-land/planning-application-data-specification/commit/b08a859e8edcda30f64506d5157748bfe5548a9e))
+* define synonyms field (commit [582a7d8b](https://github.com/digital-land/planning-application-data-specification/commit/582a7d8b6b01559b39ac56555254632641c4108c))
+* define source field (commit [4513a996](https://github.com/digital-land/planning-application-data-specification/commit/4513a99607d6dba53132d4d6c64da0b5ccdd6fe9))
+* define boolean field needed for oilgas-permission-type codelist (commit [3dc063cc](https://github.com/digital-land/planning-application-data-specification/commit/3dc063cc9449d2c821454403e1d396730ab9abec))
+* define parent field used in hierarchical codelists (commit [4fd30f94](https://github.com/digital-land/planning-application-data-specification/commit/4fd30f94f1f7aac8897f8b08ea26b75d7481c756))
+* add document-type field needed by planning-requirement codelist (commit [fb91b58b](https://github.com/digital-land/planning-application-data-specification/commit/fb91b58bd23ad29ceaf792fedd337fe3ccf39fa3))
+* add local-planning-authority field (commit [e55d848a](https://github.com/digital-land/planning-application-data-specification/commit/e55d848aac20c0587deb2ccedb33e234cd09d259))
+* define the fields needed by organisations codelist (commit [f5537509](https://github.com/digital-land/planning-application-data-specification/commit/f5537509c1416bdca9fcd2f423573856b15fb5f3))
+
+### 🐛 Bug Fixes
+
+* reference of need record (commit [781a58be](https://github.com/digital-land/planning-application-data-specification/commit/781a58be5b4b8008173688fd6c0f8dd29d224e9b))
+* remove need column (commit [054a8ec8](https://github.com/digital-land/planning-application-data-specification/commit/054a8ec8d17db34f74d30de5419ac32b257a812a))
+* swap need column to notes (commit [b9648c99](https://github.com/digital-land/planning-application-data-specification/commit/b9648c9909ec5647bbd8596c931e9f6db307bd30))
+* column name should be description not notes (commit [042ecb99](https://github.com/digital-land/planning-application-data-specification/commit/042ecb99277f58db253cafeacc7c6d0614fb1d3a))
+* type in field name (commit [6ad82412](https://github.com/digital-land/planning-application-data-specification/commit/6ad824128bb3b0465a408f972d460b747559f856))
+
+### 📚 Documentation
+
+* add data need around including location identifiers (commit [e3c67956](https://github.com/digital-land/planning-application-data-specification/commit/e3c67956d8ab5f203d32cb5e905131820f4be5a7))
+* add need about know when application published (commit [5950c8e2](https://github.com/digital-land/planning-application-data-specification/commit/5950c8e2d0c3d49375f3c37a0cbe2a66b4cd577e))
+
+
 <a name="v0.2.06"></a>
 ## [v0.2.06](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.05...v0.2.06) (2026-05-29)
 
