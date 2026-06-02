@@ -1,4 +1,54 @@
 
+<a name="v0.2.11"></a>
+## [v0.2.11](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.10...v0.2.11) (2026-06-02)
+
+Sort out ownership certificate modules
+
+### 𝌭 Model changes
+
+* update extraction-oil-gas application to use oil-gas-ownership-notices module (commit [f086426c](https://github.com/digital-land/planning-application-data-specification/commit/f086426c3fc7a23abaaf84ca4ed030b3478e8f62))
+* define oil-gas-ownership-notices module (commit [d9cabfb9](https://github.com/digital-land/planning-application-data-specification/commit/d9cabfb94c43fedd71bffdf05a7789ada357db1f))
+* make steps-taken field more generic and reusable (commit [64a5d1c6](https://github.com/digital-land/planning-application-data-specification/commit/64a5d1c6b6471ecd27de31dd47d5c8b57975a7e7))
+* define fields for capturing details of notices posted (commit [8f3ec00c](https://github.com/digital-land/planning-application-data-specification/commit/8f3ec00cac4d33d7b5a56c482688eaa7bef92827))
+* add component for details about notices posted somewhere (commit [b8cb2f2b](https://github.com/digital-land/planning-application-data-specification/commit/b8cb2f2b84525700cfaedf7e6428682974672df0))
+* add required-if structures where condition was prose only (commit [c812ed3e](https://github.com/digital-land/planning-application-data-specification/commit/c812ed3e99358fbe85f2cac3a452d2999bdf09d7))
+* applies-if only need in ownership-certs when field only applies to subset of application types (commit [b449a4bb](https://github.com/digital-land/planning-application-data-specification/commit/b449a4bbfcd25a7a604960776811b966937cf027))
+
+
+<a name="v0.2.10"></a>
+## [v0.2.10](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.09...v0.2.10) (2026-06-02)
+
+Fix technical details consent application
+
+### ⚒️ Tooling
+
+* integrity checks check application types in applies-f exist (commit [e12173d3](https://github.com/digital-land/planning-application-data-specification/commit/e12173d34028b3d0d514b7fa3f21110e75bfd978))
+
+### 𝌭 Model changes
+
+* add linked-applications to the planning-application dataset (commit [6c89d7c8](https://github.com/digital-land/planning-application-data-specification/commit/6c89d7c89d47165fadce278656b40f976bb68a82))
+* add a development-scale field with accompanying codelist (commit [8f9fb8f5](https://github.com/digital-land/planning-application-data-specification/commit/8f9fb8f579542a7ec77606db41b785db16925da1))
+* add planning-performance-agreement to planning-application dataset (commit [12f05cb7](https://github.com/digital-land/planning-application-data-specification/commit/12f05cb768247768d7896de25aad5447b92169a6))
+
+### 🐛 Bug Fixes
+
+* modules that need technical-details-consent listed (commit [565f5775](https://github.com/digital-land/planning-application-data-specification/commit/565f577517444042a7f0efc73f5b745804f6aa7e))
+* access-rights-of-way module for technical-details-consent (commit [2996cf76](https://github.com/digital-land/planning-application-data-specification/commit/2996cf768ad3ac6f2dd9a0dad17a25941a0e75bc))
+* proposal-details for technical details consent (commit [a0349df0](https://github.com/digital-land/planning-application-data-specification/commit/a0349df0bfcbbc9162236ea79b1648b146a047a9))
+
+### 📚 Documentation
+
+* needs related to minor classification developments partially covered (commit [2b096853](https://github.com/digital-land/planning-application-data-specification/commit/2b09685302b950e6800adc23fd8207aaadfdaf07))
+* document partial coverage for PiP progression (commit [209b02e9](https://github.com/digital-land/planning-application-data-specification/commit/209b02e967e92800a0870b7e22b8017b7a3f8a2f))
+* split development scale reporting justifications (commit [ec8eac09](https://github.com/digital-land/planning-application-data-specification/commit/ec8eac0924adb3e1448c02a782aa1d171932b1c2))
+* knowing about demolition in conservation areas is covered (commit [f63c9998](https://github.com/digital-land/planning-application-data-specification/commit/f63c9998b77d7b20311e9d5d7802f9eb632dacbf))
+* knowing decisions on lbc applications is covered (commit [0ad1581a](https://github.com/digital-land/planning-application-data-specification/commit/0ad1581a62b27349e50d57a700e246e64b79612c))
+* advertising consent apps and decisions is covered (commit [e80e4d3c](https://github.com/digital-land/planning-application-data-specification/commit/e80e4d3c144074cee39a4260f4b93e89010e428f))
+* householder apps and decisions volume is covered (commit [1f57aabf](https://github.com/digital-land/planning-application-data-specification/commit/1f57aabf83c7002bfc144d81a96dcc8e13d21323))
+* need-ps-027 is partially satisfied (commit [ce6c1da7](https://github.com/digital-land/planning-application-data-specification/commit/ce6c1da75fb6bd17fe3274634a606d27c8b28247))
+* capture justification records for what the minor major categorisation supports (commit [d150be4f](https://github.com/digital-land/planning-application-data-specification/commit/d150be4fd41f27ae7bc3160cf107f6aac059ee45))
+
+
 <a name="v0.2.09"></a>
 ## [v0.2.09](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.08...v0.2.09) (2026-06-02)
 
