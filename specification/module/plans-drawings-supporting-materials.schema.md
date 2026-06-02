@@ -5,6 +5,7 @@ end-date: ''
 entry-date: 2025-07-14
 fields:
 - field: supporting-documents
+  description: References to the plans, drawings and supporting materials already included in the application document list that are relevant to this part of the application
   required: true
 - field: inspection-address
   required: true
