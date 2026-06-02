@@ -34,12 +34,22 @@ fields:
     application-type:
       in:
       - lbc
-- field: steps-taken
-  notes: Required for Certificate-C or Certificate-D
-- field: newspaper-notices
-  notes: Required for Certificate-C or Certificate-D
 - field: ownership-cert-option
   notes: Certificate type determined by ownership and notification status
+- field: steps-taken
+  required-if:
+    - description: Required for Certificate-C or Certificate-D
+      field: ownership-cert-option
+      in: 
+      - certificate-c
+      - certificate-d
+- field: newspaper-notices
+  required-if:
+    - description: Required for Certificate-C or Certificate-D
+      field: ownership-cert-option
+      in: 
+      - certificate-c
+      - certificate-d
 - field: person-reference
   description: Declaration must be made by an applicant or agent making the application
   required: true
