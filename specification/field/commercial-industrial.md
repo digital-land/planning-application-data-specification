@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Maximum throughput for commercial and industrial waste (annual throughput
   in tonnes/litres)
 end-date: ''

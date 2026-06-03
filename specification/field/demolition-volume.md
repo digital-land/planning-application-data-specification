@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Volume of part to be demolished in cubic metres
 end-date: ''
 entry-date: 2025-06-30

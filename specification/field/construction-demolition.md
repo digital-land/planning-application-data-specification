@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Maximum throughput for construction and demolition waste (annual throughput
   in tonnes/litres)
 end-date: ''
