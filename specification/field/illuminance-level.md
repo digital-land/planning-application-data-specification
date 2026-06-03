@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Level of illuminance for the advertisement
 end-date: ''
 entry-date: 2025-07-17

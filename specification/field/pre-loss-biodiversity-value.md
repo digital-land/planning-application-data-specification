@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Biodiversity value immediately before habitat loss or degradation occurred,
   measured in Habitat Biodiversity Units
 end-date: ''

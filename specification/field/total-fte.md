@@ -1,6 +1,6 @@
 ---
 cardinality: '1'
-datatype: number
+datatype: decimal
 description: Total full-time equivalent (FTE)
 end-date: ''
 entry-date: '2025-07-08'

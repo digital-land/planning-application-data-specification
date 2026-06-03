@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Calculated biodiversity value in Habitat Biodiversity Units
 end-date: ''
 entry-date: 2025-06-16
