@@ -3,9 +3,10 @@ component: site-area
 name: Site area
 description: |
   Information about the total area of a development site, including 
-  the measured value, unit, and source of the measurement
+  the measured size, unit, and source of the measurement
 fields:
-  - field: value
+  - field: size
+    description: Size of the development site area
     required: true
   - field: unit
     required: true
