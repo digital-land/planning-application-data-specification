@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: integer
 description: The number of bedrooms in unit
 end-date: ''
 entry-date: 2025-07-17

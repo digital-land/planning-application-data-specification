@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: integer
 description: The total number of existing units
 end-date: ''
 entry-date: 2025-07-17

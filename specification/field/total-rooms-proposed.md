@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: integer
 description: Total rooms proposed (including change of use)
 end-date: ''
 entry-date: 2025-07-17

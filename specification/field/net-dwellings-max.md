@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: integer
 description: The maximum number of net additional dwellings proposed as part of the
   development, allowing for flexibility in the final housing numbers
 end-date: ''

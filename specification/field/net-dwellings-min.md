@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: integer
 description: The minimum number of net additional dwellings proposed as part of the
   development, accounting for any existing dwellings lost and new dwellings created
 end-date: ''
