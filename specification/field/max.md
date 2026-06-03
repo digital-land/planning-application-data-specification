@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Upper bound of non-residential use, measured in square metres for floorspace
   or hectares for site area
 end-date: ''

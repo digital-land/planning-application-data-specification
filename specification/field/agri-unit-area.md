@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Total area of the entire agricultural unit
 end-date: ''
 entry-date: 2026-05-11

@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Maximum projection, in metres, of the advertisement from the face of
   the building
 end-date: ''

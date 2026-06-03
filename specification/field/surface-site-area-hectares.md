@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Surface site area in hectares
 end-date: ''
 entry-date: 2025-07-02
