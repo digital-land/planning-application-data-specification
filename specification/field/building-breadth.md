@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Breadth of the building (in metres).
 end-date: ''
 entry-date: 2026-05-11

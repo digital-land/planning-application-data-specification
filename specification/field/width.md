@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Width of dimensions of advertisement
 end-date: ''
 entry-date: 2025-07-17

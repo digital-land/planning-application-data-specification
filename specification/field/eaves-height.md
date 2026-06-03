@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Height at the eaves of the extension, measured externally from natural
   ground level in metres
 end-date: ''

@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Length of rear extension in metres
 end-date: ''
 entry-date: 2025-07-10

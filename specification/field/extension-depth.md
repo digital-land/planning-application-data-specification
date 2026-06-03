@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: How far the extension extends beyond the rear wall, measured externally
   in metres
 end-date: ''

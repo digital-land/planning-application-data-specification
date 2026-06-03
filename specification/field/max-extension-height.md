@@ -1,6 +1,6 @@
 ---
 cardinality: 1
-datatype: number
+datatype: decimal
 description: Maximum height of the extension, measured externally from natural ground
   level in metres
 end-date: ''
