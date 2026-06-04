@@ -21,6 +21,24 @@ Our aim is to understand what information is actually needed, by whom, and for w
 
 This approach follows the “start small” principle: we’ll begin with a minimal, evidence-based core and only add parts and fields once there is a clear and validated need.
 
+### Authoritative application data
+
+The `planning-application-data` dataset identifies the authoritative structured
+application data at two important points:
+
+* `submitted-data-uri` identifies the application data as first received by the
+  planning authority.
+* `validated-data-uri` identifies the application data accepted through planning
+  validation. It is required where the application has a `found-valid` event in
+  `planning-permission-timeline`.
+
+These URIs allow authorised users or systems to identify and retrieve the
+artefacts. They do not imply public access or prescribe how the artefacts are
+stored. Documents remain separate records in `planning-application-document`.
+
+See [Reference authoritative application artefacts without prescribing
+storage](../design-decisions/0018-reference-authoritative-application-artefacts-without-prescribing-storage.md)
+for the modelling decision.
 
 ### Specification development
 

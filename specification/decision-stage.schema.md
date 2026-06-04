@@ -41,6 +41,18 @@ datasets:
         description: a URL to the completed application form
       - field: documentation-url
         description: the URL where supporting documents for the application can be accessed
+  - dataset: planning-application-data
+    name: planning application data
+    fields:
+      - field: reference
+        description: the <a href="#reference">reference</a> for the planning application data record
+      - field: planning-application
+        description: the <a href="#reference">reference</a> for the related planning application
+        dataset: planning-application
+      - field: submitted-data-uri
+        description: the URI identifying the authoritative structured application data as first received by the planning authority
+      - field: validated-data-uri
+        description: the URI identifying the authoritative structured application data accepted through planning validation
   - dataset: site
     name: site
     fields:
