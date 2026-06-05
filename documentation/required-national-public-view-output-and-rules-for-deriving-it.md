@@ -20,6 +20,7 @@ In plain English:
 
 - authorities must be able to accept conformant planning application data
 - authorities must be able to publish conformant national public view data
+- authorities must be able to share conformant data as required (e.g. to PINs)
 - how their back office system gets from one to the other is implementation detail
 
 The national public view is built from the wider planning application record and the submission object over time. Some values may originate in the submission, some may be recorded by officers and some may come from later process activity.
