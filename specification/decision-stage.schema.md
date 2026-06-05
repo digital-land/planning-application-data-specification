@@ -149,6 +149,8 @@ datasets:
       - field: replaces
         description: Reference to an earlier document record replaced by this document
         dataset: planning-application-document
+      - field: public-register-status
+        description: Whether the document has been assessed as suitable for public availability on the planning register
   - dataset: planning-permission-timeline
     name: planning permission timeline
     fields:

@@ -15,6 +15,7 @@ fields:
   - field: replaces
     description: Reference to an earlier document record replaced by this document
     dataset: planning-application-document
+  - field: public-register-status
   - field: document-url
   - field: documentation-url
 entry-date: 2026-01-28
@@ -86,6 +87,7 @@ name: Proposed plans revision B
 document-url: https://example.org/documents/proposed-plans-v2.pdf
 documentation-url: https://example.org/applications/pa-1001/documents/doc-002
 replaces: doc-001
+public-register-status: publish
 ```
 
 In this example `doc-002` is the newer document record and it replaces the
