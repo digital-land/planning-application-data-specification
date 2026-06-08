@@ -1,4 +1,101 @@
 
+<a name="v0.2.16"></a>
+## [v0.2.16](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.15...v0.2.16) (2026-06-08)
+
+Defining national public view
+
+### 𝌭 Model changes
+
+* add public-register-status field (commit [fa268483](https://github.com/digital-land/planning-application-data-specification/commit/fa268483891964edb440153718d7e91b4b15d732))
+
+### 📚 Documentation
+
+* update note (commit [a3fae7fb](https://github.com/digital-land/planning-application-data-specification/commit/a3fae7fbe54a6bdb2c1954701b437d99cebd610c))
+* write up of how we plan to define national public view (commit [9eeca0b2](https://github.com/digital-land/planning-application-data-specification/commit/9eeca0b2520bdc089019d7b4864662275183b043))
+* add need about explicitly deciding which documents are suitable for public access (commit [9141eda6](https://github.com/digital-land/planning-application-data-specification/commit/9141eda6cbdd066cf274bca001444e0e81a8f005))
+
+
+<a name="v0.2.15"></a>
+## [v0.2.15](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.14...v0.2.15) (2026-06-08)
+
+Improvements to decision stage specification
+
+### 𝌭 Model changes
+
+* add resolution to grant and refuse as events in permission event codelist (commit [00aff5eb](https://github.com/digital-land/planning-application-data-specification/commit/00aff5eb9cdb01f4ae09d821504b0a48dc484d42))
+* add mayor to decision-maker codelist (commit [1532d7e6](https://github.com/digital-land/planning-application-data-specification/commit/1532d7e6be394d010f2f3125ba892a4ff509cb55))
+* Add authoritative submitted and validated application data references (commit [0bccd64d](https://github.com/digital-land/planning-application-data-specification/commit/0bccd64d62de13eda18a6661465798324e5187fb))
+
+### 🐛 Bug Fixes
+
+* add missing development-scale codelist data (commit [98cabb29](https://github.com/digital-land/planning-application-data-specification/commit/98cabb2970c7138cb2e5663e9034dd0e94cd4237))
+
+### 📚 Documentation
+
+* add needs around the hidden middle, when a decision has been made but the decision notice is still to be issued (commit [a82dcdf9](https://github.com/digital-land/planning-application-data-specification/commit/a82dcdf9a7651d726684a2840d144a10038300b1))
+* add need about open data requirement from the LURA (commit [67abdcae](https://github.com/digital-land/planning-application-data-specification/commit/67abdcaea917853d9920345469897c8dab15536e))
+
+
+<a name="v0.2.14"></a>
+## [v0.2.14](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.13...v0.2.14) (2026-06-08)
+
+Add publicity-start event
+
+### 𝌭 Model changes
+
+* add publicity-start event to permission events codelist (commit [131faf29](https://github.com/digital-land/planning-application-data-specification/commit/131faf29ce2cf8e10512b5d25365444f6b209cb5))
+
+### 📚 Documentation
+
+* add need about publicity (commit [1b67dfe0](https://github.com/digital-land/planning-application-data-specification/commit/1b67dfe06af4cae7c39cb8b5520270812393bbe3))
+
+
+<a name="v0.2.13"></a>
+## [v0.2.13](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.12...v0.2.13) (2026-06-08)
+
+Convert datatype number fields to more specific datatype
+
+### 𝌭 Model changes
+
+* use decimal for grid coordinate fields (commit [fcc73cfe](https://github.com/digital-land/planning-application-data-specification/commit/fcc73cfe95658eab7784016e5fba671a38e6ee76))
+* use decimal for volume and throughput fields (commit [64687e55](https://github.com/digital-land/planning-application-data-specification/commit/64687e5512f675a4ca42465d9f5d1354579ca028))
+* use decimal for money and calculated values (commit [087a0891](https://github.com/digital-land/planning-application-data-specification/commit/087a089114fb3ee31c59cbf6def925ae64f7b6bf))
+* use decimal for area and projection fields (commit [cbb99e4c](https://github.com/digital-land/planning-application-data-specification/commit/cbb99e4cb8ce4a6b3a4eb01065de9b493ab3c457))
+* remove unused field called value (commit [c8ba9bf3](https://github.com/digital-land/planning-application-data-specification/commit/c8ba9bf3fa1556d7cdcf13b5555e6939a8846532))
+* move unit style fields to datatype: integer (commit [246378ea](https://github.com/digital-land/planning-application-data-specification/commit/246378eabeeccb9df02cc3fd8515ee3141d920e1))
+* height, width, depth measurement fields should be datatype: decimal (commit [eb174a47](https://github.com/digital-land/planning-application-data-specification/commit/eb174a47eaf40cfb292665a6920390e24f90c0eb))
+* use a size field for site-area component (commit [18aefad1](https://github.com/digital-land/planning-application-data-specification/commit/18aefad1085df17d030f9adebaa53d210cf1e819))
+
+
+<a name="v0.2.12"></a>
+## [v0.2.12](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.11...v0.2.12) (2026-06-08)
+
+Tweaks and fixes
+
+### ⚒️ Tooling
+
+* integrity checks check application types in applies-f exist (commit [8d5408d5](https://github.com/digital-land/planning-application-data-specification/commit/8d5408d5beb20a9ffd98f7c5ff05926754c772dd))
+
+### 𝌭 Model changes
+
+* update description on supporting-documents field in plans-drawings-supporting-materials module (commit [71178817](https://github.com/digital-land/planning-application-data-specification/commit/71178817b6e8528b421cdcbb3ed333388f61f53e))
+* rename notice-date to notice-served-date (commit [cd231c83](https://github.com/digital-land/planning-application-data-specification/commit/cd231c8321d454988bcb6ea82feb44f8087f125c))
+* update extraction-oil-gas application to use oil-gas-ownership-notices module (commit [421e335f](https://github.com/digital-land/planning-application-data-specification/commit/421e335f4e485ed0e0805c94575819050ea11272))
+* define oil-gas-ownership-notices module (commit [352bc002](https://github.com/digital-land/planning-application-data-specification/commit/352bc002ac0d723ceefb1bd43ea0db0748b65e86))
+* make steps-taken field more generic and reusable (commit [85db4c53](https://github.com/digital-land/planning-application-data-specification/commit/85db4c53557c49aafa3de3278a3bbe0334a3db74))
+* define fields for capturing details of notices posted (commit [b264340b](https://github.com/digital-land/planning-application-data-specification/commit/b264340b035225eb0dabb56ee79b74109c34116c))
+* add component for details about notices posted somewhere (commit [4d821329](https://github.com/digital-land/planning-application-data-specification/commit/4d8213298d45facb771a55ccbb7a7662c134c41e))
+* add required-if structures where condition was prose only (commit [746918ee](https://github.com/digital-land/planning-application-data-specification/commit/746918ee7627bebb3d940d9c51e7cfce65ec86d6))
+* applies-if only need in ownership-certs when field only applies to subset of application types (commit [eb44cb83](https://github.com/digital-land/planning-application-data-specification/commit/eb44cb837a864addf83d5a788b9835ed04b15aa5))
+* add linked-applications to the planning-application dataset (commit [d9dc67dd](https://github.com/digital-land/planning-application-data-specification/commit/d9dc67dd7f5a469fea1f3c37c776224250ab8588))
+
+### 🐛 Bug Fixes
+
+* modules that need technical-details-consent listed (commit [29b96b4b](https://github.com/digital-land/planning-application-data-specification/commit/29b96b4bf6c0bb4ebf36da6cad181055d3c58799))
+* access-rights-of-way module for technical-details-consent (commit [e9853e08](https://github.com/digital-land/planning-application-data-specification/commit/e9853e081b0a2d69bb30f86ea8d6f490531198ab))
+* proposal-details for technical details consent (commit [8a3e29e5](https://github.com/digital-land/planning-application-data-specification/commit/8a3e29e594643449f1daa1d15f660a4d46e56846))
+
+
 <a name="v0.2.11"></a>
 ## [v0.2.11](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.10...v0.2.11) (2026-06-02)
 
