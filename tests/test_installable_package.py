@@ -39,6 +39,7 @@ def test_canonical_codelist_lookup_returns_items(project_root):
     assert codelist.ref == "tenure-type"
     assert "market-housing" in item_refs
     assert "london-affordable-rent" in item_refs
+    assert codelist.usage == "data/usage/tenure-type-usage.csv"
 
 
 def test_applicable_codelist_filters_by_profile_and_application_type(project_root):

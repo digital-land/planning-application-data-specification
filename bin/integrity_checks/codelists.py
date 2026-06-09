@@ -46,6 +46,35 @@ def check_codelist_source(codelists):
     return not has_errors
 
 
+def check_codelist_usage_source(codelists):
+    """
+    Check optional codelist usage sources point to a local usage CSV that exists.
+    """
+    project_root = Path(__file__).resolve().parents[2]
+    has_errors = False
+    for path, meta in codelists.items():
+        usage = meta.get("usage")
+        if not usage:
+            continue
+        valid_usage = (
+            isinstance(usage, str)
+            and usage.startswith("data/usage/")
+            and usage.endswith(".csv")
+        )
+        if not valid_usage:
+            print_error(
+                "codelist",
+                path,
+                f"usage is not a valid data/usage CSV path: {usage}",
+            )
+            has_errors = True
+            continue
+        if not (project_root / usage).exists():
+            print_error("codelist", path, f"usage source does not exist: {usage}")
+            has_errors = True
+    return not has_errors
+
+
 def check_codelist_github_discussion(codelists):
     """
     Check rule 3: warning if github discussion number is empty
@@ -287,6 +316,7 @@ def check_all(codelists, fields):
     checks_with_args = [
         (check_codelist_names, [codelists]),
         (check_codelist_source, [codelists]),
+        (check_codelist_usage_source, [codelists]),
         (check_codelist_github_discussion, [codelists]),
         (check_codelist_entry_date, [codelists]),
         (check_codelist_name_plural, [codelists]),

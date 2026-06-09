@@ -17,6 +17,7 @@ from bin.integrity_checks.codelists import (
     check_codelist_field_references,
     check_codelist_parent_column,
     check_codelist_parent_references,
+    check_codelist_usage_source,
 )
 from bin.integrity_checks.fields import (
     check_codelist_exists,
@@ -1763,6 +1764,24 @@ class TestCodelistSourceData:
             assert not check_codelist_declared_fields_present(codelists)
         finally:
             source_path.unlink(missing_ok=True)
+
+    def test_codelist_usage_source_passes_when_usage_csv_exists(self):
+        codelists = {
+            "specification/codelist/tenure-type.schema.md": {
+                "usage": "data/usage/tenure-type-usage.csv",
+            }
+        }
+
+        assert check_codelist_usage_source(codelists)
+
+    def test_codelist_usage_source_fails_when_path_is_not_usage_csv(self):
+        codelists = {
+            "specification/codelist/test.schema.md": {
+                "usage": "data/codelist/test.csv",
+            }
+        }
+
+        assert not check_codelist_usage_source(codelists)
 
     def test_parent_column_allows_valid_parent_reference(self, project_root):
         source_path = project_root / "data" / "test-codelist-validation.csv"
