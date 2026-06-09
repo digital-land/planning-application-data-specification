@@ -1067,6 +1067,12 @@ def build_site(args: argparse.Namespace) -> None:
                 "title": app.get("name", app_id),
                 "description": app.get("description", ""),
                 "application": app_id,
+                "extends": {
+                    "ref": app.get("extends"),
+                    "href": renderer.url_for(f"/application-type/{app.get('extends')}"),
+                }
+                if app.get("extends")
+                else None,
                 "synonyms": app.get("synonyms", []),
                 "notes": app.get("notes", ""),
                 "entry_date": app.get("entry-date", ""),
