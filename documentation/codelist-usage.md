@@ -14,6 +14,7 @@ The pattern is simple:
 
 1. keep one canonical codelist for the values
 2. keep usage or context rules in a separate table
+3. add a `usage` property to the codelist schema when that codelist has a usage table
 
 If the codelist needs hierarchy, that hierarchy stays in the codelist.
 
@@ -44,6 +45,17 @@ It should contain:
 - any hierarchy or roll-up relationship, using `parent` where needed
 
 It should not contain context rules about where each value is allowed.
+
+When a canonical codelist has a usage table, its schema should include a `usage` property that points to the usage CSV. This makes it explicit that the codelist can be filtered by `specification-profile` or another context column.
+
+For example:
+
+```yaml
+source: data/codelist/tenure-type.csv
+usage: data/usage/tenure-type-usage.csv
+```
+
+Use `source` for the canonical codelist data and `usage` for the optional usage table. If a codelist does not have context-specific allowed values, omit `usage`.
 
 ### Usage table
 
@@ -113,9 +125,9 @@ For now, this can stay as a short prose explanation rather than a formal artefac
 
 The canonical codelist remains in `data/codelist/`.
 
-The usage table should sit in `data/`, for example:
+The usage table should sit in `data/usage/`, for example:
 
-- `data/tenure-type-usage.csv`
+- `data/usage/tenure-type-usage.csv`
 
 Its definition should sit in `specification/data/`, for example:
 
