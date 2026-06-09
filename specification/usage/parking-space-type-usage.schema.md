@@ -1,5 +1,5 @@
 ---
-data: parking-space-type-usage
+usage: parking-space-type-usage
 description: |
   Defines which parking space types are allowed for each specification profile.
 end-date:

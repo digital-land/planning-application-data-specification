@@ -17,11 +17,11 @@ def make_tables():
         "application": {},
         "codelist": {},
         "component": {},
-        "data": {},
         "dataset": {},
         "field": {},
         "module": {},
         "specification": {},
+        "usage": {},
         # "planning-requirement": {},
     }
 
@@ -32,7 +32,7 @@ def make_needs_tables():
 
 def load_table_content(table, target_tables):
     file_path = "*.md"
-    if table in ["application", "module", "codelist", "dataset", "data"]:
+    if table in ["application", "module", "codelist", "dataset", "usage"]:
         file_path = "*.schema.md"
 
     # specification files live directly under specification/

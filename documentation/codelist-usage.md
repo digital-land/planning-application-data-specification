@@ -97,9 +97,9 @@ The initial recommendation is to use separate usage tables for separate codelist
 
 Current examples:
 
-- [housing-type-usage schema](../specification/data/housing-type-usage.schema.md) and [housing-type-usage CSV](../data/usage/housing-type-usage.csv)
-- [parking-space-type-usage schema](../specification/data/parking-space-type-usage.schema.md) and [parking-space-type-usage CSV](../data/usage/parking-space-type-usage.csv)
-- [tenure-type-usage schema](../specification/data/tenure-type-usage.schema.md) and [tenure-type-usage CSV](../data/usage/tenure-type-usage.csv)
+- [housing-type-usage schema](../specification/usage/housing-type-usage.schema.md) and [housing-type-usage CSV](../data/usage/housing-type-usage.csv)
+- [parking-space-type-usage schema](../specification/usage/parking-space-type-usage.schema.md) and [parking-space-type-usage CSV](../data/usage/parking-space-type-usage.csv)
+- [tenure-type-usage schema](../specification/usage/tenure-type-usage.schema.md) and [tenure-type-usage CSV](../data/usage/tenure-type-usage.csv)
 - [specification-profile codelist](../specification/codelist/specification-profile.schema.md)
 
 This is clearer and easier to maintain than one generic usage table.
@@ -129,9 +129,9 @@ The usage table should sit in `data/usage/`, for example:
 
 - `data/usage/tenure-type-usage.csv`
 
-Its definition should sit in `specification/data/`, for example:
+Its definition should sit in `specification/usage/`, for example:
 
-- `specification/data/tenure-type-usage.schema.md`
+- `specification/usage/tenure-type-usage.schema.md`
 
 If needed, a short explanation of routing rules can be added to the usage-table schema note or to `specification/README.md`.
 

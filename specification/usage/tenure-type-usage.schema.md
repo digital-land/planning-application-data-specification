@@ -1,5 +1,5 @@
 ---
-data: tenure-type-usage
+usage: tenure-type-usage
 description: |
   Defines which tenure types are allowed for each specification profile and application type context.
 end-date:

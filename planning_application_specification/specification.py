@@ -368,7 +368,7 @@ class Specification:
 
     def _conventional_usage_source(self, codelist_ref: str) -> str:
         usage_schema_ref = f"{codelist_ref}-usage"
-        usage_schema = self.tables.get("data", {}).get(usage_schema_ref)
+        usage_schema = self.tables.get("usage", {}).get(usage_schema_ref)
         if not usage_schema:
             return ""
         return usage_schema.get("source", "") or ""

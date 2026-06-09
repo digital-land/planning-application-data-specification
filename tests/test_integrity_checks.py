@@ -871,8 +871,8 @@ class TestUsageIntegrityChecks:
         self.patch_usage_source_path(monkeypatch, csv_path)
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
                 "fields": [{"field": "reference"}, {"field": "missing-column"}],
             }
@@ -895,8 +895,8 @@ class TestUsageIntegrityChecks:
         self.patch_usage_source_path(monkeypatch, csv_path)
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
                 "fields": [{"field": "reference"}, {"field": "name"}],
             }
@@ -919,8 +919,8 @@ class TestUsageIntegrityChecks:
         self.patch_usage_source_path(monkeypatch, csv_path)
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
                 "key-field": "reference",
             }
@@ -944,8 +944,8 @@ class TestUsageIntegrityChecks:
         self.patch_usage_source_path(monkeypatch, csv_path)
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
                 "key-field": "reference",
             }
@@ -969,8 +969,8 @@ class TestUsageIntegrityChecks:
         self.patch_usage_source_path(monkeypatch, csv_path)
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
                 "key-field": "reference",
             }
@@ -998,8 +998,8 @@ class TestUsageIntegrityChecks:
         )
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
             }
         }
@@ -1026,8 +1026,8 @@ class TestUsageIntegrityChecks:
         )
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
             }
         }
@@ -1049,8 +1049,8 @@ class TestUsageIntegrityChecks:
         self.patch_usage_source_path(monkeypatch, csv_path)
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
             }
         }
@@ -1075,8 +1075,8 @@ class TestUsageIntegrityChecks:
         self.patch_usage_source_path(monkeypatch, csv_path)
 
         usage_tables = {
-            "specification/data/test-usage.schema.md": {
-                "data": "test-usage",
+            "specification/usage/test-usage.schema.md": {
+                "usage": "test-usage",
                 "source": "data/test-usage.csv",
             }
         }

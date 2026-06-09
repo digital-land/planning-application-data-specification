@@ -59,12 +59,14 @@ def check_usage_names(usage_tables):
     has_errors = False
 
     for path, meta in usage_tables.items():
-        usage_name = meta.get("data")
+        usage_name = meta.get("usage")
         if not isinstance(usage_name, str) or not check_kebab_case(usage_name):
-            print_error("usage", path, f"data '{usage_name}' must be kebab-case string")
+            print_error(
+                "usage", path, f"usage '{usage_name}' must be kebab-case string"
+            )
             has_errors = True
         elif usage_name in seen:
-            print_error("usage", path, f"duplicate data '{usage_name}'")
+            print_error("usage", path, f"duplicate usage '{usage_name}'")
             has_errors = True
         seen.add(usage_name)
 

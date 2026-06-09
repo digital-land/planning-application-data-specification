@@ -32,7 +32,7 @@ def perform_checks():
     fields = specification["field"]
     codelists = specification["codelist"]
     components = specification["component"]
-    usage_tables = specification["data"]
+    usage_tables = specification["usage"]
     datasets = specification["dataset"]
     modules = specification["module"]
     applications = specification["application"]

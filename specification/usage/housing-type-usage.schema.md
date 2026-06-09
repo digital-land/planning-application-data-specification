@@ -1,5 +1,5 @@
 ---
-data: housing-type-usage
+usage: housing-type-usage
 description: |
   Defines which housing types are allowed for each specification profile.
 end-date:

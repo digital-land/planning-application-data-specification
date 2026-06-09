@@ -14,11 +14,11 @@ def make_tables():
         "application": {},
         "codelist": {},
         "component": {},
-        "data": {},
         "dataset": {},
         "field": {},
         "module": {},
         "specification": {},
+        "usage": {},
     }
 
 
@@ -47,7 +47,7 @@ def _resolve_repo_root(path: str | Path | None = None) -> Path:
 def load_table_content(table, target_tables, root_path: str | Path | None = None):
     root = _resolve_repo_root(root_path)
     file_path = "*.md"
-    if table in ["application", "module", "codelist", "dataset", "data"]:
+    if table in ["application", "module", "codelist", "dataset", "usage"]:
         file_path = "*.schema.md"
 
     if table == "specification":
