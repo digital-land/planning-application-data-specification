@@ -576,9 +576,9 @@ def render_data_model(renderer: RenderContext) -> None:
         "page_title": "Data model",
         "links": {
             "application_types": renderer.url_for("/application-type/"),
-            "modules": renderer.url_for("/submission/module/"),
-            "components": renderer.url_for("/submission/component/"),
-            "fields": renderer.url_for("/fields/"),
+            "modules": renderer.url_for("/module/"),
+            "components": renderer.url_for("/component/"),
+            "fields": renderer.url_for("/field/"),
             "codelists": renderer.url_for("/codelist/"),
             "datasets": renderer.url_for("/dataset/"),
         },
@@ -893,14 +893,14 @@ def build_site(args: argparse.Namespace) -> None:
         submission_modules = list(spec_model.get("modules", {}).values())
         submission_modules.sort(key=lambda m: m.name or m.ref)
         module_index_ctx = {
-            "page_title": "Submission modules",
-            "links": {"back": renderer.url_for("/submission")},
+            "page_title": "Modules",
+            "links": {"back": renderer.url_for("/data-model")},
             "modules": [
                 {
                     "ref": m.ref,
                     "name": m.name or m.ref,
                     "description": m.description or "",
-                    "href": renderer.url_for(f"/submission/module/{m.ref}"),
+                    "href": renderer.url_for(f"/module/{m.ref}"),
                 }
                 for m in submission_modules
             ],
@@ -908,7 +908,7 @@ def build_site(args: argparse.Namespace) -> None:
         module_index_html = env.get_template("module_index.html").render(
             **module_index_ctx
         )
-        renderer.write_page("submission/module/index.html", module_index_html)
+        renderer.write_page("module/index.html", module_index_html)
 
         module_template = env.get_template("module_detail.html")
         for m in submission_modules:
@@ -921,12 +921,10 @@ def build_site(args: argparse.Namespace) -> None:
                 "description": m.description or "",
                 "fields": mod_fields,
                 "rules": rules,
-                "links": {"back": renderer.url_for("/submission/module")},
+                "links": {"back": renderer.url_for("/module")},
             }
             module_html = module_template.render(**module_ctx)
-            renderer.write_page(
-                f"submission/module/{m.ref}/index.html", module_html
-            )
+            renderer.write_page(f"module/{m.ref}/index.html", module_html)
 
         # Component index and detail pages
         component_index_ctx = {
@@ -936,7 +934,7 @@ def build_site(args: argparse.Namespace) -> None:
                     "ref": c.ref,
                     "name": c.name or c.ref,
                     "description": c.description or "",
-                    "href": renderer.url_for(f"/submission/component/{c.ref}"),
+                    "href": renderer.url_for(f"/component/{c.ref}"),
                 }
                 for c in sorted(component_index.values(), key=lambda c: c.ref)
             ],
@@ -945,7 +943,7 @@ def build_site(args: argparse.Namespace) -> None:
         comp_index_html = env.get_template("component_index.html").render(
             **component_index_ctx
         )
-        renderer.write_page("submission/component/index.html", comp_index_html)
+        renderer.write_page("component/index.html", comp_index_html)
 
         comp_template = env.get_template("component_detail.html")
         raw_components = spec_tables.get("component", {})
@@ -957,7 +955,7 @@ def build_site(args: argparse.Namespace) -> None:
                 {
                     "ref": mr,
                     "name": getattr(module_index.get(mr), "name", mr),
-                    "href": renderer.url_for(f"/submission/module/{mr}"),
+                    "href": renderer.url_for(f"/module/{mr}"),
                 }
                 for mr in module_refs
                 if mr in module_index
@@ -973,7 +971,7 @@ def build_site(args: argparse.Namespace) -> None:
                 "breadcrumbs": [],
             }
             comp_html = comp_template.render(**comp_ctx)
-            renderer.write_page(f"submission/component/{cref}/index.html", comp_html)
+            renderer.write_page(f"component/{cref}/index.html", comp_html)
 
         # Codelist index and detail pages
         codelists_raw = spec_tables.get("codelist", {})
@@ -1016,7 +1014,7 @@ def build_site(args: argparse.Namespace) -> None:
                     "ref": f.ref,
                     "name": f.name,
                     "description": f.description,
-                    "href": renderer.url_for(f"/fields/{f.ref}"),
+                    "href": renderer.url_for(f"/field/{f.ref}"),
                 }
                 for f in sorted(field_index.values(), key=lambda f: f.ref)
             ],
@@ -1024,7 +1022,7 @@ def build_site(args: argparse.Namespace) -> None:
         fields_index_html = env.get_template("fields_index.html").render(
             **fields_index_ctx
         )
-        renderer.write_page("fields/index.html", fields_index_html)
+        renderer.write_page("field/index.html", fields_index_html)
 
         field_detail_template = env.get_template("field_detail.html")
         for f in field_index.values():
@@ -1033,7 +1031,7 @@ def build_site(args: argparse.Namespace) -> None:
                 "field": f,
             }
             field_html = field_detail_template.render(**ctx)
-            renderer.write_page(f"fields/{f.ref}/index.html", field_html)
+            renderer.write_page(f"field/{f.ref}/index.html", field_html)
 
         # Submission application detail pages
         app_template = env.get_template("submission_application_detail.html")
@@ -1059,7 +1057,7 @@ def build_site(args: argparse.Namespace) -> None:
                             "ref": mobj.ref,
                             "name": mobj.name or mobj.ref,
                             "description": mobj.description or "",
-                            "href": renderer.url_for(f"/submission/module/{mobj.ref}"),
+                            "href": renderer.url_for(f"/module/{mobj.ref}"),
                             "required": m.get("required"),
                         }
                     )
