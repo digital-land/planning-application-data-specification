@@ -1,8 +1,9 @@
 ---
 application: pa-extension
 extends: prior-approval
-name: Larger Home Extension
-description: Planning application for extension
+name: "Prior approval: Larger Home Extension"
+description: |
+  An application for prior approval for a proposed larger single-storey rear extension to a dwellinghouse under permitted development rights.
 entry-date: 2025-08-12
 start-date: ''
 end-date: ''

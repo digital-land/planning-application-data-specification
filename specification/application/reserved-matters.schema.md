@@ -1,7 +1,8 @@
 ---
 application: reserved-matters
 name: Reserved matters
-description: This application is only required when the applicant has already been granted outline planning permission. Reserved matters can include appearance, means of access, landscaping, layout and scale
+description: |
+  An application to provide details on appearance, means of access, landscaping, layout and scale, following an outline application
 synonyms: []
 legislation:
   - https://www.legislation.gov.uk/ukpga/1990/8/section/196D

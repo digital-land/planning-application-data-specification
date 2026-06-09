@@ -1,7 +1,7 @@
 ---
 application: pa-storey
 extends: prior-approval
-name: Additional storeys
+name: "Prior approval: Additional storeys"
 description: Enlargement of a dwellinghouse by construction of additional storeys
 entry-date: 2025-08-12
 start-date: ''

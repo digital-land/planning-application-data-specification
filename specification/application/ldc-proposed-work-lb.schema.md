@@ -1,6 +1,6 @@
 ---
 application: ldc-proposed-work-lb
-name: LDC Proposed Work to a Listed Building
+name: "Lawful development certficate: Proposed Work to a Listed Building"
 description: An application for a certificate confirming whether proposed works to a listed building would be lawful because they do not require listed building consent
 entry-date: 2025-08-12
 start-date: ''

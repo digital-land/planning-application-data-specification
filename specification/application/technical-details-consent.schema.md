@@ -2,7 +2,7 @@
 application: technical-details-consent
 name: Technical details consent
 description: |
-  Technical Details Consent (TDC) is the second stage of the 'Permission in Principle' (PiP) process in planning, primarily for housing-led development. It follows the initial 'Permission in Principle' stage, which establishes whether a site is suitable in principle for development. TDC assesses the detailed design, layout, and other technical aspects of the proposed development.
+  Technical Details Consent (TDC) is the second stage of the 'Permission in Principle' (PiP) and is for assessing the detailed design, layout, and other technical aspects of the proposed development.
 synonyms: []
 legislation:
   - https://www.legislation.gov.uk/uksi/2015/596/article/7

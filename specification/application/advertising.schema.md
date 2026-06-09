@@ -1,6 +1,6 @@
 ---
 application: advertising
-name: Advertising
+name: Advertising consent
 description: An application for all types of advertisements and signs
 synonyms: []
 legislation:
