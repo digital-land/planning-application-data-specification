@@ -18,4 +18,5 @@ notes:
 organisation: government-organisation:D1342
 plural: Tenure types
 source: data/codelist/tenure-type.csv
+usage: data/usage/tenure-type-usage.csv
 ---
