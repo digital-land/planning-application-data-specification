@@ -112,12 +112,14 @@ class Codelist:
     name: str
     description: str
     source: str
+    usage: str
     items: tuple[CodelistItem, ...]
 
     def applicable(self, selection: SelectionContext | None = None) -> ApplicableCodelist:
-        usage_schema_ref = f"{self.ref}-usage"
-        usage_schema = self.specification.tables.get("data", {}).get(usage_schema_ref)
-        if not usage_schema:
+        usage_source = self.usage or self.specification._conventional_usage_source(
+            self.ref
+        )
+        if not usage_source:
             return ApplicableCodelist(
                 canonical=self,
                 items=self.items,
@@ -125,7 +127,7 @@ class Codelist:
                 usage_rules_applied=False,
             )
 
-        usage_rows = self.specification._load_csv_rows(usage_schema["source"])
+        usage_rows = self.specification._load_csv_rows(usage_source)
         item_key = self.ref
         allowed_refs = set()
         for row in usage_rows:
@@ -192,6 +194,7 @@ class Specification:
             name=codelist_meta.get("name", ref),
             description=codelist_meta.get("description", "") or "",
             source=codelist_meta.get("source", "") or "",
+            usage=codelist_meta.get("usage", "") or "",
             items=items,
         )
 
@@ -362,6 +365,13 @@ class Specification:
         csv_path = self.source_path / relative_path
         with csv_path.open(newline="", encoding="utf-8") as csv_file:
             return list(csv.DictReader(csv_file))
+
+    def _conventional_usage_source(self, codelist_ref: str) -> str:
+        usage_schema_ref = f"{codelist_ref}-usage"
+        usage_schema = self.tables.get("data", {}).get(usage_schema_ref)
+        if not usage_schema:
+            return ""
+        return usage_schema.get("source", "") or ""
 
     def _build_application_view(self, application: dict) -> ApplicationDef:
         application_types = application.get("application-types") or []

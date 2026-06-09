@@ -599,6 +599,7 @@ Attributes:
 - `name`: human-readable name
 - `description`: schema description text
 - `source`: canonical source path or URL
+- `usage`: optional usage table source path
 - `items`: tuple of canonical `CodelistItem` objects
 
 ### `Codelist.applicable(selection: SelectionContext | None = None) -> ApplicableCodelist`
@@ -637,7 +638,7 @@ Attributes:
 - `canonical`: the canonical `Codelist`
 - `items`: tuple of applicable `CodelistItem` objects
 - `selection`: the `SelectionContext` used
-- `usage_rules_applied`: `True` if a matching `*-usage` data schema exists, otherwise `False`
+- `usage_rules_applied`: `True` if a `usage` source or matching `*-usage` data schema exists, otherwise `False`
 
 ## `CodelistItem`
 
