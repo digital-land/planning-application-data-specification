@@ -878,6 +878,7 @@ def build_site(args: argparse.Namespace) -> None:
                     ),
                 }
                 for app in applications
+                if not app.get("base-type")
             ],
         }
         submission_html = env.get_template("submission_index.html").render(
