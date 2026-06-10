@@ -14,24 +14,25 @@ datasets:
     name: planning application
     fields:
       - field: reference
-        description: the reference for the planning application
+        description: the reference used for the planning application, for example 2025/1674
       - field: description
         description: the description of the proposed development
       - field: application-types
-        description: one or more codelist values describing the application type
+        description: one or more application types that the application covers
       - field: site
-        description: the reference for the related site
+        description: the reference to the related site
         dataset: site
       - field: received-date
         description: the date the planning authority received the application
       - field: development-scale
-        description: the local planning authority's classification of a full or outline planning application by development scale, where applicable
+        description: the local planning authority's classification of a full or outline planning application by development scale, where applicable. Either major or minor
       - field: planning-performance-agreement
         description: whether the application was subject to a Planning Performance Agreement
       - field: withdrawn-date
         description: the date the planning application was withdrawn
       - field: linked-applications
         description: references to earlier applications this application directly links to
+        dataset: planning-application
       - field: document-url
         description: a URL to the completed application form published by the planning authority, where available
       - field: documentation-url
@@ -42,13 +43,13 @@ datasets:
       - field: reference
         description: the reference for the site
       - field: name
-        description: Plain-language name for the site so it can be referenced in discussions and reports
+        description: a plain-language name for the site so it can be referenced in discussions and reports
       - field: address-text
-        description: Plain-language address for the site, where one is available
+        description: the address for the site, where one is available
       - field: postcode
-        description: Postcode for the site, where one is available
+        description: postcode for the site, where one is available
       - field: description
-        description: Plain-language description of the site, where this helps identify the land or buildings
+        description: a plain-language description of the site, where this helps identify the land or buildings
       - field: site-boundary
         description: the boundary geometry for the site
   - dataset: decision-notice
@@ -57,7 +58,7 @@ datasets:
       - field: reference
         description: the reference for the decision notice
       - field: planning-application
-        description: the reference for the related planning application
+        description: the reference for the planning application the decision notice is for
         dataset: planning-application
       - field: decision
         description: the decision outcome for the planning application
@@ -77,7 +78,7 @@ datasets:
     name: planning condition
     fields:
       - field: reference
-        description: the reference for the planning condition
+        description: a reference for the planning condition
       - field: name
         description: a plain-language label for the condition
       - field: description
