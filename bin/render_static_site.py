@@ -7,6 +7,7 @@ digital_land_frontend Jinja setup and local templates.
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 import os
 from collections import defaultdict
@@ -30,6 +31,10 @@ from bin.models import FieldDef, ComponentInstance, FieldInstance
 from bin.renderer import RenderContext
 from bin.utils import ensure_dir
 from planning_application_specification import Specification
+from planning_application_specification.models import (
+    ComponentUsage as SpecificationComponentUsage,
+)
+from planning_application_specification.models import FieldUsage as SpecificationFieldUsage
 
 try:
     import markdown as markdown_lib
@@ -68,6 +73,20 @@ def load_submission_applications(spec_root: Path) -> List[Dict[str, Any]]:
         app["__path"] = path
         apps.append(app)
     return apps
+
+
+def load_active_combined_applications(spec_root: Path) -> List[Dict[str, str]]:
+    combined_path = spec_root / "combined-application-types.csv"
+    if not combined_path.exists():
+        return []
+
+    with combined_path.open(newline="", encoding="utf-8") as csvfile:
+        return [
+            row
+            for row in csv.DictReader(csvfile)
+            if (row.get("start-date") or "").strip()
+            and not (row.get("end-date") or "").strip()
+        ]
 
 
 def load_readme(path: Path) -> str:
@@ -378,6 +397,31 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
             component_name=comp_name,
         )
 
+    if isinstance(field_entry, SpecificationFieldUsage):
+        orig = field_entry.original
+        overrides = field_entry.overrides or {}
+        name = overrides.get("name") or orig.name
+        description = overrides.get("description") or orig.description
+        cardinality = overrides.get("cardinality") or orig.cardinality
+        datatype = overrides.get("datatype") or orig.datatype
+        codelist = overrides.get("codelist") or orig.codelist
+        required = overrides.get("required")
+        if required is None:
+            required = orig.required
+        comp_name = None
+        if orig.resolved_component:
+            comp_name = orig.resolved_component.component.name or orig.resolved_component.component.ref
+        return FieldView(
+            ref=orig.ref,
+            name=name,
+            description=description,
+            cardinality=cardinality,
+            datatype=datatype,
+            codelist=codelist,
+            required=required,
+            component_name=comp_name,
+        )
+
     # Fallback for dict-based field entries (datasets, etc.)
     field_ref = field_entry.get("field")
     fd = None
@@ -422,6 +466,19 @@ def build_field_views_from_items(items: List[Any], field_index: Dict[str, Any]) 
             fv = build_field_display(fi)
             fv.children = build_field_views_from_items(item.component.items, field_index)
             views.append(fv)
+        elif isinstance(item, SpecificationFieldUsage):
+            fv = build_field_display(item)
+            if item.original.resolved_component:
+                fv.children = build_field_views_from_items(
+                    item.original.resolved_component.component.items, field_index
+                )
+            views.append(fv)
+        elif isinstance(item, SpecificationComponentUsage):
+            referenced_by = item.referenced_by_field
+            if referenced_by:
+                fv = build_field_display(referenced_by)
+                fv.children = build_field_views_from_items(item.component.items, field_index)
+                views.append(fv)
     return views
 
 
@@ -485,6 +542,98 @@ def inherited_from_label(parent_refs: List[str]) -> Optional[str]:
     if not parent_refs:
         return None
     return ", ".join(parent_refs)
+
+
+def build_application_fields(
+    application: Dict[str, Any],
+    application_index: Dict[str, Dict[str, Any]],
+    field_index: Dict[str, Any],
+) -> List[FieldView]:
+    fields = []
+    for field_entry, field_inherited_from in application_field_entries(
+        application, application_index
+    ):
+        fv = build_field_display(field_entry, field_index)
+        meta = field_index.get(fv.ref)
+        if getattr(meta, "resolved_component", None):
+            fv.children = build_field_views_from_items(
+                meta.resolved_component.component.items, field_index
+            )
+        fv.required = field_entry.get("required")
+        fv.inherited_from = field_inherited_from
+        fields.append(fv)
+    return fields
+
+
+def build_combined_application_fields(
+    application: Any,
+    field_index: Dict[str, Any],
+) -> List[FieldView]:
+    return build_field_views_from_items(application.items, field_index)
+
+
+def build_application_modules(
+    application: Dict[str, Any],
+    specification: Specification,
+    module_index: Dict[str, Any],
+    renderer: RenderContext,
+) -> List[Dict[str, Any]]:
+    app_id = application.get("application")
+    parent_refs = application_parent_refs(application)
+    own_module_refs = set(application_module_refs(application))
+    inherited_from = inherited_from_label(parent_refs)
+
+    if parent_refs:
+        module_entries = [
+            {
+                "module": module.ref,
+                "inherited_from": inherited_from
+                if module.ref not in own_module_refs
+                else None,
+            }
+            for module in specification.application(app_id).modules
+        ]
+    else:
+        module_entries = application.get("modules", [])
+
+    return build_module_display(module_entries, module_index, renderer)
+
+
+def build_combined_application_modules(
+    application: Any,
+    module_index: Dict[str, Any],
+    renderer: RenderContext,
+) -> List[Dict[str, Any]]:
+    module_entries = [{"module": module.ref} for module in application.modules]
+    return build_module_display(module_entries, module_index, renderer)
+
+
+def build_module_display(
+    module_entries: List[Any],
+    module_index: Dict[str, Any],
+    renderer: RenderContext,
+) -> List[Dict[str, Any]]:
+    modules = []
+    for module_entry in module_entries:
+        if isinstance(module_entry, str):
+            module_entry = {"module": module_entry}
+        elif not isinstance(module_entry, dict):
+            continue
+        module_ref = module_entry.get("module")
+        module_obj = module_index.get(module_ref)
+        if not module_obj:
+            continue
+        modules.append(
+            {
+                "ref": module_obj.ref,
+                "name": module_obj.name or module_obj.ref,
+                "description": module_obj.description or "",
+                "href": renderer.url_for(f"/module/{module_obj.ref}"),
+                "required": module_entry.get("required"),
+                "inherited_from": module_entry.get("inherited_from"),
+            }
+        )
+    return modules
 
 
 def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) -> List[str]:
@@ -795,6 +944,7 @@ def build_site(args: argparse.Namespace) -> None:
             for application in applications
             if application.get("application")
         }
+        combined_applications = load_active_combined_applications(spec_root)
 
         needs_data = load_needs()
         need_records = list(needs_data.get("need", {}).values())
@@ -950,6 +1100,16 @@ def build_site(args: argparse.Namespace) -> None:
                 }
                 for app in applications
                 if not app.get("base-type")
+            ],
+            "combined_applications": [
+                {
+                    "name": app.get("name", app.get("application-types")),
+                    "description": app.get("description", ""),
+                    "href": renderer.url_for(
+                        f"/application-type/{app.get('application-types')}"
+                    ),
+                }
+                for app in combined_applications
             ],
         }
         submission_html = env.get_template("submission_index.html").render(
@@ -1109,60 +1269,12 @@ def build_site(args: argparse.Namespace) -> None:
         app_template = env.get_template("submission_application_detail.html")
         for app in applications:
             app_id = app.get("application")
-            parent_refs = application_parent_refs(app)
-            own_module_refs = set(application_module_refs(app))
-            inherited_from = inherited_from_label(parent_refs)
-            fields = []
-            for f, field_inherited_from in application_field_entries(
-                app, application_index
-            ):
-                fv = build_field_display(f, field_index)
-                meta = field_index.get(fv.ref)
-                if getattr(meta, "resolved_component", None):
-                    fv.children = build_field_views_from_items(
-                        meta.resolved_component.component.items, field_index
-                    )
-                fv.required = f.get("required")
-                fv.inherited_from = field_inherited_from
-                fields.append(fv)
-            modules = []
-            if parent_refs:
-                module_defs = specification.application(app_id).modules
-                module_entries = [
-                    {
-                        "module": module.ref,
-                        "inherited_from": inherited_from
-                        if module.ref not in own_module_refs
-                        else None,
-                    }
-                    for module in module_defs
-                ]
-            else:
-                module_entries = app.get("modules", [])
-            for m in module_entries:
-                if isinstance(m, str):
-                    m = {"module": m}
-                elif not isinstance(m, dict):
-                    continue
-                mref = m.get("module")
-                mobj = module_index.get(mref)
-                if not mobj:
-                    continue
-                modules.append(
-                    {
-                        "ref": mobj.ref,
-                        "name": mobj.name or mobj.ref,
-                        "description": mobj.description or "",
-                        "href": renderer.url_for(f"/module/{mobj.ref}"),
-                        "required": m.get("required"),
-                        "inherited_from": m.get("inherited_from"),
-                    }
-                )
             app_ctx = {
                 "page_title": f"Application {app_id}",
                 "title": app.get("name", app_id),
                 "description": app.get("description", ""),
                 "application": app_id,
+                "application_types": [],
                 "base_type": app.get("base-type", False),
                 "extends": {
                     "ref": app.get("extends"),
@@ -1174,12 +1286,47 @@ def build_site(args: argparse.Namespace) -> None:
                 "notes": app.get("notes", ""),
                 "entry_date": app.get("entry-date", ""),
                 "legislation": app.get("legislation", []),
-                "fields": fields,
-                "modules": modules,
+                "fields": build_application_fields(
+                    app, application_index, field_index
+                ),
+                "modules": build_application_modules(
+                    app, specification, module_index, renderer
+                ),
                 "links": {"back": renderer.url_for("/application-type")},
             }
             app_html = app_template.render(**app_ctx)
             renderer.write_page(f"application-type/{app_id}/index.html", app_html)
+
+        for combined in combined_applications:
+            application_types = combined.get("application-types")
+            if not application_types:
+                continue
+
+            application = specification.application(application_types)
+            app_ctx = {
+                "page_title": f"Application {application.ref}",
+                "title": application.name,
+                "description": application.description,
+                "application": application.ref,
+                "application_types": application.application_types,
+                "base_type": False,
+                "extends": None,
+                "synonyms": [],
+                "notes": application.notes,
+                "entry_date": application.entry_date,
+                "legislation": [],
+                "fields": build_combined_application_fields(
+                    application, field_index
+                ),
+                "modules": build_combined_application_modules(
+                    application, module_index, renderer
+                ),
+                "links": {"back": renderer.url_for("/application-type")},
+            }
+            app_html = app_template.render(**app_ctx)
+            renderer.write_page(
+                f"application-type/{application.ref}/index.html", app_html
+            )
 
         # Justification index and detail pages
         justification_template = env.get_template("justification_detail.html")
