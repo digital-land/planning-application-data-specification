@@ -17,4 +17,5 @@ notes:
 organisation: government-organisation:D1342
 plural: Permission process events
 source: data/codelist/permission-process-event.csv
+usage: data/usage/permission-process-event-usage.csv
 ---
