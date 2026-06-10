@@ -1,4 +1,93 @@
 
+<a name="v0.2.21"></a>
+## [v0.2.21](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.20...v0.2.21) (2026-06-10)
+
+Static site shows combined apps and apps that inherit from parent
+
+### ⚒️ Tooling
+
+* add application fields intro copy (commit [186dbb22](https://github.com/digital-land/planning-application-data-specification/commit/186dbb2293137de8bd88409a93dcc8cdb404f79f))
+* show combined applications (commit [e55098eb](https://github.com/digital-land/planning-application-data-specification/commit/e55098eb3633e73d187d588875baa4d255a65340))
+* change base type note from inset text to callout (commit [6fe9e1ae](https://github.com/digital-land/planning-application-data-specification/commit/6fe9e1ae5d46e3167da451dcdf783704adc75d49))
+* include inherited fields and modules on the page (commit [604268a0](https://github.com/digital-land/planning-application-data-specification/commit/604268a0b461d5e512a9ac2cf3d3473fd7dce707))
+* make it clear which application schemas are base types (commit [b0ddf40d](https://github.com/digital-land/planning-application-data-specification/commit/b0ddf40d6e4e4c8f4faba787ce5cfb41252fed02))
+
+
+<a name="v0.2.20"></a>
+## [v0.2.20](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.19...v0.2.20) (2026-06-10)
+
+Define national public view schema
+
+### 𝌭 Model changes
+
+* add a national-public-view schema (commit [c599941d](https://github.com/digital-land/planning-application-data-specification/commit/c599941dbcfcef867f83eb263701643a027dc8df))
+
+### 📚 Documentation
+
+* document the national public view approach and definition [skip ci] (commit [27cc19e1](https://github.com/digital-land/planning-application-data-specification/commit/27cc19e12925def5467132541cf21d0569c72e7d))
+
+
+<a name="v0.2.19"></a>
+## [v0.2.19](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.18...v0.2.19) (2026-06-10)
+
+Static site handles application inheritance
+
+### ⚒️ Tooling
+
+* change base type note from inset text to callout (commit [4aba8f84](https://github.com/digital-land/planning-application-data-specification/commit/4aba8f84b437b73b4dd53912f91009d1d27db2d9))
+* include inherited fields and modules on the page (commit [6bbeca70](https://github.com/digital-land/planning-application-data-specification/commit/6bbeca70c0b971235dbf1d24870e61135f78a04b))
+* make it clear which application schemas are base types (commit [8dcbe761](https://github.com/digital-land/planning-application-data-specification/commit/8dcbe76148d49cfc3a6a7604eab2103ec28791f2))
+* link to parent application if extends property is set (commit [5d19044d](https://github.com/digital-land/planning-application-data-specification/commit/5d19044d0a5855ca3e69a88f348a0ed7dbf8427b))
+
+
+<a name="v0.2.18"></a>
+## [v0.2.18](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.17...v0.2.18) (2026-06-09)
+
+Add usage property to applicable codelists
+
+### ⚒️ Tooling
+
+* package should be aware of usage property (commit [c3d406c7](https://github.com/digital-land/planning-application-data-specification/commit/c3d406c7e868216b893959db5d10039f62a306ef))
+* integrity checks should check usage property points to usage tables that exist (commit [6ce87479](https://github.com/digital-land/planning-application-data-specification/commit/6ce87479f03238bdef3e8e020826fe3e71048975))
+
+### 𝌭 Model changes
+
+* add usage property to codelists with variants (commit [42fdd08c](https://github.com/digital-land/planning-application-data-specification/commit/42fdd08c3fcabbfe34209c6a43224ed3b17aae25))
+
+### 🐛 Bug Fixes
+
+* rename specification/data folder to specification/usage (commit [64321cf7](https://github.com/digital-land/planning-application-data-specification/commit/64321cf72800b8ad8c1da65e18d04152d5d288cf))
+
+### 📚 Documentation
+
+* update codelist usage documentation (commit [6e8271dd](https://github.com/digital-land/planning-application-data-specification/commit/6e8271dd3a5452d82df85e5cf75f84260b36f8e4))
+
+
+<a name="v0.2.17"></a>
+## [v0.2.17](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.16...v0.2.17) (2026-06-09)
+
+Reorganise static site under planning application data standard banner
+
+### ⚒️ Tooling
+
+* tweak title of action (commit [0c3f791e](https://github.com/digital-land/planning-application-data-specification/commit/0c3f791ec19e96c75dc7cf717717e4e917041112))
+* add application type next steps copy (commit [8f641a52](https://github.com/digital-land/planning-application-data-specification/commit/8f641a527576270278083a85526a6b9a2f71ef09))
+* hide base application types from index (commit [caff1b00](https://github.com/digital-land/planning-application-data-specification/commit/caff1b00a83cb6ada724e9e0c7138c9964cec2e9))
+* content tweaks (commit [207270a3](https://github.com/digital-land/planning-application-data-specification/commit/207270a3d6d018dcf14202a39b999d499ab2326c))
+* align model breadcrumbs with routes (commit [ff64c1b8](https://github.com/digital-land/planning-application-data-specification/commit/ff64c1b818fb567086abf8e69074f6d70fa88c92))
+* move model reference pages to singular routes (commit [ce9174ce](https://github.com/digital-land/planning-application-data-specification/commit/ce9174ce0985aef3c261e9c67bf755196665e1fb))
+* update render code to use new routes (commit [82afde47](https://github.com/digital-land/planning-application-data-specification/commit/82afde47c049f555edead244b23a7a2aabab8825))
+* remove shared elements route (commit [f2fd4cf5](https://github.com/digital-land/planning-application-data-specification/commit/f2fd4cf50d4a800bf3ed465e230895ad42949ba5))
+* move dataset pages to new route (commit [131d0e23](https://github.com/digital-land/planning-application-data-specification/commit/131d0e23315edd36c84c00f4fb3e7c95ea862214))
+* move application type pages to new route (commit [9e619529](https://github.com/digital-land/planning-application-data-specification/commit/9e6195291097e568c5b1c15cbf2b79adecba431b))
+* restructure static site entry points (commit [b4c96b23](https://github.com/digital-land/planning-application-data-specification/commit/b4c96b2383e647f5ea65d58604aef03baf21f005))
+* add reusable static site navigation (commit [137b0b7b](https://github.com/digital-land/planning-application-data-specification/commit/137b0b7b40e9de259a8029d74e95439f126516b5))
+
+### 𝌭 Model changes
+
+* update application names and descriptions (commit [a8b80da2](https://github.com/digital-land/planning-application-data-specification/commit/a8b80da25489d5278a0dcbc8ade9146a5f231e6c))
+
+
 <a name="v0.2.16"></a>
 ## [v0.2.16](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.15...v0.2.16) (2026-06-08)
 
