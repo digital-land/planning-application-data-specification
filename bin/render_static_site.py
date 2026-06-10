@@ -29,6 +29,7 @@ from bin.loader import load_needs, load_specification_model
 from bin.models import FieldDef, ComponentInstance, FieldInstance
 from bin.renderer import RenderContext
 from bin.utils import ensure_dir
+from planning_application_specification import Specification
 
 try:
     import markdown as markdown_lib
@@ -324,6 +325,7 @@ class FieldView:
         target_dataset_href="",
         satisfactions=None,
         component_name=None,
+        inherited_from=None,
     ):
         self.ref = ref
         self.name = name
@@ -337,6 +339,7 @@ class FieldView:
         self.target_dataset_href = target_dataset_href
         self.satisfactions = satisfactions or []
         self.component_name = component_name
+        self.inherited_from = inherited_from
 
 
 def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) -> FieldView:
@@ -420,6 +423,68 @@ def build_field_views_from_items(items: List[Any], field_index: Dict[str, Any]) 
             fv.children = build_field_views_from_items(item.component.items, field_index)
             views.append(fv)
     return views
+
+
+def application_parent_refs(application: Dict[str, Any]) -> List[str]:
+    extends = application.get("extends")
+    if not extends:
+        return []
+    if isinstance(extends, list):
+        return [ref for ref in extends if ref]
+    return [extends]
+
+
+def application_module_refs(application: Dict[str, Any]) -> List[str]:
+    refs: List[str] = []
+    for module in application.get("modules", []) or []:
+        if isinstance(module, dict) and module.get("module"):
+            refs.append(module["module"])
+        elif isinstance(module, str):
+            refs.append(module)
+    return refs
+
+
+def application_field_entries(
+    application: Dict[str, Any],
+    application_index: Dict[str, Dict[str, Any]],
+    visited: Optional[set[str]] = None,
+) -> List[Tuple[Dict[str, Any], Optional[str]]]:
+    visited = visited or set()
+    application_ref = application.get("application")
+    if application_ref in visited:
+        return []
+    if application_ref:
+        visited.add(application_ref)
+
+    fields: List[Tuple[Dict[str, Any], Optional[str]]] = []
+    for parent_ref in application_parent_refs(application):
+        parent = application_index.get(parent_ref)
+        if parent:
+            fields.extend(
+                (field, inherited_from or parent_ref)
+                for field, inherited_from in application_field_entries(
+                    parent, application_index, visited
+                )
+            )
+
+    fields.extend((field, None) for field in application.get("fields", []) or [])
+
+    deduped_fields: List[Tuple[Dict[str, Any], Optional[str]]] = []
+    index_by_ref: Dict[str, int] = {}
+    for field, inherited_from in fields:
+        field_ref = field.get("field")
+        if field_ref in index_by_ref:
+            deduped_fields[index_by_ref[field_ref]] = (field, inherited_from)
+        else:
+            index_by_ref[field_ref] = len(deduped_fields)
+            deduped_fields.append((field, inherited_from))
+    return deduped_fields
+
+
+def inherited_from_label(parent_refs: List[str]) -> Optional[str]:
+    if not parent_refs:
+        return None
+    return ", ".join(parent_refs)
 
 
 def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) -> List[str]:
@@ -713,6 +778,7 @@ def build_site(args: argparse.Namespace) -> None:
         module_index = spec_model.get("modules", {})
         codelist_index = spec_model.get("tables", {}).get("codelist", {})
         component_index = spec_model.get("components", {})
+        specification = Specification.load(root_dir)
 
         decision_stage = load_decision_stage(spec_root / "decision-stage.schema.md")
         decision_datasets: List[Dict[str, Any]] = []
@@ -724,6 +790,11 @@ def build_site(args: argparse.Namespace) -> None:
             decision_datasets.append(merged)
 
         applications = load_submission_applications(spec_root)
+        application_index = {
+            application.get("application"): application
+            for application in applications
+            if application.get("application")
+        }
 
         needs_data = load_needs()
         need_records = list(needs_data.get("need", {}).values())
@@ -1038,8 +1109,13 @@ def build_site(args: argparse.Namespace) -> None:
         app_template = env.get_template("submission_application_detail.html")
         for app in applications:
             app_id = app.get("application")
+            parent_refs = application_parent_refs(app)
+            own_module_refs = set(application_module_refs(app))
+            inherited_from = inherited_from_label(parent_refs)
             fields = []
-            for f in app.get("fields", []):
+            for f, field_inherited_from in application_field_entries(
+                app, application_index
+            ):
                 fv = build_field_display(f, field_index)
                 meta = field_index.get(fv.ref)
                 if getattr(meta, "resolved_component", None):
@@ -1047,21 +1123,41 @@ def build_site(args: argparse.Namespace) -> None:
                         meta.resolved_component.component.items, field_index
                     )
                 fv.required = f.get("required")
+                fv.inherited_from = field_inherited_from
                 fields.append(fv)
             modules = []
-            for m in app.get("modules", []):
+            if parent_refs:
+                module_defs = specification.application(app_id).modules
+                module_entries = [
+                    {
+                        "module": module.ref,
+                        "inherited_from": inherited_from
+                        if module.ref not in own_module_refs
+                        else None,
+                    }
+                    for module in module_defs
+                ]
+            else:
+                module_entries = app.get("modules", [])
+            for m in module_entries:
+                if isinstance(m, str):
+                    m = {"module": m}
+                elif not isinstance(m, dict):
+                    continue
                 mref = m.get("module")
                 mobj = module_index.get(mref)
-                if mobj:
-                    modules.append(
-                        {
-                            "ref": mobj.ref,
-                            "name": mobj.name or mobj.ref,
-                            "description": mobj.description or "",
-                            "href": renderer.url_for(f"/module/{mobj.ref}"),
-                            "required": m.get("required"),
-                        }
-                    )
+                if not mobj:
+                    continue
+                modules.append(
+                    {
+                        "ref": mobj.ref,
+                        "name": mobj.name or mobj.ref,
+                        "description": mobj.description or "",
+                        "href": renderer.url_for(f"/module/{mobj.ref}"),
+                        "required": m.get("required"),
+                        "inherited_from": m.get("inherited_from"),
+                    }
+                )
             app_ctx = {
                 "page_title": f"Application {app_id}",
                 "title": app.get("name", app_id),
