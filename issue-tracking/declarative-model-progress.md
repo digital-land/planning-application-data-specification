@@ -6,4 +6,4 @@
 - **Components**: 56
 - **Codelists**: 52
 - **Datasets**: 9
-- **Specifications**: 1
+- **Specifications**: 2
