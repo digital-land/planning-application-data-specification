@@ -1,5 +1,10 @@
 import csv
 
+from bs4 import BeautifulSoup
+from markdown import markdown
+from markupsafe import Markup
+from slugify import slugify
+
 
 def markdown_link(text, url):
     """Return a markdown link string."""
@@ -59,11 +64,62 @@ def csv_to_markdown(
         for row in reader:
             selected_values = [row[index] for index in field_indices]
             cleaned_values = [
-                value.strip("'")
-                if value.startswith("'") and value.endswith("'")
-                else value
+                (
+                    value.strip("'")
+                    if value.startswith("'") and value.endswith("'")
+                    else value
+                )
                 for value in selected_values
             ]
             markdown_table += "| " + " | ".join(cleaned_values) + " |\n"
 
     return markdown_table
+
+
+def render_govuk_markdown(text, make_safe=True):
+    """Render markdown as HTML with GOV.UK Design System classes."""
+    if text is None:
+        return ""
+
+    soup = BeautifulSoup(markdown(text), "html.parser")
+    add_govuk_markdown_attrs(soup)
+
+    if make_safe:
+        return Markup(str(soup))
+    return soup
+
+
+def add_govuk_markdown_attrs(soup):
+    """Add GOV.UK Design System classes to rendered markdown HTML."""
+    for tag in soup.select("p"):
+        tag["class"] = "govuk-body"
+
+    for tag in soup.select("h1, h2, h3, h4, h5"):
+        tag["id"] = slugify(tag.get_text())
+
+    for tag in soup.select("h1"):
+        tag["class"] = "govuk-heading-xl"
+
+    for tag in soup.select("h2"):
+        tag["class"] = "govuk-heading-l"
+
+    for tag in soup.select("h3"):
+        tag["class"] = "govuk-heading-m"
+
+    for tag in soup.select("h4, h5"):
+        tag["class"] = "govuk-heading-s"
+
+    for tag in soup.select("ul"):
+        tag["class"] = "govuk-list govuk-list--bullet"
+
+    for tag in soup.select("ol"):
+        tag["class"] = "govuk-list govuk-list--number"
+
+    for tag in soup.select("a"):
+        tag["class"] = "govuk-link"
+
+    for tag in soup.select("hr"):
+        tag["class"] = "govuk-section-break govuk-section-break--l"
+
+    for tag in soup.select("code"):
+        tag["class"] = "app-code"
