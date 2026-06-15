@@ -1,6 +1,8 @@
-import pytest
-
-from bin.render_static_site import build_need_maps, extract_dataset_only_refs
+from bin.render_static_site import (
+    build_need_maps,
+    extract_dataset_only_refs,
+    parse_design_decision,
+)
 from bin.renderer import url_for
 
 
@@ -66,3 +68,26 @@ def test_build_need_maps_handles_dict_satisfied_by():
     _, dataset_to_need = build_need_maps(needs_data)
     assert dataset_to_need.get("section-106") is not None
     assert dataset_to_need["section-106"][0]["need"] == "dd-need-003"
+
+
+def test_parse_design_decision_extracts_metadata_and_renders_body(tmp_path):
+    decision_path = tmp_path / "0012-use-a-controlled-list.md"
+    decision_path.write_text(
+        "## Decision: Use a controlled list\n\n"
+        "**Date:** 2026-04-14  \n"
+        "**Status:** Proposed  \n\n"
+        "**Context:**\n\n"
+        "Some context.\n",
+        encoding="utf-8",
+    )
+
+    decision = parse_design_decision(decision_path)
+
+    assert decision["decision_id"] == "0012"
+    assert decision["slug"] == "0012-use-a-controlled-list"
+    assert decision["title"] == "Use a controlled list"
+    assert decision["date"] == "2026-04-14"
+    assert decision["status"] == "Proposed"
+    assert "Decision: Use a controlled list" not in decision["body"]
+    assert "2026-04-14" not in decision["body"]
+    assert '<p class="govuk-body"><strong>Context:</strong></p>' in decision["body"]

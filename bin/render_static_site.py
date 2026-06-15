@@ -10,6 +10,7 @@ import argparse
 import csv
 import json
 import os
+import re
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
@@ -27,6 +28,7 @@ from digital_land_frontend import globals as dlf_globals  # noqa: E402
 from bin.completeness import build_progress_view_model
 from bin.jinja_filters import commanum_filter
 from bin.loader import load_needs, load_specification_model
+from bin.markdown_utils import render_govuk_markdown
 from bin.models import FieldDef, ComponentInstance, FieldInstance
 from bin.renderer import RenderContext
 from bin.utils import ensure_dir
@@ -87,6 +89,66 @@ def load_active_combined_applications(spec_root: Path) -> List[Dict[str, str]]:
             if (row.get("start-date") or "").strip()
             and not (row.get("end-date") or "").strip()
         ]
+
+
+def load_design_decisions(documentation_root: Path) -> List[Dict[str, Any]]:
+    decisions_path = documentation_root / "design-decisions"
+    if not decisions_path.exists():
+        return []
+
+    decisions = [
+        parse_design_decision(path) for path in sorted(decisions_path.glob("*.md"))
+    ]
+    return sorted(decisions, key=lambda decision: decision["decision_id"])
+
+
+def parse_design_decision(path: Path) -> Dict[str, Any]:
+    content = path.read_text(encoding="utf-8")
+    slug = path.stem
+    decision_id = slug.split("-", 1)[0]
+    title = extract_design_decision_title(content, slug)
+    body_markdown = strip_design_decision_page_metadata(content)
+
+    return {
+        "decision_id": decision_id,
+        "slug": slug,
+        "title": title,
+        "date": extract_design_decision_metadata(content, "Date"),
+        "status": extract_design_decision_metadata(content, "Status"),
+        "body": render_govuk_markdown(body_markdown),
+    }
+
+
+def extract_design_decision_title(content: str, fallback: str) -> str:
+    for line in content.splitlines():
+        match = re.match(r"^#{1,2}\s+(.*)$", line.strip())
+        if match:
+            title = match.group(1).strip()
+            return re.sub(r"^Decision:\s*", "", title, flags=re.IGNORECASE)
+    return fallback.replace("-", " ").capitalize()
+
+
+def extract_design_decision_metadata(content: str, label: str) -> str:
+    pattern = rf"^\*\*{re.escape(label)}:\*\*\s*(.*?)\s*$"
+    for line in content.splitlines():
+        match = re.match(pattern, line.strip())
+        if match:
+            return match.group(1).strip()
+    return ""
+
+
+def strip_design_decision_page_metadata(content: str) -> str:
+    lines = []
+    skipped_heading = False
+    for line in content.splitlines():
+        stripped = line.strip()
+        if not skipped_heading and re.match(r"^#{1,2}\s+", stripped):
+            skipped_heading = True
+            continue
+        if re.match(r"^\*\*(Date|Status):\*\*", stripped):
+            continue
+        lines.append(line)
+    return "\n".join(lines).strip()
 
 
 def load_readme(path: Path) -> str:
@@ -809,6 +871,39 @@ def render_national_public_view(renderer: RenderContext) -> None:
     renderer.write_page("national-public-view/index.html", public_view_html)
 
 
+def render_design_decisions(
+    renderer: RenderContext,
+    design_decisions: List[Dict[str, Any]],
+) -> None:
+    decisions = [
+        {
+            **decision,
+            "href": renderer.url_for(f"/design-decision/{decision['slug']}"),
+        }
+        for decision in design_decisions
+    ]
+    index_html = renderer.render(
+        "design_decision_index.html",
+        {
+            "page_title": "Design decisions",
+            "decisions": decisions,
+        },
+    )
+    renderer.write_page("design-decision/index.html", index_html)
+
+    for decision in decisions:
+        detail_html = renderer.render(
+            "design_decision_detail.html",
+            {
+                "page_title": f"Design decision {decision['decision_id']}",
+                "decision": decision,
+            },
+        )
+        renderer.write_page(
+            f"design-decision/{decision['slug']}/index.html", detail_html
+        )
+
+
 def render_justifications_index(
     renderer: RenderContext,
     justifications: List[Dict[str, Any]],
@@ -945,6 +1040,7 @@ def build_site(args: argparse.Namespace) -> None:
             if application.get("application")
         }
         combined_applications = load_active_combined_applications(spec_root)
+        design_decisions = load_design_decisions(root_dir / "documentation")
 
         needs_data = load_needs()
         need_records = list(needs_data.get("need", {}).values())
@@ -957,6 +1053,7 @@ def build_site(args: argparse.Namespace) -> None:
         render_index(renderer)
         render_data_model(renderer)
         render_national_public_view(renderer)
+        render_design_decisions(renderer, design_decisions)
 
         # Datasets
         render_dataset_index(
