@@ -857,6 +857,7 @@ def render_data_model(renderer: RenderContext) -> None:
             "fields": renderer.url_for("/field/"),
             "codelists": renderer.url_for("/codelist/"),
             "datasets": renderer.url_for("/dataset/"),
+            "design_decisions": renderer.url_for("/design-decision/"),
         },
     }
     data_model_html = renderer.render("data_model.html", data_model_ctx)
@@ -1186,7 +1187,12 @@ def build_site(args: argparse.Namespace) -> None:
         # Submission index
         submission_ctx = {
             "page_title": "Application types",
-            "links": {"progress": renderer.url_for("/submissions/progress")},
+            "links": {
+                "progress": renderer.url_for("/submissions/progress"),
+                "combined_application_decision": renderer.url_for(
+                    "/design-decision/0012-use-a-controlled-list-for-combined-application-types/"
+                ),
+            },
             "applications": [
                 {
                     "name": app.get("name", app.get("application")),
