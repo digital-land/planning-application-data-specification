@@ -3,7 +3,7 @@
 <html lang="en" class="govuk-template govuk-template--rebranded">
   <head>
     <meta charset="utf-8">
-    <title>Field applicant-interest</title>
+    <title>Design decision 0017</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#1d70b8">
 
@@ -97,13 +97,11 @@ data-module="govuk-service-navigation">
               
 
               
-              <li class="govuk-service-navigation__item govuk-service-navigation__item--active">
+              <li class="govuk-service-navigation__item">
                 
-                  <a class="govuk-service-navigation__link" href="/planning-application-data-specification/data-model/" aria-current="page">
+                  <a class="govuk-service-navigation__link" href="/planning-application-data-specification/data-model/">
                     
-                
-                  <strong class="govuk-service-navigation__active-fallback">Data model</strong>
-                
+                Data model
                   </a>
                 
               </li>
@@ -160,12 +158,12 @@ data-module="govuk-service-navigation">
 
   
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="/planning-application-data-specification/field">Field</a>
+      <a class="govuk-breadcrumbs__link" href="/planning-application-data-specification/design-decision">Design decisions</a>
     </li>
   
 
   
-    <li class="govuk-breadcrumbs__list-item" aria-current="page">Applicant interest</li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">Do not duplicate dates across decision-stage datasets</li>
   
 
   </ol>
@@ -176,57 +174,72 @@ data-module="govuk-service-navigation">
           
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-xl">Field</span>
-    <h1 class="govuk-heading-xl">Applicant interest</h1>
-    <p class="govuk-body-l">Details of the applicant&#39;s interest in the land</p>
+    <span class="govuk-caption-xl">Design decision</span>
+    <h1 class="govuk-heading-xl">Do not duplicate dates across decision-stage datasets</h1>
 
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Reference</dt>
-        <dd class="govuk-summary-list__value"><code>applicant-interest</code></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Name</dt>
-        <dd class="govuk-summary-list__value">Applicant interest</dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Datatype</dt>
-        <dd class="govuk-summary-list__value">string</dd>
+        <dt class="govuk-summary-list__key">Decision</dt>
+        <dd class="govuk-summary-list__value">0017</dd>
       </div>
       
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">
-          Cardinality
-          <p class="govuk-hint">(Number expected)</p>
-        </dt>
-        <dd class="govuk-summary-list__value">
-          
-            1
-          
-        </dd>
-      </div>
-      
-      
-      
-      
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Entry date</dt>
-        <dd class="govuk-summary-list__value">2025-07-09</dd>
+        <dt class="govuk-summary-list__key">Status</dt>
+        <dd class="govuk-summary-list__value">Proposed</dd>
       </div>
       
       
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Notes</dt>
-        <dd class="govuk-summary-list__value">
-          
-          
-        </dd>
+        <dt class="govuk-summary-list__key">Date</dt>
+        <dd class="govuk-summary-list__value">2026-05-28</dd>
       </div>
+      
     </dl>
 
-    <div class="govuk-inset-text">
-      Raw definition: <a class="govuk-link" href="https://github.com/digital-land/planning-application-data-specification/blob/main/specification/field/applicant-interest.md?plain=1" target="_blank" rel="noopener">View the raw field schema on GitHub</a>
+    <div class="app-prose">
+      <p class="govuk-body"><strong>Context:</strong> </p>
+<p class="govuk-body">The decision-stage specification has primary datasets that record the main facts about a planning application and its decision.</p>
+<p class="govuk-body">Some of those facts are dates. For example:</p>
+<ul class="govuk-list govuk-list--bullet">
+<li><code class="app-code">planning-application.received-date</code> records when the planning authority received the application</li>
+<li><code class="app-code">decision-notice.decision-date</code> records when the decision was made</li>
+</ul>
+<p class="govuk-body">The specification also has <code class="app-code">planning-permission-timeline</code>, which records dated events in the processing of a planning application.</p>
+<p class="govuk-body">If the same date is recorded both as a primary dataset field and as a timeline event, the specification duplicates the same fact in two places. That creates scope for conflicting values and uncertainty about which record is authoritative.</p>
+<p class="govuk-body"><strong>Decision:</strong> </p>
+<p class="govuk-body">The same date should not be modelled twice across decision-stage datasets.</p>
+<p class="govuk-body">Where a date is already recorded as a field on the dataset that owns the underlying record, it should not also be added as a <code class="app-code">planning-permission-timeline</code> event for the same fact.</p>
+<p class="govuk-body">The <code class="app-code">planning-permission-timeline</code> dataset should be used for process events where an event record is useful in its own right. This is especially relevant where events can happen more than once, need event-level context or are not already modelled as a first-class date on another dataset.</p>
+<p class="govuk-body"><strong>Rationale:</strong> </p>
+<p class="govuk-body">Keeping core dates on the dataset that owns the record:</p>
+<ul class="govuk-list govuk-list--bullet">
+<li>makes the authoritative source clearer</li>
+<li>reduces the risk of the same date being recorded differently in two places</li>
+<li>keeps process events in the timeline and fundamental record properties on their owning datasets</li>
+<li>still allows services to display a combined timeline by deriving it from multiple datasets where needed</li>
+</ul>
+<p class="govuk-body"><strong>Consequences:</strong> </p>
+<ul class="govuk-list govuk-list--bullet">
+<li><code class="app-code">application-received</code> should not be a <code class="app-code">permission-process-event</code> because <code class="app-code">received-date</code> is already recorded on <code class="app-code">planning-application</code>.</li>
+<li><code class="app-code">decision-date</code> should remain on <code class="app-code">decision-notice</code> and should not be duplicated as a timeline event.</li>
+<li><code class="app-code">withdrawn-date</code> should be recorded on <code class="app-code">planning-application</code> and should not be duplicated as a timeline event, because withdrawal is a fundamental fact about the application rather than a repeatable process event.</li>
+<li>A complete chronological timeline should be treated as a derived view. It may combine dates and events from <code class="app-code">planning-application</code>, <code class="app-code">planning-permission-timeline</code>, <code class="app-code">decision-notice</code> and other decision-stage datasets without duplicating those facts in the canonical datasets.</li>
+<li><code class="app-code">application-submitted</code> can remain as a <code class="app-code">permission-process-event</code> because the decision-stage specification does not otherwise hold submitted date as a first-class field.</li>
+</ul>
+<p class="govuk-body"><strong>Alternatives considered:</strong> </p>
+<ul class="govuk-list govuk-list--bullet">
+<li>Duplicate first-class dates in <code class="app-code">planning-permission-timeline</code> -&gt; rejected because it creates two authoritative-looking places for the same fact, increasing the risk of conflicting values without improving the canonical data model.</li>
+<li>Remove first-class dates from their owning datasets and model all dates only as events -&gt; rejected because dates such as <code class="app-code">received-date</code> and <code class="app-code">decision-date</code> are fundamental properties of their records and should be easy to find.</li>
+</ul>
     </div>
+
+    <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l app-strong-section-break">
+
+    <h2 class="govuk-heading-m">Help improve this design decision</h2>
+    <p class="govuk-body">To help keep this design decision useful and up to date, you can raise feedback on GitHub.</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li><a class="govuk-link" href="https://github.com/digital-land/planning-application-data-specification/issues/new?title=%5B0017%5D%20Feedback%20on%20design%20decision%3A%20Do%20not%20duplicate%20dates%20across%20decision-stage%20datasets">Raise feedback on GitHub for decision 0017</a></li>
+    </ul>
   </div>
 </div>
 
