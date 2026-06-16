@@ -9,7 +9,6 @@ fields:
     required: true
   - field: person
     required: true
-    component: person
 entry-date: 2025-06-16
 end-date: ''
 ---
