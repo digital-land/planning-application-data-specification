@@ -1,5 +1,6 @@
 from bin.render_static_site import (
     build_need_maps,
+    design_decision_feedback_url,
     extract_dataset_only_refs,
     parse_design_decision,
 )
@@ -91,3 +92,18 @@ def test_parse_design_decision_extracts_metadata_and_renders_body(tmp_path):
     assert "Decision: Use a controlled list" not in decision["body"]
     assert "2026-04-14" not in decision["body"]
     assert '<p class="govuk-body"><strong>Context:</strong></p>' in decision["body"]
+
+
+def test_design_decision_feedback_url_includes_decision_number_and_title():
+    result = design_decision_feedback_url(
+        {
+            "decision_id": "0012",
+            "title": "Use a controlled list for combined application types",
+        }
+    )
+
+    assert result == (
+        "https://github.com/digital-land/planning-application-data-specification/"
+        "issues/new?title=%5B0012%5D%20Feedback%20on%20design%20decision%3A%20"
+        "Use%20a%20controlled%20list%20for%20combined%20application%20types"
+    )

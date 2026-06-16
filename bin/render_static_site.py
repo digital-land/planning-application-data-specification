@@ -14,6 +14,7 @@ import re
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Dict, List, Optional, Tuple
+from urllib.parse import quote
 
 import frontmatter
 import jinja2
@@ -149,6 +150,15 @@ def strip_design_decision_page_metadata(content: str) -> str:
             continue
         lines.append(line)
     return "\n".join(lines).strip()
+
+
+def design_decision_feedback_url(decision: Dict[str, Any]) -> str:
+    title = f"[{decision['decision_id']}] Feedback on design decision: {decision['title']}"
+    encoded_title = quote(title)
+    return (
+        "https://github.com/digital-land/planning-application-data-specification/"
+        f"issues/new?title={encoded_title}"
+    )
 
 
 def load_readme(path: Path) -> str:
@@ -880,6 +890,7 @@ def render_design_decisions(
         {
             **decision,
             "href": renderer.url_for(f"/design-decision/{decision['slug']}"),
+            "feedback_href": design_decision_feedback_url(decision),
         }
         for decision in design_decisions
     ]
