@@ -1,4 +1,44 @@
 
+<a name="v0.2.23"></a>
+## [v0.2.23](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.22...v0.2.23) (2026-06-16)
+
+Spec fixes
+
+### ⚒️ Tooling
+
+* check for redundant component use (commit [efb286f6](https://github.com/digital-land/planning-application-data-specification/commit/efb286f67bc857da49eecaa7a033c5cc2eb28859))
+
+### 𝌭 Model changes
+
+* split fields that are not semantically the same (commit [e6d3b731](https://github.com/digital-land/planning-application-data-specification/commit/e6d3b73198baea18d004318f9bee4793f3a82c30))
+
+### 🐛 Bug Fixes
+
+* property name typo (commit [04cde666](https://github.com/digital-land/planning-application-data-specification/commit/04cde66624ab90bc1e514d7cb5127af163635e12))
+* applicant component does not need field person component person (commit [9ddccca7](https://github.com/digital-land/planning-application-data-specification/commit/9ddccca769be39d2626bba8117da724e1ebdbf87))
+
+
+<a name="v0.2.22"></a>
+## [v0.2.22](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.21...v0.2.22) (2026-06-16)
+
+Add design decision records to static site
+
+### ⚒️ Tooling
+
+* add design decision feedback links (commit [772394b1](https://github.com/digital-land/planning-application-data-specification/commit/772394b17f3036d2764e2e23033db5b1625f14b7))
+* link design decisions from static site (commit [6cfe686c](https://github.com/digital-land/planning-application-data-specification/commit/6cfe686cd7948c69a5dcf38696be1295a17ec2b6))
+* generate design decision pages (commit [145ac0d6](https://github.com/digital-land/planning-application-data-specification/commit/145ac0d6e923da552f12ce774d11dee67a1b4dbe))
+* add govuk markdown renderer (commit [e4397608](https://github.com/digital-land/planning-application-data-specification/commit/e4397608706d0a588b8cea1489fe85e3133309c4))
+
+### 𝌭 Model changes
+
+* tweak some descriptions on national public view (commit [d37ed82a](https://github.com/digital-land/planning-application-data-specification/commit/d37ed82a92ba911a45c126756063ad43ff7778a0))
+
+### 📚 Documentation
+
+* rationalise design decision statuses (commit [d95c1ddd](https://github.com/digital-land/planning-application-data-specification/commit/d95c1ddd066063cd34321cf6f101c3b9fbecc01a))
+
+
 <a name="v0.2.21"></a>
 ## [v0.2.21](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.20...v0.2.21) (2026-06-10)
 
