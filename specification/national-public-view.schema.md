@@ -24,6 +24,8 @@ datasets:
         dataset: site
       - field: received-date
         description: the date the planning authority received the application
+      - field: planning-authority
+        description: Identifier of the planning authority that received this planning application
       - field: development-scale
         description: the local planning authority's classification of a full or outline planning application by development scale, where applicable. Either major or minor
       - field: planning-performance-agreement
