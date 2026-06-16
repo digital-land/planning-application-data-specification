@@ -8,6 +8,7 @@ end-date: ''
 entry-date: 2025-06-20
 field: planning-authority
 name: Planning authority
+parent-field: organisation
 notes: 'Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk'
 ---
 
