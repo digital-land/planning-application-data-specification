@@ -5,7 +5,7 @@ description: |
   Details of the building being proposed, extended or altered
 fields:
   - field: details
-    descripiton: A description of the proposed agricultural or forestry building type
+    description: A description of the proposed agricultural or forestry building type
     required: true
   - field: building-length
     description: Length of the proposed agricultural or forestry building in metres.
