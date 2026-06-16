@@ -1,7 +1,7 @@
 ## Decision: Name the application record dataset `planning-application`
 
 **Date:** 2025-12-18  
-**Status:** Under review  
+**Status:** Proposed
 
 **Context:**  
 While publishing the decision stage specification incrementally, we needed to introduce a dataset representing the application record associated with a decision.  

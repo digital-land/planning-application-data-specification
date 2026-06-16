@@ -1,7 +1,7 @@
 ## Decision: Use enum field instead of nullable boolean
 
 **Date:** 2025-07-01  
-**Status:** Under review  
+**Status:** Proposed
 **Context:**  
 We needed to model fields where the answer may be "yes", "no", or explicitly "unknown" — such as [cert-of-im-sought].
 

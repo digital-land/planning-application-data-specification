@@ -1,7 +1,7 @@
 ## Decision: Name the decision notice dataset `decision-notice`
 
 **Date:** 2026-01-09  
-**Status:** Under review  
+**Status:** Proposed
 
 **Context:**  
 

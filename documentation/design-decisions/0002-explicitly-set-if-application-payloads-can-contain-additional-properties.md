@@ -1,7 +1,7 @@
 ## Decision: Explicitly set if application payloads can contain additional properties
 
 **Date:** 2025-12-16 
-**Status:** Under review  
+**Status:** Proposed
 
 **Context:**  
 When generating JSON Schemas from the declarative application definitions, we need a clear and explicit way to control whether application payloads may include properties beyond those defined by the specification.  

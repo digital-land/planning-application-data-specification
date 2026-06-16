@@ -1,7 +1,7 @@
 ## Decision: Use explicit schedule days for hours of operation
 
 **Date:** 2026-03-24  
-**Status:** Proposed  
+**Status:** Proposed
 
 **Context:**  
 

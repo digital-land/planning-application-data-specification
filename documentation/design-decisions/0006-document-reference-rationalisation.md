@@ -1,7 +1,7 @@
 ## Decision: Single document reference pattern for modules
 
 **Date:** 2026-01-14  
-**Status:** Proposed  
+**Status:** Proposed
 
 **Context:**  
 - Multiple components/fields (`plans-document`/`plans-documents`, `supporting-document`/`supporting-documents`) captured document data, sometimes duplicating names already in `application.documents`.  

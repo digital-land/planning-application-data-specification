@@ -1,7 +1,7 @@
 ## Decision: Do not duplicate dates across decision-stage datasets
 
 **Date:** 2026-05-28  
-**Status:** draft  
+**Status:** Proposed
 
 **Context:**  
 

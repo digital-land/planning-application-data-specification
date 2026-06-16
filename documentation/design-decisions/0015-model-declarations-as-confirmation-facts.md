@@ -1,7 +1,7 @@
 ## Decision: Model declarations as confirmation facts, not digital signatures
 
 **Date:** 2026-05-19  
-**Status:** draft  
+**Status:** Proposed
 
 **Context:**  
 

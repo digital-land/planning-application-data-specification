@@ -1,7 +1,7 @@
 ## Decision: Reference authoritative application artefacts without prescribing storage
 
 **Date:** 2026-06-04  
-**Status:** draft  
+**Status:** Proposed
 
 **Context:**  
 

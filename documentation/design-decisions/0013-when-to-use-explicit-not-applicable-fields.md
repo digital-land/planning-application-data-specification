@@ -1,7 +1,7 @@
 ## Decision: When to use explicit not applicable fields
 
 **Date:** 2026-04-22  
-**Status:** Proposed  
+**Status:** Proposed
 
 **Context:**  
 

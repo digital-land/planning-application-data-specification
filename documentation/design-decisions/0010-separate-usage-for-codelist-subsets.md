@@ -1,7 +1,7 @@
 ## Decision: Use separate usage tables when codelists need context-specific subsets
 
 **Date:** 2026-03-19  
-**Status:** Proposed  
+**Status:** Proposed
 
 **Context:**  
 

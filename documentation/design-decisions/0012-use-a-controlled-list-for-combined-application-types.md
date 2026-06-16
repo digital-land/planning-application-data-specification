@@ -1,7 +1,7 @@
 ## Decision: Use a controlled list for combined application types
 
 **Date:** 2026-04-14  
-**Status:** Proposed  
+**Status:** Proposed
 
 **Context:**  
 

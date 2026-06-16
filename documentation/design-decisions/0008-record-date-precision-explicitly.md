@@ -1,7 +1,7 @@
 ## Decision: Record date precision explicitly using a separate `date_precision` attribute
 
 **Date:** 2026-01-26 
-**Status:** Under review
+**Status:** Proposed
 
 **Context:**  
 

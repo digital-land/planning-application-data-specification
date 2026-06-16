@@ -1,7 +1,7 @@
 ## Decision: Keep form generation details separate from structured data
 
 **Date:** 2026-05-21  
-**Status:** Draft  
+**Status:** Proposed
 
 **Context:**  
 

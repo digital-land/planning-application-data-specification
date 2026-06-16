@@ -1,7 +1,7 @@
 ## Decision: Link named individuals by reference, not name matching
 
 **Date:** 2026-05-19  
-**Status:** draft  
+**Status:** Proposed
 
 **Context:**  
 

@@ -1,7 +1,7 @@
 ## Decision: Require documents to be submitted as files within the application record
 
 **Date:** 2025-12-18  
-**Status:** Under review  
+**Status:** Proposed
 
 **Context:**  
 During discussions on how documents should be represented and referenced within an application submission, the option of allowing applicants to provide external links (e.g. URLs) to documents instead of uploading the documents themselves was raised.  
