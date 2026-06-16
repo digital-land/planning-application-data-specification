@@ -4,6 +4,7 @@ from typing import Any, Dict, List
 
 from integrity_checks.utils import (
     get_object_field_names,
+    iter_redundant_field_component_overrides,
     iter_required_if_field_refs,
     run_checks,
 )
@@ -73,6 +74,23 @@ def check_field_references(
                     f"field '{field_name}' is deprecated (has end-date {field_data.get('end-date')})",
                 )
                 has_errors = True
+    return not has_errors
+
+
+def check_redundant_component_overrides(
+    components: List[Dict[str, Any]], fields: Dict[str, Any]
+) -> bool:
+    """Check field instances do not repeat their field definition's component."""
+    has_errors = False
+    for component_name, component in components.items():
+        for field_name, component_ref in iter_redundant_field_component_overrides(
+            component.get("fields", []), fields
+        ):
+            print_error(
+                component_name,
+                f"field '{field_name}' repeats default component '{component_ref}'",
+            )
+            has_errors = True
     return not has_errors
 
 
@@ -258,6 +276,7 @@ def check_all(
     checks_with_args = [
         (check_component_names, [components]),
         (check_field_references, [components, fields]),
+        (check_redundant_component_overrides, [components, fields]),
         # (check_application_type_references, [components, valid_types]),
         (check_field_condition_references, [components, fields, valid_types]),
         (check_dates, [components]),

@@ -27,6 +27,7 @@ from bin.integrity_checks.fields import (
 )
 from bin.integrity_checks.modules import (
     check_applies_if_structure,
+    check_redundant_component_overrides as check_module_redundant_component_overrides,
     check_required_if_fields,
 )
 
@@ -335,6 +336,50 @@ class TestRequiredIfFieldReferences:
             application_types={},
         )
         assert has_no_errors
+
+
+class TestRedundantFieldComponentOverrides:
+    def test_module_component_override_fails_when_it_repeats_field_default(self):
+        modules = {
+            "applicant-details": {
+                "fields": [{"field": "person", "component": "person"}]
+            }
+        }
+        fields = {"person": {"component": "person"}}
+
+        assert not check_module_redundant_component_overrides(modules, fields)
+
+    def test_module_component_override_passes_when_it_changes_field_default(self):
+        modules = {
+            "agent-details": {
+                "fields": [{"field": "person", "component": "other-contact"}]
+            }
+        }
+        fields = {"person": {"component": "person"}}
+
+        assert check_module_redundant_component_overrides(modules, fields)
+
+    def test_component_component_override_fails_when_it_repeats_field_default(self):
+        components = {
+            "applicant": {
+                "fields": [{"field": "person", "component": "person"}]
+            }
+        }
+        fields = {"person": {"component": "person"}}
+
+        assert not component_checks.check_redundant_component_overrides(
+            components, fields
+        )
+
+    def test_component_component_override_passes_when_it_changes_field_default(self):
+        components = {
+            "other-contact": {
+                "fields": [{"field": "person", "component": "other-contact"}]
+            }
+        }
+        fields = {"person": {"component": "person"}}
+
+        assert component_checks.check_redundant_component_overrides(components, fields)
 
 
 class TestFieldIntegrityChecks:

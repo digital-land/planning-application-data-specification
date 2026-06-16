@@ -1,6 +1,7 @@
 from integrity_checks.utils import (
     get_object_field_names,
     has_reference_error,
+    iter_redundant_field_component_overrides,
     iter_required_if_field_refs,
     print_error,
     run_checks,
@@ -71,6 +72,26 @@ def check_field_references(modules, fields):
                     f"referenced field '{field_name}' is deprecated (has end-date {field_def.get('end-date')})",
                 )
                 has_errors = True
+
+    return not has_errors
+
+
+def check_redundant_component_overrides(modules, fields):
+    """
+    Check field instances do not repeat their field definition's component.
+    """
+    has_errors = False
+
+    for module_name, module in modules.items():
+        for field_name, component_ref in iter_redundant_field_component_overrides(
+            module.get("fields", []), fields
+        ):
+            print_error(
+                "module",
+                module_name,
+                f"field '{field_name}' repeats default component '{component_ref}'",
+            )
+            has_errors = True
 
     return not has_errors
 
@@ -235,6 +256,7 @@ def check_all(modules, fields, applications=None):
     checks_with_args = [
         (check_module_names, [modules]),
         (check_field_references, [modules, fields]),
+        (check_redundant_component_overrides, [modules, fields]),
         (check_dates, [modules]),
         (check_attrs, [modules]),
         (check_applies_if_structure, [modules, applications]),

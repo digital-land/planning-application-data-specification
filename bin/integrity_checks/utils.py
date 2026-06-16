@@ -43,6 +43,24 @@ def get_object_field_names(field_definitions):
     return field_names
 
 
+def iter_redundant_field_component_overrides(field_instances, fields):
+    """Yield field instances that repeat their field definition's component."""
+    for field_instance in field_instances or []:
+        if not isinstance(field_instance, dict):
+            continue
+        if "component" not in field_instance:
+            continue
+
+        field_name = field_instance.get("field")
+        if field_name not in fields:
+            continue
+
+        default_component = fields[field_name].get("component")
+        override_component = field_instance.get("component")
+        if default_component and override_component == default_component:
+            yield field_name, override_component
+
+
 def iter_required_if_field_refs(required_if, *, inside_contains=False):
     """Yield top-level `field` references found within a required-if structure."""
     if isinstance(required_if, list):
