@@ -19,6 +19,8 @@ fields:
 - field: site
 - field: received-date
   description: Date the planning authority received the application
+- field: planning-authority
+  description: Identifier of the planning authority that received this planning application
 - field: development-scale
   applies-if:
     application-types:
