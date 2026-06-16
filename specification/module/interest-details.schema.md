@@ -4,9 +4,7 @@ description: Names and contact details for all parties with an interest in the p
 end-date: ''
 entry-date: 2025-07-18
 fields:
-- codelist: applicant-interest-type
-  datatype: enum
-  field: applicant-interest
+- field: applicant-interest-type
   required: true
 - field: owner-details
   required-if:

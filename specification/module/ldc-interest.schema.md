@@ -3,10 +3,7 @@ description: Who had a say in whether the proposal should go ahead
 end-date: ''
 entry-date: 2025-01-17
 fields:
-- field: applicant-interest
-  codelist: applicant-interest-type
-  datatype: enum
-  description: Applicant's interest in the listed building
+- field: applicant-interest-type
   required: true
 - field: owner-details
   description: Details of the owner if the applicant is a lessee or occupier
