@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Optional
 
 from .application_types import canonical_application_ref, normalise_application_types
-from .applications import resolve_application
+from .applications import get_active_combined_application_refs, resolve_application
 from .loader import _resolve_repo_root, load_specification_model
 from .models import ApplicationDef, ComponentUsage, FieldDef, FieldUsage
 
@@ -236,6 +236,10 @@ class Specification:
         self.module(ref)
         matching_applications = []
         for application in self.applications.values():
+            if any(module.ref == ref for module in application.modules):
+                matching_applications.append(application)
+        for application_ref in get_active_combined_application_refs(self.tables):
+            application = self.application(application_ref)
             if any(module.ref == ref for module in application.modules):
                 matching_applications.append(application)
         return tuple(sorted(matching_applications, key=lambda application: application.ref))

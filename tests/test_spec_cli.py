@@ -845,31 +845,47 @@ def test_modules_in_application_command_supports_combined_application_type(monke
 def test_applications_with_module_command_uses_new_inspect_output_shape(monkeypatch):
     runner = CliRunner()
 
+    applications = [
+        type(
+            "StubApplication",
+            (),
+            {"ref": "full", "name": "Full planning application"},
+        )(),
+        type(
+            "StubApplication",
+            (),
+            {"ref": "hh", "name": "Householder planning application"},
+        )(),
+        type(
+            "StubApplication",
+            (),
+            {"ref": "hh;lbc", "name": "Householder planning permission and listed building consent"},
+        )(),
+    ]
+
+    class StubSpecification:
+        def applications_with_module(self, module_ref):
+            assert module_ref == "site-details"
+            return applications
+
     monkeypatch.setattr(
         spec,
-        "load_content",
-        lambda: {
-            "application": {
-                "hh": {"name": "Householder planning application"},
-                "full": {"name": "Full planning application"},
-            }
-        },
-    )
-    monkeypatch.setattr(
-        spec,
-        "get_applications_with_module",
-        lambda module_ref, specification: ["hh", "full"]
-        if module_ref == "site-details"
-        else [],
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
     )
 
     result = runner.invoke(spec.cli, ["inspect", "uses", "module", "site-details"])
 
     assert result.exit_code == 0
     assert "Module: site-details" in result.output
-    assert "Applications: 2" in result.output
+    assert "Applications: 3" in result.output
     assert "- hh: Householder planning application" in result.output
     assert "- full: Full planning application" in result.output
+    assert "- hh;lbc: Householder planning permission and listed building consent" in result.output
 
 
 def test_module_forms_command_lists_analysed_2025_forms(monkeypatch):

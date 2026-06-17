@@ -76,6 +76,8 @@ The commands answer different relationship questions:
 | `inspect uses field <field_ref>` | modules and components that include a field |
 | `inspect uses component <component_ref>` | fields and modules that use a component |
 
+`inspect uses module` includes active controlled combined application types when the combined application uses the module.
+
 For example:
 
 ```bash

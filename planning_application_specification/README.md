@@ -107,7 +107,7 @@ print(householder_listed.is_combined)  # True
 Use canonical lookup when you want the base definition:
 
 - `spec.application(ref)` for an application view over a canonical single application definition
-- `spec.applications_with_module(ref)` when you want the canonical application types that include a given module
+- `spec.applications_with_module(ref)` when you want the application types, including active controlled combined application types, that include a given module
 - `spec.field_usages(ref)` when you want the modules and components that directly use a field
 - `spec.component_usages(ref)` when you want the fields and modules that directly use a component
 - `spec.codelist_usages(ref)` when you want to find fields, modules and components that use a codelist, including usage-level codelist overrides
@@ -206,9 +206,9 @@ householder_listed = spec.application(["hh", "lbc"])
 
 ### `Specification.applications_with_module(ref: str) -> tuple[ApplicationDef, ...]`
 
-Return the canonical single application definitions that include a given module.
+Return the application definitions that include a given module.
 
-This is a query over the loaded application model. It uses the resolved module sets already carried on canonical `ApplicationDef` objects, including inherited modules where applicable.
+This is a query over the loaded application model. It uses the resolved module sets already carried on canonical `ApplicationDef` objects, including inherited modules where applicable. It also derives active controlled combined application views and includes them when the combined application uses the module.
 
 Arguments:
 
@@ -216,8 +216,8 @@ Arguments:
 
 Returns:
 
-- a tuple of canonical `ApplicationDef` objects sorted by application ref
-- this does not derive or include controlled combined application views
+- a tuple of `ApplicationDef` objects sorted by application ref
+- active controlled combined application views are included when they use the module
 
 Raises:
 

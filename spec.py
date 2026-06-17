@@ -9,7 +9,7 @@ sys.path.insert(0, str(PROJECT_ROOT))
 sys.path.insert(0, str(PROJECT_ROOT / "bin"))
 
 import click
-from bin.applications import get_application_module_refs, get_applications_with_module
+from bin.applications import get_application_module_refs
 from bin.completeness import (
     build_progress_view_model,
     calculate_scope_summary,
@@ -341,16 +341,14 @@ def uses():
 @click.argument("module_ref")
 def applications_with_module(module_ref):
     """Find applications that use a specific module."""
-    spec = load_content()
-    apps = get_applications_with_module(module_ref, spec)
+    spec = Specification.load()
+    apps = spec.applications_with_module(module_ref)
 
     if apps:
         click.echo(f"Module: {module_ref}")
         click.echo(f"Applications: {len(apps)}")
-        for app_ref in apps:
-            app = spec["application"].get(app_ref, {})
-            name = app.get("name", app_ref)
-            click.echo(f"- {app_ref}: {name}")
+        for app in apps:
+            click.echo(f"- {app.ref}: {app.name}")
     else:
         click.echo(f"No applications found using module '{module_ref}'")
 

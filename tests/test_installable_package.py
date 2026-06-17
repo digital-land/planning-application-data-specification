@@ -178,7 +178,8 @@ def test_applications_with_module_returns_canonical_applications_in_sorted_order
     assert "hh" in refs
     assert "lbc" in refs
     assert "technical-details-consent" in refs
-    assert "hh;lbc" not in refs
+    assert "hh;lbc" in refs
+    assert any(application.ref == "hh;lbc" and application.is_combined for application in applications)
 
 
 def test_applications_with_module_rejects_unknown_module(project_root):
