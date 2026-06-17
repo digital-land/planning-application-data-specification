@@ -1420,6 +1420,7 @@ def build_site(args: argparse.Namespace) -> None:
             ctx = {
                 "page_title": f"Field {f.ref}",
                 "field": f,
+                "usage": build_field_usage_view(specification, f.ref, renderer),
             }
             field_html = field_detail_template.render(**ctx)
             renderer.write_page(f"field/{f.ref}/index.html", field_html)

@@ -52,6 +52,57 @@ def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path
     assert 'href="/codelist/decision-maker"' in dataset_html
 
 
+def test_render_site_shows_where_module_is_used(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    module_page = output_dir / "module" / "proposal-details" / "index.html"
+    html = module_page.read_text(encoding="utf-8")
+
+    assert "Where this is used" in html
+    assert "This module is used in 14 application types:" in html
+    assert 'href="/application-type/hh"' in html
+    assert 'href="/application-type/hh;lbc"' in html
+    assert ">outline<" not in html
+
+
+def test_render_site_shows_where_field_is_used(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    field_page = output_dir / "field" / "description" / "index.html"
+    html = field_page.read_text(encoding="utf-8")
+
+    assert "Where this is used" in html
+    assert "This field is used in" in html
+    assert "modules:" in html
+    assert 'href="/module/proposal-details"' in html
+    assert "components:" in html
+    assert 'href="/component/site-location"' in html
+
+
 def test_render_site_uses_local_root_links_when_base_url_is_empty(tmp_path, monkeypatch):
     output_dir = tmp_path / "site"
     args = parse_args([

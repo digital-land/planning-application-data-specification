@@ -1,0 +1,42 @@
+{% macro render_where_used(element_type, usage) %}
+  {% set applications = usage.applications | default([]) if usage else [] %}
+  {% set modules = usage.modules | default([]) if usage else [] %}
+  {% set components = usage.components | default([]) if usage else [] %}
+  <h2 class="govuk-heading-l govuk-!-margin-top-9">Where this is used</h2>
+  {% if applications or modules or components %}
+  {% if applications %}
+    <h3 class="govuk-heading-m">Application types</h3>
+    <p class="govuk-body">This {{ element_type }} is used in {{ applications | length }} application type{% if applications | length != 1 %}s{% endif %}:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      {% for application in applications %}
+        <li>
+          <a class="govuk-link" href="{{ application.href }}">{{ application.name or application.ref }}</a>
+          {% if application.is_combined %}
+            <span class="govuk-hint govuk-!-display-inline govuk-!-margin-left-1">Combined application type</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if modules %}
+    <h3 class="govuk-heading-m">Modules</h3>
+    <p class="govuk-body">This {{ element_type }} is used in {{ modules | length }} module{% if modules | length != 1 %}s{% endif %}:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      {% for module in modules %}
+        <li><a class="govuk-link" href="{{ module.href }}">{{ module.name or module.ref }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if components %}
+    <h3 class="govuk-heading-m">Components</h3>
+    <p class="govuk-body">This {{ element_type }} is used in {{ components | length }} component{% if components | length != 1 %}s{% endif %}:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      {% for component in components %}
+        <li><a class="govuk-link" href="{{ component.href }}">{{ component.name or component.ref }}</a></li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% else %}
+    <p class="govuk-body">This {{ element_type }} is unused.</p>
+  {% endif %}
+{% endmacro %}
