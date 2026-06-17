@@ -179,6 +179,9 @@ def test_applications_with_module_returns_canonical_applications_in_sorted_order
     assert "lbc" in refs
     assert "technical-details-consent" in refs
     assert "hh;lbc" in refs
+    assert "outline" not in refs
+    assert "outline-all" in refs
+    assert "outline-some" in refs
     assert any(application.ref == "hh;lbc" and application.is_combined for application in applications)
 
 

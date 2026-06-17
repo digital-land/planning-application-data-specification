@@ -236,6 +236,8 @@ class Specification:
         self.module(ref)
         matching_applications = []
         for application in self.applications.values():
+            if self._is_base_application_type(application.ref):
+                continue
             if any(module.ref == ref for module in application.modules):
                 matching_applications.append(application)
         for application_ref in get_active_combined_application_refs(self.tables):
@@ -243,6 +245,10 @@ class Specification:
             if any(module.ref == ref for module in application.modules):
                 matching_applications.append(application)
         return tuple(sorted(matching_applications, key=lambda application: application.ref))
+
+    def _is_base_application_type(self, ref: str) -> bool:
+        application = self.tables.get("application", {}).get(ref, {})
+        return bool(application.get("base-type"))
 
     def field_usages(self, ref: str) -> FieldUsages:
         self.field(ref)
