@@ -76,6 +76,25 @@ The commands answer different relationship questions:
 | `inspect uses field <field_ref>` | modules and components that include a field |
 | `inspect uses component <component_ref>` | fields and modules that use a component |
 
+For example:
+
+```bash
+python spec.py inspect uses component applicant
+```
+
+prints the fields that reference the `applicant` component and the modules that use those fields:
+
+```text
+Component: applicant
+Fields: 1
+- applicants: Applicants
+
+Modules: 1
+- applicant-details: Applicant details
+```
+
+This uses the same package-backed component usage query as the Python API.
+
 ## Run repository reports
 
 Use `report` for maintained summary views over the repository.

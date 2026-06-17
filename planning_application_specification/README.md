@@ -61,6 +61,7 @@ The implemented package currently supports:
 - canonical single-application lookup and controlled combined-application lookup
 - canonical codelist lookup
 - canonical field, component and module lookup
+- component usage lookup across canonical field definitions and direct module usages
 - codelist usage lookup across canonical field definitions and direct module/component field usages
 - applicable codelist filtering using selection context
 - resolved field lookup for module or component context with static override merging
@@ -108,6 +109,7 @@ Use canonical lookup when you want the base definition:
 - `spec.application(ref)` for an application view over a canonical single application definition
 - `spec.applications_with_module(ref)` when you want the canonical application types that include a given module
 - `spec.field_usages(ref)` when you want the modules and components that directly use a field
+- `spec.component_usages(ref)` when you want the fields and modules that directly use a component
 - `spec.codelist_usages(ref)` when you want to find fields, modules and components that use a codelist, including usage-level codelist overrides
 - `spec.codelist(ref)` for the source codelist
 - `spec.field(ref)`, `spec.component(ref)` and `spec.module(ref)` for canonical definitions
@@ -254,6 +256,34 @@ usages = spec.field_usages("description")
 module_refs = [match.container.ref for match in usages.modules]
 ```
 
+### `Specification.component_usages(ref: str) -> ComponentUsages`
+
+Return the canonical field definitions and module definitions that directly use a given component.
+
+This is a discovery query over the loaded specification model. It reports fields whose canonical definition references the component, and modules whose direct authored field rows resolve to that component. It does not recurse through nested components.
+
+Arguments:
+
+- `ref`: component reference, for example `"applicant"`
+
+Returns:
+
+- a `ComponentUsages` object with `fields` and `modules`
+- `fields` contains canonical `FieldDef` objects whose base definition references the component
+- `modules` contains `FieldUsageMatch` entries for module field usages whose field resolves to the component
+
+Raises:
+
+- `KeyError` if the component is not defined
+
+Example:
+
+```python
+usages = spec.component_usages("applicant")
+field_refs = [field.ref for field in usages.fields]
+module_refs = [match.container.ref for match in usages.modules]
+```
+
 ### `Specification.codelist_usages(ref: str) -> CodelistUsages`
 
 Return the fields, modules and components that use a given codelist.
@@ -305,7 +335,7 @@ for match in usages.modules:
     print(match.container.ref, field_ref, codelist_ref)
 ```
 
-For example, `applicant-interest` is canonically a string field, but in the `interest-details` module it is used with `codelist: applicant-interest-type`. That match appears in `usages.modules`, not `usages.fields`.
+For example, a codelist can appear in `usages.fields` when a canonical field definition names it directly, and in `usages.modules` or `usages.components` when a module or component field usage has that effective codelist.
 
 ### `Specification.field(ref: str)`
 
