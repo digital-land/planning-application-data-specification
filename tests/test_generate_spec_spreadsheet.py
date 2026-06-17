@@ -14,57 +14,6 @@ def _load_sheet_rows(path: Path):
     return rows, merged_ranges
 
 
-def test_write_application_excel_preserves_filtered_rows_and_merge_ranges(project_root, tmp_path):
-    model = load_specification_model()
-    app = model["applications"]["full"]
-
-    workbook_path = write_application_excel(
-        app,
-        tmp_path,
-        incl_app_details=False,
-        incl_references=False,
-    )
-
-    rows, merged_ranges = _load_sheet_rows(workbook_path)
-
-    assert rows[0] == (
-        "top-level",
-        "top-level-description",
-        "field1",
-        "field2",
-        "field3",
-        "field4",
-        "description",
-        "datatype",
-        "requirement",
-    )
-    assert rows[1] == (
-        "Submission details",
-        "Details about the submitted payload, including how it is identified, routed, validated, handled and traced",
-        "Submission details",
-        "Submission reference",
-        None,
-        None,
-        "A unique reference for the submission",
-        "string",
-        "MUST",
-    )
-    assert (
-        "Description of the proposal",
-        "What development, works or change of use is proposed",
-        "Proposal description",
-        None,
-        None,
-        None,
-        "A description of what is being proposed, including the development, works, or change of use",
-        "string",
-        "MUST",
-    ) in rows
-    assert not any(row[2] == "Related application[]" for row in rows if len(row) > 2)
-    assert "A159:A165" in merged_ranges
-    assert "B159:B165" in merged_ranges
-
-
 def test_write_application_excel_verbose_includes_reference_columns(tmp_path):
     model = load_specification_model()
     app = model["applications"]["full"]

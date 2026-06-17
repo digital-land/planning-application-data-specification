@@ -9,6 +9,7 @@ from planning_application_specification.applications import (
 from planning_application_specification.models import ApplicationDef
 from planning_application_specification.specification import (
     CodelistUsages,
+    ComponentUsages,
     FieldUsages,
     ResolvedComponentReference,
     ResolvedField,
@@ -241,7 +242,7 @@ def test_codelist_usages_returns_module_usage_override_matches(project_root):
 
     usages = spec.codelist_usages("applicant-interest-type")
 
-    assert usages.fields == ()
+    assert [field.ref for field in usages.fields] == ["applicant-interest-type"]
 
     module_matches = {
         match.container.ref: match for match in usages.modules
@@ -251,10 +252,8 @@ def test_codelist_usages_returns_module_usage_override_matches(project_root):
 
     interest_details = module_matches["interest-details"]
     assert interest_details.container_type == "module"
-    assert interest_details.usage.original.ref == "applicant-interest"
-    assert interest_details.usage.original.codelist is None
-    assert interest_details.usage.overrides["codelist"] == "applicant-interest-type"
-    assert interest_details.usage.overrides["datatype"] == "enum"
+    assert interest_details.usage.original.ref == "applicant-interest-type"
+    assert interest_details.usage.original.codelist == "applicant-interest-type"
 
 
 def test_codelist_usages_returns_component_usage_override_matches(project_root):
@@ -283,6 +282,23 @@ def test_codelist_usages_rejects_unknown_codelist(project_root):
         assert "Unknown codelist" in str(exc)
     else:
         raise AssertionError("Expected KeyError for unknown codelist")
+
+
+def test_component_usages_returns_fields_and_modules(project_root):
+    spec = Specification.load(project_root)
+
+    usages = spec.component_usages("applicant")
+
+    assert isinstance(usages, ComponentUsages)
+    assert [field.ref for field in usages.fields] == ["applicants"]
+
+    module_matches = {match.container.ref: match for match in usages.modules}
+    assert "applicant-details" in module_matches
+
+    applicant_details = module_matches["applicant-details"]
+    assert applicant_details.container_type == "module"
+    assert applicant_details.usage.original.ref == "applicants"
+    assert applicant_details.usage.original.component == "applicant"
 
 
 def test_application_rejects_unknown_combined_type(project_root):

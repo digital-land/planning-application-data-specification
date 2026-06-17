@@ -1,4 +1,3 @@
-import os
 from pathlib import Path
 
 from bin.render_static_site import build_site, parse_args
@@ -21,7 +20,7 @@ def test_render_site_builds_section_106_dataset(tmp_path, monkeypatch):
     monkeypatch.chdir(Path(__file__).parent.parent)
     build_site(args)
 
-    dataset_page = output_dir / "decision-stage" / "dataset" / "section-106" / "index.html"
+    dataset_page = output_dir / "dataset" / "section-106" / "index.html"
     assert dataset_page.exists(), "section-106 dataset page should be rendered"
     html = dataset_page.read_text(encoding="utf-8")
     # Basic smoke checks: title and at least one linked need/justification section
@@ -44,11 +43,11 @@ def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path
     monkeypatch.chdir(Path(__file__).parent.parent)
     build_site(args)
 
-    module_page = output_dir / "submission" / "module" / "interest-details" / "index.html"
+    module_page = output_dir / "module" / "interest-details" / "index.html"
     module_html = module_page.read_text(encoding="utf-8")
     assert 'href="/codelist/applicant-interest-type"' in module_html
 
-    dataset_page = output_dir / "decision-stage" / "dataset" / "decision-notice" / "index.html"
+    dataset_page = output_dir / "dataset" / "decision-notice" / "index.html"
     dataset_html = dataset_page.read_text(encoding="utf-8")
     assert 'href="/codelist/decision-maker"' in dataset_html
 
@@ -69,20 +68,20 @@ def test_render_site_uses_local_root_links_when_base_url_is_empty(tmp_path, monk
     build_site(args)
 
     index_html = (output_dir / "index.html").read_text(encoding="utf-8")
-    assert 'href="/submission"' in index_html
-    assert 'href="/planning-application-data-specification/submission"' not in index_html
+    assert 'href="/application-type/"' in index_html
+    assert 'href="/planning-application-data-specification/application-type/"' not in index_html
 
     application_html = (
-        output_dir / "submission" / "application" / "full" / "index.html"
+        output_dir / "application-type" / "full" / "index.html"
     ).read_text(encoding="utf-8")
-    assert 'href="/submission/module/agent-details"' in application_html
-    assert 'href="/planning-application-data-specification/submission/module/agent-details"' not in application_html
+    assert 'href="/module/agent-details"' in application_html
+    assert 'href="/planning-application-data-specification/module/agent-details"' not in application_html
 
     module_html = (
-        output_dir / "submission" / "module" / "agent-details" / "index.html"
+        output_dir / "module" / "agent-details" / "index.html"
     ).read_text(encoding="utf-8")
-    assert 'href="/submission"' in module_html
-    assert 'href="/submissions"' not in module_html
+    assert 'href="/module"' in module_html
+    assert 'href="/submission"' not in module_html
 
 
 def test_render_site_uses_base_url_for_github_pages_links(tmp_path, monkeypatch):
@@ -101,12 +100,12 @@ def test_render_site_uses_base_url_for_github_pages_links(tmp_path, monkeypatch)
     build_site(args)
 
     index_html = (output_dir / "index.html").read_text(encoding="utf-8")
-    assert 'href="/planning-application-data-specification/submission"' in index_html
+    assert 'href="/planning-application-data-specification/application-type/"' in index_html
 
     application_html = (
-        output_dir / "submission" / "application" / "full" / "index.html"
+        output_dir / "application-type" / "full" / "index.html"
     ).read_text(encoding="utf-8")
     assert (
-        'href="/planning-application-data-specification/submission/module/agent-details"'
+        'href="/planning-application-data-specification/module/agent-details"'
         in application_html
     )
