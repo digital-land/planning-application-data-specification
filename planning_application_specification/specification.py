@@ -53,6 +53,12 @@ class FieldUsages:
 
 
 @dataclass(frozen=True)
+class ComponentUsages:
+    fields: tuple[FieldDef, ...]
+    modules: tuple[FieldUsageMatch, ...]
+
+
+@dataclass(frozen=True)
 class CodelistUsages:
     fields: tuple[FieldDef, ...]
     modules: tuple[FieldUsageMatch, ...]
@@ -241,6 +247,23 @@ class Specification:
             self.components.values(), ref, "component"
         )
         return FieldUsages(modules=module_matches, components=component_matches)
+
+    def component_usages(self, ref: str) -> ComponentUsages:
+        self.component(ref)
+        fields = tuple(
+            sorted(
+                (
+                    field
+                    for field in self.fields.values()
+                    if field.component == ref
+                ),
+                key=lambda field: field.ref,
+            )
+        )
+        module_matches = self._collect_component_usage_matches(
+            self.modules.values(), ref, "module"
+        )
+        return ComponentUsages(fields=fields, modules=module_matches)
 
     def codelist_usages(self, ref: str) -> CodelistUsages:
         self.codelist(ref)
@@ -553,10 +576,40 @@ class Specification:
             )
         )
 
+    def _collect_component_usage_matches(
+        self, containers, component_ref: str, container_type: str
+    ) -> tuple[FieldUsageMatch, ...]:
+        matches = []
+        for container in containers:
+            usage = self._find_direct_component_field_usage(
+                container.items, component_ref
+            )
+            if usage:
+                matches.append(
+                    FieldUsageMatch(
+                        container_type=container_type,
+                        container=container,
+                        usage=usage,
+                    )
+                )
+        return tuple(sorted(matches, key=lambda match: match.container.ref))
+
     def _find_direct_field_usage(self, items, ref: str) -> FieldUsage | None:
         for item in items:
             if isinstance(item, FieldUsage) and item.original.ref == ref:
                 return item
+        return None
+
+    def _find_direct_component_field_usage(
+        self, items, component_ref: str
+    ) -> FieldUsage | None:
+        for item in items:
+            if (
+                isinstance(item, ComponentUsage)
+                and item.component.ref == component_ref
+                and isinstance(item.referenced_by_field, FieldUsage)
+            ):
+                return item.referenced_by_field
         return None
 
     def _find_direct_codelist_usages(
