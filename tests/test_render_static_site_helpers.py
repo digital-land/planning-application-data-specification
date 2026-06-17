@@ -1,4 +1,5 @@
 from bin.render_static_site import (
+    build_module_usage_view,
     build_need_maps,
     design_decision_feedback_url,
     extract_dataset_only_refs,
@@ -22,6 +23,57 @@ def test_extract_dataset_only_refs_filters_out_field_pairs():
         {"dataset": "site"},
     ]
     assert extract_dataset_only_refs(blob) == ["section-106", "site"]
+
+
+def test_build_module_usage_view_uses_package_applications_with_links():
+    applications = [
+        type(
+            "StubApplication",
+            (),
+            {
+                "ref": "full",
+                "name": "Full planning permission",
+                "is_combined": False,
+            },
+        )(),
+        type(
+            "StubApplication",
+            (),
+            {
+                "ref": "hh;lbc",
+                "name": "Householder planning permission and listed building consent",
+                "is_combined": True,
+            },
+        )(),
+    ]
+
+    class StubSpec:
+        def applications_with_module(self, module_ref):
+            assert module_ref == "proposal-details"
+            return applications
+
+    class StubRenderer:
+        def url_for(self, path):
+            return f"/base{path}"
+
+    usage = build_module_usage_view(StubSpec(), "proposal-details", StubRenderer())
+
+    assert usage == {
+        "applications": [
+            {
+                "ref": "full",
+                "name": "Full planning permission",
+                "href": "/base/application-type/full",
+                "is_combined": False,
+            },
+            {
+                "ref": "hh;lbc",
+                "name": "Householder planning permission and listed building consent",
+                "href": "/base/application-type/hh;lbc",
+                "is_combined": True,
+            },
+        ]
+    }
 
 
 def test_build_need_maps_dataset_only_mapping():

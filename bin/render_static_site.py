@@ -708,6 +708,24 @@ def build_module_display(
     return modules
 
 
+def build_module_usage_view(
+    specification: Any,
+    module_ref: str,
+    renderer: RenderContext,
+) -> Dict[str, List[Dict[str, Any]]]:
+    return {
+        "applications": [
+            {
+                "ref": application.ref,
+                "name": application.name or application.ref,
+                "href": renderer.url_for(f"/application-type/{application.ref}"),
+                "is_combined": bool(application.is_combined),
+            }
+            for application in specification.applications_with_module(module_ref)
+        ]
+    }
+
+
 def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) -> List[str]:
     refs: List[str] = []
     for mref, m in modules.items():
