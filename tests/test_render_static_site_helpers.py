@@ -1,4 +1,5 @@
 from bin.render_static_site import (
+    build_component_usage_view,
     build_field_usage_view,
     build_module_usage_view,
     build_need_maps,
@@ -130,6 +131,62 @@ def test_build_field_usage_view_uses_direct_modules_and_components_with_links():
                 "ref": "site-location",
                 "name": "Site location",
                 "href": "/base/component/site-location",
+            }
+        ],
+    }
+
+
+def test_build_component_usage_view_uses_fields_and_modules_with_links():
+    module_match = type(
+        "StubContainerUsage",
+        (),
+        {
+            "container": type(
+                "StubModule",
+                (),
+                {"ref": "applicant-details", "name": "Applicant details"},
+            )()
+        },
+    )()
+    usages = type(
+        "StubComponentUsages",
+        (),
+        {
+            "fields": [
+                type(
+                    "StubField",
+                    (),
+                    {"ref": "applicants", "name": "Applicants"},
+                )()
+            ],
+            "modules": [module_match],
+        },
+    )()
+
+    class StubSpec:
+        def component_usages(self, component_ref):
+            assert component_ref == "applicant"
+            return usages
+
+    class StubRenderer:
+        def url_for(self, path):
+            return f"/base{path}"
+
+    usage = build_component_usage_view(StubSpec(), "applicant", StubRenderer())
+
+    assert usage == {
+        "fields": [
+            {
+                "ref": "applicants",
+                "name": "Applicants",
+                "href": "/base/field/applicants",
+            }
+        ],
+        "modules": [
+            {
+                "ref": "applicant-details",
+                "name": "Applicant details",
+                "href": "/base/module/applicant-details",
             }
         ],
     }
