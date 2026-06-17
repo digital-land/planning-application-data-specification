@@ -1,4 +1,5 @@
 from bin.render_static_site import (
+    build_field_usage_view,
     build_module_usage_view,
     build_need_maps,
     design_decision_feedback_url,
@@ -73,6 +74,64 @@ def test_build_module_usage_view_uses_package_applications_with_links():
                 "is_combined": True,
             },
         ]
+    }
+
+
+def test_build_field_usage_view_uses_direct_modules_and_components_with_links():
+    module_match = type(
+        "StubContainerUsage",
+        (),
+        {
+            "container": type(
+                "StubModule",
+                (),
+                {"ref": "proposal-details", "name": "Proposal details"},
+            )()
+        },
+    )()
+    component_match = type(
+        "StubContainerUsage",
+        (),
+        {
+            "container": type(
+                "StubComponent",
+                (),
+                {"ref": "site-location", "name": "Site location"},
+            )()
+        },
+    )()
+    usages = type(
+        "StubFieldUsages",
+        (),
+        {"modules": [module_match], "components": [component_match]},
+    )()
+
+    class StubSpec:
+        def field_usages(self, field_ref):
+            assert field_ref == "description"
+            return usages
+
+    class StubRenderer:
+        def url_for(self, path):
+            return f"/base{path}"
+
+    usage = build_field_usage_view(StubSpec(), "description", StubRenderer())
+
+    assert usage == {
+        "modules": [
+            {
+                "ref": "proposal-details",
+                "name": "Proposal details",
+                "href": "/base/module/proposal-details",
+            }
+        ],
+        "components": [
+            {
+                "ref": "site-location",
+                "name": "Site location",
+                "href": "/base/component/site-location",
+            }
+        ],
     }
 
 

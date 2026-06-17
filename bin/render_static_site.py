@@ -726,6 +726,32 @@ def build_module_usage_view(
     }
 
 
+def build_field_usage_view(
+    specification: Any,
+    field_ref: str,
+    renderer: RenderContext,
+) -> Dict[str, List[Dict[str, Any]]]:
+    usages = specification.field_usages(field_ref)
+    return {
+        "modules": [
+            {
+                "ref": match.container.ref,
+                "name": match.container.name or match.container.ref,
+                "href": renderer.url_for(f"/module/{match.container.ref}"),
+            }
+            for match in usages.modules
+        ],
+        "components": [
+            {
+                "ref": match.container.ref,
+                "name": match.container.name or match.container.ref,
+                "href": renderer.url_for(f"/component/{match.container.ref}"),
+            }
+            for match in usages.components
+        ],
+    }
+
+
 def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) -> List[str]:
     refs: List[str] = []
     for mref, m in modules.items():
@@ -1285,6 +1311,7 @@ def build_site(args: argparse.Namespace) -> None:
                 "description": m.description or "",
                 "fields": mod_fields,
                 "rules": rules,
+                "usage": build_module_usage_view(specification, m.ref, renderer),
                 "links": {"back": renderer.url_for("/module")},
             }
             module_html = module_template.render(**module_ctx)
