@@ -301,6 +301,17 @@ def test_component_usages_returns_fields_and_modules(project_root):
     assert applicant_details.usage.original.component == "applicant"
 
 
+def test_component_usages_rejects_unknown_component(project_root):
+    spec = Specification.load(project_root)
+
+    try:
+        spec.component_usages("not-a-real-component")
+    except KeyError as exc:
+        assert "Unknown component" in str(exc)
+    else:
+        raise AssertionError("Expected KeyError for unknown component")
+
+
 def test_application_rejects_unknown_combined_type(project_root):
     spec = Specification.load(project_root)
 

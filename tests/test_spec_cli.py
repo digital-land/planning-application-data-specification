@@ -702,25 +702,54 @@ def test_codelist_usage_command_handles_no_matches(monkeypatch):
 def test_component_usage_command_uses_canonical_summary_shape(monkeypatch):
     runner = CliRunner()
 
+    usages = type(
+        "StubComponentUsages",
+        (),
+        {
+            "fields": [
+                FieldDef(ref="floor-area", name="Floor area"),
+                FieldDef(ref="site-area", name="Site area"),
+            ],
+            "modules": [
+                type(
+                    "StubContainerUsage",
+                    (),
+                    {
+                        "container": type(
+                            "StubModule",
+                            (),
+                            {"ref": "proposal-details", "name": "Proposal details"},
+                        )(),
+                    },
+                )(),
+                type(
+                    "StubContainerUsage",
+                    (),
+                    {
+                        "container": type(
+                            "StubModule",
+                            (),
+                            {"ref": "site-details", "name": "Site details"},
+                        )(),
+                    },
+                )(),
+            ],
+        },
+    )()
+
+    class StubSpecification:
+        def component_usages(self, component_ref):
+            assert component_ref == "site-dimensions"
+            return usages
+
     monkeypatch.setattr(
         spec,
-        "load_content",
-        lambda: {
-            "field": {
-                "site-area": {"name": "Site area", "component": "site-dimensions"},
-                "floor-area": {"name": "Floor area", "component": "site-dimensions"},
-            },
-            "module": {
-                "site-details": {
-                    "name": "Site details",
-                    "fields": ["site-area", "postcode"],
-                },
-                "proposal-details": {
-                    "name": "Proposal details",
-                    "fields": [{"field": "floor-area"}],
-                },
-            },
-        },
+        "Specification",
+        type(
+            "SpecificationModule",
+            (),
+            {"load": staticmethod(lambda path=None: StubSpecification())},
+        ),
     )
 
     result = runner.invoke(
