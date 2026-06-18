@@ -11,8 +11,8 @@ fields:
   - field: specified-use
     notes: should this be use-other?
     required-if:
-      description: use == "other" OR use == "sui"
-      any:
+      - description: use == "other" OR use == "sui"
+        any:
         - field: use
           contains: sui
         - field: use
