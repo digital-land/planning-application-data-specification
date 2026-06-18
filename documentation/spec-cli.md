@@ -73,12 +73,34 @@ The commands answer different relationship questions:
 | --- | --- |
 | `inspect uses application <application_ref>` | modules used by a single or controlled combined application |
 | `inspect uses module <module_ref>` | applications that use a module |
-| `inspect uses field <field_ref>` | modules and components that include a field |
+| `inspect uses field <field_ref>` | datasets, modules and components that include a field |
 | `inspect uses component <component_ref>` | fields and modules that use a component |
 
 `inspect uses module` includes active controlled combined application types when the combined application uses the module.
 
 For example:
+
+```bash
+python spec.py inspect uses field description
+```
+
+prints the datasets, modules and components that directly include the `description` field:
+
+```text
+Field: description
+Datasets: 3
+- planning-application: Planning application
+- planning-condition: Planning condition
+- site: Site
+
+Modules: 12
+...
+
+Components: 3
+...
+```
+
+For component usage:
 
 ```bash
 python spec.py inspect uses component applicant
