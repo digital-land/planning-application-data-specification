@@ -50,6 +50,7 @@ class FieldUsageMatch:
 class FieldUsages:
     modules: tuple[FieldUsageMatch, ...]
     components: tuple[FieldUsageMatch, ...]
+    datasets: tuple[FieldUsageMatch, ...]
 
 
 @dataclass(frozen=True)
@@ -160,6 +161,7 @@ class Specification:
     tables: dict
     modules: dict
     components: dict
+    datasets: dict
     applications: dict
     fields: dict
 
@@ -172,6 +174,7 @@ class Specification:
             tables=model["tables"],
             modules=model["modules"],
             components=model["components"],
+            datasets=model["datasets"],
             applications=model["applications"],
             fields=model["fields"],
         )
@@ -256,7 +259,14 @@ class Specification:
         component_matches = self._collect_field_usage_matches(
             self.components.values(), ref, "component"
         )
-        return FieldUsages(modules=module_matches, components=component_matches)
+        dataset_matches = self._collect_field_usage_matches(
+            self.datasets.values(), ref, "dataset"
+        )
+        return FieldUsages(
+            modules=module_matches,
+            components=component_matches,
+            datasets=dataset_matches,
+        )
 
     def component_usages(self, ref: str) -> ComponentUsages:
         self.component(ref)

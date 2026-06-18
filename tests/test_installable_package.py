@@ -28,6 +28,7 @@ def test_specification_load_reads_local_checkout(project_root):
 
     assert spec.source_path == project_root
     assert "description" in spec.fields
+    assert "planning-application" in spec.datasets
     assert "tenure-type" in spec.tables["codelist"]
 
 
@@ -209,6 +210,11 @@ def test_field_usages_returns_grouped_def_and_usage_matches(project_root):
     assert any(match.container.ref == "proposal-details" for match in usages.modules)
     assert all(match.container_type == "component" for match in usages.components)
     assert all(match.usage.original.ref == "description" for match in usages.components)
+    assert all(match.container_type == "dataset" for match in usages.datasets)
+    assert all(match.usage.original.ref == "description" for match in usages.datasets)
+    assert any(
+        match.container.ref == "planning-application" for match in usages.datasets
+    )
 
 
 def test_field_usages_returns_component_matches(project_root):

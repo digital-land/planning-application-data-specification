@@ -6,7 +6,14 @@ from pathlib import Path
 import frontmatter
 
 from .applications import get_application_module_refs
-from .models import ApplicationDef, ComponentDef, ComponentUsage, FieldDef, ModuleDef
+from .models import (
+    ApplicationDef,
+    ComponentDef,
+    ComponentUsage,
+    DatasetDef,
+    FieldDef,
+    ModuleDef,
+)
 
 
 def make_tables():
@@ -120,6 +127,13 @@ def load_specification_model(root_path: str | Path | None = None):
         if module.ref:
             module_defs[module.ref] = module
 
+    dataset_defs = {}
+    for dataset_ref, content in tables.get("dataset", {}).items():
+        dataset_def = dict(content)
+        dataset = DatasetDef.from_spec(dataset_def, field_defs, component_defs)
+        if dataset.ref:
+            dataset_defs[dataset.ref] = dataset
+
     application_defs = {}
     for application_ref, content in tables.get("application", {}).items():
         application_def = dict(content)
@@ -143,6 +157,7 @@ def load_specification_model(root_path: str | Path | None = None):
         "tables": tables,
         "modules": module_defs,
         "components": component_defs,
+        "datasets": dataset_defs,
         "applications": application_defs,
         "fields": field_defs,
     }
