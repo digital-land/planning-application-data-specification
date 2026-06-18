@@ -778,6 +778,42 @@ def build_component_usage_view(
     }
 
 
+def build_codelist_usage_view(
+    specification: Any,
+    codelist_ref: str,
+    renderer: RenderContext,
+) -> Dict[str, List[Dict[str, Any]]]:
+    usages = specification.codelist_usages(codelist_ref)
+    return {
+        "fields": [
+            {
+                "ref": field.ref,
+                "name": field.name or field.ref,
+                "href": renderer.url_for(f"/field/{field.ref}"),
+            }
+            for field in usages.fields
+        ],
+        "modules": [
+            {
+                "ref": match.container.ref,
+                "name": match.container.name or match.container.ref,
+                "href": renderer.url_for(f"/module/{match.container.ref}"),
+                "field_ref": match.usage.original.ref,
+            }
+            for match in usages.modules
+        ],
+        "components": [
+            {
+                "ref": match.container.ref,
+                "name": match.container.name or match.container.ref,
+                "href": renderer.url_for(f"/component/{match.container.ref}"),
+                "field_ref": match.usage.original.ref,
+            }
+            for match in usages.components
+        ],
+    }
+
+
 def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) -> List[str]:
     refs: List[str] = []
     for mref, m in modules.items():

@@ -1,4 +1,5 @@
 from bin.render_static_site import (
+    build_codelist_usage_view,
     build_component_usage_view,
     build_field_usage_view,
     build_module_usage_view,
@@ -187,6 +188,95 @@ def test_build_component_usage_view_uses_fields_and_modules_with_links():
                 "ref": "applicant-details",
                 "name": "Applicant details",
                 "href": "/base/module/applicant-details",
+            }
+        ],
+    }
+
+
+def test_build_codelist_usage_view_uses_fields_modules_and_components_with_links():
+    module_match = type(
+        "StubContainerUsage",
+        (),
+        {
+            "container": type(
+                "StubModule",
+                (),
+                {"ref": "interest-details", "name": "Interest details"},
+            )(),
+            "usage": type(
+                "StubFieldUsage",
+                (),
+                {"original": type("StubField", (), {"ref": "applicant-interest-type"})()},
+            )(),
+        },
+    )()
+    component_match = type(
+        "StubContainerUsage",
+        (),
+        {
+            "container": type(
+                "StubComponent",
+                (),
+                {"ref": "waste-management", "name": "Waste management"},
+            )(),
+            "usage": type(
+                "StubFieldUsage",
+                (),
+                {"original": type("StubField", (), {"ref": "unit-type"})()},
+            )(),
+        },
+    )()
+    usages = type(
+        "StubCodelistUsages",
+        (),
+        {
+            "fields": [
+                type(
+                    "StubField",
+                    (),
+                    {"ref": "applicant-interest-type", "name": "Applicant interest type"},
+                )()
+            ],
+            "modules": [module_match],
+            "components": [component_match],
+        },
+    )()
+
+    class StubSpec:
+        def codelist_usages(self, codelist_ref):
+            assert codelist_ref == "applicant-interest-type"
+            return usages
+
+    class StubRenderer:
+        def url_for(self, path):
+            return f"/base{path}"
+
+    usage = build_codelist_usage_view(
+        StubSpec(), "applicant-interest-type", StubRenderer()
+    )
+
+    assert usage == {
+        "fields": [
+            {
+                "ref": "applicant-interest-type",
+                "name": "Applicant interest type",
+                "href": "/base/field/applicant-interest-type",
+            }
+        ],
+        "modules": [
+            {
+                "ref": "interest-details",
+                "name": "Interest details",
+                "href": "/base/module/interest-details",
+                "field_ref": "applicant-interest-type",
+            }
+        ],
+        "components": [
+            {
+                "ref": "waste-management",
+                "name": "Waste management",
+                "href": "/base/component/waste-management",
+                "field_ref": "unit-type",
             }
         ],
     }
