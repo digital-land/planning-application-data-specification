@@ -80,6 +80,17 @@ def test_build_module_usage_view_uses_package_applications_with_links():
 
 
 def test_build_field_usage_view_uses_direct_modules_and_components_with_links():
+    dataset_match = type(
+        "StubContainerUsage",
+        (),
+        {
+            "container": type(
+                "StubDataset",
+                (),
+                {"ref": "planning-application", "name": "Planning application"},
+            )()
+        },
+    )()
     module_match = type(
         "StubContainerUsage",
         (),
@@ -105,7 +116,11 @@ def test_build_field_usage_view_uses_direct_modules_and_components_with_links():
     usages = type(
         "StubFieldUsages",
         (),
-        {"modules": [module_match], "components": [component_match]},
+        {
+            "datasets": [dataset_match],
+            "modules": [module_match],
+            "components": [component_match],
+        },
     )()
 
     class StubSpec:
@@ -120,6 +135,13 @@ def test_build_field_usage_view_uses_direct_modules_and_components_with_links():
     usage = build_field_usage_view(StubSpec(), "description", StubRenderer())
 
     assert usage == {
+        "datasets": [
+            {
+                "ref": "planning-application",
+                "name": "Planning application",
+                "href": "/base/dataset/planning-application",
+            }
+        ],
         "modules": [
             {
                 "ref": "proposal-details",

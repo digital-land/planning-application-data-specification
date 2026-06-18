@@ -733,6 +733,14 @@ def build_field_usage_view(
 ) -> Dict[str, List[Dict[str, Any]]]:
     usages = specification.field_usages(field_ref)
     return {
+        "datasets": [
+            {
+                "ref": match.container.ref,
+                "name": match.container.name or match.container.ref,
+                "href": renderer.url_for(f"/dataset/{match.container.ref}"),
+            }
+            for match in usages.datasets
+        ],
         "modules": [
             {
                 "ref": match.container.ref,

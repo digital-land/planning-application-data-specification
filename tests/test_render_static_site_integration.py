@@ -97,6 +97,8 @@ def test_render_site_shows_where_field_is_used(tmp_path, monkeypatch):
 
     assert "Where this is used" in html
     assert "This field is used in" in html
+    assert "datasets:" in html
+    assert 'href="/dataset/planning-application"' in html
     assert "modules:" in html
     assert 'href="/module/proposal-details"' in html
     assert "components:" in html
