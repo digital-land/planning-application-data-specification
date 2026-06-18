@@ -409,25 +409,35 @@ def inspect_codelist(codelist_ref):
 @uses.command(name="field")
 @click.argument("field_ref")
 def field_usage(field_ref):
-    """Find modules and components that include a given field."""
+    """Find datasets, modules and components that include a given field."""
     spec = _load_specification()
     usage = spec.field_usages(field_ref)
+    dataset_hits = usage.datasets
     module_hits = usage.modules
     component_hits = usage.components
 
-    if not module_hits and not component_hits:
-        click.echo(f"No modules or components found using field '{field_ref}'")
+    if not dataset_hits and not module_hits and not component_hits:
+        click.echo(
+            f"No datasets, modules or components found using field '{field_ref}'"
+        )
         return
 
     click.echo(f"Field: {field_ref}")
 
+    if dataset_hits:
+        click.echo(f"Datasets: {len(dataset_hits)}")
+        for match in dataset_hits:
+            click.echo(f"- {match.container.ref}: {match.container.name}")
+
     if module_hits:
+        if dataset_hits:
+            click.echo()
         click.echo(f"Modules: {len(module_hits)}")
         for match in module_hits:
             click.echo(f"- {match.container.ref}: {match.container.name}")
 
     if component_hits:
-        if module_hits:
+        if dataset_hits or module_hits:
             click.echo()
         click.echo(f"Components: {len(component_hits)}")
         for match in component_hits:

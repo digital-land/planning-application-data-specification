@@ -530,6 +530,22 @@ def test_field_usage_command_uses_canonical_summary_shape(monkeypatch):
         "StubFieldUsageResult",
         (),
         {
+            "datasets": [
+                type(
+                    "StubContainerUsage",
+                    (),
+                    {
+                        "container": type(
+                            "StubDataset",
+                            (),
+                            {
+                                "ref": "planning-application",
+                                "name": "Planning application",
+                            },
+                        )()
+                    },
+                )()
+            ],
             "modules": [
                 type(
                     "StubContainerUsage",
@@ -578,6 +594,8 @@ def test_field_usage_command_uses_canonical_summary_shape(monkeypatch):
 
     assert result.exit_code == 0
     assert "Field: description" in result.output
+    assert "Datasets: 1" in result.output
+    assert "- planning-application: Planning application" in result.output
     assert "Modules: 1" in result.output
     assert "- proposal-details: Proposal details" in result.output
     assert "Components: 1" in result.output
