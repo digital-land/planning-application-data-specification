@@ -49,21 +49,27 @@ fields:
   required: true
 - field: supporting-documents
   required-if:
-  - any: true
-    field:
-    - new-altered-vehicle
-    - new-altered-pedestrian
-    - change-right-of-way
-    - new-right-of-way
-    - new-public-road
-    - temp-right-of-way
-    - future-new-right-of-way
+  - any:
+    - field: new-altered-vehicle
+      value: true
+    - field: new-altered-pedestrian
+      value: true
+    - field: change-right-of-way
+      value: true
+    - field: new-right-of-way
+      value: true
+    - field: new-public-road
+      value: true
+    - field: temp-right-of-way
+      value: true
+    - field: future-new-right-of-way
+      value: true
 module: access-rights-of-way
 name: Access and rights of way
 rules:
-- rule: All fields must use values from rights-of-way-answers codelist
-- rule: If new-altered-vehicle is yes, details must be provided
-- rule: If change-right-of-way is yes, separate rights of way order may be needed
-- rule: If temp-right-of-way is yes, details of temporary diversions must be provided
+- rule: All fields must use values from rights-of-way-answer codelist
+- rule: If new-altered-vehicle is true, details must be provided
+- rule: If change-right-of-way is true, separate rights of way order may be needed
+- rule: If temp-right-of-way is true, details of temporary diversions must be provided
 - rule: each document in supporting-documents must have a `reference` that matches a document in application.documents
 ---
