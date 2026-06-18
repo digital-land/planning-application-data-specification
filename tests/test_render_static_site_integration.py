@@ -103,6 +103,31 @@ def test_render_site_shows_where_field_is_used(tmp_path, monkeypatch):
     assert 'href="/component/site-location"' in html
 
 
+def test_render_site_shows_where_component_is_used(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    component_page = output_dir / "component" / "applicant" / "index.html"
+    html = component_page.read_text(encoding="utf-8")
+
+    assert "Where this is used" in html
+    assert "This component is used in 1 field:" in html
+    assert 'href="/field/applicants"' in html
+    assert "This component is used in 1 module:" in html
+    assert 'href="/module/applicant-details"' in html
+
+
 def test_render_site_uses_local_root_links_when_base_url_is_empty(tmp_path, monkeypatch):
     output_dir = tmp_path / "site"
     args = parse_args([

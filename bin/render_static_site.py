@@ -1367,16 +1367,6 @@ def build_site(args: argparse.Namespace) -> None:
         for cref, comp in component_index.items():
             comp_fields = build_field_views_from_items(comp.items, field_index)
             comp_rules = raw_components.get(cref, {}).get("rules", [])
-            module_refs = find_modules_using_component(cref, module_index)
-            modules_list = [
-                {
-                    "ref": mr,
-                    "name": getattr(module_index.get(mr), "name", mr),
-                    "href": renderer.url_for(f"/module/{mr}"),
-                }
-                for mr in module_refs
-                if mr in module_index
-            ]
             comp_ctx = {
                 "page_title": f"Component {cref}",
                 "ref": cref,
@@ -1384,7 +1374,7 @@ def build_site(args: argparse.Namespace) -> None:
                 "description": comp.description or "",
                 "fields": comp_fields,
                 "rules": comp_rules,
-                "modules": modules_list,
+                "usage": build_component_usage_view(specification, cref, renderer),
                 "breadcrumbs": [],
             }
             comp_html = comp_template.render(**comp_ctx)

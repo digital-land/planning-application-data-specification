@@ -1,9 +1,10 @@
 {% macro render_where_used(element_type, usage) %}
   {% set applications = usage.applications | default([]) if usage else [] %}
+  {% set fields = usage.fields | default([]) if usage else [] %}
   {% set modules = usage.modules | default([]) if usage else [] %}
   {% set components = usage.components | default([]) if usage else [] %}
   <h2 class="govuk-heading-l govuk-!-margin-top-9">Where this is used</h2>
-  {% if applications or modules or components %}
+  {% if applications or fields or modules or components %}
   {% if applications %}
     <h3 class="govuk-heading-m">Application types</h3>
     <p class="govuk-body">This {{ element_type }} is used in {{ applications | length }} application type{% if applications | length != 1 %}s{% endif %}:</p>
@@ -15,6 +16,15 @@
             <span class="govuk-hint govuk-!-display-inline govuk-!-margin-left-1">Combined application type</span>
           {% endif %}
         </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+  {% if fields %}
+    <h3 class="govuk-heading-m">Fields</h3>
+    <p class="govuk-body">This {{ element_type }} is used in {{ fields | length }} field{% if fields | length != 1 %}s{% endif %}:</p>
+    <ul class="govuk-list govuk-list--bullet">
+      {% for field in fields %}
+        <li><a class="govuk-link" href="{{ field.href }}">{{ field.name or field.ref }}</a></li>
       {% endfor %}
     </ul>
   {% endif %}
