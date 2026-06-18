@@ -1445,6 +1445,7 @@ def build_site(args: argparse.Namespace) -> None:
                 "page_title": f"Codelist {cref}",
                 "codelist": c,
                 "source_link": source_link,
+                "usage": build_codelist_usage_view(specification, cref, renderer),
             }
             cl_html = cl_detail_template.render(**cl_ctx)
             renderer.write_page(f"codelist/{cref}/index.html", cl_html)

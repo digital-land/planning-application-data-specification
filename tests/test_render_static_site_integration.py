@@ -128,6 +128,33 @@ def test_render_site_shows_where_component_is_used(tmp_path, monkeypatch):
     assert 'href="/module/applicant-details"' in html
 
 
+def test_render_site_shows_where_codelist_is_used(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    codelist_page = output_dir / "codelist" / "applicant-interest-type" / "index.html"
+    html = codelist_page.read_text(encoding="utf-8")
+
+    assert "Where this is used" in html
+    assert "This codelist is used in 1 field:" in html
+    assert 'href="/field/applicant-interest-type"' in html
+    assert "This codelist is used in 2 modules:" in html
+    assert 'href="/module/interest-details"' in html
+    assert 'href="/module/ldc-interest"' in html
+    assert "(field: applicant-interest-type)" in html
+
+
 def test_render_site_uses_local_root_links_when_base_url_is_empty(tmp_path, monkeypatch):
     output_dir = tmp_path / "site"
     args = parse_args([

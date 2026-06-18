@@ -276,7 +276,8 @@ class Specification:
         return ComponentUsages(fields=fields, modules=module_matches)
 
     def codelist_usages(self, ref: str) -> CodelistUsages:
-        self.codelist(ref)
+        if ref not in self.tables.get("codelist", {}):
+            raise KeyError(f"Unknown codelist: {ref}")
         fields = tuple(
             sorted(
                 (

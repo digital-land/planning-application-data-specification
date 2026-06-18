@@ -277,6 +277,14 @@ def test_codelist_usages_returns_component_usage_override_matches(project_root):
     assert waste_management.usage.overrides["codelist"] == "waste-throughput-unit"
 
 
+def test_codelist_usages_supports_external_source_codelists(project_root):
+    spec = Specification.load(project_root)
+
+    usages = spec.codelist_usages("listed-building-grade")
+
+    assert isinstance(usages, CodelistUsages)
+
+
 def test_codelist_usages_rejects_unknown_codelist(project_root):
     spec = Specification.load(project_root)
 
