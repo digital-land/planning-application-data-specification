@@ -6,6 +6,7 @@ from integrity_checks.utils import (
     get_object_field_names,
     iter_redundant_field_component_overrides,
     iter_required_if_field_refs,
+    iter_required_if_operator_errors,
     run_checks,
 )
 from utils import check_kebab_case
@@ -233,6 +234,13 @@ def check_field_condition_references(
                         f"Field reference '{field_ref}' in required-if for '{field_def.get('field')}' not found in this component",
                     )
                     has_errors = True
+
+            for error in iter_required_if_operator_errors(required_if):
+                print_error(
+                    component_name,
+                    f"Operator condition in field '{field_def.get('field')}' {error}",
+                )
+                has_errors = True
 
             if check_condition(
                 required_if,

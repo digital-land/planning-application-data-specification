@@ -86,6 +86,50 @@ def iter_required_if_field_refs(required_if, *, inside_contains=False):
                 yield from iter_required_if_field_refs(value, inside_contains=inside_contains)
 
 
+def iter_required_if_operator_errors(required_if):
+    """Yield errors for unsupported or malformed operator conditions."""
+    if isinstance(required_if, list):
+        for item in required_if:
+            yield from iter_required_if_operator_errors(item)
+        return
+
+    if not isinstance(required_if, dict):
+        return
+
+    has_operator = "operator" in required_if
+    operator = required_if.get("operator")
+    has_value = "value" in required_if
+    has_value_field = "value-field" in required_if
+
+    if has_value_field and not has_operator:
+        yield "uses 'value-field' without an operator"
+
+    if has_operator:
+        unary_operators = {"empty", "not_empty"}
+        binary_operators = {"<"}
+
+        if not isinstance(operator, str):
+            yield "operator must be a supported string"
+        elif operator not in unary_operators | binary_operators:
+            yield f"uses unknown operator '{operator}'"
+        elif operator in unary_operators and (has_value or has_value_field):
+            yield f"operator '{operator}' must not have an operand"
+        elif operator in binary_operators and has_value == has_value_field:
+            yield (
+                f"operator '{operator}' must have exactly one of 'value' or "
+                "'value-field'"
+            )
+
+        if has_value_field:
+            value_field = required_if.get("value-field")
+            if not isinstance(value_field, str) or not value_field.strip():
+                yield "'value-field' must be a non-empty field path"
+
+    for value in required_if.values():
+        if isinstance(value, (dict, list)):
+            yield from iter_required_if_operator_errors(value)
+
+
 def run_checks(checks_with_args):
     """Run a sequence of checks and return True only if all pass."""
     all_passed = True

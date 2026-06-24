@@ -338,6 +338,88 @@ class TestRequiredIfFieldReferences:
         assert has_no_errors
 
 
+class TestRequiredIfOperators:
+    """Test the supported operator condition shapes."""
+
+    @pytest.mark.parametrize(
+        "condition",
+        [
+            {"field": "items", "operator": "empty"},
+            {"field": "items", "operator": "not_empty"},
+            {"field": "count", "operator": "<", "value": 10},
+            {
+                "field": "pre-development-date",
+                "operator": "<",
+                "value-field": "submission-details.submitted-at",
+            },
+        ],
+    )
+    def test_valid_operator_conditions(self, condition):
+        errors = list(integrity_utils.iter_required_if_operator_errors(condition))
+        assert errors == []
+
+    @pytest.mark.parametrize(
+        "condition",
+        [
+            {"field": "date", "operator": "<"},
+            {"field": "date", "operator": "<", "value-field": ""},
+            {
+                "field": "date",
+                "operator": "<",
+                "value": "2026-01-01",
+                "value-field": "submission-details.submitted-at",
+            },
+            {"field": "items", "operator": "empty", "value": []},
+            {"field": "date", "operator": "before", "value": "2026-01-01"},
+            {"field": "date", "operator": ["<"], "value": "2026-01-01"},
+            {"field": "date", "value-field": "submission-details.submitted-at"},
+        ],
+    )
+    def test_invalid_operator_conditions(self, condition):
+        errors = list(integrity_utils.iter_required_if_operator_errors(condition))
+        assert errors
+
+    def test_module_integrity_rejects_invalid_operator_condition(self):
+        modules = {
+            "test-module": {
+                "fields": [
+                    {"field": "date"},
+                    {
+                        "field": "reason",
+                        "required-if": [{"field": "date", "operator": "<"}],
+                    },
+                ]
+            }
+        }
+
+        assert not check_required_if_fields(modules)
+
+    def test_component_integrity_accepts_field_comparison(self):
+        components = {
+            "test-component": {
+                "fields": [
+                    {"field": "pre-development-date"},
+                    {
+                        "field": "earlier-date-reason",
+                        "required-if": [
+                            {
+                                "field": "pre-development-date",
+                                "operator": "<",
+                                "value-field": "submission-details.submitted-at",
+                            }
+                        ],
+                    },
+                ]
+            }
+        }
+
+        assert check_field_condition_references(
+            components,
+            fields={},
+            application_types={},
+        )
+
+
 class TestRedundantFieldComponentOverrides:
     def test_module_component_override_fails_when_it_repeats_field_default(self):
         modules = {

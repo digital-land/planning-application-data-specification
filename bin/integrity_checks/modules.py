@@ -3,6 +3,7 @@ from integrity_checks.utils import (
     has_reference_error,
     iter_redundant_field_component_overrides,
     iter_required_if_field_refs,
+    iter_required_if_operator_errors,
     print_error,
     run_checks,
 )
@@ -240,6 +241,14 @@ def check_required_if_fields(modules):
                         f"field #{field_def.get('field')} references missing required-if field '{ref_field}' in this module",
                     )
                     has_errors = True
+
+            for error in iter_required_if_operator_errors(required_if):
+                print_error(
+                    "module",
+                    module_name,
+                    f"field #{field_def.get('field')} {error}",
+                )
+                has_errors = True
 
     return not has_errors
 
