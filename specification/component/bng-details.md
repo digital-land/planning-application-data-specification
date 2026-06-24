@@ -12,7 +12,8 @@ fields:
   - field: earlier-date-reason
     required-if:
       - field: pre-development-date
-        description: "earlier than application submission"
+        operator: "<"
+        value-field: submission-details.submitted-at
   - field: habitat-loss-after-2020
   - field: habitat-loss-details
     required-if:

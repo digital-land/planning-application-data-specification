@@ -56,9 +56,9 @@ rules:
 - description: Exemption type must be from valid enumeration
   rule: bng-condition-exemption-reasons[].exemption-type must be from bng-exemption-type
     codelist
-- description: Pre-development date must align with application or be justified
-  rule: bng-details.pre-development-date <= submission-details.submitted-at OR earlier-date-reason
-    provided
+- description: A pre-development date earlier than submission must be justified
+  rule: bng-details.pre-development-date < submission-details.submitted-at REQUIRES
+    bng-details.earlier-date-reason
 - description: Habitat loss details required when habitat loss after 2020 is true
   rule: bng-details.habitat-loss-after-2020 == true REQUIRES bng-details.habitat-loss-details
 - description: Irreplaceable habitat details required when irreplaceable habitats
