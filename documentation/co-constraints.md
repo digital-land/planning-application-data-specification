@@ -72,9 +72,41 @@ These are the main patterns currently used.
 | Answer contains a value | `required-if` + `field` + `contains` | Field is required when a list or multi-value field contains a value. |
 | Any condition is met | `required-if` + `any` | Field is required if at least one listed condition is satisfied. |
 | All conditions are met | `required-if` + `all` | Field is required only if every listed condition is satisfied. |
-| Operator check | `required-if` + `operator` | Field is required when an operator condition is satisfied, such as `not_empty`. |
+| Unary operator check | `required-if` + `field` + `operator` | Field is required when a state check such as `empty` or `not_empty` is satisfied. |
+| Literal comparison | `required-if` + `field` + `operator` + `value` | Field is required when another field compares with a literal value. |
+| Field comparison | `required-if` + `field` + `operator` + `value-field` | Field is required when one field compares with another field. |
 
-`operator` is the likely direction for state checks and future comparisons. For example, planning requirements (the documents required to be submitted along side the application) we are already experimenting with use operators such as `>=`.
+## Operators and operands
+
+Operator conditions use the same flat condition structure as other `required-if`
+conditions. The operator determines whether the condition needs a right-hand
+operand.
+
+- unary operators such as `empty` and `not_empty` do not take an operand
+- binary operators take exactly one of `value` or `value-field`
+- `value` contains a literal right-hand value
+- `value-field` contains an explicit field path whose value is the right-hand value
+
+For example, a field-to-field comparison is written as:
+
+```yaml
+- field: earlier-date-reason
+  required-if:
+    - field: pre-development-date
+      operator: "<"
+      value-field: submission-details.submitted-at
+```
+
+This means `earlier-date-reason` is required when `pre-development-date` is
+less than `submission-details.submitted-at`.
+
+The initial operator vocabulary used by submission co-constraints is:
+
+| Operator | Type | Operand |
+| --- | --- | --- |
+| `empty` | Unary state check | None |
+| `not_empty` | Unary state check | None |
+| `<` | Binary comparison | Exactly one of `value` or `value-field` |
 
 ## Any and all
 
