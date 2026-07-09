@@ -538,6 +538,37 @@ class Specification:
 
         return True
 
+    def _selection_application_types_with_parents(
+        self, selection: SelectionContext
+    ) -> tuple[str, ...]:
+        application_types = set()
+
+        def add_application_type(ref: str) -> None:
+            if ref in application_types:
+                return
+            application_types.add(ref)
+
+            application = self.applications.get(ref)
+            if not application:
+                return
+
+            extends = application.extends
+            if isinstance(extends, str):
+                parent_refs = [extends]
+            elif isinstance(extends, (list, tuple, set)):
+                parent_refs = list(extends)
+            else:
+                parent_refs = []
+
+            for parent_ref in parent_refs:
+                if isinstance(parent_ref, str) and parent_ref:
+                    add_application_type(parent_ref)
+
+        for application_type in selection.application_types():
+            add_application_type(application_type)
+
+        return tuple(sorted(application_types))
+
     def _find_field_usage(self, items, ref: str) -> FieldUsage | None:
         for item in items:
             if isinstance(item, FieldUsage) and item.original.ref == ref:
@@ -655,7 +686,9 @@ class Specification:
         if not isinstance(applies_if, dict):
             return True
 
-        selection_application_types = selection.application_types()
+        selection_application_types = self._selection_application_types_with_parents(
+            selection
+        )
         if selection_application_types:
             app_type_condition = applies_if.get("application-type")
             if isinstance(app_type_condition, dict):
