@@ -481,6 +481,24 @@ def test_resolve_field_supports_semicolon_delimited_combined_application_selecti
     assert applicable.applies is True
 
 
+def test_resolve_field_applies_if_matches_parent_application_type(project_root):
+    spec = Specification.load(project_root)
+
+    inherited_from_outline = spec.resolve_field(
+        "description",
+        module="proposal-details",
+        selection=SelectionContext(application_type="outline-some"),
+    )
+    full_only = spec.resolve_field(
+        "is-psi",
+        module="proposal-details",
+        selection=SelectionContext(application_type="outline-some"),
+    )
+
+    assert inherited_from_outline.applies is True
+    assert full_only.applies is False
+
+
 def test_resolve_container_items_returns_mixed_module_items_in_order(project_root):
     spec = Specification.load(project_root)
 
