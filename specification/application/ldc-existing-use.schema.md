@@ -1,7 +1,7 @@
 ---
 application: ldc-existing-use
 extends: ldc
-name: "Lawful development certificate: Existing Use"
+name: "Lawful development certificate: Existing use or development"
 description: |
   An application for a certificate confirming that an existing use of land, operational development or an activity being carried out in breach of a planning condition is lawful for planning purposes
 entry-date: 2025-08-12
