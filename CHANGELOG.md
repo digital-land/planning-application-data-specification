@@ -1,4 +1,167 @@
 
+<a name="v0.2.29"></a>
+## [v0.2.29](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.28...v0.2.29) (2026-07-13)
+
+Use package for JSON schema generation
+
+### ⚒️ Tooling
+
+* use package model for JSON schema generation (commit [62d22496](https://github.com/digital-land/planning-application-data-specification/commit/62d224965a716e36ed57b569448ed70aa7dbc7e4))
+
+### 📚 Documentation
+
+* document JSON schema co-constraint coverage (commit [71ee9699](https://github.com/digital-land/planning-application-data-specification/commit/71ee9699bef2735016c7be85a305755aafb16010))
+
+
+<a name="v0.2.28"></a>
+## [v0.2.28](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.27...v0.2.28) (2026-07-13)
+
+Spec fixes
+
+### ⚒️ Tooling
+
+* implement applies-if inheritance for application types (commit [85f770c6](https://github.com/digital-land/planning-application-data-specification/commit/85f770c6d35c463c16e351bd566d2d82f55ab208))
+* cover applies-if inheritance for application types (commit [78232b85](https://github.com/digital-land/planning-application-data-specification/commit/78232b851831c22594e04ee56ddd5ecf2e702d86))
+
+### 👷‍♀️ Application changes
+
+* tweak names of LDC applications based on lawyer advice (commit [26269e4e](https://github.com/digital-land/planning-application-data-specification/commit/26269e4e43ceb2201cd11a4d4888c3cb8960252d))
+
+### 📚 Documentation
+
+* add decision-stage records for sample applications (commit [5b8d3f40](https://github.com/digital-land/planning-application-data-specification/commit/5b8d3f4032066d36a63c45cabd8e00000a5334a0))
+
+
+<a name="v0.2.27"></a>
+## [v0.2.27](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.26...v0.2.27) (2026-07-13)
+
+Real examples
+
+### 📚 Documentation
+
+* add another couple of real data examples (commit [813d8010](https://github.com/digital-land/planning-application-data-specification/commit/813d8010e4f27e59f743697df590fb0e51858c94))
+* restructure how to store real data examples (commit [0559c322](https://github.com/digital-land/planning-application-data-specification/commit/0559c322d19e6dec5de3a5fbf8d59d818942dde4))
+
+
+<a name="v0.2.26"></a>
+## [v0.2.26](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.25...v0.2.26) (2026-07-13)
+
+Expand co-constraint coverage
+
+### ⚒️ Tooling
+
+* validate co-constraint operators (commit [060417e7](https://github.com/digital-land/planning-application-data-specification/commit/060417e79575b30acea6f4c5b01b14ecd66b2c9d))
+* show module usage on detail pages (commit [29702051](https://github.com/digital-land/planning-application-data-specification/commit/29702051a8b2eb1d19b323a455ca2a95e8b158b7))
+* show dataset usage on field pages (commit [7c0cfe31](https://github.com/digital-land/planning-application-data-specification/commit/7c0cfe31ce0cecdf00f5b9d038246023ebbd96e2))
+* show dataset field usage in CLI (commit [07abd0a5](https://github.com/digital-land/planning-application-data-specification/commit/07abd0a5d3b86296effbaeb3e45595815408b286))
+* include datasets in field usage query (commit [3b6bf790](https://github.com/digital-land/planning-application-data-specification/commit/3b6bf790ce36401e93bb78439931abb3feb2e80e))
+* show codelist usage on detail pages (commit [d356cc81](https://github.com/digital-land/planning-application-data-specification/commit/d356cc81edfc6ec287f5bb617a38d81e77aeb2f8))
+* add codelist usage view model (commit [6ea59253](https://github.com/digital-land/planning-application-data-specification/commit/6ea59253b218bc747ea2805de5b15752e08ddbe4))
+* show component usage on detail pages (commit [198f29bd](https://github.com/digital-land/planning-application-data-specification/commit/198f29bdbd549bb079fecf469c815940469f0ac0))
+* add component usage view model (commit [cf0322a5](https://github.com/digital-land/planning-application-data-specification/commit/cf0322a5abc595b53ce41f5d9611e721488e453f))
+* show field usage on detail pages (commit [9468cf06](https://github.com/digital-land/planning-application-data-specification/commit/9468cf06de4444992e03d774b128dabee4cda926))
+* add field usage view model (commit [2ba176b6](https://github.com/digital-land/planning-application-data-specification/commit/2ba176b694a2d43d60b8d6a8fb05d5853c73dc55))
+* include combined applications in module usage (commit [f50b8e81](https://github.com/digital-land/planning-application-data-specification/commit/f50b8e817f1115afa653c792959ae7b40046f28c))
+* use package query for component usage (commit [9fe05471](https://github.com/digital-land/planning-application-data-specification/commit/9fe05471b5f8d6881b2bea3a17dd3771880ba14c))
+* add component usage query (commit [1a65bec6](https://github.com/digital-land/planning-application-data-specification/commit/1a65bec620a4cd61542780a84a0b7c6618fdcfab))
+
+### 𝌭 Model changes
+
+* codify BNG earlier date requirement (commit [f3b3b645](https://github.com/digital-land/planning-application-data-specification/commit/f3b3b6458555ce0c18a15ad91aaa7d5dec1d732e))
+* use 'any' condition pattern for co-constraint (commit [8d220491](https://github.com/digital-land/planning-application-data-specification/commit/8d220491913ffa76bff2b6b75a8b8c79ac277393))
+* planning-authority should be part of whats made open (commit [3fa9f889](https://github.com/digital-land/planning-application-data-specification/commit/3fa9f889fd2a2d2126f12cdbbfe1bda08b2fd304))
+* add planning-authority to planning-application records for complete decision stage specification (commit [a8050cb4](https://github.com/digital-land/planning-application-data-specification/commit/a8050cb489fb7b86f0f91de3181d7a24f0fcbb16))
+* make it clear planning-authority field if subset of organisation (commit [d8ea8dce](https://github.com/digital-land/planning-application-data-specification/commit/d8ea8dcec039d643538a5720499eea0ff8028ba5))
+
+### 🐛 Bug Fixes
+
+* any conditions should be list not dict (commit [04b1685d](https://github.com/digital-land/planning-application-data-specification/commit/04b1685d8774729c94d6f084fea43ca4bcf7d535))
+* incorrect field references (commit [194b5d67](https://github.com/digital-land/planning-application-data-specification/commit/194b5d675a65305fc3173db72d436656ae9dfa9d))
+* omit base types from module usage (commit [aca48322](https://github.com/digital-land/planning-application-data-specification/commit/aca483228fa8445e40e5e28d225dd511afc5ed5d))
+* align stale expectations with current spec (commit [546b087c](https://github.com/digital-land/planning-application-data-specification/commit/546b087cc6a40e1e70327a4ce5524cb4d38dcd6f))
+
+### 👷‍♀️ Application changes
+
+* add module usage view model (commit [becd3a6e](https://github.com/digital-land/planning-application-data-specification/commit/becd3a6ef80d65f1268e28095b95deefec9db6eb))
+
+### 📚 Documentation
+
+* clarify operator schema limitations (commit [1a917915](https://github.com/digital-land/planning-application-data-specification/commit/1a917915c446a77069ef4919fda188fa00fb9777))
+* define field comparison co-constraints (commit [5ec3e930](https://github.com/digital-land/planning-application-data-specification/commit/5ec3e930d1f5c05e788268238c2eccaeb9060f4b))
+* document field dataset usage (commit [ae606bab](https://github.com/digital-land/planning-application-data-specification/commit/ae606bab9de4d6f0992da6928a1f73c00ff33abf))
+* document component usage lookup (commit [06320f3c](https://github.com/digital-land/planning-application-data-specification/commit/06320f3c4dc177c177bd28cefc5fb7c603fc7ffd))
+* fix sentence flow (commit [1d1cb9fb](https://github.com/digital-land/planning-application-data-specification/commit/1d1cb9fbfb8ff8f4bf5ae1f3a5c0c34fb17e9955))
+* add note to spec viewer above evolving the specs (commit [cd506a2a](https://github.com/digital-land/planning-application-data-specification/commit/cd506a2a8735e4abc56c1ab927dd257694bd5fff))
+
+
+<a name="v0.2.25"></a>
+## [v0.2.25](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.24...v0.2.25) (2026-06-18)
+
+Add usage sections to static site pages
+
+### ⚒️ Tooling
+
+* show module usage on detail pages (commit [6df65f0e](https://github.com/digital-land/planning-application-data-specification/commit/6df65f0ef5c3039efe96521ebec4b2c26ccbb291))
+* show dataset usage on field pages (commit [0c271bbb](https://github.com/digital-land/planning-application-data-specification/commit/0c271bbb746e1e9a265a0737ad086bd5cf9947ef))
+* show dataset field usage in CLI (commit [332fdc8f](https://github.com/digital-land/planning-application-data-specification/commit/332fdc8fe73d0cc84631f4085d43f62f57519a05))
+* include datasets in field usage query (commit [f065ffff](https://github.com/digital-land/planning-application-data-specification/commit/f065ffffafa45a3c4183e7dae9b060e08c947590))
+* show codelist usage on detail pages (commit [6e227f14](https://github.com/digital-land/planning-application-data-specification/commit/6e227f14b37235e00ef285cbd746f16d104f8230))
+* add codelist usage view model (commit [05f9531a](https://github.com/digital-land/planning-application-data-specification/commit/05f9531afbc796a08751f296aaff1012ebcbee33))
+* show component usage on detail pages (commit [7bf76117](https://github.com/digital-land/planning-application-data-specification/commit/7bf76117e0974a9d1906389e1098d9ee143d4507))
+* add component usage view model (commit [0abc472d](https://github.com/digital-land/planning-application-data-specification/commit/0abc472da455e6712a32c45df1d1970a8e173097))
+* show field usage on detail pages (commit [ca90c233](https://github.com/digital-land/planning-application-data-specification/commit/ca90c233af65998b8a0e2243ab56ef04fea6a235))
+* add field usage view model (commit [bff23f6c](https://github.com/digital-land/planning-application-data-specification/commit/bff23f6cc6313f7ded6c1153b18f6aaa3908bb70))
+* include combined applications in module usage (commit [1254570f](https://github.com/digital-land/planning-application-data-specification/commit/1254570f1cd192c852bf1bc114f1c3f5eeafe391))
+* use package query for component usage (commit [6bc7b108](https://github.com/digital-land/planning-application-data-specification/commit/6bc7b1086e9d5411a7b14eb407c609bbfb9cf495))
+* add component usage query (commit [d609da83](https://github.com/digital-land/planning-application-data-specification/commit/d609da8340410289faea0713dd804e425a9247a8))
+
+### 🐛 Bug Fixes
+
+* omit base types from module usage (commit [3052da1b](https://github.com/digital-land/planning-application-data-specification/commit/3052da1bf7e1fd8320c384cb1a6e833a203dbb85))
+* align stale expectations with current spec (commit [6dda51cb](https://github.com/digital-land/planning-application-data-specification/commit/6dda51cbad2dac03e7bb6ba6f8a10480f1a054e8))
+
+### 👷‍♀️ Application changes
+
+* add module usage view model (commit [55deedbf](https://github.com/digital-land/planning-application-data-specification/commit/55deedbf9630ed02b0d582c6e70bb61ec8c61b71))
+
+### 📚 Documentation
+
+* document field dataset usage (commit [be8c0e6f](https://github.com/digital-land/planning-application-data-specification/commit/be8c0e6f12531989f662faa15bf50471f970e2ff))
+* document component usage lookup (commit [85f247a8](https://github.com/digital-land/planning-application-data-specification/commit/85f247a878a34140bb36691413349d85d8a114dd))
+
+
+<a name="v0.2.24"></a>
+## [v0.2.24](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.23...v0.2.24) (2026-06-16)
+
+Specification view home page content tweaks
+
+### ⚒️ Tooling
+
+* check for redundant component use (commit [6fa00325](https://github.com/digital-land/planning-application-data-specification/commit/6fa0032534a9deeaeb9c5c0b256ff8c1ab1385a1))
+* add design decision feedback links (commit [b6ec0aeb](https://github.com/digital-land/planning-application-data-specification/commit/b6ec0aeb58cb017e7d6a8fee3c7a0f0276da63c2))
+* link design decisions from static site (commit [df2b8676](https://github.com/digital-land/planning-application-data-specification/commit/df2b8676802d33bd9f5dc28f0dee6c6aff85109d))
+* generate design decision pages (commit [9bdc82c7](https://github.com/digital-land/planning-application-data-specification/commit/9bdc82c718342f2cb0507e8ec77dfd911e461349))
+* add govuk markdown renderer (commit [96df76fb](https://github.com/digital-land/planning-application-data-specification/commit/96df76fbbb16efa8794d2a8af452470c6924c2c9))
+
+### 𝌭 Model changes
+
+* planning-authority should be part of whats made open (commit [7c39a384](https://github.com/digital-land/planning-application-data-specification/commit/7c39a38405de58505cf36e8024134acd3ab2cbbb))
+* add planning-authority to planning-application records for complete decision stage specification (commit [0ece2f09](https://github.com/digital-land/planning-application-data-specification/commit/0ece2f09f66372d3d230ed8c9d65697e2ab451ef))
+* make it clear planning-authority field if subset of organisation (commit [df29fe73](https://github.com/digital-land/planning-application-data-specification/commit/df29fe7374eaa2cb5a517c7198966bae36608315))
+* split fields that are not semantically the same (commit [5f21a51c](https://github.com/digital-land/planning-application-data-specification/commit/5f21a51cea9e8fa24d40ef0b645da4ba766b0f3e))
+
+### 🐛 Bug Fixes
+
+* property name typo (commit [577a3060](https://github.com/digital-land/planning-application-data-specification/commit/577a3060f93ca787b39ac31e16636d33929dd036))
+* applicant component does not need field person component person (commit [6da05b45](https://github.com/digital-land/planning-application-data-specification/commit/6da05b456e94703053982551d0a04a59ddb1e926))
+
+### 📚 Documentation
+
+* fix sentence flow (commit [9960827e](https://github.com/digital-land/planning-application-data-specification/commit/9960827e8ffef16c2c2829b40f9ae8250c7447c9))
+* add note to spec viewer above evolving the specs (commit [89c8c7ed](https://github.com/digital-land/planning-application-data-specification/commit/89c8c7edfc4adcb701402c193c779e3a0a30c180))
+* rationalise design decision statuses (commit [c84af1d7](https://github.com/digital-land/planning-application-data-specification/commit/c84af1d7876b8ff15c4781b2008f653be42993ad))
+
+
 <a name="v0.2.23"></a>
 ## [v0.2.23](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.22...v0.2.23) (2026-06-16)
 
