@@ -161,6 +161,39 @@ Whole modules are not currently put in or out of scope by an applicant answer. I
 
 Components are represented through fields, so the same field-level rules can control when a component-shaped response is required.
 
+## JSON Schema generator coverage
+
+The co-constraint vocabulary is broader than the JSON Schema generator currently
+emits. The generated JSON Schema files should therefore be treated as a useful
+validation layer, not as a complete implementation of every structured
+co-constraint in the specification.
+
+The current generator covers these patterns:
+
+| Pattern | JSON Schema generation status |
+| --- | --- |
+| `required-if` with `field` + `value` | Partially emitted as `if`/`then`. |
+| `required-if` with `any` containing `field` + `value` | Partially emitted as `anyOf` inside `if`. |
+| `required-if` with `any` containing `field` + `contains` | Partially emitted as a string `pattern` check. |
+| `required-if` with `any: true` and a list of fields | Partially emitted as checks for the JSON boolean value `true`. |
+| `applies-if` using parent application types | Emitted using package application type inheritance resolution, so a child type such as `outline-some` satisfies rules written for `outline`. |
+
+The current generator does not yet cover these patterns:
+
+| Pattern | What is missing |
+| --- | --- |
+| `required-if` with `operator: not_empty` or `operator: empty` | Needs translation to JSON Schema presence and non-empty checks such as `required` plus `minLength`, `minItems` or `minProperties`, depending on the target datatype. |
+| `required-if` with comparison operators such as `<` | Needs typed comparison support, including date and datetime comparison semantics. |
+| `required-if` with `value-field` | Needs field-to-field comparison support. |
+| Explicit `all` conditions | Needs reliable `allOf` generation for grouped conditions. |
+| `field` paths outside the current object, such as `agent-details.agent.reference` | Needs a decision about whether dotted paths represent literal property names or nested object traversal in generated JSON Schema. |
+
+Until these patterns are implemented, generated schemas can be conservative.
+Where a co-constraint cannot yet be represented correctly, it is acceptable for
+published generated schemas to be over-protective, for example by requiring a
+field unconditionally rather than allowing invalid data through. This is a
+temporary generator limitation, not the intended semantics of the specification.
+
 ## Open questions
 
 This vocabulary is still being tightened.

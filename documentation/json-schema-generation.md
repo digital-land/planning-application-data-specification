@@ -212,6 +212,25 @@ Maps to:
 }
 ```
 
+### Co-constraint coverage
+
+The specification supports structured co-constraints such as `applies-if` and
+`required-if`. The JSON Schema generator currently emits only a subset of these
+rules.
+
+Known gaps include `required-if` operators such as `not_empty`, field-to-field
+comparisons, grouped `all` conditions and dotted paths that refer outside the
+current object. `applies-if` checks are resolved through the package model, so
+application types that use `extends` inherit parent application type conditions.
+
+Until those gaps are implemented, generated schemas may be conservative. For
+example, a generated schema may require a field unconditionally even where the
+source specification says it is conditionally required. This is preferable to
+silently accepting invalid data, but it means generated schemas should not yet
+be treated as a complete expression of all co-constraints.
+
+See [Co-constraints](co-constraints.md) for the current coverage matrix.
+
 #### Codelist mapping
 ```
 # Field with enumeration
