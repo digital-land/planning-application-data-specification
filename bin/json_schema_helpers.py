@@ -36,9 +36,9 @@ def create_anyof_conditions_rule(
 
 
 def create_anyof_fields_rule(field_ref: str, any_fields: List[str]) -> Dict[str, Any]:
-    """Creates an 'anyOf' JSON Schema rule from a list of field names (checking for 'true')."""
+    """Creates an 'anyOf' JSON Schema rule from a list of field names checking for true."""
     return {
-        "if": {"anyOf": [{"properties": {f: {"const": "true"}}} for f in any_fields]},
+        "if": {"anyOf": [{"properties": {f: {"const": True}}} for f in any_fields]},
         "then": {"required": [field_ref]},
     }
 

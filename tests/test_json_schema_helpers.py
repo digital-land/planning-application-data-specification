@@ -61,8 +61,8 @@ def test_create_anyof_fields_rule():
     expected_rule = {
         "if": {
             "anyOf": [
-                {"properties": {"field-x": {"const": "true"}}},
-                {"properties": {"field-y": {"const": "true"}}},
+                {"properties": {"field-x": {"const": True}}},
+                {"properties": {"field-y": {"const": True}}},
             ]
         },
         "then": {"required": [field_ref]},
@@ -135,8 +135,8 @@ def test_parse_required_if_any_fields_true():
         {
             "if": {
                 "anyOf": [
-                    {"properties": {"field-x": {"const": "true"}}},
-                    {"properties": {"field-y": {"const": "true"}}},
+                    {"properties": {"field-x": {"const": True}}},
+                    {"properties": {"field-y": {"const": True}}},
                 ]
             },
             "then": {"required": [field_ref]},

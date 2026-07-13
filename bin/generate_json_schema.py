@@ -7,8 +7,14 @@ from typing import Any, Dict, List, Set, Tuple
 
 from bin.json_schema_helpers import parse_and_generate_required_if_rules
 from bin.loader import load_content
-from bin.models import ComponentInstance, FieldDef, FieldInstance
 from bin.utils import save_string_to_file
+from planning_application_specification import Specification
+from planning_application_specification.models import (
+    ComponentInstance,
+    FieldDef,
+    FieldInstance,
+)
+from planning_application_specification.specification import SelectionContext
 
 OUTPUT_DIR = "generated/json-schema"
 APPLICATIONS_OUTPUT_DIR = f"{OUTPUT_DIR}/applications"
@@ -88,8 +94,10 @@ def resolve_field_schema(field_item, specification) -> Dict[str, Any]:
     # Basic datatype mapping
     if datatype == "string":
         schema = {"type": "string"}
-    elif datatype == "number":
+    elif datatype in ("number", "decimal"):
         schema = {"type": "number"}
+    elif datatype == "integer":
+        schema = {"type": "integer"}
     elif datatype == "boolean":
         schema = {"type": "boolean"}
     elif datatype == "enum":
@@ -139,13 +147,10 @@ def process_items(
             field = field_instance.original
             overrides = getattr(field_instance, "overrides", {})
 
-            # Check if the field applies to the current application type
-            applies_if = overrides.get("applies-if")
-            if applies_if:
-                app_type_condition = applies_if.get("application-type")
-                if app_type_condition and "in" in app_type_condition:
-                    if app_ref not in app_type_condition["in"]:
-                        continue  # Skip this field if it doesn't apply
+            if not specification._usage_applies(
+                field_instance, SelectionContext(application_type=app_ref)
+            ):
+                continue
 
             # If we are here, the field should be included
             field_schema = resolve_field_schema(field_instance, specification)
@@ -159,9 +164,13 @@ def process_items(
             required_if = overrides.get("required-if")
 
             if required_if:
-                conditional_rules.extend(
-                    parse_and_generate_required_if_rules(field.ref, required_if)
+                parsed_conditional_rules = parse_and_generate_required_if_rules(
+                    field.ref, required_if
                 )
+                if parsed_conditional_rules:
+                    conditional_rules.extend(parsed_conditional_rules)
+                else:
+                    required.append(field.ref)
             elif is_required:
                 required.append(field.ref)
 
@@ -203,7 +212,7 @@ def generate_definitions(
     # Process items recursively to handle nested references (for components)
     while all_refs - processed:
         ref = next(iter(all_refs - processed))
-        item_def = specification[spec_key].get(ref)
+        item_def = getattr(specification, spec_key).get(ref)
 
         if item_def is None:
             processed.add(ref)
@@ -260,7 +269,7 @@ def generate_module_definitions(modules, specification, app_ref: str) -> Dict[st
 
 def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
     """Generate complete JSON Schema for application type"""
-    app_def = specification["applications"].get(app_ref)
+    app_def = specification.applications.get(app_ref)
     if not app_def:
         raise ValueError(f"Application {app_ref} not found")
 
@@ -332,11 +341,9 @@ def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
 
 def generate_json_schemas():
     """Main function to generate all JSON schemas"""
-    from bin.loader import load_specification_model
-
     print("Loading specification model...")
-    specification = load_specification_model()
-    applications = specification["applications"]
+    specification = Specification.load()
+    applications = specification.applications
 
     # Ensure output directories exist
     Path(OUTPUT_DIR).mkdir(parents=True, exist_ok=True)
