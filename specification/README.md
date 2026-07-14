@@ -199,7 +199,7 @@ They answer different questions.
 - Planning application data: *What information should we record and maintain about the application?*
 - Submission: *What information do we need to ask for, and how should it be structured?*
 
-More detail on this distinction is covered in [this explainer](https://github.com/digital-land/planning-application-data-specification/blob/main/docs/difference-between-submission-decision-specs.md).
+More detail on this distinction is covered in [this explainer](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/difference-between-the-specifications.md).
 
 
 ### Why are some things modules and others datasets?
