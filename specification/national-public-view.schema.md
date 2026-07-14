@@ -52,8 +52,8 @@ datasets:
         description: postcode for the site, where one is available
       - field: description
         description: a plain-language description of the site, where this helps identify the land or buildings
-      - field: site-boundary
-        description: the boundary geometry for the site
+      - field: geometry
+        description: the boundary for the site
   - dataset: decision-notice
     name: decision notice
     fields:
