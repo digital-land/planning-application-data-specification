@@ -489,10 +489,13 @@ def report():
     pass
 
 
-@report.group()
-def decision():
-    """Decision-stage reporting."""
+@report.group(name="planning-application-data")
+def planning_application_data():
+    """Planning application data specification reporting."""
     pass
+
+
+report.add_command(planning_application_data, "decision")
 
 
 @report.command(name="summary")
@@ -502,10 +505,10 @@ def spec_summary(markdown):
     click.echo(format_spec_summary(markdown=markdown))
 
 
-@decision.command()
+@planning_application_data.command()
 @click.option("--list", "do_list", is_flag=True, help="List covered need ids")
 def summary(do_list):
-    """Summarise decision-stage needs coverage by justifications."""
+    """Summarise planning application data needs coverage by justifications."""
     needs_data = load_needs()
     needs = needs_data.get("need", {})
     justs = needs_data.get("justification", {})
@@ -518,7 +521,8 @@ def summary(do_list):
     total_needs = len(needs)
     total_covered = len(covered.keys())
     click.echo(
-        f"Decision-stage needs covered by justifications: {total_covered}/{total_needs}"
+        "Planning application data needs covered by justifications: "
+        f"{total_covered}/{total_needs}"
     )
     if do_list and covered:
         click.echo("Covered needs:")

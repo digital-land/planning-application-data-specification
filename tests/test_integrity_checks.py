@@ -1503,7 +1503,7 @@ class TestNeedIntegrityChecks:
 class TestSpecificationIntegrityChecks:
     def test_datasets_exist_fails_when_dataset_attribute_is_missing(self):
         specifications = {
-            "decision-stage": {
+            "planning-application-data": {
                 "datasets": [{}]
             }
         }
@@ -1515,7 +1515,7 @@ class TestSpecificationIntegrityChecks:
 
     def test_datasets_exist_fails_when_dataset_is_unknown(self):
         specifications = {
-            "decision-stage": {
+            "planning-application-data": {
                 "datasets": [{"dataset": "missing-dataset"}]
             }
         }
@@ -1527,7 +1527,7 @@ class TestSpecificationIntegrityChecks:
 
     def test_datasets_exist_passes_when_all_datasets_are_known(self):
         specifications = {
-            "decision-stage": {
+            "planning-application-data": {
                 "datasets": [{"dataset": "decision-notice"}]
             }
         }
@@ -1539,7 +1539,7 @@ class TestSpecificationIntegrityChecks:
 
     def test_dataset_fields_fail_when_field_attribute_is_missing(self):
         specifications = {
-            "decision-stage": {
+            "planning-application-data": {
                 "datasets": [
                     {
                         "dataset": "decision-notice",
@@ -1559,7 +1559,7 @@ class TestSpecificationIntegrityChecks:
 
     def test_dataset_fields_fail_when_field_not_defined_on_dataset(self):
         specifications = {
-            "decision-stage": {
+            "planning-application-data": {
                 "datasets": [
                     {
                         "dataset": "decision-notice",
@@ -1579,7 +1579,7 @@ class TestSpecificationIntegrityChecks:
 
     def test_dataset_fields_pass_when_fields_match_dataset_definition(self):
         specifications = {
-            "decision-stage": {
+            "planning-application-data": {
                 "datasets": [
                     {
                         "dataset": "decision-notice",

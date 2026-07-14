@@ -12,10 +12,13 @@ from bin.renderer import url_for
 
 
 def test_url_for_handles_base_url():
-    assert url_for("", "/decision-stage") == "/decision-stage"
-    assert url_for("http://example.com", "/decision-stage") == "http://example.com/decision-stage"
+    assert url_for("", "/planning-application-data") == "/planning-application-data"
+    assert (
+        url_for("http://example.com", "/planning-application-data")
+        == "http://example.com/planning-application-data"
+    )
     # ensure leading slash is added if missing
-    assert url_for("", "decision-stage") == "/decision-stage"
+    assert url_for("", "planning-application-data") == "/planning-application-data"
 
 
 def test_extract_dataset_only_refs_filters_out_field_pairs():

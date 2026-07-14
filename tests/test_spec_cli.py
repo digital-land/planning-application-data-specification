@@ -67,7 +67,7 @@ def test_report_summary_command_supports_markdown_output(monkeypatch):
     )
 
 
-def test_report_decision_summary_lists_covered_needs(monkeypatch):
+def test_report_planning_application_data_summary_lists_covered_needs(monkeypatch):
     runner = CliRunner()
 
     monkeypatch.setattr(
@@ -86,13 +86,30 @@ def test_report_decision_summary_lists_covered_needs(monkeypatch):
         },
     )
 
-    result = runner.invoke(spec.cli, ["report", "decision", "summary", "--list"])
+    result = runner.invoke(
+        spec.cli, ["report", "planning-application-data", "summary", "--list"]
+    )
 
     assert result.exit_code == 0
-    assert "Decision-stage needs covered by justifications: 2/3" in result.output
+    assert "Planning application data needs covered by justifications: 2/3" in result.output
     assert "Covered needs:" in result.output
     assert "• need-1: First need (just-1)" in result.output
     assert "• need-2: Second need (just-1, just-2)" in result.output
+
+
+def test_report_decision_summary_is_a_compatibility_alias(monkeypatch):
+    runner = CliRunner()
+
+    monkeypatch.setattr(
+        spec,
+        "load_needs",
+        lambda: {"need": {}, "justification": {}},
+    )
+
+    result = runner.invoke(spec.cli, ["report", "decision", "summary"])
+
+    assert result.exit_code == 0
+    assert "Planning application data needs covered by justifications: 0/0" in result.output
 
 
 def test_report_completeness_summary_command_prints_scope_totals(monkeypatch):

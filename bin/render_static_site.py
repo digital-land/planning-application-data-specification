@@ -64,8 +64,10 @@ def extract_intro(md_text: str, stop_at_heading: str = "## ") -> str:
     return "\n".join(lines).strip()
 
 
-def load_decision_stage(decision_stage_path: Path) -> Dict[str, Any]:
-    return dict(frontmatter.load(decision_stage_path))
+def load_planning_application_data_specification(
+    specification_path: Path,
+) -> Dict[str, Any]:
+    return dict(frontmatter.load(specification_path))
 
 
 def load_submission_applications(spec_root: Path) -> List[Dict[str, Any]]:
@@ -934,7 +936,7 @@ def render_dataset_index(
     detail_route: str,
     needs_route: str,
 ) -> None:
-    # Decision stage datasets list
+    # Planning application data specification datasets list
     dataset_ctx = {
         "page_title": page_title,
         "datasets": [
@@ -1150,14 +1152,18 @@ def build_site(args: argparse.Namespace) -> None:
         component_index = spec_model.get("components", {})
         specification = Specification.load(root_dir)
 
-        decision_stage = load_decision_stage(spec_root / "decision-stage.schema.md")
-        decision_datasets: List[Dict[str, Any]] = []
-        for ds in decision_stage.get("datasets", []):
+        planning_application_data_specification = (
+            load_planning_application_data_specification(
+                spec_root / "planning-application-data.schema.md"
+            )
+        )
+        planning_application_data_datasets: List[Dict[str, Any]] = []
+        for ds in planning_application_data_specification.get("datasets", []):
             dataset_id = ds.get("dataset")
             dataset_meta = dataset_index.get(dataset_id, {})
             merged = dict(dataset_meta)
             merged.update(ds)
-            decision_datasets.append(merged)
+            planning_application_data_datasets.append(merged)
 
         applications = load_submission_applications(spec_root)
         application_index = {
@@ -1185,15 +1191,15 @@ def build_site(args: argparse.Namespace) -> None:
         render_dataset_index(
             renderer,
             "Datasets",
-            decision_datasets,
+            planning_application_data_datasets,
             "dataset",
             "dataset",
             "user-need",
         )
 
-        # Decision stage needs list
+        # Planning application data specification needs list
         needs_ctx = {
-            "page_title": "Decision stage needs",
+            "page_title": "Planning application data needs",
             "needs": [
                 {
                     "id": need.get("need"),
@@ -1210,7 +1216,7 @@ def build_site(args: argparse.Namespace) -> None:
         needs_html = env.get_template("needs_index.html").render(**needs_ctx)
         renderer.write_page("user-need/index.html", needs_html)
 
-        # Decision stage need detail pages
+        # Planning application data specification need detail pages
         need_template = env.get_template("need_detail.html")
         for need in need_records:
             n_id = need.get("need")
@@ -1242,9 +1248,9 @@ def build_site(args: argparse.Namespace) -> None:
             need_html = need_template.render(**need_ctx)
             renderer.write_page(f"user-need/{n_id}/index.html", need_html)
 
-        # Decision stage dataset detail pages
+        # Planning application data specification dataset detail pages
         dataset_template = env.get_template("dataset_detail.html")
-        for ds in decision_datasets:
+        for ds in planning_application_data_datasets:
             ds_id = ds.get("dataset")
             ds_needs = dataset_to_need_justifications.get(ds_id, [])
             all_need_justs = [
@@ -1590,7 +1596,7 @@ def build_site(args: argparse.Namespace) -> None:
             ],
             "datasets": [
                 f"dataset/{ds.get('dataset')}/index.html"
-                for ds in decision_datasets
+                for ds in planning_application_data_datasets
             ],
             "application_types": "application-type/index.html",
             "submission_progress": "submissions/progress/index.html",
