@@ -1,7 +1,7 @@
 ---
-specification: decision-stage
-name: Decision stage
-plural: decision stage specifications
+specification: planning-application-data
+name: Planning application data
+plural: Planning application data specifications
 specification-status: working-draft
 consideration: planning-applications-decisions
 start-date: ''
