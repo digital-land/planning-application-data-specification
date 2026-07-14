@@ -14,7 +14,7 @@ themes:
   - traceability
 source:
   - type: community-session
-    notes: Document versioning was discussed explicitly in the February 2026 decision-stage session.
+    notes: Document versioning was discussed explicitly in the February 2026 community session.
 variations:
 next_step:
 notes: |

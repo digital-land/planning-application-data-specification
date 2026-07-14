@@ -5,8 +5,7 @@ priority: medium
 name: Trace homes from permission to delivery
 statement: >
   As a housing-delivery-analyst or planning-authority-officer, I need homes or
-  housing outputs within a development to remain traceable from planning
-  permission through amendments, starts and completions so that delivery,
+  housing outputs within a development to remain traceable from planning permission through amendments, starts and completions so that delivery,
   tenure and obligations can be monitored accurately.
 actors:
   - housing-delivery-analyst
@@ -23,18 +22,11 @@ source:
 variations:
 next_step: review
 notes: |
-  Confidence: low. This is a strong need, but it likely depends on links beyond
-  the immediate decision-stage planning record into later delivery or monitoring
-  systems.
+  Confidence: low. This need is about tracking housing delivery from planning permission through to completion.
 
-  The role of the decision-stage specification may be to preserve enough
-  structured housing output information and identifiers to enable downstream
-  traceability, rather than to satisfy the full delivery-tracking need on its
-  own.
+  The planning application data specification could support this by recording housing outputs and links between related applications. It cannot on its own track later construction and delivery activity, which is likely to sit in other systems.
 
-  The phrasing intentionally uses “homes or housing outputs” rather than
-  assuming that every individual dwelling must be modelled as a fully traceable
-  object at decision stage.
+  It is not yet clear whether individual homes need separate records.
 
   Related needs: dd-need-078, dd-need-086, need-ps-024.
 ---
