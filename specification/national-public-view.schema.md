@@ -1,6 +1,5 @@
 ---
 specification: national-public-view
-specification-profile: national-public-view
 name: National public view
 plural: national public view specifications
 specification-status: working-draft
@@ -121,6 +120,7 @@ datasets:
   - dataset: planning-application-document
     name: planning application document
     record-inclusion:
+      description: Include only documents the planning authority has decided may appear on the public register.
       field: public-register-status
       include-values:
         - publish
@@ -142,9 +142,11 @@ datasets:
   - dataset: planning-permission-timeline
     name: planning permission timeline
     record-inclusion:
+      description: Include only permission process events selected for the national public view.
       field: permission-process-event
       include-values:
         codelist: permission-process-event
+        specification-profile: national-public-view
     fields:
       - field: reference
         description: the reference for the timeline entry
