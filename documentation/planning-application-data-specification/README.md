@@ -1,21 +1,21 @@
-# Decision stage specification
+# Planning application data specification
 
-The decision stage specification defines the data required to represent the outcome of a planning application, including the decision itself, any conditions, reasons, and related information needed to understand and act on that decision.
+The planning application data specification defines the authoritative record data that a planning authority creates and maintains as a planning application moves through the planning permission process. It includes application records, sites, documents, process events, decision notices, conditions and section 106 agreements.
 
 ### Purpose
 
-The decision stage specification is designed to:
+The planning application data specification is designed to:
 
-* Standardise how planning decisions are recorded and shared – ensuring all authorities capture and publish decision data in a consistent, machine-readable format.
-* Create a single source of truth – allowing decision information to be entered once and reused across registers, reports and systems.
-* Replace manual and repetitive tasks – reducing the administrative burden on local planning authorities by making activities such as completing PS1 and PS2 returns automatable and, in time, real-time.
-* Improve transparency and interoperability – enabling decision data to be linked across the wider planning process (applications, conditions, appeals, completions) and compared across authorities.
-* Support better monitoring and policymaking – providing accurate, structured data for national statistics, housing delivery tracking, and local performance insights.
-* Free up planners’ time – allowing officers to focus more on professional planning work rather than administrative data entry and reporting.
+* Standardise how planning application records are created, maintained and shared, so authorities can exchange consistent, machine-readable data.
+* Create an authoritative record that can be reused across planning registers, reports and connected systems.
+* Reduce manual and repetitive tasks, including producing PS1 and PS2 returns.
+* Improve transparency and interoperability by linking application, process, decision and related records across the planning process.
+* Support monitoring, policymaking, national statistics, housing-delivery tracking and local performance insight.
+* Free up planners’ time by reducing administrative data entry and reporting.
 
 ### Research
 
-Because there are no existing de facto standards for planning decisions, unlike the submission stage, where the current application forms provided a clear starting point, we’ve had to begin the decision stage work with foundational research.
+Unlike the submission specification, which could start from established planning application forms, the planning application data specification needs foundational research into the records that planning authorities create and maintain through the planning permission process.
 
 Our aim is to understand what information is actually needed, by whom, and for what purpose before defining any data structure. We’ve started by gathering evidence through broad engagement with the community (interviews and questionnaires) and are now carrying out deep-dive research sessions to explore specific user needs in more detail.
 
@@ -42,10 +42,10 @@ for the modelling decision.
 
 ### Specification development
 
-We’re basing the decision data specification on a clear hierarchy of inputs to ensure it is both legally robust and practically useful:
+We’re basing the planning application data specification on a clear hierarchy of inputs, so it is both legally robust and practically useful:
 
 1.	Legislation
-    * Primarily Article 35 and 40 of the Development Management Procedure Order (DMPO), which sets the legal basis for what must appear on the decision notice and planning register.
+    * Primarily Article 35 and 40 of the Development Management Procedure Order (DMPO), which set requirements for decision notices and planning-register information.
     * Includes the [work led by Camden to clarify the statutory requirements of the decision notice](https://github.com/digital-land/planning-application-data-specification/issues/330).
   
 2.	PS1 and PS2 forms

@@ -4,12 +4,12 @@ This folder defines the **core data model** for planning application data.
 
 It is intended for anyone working with the model in practice, including software suppliers implementing the specifications, local planning authorities using or testing them, policy and standards teams contributing to their development, and analysts or integrators who need to understand how planning data is structured.
 
-It is used to support **two related but distinct specifications**:
+It is used to support two specifications:
 
-- **Submission specification** – what information is required to submit a valid planning application
-- **Decision specification** – what information must be recorded once a decision has been made
+- **Planning application data specification** – the authoritative information that a planning authority creates and maintains through the planning permission process
+- **Submission specification** – the information required to submit a valid planning application and get consistent data into the system
 
-Together, these specifications describe **what data is required at different stages of the planning process**, without dictating how software systems must be built to collect or store it.
+The planning application data specification describes the information that needs to be held and maintained. The submission specification provides a structured route for collecting the information needed when an application is made.
 
 This README explains the different elements in this folder, how they fit together, and why they exist.
 
@@ -17,31 +17,31 @@ For a shorter primer on how the specification fits together and where to find fi
 
 ---
 
-## Two stages, two models
+## Two specifications, two roles
 
-The planning process has a clear split:
+The specifications have complementary roles:
 
-- **Input**: an applicant submits information to request permission
-- **Output**: a local authority records what decision was made and why, and any associated artefacts
+- **Planning application data**: a local planning authority records and maintains authoritative information about an application through the planning permission process.
+- **Submission**: an applicant provides information through a structured route when making an application.
 
-The data model reflects this.
+The data model supports both roles.
 
-### Submission specification (input)
+### Planning application data specification
+
+The planning application data specification defines:
+- what information a planning authority should record and maintain about an application
+- the authoritative records of the application, its progress, associated documents, decision and related obligations
+
+It is **flat and relational**, because it represents linked records maintained through the planning permission process, without submission-time business logic.
+
+### Submission specification
 
 The submission specification defines:
 - what information an applicant must provide
 - how that information is grouped
 - which modules and fields are required for different application types
 
-It is **structured and nested**, because it mirrors how people think about completing an application.
-
-### Decision specification (output)
-
-The decision specification defines:
-- what information and artefacts must be recorded once a decision exists
-- the authoritative record of decisions, conditions and outcomes
-
-It is **flat and relational**, because it represents facts that have already happened, with submission-time business logic removed.
+It is **structured and nested**, because it mirrors how people think about completing an application and provides a route for getting consistent data into the system.
 
 ---
 
@@ -94,9 +94,9 @@ On the whole, you cannot add fields directly to an application.
 Fields must belong to a module so they are grouped, reusable and understandable.
 
 
-### Components (submission and decision)
+### Components (submission)
 
-**Components are reusable blocks of fields.**
+**Components are reusable blocks of fields for use in submission forms.**
 
 They capture patterns that appear repeatedly across the model.
 
@@ -106,14 +106,14 @@ For example:
 - a contact details component
 
 Components:
-- are shared by both submission and decision specifications
+- are used by the submission specification
 - promote consistency and reuse
-- provide a common vocabulary across the model
+- make repeated form structures easier to define
 
 Think of components as the standard building blocks used everywhere.
 
 
-### Fields (submission and decision)
+### Fields (shared)
 
 **Fields define individual pieces of data.**
 
@@ -132,7 +132,7 @@ Fields should not exist in isolation.
 They are always used as part of an application, module, component or dataset.
 
 
-### Datasets (decision)
+### Datasets (planning application data)
 
 **Datasets define tables of record.**
 
@@ -144,11 +144,10 @@ For example:
 - decisions
 - planning conditions
 
-Some datasets (such as planning applications) **exist before a decision is made**,  
-but in the decision specification they are treated as **authoritative records**, not user inputs.
+Some datasets, such as planning applications and sites, exist before a decision is made. In the planning application data specification, they are treated as **authoritative records**, not user inputs.
 
 Datasets:
-- are used by the decision specification
+- are used by the planning application data specification
 - are flat and explicit
 - remove submission-time structure and logic
 - support publication, reporting and analysis
@@ -156,7 +155,7 @@ Datasets:
 They describe *what exists and what happened*, not *how information was collected*.
 
 
-### Codelists (submission and decision)
+### Codelists (shared)
 
 **Codelists define the allowed values for certain fields.**
 
@@ -171,7 +170,7 @@ Some codelists are:
 - maintained locally for planning-permission-specific use (for example, yes-no-unknown)
 - maintained elsewhere where they have wider utility, and referenced here (for example, use classes)
 
-Using shared codelists across submission and decision stages ensures the same concepts mean the same thing throughout the process.
+Using shared codelists across the submission and planning application data specifications ensures the same concepts mean the same thing throughout the process.
 
 #### Codelist usage
 
@@ -185,28 +184,28 @@ See the [codelist usage pattern note](https://github.com/digital-land/planning-a
 
 ### Why not one big schema?
 
-Because submission and decision data serve different purposes.
+Because the specifications serve different purposes.
 
-- Submission data supports user input and validation
-- Decision data records authoritative outcomes
+- The planning application data specification defines the authoritative information that a planning authority should record and maintain about an application and its progress.
+- The submission specification defines the forms, structure and validation needed to collect good data when an application is made.
 
-Forcing both into a single structure would make both harder to use.
+Forcing both into a single structure would mix the authoritative record with the form structure and validation needed to collect it.
 
 
-### Why do submission and decision models look different?
+### Why do the planning application data and submission models look different?
 
 They answer different questions.
 
-- Submission: *What information do we need to ask for?*
-- Decision: *What happened?*
+- Planning application data: *What information should we record and maintain about the application?*
+- Submission: *What information do we need to ask for, and how should it be structured?*
 
 More detail on this distinction is covered in [this explainer](https://github.com/digital-land/planning-application-data-specification/blob/main/docs/difference-between-submission-decision-specs.md).
 
 
 ### Why are some things modules and others datasets?
 
-- **Modules** organise information people are asked to provide
-- **Datasets** record facts that exist independently
+- **Datasets** record information that a planning authority needs to maintain
+- **Modules** organise information people are asked to provide through a submission form
 
 If something represents a thing that can exist, change state, or be referenced later, it belongs in a dataset.
 
@@ -224,15 +223,15 @@ Adding fields directly to applications would quickly lead to duplication and inc
 
 ### Why is the same subject a module in one place and a dataset in another?
 
-Some subjects appear in both submission modules and decision datasets. This is expected.
+Some subjects appear in both submission modules and datasets in the planning application data specification. This is expected.
 
 In the submission specification, a **module** groups related information that a user is asked to provide as part of an application. Its purpose is to support data entry and validation.
 
-In the decision specification, a **dataset** records the enduring, authoritative version of that information once it exists as part of the planning record.
+In the planning application data specification, a **dataset** records the enduring, authoritative version of that information as part of the planning record.
 
 The difference is not about the subject itself, but about **when and why the data is being captured**:
+- datasets record and maintain authoritative information that can be referenced, published or analysed later
 - modules organise information at the point of submission
-- datasets record facts that exist independently and can be referenced, published or analysed later
 
 ### Does the specification define validation rules or user interface behaviour?
 
@@ -273,7 +272,7 @@ Most changes involve adding or refining fields, modules or datasets rather than 
 - Modules organise **how information is grouped**
 - Components provide **reusable building blocks**
 - Fields define **individual data points**
-- Datasets record **authoritative outcomes**
+- Datasets record **authoritative information**
 - Codelists keep answers **consistent**
 
-Together, these elements form a clear, extensible data model that supports both submitting planning applications and recording planning decisions without prescribing how systems must be built to do it.
+Together, these elements form a clear, extensible data model that supports both recording and maintaining planning application information, and collecting good data when an application is made, without prescribing how systems must be built.

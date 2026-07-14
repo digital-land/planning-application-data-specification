@@ -18,12 +18,13 @@ The standard should define conformant data at the boundaries. It should not pres
 
 In plain English:
 
-- authorities must be able to accept conformant planning application data
+- authorities must be able to hold and maintain conformant planning application data
+- authorities must be able to accept conformant submission data
 - authorities must be able to publish conformant national public view data
 - authorities must be able to share conformant data as required (e.g. to PINs)
 - how their back office system gets from one to the other is implementation detail
 
-The national public view is built from the wider planning application record and the submission object over time. Some values may originate in the submission, some may be recorded by officers and some may come from later process activity.
+The national public view is built from records defined in the planning application data specification. Some values may originate in the submission, some may be recorded by officers and some may come from later process activity.
 
 ## Why "extraction" is a useful framing
 
@@ -45,7 +46,7 @@ It also gives a direct answer to a developer:
 
 > To publish the national public view, produce data conforming to `national-public-view.schema.md`.
 
-This would look similar to `decision-stage.schema.md`, but it would be explicitly named for the view being published:
+This would use the same dataset and field definitions as `planning-application-data.schema.md`, but would be explicitly named for the view being published:
 
 ```yaml
 specification: national-public-view
@@ -310,6 +311,6 @@ The potential follow-up is a field such as `redacted-from`, so the redacted publ
 
 ## Remaining questions
 
-- Should `national-public-view.schema.md` duplicate selected field descriptions, as `decision-stage.schema.md` does, or should it reference canonical dataset fields more tersely?
+- Should `national-public-view.schema.md` duplicate selected field descriptions, as `planning-application-data.schema.md` does, or should it reference canonical dataset fields more tersely?
 - Should the rule be called `record-inclusion`, `include-if`, `where` or something else?
 - Is the national public view always a subset of the local authority's public view, or can the national view require something that the authority would not otherwise publish locally?

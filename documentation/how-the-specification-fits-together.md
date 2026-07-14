@@ -1,29 +1,31 @@
 # How the specification fits together
 
-This note is a short primer on the structure of the planning application data specification and where to find the main pieces within it.
+This note is a short primer on how the planning application data and submission specifications fit together, and where to find their main parts.
 
 In particular, it explains:
 
-- how applications, modules, fields and codelists relate to each other
-- where submission-level details fit in the application payload
-- where to find field datatypes and formats
-- where to find controlled vocabularies and the codelists linked to fields
+- the role of the planning application data specification and the submission specification
+- how datasets, applications, modules, components, fields and codelists relate to each other
+- where submission details fit in an application payload
+- where to find field datatypes, formats and controlled vocabularies
 - where to use the specification viewer and where to use the GitHub repository
 
 The short version is:
 
-- every field has a definition
-- every field definition includes a datatype
-- if a field uses a controlled list, the field definition names the codelist
-- the codelist then defines the allowed values
+- the planning application data specification defines the authoritative information a planning authority records and maintains
+- the submission specification defines the structured route for collecting information when an application is made
+- datasets define the records in the planning application data specification
+- applications, modules and components define the structure of a submission
+- every field has a definition, including its datatype
+- if a field uses a controlled list, its definition names the codelist and the codelist defines the allowed values
 
 ## Start here
 
 The easiest place to browse the specification is the viewer site:
 
-- [Planning application data specification](https://digital-land.github.io/planning-application-data-specification/)
+- [Planning application data standard](https://digital-land.github.io/planning-application-data-specification/)
+- [Planning application data datasets](https://digital-land.github.io/planning-application-data-specification/dataset/)
 - [Submission specification](https://digital-land.github.io/planning-application-data-specification/submission/)
-- [Decision specification](https://digital-land.github.io/planning-application-data-specification/decision-stage/)
 - [Shared elements](https://digital-land.github.io/planning-application-data-specification/shared-elements/)
 - [Fields](https://digital-land.github.io/planning-application-data-specification/fields/)
 - [Codelists](https://digital-land.github.io/planning-application-data-specification/codelist/)
@@ -37,22 +39,37 @@ The underlying canonical files are in GitHub:
 
 ## How the parts fit together
 
-At a high level the specification works like this:
+The planning application data specification and submission specification use the same field and codelist definitions, but organise them differently.
+
+In the planning application data specification:
+
+- a dataset defines a type of authoritative record
+- a dataset lists the fields recorded for that type of record
+- fields can link one dataset record to another
+
+In the submission specification:
 
 - an application definition says what is needed for a given application type
 - every application includes `submission-details` for submission-level information
 - an application uses modules
 - a module groups related fields
+- components provide reusable form structures within the submission specification
+- co-constraints describe conditional rules, such as when a field applies or becomes required
+
+In both specifications:
+
 - a field defines an individual data item, including its datatype
 - if the field is controlled, the field definition points to a codelist
 - the codelist defines the allowed values
-- co-constraints describe conditional rules, such as when a field applies or becomes required
 
-In other words:
+```text
+planning application data: dataset -> field -> datatype / codelist
+submission: application -> module -> field -> datatype / codelist
+```
 
-`application -> module -> field -> datatype / codelist`
+This is why the field definition is the key place to look when you need to know how a field is defined, regardless of which specification uses it.
 
-This is why the field definition is the key place to look when you want to know how a field is defined.
+For an explanation of the different roles, see [the difference between the specifications](difference-between-the-specifications.md).
 
 For the submission-level part of the payload, see [submission details](submission-details.md).
 

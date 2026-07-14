@@ -161,5 +161,5 @@ The national public view is an explicit extraction from the wider planning
 application data standard. Datasets, records and fields are included only where
 this schema says they are included.
 
-The publication boundary and rationale for excluded decision-stage fields are
-documented in [National public view](../documentation/national-public-view.md).
+The publication boundary and rationale for excluded planning application data
+fields are documented in [National public view](../documentation/national-public-view.md).

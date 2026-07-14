@@ -166,13 +166,13 @@ python spec.py report completeness summary --input path/to/application-volumes.c
 
 Add `--verbose` when you need the row-level lists behind the summary.
 
-## Check decision-stage needs coverage
+## Check planning application data needs coverage
 
-Use the decision report to see how many decision-stage needs are covered by justifications.
+Use the planning application data report to see how many planning application data needs are covered by justifications.
 
 ```bash
-python spec.py report decision summary
-python spec.py report decision summary --list
+python spec.py report planning-application-data summary
+python spec.py report planning-application-data summary --list
 ```
 
 `--list` prints the covered need ids and the justification ids that cover them.
@@ -228,7 +228,7 @@ python spec.py
     completeness [--input <csv>] [--verbose]
     completeness summary [--input <csv>] [--verbose]
     completeness scope [--input <csv>] [--verbose]
-    decision
+    planning-application-data
       summary [--list]
 
   analysis

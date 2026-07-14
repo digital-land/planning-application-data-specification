@@ -3,10 +3,11 @@
 The national public view is the open publication view of the wider planning
 application data standard.
 
-The decision-stage specification defines core data that should be kept about a
-planning application through the decision process. The national public view is
-more cautious. It includes only the datasets, records and fields that the
-standard explicitly says should be published.
+The planning application data specification defines the authoritative
+information that a planning authority creates and maintains through the planning
+permission process. The national public view is more cautious. It includes only
+the datasets, records and fields that the standard explicitly says should be
+published as open data.
 
 This matters because the wider planning application data standard can include
 controlled records, operational records and evidence that may be needed by a

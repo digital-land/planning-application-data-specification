@@ -34,8 +34,8 @@ These are standards, vocabularies and sources that may be relevant in different 
 
 | Candidate | Possible relevance | Current position |
 | --- | --- | --- |
-| `schema.org` | Common vocabulary for actions, decisions, documents, events and legal concepts. | Used in semantic notes for some decision-stage datasets. |
-| buildingSMART IFC | Built environment concepts such as sites, documents and events. | Used as a conceptual reference where it helps explain decision-stage datasets. |
+| `schema.org` | Common vocabulary for actions, decisions, documents, events and legal concepts. | Used in semantic notes for some datasets in the planning application data specification. |
+| buildingSMART IFC | Built environment concepts such as sites, documents and events. | Used as a conceptual reference where it helps explain datasets in the planning application data specification. |
 | WGS84 / UK government location point standard | Coordinates and location exchange. | Used for latitude and longitude fields and location decisions. |
 | OGC Well-known text / ISO geometry conventions | Geometry representation for boundaries and spatial data. | Reflected in field datatype documentation for geometry-like values. |
 | JSON Schema | Machine-readable validation of generated schemas. | Used for generated JSON Schema, currently Draft-07 for compatibility. |
@@ -45,7 +45,7 @@ This list is not exhaustive. It is a working list of potentially relevant refere
 
 ## Alignment captured so far
 
-Some alignment has already been captured in the specification, mainly through semantic notes in decision-stage dataset schemas.
+Some alignment has already been captured in the planning application data specification, mainly through semantic notes in dataset schemas.
 
 Examples include:
 
@@ -81,7 +81,7 @@ The aim is pragmatic alignment: use existing standards where they help, record u
 - Keep a lightweight list of candidate standards or vocabularies when they are raised.
 - Add semantic notes only where the relationship is clear and useful.
 - Use design decision records when alignment affects the model shape.
-- Review candidate references as part of future iterations, especially where decision-stage datasets mature or new publication requirements emerge.
+- Review candidate references as part of future iterations, especially as datasets in the planning application data specification mature or new publication requirements emerge.
 
 ## Suggesting standards to consider
 
