@@ -197,36 +197,38 @@ data-module="govuk-service-navigation">
     </dl>
 
     <div class="app-prose">
-      <p class="govuk-body"><strong>Context:</strong> </p>
-<p class="govuk-body">The decision-stage specification has primary datasets that record the main facts about a planning application and its decision.</p>
-<p class="govuk-body">Some of those facts are dates. For example:</p>
+      <h3 class="govuk-heading-m" id="context">Context</h3>
+<p class="govuk-body">The specification has datasets that record the main facts and characteristics about a planning application and its decision.</p>
+<p class="govuk-body">Some of those facts are dated events that change the application’s state. For example:</p>
 <ul class="govuk-list govuk-list--bullet">
-<li><code class="app-code">planning-application.received-date</code> records when the planning authority received the application</li>
-<li><code class="app-code">decision-notice.decision-date</code> records when the decision was made</li>
+<li><code class="app-code">planning-application.received-date</code> records when the planning authority received the application and is when the statutory time period for a planning authority to validate an application begins</li>
+<li><code class="app-code">decision-notice.decision-date</code> records when the decision was made and decision notice issued, and carries legal significance</li>
 </ul>
 <p class="govuk-body">The specification also has <code class="app-code">planning-permission-timeline</code>, which records dated events in the processing of a planning application.</p>
+<p class="govuk-body">There is some crossover here and a decision needs to be made about where to store certain dates.</p>
 <p class="govuk-body">If the same date is recorded both as a primary dataset field and as a timeline event, the specification duplicates the same fact in two places. That creates scope for conflicting values and uncertainty about which record is authoritative.</p>
-<p class="govuk-body"><strong>Decision:</strong> </p>
-<p class="govuk-body">The same date should not be modelled twice across decision-stage datasets.</p>
-<p class="govuk-body">Where a date is already recorded as a field on the dataset that owns the underlying record, it should not also be added as a <code class="app-code">planning-permission-timeline</code> event for the same fact.</p>
-<p class="govuk-body">The <code class="app-code">planning-permission-timeline</code> dataset should be used for process events where an event record is useful in its own right. This is especially relevant where events can happen more than once, need event-level context or are not already modelled as a first-class date on another dataset.</p>
-<p class="govuk-body"><strong>Rationale:</strong> </p>
+<h3 class="govuk-heading-m" id="decision">Decision</h3>
+<p class="govuk-body">Each fact has one canonical home. </p>
+<p class="govuk-body">Keep a date on the dataset whose record it describes when it is a core property of that record. </p>
+<p class="govuk-body">Use <code class="app-code">planning-permission-timeline</code> for process events that need their own record, can recur or need event-specific context.</p>
+<p class="govuk-body">Do not store the same fact in both places.</p>
+<h3 class="govuk-heading-m" id="rationale">Rationale</h3>
 <p class="govuk-body">Keeping core dates on the dataset that owns the record:</p>
 <ul class="govuk-list govuk-list--bullet">
-<li>makes the authoritative source clearer</li>
+<li>means key state of the item can be understood using a single dataset. For example, any planning application record with a <code class="app-code">withdrawn-date</code> can be considered withdrawn</li>
 <li>reduces the risk of the same date being recorded differently in two places</li>
 <li>keeps process events in the timeline and fundamental record properties on their owning datasets</li>
 <li>still allows services to display a combined timeline by deriving it from multiple datasets where needed</li>
 </ul>
-<p class="govuk-body"><strong>Consequences:</strong> </p>
+<h3 class="govuk-heading-m" id="consequences">Consequences</h3>
 <ul class="govuk-list govuk-list--bullet">
 <li><code class="app-code">application-received</code> should not be a <code class="app-code">permission-process-event</code> because <code class="app-code">received-date</code> is already recorded on <code class="app-code">planning-application</code>.</li>
 <li><code class="app-code">decision-date</code> should remain on <code class="app-code">decision-notice</code> and should not be duplicated as a timeline event.</li>
 <li><code class="app-code">withdrawn-date</code> should be recorded on <code class="app-code">planning-application</code> and should not be duplicated as a timeline event, because withdrawal is a fundamental fact about the application rather than a repeatable process event.</li>
-<li>A complete chronological timeline should be treated as a derived view. It may combine dates and events from <code class="app-code">planning-application</code>, <code class="app-code">planning-permission-timeline</code>, <code class="app-code">decision-notice</code> and other decision-stage datasets without duplicating those facts in the canonical datasets.</li>
-<li><code class="app-code">application-submitted</code> can remain as a <code class="app-code">permission-process-event</code> because the decision-stage specification does not otherwise hold submitted date as a first-class field.</li>
+<li>a complete chronological timeline will need to be treated as a derived view. It may combine dates and events from <code class="app-code">planning-application</code>, <code class="app-code">planning-permission-timeline</code>, <code class="app-code">decision-notice</code> and other decision-stage datasets without duplicating those facts in the canonical datasets.</li>
+<li><code class="app-code">application-submitted</code> remains a <code class="app-code">permission-process-event</code>. It records submission by the applicant, which is distinct from receipt by the planning authority recorded in received-date.</li>
 </ul>
-<p class="govuk-body"><strong>Alternatives considered:</strong> </p>
+<h3 class="govuk-heading-m" id="alternatives-considered">Alternatives considered</h3>
 <ul class="govuk-list govuk-list--bullet">
 <li>Duplicate first-class dates in <code class="app-code">planning-permission-timeline</code> -&gt; rejected because it creates two authoritative-looking places for the same fact, increasing the risk of conflicting values without improving the canonical data model.</li>
 <li>Remove first-class dates from their owning datasets and model all dates only as events -&gt; rejected because dates such as <code class="app-code">received-date</code> and <code class="app-code">decision-date</code> are fundamental properties of their records and should be easy to find.</li>
