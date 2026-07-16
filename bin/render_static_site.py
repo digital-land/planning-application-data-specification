@@ -965,7 +965,7 @@ def render_index(renderer: RenderContext) -> None:
             "application_types": renderer.url_for("/application-type/"),
             "datasets": renderer.url_for("/dataset/"),
             "data_model": renderer.url_for("/data-model/"),
-            "national_public_view": renderer.url_for("/national-public-view/"),
+            "national_public_view": renderer.url_for("/view/national-public/"),
             "github_feedback": "https://github.com/digital-land/planning-application-data-specification/issues/new",
         },
     }
@@ -990,12 +990,128 @@ def render_data_model(renderer: RenderContext) -> None:
     renderer.write_page("data-model/index.html", data_model_html)
 
 
-def render_national_public_view(renderer: RenderContext) -> None:
+def national_public_view_field_applicability(
+    dataset: Dict[str, Any], field_ref: str
+) -> str:
+    """Return the one explicit public-view field applicability note, if present."""
+    for field in dataset.get("fields", []):
+        if field.get("field") != field_ref:
+            continue
+        application_types = (
+            field.get("applies-if", {})
+            .get("application-types", {})
+            .get("in", [])
+        )
+        if set(application_types) == {"full", "outline-all", "outline-some"}:
+            return "Only for full and outline planning applications."
+    return ""
+
+
+def build_national_public_view_datasets(
+    public_view: Dict[str, Any],
+    dataset_index: Dict[str, Dict[str, Any]],
+    field_index: Dict[str, Any],
+    renderer: RenderContext,
+) -> List[Dict[str, Any]]:
+    datasets: List[Dict[str, Any]] = []
+
+    for view_dataset in public_view.get("datasets", []):
+        dataset_ref = view_dataset["dataset"]
+        dataset = dataset_index.get(dataset_ref, {})
+        fields = []
+        for field in view_dataset.get("fields", []):
+            field_view = build_field_display(field, field_index)
+            target_dataset = field.get("dataset")
+            fields.append(
+                {
+                    "ref": field_view.ref,
+                    "name": field_view.name,
+                    "description": field_view.description,
+                    "datatype": field_view.datatype,
+                    "cardinality": field_view.cardinality,
+                    "field_href": renderer.url_for(f"/field/{field_view.ref}"),
+                    "target_dataset": target_dataset,
+                    "target_dataset_href": (
+                        renderer.url_for(f"/dataset/{target_dataset}")
+                        if target_dataset
+                        else ""
+                    ),
+                    "codelist": field_view.codelist,
+                    "codelist_href": (
+                        renderer.url_for(f"/codelist/{field_view.codelist}")
+                        if field_view.codelist
+                        else ""
+                    ),
+                    "applicability": national_public_view_field_applicability(
+                        dataset, field_view.ref
+                    ),
+                }
+            )
+
+        record_inclusion = view_dataset.get("record-inclusion")
+        datasets.append(
+            {
+                "ref": dataset_ref,
+                "name": view_dataset.get("name") or dataset.get("name") or dataset_ref,
+                "description": dataset.get("description", ""),
+                "href": renderer.url_for(f"/view/national-public/#{dataset_ref}"),
+                "fields": fields,
+                "record_inclusion": record_inclusion,
+                "publishing_rule": (
+                    record_inclusion.get("description")
+                    if record_inclusion
+                    else "Publish all records."
+                ),
+            }
+        )
+    return datasets
+
+
+def render_views(
+    renderer: RenderContext,
+    public_view: Dict[str, Any],
+    dataset_index: Dict[str, Dict[str, Any]],
+    field_index: Dict[str, Any],
+) -> None:
+    datasets = build_national_public_view_datasets(
+        public_view, dataset_index, field_index, renderer
+    )
+    view_index_html = renderer.render(
+        "view_index.html",
+        {
+            "page_title": "Views",
+            "views": [
+                {
+                    "name": public_view.get("name", "National public view"),
+                    "description": "The data that planning authorities must publish openly.",
+                    "href": renderer.url_for("/view/national-public/"),
+                }
+            ],
+        },
+    )
+    renderer.write_page("view/index.html", view_index_html)
+
     public_view_html = renderer.render(
         "national_public_view.html",
-        {"page_title": "National public view"},
+        {
+            "page_title": "National public view",
+            "datasets": datasets,
+            "raw_schema_href": "https://github.com/digital-land/planning-application-data-specification/blob/main/specification/national-public-view.schema.md?plain=1",
+            "info_href": renderer.url_for("/view/national-public/info/"),
+        },
     )
-    renderer.write_page("national-public-view/index.html", public_view_html)
+    renderer.write_page("view/national-public/index.html", public_view_html)
+
+    info_html = renderer.render(
+        "national_public_view_info.html",
+        {
+            "page_title": "About the national public view",
+            "public_view_href": renderer.url_for("/view/national-public/"),
+            "documentation_href": "https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/national-public-view.md",
+            "derivation_href": "https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/required-national-public-view-output-and-rules-for-deriving-it.md",
+        },
+    )
+    renderer.write_page("view/national-public/info/index.html", info_html)
 
 
 def render_design_decisions(
@@ -1157,6 +1273,9 @@ def build_site(args: argparse.Namespace) -> None:
                 spec_root / "planning-application-data.schema.md"
             )
         )
+        national_public_view_specification = load_planning_application_data_specification(
+            spec_root / "national-public-view.schema.md"
+        )
         planning_application_data_datasets: List[Dict[str, Any]] = []
         for ds in planning_application_data_specification.get("datasets", []):
             dataset_id = ds.get("dataset")
@@ -1184,7 +1303,12 @@ def build_site(args: argparse.Namespace) -> None:
         # Index
         render_index(renderer)
         render_data_model(renderer)
-        render_national_public_view(renderer)
+        render_views(
+            renderer,
+            national_public_view_specification,
+            dataset_index,
+            field_index,
+        )
         render_design_decisions(renderer, design_decisions)
 
         # Datasets
@@ -1601,7 +1725,8 @@ def build_site(args: argparse.Namespace) -> None:
             "application_types": "application-type/index.html",
             "submission_progress": "submissions/progress/index.html",
             "data_model": "data-model/index.html",
-            "national_public_view": "national-public-view/index.html",
+            "views": "view/index.html",
+            "national_public_view": "view/national-public/index.html",
         }
         renderer.write_page("sitemap.json", json.dumps(site_map, indent=2))
 

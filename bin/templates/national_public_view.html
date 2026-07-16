@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% set primary_navigation_current = "view" %}
 
 {% block app_breadcrumbs %}
   {{- govukBreadcrumbs({
@@ -6,6 +7,10 @@
       {
         'text': "Home",
         'href': url_for("/")
+      },
+      {
+        'text': "Views",
+        'href': url_for("/view/")
       },
       {
         'text': "National public view"
@@ -17,26 +22,67 @@
 {% block content %}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
-    <h1 class="govuk-heading-xl">National public view</h1>
-    <p class="govuk-body-l">The national public view will define the planning application data that should be published openly from the wider planning application data standard.</p>
+    <h1 class="govuk-heading-xl" id="top">National public view</h1>
+    <p class="govuk-body-l">The national public view defines the planning application data that planning authorities must publish openly.</p>
 
-    <p class="govuk-body">The view is being developed as an explicit extraction from the standard. Nothing enters the national public view unless the standard says it should be included.</p>
+    <p class="govuk-body">This is the definitive publication contract. Publish every listed field for each included record, except that <code>development-scale</code> applies only to full and outline planning applications.</p>
 
-    <h2 class="govuk-heading-l">What the view will define</h2>
-    <p class="govuk-body">The national public view is expected to be defined by a future <code>national-public-view.schema.md</code> file.</p>
-    <p class="govuk-body">That schema will specify which datasets and fields are included in the public view. Some datasets may include only selected records.</p>
+    <p class="govuk-body"><a class="govuk-link" href="{{ raw_schema_href }}">View the raw schema on GitHub</a></p>
+    <p class="govuk-body"><a class="govuk-link" href="{{ info_href }}">Find out how the national public view works</a></p>
 
-    <h2 class="govuk-heading-l">Expected inclusion rules</h2>
+    <h2 class="govuk-heading-l">Datasets to publish</h2>
     <ul class="govuk-list govuk-list--bullet">
-      <li>a dataset is in the national public view only if it appears in the public view schema</li>
-      <li>a field is in the national public view only if it is listed for that dataset</li>
-      <li>document records are expected to use <code>public-register-status</code> to decide whether they are included</li>
-      <li>timeline records may use codelist profile rules to decide which event types are included</li>
+      {% for dataset in datasets %}
+        <li><a class="govuk-link" href="{{ dataset.href }}">{{ dataset.name | capitalize }}</a>: {{ dataset.publishing_rule }}</li>
+      {% endfor %}
     </ul>
-
-    <h2 class="govuk-heading-l">What is out of scope</h2>
-    <p class="govuk-body">The national public view will define conformant public output. It will not prescribe supplier back-office architecture or local storage design.</p>
-    <p class="govuk-body">Local publication and redaction processes remain separate decisions unless the standard explicitly defines a public-view inclusion rule.</p>
   </div>
 </div>
+
+{% for dataset in datasets %}
+<div class="govuk-grid-row govuk-!-margin-top-8" id="{{ dataset.ref }}">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">{{ dataset.name | capitalize }}</h2>
+    {% if dataset.description %}<p class="govuk-body-l">{{ dataset.description }}</p>{% endif %}
+    {% if dataset.record_inclusion %}
+      <div class="govuk-inset-text">
+        <p class="govuk-body"><strong>Records to include:</strong> {{ dataset.record_inclusion.description }}</p>
+      </div>
+    {% else %}
+      <p class="govuk-body">Publish all records in this dataset.</p>
+    {% endif %}
+
+    <table class="govuk-table">
+      <thead class="govuk-table__head">
+        <tr class="govuk-table__row">
+          <th scope="col" class="govuk-table__header">Field</th>
+          <th scope="col" class="govuk-table__header">Description</th>
+          <th scope="col" class="govuk-table__header">Data type and cardinality</th>
+          <th scope="col" class="govuk-table__header">Related information</th>
+        </tr>
+      </thead>
+      <tbody class="govuk-table__body">
+        {% for field in dataset.fields %}
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <strong><a class="govuk-link" href="{{ field.field_href }}">{{ field.name }}</a></strong>
+              <p class="govuk-hint govuk-!-font-size-16 govuk-!-margin-top-1 govuk-!-margin-bottom-0">(<code>{{ field.ref }}</code>)</p>
+            </td>
+            <td class="govuk-table__cell">
+              {{ field.description }}
+              {% if field.applicability %}<p class="govuk-hint govuk-!-margin-top-2 govuk-!-margin-bottom-0">{{ field.applicability }}</p>{% endif %}
+            </td>
+            <td class="govuk-table__cell"><code>{{ field.datatype }}</code><br>{{ field.cardinality }}</td>
+            <td class="govuk-table__cell">
+              {% if field.target_dataset %}Refers to the <a class="govuk-link" href="{{ field.target_dataset_href }}">{{ field.target_dataset }} dataset</a>.{% endif %}
+              {% if field.codelist %}Allowed values are in the <a class="govuk-link" href="{{ field.codelist_href }}">{{ field.codelist }} codelist</a>.{% endif %}
+            </td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    <p class="govuk-body govuk-!-margin-top-4"><a class="govuk-link" href="#top">Back to list of datasets</a></p>
+  </div>
+</div>
+{% endfor %}
 {% endblock %}
