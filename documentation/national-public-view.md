@@ -3,6 +3,10 @@
 The national public view is the open publication view of the wider planning
 application data standard.
 
+The [national public view schema](../specification/national-public-view.schema.md)
+is the definitive publication contract. It defines the datasets, records and
+fields that planning authorities must publish.
+
 The planning application data specification defines the authoritative
 information that a planning authority creates and maintains through the planning
 permission process. The national public view is more cautious. It includes only
@@ -33,11 +37,19 @@ The first version intentionally starts from a cautious publication boundary.
 Fields can be added later when there is a clear publication need and the
 publication risk is understood.
 
-## National public view table
+For an included record, publish every field listed for its dataset in the
+schema. The only field-level applicability rule is that `development-scale`
+applies to full and outline planning applications.
 
-Rows without an exclusion rule are included in full for that dataset and field.
-The record-inclusion-rule column is used only where records from an included dataset
-are filtered before publication.
+For detailed guidance on deriving the output, see [Required national public
+view output and rules for deriving
+it](required-national-public-view-output-and-rules-for-deriving-it.md).
+
+## Publication summary
+
+This table is a readable summary of the schema. The schema remains the source
+of truth. The record-inclusion-rule column is used only where records from an
+included dataset are filtered before publication.
 
 | dataset | field | description | record-inclusion-rule |
 | --- | --- | --- | --- |
@@ -47,6 +59,7 @@ are filtered before publication.
 |  | application-types | One or more codelist values describing the application type. |  |
 |  | site | Reference for the related site. |  |
 |  | received-date | Date the planning authority received the application. |  |
+|  | planning-authority | Identifier of the planning authority that received the planning application. |  |
 |  | development-scale | Local planning authority classification of a full or outline application by development scale, where applicable. |  |
 |  | planning-performance-agreement | Whether the application was subject to a Planning Performance Agreement. |  |
 |  | withdrawn-date | Date the planning application was withdrawn. |  |
@@ -59,7 +72,7 @@ are filtered before publication.
 |  | address-text | Plain-language address for the site, where available. |  |
 |  | postcode | Postcode for the site, where available. |  |
 |  | description | Plain-language description of the site, where this helps identify the land or buildings. |  |
-|  | site-boundary | Boundary geometry for the site. |  |
+|  | geometry | Boundary for the site. |  |
 | decision-notice |  |  |  |
 |  | reference | Reference for the decision notice. |  |
 |  | planning-application | Reference for the related planning application. |  |
