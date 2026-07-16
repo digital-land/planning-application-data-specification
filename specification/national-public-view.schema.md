@@ -104,7 +104,8 @@ datasets:
       - field: requested-by
         description: identifier of the body requesting the condition
       - field: discharged-by
-        description: identifier of the body discharging the condition
+        description: identifier of the decision notice discharging the condition
+        dataset: decision-notice
   - dataset: section-106
     name: section 106 agreement
     fields:
