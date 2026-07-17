@@ -24,20 +24,22 @@ import jinja2.filters as jinja_filters
 if not hasattr(jinja_filters, "evalcontextfilter"):
     jinja_filters.evalcontextfilter = jinja_filters.pass_eval_context
 
-from digital_land_frontend import filters as dlf_filters  # noqa: E402
-from digital_land_frontend import globals as dlf_globals  # noqa: E402
 from bin.completeness import build_progress_view_model
 from bin.jinja_filters import commanum_filter
 from bin.loader import load_needs, load_specification_model
 from bin.markdown_utils import render_govuk_markdown
-from bin.models import FieldDef, ComponentInstance, FieldInstance
+from bin.models import ComponentInstance, FieldDef, FieldInstance
 from bin.renderer import RenderContext
 from bin.utils import ensure_dir
+from digital_land_frontend import filters as dlf_filters  # noqa: E402
+from digital_land_frontend import globals as dlf_globals  # noqa: E402
 from planning_application_specification import Specification
 from planning_application_specification.models import (
     ComponentUsage as SpecificationComponentUsage,
 )
-from planning_application_specification.models import FieldUsage as SpecificationFieldUsage
+from planning_application_specification.models import (
+    FieldUsage as SpecificationFieldUsage,
+)
 
 try:
     import markdown as markdown_lib
@@ -46,7 +48,9 @@ except ImportError:  # pragma: no cover
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 TEMPLATE_DIR = REPO_ROOT / "bin" / "templates"
-DEFAULT_PROGRESS_INPUT = REPO_ROOT / "bin" / "admin_data" / "2024-application-volumes.csv"
+DEFAULT_PROGRESS_INPUT = (
+    REPO_ROOT / "bin" / "admin_data" / "2024-application-volumes.csv"
+)
 
 
 def render_markdown(md_text: str) -> str:
@@ -155,7 +159,9 @@ def strip_design_decision_page_metadata(content: str) -> str:
 
 
 def design_decision_feedback_url(decision: Dict[str, Any]) -> str:
-    title = f"[{decision['decision_id']}] Feedback on design decision: {decision['title']}"
+    title = (
+        f"[{decision['decision_id']}] Feedback on design decision: {decision['title']}"
+    )
     encoded_title = quote(title)
     return (
         "https://github.com/digital-land/planning-application-data-specification/"
@@ -435,13 +441,16 @@ class FieldView:
         self.inherited_from = inherited_from
 
 
-def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) -> FieldView:
+def build_field_display(
+    field_entry: Any, field_index: Dict[str, Any] = None
+) -> FieldView:
     # If already a FieldView
     if isinstance(field_entry, FieldView):
         return field_entry
 
     # Handle FieldInstance (from models)
-    from bin.models import FieldInstance, FieldDef as FD  # type: ignore
+    from bin.models import FieldDef as FD  # type: ignore
+    from bin.models import FieldInstance
 
     if isinstance(field_entry, FieldInstance):
         orig = field_entry.original
@@ -484,7 +493,10 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
             required = orig.required
         comp_name = None
         if orig.resolved_component:
-            comp_name = orig.resolved_component.component.name or orig.resolved_component.component.ref
+            comp_name = (
+                orig.resolved_component.component.name
+                or orig.resolved_component.component.ref
+            )
         return FieldView(
             ref=orig.ref,
             name=name,
@@ -524,7 +536,9 @@ def build_field_display(field_entry: Any, field_index: Dict[str, Any] = None) ->
     )
 
 
-def build_field_views_from_items(items: List[Any], field_index: Dict[str, Any]) -> List[FieldView]:
+def build_field_views_from_items(
+    items: List[Any], field_index: Dict[str, Any]
+) -> List[FieldView]:
     views: List[FieldView] = []
     for item in items:
         if isinstance(item, FieldInstance):
@@ -538,7 +552,9 @@ def build_field_views_from_items(items: List[Any], field_index: Dict[str, Any]) 
         elif isinstance(item, ComponentInstance):
             fi = item.referenced_by_field
             fv = build_field_display(fi)
-            fv.children = build_field_views_from_items(item.component.items, field_index)
+            fv.children = build_field_views_from_items(
+                item.component.items, field_index
+            )
             views.append(fv)
         elif isinstance(item, SpecificationFieldUsage):
             fv = build_field_display(item)
@@ -551,7 +567,9 @@ def build_field_views_from_items(items: List[Any], field_index: Dict[str, Any]) 
             referenced_by = item.referenced_by_field
             if referenced_by:
                 fv = build_field_display(referenced_by)
-                fv.children = build_field_views_from_items(item.component.items, field_index)
+                fv.children = build_field_views_from_items(
+                    item.component.items, field_index
+                )
                 views.append(fv)
     return views
 
@@ -661,9 +679,9 @@ def build_application_modules(
         module_entries = [
             {
                 "module": module.ref,
-                "inherited_from": inherited_from
-                if module.ref not in own_module_refs
-                else None,
+                "inherited_from": (
+                    inherited_from if module.ref not in own_module_refs else None
+                ),
             }
             for module in specification.application(app_id).modules
         ]
@@ -824,7 +842,9 @@ def build_codelist_usage_view(
     }
 
 
-def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) -> List[str]:
+def find_modules_using_component(
+    component_ref: str, modules: Dict[str, Any]
+) -> List[str]:
     refs: List[str] = []
     for mref, m in modules.items():
         items = getattr(m, "items", []) or []
@@ -834,7 +854,10 @@ def find_modules_using_component(component_ref: str, modules: Dict[str, Any]) ->
                     refs.append(mref)
                     break
             elif isinstance(item, ComponentInstance):
-                if getattr(item.referenced_by_field.original, "component", None) == component_ref:
+                if (
+                    getattr(item.referenced_by_field.original, "component", None)
+                    == component_ref
+                ):
                     refs.append(mref)
                     break
     return sorted(set(refs))
@@ -998,9 +1021,7 @@ def national_public_view_field_applicability(
         if field.get("field") != field_ref:
             continue
         application_types = (
-            field.get("applies-if", {})
-            .get("application-types", {})
-            .get("in", [])
+            field.get("applies-if", {}).get("application-types", {}).get("in", [])
         )
         if set(application_types) == {"full", "outline-all", "outline-some"}:
             return "Only for full and outline planning applications."
@@ -1083,7 +1104,7 @@ def render_views(
             "views": [
                 {
                     "name": public_view.get("name", "National public view"),
-                    "description": "The data that planning authorities must publish openly.",
+                    "description": "The data that planning authorities must publish as open data.",
                     "href": renderer.url_for("/view/national-public/"),
                 }
             ],
@@ -1273,8 +1294,10 @@ def build_site(args: argparse.Namespace) -> None:
                 spec_root / "planning-application-data.schema.md"
             )
         )
-        national_public_view_specification = load_planning_application_data_specification(
-            spec_root / "national-public-view.schema.md"
+        national_public_view_specification = (
+            load_planning_application_data_specification(
+                spec_root / "national-public-view.schema.md"
+            )
         )
         planning_application_data_datasets: List[Dict[str, Any]] = []
         for ds in planning_application_data_specification.get("datasets", []):
@@ -1393,9 +1416,9 @@ def build_site(args: argparse.Namespace) -> None:
                     fv.children = build_field_views_from_items(
                         meta.resolved_component.component.items, field_index
                     )
-                target_dataset = getattr(f, "get", lambda k, default=None: f.get(k, default))(
-                    "dataset", None
-                )
+                target_dataset = getattr(
+                    f, "get", lambda k, default=None: f.get(k, default)
+                )("dataset", None)
                 fv.description = render_markdown(fv.description or "")
                 fv.target_dataset = target_dataset
                 fv.target_dataset_href = (
@@ -1627,19 +1650,21 @@ def build_site(args: argparse.Namespace) -> None:
                 "application": app_id,
                 "application_types": [],
                 "base_type": app.get("base-type", False),
-                "extends": {
-                    "ref": app.get("extends"),
-                    "href": renderer.url_for(f"/application-type/{app.get('extends')}"),
-                }
-                if app.get("extends")
-                else None,
+                "extends": (
+                    {
+                        "ref": app.get("extends"),
+                        "href": renderer.url_for(
+                            f"/application-type/{app.get('extends')}"
+                        ),
+                    }
+                    if app.get("extends")
+                    else None
+                ),
                 "synonyms": app.get("synonyms", []),
                 "notes": app.get("notes", ""),
                 "entry_date": app.get("entry-date", ""),
                 "legislation": app.get("legislation", []),
-                "fields": build_application_fields(
-                    app, application_index, field_index
-                ),
+                "fields": build_application_fields(app, application_index, field_index),
                 "modules": build_application_modules(
                     app, specification, module_index, renderer
                 ),
@@ -1666,9 +1691,7 @@ def build_site(args: argparse.Namespace) -> None:
                 "notes": application.notes,
                 "entry_date": application.entry_date,
                 "legislation": [],
-                "fields": build_combined_application_fields(
-                    application, field_index
-                ),
+                "fields": build_combined_application_fields(application, field_index),
                 "modules": build_combined_application_modules(
                     application, module_index, renderer
                 ),
@@ -1715,9 +1738,7 @@ def build_site(args: argparse.Namespace) -> None:
         # Emit a sitemap for inspection
         site_map = {
             "index": "index.html",
-            "needs": [
-                f"user-need/{n.get('need')}/index.html" for n in need_records
-            ],
+            "needs": [f"user-need/{n.get('need')}/index.html" for n in need_records],
             "datasets": [
                 f"dataset/{ds.get('dataset')}/index.html"
                 for ds in planning_application_data_datasets
