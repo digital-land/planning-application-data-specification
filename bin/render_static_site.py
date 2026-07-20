@@ -1116,6 +1116,7 @@ def render_views(
         "national_public_view.html",
         {
             "page_title": "National public view",
+            "specification_status": public_view.get("specification-status"),
             "datasets": datasets,
             "raw_schema_href": "https://github.com/digital-land/planning-application-data-specification/blob/main/specification/national-public-view.schema.md?plain=1",
             "info_href": renderer.url_for("/view/national-public/info/"),
