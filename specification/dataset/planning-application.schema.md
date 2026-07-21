@@ -15,6 +15,8 @@ fields:
   description: URL where supporting documents for the application can be accessed
 - field: description
   description: The description of the proposed development
+- field: name
+  description: A plain-language label for the planning application so it can be identified without relying on its reference
 - field: application-types
 - field: site
 - field: received-date

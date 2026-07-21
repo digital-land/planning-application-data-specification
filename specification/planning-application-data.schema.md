@@ -14,6 +14,8 @@ datasets:
     fields:
       - field: reference
         description: the <a href="#reference">reference</a> for the planning application
+      - field: name
+        description: A plain-language label for the planning application so it can be identified without relying on its reference
       - field: description
         description: the description of the proposed development
       - field: application-types

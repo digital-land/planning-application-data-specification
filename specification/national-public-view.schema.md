@@ -14,6 +14,8 @@ datasets:
     fields:
       - field: reference
         description: the reference used for the planning application, for example 2025/1674
+      - field: name
+        description: A plain-language label for the planning application so it can be identified without relying on its reference
       - field: description
         description: the description of the proposed development
       - field: application-types
