@@ -129,6 +129,8 @@ datasets:
     fields:
       - field: reference
         description: the <a href="#reference">reference</a> for the section 106 agreement
+      - field: name
+        description: Title or plain-language label for the section 106 agreement so it can be identified
       - field: decision-notice
         description: the <a href="#reference">reference</a> for the decision notice tied to the section 106 agreement
         dataset: decision-notice
