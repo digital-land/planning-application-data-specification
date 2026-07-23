@@ -4,7 +4,7 @@ The national public view is the open publication view of the wider planning
 application data standard.
 
 The [national public view schema](../specification/national-public-view.schema.md)
-is the definitive publication contract. It defines the datasets, records and
+is the definitive publication expectation. It defines the datasets, records and
 fields that planning authorities must publish.
 
 The planning application data specification defines the authoritative
