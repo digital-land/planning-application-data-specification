@@ -2,7 +2,7 @@
 cardinality: 1
 component: file
 datatype: object
-description: The digital file or a reference to where the file is stored
+description: Details of the digital file attached to a submission
 end-date: ''
 entry-date: 2025-06-20
 field: file

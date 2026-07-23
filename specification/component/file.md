@@ -2,7 +2,7 @@
 component: file
 name: File
 description: |
-  Structure for digital files to be included in the submission of an application
+  Structure for describing a digital file attached to a submission, including its name, its type, size and encoded content
 fields:
   - field: base64-content
   - field: filename
