@@ -424,6 +424,7 @@ class FieldView:
         target_dataset_href="",
         satisfactions=None,
         component_name=None,
+        component_ref=None,
         inherited_from=None,
     ):
         self.ref = ref
@@ -438,6 +439,7 @@ class FieldView:
         self.target_dataset_href = target_dataset_href
         self.satisfactions = satisfactions or []
         self.component_name = component_name
+        self.component_ref = component_ref
         self.inherited_from = inherited_from
 
 
@@ -465,9 +467,11 @@ def build_field_display(
             required = orig.required
         children = overrides.get("children", [])
         comp_name = None
+        comp_ref = None
         if orig.resolved_component:
             comp = orig.resolved_component.component
             comp_name = comp.name or comp.ref
+            comp_ref = comp.ref
         return FieldView(
             ref=orig.ref,
             name=name,
@@ -478,6 +482,7 @@ def build_field_display(
             required=required,
             children=children,
             component_name=comp_name,
+            component_ref=comp_ref,
         )
 
     if isinstance(field_entry, SpecificationFieldUsage):
@@ -492,11 +497,11 @@ def build_field_display(
         if required is None:
             required = orig.required
         comp_name = None
+        comp_ref = None
         if orig.resolved_component:
-            comp_name = (
-                orig.resolved_component.component.name
-                or orig.resolved_component.component.ref
-            )
+            comp = orig.resolved_component.component
+            comp_name = comp.name or comp.ref
+            comp_ref = comp.ref
         return FieldView(
             ref=orig.ref,
             name=name,
@@ -506,6 +511,7 @@ def build_field_display(
             codelist=codelist,
             required=required,
             component_name=comp_name,
+            component_ref=comp_ref,
         )
 
     # Fallback for dict-based field entries (datasets, etc.)
@@ -520,9 +526,11 @@ def build_field_display(
     datatype = field_entry.get("datatype") or fd.datatype
     codelist = field_entry.get("codelist") or fd.codelist
     comp_name = None
+    comp_ref = None
     if fd.resolved_component:
         comp = fd.resolved_component.component
         comp_name = comp.name or comp.ref
+        comp_ref = comp.ref
     return FieldView(
         ref=field_ref,
         name=name,
@@ -533,6 +541,7 @@ def build_field_display(
         required=field_entry.get("required"),
         children=field_entry.get("children", []),
         component_name=comp_name,
+        component_ref=comp_ref,
     )
 
 

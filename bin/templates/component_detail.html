@@ -18,10 +18,15 @@
   {% for field in fields %}
     <div class="govuk-summary-list__row">
       <dt class="govuk-summary-list__key">
-        <div class="govuk-body govuk-!-font-weight-bold">{{ field.name }}</div>
+        <div class="govuk-body govuk-!-font-weight-bold">
+          {{ field.name }}
+        </div>
         <div class="govuk-hint govuk-!-margin-bottom-0"><code>{{ field.ref }}</code></div>
       </dt>
       <dd class="govuk-summary-list__value">
+        {% if field.component_ref -%}
+          <strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-1">Component</strong>
+        {% endif %}
         {% if field.description %}<p class="govuk-body">{{ field.description }}</p>{% endif %}
         {% if field.required is not none %}
           <p class="govuk-hint govuk-!-margin-bottom-0">Required: {{ field.required }}</p>
@@ -38,7 +43,7 @@
           </p>
         {% endif %}
 
-        {% if field.datatype == "object" and field.children %}
+        {% if field.datatype == "object" and field.children and level == 0 %}
           {{ govukAccordion({
             "id": ("comp-field-component-" ~ field.ref ~ "-" ~ loop.index ~ "-" ~ level),
             "classes": "govuk-!-margin-top-2",
@@ -54,6 +59,10 @@
               }
             ]
           }) }}
+        {% elif field.datatype == "object" and field.component_ref %}
+          <p class="govuk-body govuk-!-margin-bottom-0">
+            This field uses the <a class="govuk-link" href="{{ url_for('/component/' ~ field.component_ref) }}">{{ field.component_name or field.component_ref }} component</a>.
+          </p>
         {% endif %}
       </dd>
     </div>
