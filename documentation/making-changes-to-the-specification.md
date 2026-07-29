@@ -35,7 +35,8 @@ This guide explains how to make deliberate, traceable changes to the planning ap
   - Adding a field to a dataset
 - Codelists (needs content)
 - Codelist values (needs content)
-- Application types (needs content)
+- [Application types](#application-types)
+  - [Allowed combined application types](#allowed-combined-application-types)
 - User needs (needs content)
 - Justifications (needs content)
 
@@ -67,6 +68,47 @@ For a non-semantic change, such as clearer wording, a corrected datatype constra
 For a semantic change, such as changing what information the field represents:
 
 1. ...
+
+## Application types
+
+Application type definitions are the files in `specification/application/`.
+Before adding or changing one, identify the user need and legal basis, then
+check whether an existing application type can be extended (the new one has a parent type) and build out from there.
+
+### Adding a new application
+
+An application definition should include a stable reference, name,
+description, legislation, dates as properties.
+The fields property MUST include `submission-details`.
+The modules property is where to list the expected modules.
+
+Keep conditional questions in the relevant module or component, and set
+`allow-additional-properties` explicitly.
+
+If the change adds a new concept, define the field, component or module in its canonical location before referencing it from the application. 
+
+Update any affected codelists, codelist usage and examples.
+
+Always run `make checks` and review the compiled application view, spreadsheet and JSON Schema before submitting the change for review.
+
+[THIS CONTENT NEEDS FLESHING OUT]
+
+### Allowed combined application types
+
+A combined application type is only allowed where the applicant needs more
+than one connected consent to carry out the development. These must be agreed with the Development Management Policy team in MHCLG.
+
+Do not create a separate application definition for a combination.
+
+First confirm the policy basis for the combination and that each member
+application type already has an active canonical definition. Then add the
+combination to `specification/combined-application-types.csv`, using the
+application-type references in a consistent order.
+
+The specification derives the combined application from its member application types. Its modules and application-level fields are the combined, de-duplicated set from those definitions. Do not copy modules or fields into a new combined application file.
+
+Run `make checks` and review the generated output to confirm that the
+combination is recognised and has the expected payload shape.
 
 ## Datasets
 
