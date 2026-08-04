@@ -20,7 +20,7 @@ easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | M
 northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
 latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
 longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | A text description providing details about the subject. | MAY | 
 uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | uprns are not needed in case of notification for work to trees in conservation area
 
 **Validation rules**

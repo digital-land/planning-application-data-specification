@@ -6,7 +6,7 @@ Additional materials and specifications that form part of the planning applicati
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application |  | MUST |  |
+| supporting-documents | Supporting documents[]{} | References to the plans, drawings and supporting materials already included in the application document list that are relevant to this part of the application |  | MUST |  |
 | inspection-address | Inspection address | Full postal address where supporting material can be inspected |  | MUST | Should this be the address-text field |
 
 

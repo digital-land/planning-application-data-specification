@@ -28,7 +28,7 @@ application.
 * [Foul sewage disposal](#foul-sewage-disposal)
 * [Hazardous substances](#hazardous-substances)
 * [Hours of operation](#hours-of-operation)
-* [Ownership certificates and agricultural land declaration](#ownership-certificates-and-agricultural-land-declaration)
+* [Oil and gas ownership and notices](#oil-and-gas-ownership-and-notices)
 * [Access and rights of way](#access-and-rights-of-way)
 * [Plans, drawings and supporting materials](#plans,-drawings-and-supporting-materials)
 * [Pre-application advice](#pre-application-advice)
@@ -52,20 +52,21 @@ application.
 * [Use class](#use-class)
 * [User role type](#user-role-type)
 
-## Application fields
+## Submission details fields
 
-Core planning application structure containing reference information,
-application types, submission details, modules, documents, and fees
+Details about the submitted payload, including reference information,
+application types, specification profile, destination, documents, and fees
 
-**Application fields module**
+**Submission details fields module**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+submission-reference | Submission reference | A unique reference for the submission | MUST | 
 application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum
+specification-profile | Specification profile | The specification profile used to determine context-specific allowed codelist values for the application | MUST | Select from the **specification-profile** enum
 planning-authority | Planning authority | A reference of the planning authority the application has been submitted to, e.g. local-authority:CMD for London borough of Camden | MUST | Select from the **planning-authority** enum. Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk
-submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST | 
-modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST | 
+submitted-at | Submitted at | The date and time the application was submitted | MUST | 
+created-at | Created at | The date and time the submission payload was created | MUST | 
 documents | Documents[]{} | List of submitted documents with references and details | MUST | 
 fee | Fee{} | The fee payable for the application including amounts and transaction details | MAY | 
 
@@ -79,7 +80,7 @@ name | Name | The name or title of the document | MUST |
 description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 uploaded-date | Uploaded date | The date the document was uploaded to the application | MUST | 
-file | File{} | The digital file or a reference to where the file is stored | MUST | 
+file | File{} | Details of the digital file attached to a submission | MUST | 
 
 
 **Fee component**
@@ -102,11 +103,11 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 
 **Validation rules**
 
-- reference must be a valid UUID format
+- submission-reference must identify the submitted payload
 - application-types must reference valid application type codelist values
+- specification-profile must reference a valid specification profile codelist value
 - planning-authority must be a valid organisation reference
-- modules must reference existing module definitions
-- document references must be unique within the application
+- document references must be unique within the submission
 - file must contain base64-content
 - document-types must reference valid planning requirement codelist values
 
@@ -118,8 +119,8 @@ Name and contact information if an agent is being used.
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| agent-reference | Agent reference | A reference to an agent object | MUST |  |
-| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+| agent-reference | Agent reference | A reference to an agent object | MAY |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MAY |  |
 
 
 **Contact details component**
@@ -267,12 +268,13 @@ Details of any conflict of interest that may exist between the applicant and pla
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
 | conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
-| conflict-person-name | Conflict person name | Name of the individual with the conflict of interest that matches one of the names provided in applicants/agent section | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
+| person-reference | Person reference | Reference to the applicant or agent with the conflict | MAY | Rule: is a MUST if `conflict-to-declare` is `True`. Used to link named individuals from the form to a particular declaration or confirmation statement, for example in the declaration module.
+ |
 | conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
 
 **Validation rules**
 
-- conflict-person-name must match a name provided in applicants or agent sections
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
 
 ## Biodiversity, geological and archaeological conservation
 
@@ -316,15 +318,17 @@ Signed and dated verification of the application's accuracy.
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| name | Name | A name of a person | MUST |  |
+| person-reference | Person reference | Declaration must be made by an applicant or agent making the application | MUST | Used to link named individuals from the form to a particular declaration or confirmation statement, for example in the declaration module.
+ |
 | declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
 | declaration-date | Declaration date | The date the declaration was made | MUST |  |
 
 **Validation rules**
 
-- name must match one of the named individuals in the application
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
+- declaration-confirmed must be `true` for a submission to be valid
 
 ## Designated areas
 
@@ -510,23 +514,23 @@ close-time | Close time | Closing time | MUST | Format: HH:MM
 - open-time and close-time must be in HH:MM format
 - close-time must be after open-time within same time range
 
-## Ownership certificates and agricultural land declaration
+## Oil and gas ownership and notices
 
-Who will be affected by the proposal and whether they have been notified, such as agricultural tenants
+Ownership, agricultural tenant and public notice details for extraction of oil and gas applications
 
-**Ownership certificates and agricultural land declaration module**
+**Oil and gas ownership and notices module**
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| sole-owner | Sole owner | Is the applicant the sole owner of the land? | MUST |  |
-| agricultural-tenants | Agricultural tenants | Are there any agricultural tenants on the land? | MUST |  |
-| owners-and-tenants | Owners and tenants[]{} | List of known owners and agricultural tenants | MAY |  |
-| steps-taken | Steps taken | Description of steps taken to identify unknown owners or tenants | MAY | Required for Certificate-C or Certificate-D |
-| newspaper-notices | Newspaper notices[]{} | Details of notices published in papers | MAY | Required for Certificate-C or Certificate-D |
-| ownership-cert-option | Ownership certificate type | The type of ownership certificate based on ownership and tenancy status | MAY | Select from the **ownership-cert-type** enum. Certificate type determined by ownership and notification status |
-| applicant-signature | Applicant signature | Digital signature of the applicant | MAY |  |
-| agent-signature | Agent signature | Digital signature of the agent (if applicable) | MAY |  |
-| declaration-date | Declaration date | The date the declaration was made | MAY |  |
+| owners-and-tenants | Owners and tenants[]{} | Owners and agricultural tenants who were served notice | MUST |  |
+| valid-posted-notices | Valid posted notices[]{} | Notices posted in each parish or ward and displayed for the required period | MUST |  |
+| invalid-posted-notices | Invalid posted notices[]{} | Notices that were posted but not displayed for the required period | MAY |  |
+| steps-taken | Steps taken | Steps taken to protect or replace notices that were removed, obscured or defaced | MAY |  |
+| newspaper-notices | Newspaper notices[]{} | Newspaper notices published in the area where the land is situated | MUST |  |
+| person-reference | Person reference | Declaration must be made by an applicant or agent making the application | MUST | Used to link named individuals from the form to a particular declaration or confirmation statement, for example in the declaration module.
+ |
+| declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
+| declaration-date | Declaration date | The date the declaration was made | MUST |  |
 
 
 **Notified person component**
@@ -534,7 +538,16 @@ Who will be affected by the proposal and whether they have been notified, such a
 field | name | description | required | notes
 -- | -- | -- | -- | --
 person | Person{} | details of the owner (or tenant when not a listed building consent application) | MAY | 
-notice-date | Notice date | Date when notice was served | MAY | 
+notice-served-date | Notice served date | Date when notice was served | MAY | 
+
+
+**Posted notice component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+parish-ward | Parish or ward | Parish or ward where the notice was posted | MUST | Could become a codelist-backed field in future, but this would need canonical ward and parish datasets to be available first.
+notice-location | Notice location | Location where the notice was posted | MUST | 
+notice-posted-date | Notice posted date | Date when the notice was posted | MUST | 
 
 
 **Newspaper notice component**
@@ -555,7 +568,14 @@ last-name | Last Name | The last name of the individual | MUST |
 address-text | Address Text | Flexible field for capturing addresses | MUST | 
 postcode | Postcode | The postal code | MAY | 
 
+**Validation rules**
 
+- valid-posted-notices and invalid-posted-notices must include at least one notice in every parish or ward where the application land is situated
+- steps-taken is required when `invalid-posted-notices` is provided
+- newspaper-notices.publication-date must not be earlier than 21 days before the application date
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
+- declaration-date must not be in the future
+- declaration-confirmed must be `true` for a submission to be valid
 
 ## Access and rights of way
 
@@ -582,10 +602,10 @@ reference | Reference | A unique reference for the data item | MUST |
 
 **Validation rules**
 
-- All fields must use values from rights-of-way-answers codelist
-- If new-altered-vehicle is yes, details must be provided
-- If change-right-of-way is yes, separate rights of way order may be needed
-- If temp-right-of-way is yes, details of temporary diversions must be provided
+- All fields must use values from rights-of-way-answer codelist
+- If new-altered-vehicle is true, details must be provided
+- If change-right-of-way is true, separate rights of way order may be needed
+- If temp-right-of-way is true, details of temporary diversions must be provided
 - each document in supporting-documents must have a `reference` that matches a document in application.documents
 
 ## Plans, drawings and supporting materials
@@ -596,7 +616,7 @@ Additional materials and specifications that form part of the planning applicati
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| supporting-documents | Supporting documents[]{} | References to supporting documents that have been uploaded with the application | MUST |  |
+| supporting-documents | Supporting documents[]{} | References to the plans, drawings and supporting materials already included in the application document list that are relevant to this part of the application | MUST |  |
 | inspection-address | Inspection address | Full postal address where supporting material can be inspected | MUST | Should this be the address-text field |
 
 
@@ -650,7 +670,7 @@ easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | M
 northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
 latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
 longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | A text description providing details about the subject. | MAY | 
 uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | uprns are not needed in case of notification for work to trees in conservation area
 
 **Validation rules**
@@ -672,7 +692,7 @@ For oil and gas extraction developments, who owns or has an interest in the site
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
 | site-owner | Site owner{} | Details of the owner of the development site | MUST |  |
-| applicant-interest | Applicant interest | Description of the applicant's interest in the land | MUST |  |
+| applicant-interest | Applicant interest | Details of the applicant's interest in the land | MUST |  |
 | applicant-interest-adjoining-land | Applicant interest adjoining land | Description of the applicant's interest in the adjacent land | MUST |  |
 
 
@@ -849,13 +869,13 @@ Below are the codelists required to support this specification:
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | hh |  | Householder planning application | A simplified process for applications to alter or enlarge a single house (but not a flat), including works within the boundary/garden |  | https://www.legislation.gov.uk/ukpga/1990/8/section/62 |  | 2025-01-07 |  |  |
 | full |  | Full planning permission | This application is needed when making detailed proposals for developments which are not covered by a householder application or permitted development rights |  | https://www.legislation.gov.uk/ukpga/1990/8/section/62 |  | 2025-01-07 |  |  |
-| outline |  | Outline planning | Applications that are used to understand whether the basic nature of a development is viable |  | https://www.legislation.gov.uk/ukpga/1990/8/section/92 |  | 2025-01-07 |  |  |
-| reserved-matters |  | Reserved matters | This application is only required when the applicant has already been granted outline planning permission. Reserved matters can include appearance, means of access, landscaping, layout and scale |  | https://www.legislation.gov.uk/ukpga/1990/8/section/196D;https://www.legislation.gov.uk/ukpga/1990/9/section/69 |  | 2025-01-07 |  |  |
+| outline |  | Outline planning base type | Applications that are used to understand whether the basic nature of a development is viable |  | https://www.legislation.gov.uk/ukpga/1990/8/section/92 |  | 2025-01-07 |  |  |
+| reserved-matters |  | Reserved matters | An application to provide details on appearance, means of access, landscaping, layout and scale, following an outline application |  | https://www.legislation.gov.uk/ukpga/1990/8/section/196D;https://www.legislation.gov.uk/ukpga/1990/9/section/69 |  | 2025-01-07 |  |  |
 | demolition-con-area |  | Planning permission for relevant demolition in a conservation area | An application for planning permission involving the demolition of any unlisted building or structure in a conservation area if permission is required |  | https://www.legislation.gov.uk/ukpga/1990/8/section/196D |  | 2025-01-07 |  |  |
 | lbc |  | Listed building consent | An application for works for the demolition of a listed building or for its alteration or extension in any manner which would affect its character as a building of special architectural or historic interest |  | https://www.legislation.gov.uk/ukpga/1990/9/contents |  | 2025-01-07 |  |  |
-| advertising |  | Advertising | An application for all types of advertisements and signs |  | https://www.legislation.gov.uk/uksi/2007/783/introduction/made |  | 2025-01-07 |  |  |
-| ldc |  | Lawful development certificate | A legal document stating the lawfulness of past, present or future building use, operation or other matters, signifying that enforcement action cannot be carried out against the development |  | https://www.legislation.gov.uk/ukpga/1990/8/part/VII/crossheading/established-use-certificates;https://www.legislation.gov.uk/uksi/2015/595/contents/made |  | 2025-01-07 |  |  |
-| prior-approval |  | Prior approval | This applies to  developments with permitted development rights (where developments are granted planning permission by national legislation without the need to submit a planning application) |  | https://www.legislation.gov.uk/uksi/2015/596/contents |  | 2025-01-07 |  |  |
+| advertising |  | Advertising consent | An application for all types of advertisements and signs |  | https://www.legislation.gov.uk/uksi/2007/783/introduction/made |  | 2025-01-07 |  |  |
+| ldc |  | Lawful development certificate base type | A legal document stating the lawfulness of past, present or future building use, operation or other matters, signifying that enforcement action cannot be carried out against the development |  | https://www.legislation.gov.uk/ukpga/1990/8/part/VII/crossheading/established-use-certificates;https://www.legislation.gov.uk/uksi/2015/595/contents/made |  | 2025-01-07 |  |  |
+| prior-approval |  | Prior approval base type | This applies to  developments with permitted development rights (where developments are granted planning permission by national legislation without the need to submit a planning application) |  | https://www.legislation.gov.uk/uksi/2015/596/contents |  | 2025-01-07 |  |  |
 | s73 |  | Removal or variation of a condition following grant of planning permission | Applications for a removal or variation of a condition after planning permission has been granted | s73;Section 73;Minor Material Amendment | https://www.legislation.gov.uk/ukpga/1990/8/section/73;https://www.legislation.gov.uk/ukpga/1990/9/section/19 | Case law: Armstrong v Secretary of State for Levelling Up, Housing and Communities (2023)
 Hillside Parks Ltd v Snowdonia National Park Authority (2022) | 2025-01-07 |  |  |
 | approval-condition |  | Approval of details reserved by condition | An application to have conditions approved which have been applied at the time of granting a planning permission to limit and control the way in which the planning permission has been implemented | Details pursuant;Discharge of condition;Approval of details;AOD;Details application;DET;Approval (Discharge) of Planning Condition | https://www.legislation.gov.uk/ukpga/1990/8/section/74A;https://www.legislation.gov.uk/ukpga/1990/9/contents |  | 2025-01-07 |  |  |
@@ -880,17 +900,17 @@ Hillside Parks Ltd v Snowdonia National Park Authority (2022) | 2025-01-07 |  | 
 | reg-3 |  | Regulation 3 planning application | Regulation 3 of the Town and Country Planning General Regulations 1992 allows a local planning authority to grant planning permission for its own development, essentially acting as both the applicant and the decision-maker. This means a council can approve development projects on land they own, even if it might otherwise be restricted. |  | https://www.legislation.gov.uk/uksi/1992/1492/regulation/3/made | While Reg 3 is a seperate type of application, they are currently dealt with via a tick box at the beginning of the application form, rather than a seperate or different application form | 2025-09-10 |  |  |
 | reg-4 |  | Regulation 4 planning application | Where a planning authority applies for permission to develop land they own or have an interest in, but do not intend to develop themselves. In such cases, Regulation 4 dictates that the application is determined by the authority itself, unless the Secretary of State decides to take over the determination. |  | https://www.legislation.gov.uk/uksi/1992/1492/regulation/4/made | While Reg 4 is a seperate type of application, they are currently dealt with via a tick box at the beginning of the application form, rather than a seperate or different application form | 2025-09-10 |  |  |
 | mineral-app |  | Mineral planning applications | A mineral planning application is a request for permission to extract minerals or carry out related development. |  | https://www.legislation.gov.uk/ukpga/1995/25/schedule/14/crossheading/application-to-determine-the-conditions-to-which-the-mineral-permissions-relating-to-a-mining-site-are-to-be-subject |  | 2025-09-10 |  |  |
-| technical-details-consent |  | Technical Details Consent | Technical Details Consent (TDC) is the second stage of the 'Permission in Principle' (PiP) process in planning, primarily for housing-led development. It follows the initial 'Permission in Principle' stage, which establishes whether a site is suitable in principle for development. TDC assesses the detailed design, layout, and other technical aspects of the proposed development. |  | https://www.legislation.gov.uk/uksi/2015/596/article/7 | Technical details consent accompanies permission in principle, and has the same requirements as an application for full planning permission. Therefore technical details consent is submitted using the full application form, where there is a field which allows the applicant to provide reference to the original permission in principle application. Where this is filled in, the officer will be able to infer that the application is therefore a technical details consent. Technical details consent should be captured separately from full planning permission, and we should ensure that it can be linked to the permission in principle application. | 2025-09-10 |  |  |
+| technical-details-consent |  | Technical Details Consent | Technical Details Consent (TDC) is the second stage of the 'Permission in Principle' (PiP) and is for assessing the detailed design, layout, and other technical aspects of the proposed development. |  | https://www.legislation.gov.uk/uksi/2015/596/article/7 | Technical details consent accompanies permission in principle, and has the same requirements as an application for full planning permission. Therefore technical details consent is submitted using the full application form, where there is a field which allows the applicant to provide reference to the original permission in principle application. Where this is filled in, the officer will be able to infer that the application is therefore a technical details consent. Technical details consent should be captured separately from full planning permission, and we should ensure that it can be linked to the permission in principle application. | 2025-09-10 |  |  |
 | romp |  | Review of mineral permission (ROMP) | The ROMP review is an important piece of legislation allowing MPAs to update older mineral planning permissions to bring them into line with modern standards of environmental protection and planning control, and to impose modern restoration and aftercare conditions. | ROMP | https://www.legislation.gov.uk/ukpga/1995/25/schedule/14/crossheading/application-to-determine-the-conditions-to-which-the-mineral-permissions-relating-to-a-mining-site-are-to-be-subject |  | 2025-09-10 |  |  |
 | haz-substance-consent |  | Hazardous Substances Consent | Hazardous Substance Consent is required when substances on a site are at, or in excess of the 'controlled quantity' as set out in the Planning (Hazardous Substances) Regulations 2015. |  | https://www.legislation.gov.uk/uksi/2015/627/contents |  | 2025-09-10 |  |  |
 | psi-app |  | Public Service Infrastructure applications | Public Service Infrastructure (PSI) applications in planning refer to proposals for major developments related to essential public services like schools, hospitals, and criminal justice accommodation. These applications are subject to specific regulations and accelerated decision-making timelines to ensure timely delivery of these crucial public services. | psi | https://www.legislation.gov.uk/uksi/2021/746/made | Currently handled with a checkbox in the full application form | 2025-09-10 |  |  |
-| ldc-existing-use | ldc | LDC Existing Use | Existing use of the site |  |  |  | 2025-10-29 |  |  |
-| ldc-prospective-use | ldc | LDC Proposed Use | Prospective use of the site |  |  |  | 2025-10-29 |  |  |
-| ldc-proposed-work-lb | ldc | LDC Proposed Work to a Listed Building | Proposed work to a listed building |  |  |  | 2025-10-29 |  |  |
+| ldc-existing-use | ldc | Lawful development certificate: Existing Use | An application for a certificate confirming that an existing use of land, operational development or an activity being carried out in breach of a planning condition is lawful for planning purposes |  |  |  | 2025-10-29 |  |  |
+| ldc-prospective-use | ldc | Lawful development certificate: Proposed Use | An application for a certificate confirming that a proposed use of buildings or other land, or operations proposed to be carried out in, on, over or under land, would be lawful for planning purposes. |  |  |  | 2025-10-29 |  |  |
+| ldc-proposed-work-lb |  | Lawful development certficate: Proposed Work to a Listed Building | An application for a certificate confirming whether proposed works to a listed building would be lawful because they do not require listed building consent |  | https://www.legislation.gov.uk/ukpga/1990/9/section/26H;https://www.legislation.gov.uk/ukpga/1990/9/section/26I |  | 2025-10-29 |  |  |
 | outline-some | outline | Outline Planning Permission with Some Matters Reserved | Outline planning permission with some matters reserved |  |  |  | 2025-10-29 |  |  |
 | outline-all | outline | Outline Planning Permission with All Matters Reserved | Outline planning permission with all matters reserved |  |  |  | 2025-10-29 |  |  |
-| pa-extension | prior-approval | Larger Home Extension | Planning application for extension |  |  |  | 2025-10-29 |  |  |
-| pa-storey | prior-approval | Additional storeys | Enlargement of a dwellinghouse by construction of additional storeys |  |  |  | 2025-10-29 |  |  |
+| pa-extension | prior-approval | Prior approval: Larger Home Extension | An application for prior approval for a proposed larger single-storey rear extension to a dwellinghouse under permitted development rights. |  |  |  | 2025-10-29 |  |  |
+| pa-storey | prior-approval | Prior approval: Additional storeys | Enlargement of a dwellinghouse by construction of additional storeys |  |  |  | 2025-10-29 |  |  |
 | pa-demo-building | prior-approval | Demolition of building | Application to determine if prior approval is required for demolition of a building |  |  |  | 2026-03-02 |  |  |
 | cho-agri-to-dwh | prior-approval | Change of use from agricultural buildings to dwellinghouses | Change of use from agricultural or former agricultural buildings to dwellinghouses |  |  |  | 2026-03-02 |  |  |
 | cho-commercial-to-dwh | prior-approval | Change of use from commercial buildings to dwellinghouses | Change of use from commercial or business or service use to dwellinghouses |  |  |  | 2026-03-02 |  |  |
@@ -951,14 +971,14 @@ Hillside Parks Ltd v Snowdonia National Park Authority (2022) | 2025-01-07 |  | 
 
 | reference | name | description | related-proposal-required |
 | --- | --- | --- | --- |
-| oil-gas-full-permission | Full planning permission for oil and gas working |  | No |
-| waste-full-permission | Full planning permission for controlled waste |  | No |
-| renewal-unimplemented | Renewal of unimplemented permission |  | Yes |
-| renewal-temporary | Renewal of temporary permission |  | Yes |
-| extension-existing-site | Extension to an existing site |  | Yes |
-| variation-condition | Variation of condition(s) |  | Yes |
-| romp-review | Review of conditions for Mineral Permissions (ROMPs) |  | Yes |
-| minerals-development | Previous permissions for minerals development on the site |  | Yes |
+| oil-gas-full-permission | Full planning permission for oil and gas working |  | False |
+| waste-full-permission | Full planning permission for controlled waste |  | False |
+| renewal-unimplemented | Renewal of unimplemented permission |  | True |
+| renewal-temporary | Renewal of temporary permission |  | True |
+| extension-existing-site | Extension to an existing site |  | True |
+| variation-condition | Variation of condition(s) |  | True |
+| romp-review | Review of conditions for Mineral Permissions (ROMPs) |  | True |
+| minerals-development | Previous permissions for minerals development on the site |  | True |
 
 ### Schedule day
 

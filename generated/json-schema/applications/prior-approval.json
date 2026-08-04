@@ -30,8 +30,8 @@
     "site-details": {
       "$ref": "#/definitions/site-details"
     },
-    "application": {
-      "$ref": "#/definitions/application"
+    "submission-details": {
+      "$ref": "#/definitions/submission-details"
     }
   },
   "required": [
@@ -43,7 +43,7 @@
     "checklist",
     "declaration",
     "site-details",
-    "application"
+    "submission-details"
   ],
   "definitions": {
     "site-location": {
@@ -65,10 +65,10 @@
           "type": "number"
         },
         "latitude": {
-          "type": "number"
+          "type": "string"
         },
         "longitude": {
-          "type": "number"
+          "type": "string"
         },
         "description": {
           "type": "string"
@@ -79,6 +79,41 @@
             "type": "string"
           },
           "minItems": 1
+        }
+      },
+      "required": []
+    },
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
         }
       },
       "required": []
@@ -123,41 +158,6 @@
         "address-text"
       ]
     },
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
-    "phone-number": {
-      "type": "object",
-      "properties": {
-        "number": {
-          "type": "string"
-        },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
-    },
     "agent": {
       "type": "object",
       "properties": {
@@ -181,6 +181,26 @@
       "required": [
         "reference",
         "person"
+      ]
+    },
+    "conflict-of-interest": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "agent-contact": {
+      "type": "object",
+      "properties": {
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "agent-reference",
+        "contact-details"
       ]
     },
     "site-details": {
@@ -222,6 +242,25 @@
         "applicants"
       ]
     },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "person-reference": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "person-reference",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
     "applicant-contact": {
       "type": "object",
       "properties": {
@@ -252,49 +291,10 @@
         "national-req-types"
       ]
     },
-    "agent-contact": {
+    "submission-details": {
       "type": "object",
       "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
-    "conflict-of-interest": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    },
-    "declaration": {
-      "type": "object",
-      "properties": {
-        "name": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "name",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
-    "application": {
-      "type": "object",
-      "properties": {
-        "reference": {
+        "submission-reference": {
           "type": "string"
         },
         "application-types": {
@@ -379,6 +379,14 @@
             ]
           },
           "minItems": 1
+        },
+        "specification-profile": {
+          "type": "string",
+          "enum": [
+            "mhclg-core",
+            "gla",
+            "national-public-view"
+          ]
         },
         "planning-authority": {
           "type": "string",
@@ -804,15 +812,11 @@
             "development-corporation:Q137717415"
           ]
         },
-        "submission-date": {
+        "submitted-at": {
           "type": "string"
         },
-        "modules": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
+        "created-at": {
+          "type": "string"
         },
         "documents": {
           "type": "array",
@@ -826,11 +830,12 @@
         }
       },
       "required": [
-        "reference",
+        "submission-reference",
         "application-types",
+        "specification-profile",
         "planning-authority",
-        "submission-date",
-        "modules",
+        "submitted-at",
+        "created-at",
         "documents"
       ]
     },
@@ -922,7 +927,11 @@
               "habitat-baseline",
               "proposed-habitat-plan",
               "sustainability-statement",
-              "bng-metric"
+              "bng-metric",
+              "site-investigation",
+              "construction-management-plan",
+              "waste-management-plan",
+              "water-impact-assessment"
             ]
           },
           "minItems": 1
@@ -955,7 +964,7 @@
           "type": "string"
         },
         "file-size": {
-          "type": "number"
+          "type": "integer"
         }
       },
       "required": [

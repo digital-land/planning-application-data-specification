@@ -6,9 +6,9 @@ Names and contact details for all parties with an interest in the proposed devel
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| applicant-interest | Applicant interest | Description of the applicant's interest in the land |  | MUST |  |
+| applicant-interest-type | Applicant interest type | The applicant’s relationship to the land, property or building |  | MUST | Select from the **applicant-interest-type** enum |
 | owner-details | Owner details[]{} | Details of property owners including their personal information and notification status |  | MAY |  |
-| interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status |  | MAY | Rule: is a MUST if `applicant-interest` is `none` |
+| interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status |  | MAY | Rule: is a MUST if `applicant-interest-type` is `none` |
 
 
 **LDC Owner Details component**
@@ -41,7 +41,7 @@ postcode | Postcode | The postal code | MAY |
 
 **Validation rules**
 
-- if applicant-interest is 'lessee' or 'occupier', then owner-details is required
-- if applicant-interest is 'none', then interested-persons is required
+- if applicant-interest-type is 'lessee' or 'occupier', then owner-details is required
+- if applicant-interest-type is 'none', then interested-persons is required
 - if applicant-owns-land is false, then permission-obtained is required
 - if applicant-owns-land is false and permission-obtained is false, then permission-not-obtained-details is required

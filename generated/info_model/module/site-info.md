@@ -16,7 +16,7 @@ Any additional relevant information about the development site.
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-value | Value | Numeric value representing a measurement or quantity | MUST | 
+size | Size | Size of the development site area | MUST | 
 unit | Unit | Unit of measurement for a value | MUST | 
 provided-by | Provided by | Whether the information was provided by the applicant or calculated by the system | MAY | Select from the **provided-by** enum
 

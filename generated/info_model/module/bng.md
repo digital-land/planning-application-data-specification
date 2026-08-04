@@ -7,9 +7,9 @@ How any natural habitats on the development site will be improved by the propose
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
 | bng-exempt | Biodiversity gain exemption | Statement whether the biodiversity gain condition will apply if permission is granted. Householder applicants need to confirm the biodiversity gain condition does not apply. | hh | MUST |  |
-| bng-condition-applies | Biodiversity gain condition applies | Does the applicant believe the Biodiversity Gain Condition applies to this application | full, outline, demolition-con-area | MUST |  |
-| bng-condition-exemption-reasons | Biodiversity gain condition exemption reason[]{} | Reasons why BNG does not apply, referencing exemptions or transitional arrangements | full, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `False` |
-| bng-details | Biodiversity net gain details{} | Comprehensive details about biodiversity net gain assessment including pre-development value, habitat loss information, and supporting documentation | full, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `True` |
+| bng-condition-applies | Biodiversity gain condition applies | Does the applicant believe the Biodiversity Gain Condition applies to this application | full, technical-details-consent, outline, demolition-con-area | MUST |  |
+| bng-condition-exemption-reasons | Biodiversity gain condition exemption reason[]{} | Reasons why BNG does not apply, referencing exemptions or transitional arrangements | full, technical-details-consent, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `False` |
+| bng-details | Biodiversity net gain details{} | Comprehensive details about biodiversity net gain assessment including pre-development value, habitat loss information, and supporting documentation | full, technical-details-consent, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `True` |
 
 
 **BNG exemption reason component**
@@ -58,6 +58,6 @@ details | Details | Additional details or information about an item | MAY |  | p
 - bng-condition-applies == true REQUIRES bng-details
 - application-type == 'hh' RECOMMENDS bng-exempt == false
 - bng-condition-exemption-reasons[].exemption-type must be from bng-exemption-type codelist
-- bng-details.pre-development-date <= application-submission-date OR earlier-date-reason provided
+- bng-details.pre-development-date < submission-details.submitted-at REQUIRES bng-details.earlier-date-reason
 - bng-details.habitat-loss-after-2020 == true REQUIRES bng-details.habitat-loss-details
 - bng-details.irreplaceable-habitats == true REQUIRES bng-details.irreplaceable-habitats-details

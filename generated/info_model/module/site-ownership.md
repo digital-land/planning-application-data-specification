@@ -7,7 +7,7 @@ For oil and gas extraction developments, who owns or has an interest in the site
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
 | site-owner | Site owner{} | Details of the owner of the development site |  | MUST |  |
-| applicant-interest | Applicant interest | Description of the applicant's interest in the land |  | MUST |  |
+| applicant-interest | Applicant interest | Details of the applicant's interest in the land |  | MUST |  |
 | applicant-interest-adjoining-land | Applicant interest adjoining land | Description of the applicant's interest in the adjacent land |  | MUST |  |
 
 

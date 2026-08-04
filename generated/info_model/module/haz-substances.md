@@ -6,8 +6,8 @@ Details of hazardous substances requiring consent used as part of the developmen
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| involves-hazardous-substances | Involves hazardous substances | Indicates if hazardous substances are involved in the proposal | full, outline | MUST | Select from the **yes-no-not-applicable** enum |
-| substance-types | Substance types[]{} | List of hazardous substances and their quantities | full, outline | MAY | Rule: is a MUST if `involves-hazardous-substances` is `yes` |
+| involves-hazardous-substances | Involves hazardous substances | Indicates if hazardous substances are involved in the proposal | full, technical-details-consent, outline | MUST | Select from the **yes-no-not-applicable** enum |
+| substance-types | Substance types[]{} | List of hazardous substances and their quantities | full, technical-details-consent, outline | MAY | Rule: is a MUST if `involves-hazardous-substances` is `yes` |
 | hazardous-sub-consent-req | Hazardous substance consent required | Does the proposal involve the use or storage of any substances requiring hazardous substances consent | extraction-oil-gas | MUST |  |
 | hazardous-sub-consent-details | Hazardous substance consent details | Details of hazardous substance consent requirements | extraction-oil-gas | MAY | Rule: is a MUST if `hazardous-sub-consent-req` is `True` |
 

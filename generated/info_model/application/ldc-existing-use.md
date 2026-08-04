@@ -1,6 +1,7 @@
-# LDC Existing Use
+# Lawful development certificate: Existing use or development
 
-Existing use of the site
+An application for a certificate confirming that an existing use of land, operational development or an activity being carried out in breach of a planning condition is lawful for planning purposes
+
 
 ## Contents
 
@@ -33,20 +34,21 @@ Existing use of the site
 * [Use class](#use-class)
 * [User role type](#user-role-type)
 
-## Application fields
+## Submission details fields
 
-Core planning application structure containing reference information,
-application types, submission details, modules, documents, and fees
+Details about the submitted payload, including reference information,
+application types, specification profile, destination, documents, and fees
 
-**Application fields module**
+**Submission details fields module**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+submission-reference | Submission reference | A unique reference for the submission | MUST | 
 application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum
+specification-profile | Specification profile | The specification profile used to determine context-specific allowed codelist values for the application | MUST | Select from the **specification-profile** enum
 planning-authority | Planning authority | A reference of the planning authority the application has been submitted to, e.g. local-authority:CMD for London borough of Camden | MUST | Select from the **planning-authority** enum. Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk
-submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST | 
-modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST | 
+submitted-at | Submitted at | The date and time the application was submitted | MUST | 
+created-at | Created at | The date and time the submission payload was created | MUST | 
 documents | Documents[]{} | List of submitted documents with references and details | MUST | 
 fee | Fee{} | The fee payable for the application including amounts and transaction details | MAY | 
 
@@ -60,7 +62,7 @@ name | Name | The name or title of the document | MUST |
 description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 uploaded-date | Uploaded date | The date the document was uploaded to the application | MUST | 
-file | File{} | The digital file or a reference to where the file is stored | MUST | 
+file | File{} | Details of the digital file attached to a submission | MUST | 
 
 
 **Fee component**
@@ -83,11 +85,11 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 
 **Validation rules**
 
-- reference must be a valid UUID format
+- submission-reference must identify the submitted payload
 - application-types must reference valid application type codelist values
+- specification-profile must reference a valid specification profile codelist value
 - planning-authority must be a valid organisation reference
-- modules must reference existing module definitions
-- document references must be unique within the application
+- document references must be unique within the submission
 - file must contain base64-content
 - document-types must reference valid planning requirement codelist values
 
@@ -99,8 +101,8 @@ Name and contact information if an agent is being used.
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| agent-reference | Agent reference | A reference to an agent object | MUST |  |
-| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+| agent-reference | Agent reference | A reference to an agent object | MAY |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MAY |  |
 
 
 **Contact details component**
@@ -242,10 +244,14 @@ Details of any conflict of interest that may exist between the applicant and pla
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
+| conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
+| person-reference | Person reference | Reference to the applicant or agent with the conflict | MAY | Rule: is a MUST if `conflict-to-declare` is `True`. Used to link named individuals from the form to a particular declaration or confirmation statement, for example in the declaration module.
+ |
+| conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
 
 **Validation rules**
 
-- conflict-person-name must match a name provided in applicants or agent sections
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
 
 ## Declaration
 
@@ -255,15 +261,17 @@ Signed and dated verification of the application's accuracy.
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| name | Name | A name of a person | MUST |  |
+| person-reference | Person reference | Declaration must be made by an applicant or agent making the application | MUST | Used to link named individuals from the form to a particular declaration or confirmation statement, for example in the declaration module.
+ |
 | declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
 | declaration-date | Declaration date | The date the declaration was made | MUST |  |
 
 **Validation rules**
 
-- name must match one of the named individuals in the application
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
+- declaration-confirmed must be `true` for a submission to be valid
 
 ## Description of existing use
 
@@ -348,9 +356,9 @@ Names and contact details for all parties with an interest in the proposed devel
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| applicant-interest | Applicant interest | Description of the applicant's interest in the land | MUST |  |
+| applicant-interest-type | Applicant interest type | The applicant’s relationship to the land, property or building | MUST | Select from the **applicant-interest-type** enum |
 | owner-details | Owner details[]{} | Details of property owners including their personal information and notification status | MAY |  |
-| interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status | MAY | Rule: is a MUST if `applicant-interest` is `none` |
+| interested-persons | Interested persons[]{} | Details of persons with an interest in the property including their personal information, nature of interest, and notification status | MAY | Rule: is a MUST if `applicant-interest-type` is `none` |
 
 
 **LDC Owner Details component**
@@ -383,8 +391,8 @@ postcode | Postcode | The postal code | MAY |
 
 **Validation rules**
 
-- if applicant-interest is 'lessee' or 'occupier', then owner-details is required
-- if applicant-interest is 'none', then interested-persons is required
+- if applicant-interest-type is 'lessee' or 'occupier', then owner-details is required
+- if applicant-interest-type is 'none', then interested-persons is required
 - if applicant-owns-land is false, then permission-obtained is required
 - if applicant-owns-land is false and permission-obtained is false, then permission-not-obtained-details is required
 
@@ -473,7 +481,7 @@ easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | M
 northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
 latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
 longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | A text description providing details about the subject. | MAY | 
 uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | uprns are not needed in case of notification for work to trees in conservation area
 
 **Validation rules**

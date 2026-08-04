@@ -1,6 +1,7 @@
 # Agricultural or forestry building details
 
-Agricultural or forestry building details
+Details of the proposed agricultural or forestry building, including operation type, dimensions, materials
+
 
 **Agricultural or forestry building details module**
 
@@ -28,7 +29,7 @@ Agricultural or forestry building details
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-details | Details | Additional details or information about an item | MUST | 
+details | Details | A description of the proposed agricultural or forestry building type | MUST | 
 building-length | Building length | Length of the proposed agricultural or forestry building in metres. | MUST | 
 eaves-height | Eaves height | Height at the eaves of the extension, measured externally from natural ground level in metres | MUST | 
 building-breadth | Building breadth | Breadth of the proposed agricultural or forestry building in metres | MUST | 

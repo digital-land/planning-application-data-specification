@@ -1,8 +1,9 @@
-# agri-forest-dev-elig
+# Agricultural and forestry development eligibility
+
+Information needed to assess agricultural unit, land parcel, agricultural purpose and wider site constraints
 
 
-
-**agri-forest-dev-elig module**
+**Agricultural and forestry development eligibility module**
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |

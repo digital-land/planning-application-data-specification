@@ -16,7 +16,7 @@ Whether certain eligibility criteria has been met and the right people notified
 field | name | description | required | notes
 -- | -- | -- | -- | --
 person | Person{} | details of the owner (or tenant when not a listed building consent application) | MAY | 
-notice-date | Notice date | Date when notice was served | MAY | 
+notice-served-date | Notice served date | Date when notice was served | MAY | 
 
 
 **Person obj component**

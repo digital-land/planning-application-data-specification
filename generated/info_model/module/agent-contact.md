@@ -6,8 +6,8 @@ Name and contact information if an agent is being used.
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| agent-reference | Agent reference | A reference to an agent object |  | MUST |  |
-| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. |  | MUST |  |
+| agent-reference | Agent reference | A reference to an agent object |  | MAY |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. |  | MAY |  |
 
 
 **Contact details component**

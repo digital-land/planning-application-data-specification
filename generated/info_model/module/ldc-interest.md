@@ -6,9 +6,9 @@ Who had a say in whether the proposal should go ahead
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| applicant-interest | Applicant interest | Applicant's interest in the listed building |  | MUST |  |
+| applicant-interest-type | Applicant interest type | The applicant’s relationship to the land, property or building |  | MUST | Select from the **applicant-interest-type** enum |
 | owner-details | Owner details[]{} | Details of the owner if the applicant is a lessee or occupier |  | MAY |  |
-| interested-persons | Interested persons[]{} | Details of other interested persons in the listed building |  | MAY |  |
+| interested-persons | Interested persons[]{} | Details of other interested persons in the listed building |  | MAY | Rule: is a MUST if `applicant-interest-type` is `none` |
 
 
 **LDC Owner Details component**
@@ -41,6 +41,6 @@ postcode | Postcode | The postal code | MAY |
 
 **Validation rules**
 
-- owner-details is required if applicant-interest is 'lessee' or 'occupier'
-- interested-persons is required if applicant-interest is 'none'
+- owner-details is required if applicant-interest-type is 'lessee' or 'occupier'
+- interested-persons is required if applicant-interest-type is 'none'
 - at least one of owner-details or interested-persons must be provided

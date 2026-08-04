@@ -43,20 +43,21 @@ Applications that are used to understand whether the basic nature of a developme
 * [Waste capacity unit](#waste-capacity-unit)
 * [Waste management type](#waste-management-type)
 
-## Application fields
+## Submission details fields
 
-Core planning application structure containing reference information,
-application types, submission details, modules, documents, and fees
+Details about the submitted payload, including reference information,
+application types, specification profile, destination, documents, and fees
 
-**Application fields module**
+**Submission details fields module**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-reference | Reference | A unique reference for the data item | MUST | 
+submission-reference | Submission reference | A unique reference for the submission | MUST | 
 application-types | Application types[] | A list of planning application types that define the nature of the planning application | MUST | Select from the **application-type** enum
+specification-profile | Specification profile | The specification profile used to determine context-specific allowed codelist values for the application | MUST | Select from the **specification-profile** enum
 planning-authority | Planning authority | A reference of the planning authority the application has been submitted to, e.g. local-authority:CMD for London borough of Camden | MUST | Select from the **planning-authority** enum. Currently built by combining local-authority, development-corporation and national-park-authority datasets from planning.data.gov.uk
-submission-date | Submission date | Date the application is submitted in YYYY-MM-DD format | MUST | 
-modules | Modules[] | List of required modules for this application that can be used to validate the application | MUST | 
+submitted-at | Submitted at | The date and time the application was submitted | MUST | 
+created-at | Created at | The date and time the submission payload was created | MUST | 
 documents | Documents[]{} | List of submitted documents with references and details | MUST | 
 fee | Fee{} | The fee payable for the application including amounts and transaction details | MAY | 
 
@@ -70,7 +71,7 @@ name | Name | The name or title of the document | MUST |
 description | Description | Brief description of what the document contains | MAY | 
 document-types | Document types[] | List of codelist references that the document covers | MUST | Select from the **planning-requirement** enum
 uploaded-date | Uploaded date | The date the document was uploaded to the application | MUST | 
-file | File{} | The digital file or a reference to where the file is stored | MUST | 
+file | File{} | Details of the digital file attached to a submission | MUST | 
 
 
 **Fee component**
@@ -93,11 +94,11 @@ file-size | File size | Size of the file in bytes that can be used to enforce li
 
 **Validation rules**
 
-- reference must be a valid UUID format
+- submission-reference must identify the submitted payload
 - application-types must reference valid application type codelist values
+- specification-profile must reference a valid specification profile codelist value
 - planning-authority must be a valid organisation reference
-- modules must reference existing module definitions
-- document references must be unique within the application
+- document references must be unique within the submission
 - file must contain base64-content
 - document-types must reference valid planning requirement codelist values
 
@@ -109,8 +110,8 @@ Name and contact information if an agent is being used.
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| agent-reference | Agent reference | A reference to an agent object | MUST |  |
-| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MUST |  |
+| agent-reference | Agent reference | A reference to an agent object | MAY |  |
+| contact-details | Contact details{} | A structured object containing contact information for an individual. This component is required for planning in principle (PiP) applications and optional for other application types. Contains email and phone contact information. | MAY |  |
 
 
 **Contact details component**
@@ -287,7 +288,7 @@ reference | Reference | A unique reference for the data item | MUST |
 - bng-condition-applies == true REQUIRES bng-details
 - application-type == 'hh' RECOMMENDS bng-exempt == false
 - bng-condition-exemption-reasons[].exemption-type must be from bng-exemption-type codelist
-- bng-details.pre-development-date <= application-submission-date OR earlier-date-reason provided
+- bng-details.pre-development-date < submission-details.submitted-at REQUIRES bng-details.earlier-date-reason
 - bng-details.habitat-loss-after-2020 == true REQUIRES bng-details.habitat-loss-details
 - bng-details.irreplaceable-habitats == true REQUIRES bng-details.irreplaceable-habitats-details
 
@@ -315,12 +316,13 @@ Details of any conflict of interest that may exist between the applicant and pla
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
 | conflict-to-declare | Conflict to declare | Indicates whether any named applicant or agent has a relationship to the planning authority that must be declared | MUST |  |
-| conflict-person-name | Conflict person name | Name of the individual with the conflict of interest that matches one of the names provided in applicants/agent section | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
+| person-reference | Person reference | Reference to the applicant or agent with the conflict | MAY | Rule: is a MUST if `conflict-to-declare` is `True`. Used to link named individuals from the form to a particular declaration or confirmation statement, for example in the declaration module.
+ |
 | conflict-details | Conflict details | Details of the conflict of interest including name, role and how the individual is related to the planning authority | MAY | Rule: is a MUST if `conflict-to-declare` is `True` |
 
 **Validation rules**
 
-- conflict-person-name must match a name provided in applicants or agent sections
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
 
 ## Declaration
 
@@ -330,15 +332,17 @@ Signed and dated verification of the application's accuracy.
 
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
-| name | Name | A name of a person | MUST |  |
+| person-reference | Person reference | Declaration must be made by an applicant or agent making the application | MUST | Used to link named individuals from the form to a particular declaration or confirmation statement, for example in the declaration module.
+ |
 | declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
 | declaration-date | Declaration date | The date the declaration was made | MUST |  |
 
 **Validation rules**
 
-- name must match one of the named individuals in the application
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
+- declaration-confirmed must be `true` for a submission to be valid
 
 ## Employment
 
@@ -483,13 +487,12 @@ Details of changes to non-residential floorspace in the proposed development.
 field | name | description | required | notes
 -- | -- | -- | -- | --
 use | Use | A use class or type of use | MUST | Select from the **use-class** enum. an option needs to be "other"
-specified-use | Specified use | A specified use if no applicable use class is available | MAY | 
-not-applicable | Not applicable | Whether the facility is not applicable | MAY | 
+specified-use | Specified use | A specified use if no applicable use class is available | MAY | should this be use-other?
 existing-gross-floorspace | Existing gross floorspace | Existing gross internal floorspace, in sqm | MUST | 
 is-floorspace-lost-known | Is floorspace lost known | Whether the amount of floorspace to be lost is known | MAY | 
-floorspace-lost | Floorspace lost | Gross floorspace to be lost by change of use, in sqm | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-floorspace-lost-known` is `True`
+floorspace-lost | Floorspace lost | Gross floorspace to be lost by change of use, in sqm | MAY | Rule: is a MUST if `is-floorspace-lost-known` is `True`
 is-total-gross-proposed-known | Is total gross proposed known | Whether the total gross proposed floorspace is known | MAY | 
-total-gross-proposed | Total gross proposed | Total gross internal floorspace proposed, in sqm | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-total-gross-proposed-known` is `True`
+total-gross-proposed | Total gross proposed | Total gross internal floorspace proposed, in sqm | MAY | Rule: is a MUST if `is-total-gross-proposed-known` is `True`
 net-additional-floorspace | Net additional floorspace | Net additional gross internal floorspace, in sqm | MUST | Calculated as total-gross-proposed - existing-gross-floorspace. This should be calculated automatically
 
 
@@ -500,19 +503,19 @@ field | name | description | required | notes
 use-class-accommodation | Use class for accommodation | Type of non-residential use class referring to accommodation uses | MUST | Select from the **use-class-accommodation** enum. Only required for C1, C2, C2A, or Other use classes. Used to indicate gain or loss in room counts
 
 use-other | Use other | Specify use if use is "other" | MAY | Rule: is a MUST if `use-class-accommodation` is `other`. Required if use is "other"
-not-applicable | Not applicable | Used to explicitly state the use class does not apply to the proposal | MAY | 
 is-existing-rooms-lost-known | Is existing rooms lost known | Whether the total existing rooms that will be lost is known | MAY | 
-existing-rooms-lost | Existing rooms lost | Existing rooms to be lost by change of use | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-existing-rooms-lost-known` is `True`. Must be 0 or positive
+existing-rooms-lost | Existing rooms lost | Existing rooms to be lost by change of use | MAY | Rule: is a MUST if `is-existing-rooms-lost-known` is `True`. Must be 0 or positive
 is-total-rooms-proposed-known | Is total rooms proposed known | Whether the total rooms proposed is known | MAY | 
-total-rooms-proposed | Total rooms proposed | Total rooms proposed (including change of use) | MAY | Rule: is a MUST if `not-applicable` is `False`. Rule: is a MUST if `is-total-rooms-proposed-known` is `True`. Must be 0 or positive
+total-rooms-proposed | Total rooms proposed | Total rooms proposed (including change of use) | MAY | Rule: is a MUST if `is-total-rooms-proposed-known` is `True`. Must be 0 or positive
 net-additional-rooms | Net additional rooms | Net additional rooms following development | MUST | Calculated as total-rooms-proposed - existing-rooms-lost
 
 **Validation rules**
 
 - floorspace-details is required when non-residential-change is true
-- room-details is required when floorspace involves C1, C2, C2A, or other use classes
+- room-details is required when floorspace-details involves C1, C2, C2A, or "other" use classes
+- room-details-outline is required when floorspace-details-outline involves C1, C2, C2A, or "other" use classes
 - specified-use is required when use is other or sui generis
-- All floorspace values must be 0 or positive
+- Existing, lost and proposed floorspace values must be >= 0
 - All room values must be 0 or positive
 - net-additional-floorspace must equal total-gross-proposed minus existing-gross-floorspace
 - net-additional-rooms must equal total-rooms-proposed minus existing-rooms-lost
@@ -528,12 +531,13 @@ Who will be affected by the proposal and whether they have been notified, such a
 | sole-owner | Sole owner | Is the applicant the sole owner of the land? | MUST |  |
 | agricultural-tenants | Agricultural tenants | Are there any agricultural tenants on the land? | MUST |  |
 | owners-and-tenants | Owners and tenants[]{} | List of known owners and agricultural tenants | MAY |  |
-| steps-taken | Steps taken | Description of steps taken to identify unknown owners or tenants | MAY | Required for Certificate-C or Certificate-D |
-| newspaper-notices | Newspaper notices[]{} | Details of notices published in papers | MAY | Required for Certificate-C or Certificate-D |
 | ownership-cert-option | Ownership certificate type | The type of ownership certificate based on ownership and tenancy status | MAY | Select from the **ownership-cert-type** enum. Certificate type determined by ownership and notification status |
-| applicant-signature | Applicant signature | Digital signature of the applicant | MAY |  |
-| agent-signature | Agent signature | Digital signature of the agent (if applicable) | MAY |  |
-| declaration-date | Declaration date | The date the declaration was made | MAY |  |
+| steps-taken | Steps taken | Description of steps taken to identify unknown owners or tenants | MAY |  |
+| newspaper-notices | Newspaper notices[]{} | Details of notices published in papers | MAY |  |
+| person-reference | Person reference | Declaration must be made by an applicant or agent making the application | MUST | Used to link named individuals from the form to a particular declaration or confirmation statement, for example in the declaration module.
+ |
+| declaration-confirmed | Declaration confirmed | Confirms the applicant or agent has reviewed and validated the information provided in the application | MUST |  |
+| declaration-date | Declaration date | The date the declaration was made | MUST |  |
 
 
 **Notified person component**
@@ -541,7 +545,7 @@ Who will be affected by the proposal and whether they have been notified, such a
 field | name | description | required | notes
 -- | -- | -- | -- | --
 person | Person{} | details of the owner (or tenant when not a listed building consent application) | MAY | 
-notice-date | Notice date | Date when notice was served | MAY | 
+notice-served-date | Notice served date | Date when notice was served | MAY | 
 
 
 **Newspaper notice component**
@@ -562,7 +566,12 @@ last-name | Last Name | The last name of the individual | MUST |
 address-text | Address Text | Flexible field for capturing addresses | MUST | 
 postcode | Postcode | The postal code | MAY | 
 
+**Validation rules**
 
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
+- declaration-date must be in YYYY-MM-DD format
+- declaration-date must not be in the future
+- declaration-confirmed must be `true` for a submission to be valid
 
 ## Pre-application advice
 
@@ -733,7 +742,7 @@ easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | M
 northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
 latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
 longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
-description | Description | A text description providing details about the subject. For parking changes, this describes how the proposed works affect existing car parking arrangements. | MAY | 
+description | Description | A text description providing details about the subject. | MAY | 
 uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | uprns are not needed in case of notification for work to trees in conservation area
 
 **Validation rules**
