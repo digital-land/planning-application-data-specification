@@ -5,8 +5,9 @@ description: |
   Details about the location of a development site, including its boundary,
   site address and coordinates.
 fields:
-  - field: site-boundary
+  - field: geometry
     required: true
+    name: Site boundary
   - field: site-address
     required: true
     notes: UPRNs are not needed in case of notification for work to trees in conservation area
