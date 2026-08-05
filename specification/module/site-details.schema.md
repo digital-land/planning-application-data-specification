@@ -30,7 +30,10 @@ rules:
         - tree-works
 - rule: If easting is provided, northing must also be provided and vice versa
 - rule: If latitude is provided, longitude must also be provided and vice versa
-- rule: Site boundary must be valid GeoJSON
+- rule: Each site-location must include a site boundary and site address
+- rule: The planning authority must translate site information received on a paper form into the required structured site-location data, including the site boundary
+- rule: Site boundary must be valid WKT
 - rule: UPRNs must be valid format
+- rule: USRNs must be 8-digit strings
 - rule: Post code must be valid UK format
 ---

@@ -6,6 +6,7 @@ description: |
   site address and coordinates.
 fields:
   - field: site-boundary
+    required: true
   - field: site-address
     required: true
     notes: UPRNs are not needed in case of notification for work to trees in conservation area
