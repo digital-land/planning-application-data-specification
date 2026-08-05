@@ -1,5 +1,6 @@
 ---
-description: Details of properties next to the development site
+description: Addresses of premises next to the development site, used to notify
+  their owners or occupiers.
 end-date: ''
 entry-date: 2025-07-07
 fields:
@@ -8,7 +9,7 @@ fields:
 module: adj-premises
 name: Adjacent premises
 rules:
-- rule: At least one address must be provided
-- rule: Each address must have address-text as minimum requirement
-- rule: UPRN should be provided where known for accurate property identification
+- rule: At least one contact address must be provided
+- rule: Each contact address must have address-text as minimum requirement
+- rule: UPRN should be provided where known for accurate premises identification
 ---
