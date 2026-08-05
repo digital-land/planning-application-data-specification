@@ -1,4 +1,33 @@
 
+<a name="v0.2.4"></a>
+## [v0.2.4](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.31...v0.2.4) (2026-08-05)
+
+Model addresses as text with identifiers
+
+### 𝌭 Model changes
+
+* use canonical geometry field for site locations (commit [934f92e1](https://github.com/digital-land/planning-application-data-specification/commit/934f92e137d796c81693e669e915d7f21520edc0))
+* update rules related to use of site-address component (commit [043a758a](https://github.com/digital-land/planning-application-data-specification/commit/043a758aaf0e5ff52aecad0c2579fd4dc1690575))
+* use site address for site locations (commit [ae9f26cb](https://github.com/digital-land/planning-application-data-specification/commit/ae9f26cbbebc238e394f5352843c011512ebb841))
+* add site address component (commit [b3759706](https://github.com/digital-land/planning-application-data-specification/commit/b37597065e48de4a22a0532afdb1aa6de70e3e87))
+* retire generic address component (commit [5c01d110](https://github.com/digital-land/planning-application-data-specification/commit/5c01d110c30eee6c7ca899060f6f9d30e42e2506))
+* use contact address for adjacent premises (commit [3d43d9fd](https://github.com/digital-land/planning-application-data-specification/commit/3d43d9fdfe611368982384c4b94a623e648696e4))
+* use contact address for person component (commit [5f869d89](https://github.com/digital-land/planning-application-data-specification/commit/5f869d894008f3264111ee760bbfc0cec089e6e5))
+* add contact address component (commit [94eeddb9](https://github.com/digital-land/planning-application-data-specification/commit/94eeddb9e8b3b61c69ea612e7a745c547358e837))
+
+### 🐛 Bug Fixes
+
+* example boundaries should be valid WKT (commit [ad08e230](https://github.com/digital-land/planning-application-data-specification/commit/ad08e230cb309b157cbfcaea6c2d1516db2ad9b1))
+
+### 📚 Documentation
+
+* update docs and example to use geometry not site-boundary field (commit [2ac1730c](https://github.com/digital-land/planning-application-data-specification/commit/2ac1730c9566d5ba1fe9114fc5de3bf0e15f4053))
+* update examples with addresses to cover more scenarios (commit [4de4db3b](https://github.com/digital-land/planning-application-data-specification/commit/4de4db3b4603bdc79a59e8424e0c298374ffc6a5))
+* decision record for 2 address variants used (commit [2ca1aae0](https://github.com/digital-land/planning-application-data-specification/commit/2ca1aae02bddc293a1ab44b888ea520d05477133))
+* update examples to reflect use of site-address (commit [a6401d0b](https://github.com/digital-land/planning-application-data-specification/commit/a6401d0b0c26edec42f861369f4580634d4b8f6e))
+* update examples using person component (commit [86b460bf](https://github.com/digital-land/planning-application-data-specification/commit/86b460bf1df88815446ddaa16731c956d44a4db8))
+
+
 <a name="v0.2.31"></a>
 ## [v0.2.31](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.30...v0.2.31) (2026-08-04)
 
