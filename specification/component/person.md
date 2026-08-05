@@ -9,9 +9,8 @@ fields:
     required: true
   - field: last-name
     required: true
-  - field: address-text
+  - field: contact-address
     required: true
-  - field: postcode
 entry-date: 2025-05-28
 end-date: ''
 ---
