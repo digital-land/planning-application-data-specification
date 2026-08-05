@@ -24,10 +24,10 @@ Use a `site-address` component for a development site. It contains required
 `address-text`, with optional `postcode`, plural `uprns` for existing premises
 within the site boundary, and plural `usrns` for associated streets.
 
-Each `site-location` must contain both a readable `site-address` and a required
-site boundary. The boundary is authoritative for the extent of the application
-site. The planning authority must translate paper-form information into this
-structured representation.
+Each `site-location` must contain both a readable `site-address` and required
+`geometry`, presented as **Site boundary** in this context. The geometry is
+authoritative for the extent of the application site. The planning authority
+must translate paper-form information into this structured representation.
 
 **Consequences:**
 
