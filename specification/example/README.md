@@ -172,7 +172,7 @@ Shows a comprehensive submission where:
 Notes:
 - When applicant-interest is "lessee" or "occupier", owner-details is required
 - When applicant-interest is "none", interested-persons is required
-- Person objects must include required fields: first-name, last-name, address-text
+- Person objects must include required fields: first-name, last-name, contact-address
 - reason-not-informed is only provided when informed-of-application is false
 - Nature of interest should describe the person's specific connection to the property
 

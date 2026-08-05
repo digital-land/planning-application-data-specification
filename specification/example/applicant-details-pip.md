@@ -12,8 +12,10 @@ name: PIP application with required contact details
         "person": {
           "first-name": "Sarah",
           "last-name": "Wilson",
-          "address-text": "789 Park Road, Manchester",
-          "post-code": "M1 1AA"
+          "contact-address": {
+            "address-text": "789 Park Road, Manchester",
+            "postcode": "M1 1AA"
+          }
         },
         "contact-details": {
           "email": "sarah.wilson@example.com",

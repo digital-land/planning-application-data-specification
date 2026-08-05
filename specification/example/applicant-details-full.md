@@ -13,8 +13,10 @@ name: Full application with multiple applicants
           "title": "Mrs",
           "first-name": "Jane",
           "last-name": "Smith",
-          "address-text": "123 Main Street, London",
-          "postcode": "SW1A 1AA"
+          "contact-address": {
+            "address-text": "123 Main Street, London",
+            "postcode": "SW1A 1AA"
+          }
         },
         "contact-details": {
           "email": "jane.smith@example.com",
@@ -36,8 +38,10 @@ name: Full application with multiple applicants
           "title": "Mr",
           "first-name": "John",
           "last-name": "Doe",
-          "address-text": "456 High Street, London",
-          "post-code": "SW1A 2BB"
+          "contact-address": {
+            "address-text": "456 High Street, London",
+            "postcode": "SW1A 2BB"
+          }
         },
         "contact-details": {
           "email": "john.doe@example.com",
