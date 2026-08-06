@@ -4,9 +4,9 @@ status: proposed
 priority: high
 name: Understand approved or refused outcome
 statement: >
-  As a member of the public, I need to know what has been approved or refused so that I can clearly understand what is planned for my area and why that outcome was reached.
+  As a public user, I need to know what has been approved or refused so that I can clearly understand what is planned for my area and why that outcome was reached.
 actors:
-  - public
+  - public-user
 scope: in
 themes:
   - decision

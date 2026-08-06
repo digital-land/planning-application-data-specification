@@ -4,14 +4,13 @@ status: proposed
 priority: medium
 name: Know which permission is currently in force
 statement: >
-  As a planner, applicant or member of public, I need to know which permission
-  or amended permission is currently in force so that I can understand what has
-  actually been approved and avoid relying on superseded applications or
-  conditions.
+  As a planning-system user, I need to know which permission or amended
+  permission is currently in force so that I can understand what has actually
+  been approved and avoid relying on superseded applications or conditions.
 actors:
-  - planner
+  - planning-practitioner
   - applicant
-  - member of public
+  - public-user
 scope: in
 themes:
   - decision

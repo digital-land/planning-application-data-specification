@@ -2,13 +2,13 @@
 need: dd-need-101
 status: proposed
 priority: high
-name: Know when an authority has resolved to grant
+name: Record when an authority has resolved to grant
 statement: >
-  As a member of the public, applicant, agent or planning authority, I need to know when the determining authority has resolved to grant permission before the formal decision notice is issued so that I can understand that the application is no longer in ordinary assessment and is awaiting legal agreement, call-in consideration or other finalisation.
+  As a planning authority, I need to record when the determining authority has
+  resolved to grant permission before the formal decision notice is issued so
+  that the application status reflects that ordinary assessment has ended and
+  finalisation is outstanding.
 actors:
-  - member-of-public
-  - applicant
-  - agent
   - planning-authority
 scope: in
 themes:
@@ -18,6 +18,7 @@ source:
   - type: interview
     notes: Camden explained that applications can sit for weeks, months or years after a resolution to grant while legal agreements are finalised, and that this is often unclear on public registers.
 variations:
+  - dd-need-110
 next_step:
 notes: |
   This need is about the interim position after a determining authority has resolved to grant permission, but before the formal decision notice is issued. It is separate from the final decision date.

@@ -28,5 +28,5 @@ next_step:
 notes: |
   This need is about publishing a specified subset of planning application data as open data. It does not mean that the complete planning register, submitted application data or validated application data must be published openly.
 
-  Related needs: dd-need-088, dd-need-089.
+  Related needs: dd-need-088.
 ---

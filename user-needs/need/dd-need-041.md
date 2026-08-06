@@ -4,11 +4,10 @@ status: proposed
 priority: high
 name: Distinguish conditions on a decision
 statement: >
-  As a applicant / agent / developer, I need to be able to clearly distinguish each condition from others on the same decision so that I can manage, monitor, update and discharge them
+  As an applicant, I need to clearly distinguish each condition from others on
+  the same decision so that I can manage, monitor, update and discharge them.
 actors:
   - applicant
-  - agent
-  - developer
 scope: in
 themes:
   - conditions
@@ -17,13 +16,9 @@ source:
   - type: interview
     notes:
 variations:
-next_step: rewrite
-notes:
+  - dd-need-112
+next_step:
+notes: Split from a broader note that also included a possible planning
+  practitioner need. The practitioner variant should be reviewed because the
+  team is not yet fully convinced it is distinct.
 ---
-
-Similar needs:
-
-As an enforcement or monitoring officer,
-I need each condition to be clearly identifiable within a permission
-so that I can accurately record compliance, track breaches, and manage follow-up actions.
-

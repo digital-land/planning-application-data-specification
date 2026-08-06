@@ -4,10 +4,11 @@ status: proposed
 priority: high
 name: Know removed permitted development rights
 statement: >
-  As an interested party (such as a developer or property owner), I need to know which permitted development rights have been removed so that I understand what future changes will require planning permission.
+  As an applicant, I need to know which permitted development rights have been
+  removed so that I understand what future changes will require planning
+  permission.
 actors:
-  - developer
-  - member-of-the-public
+  - applicant
 scope: in
 themes:
   - decision
@@ -16,7 +17,7 @@ source:
   - type: interview
     notes:
 variations:
-  - dd-need-057
+  - dd-need-106
 next_step:
-notes:
+notes: Split from a broader statement covering applicants and public users.
 ---

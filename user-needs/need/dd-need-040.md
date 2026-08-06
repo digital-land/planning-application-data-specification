@@ -4,11 +4,12 @@ status: proposed
 priority: high
 name: Know when each condition must be complied with
 statement: >
-  As an applicant, developer, or agent, I need to know exactly when each condition must be complied with (e.g. before commencement, prior to occupation, before above-ground works, or ongoing) so that I can plan works appropriately and avoid unintentionally breaching a condition or triggering enforcement action.
+  As an applicant, I need to know exactly when each condition must be complied
+  with, for example before commencement, prior to occupation, before
+  above-ground works, or ongoing, so that I can plan works appropriately and
+  avoid unintentionally breaching a condition or triggering enforcement action.
 actors:
   - applicant
-  - developer
-  - agent
 scope: in
 themes:
   - conditions

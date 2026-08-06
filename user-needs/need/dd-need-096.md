@@ -4,9 +4,12 @@ status: proposed
 priority: medium
 name: Know when an application was first published
 statement: >
-  As a member of the public, consultee or planning authority, I need to know when an application was first published on the planning register or authority website so that I can understand when it became publicly visible and distinguish publication from publicity or consultation dates.
+  As a planning-system user, I need to know when an application was first
+  published on the planning register or authority website so that I can
+  understand when it became publicly visible and distinguish publication from
+  publicity or consultation dates.
 actors:
-  - member-of-public
+  - public-user
   - consultee
   - planning-authority
 scope: in

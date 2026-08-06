@@ -4,10 +4,12 @@ status: proposed
 priority: high
 name: Distinguish current and superseded documents
 statement: >
-  As a planning officer or member of the public, I need to know which version of each submitted document is current and which versions have been superseded, so that I can rely on the right evidence and understand what changed.
+  As a planning-system user, I need to know which version of each submitted
+  document is current and which versions have been superseded, so that I can
+  rely on the right evidence and understand what changed.
 actors:
-  - planning-officer
-  - member of public
+  - planning-practitioner
+  - public-user
 scope: in
 themes:
   - transparency

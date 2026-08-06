@@ -4,11 +4,11 @@ status: proposed
 priority: high
 name: Understand condition requirements
 statement: >
-  As anyone with an interest in a planning permission — whether a developer, citizen, or planning officer — I need to clearly understand what each condition requires so that I can act on it, check compliance, and know what obligations apply to the development.
+  As a planning practitioner, I need to understand what each planning condition
+  requires so that I can assess, monitor and enforce compliance with the
+  permission.
 actors:
-  - developer
-  - citizen
-  - planning-officer
+  - planning-practitioner
 scope: in
 themes:
   - conditions
@@ -17,6 +17,9 @@ source:
   - type: interview
     notes:
 variations:
+  - dd-need-104
+  - dd-need-105
 next_step:
-notes:
+notes: Split from a broader statement covering applicants, public users and
+  planning practitioners.
 ---

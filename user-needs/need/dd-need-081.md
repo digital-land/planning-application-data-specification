@@ -4,11 +4,10 @@ status: proposed
 priority: high
 name: Know why an application was invalid
 statement: >
-  As an applicant, agent, or planning officer, I need to know why an application was found invalid and what information is missing, so that issues can be resolved quickly and repeat patterns observed.
+  As an applicant, I need to know why my application was found invalid and what
+  information is missing so that I can resolve the issues quickly.
 actors:
   - applicant
-  - agent
-  - planning-officer
 scope: in
 themes:
   - processing
@@ -19,8 +18,11 @@ source:
 variations:
   - dd-need-065
   - dd-need-018
+  - dd-need-113
+  - dd-need-114
 next_step:
 notes: |
   Confidence: high. This is a concrete operational gap and is more actionable than simply knowing that invalidation happened.
+  Split from a broader statement covering applicants, planning authorities, planning practitioners and policy users.
   Related needs: dd-need-018, dd-need-065, dd-need-066.
 ---

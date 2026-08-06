@@ -1,6 +1,6 @@
 ---
 need: dd-need-089
-status: proposed
+status: retired
 priority: low
 name: Distinguish public, withheld, and redacted application material
 statement: >
@@ -20,6 +20,12 @@ variations:
   - dd-need-082
 next_step:
 notes: |
-  Confidence: low. This looks like a real user need, but the available evidence is indirect and should be tested against user research or operational examples.
-  Related needs: dd-need-030, dd-need-077, dd-need-082.
+  Retired after user-group rationalisation. The stronger operational need is
+  captured in dd-need-103, which covers recording whether each application
+  document has been accepted for public availability so sensitive material is
+  not made public by mistake.
+
+  A separate public-user need about knowing when material has been withheld or
+  redacted may be added later if there is stronger evidence that users need
+  this distinction. No public-user variant is being kept for now.
 ---

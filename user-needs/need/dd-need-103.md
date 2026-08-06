@@ -25,11 +25,10 @@ source:
       to be withheld from public publication where it creates security risk. This suggests a planning officer needs to make decision for each document.
 variations:
   - dd-need-077
-  - dd-need-089
 next_step: 
 notes: |
-  This need is narrower than dd-need-089. It is about recording the authority's
-  decision for each document so material that should not be published is kept
-  out of public views and the decision can travel with the planning application
-  record.
+  This is the active need for document publication decisions. It is about
+  recording the authority's decision for each document so material that should
+  not be published is kept out of public views and the decision can travel with
+  the planning application record.
 ---

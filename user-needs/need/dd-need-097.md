@@ -20,9 +20,10 @@ source:
   - type: community-session
     notes: Nora raised that initial application form data may matter later for enforcement, appeals or court process questions even where the application was later amended during validation.
 variations:
+  - dd-need-098
 next_step:
 notes: |
   Confidence: medium. The source gives credible edge cases around enforcement, appeals and court process, but the frequency and exact procedural requirements need testing with enforcement specialists, PINS and legal colleagues.
 
-  Related needs: dd-need-078, dd-need-082, dd-need-088.
+  Related needs: dd-need-078, dd-need-082, dd-need-088, dd-need-098.
 ---

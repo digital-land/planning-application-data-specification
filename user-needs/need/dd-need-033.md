@@ -4,10 +4,10 @@ status: proposed
 priority: high
 name: Know the decision and next steps
 statement: >
-  As a developer or agent, I need to know the decision on my application so that I can understand what has been granted or refused and what actions are now required
+  As an applicant, I need to know the decision on my application so that I can
+  understand what has been granted or refused and what actions are now required.
 actors:
-  - developer
-  - agent
+  - applicant
 scope: in
 themes:
   - decision

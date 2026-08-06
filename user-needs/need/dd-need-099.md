@@ -4,9 +4,12 @@ status: proposed
 priority: medium
 name: Know when statutory publicity starts
 statement: >
-  As a member of the public, consultee or planning authority, I need to know when statutory publicity for a planning application started so that I can understand when publicity requirements began and distinguish publicity from register publication and consultee consultation.
+  As a planning-system user, I need to know when statutory publicity for a
+  planning application started so that I can understand when publicity
+  requirements began and distinguish publicity from register publication and
+  consultee consultation.
 actors:
-  - member-of-public
+  - public-user
   - consultee
   - planning-authority
 scope: in

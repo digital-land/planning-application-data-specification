@@ -4,10 +4,9 @@ status: proposed
 priority: high
 name: Understand condition compliance status
 statement: >
-  As a member of the public or interested party, I need to understand the compliance status of conditions so that I can see how a development is being managed and whether commitments are being met.
+  As a public user, I need to understand the compliance status of conditions so that I can see how a development is being managed and whether commitments are being met.
 actors:
-  - member-of-the-public
-  - interested-party
+  - public-user
 scope: in
 themes:
   - conditions
