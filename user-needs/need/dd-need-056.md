@@ -4,9 +4,9 @@ status: proposed
 priority: high
 name: Clarify removed permitted development rights
 statement: >
-  As a planning officer, I need clarity about which permitted development rights no longer apply so that I do not leave uncertainty about what future development is allowed.
+  As a planning practitioner, I need clarity about which permitted development rights no longer apply so that I do not leave uncertainty about what future development is allowed.
 actors:
-  - planning-officer
+  - planning-practitioner
 scope: in
 themes:
   - decision

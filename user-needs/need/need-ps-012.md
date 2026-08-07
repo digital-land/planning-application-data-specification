@@ -4,12 +4,11 @@ status: proposed
 priority: medium
 name: Monitor smaller-scale housing development outcomes
 statement: >
-  As a development management planner, I need to understand the volume and
+  As a planning service manager, I need to understand the volume and
   outcomes of smaller-scale housing development applications so that I can
-  manage day-to-day casework and understand how neighbourhoods are changing
-  over time.
+  manage workload, capacity and service performance.
 actors:
-  - development-management-planner
+  - planning-service-manager
 scope: in
 themes:
   - housing

@@ -4,9 +4,9 @@ status: proposed
 priority: medium
 name: Identify PSI applications
 statement: >
-  As a planner in a mayoral area, I need to identify PSI applications so that I can apply the correct referral and call-in rules.
+  As a planning practitioner in a mayoral area, I need to identify PSI applications so that I can apply the correct referral and call-in rules.
 actors:
-  - planner
+  - planning-practitioner
 scope: in
 themes:
   - compliance

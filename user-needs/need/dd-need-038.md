@@ -4,9 +4,9 @@ status: proposed
 priority: high
 name: Identify responsible authority for conditions
 statement: >
-  As a planning authority officer, I need to know which authority is responsible for each condition so that the right team can enforce, monitor, or discharge it without ambiguity.
+  As a planning practitioner, I need to know which authority is responsible for each condition so that the right team can enforce, monitor, or discharge it without ambiguity.
 actors:
-  - planning-authority-officer
+  - planning-practitioner
 scope: in
 themes:
   - conditions

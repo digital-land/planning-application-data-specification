@@ -4,9 +4,9 @@ status: proposed
 priority: medium
 name: Track superseded conditions
 statement: >
-  As a planner, I need to know when one condition replaces another so that I can understand which requirements are currently in force and avoid enforcing outdated or superseded conditions.
+  As a planning practitioner, I need to know when one condition replaces another so that I can understand which requirements are currently in force and avoid enforcing outdated or superseded conditions.
 actors:
-  - planner
+  - planning-practitioner
 scope: in
 themes:
   - conditions

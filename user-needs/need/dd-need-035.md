@@ -4,9 +4,9 @@ status: proposed
 priority: high
 name: Identify who made the decision
 statement: >
-  As a planner, I need to know who made the decision (officer, committee, SoS, Mayor, or PINS) so that I can understand the governance route and explain the reasoning and accountability behind the outcome.
+  As a planning practitioner, I need to know who made the decision (officer, committee, SoS, Mayor, or PINS) so that I can understand the governance route and explain the reasoning and accountability behind the outcome.
 actors:
-  - planner
+  - planning-practitioner
 scope: in
 themes:
   - governance

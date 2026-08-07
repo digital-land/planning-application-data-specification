@@ -4,10 +4,9 @@ status: proposed
 priority: high
 name: Know when a condition was discharged
 statement: >
-  As a planning officer or enforcement officer, I need to know when a condition was discharged so that I can confirm compliance at the right point in the development and take action if necessary.
+  As a planning practitioner, I need to know when a condition was discharged so that I can confirm compliance at the right point in the development and take action if necessary.
 actors:
-  - planning-officer
-  - enforcement-officer
+  - planning-practitioner
 scope: in
 themes:
   - conditions

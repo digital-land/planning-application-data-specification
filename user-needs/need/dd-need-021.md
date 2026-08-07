@@ -4,9 +4,9 @@ status: proposed
 priority: high
 name: Identify special application categories
 statement: >
-  As a planner, I need to know whether an application is EIA development, public service infrastructure, or BNG exempt so that I can apply the correct statutory deadlines and requirements.
+  As a planning practitioner, I need to know whether an application is EIA development, public service infrastructure, or BNG exempt so that I can apply the correct statutory deadlines and requirements.
 actors:
-  - planner
+  - planning-practitioner
 scope: in
 themes:
   - compliance

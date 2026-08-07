@@ -4,9 +4,9 @@ status: proposed
 priority: high
 name: Link related applications
 statement: >
-  As a planner, I need to link related applications (e.g. outline, reserved matters, amendments) together so that context is not lost across the different stages of a development
+  As a planning practitioner, I need to link related applications (e.g. outline, reserved matters, amendments) together so that context is not lost across the different stages of a development
 actors:
-  - planner
+  - planning-practitioner
 scope: in
 themes:
   - applications

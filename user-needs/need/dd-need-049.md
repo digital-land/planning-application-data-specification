@@ -4,9 +4,9 @@ status: proposed
 priority: high
 name: Identify if section 106 is required
 statement: >
-  As a planning officer, I need to know whether an application requires a section 106 agreement so that I can anticipate workload and track obligations.
+  As a planning practitioner, I need to know whether an application requires a section 106 agreement so that I can anticipate workload and track obligations.
 actors:
-  - planning-officer
+  - planning-practitioner
 scope: in
 themes:
   - obligations
