@@ -159,8 +159,16 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 
 
@@ -222,8 +230,16 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 **Validation rules**
 
@@ -563,8 +579,16 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 **Validation rules**
 
@@ -735,15 +759,22 @@ Where the proposed development will be built.
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-site-boundary | Site boundary | Geometry of the site of the development, typically in GeoJSON format | MAY | 
-address-text | Address Text | Flexible field for capturing addresses | MAY | 
-postcode | Postcode | The postal code | MAY | 
+geometry | Site boundary | A polygon or multipolygon boundary | MUST | 
+site-address | Site address{} | A structured object containing an address used to describe a development site. | MUST | UPRNs are not needed in case of notification for work to trees in conservation area
 easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | MAY | 
 northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
 latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
 longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
-description | Description | A text description providing details about the subject. | MAY | 
-uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | uprns are not needed in case of notification for work to trees in conservation area
+
+
+**Site address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for existing premises within a site boundary | MAY | 
+usrns | USRNs[] | Unique Street Reference Numbers (USRNs) associated with the site | MAY | 
 
 **Validation rules**
 
@@ -751,8 +782,11 @@ uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties withi
 - {'description': 'Exactly one site-location for all other applications types', 'field': 'site-locations', 'require': {'exact': 1}, 'type': 'count-constraint', 'when': {'application-type': {'not': ['tree-works']}}}
 - If easting is provided, northing must also be provided and vice versa
 - If latitude is provided, longitude must also be provided and vice versa
-- Site boundary must be valid GeoJSON
+- Each site-location must include a site boundary and site address
+- The planning authority must translate site information received on a paper form into the required structured site-location data, including the site boundary
+- Site boundary must be valid WKT
 - UPRNs must be valid format
+- USRNs must be 8-digit strings
 - Post code must be valid UK format
 
 ## Site Visit Details

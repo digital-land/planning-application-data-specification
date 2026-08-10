@@ -16,5 +16,5 @@ For oil and gas extraction developments, who owns or has an interest in the site
 field | name | description | required | notes
 -- | -- | -- | -- | --
 fullname | Full name | The complete name of a person | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
+address-text | Address Text | Text representation of an address or site | MUST | 
 

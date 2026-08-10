@@ -54,17 +54,28 @@
     "submission-details"
   ],
   "definitions": {
+    "supporting-document": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "details": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference"
+      ]
+    },
     "site-location": {
       "type": "object",
       "properties": {
-        "site-boundary": {
+        "geometry": {
           "type": "string"
         },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
+        "site-address": {
+          "$ref": "#/definitions/site-address"
         },
         "easting": {
           "type": "number"
@@ -77,8 +88,20 @@
         },
         "longitude": {
           "type": "string"
+        }
+      },
+      "required": [
+        "geometry",
+        "site-address"
+      ]
+    },
+    "site-address": {
+      "type": "object",
+      "properties": {
+        "address-text": {
+          "type": "string"
         },
-        "description": {
+        "postcode": {
           "type": "string"
         },
         "uprns": {
@@ -87,27 +110,17 @@
             "type": "string"
           },
           "minItems": 1
-        }
-      },
-      "required": []
-    },
-    "existing-use": {
-      "type": "object",
-      "properties": {
-        "uses": {
+        },
+        "usrns": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/use"
+            "type": "string"
           },
           "minItems": 1
-        },
-        "floorspace": {
-          "type": "number"
         }
       },
       "required": [
-        "uses",
-        "floorspace"
+        "address-text"
       ]
     },
     "agent": {
@@ -135,30 +148,74 @@
         "person"
       ]
     },
-    "person": {
+    "applicant": {
       "type": "object",
       "properties": {
-        "title": {
+        "reference": {
           "type": "string"
         },
-        "first-name": {
-          "type": "string"
-        },
-        "last-name": {
-          "type": "string"
-        },
-        "address-text": {
-          "type": "string"
-        },
-        "postcode": {
-          "type": "string"
+        "person": {
+          "$ref": "#/definitions/person"
         }
       },
       "required": [
-        "first-name",
-        "last-name",
-        "address-text"
+        "reference",
+        "person"
       ]
+    },
+    "existing-use": {
+      "type": "object",
+      "properties": {
+        "uses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/use"
+          },
+          "minItems": 1
+        },
+        "floorspace": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "uses",
+        "floorspace"
+      ]
+    },
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
     },
     "non-residential-use": {
       "type": "object",
@@ -204,6 +261,45 @@
       "required": [
         "size",
         "unit"
+      ]
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "first-name": {
+          "type": "string"
+        },
+        "last-name": {
+          "type": "string"
+        },
+        "contact-address": {
+          "$ref": "#/definitions/contact-address"
+        }
+      },
+      "required": [
+        "first-name",
+        "last-name",
+        "contact-address"
+      ]
+    },
+    "contact-address": {
+      "type": "object",
+      "properties": {
+        "address-text": {
+          "type": "string"
+        },
+        "postcode": {
+          "type": "string"
+        },
+        "uprn": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "address-text"
       ]
     },
     "use": {
@@ -276,68 +372,90 @@
         ]
       }
     },
-    "contact-details": {
+    "site-info": {
       "type": "object",
       "properties": {
-        "email": {
-          "type": "string"
+        "site-area": {
+          "$ref": "#/definitions/site-area"
         },
-        "phone-numbers": {
+        "existing-use": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/phone-number"
+            "$ref": "#/definitions/existing-use"
+          },
+          "minItems": 1
+        },
+        "known-constraints": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "conservation-area",
+              "aona-beauty",
+              "secretary-specified-area",
+              "the-broads",
+              "national-park",
+              "world-heritage-site",
+              "site-of-special-interest"
+            ]
+          },
+          "minItems": 1
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
           },
           "minItems": 1
         }
       },
       "required": [
-        "email",
-        "phone-numbers"
+        "site-area",
+        "existing-use",
+        "known-constraints",
+        "supporting-documents"
       ]
     },
-    "phone-number": {
+    "proposal-details-inc-non-residential": {
       "type": "object",
       "properties": {
-        "number": {
+        "description": {
           "type": "string"
         },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
-    },
-    "applicant": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
+        "net-dwellings-min": {
+          "type": "integer"
         },
-        "person": {
-          "$ref": "#/definitions/person"
+        "net-dwellings-max": {
+          "type": "integer"
+        },
+        "non-residential-use": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/non-residential-use"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "reference",
-        "person"
+        "description",
+        "net-dwellings-min",
+        "net-dwellings-max",
+        "non-residential-use"
       ]
     },
-    "supporting-document": {
+    "checklist": {
       "type": "object",
       "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "details": {
-          "type": "string"
+        "national-req-types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "reference"
+        "national-req-types"
       ]
     },
     "conflict-of-interest": {
@@ -387,21 +505,6 @@
         }
       ]
     },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
     "site-details": {
       "type": "object",
       "properties": {
@@ -417,57 +520,34 @@
         "site-locations"
       ]
     },
-    "agent-details": {
+    "applicant-contact": {
       "type": "object",
       "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
-    },
-    "site-info": {
-      "type": "object",
-      "properties": {
-        "site-area": {
-          "$ref": "#/definitions/site-area"
+        "applicant-reference": {
+          "type": "string"
         },
-        "existing-use": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/existing-use"
-          },
-          "minItems": 1
-        },
-        "known-constraints": {
-          "type": "array",
-          "items": {
-            "type": "string",
-            "enum": [
-              "conservation-area",
-              "aona-beauty",
-              "secretary-specified-area",
-              "the-broads",
-              "national-park",
-              "world-heritage-site",
-              "site-of-special-interest"
-            ]
-          },
-          "minItems": 1
-        },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "site-area",
-        "existing-use",
-        "known-constraints",
-        "supporting-documents"
+        "applicant-reference",
+        "contact-details"
+      ]
+    },
+    "agent-contact": {
+      "type": "object",
+      "properties": {
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "agent-reference",
+        "contact-details"
       ]
     },
     "applicant-details": {
@@ -484,6 +564,15 @@
       "required": [
         "applicants"
       ]
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
     },
     "declaration": {
       "type": "object",
@@ -502,63 +591,6 @@
         "person-reference",
         "declaration-confirmed",
         "declaration-date"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
-    "proposal-details-inc-non-residential": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "net-dwellings-min": {
-          "type": "integer"
-        },
-        "net-dwellings-max": {
-          "type": "integer"
-        },
-        "non-residential-use": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/non-residential-use"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "description",
-        "net-dwellings-min",
-        "net-dwellings-max",
-        "non-residential-use"
-      ]
-    },
-    "checklist": {
-      "type": "object",
-      "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "national-req-types"
       ]
     },
     "submission-details": {

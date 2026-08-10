@@ -141,8 +141,16 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 
 
@@ -204,8 +212,16 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 **Validation rules**
 
@@ -307,23 +323,30 @@ Where trees affected by the proposed development are located.
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-site-boundary | Site boundary | Geometry of the site of the development, typically in GeoJSON format | MAY | 
-address-text | Address Text | Flexible field for capturing addresses | MAY | 
-postcode | Postcode | The postal code | MAY | 
+geometry | Site boundary | A polygon or multipolygon boundary | MUST | 
+site-address | Site address{} | A structured object containing an address used to describe a development site. | MUST | UPRNs are not needed in case of notification for work to trees in conservation area
 easting | Easting | Easting coordinate in British National Grid (EPSG:27700) | MAY | 
 northing | Northing | Northing coordinate in British National Grid (EPSG:27700) | MAY | 
 latitude | Latitude | Latitude coordinate in WGS84 (EPSG:4326) | MAY | 
 longitude | Longitude | Longitude coordinate in WGS84 (EPSG:4326) | MAY | 
-description | Description | A text description providing details about the subject. | MAY | 
-uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for properties within the site boundary | MAY | uprns are not needed in case of notification for work to trees in conservation area
+
+
+**Site address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprns | UPRNs[] | Unique Property Reference Numbers (UPRNs) for existing premises within a site boundary | MAY | 
+usrns | USRNs[] | Unique Street Reference Numbers (USRNs) associated with the site | MAY | 
 
 **Validation rules**
 
 - site-locations only required if the site is different from the applicant's address
-- At least one location method must be provided per site: site-boundary, address-text, or easting+northing
+- Each site-location must include a site boundary and site address
 - If easting is provided, northing must also be provided and vice versa
 - Online services can send the boundary supplied by the applicant/agent
-- Paper forms would need other fields translated into site-boundary
+- The planning authority must translate site information received on a paper form into the required structured site-location data, including the site boundary
 
 ## Trees ownership
 
@@ -352,8 +375,7 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
 
 
 **Contact details component**
@@ -362,6 +384,15 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
 phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 
 **Phone number component**

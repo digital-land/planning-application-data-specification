@@ -141,8 +141,16 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 
 
@@ -204,8 +212,16 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 **Validation rules**
 
@@ -364,8 +380,7 @@ field | name | description | required | notes
 title | Title | The title of the individual | MAY | 
 first-name | First Name | The first name of the individual | MUST | 
 last-name | Last Name | The last name of the individual | MUST | 
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
+contact-address | Contact address{} | A structured object containing an address used for correspondence. | MUST | 
 
 
 **Contact details component**
@@ -374,6 +389,15 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 email | Email | The email address that can be used for electronic correspondence with the individual | MUST | 
 phone-numbers | Phone number(s)[]{} | One or more telephone numbers to contact individual | MUST | 
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 
 **Phone number component**

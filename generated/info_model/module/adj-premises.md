@@ -1,24 +1,24 @@
 # Adjacent premises
 
-Details of properties next to the development site
+Addresses of premises next to the development site, used to notify their owners or occupiers.
 
 **Adjacent premises module**
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| addresses | Addresses[]{} | A list of addresses for the adjoining properties |  | MUST |  |
+| addresses | Addresses[]{} | A list of addresses for adjacent premises, used to notify their owners or occupiers. |  | MUST |  |
 
 
-**Address component**
+**Contact address component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-address-text | Address Text | Flexible field for capturing addresses | MUST | 
-postcode | Postcode | The postal code | MAY | 
-uprn | UPRN | Unique Property Reference Number | MAY | 
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
 
 **Validation rules**
 
-- At least one address must be provided
-- Each address must have address-text as minimum requirement
-- UPRN should be provided where known for accurate property identification
+- At least one contact address must be provided
+- Each contact address must have address-text as minimum requirement
+- UPRN should be provided where known for accurate premises identification
