@@ -17,7 +17,7 @@ This guide explains how to make deliberate, traceable changes to the planning ap
 1. Describe the problem and identify the relevant user need, or create one if needed.
 2. Identify the kind of model change needed and check whether an existing element can be reused without changing its meaning.
 3. Update the canonical definition and every relevant usage of it in the specification.
-4. Update or add justifications, examples, documentation and generated outputs where they are affected.
+4. Update or add justifications, examples and source documentation where they are affected. Regenerate derived outputs through the normal workflow where needed; do not edit them directly.
 5. Run `make checks`, review the generated and rendered outputs where relevant, and make the change available for review.
 
 ## Change types
@@ -32,13 +32,16 @@ This guide explains how to make deliberate, traceable changes to the planning ap
   - Adding a dataset (needs content)
   - Removing a dataset (needs content)
   - Changing a dataset (needs content)
-  - Adding a field to a dataset
+  - [Adding a field to a dataset](#adding-a-field-to-a-dataset)
+- [National public view](#national-public-view)
 - Codelists (needs content)
 - Codelist values (needs content)
 - [Application types](#application-types)
   - [Allowed combined application types](#allowed-combined-application-types)
-- User needs (needs content)
-- Justifications (needs content)
+- [User needs](#user-needs)
+  - [Adding a user need](#adding-a-user-need)
+- [Justifications](#justifications)
+  - [Adding a justification](#adding-a-justification)
 
 ## Fields
 
@@ -48,8 +51,9 @@ Fields are canonical definitions of individual data points. They are reused in m
 
 1. Identify the user need or other reason for the information.
 2. Search the existing fields and reuse one only if it describes the same real-world concept. If an existing field is too narrow but can safely be generalised, assess every current usage before changing it.
-3. Add the canonical field definition in `specification/field/`. Give it a stable `field` reference, a concise `name`, a plain-language `description`, an appropriate `datatype`, cardinality and entry date.
-4. Run `make checks`
+3. If the field does not already exist, add its canonical definition in `specification/field/`. Give it a stable `field` reference, a concise `name`, a plain-language `description`, an appropriate `datatype`, cardinality and entry date.
+4. Add the field to the relevant module, dataset or other usage by following the workflow for that change type.
+5. Run `make checks`.
 
 ### Removing a field
 
@@ -114,10 +118,61 @@ combination is recognised and has the expected payload shape.
 
 ### Adding a field to a dataset
 
-1. Check the field you want to add exists. If not, follow the steps in "Fields: Adding a field"
-2. Identify which dataset you want to add the field to
-3. Add the field to the `fields` property
-4. If a more specific description than the canonical field description is needed, include that in the entry too
-5. Include any other overrides if they are absolutely necessary
-6. Then look for specifications and views where the dataset is used. For example decide if you want to include this field. If so, follow steps 1-4 and add. It is likely to be a copy and paste. The key specifications and views to check are [planning-application-data.schema.md](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/planning-application-data.schema.md) and [national-public-view.schema.md](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/national-public-view.schema.md)
-7. Run `make checks` to confirm there are no issues
+1. Identify the need that the field will help meet.
+2. Search `specification/field/` for a field with the same meaning. Reuse it if the meaning is the same. If no suitable field exists, follow [Adding a field](#adding-a-field) before continuing.
+3. Identify the canonical dataset in `specification/dataset/` and confirm that the information describes that dataset's subject. Do not add a field to a convenient dataset if it belongs to a different record.
+4. Add the field reference to the dataset's `fields` property. Dataset fields are optional unless the model explicitly says otherwise.
+5. Add a context-specific description only where it makes the field clearer in this dataset. Use overrides or applicability rules only when they are necessary and do not change the canonical meaning.
+6. Search for every specification or view that includes the dataset. Add the field to each specification where it belongs. For the planning-application-data model, this normally includes [planning-application-data.schema.md](../specification/planning-application-data.schema.md).
+7. Make an explicit decision about whether the field should be included in the [national public view](#national-public-view). Do not assume that adding it to the wider specification means it should also be made available as open data.
+8. Add or update a justification linking the dataset field to the need it helps satisfy. (See creating justification records)
+9. Update affected source documentation and examples. Do not edit generated outputs directly.
+10. Run `make checks` and review the complete diff to confirm that the canonical dataset, wider specification, public view decision and justification agree.
+
+## National public view
+
+The [national public view schema](../specification/national-public-view.schema.md) is an explicit open-data extraction from the wider planning application data specification. Nothing is included unless that schema lists it.
+
+When adding or changing a dataset field:
+
+1. Decide whether there is a clear public need for the information and whether publishing it supports transparency, discovery, accountability or reuse.
+2. Assess the publication risk. Consider personal data, commercially sensitive information, private or security-sensitive information, free text and fields whose contents cannot be reliably controlled.
+3. Check whether the entire dataset is public or whether it has a `record-inclusion` rule. A field should not bypass a rule that excludes sensitive or unpublished records.
+4. If the field should be open, add it under the relevant dataset in `specification/national-public-view.schema.md`, with a description suitable for the public view.
+5. If it only applies to certain application types, such as `development-scale`, add that condition
+6. If it is optional, make that clear, such as with the `notes` field
+7. If the field should not be open, leave it out.
+8. Update the readable publication summary and any affected notes in [national-public-view.md](national-public-view.md). The schema remains the definitive contract.
+9. Mention the publication decision in the relevant justification where it is material to how the need is met.
+10. Run `make checks` and confirm that the national public view remains a deliberate subset of the wider specification.
+
+## User needs
+
+User needs describe the problem to solve, not the proposed field, dataset or other implementation. Read [Needs and justifications](../user-needs/README.md), [User groups](user-groups.md) and the working [User needs writing playbook](../tmp/user-needs-writing-playbook.md) before adding one.
+
+### Adding a user need
+
+1. Start with the evidence or observation that prompted the need. Ask who needs the information, what they are trying to do and why it matters. An existing form, public register or common data item is evidence of a practice, but does not by itself prove the underlying user need.
+2. Search `user-needs/need/` for an existing or overlapping need. Reuse or refine an existing need when the actor, motivation and outcome are substantially the same.
+3. Choose the most specific canonical actor from [User groups](user-groups.md) that explains the motivation. Use `planning-system-user` only when the same motivation genuinely applies across several planning user groups. Use a data-domain actor for needs about general properties of the data rather than a planning task.
+4. Draft a solution-free statement in the form: “As a [user], I need [need], so that [outcome].” Do not name the proposed field, dataset, API, page or other implementation in the statement.
+5. Give the need the next available identifier and create one Markdown file in `user-needs/need/`. Complete its status, priority, name, statement, actors, scope, themes, source, variations, next step and notes.
+6. Record the source accurately. Distinguish direct user research, legislation and reporting requirements from needs inferred through data design or observation.
+7. If the need is inferred or uncertain, use `status: proposed`, record the confidence and verification questions in `notes`, and set an allowed `next_step`, normally `review` or `rewrite`. Do not present an observed implementation pattern as confirmed user evidence.
+8. Use `variations` to identify nearby needs where that will help reviewers assess overlap, splitting or rationalisation.
+9. Run `make checks` and review the statement again for a clear user, purpose and outcome without prescribing the solution.
+
+## Justifications
+
+A justification records the claim that one or more specification elements help satisfy a need. It connects the reason for a change to the implemented model without putting implementation details into the need itself.
+
+### Adding a justification
+
+1. Confirm that the need exists and that the model elements named in the justification have been defined.
+2. Choose the next available `just-NNNN` identifier and create a Markdown file in `user-needs/justification/`.
+3. Reference one or more needs in `needs`.
+4. Describe the exact dataset, field, codelist value or combination in `satisfied_by`. Use `allOf` when the elements are useful only together and `anyOf` only where genuinely alternative implementations meet the same need.
+5. Set `satisfaction` to `full` only when the named elements meet the stated need. Use `partial` when important information or capability remains outside the current model.
+6. Set the confidence independently from satisfaction. Confidence describes how strong the evidence is for the claim, not how complete the model is.
+7. Explain in the body how the elements help meet the need, what would be missing without them, any limits on how they should be used and any relevant national-public-view decision.
+8. Run `make checks` to confirm that the need and every referenced specification element exist.
