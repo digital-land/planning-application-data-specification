@@ -45,6 +45,8 @@ datasets:
         description: a URL to the completed application form
       - field: documentation-url
         description: the URL where supporting documents for the application can be accessed
+      - field: notes
+        description: Optional notes that provide additional context about the planning application
   - dataset: planning-application-data
     name: planning application data
     fields:

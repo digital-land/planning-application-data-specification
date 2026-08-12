@@ -66,6 +66,7 @@ included dataset are filtered before publication.
 |  | linked-applications | References to earlier applications this application directly links to. |  |
 |  | document-url | URL to the completed application form published by the planning authority, where available. |  |
 |  | documentation-url | URL to the planning authority page where the completed application form or supporting application information can be accessed, where available. |  |
+|  | notes | Optional notes that provide additional context about the planning application. |  |
 | site |  |  |  |
 |  | reference | Reference for the site. |  |
 |  | name | Plain-language name for the site. |  |
@@ -124,7 +125,11 @@ The `public-register-status` field is not included in the output because it is a
 control field. It decides whether a document record is extracted. Document
 records with `withhold` or `not-assessed` are excluded entirely.
 
-The `planning-permission-timeline.notes` field is excluded from the first view
-because it is free text. It may contain personal, commercially sensitive,
+The `planning-application.notes` field is included to provide general context
+about the published application record. It must not be used to publish personal,
+commercially sensitive, private or security-sensitive information.
+
+The `planning-permission-timeline.notes` field remains excluded from the first
+view because event-level free text may contain personal, commercially sensitive,
 private or security-sensitive information. It can be added later if there is a
 clear publication need and suitable controls.

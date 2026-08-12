@@ -40,6 +40,8 @@ datasets:
         description: a URL to the completed application form published by the planning authority, where available
       - field: documentation-url
         description: a URL to the planning authority page where the completed application form or supporting application information can be accessed, where available
+      - field: notes
+        description: Optional notes that provide additional context about the planning application
   - dataset: site
     name: site
     fields:

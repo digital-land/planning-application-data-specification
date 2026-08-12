@@ -13,6 +13,8 @@ fields:
   description: A url to the completed application form
 - field: documentation-url
   description: URL where supporting documents for the application can be accessed
+- field: notes
+  description: Optional notes that provide additional context about the planning application
 - field: description
   description: The description of the proposed development
 - field: name
