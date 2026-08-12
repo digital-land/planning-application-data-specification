@@ -25,7 +25,7 @@ The purpose of these groups is to keep user needs readable and reusable. A need 
 | `planning-authority` | The organisation responsible for administering the planning process. It needs consistent records to meet statutory duties, publish information, manage applications and support accountability. | `planning-authority`, `local-authority`, `authority-user` |
 | `planning-service-manager` | People responsible for running or improving planning services. They need data to manage performance, workload, service quality and operational risk. | `planning-manager`, `planning-service-manager`, `planning-authority-manager`, `service-lead` |
 | `strategic-planning-user` | People using planning data for place shaping, growth, housing, high streets or economic strategy. They need aggregated and comparable information to understand trends and plan interventions. | `strategic-planner`, `place-shaping-lead`, `housing-planning-lead`, `town-centre-lead`, `economic-regeneration-lead` |
-| `analyst` | People analysing planning data across cases, areas or time periods. They need consistent, linkable and well-described data for monitoring, reporting, comparison and evidence building. | `analyst`, `data-user`, `central-government-analyst`, `housing-delivery-analyst` |
+| `analyst` | People analysing planning data across cases, areas or time periods. They need consistent, linkable and well-described data for monitoring, reporting, comparison and evidence building. | `analyst`, `central-government-analyst`, `housing-delivery-analyst` |
 | `policy-user` | People shaping, stewarding or overseeing planning policy and standards. They need evidence about how the planning system is working so they can evaluate policy, target improvements and maintain trust. | `policy-maker`, `central-government`, `mhclg`, `policy-steward`, `planning-system-steward` |
 | `service-builder` | People designing, building, integrating or operating digital planning services. They need stable, well-modelled data so services can exchange information, automate workflows and present planning records consistently. | `service-builder`, `software-supplier`, `system-integrator`, `public-register-service`, `process-user` |
 | `planning-system-user` | People who need to understand or use planning application information across the planning system. Use this when the same need genuinely applies across several user groups and choosing one narrower group would misrepresent the breadth of the need. | `planning-system-user` |
@@ -54,3 +54,15 @@ Current `planning-system-user` needs mostly relate to:
 - access to decision, committee and officer-report information
 - traceability between applications, decisions and conditions
 - cross-cutting data principles such as spatial representation and familiar location identifiers
+
+## Data-domain user groups
+
+Some needs apply to the data itself rather than to a particular role in the planning system. These needs should use a data-domain user group so they remain applicable wherever the data is produced, exchanged or used.
+
+| User group | Description and motivation |
+|---|---|
+| `data-user` | People or systems consuming planning application data. They need data that can be understood, interpreted and used reliably, regardless of the particular planning task or service in which it is used. |
+
+Use `data-user` when the need describes a general property or capability of the data, such as identity, context, provenance or interoperability, and does not depend on a planning-domain role or task.
+
+Use a planning user group such as `analyst`, `planning-practitioner` or `service-builder` when the motivation comes from a specific planning activity. A person may be both a planning-domain user and a data user, but the need should use the group that best explains why it exists.
