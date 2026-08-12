@@ -28,6 +28,30 @@ def test_render_site_builds_section_106_dataset(tmp_path, monkeypatch):
     assert "Needs satisfied by this dataset" in html
 
 
+def test_render_site_dataset_index_links_to_github_feedback(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    dataset_index = (output_dir / "dataset" / "index.html").read_text(
+        encoding="utf-8"
+    )
+    assert (
+        'href="https://github.com/digital-land/planning-application-data-specification/issues/new"'
+        in dataset_index
+    )
+
+
 def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path, monkeypatch):
     output_dir = tmp_path / "site"
     args = parse_args([

@@ -982,6 +982,7 @@ def render_dataset_index(
         "links": {
             "justifications": renderer.url_for("/justification"),
             "needs": renderer.url_for(f"/{needs_route}"),
+            "github_feedback": "https://github.com/digital-land/planning-application-data-specification/issues/new",
         },
     }
     dataset_html = renderer.render("dataset_index.html", dataset_ctx)
