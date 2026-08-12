@@ -129,6 +129,13 @@ The `planning-application.notes` field is included to provide general context
 about the published application record. It must not be used to publish personal,
 commercially sensitive, private or security-sensitive information.
 
+The `planning-application.officer-name` field is excluded. Although some local
+planning authorities publish case officer names on their public registers, the
+need for this information to be made available as national open data has not
+been established. Excluding it also avoids making a named individual's role
+available for unrestricted reuse before the public need and data protection
+considerations have been assessed.
+
 The `planning-permission-timeline.notes` field remains excluded from the first
 view because event-level free text may contain personal, commercially sensitive,
 private or security-sensitive information. It can be added later if there is a
