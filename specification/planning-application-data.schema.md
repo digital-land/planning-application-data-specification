@@ -27,6 +27,9 @@ datasets:
         description: the date the planning authority received the application
       - field: planning-authority
         description: Identifier of the planning authority that received this planning application
+      - field: officer-name
+        name: Case officer
+        description: Name of the planning officer responsible for handling the application
       - field: development-scale
         description: the local planning authority's classification of a full or outline planning application by development scale
         applies-if:
