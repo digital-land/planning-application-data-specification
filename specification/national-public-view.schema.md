@@ -79,6 +79,8 @@ datasets:
         description: the URL to the published decision notice
       - field: documentation-url
         description: the URL of the page where the decision notice can be found
+      - field: notes
+        description: Optional notes that provide additional context about the decision notice
   - dataset: planning-condition
     name: planning condition
     fields:

@@ -84,6 +84,7 @@ included dataset are filtered before publication.
 |  | planning-officer-recommendation | Recommendation made by the planning officer for this application. |  |
 |  | document-url | URL to the published decision notice. |  |
 |  | documentation-url | URL of the page where the decision notice can be found. |  |
+|  | notes | Optional notes that provide additional context about the decision notice. |  |
 | planning-condition |  |  |  |
 |  | reference | Reference for the planning condition. |  |
 |  | name | Plain-language label for the condition. |  |
@@ -127,6 +128,10 @@ records with `withhold` or `not-assessed` are excluded entirely.
 
 The `planning-application.notes` field is included to provide general context
 about the published application record. It must not be used to publish personal,
+commercially sensitive, private or security-sensitive information.
+
+The `decision-notice.notes` field is included to provide general context about
+the published decision notice record. It must not be used to publish personal,
 commercially sensitive, private or security-sensitive information.
 
 The `planning-application.officer-name` field is excluded. Although some local

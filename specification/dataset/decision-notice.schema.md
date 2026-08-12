@@ -19,6 +19,8 @@ fields:
   description: URL to the published decision notice
 - field: documentation-url
   description: URL a page where the published decision notice can be found
+- field: notes
+  description: Optional notes that provide additional context about the decision notice
 - field: planning-application
 - field: reference
 key-field: ''
