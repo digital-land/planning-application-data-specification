@@ -3,7 +3,7 @@
 <html lang="en" class="govuk-template govuk-template--rebranded">
   <head>
     <meta charset="utf-8">
-    <title>Justification just-0019</title>
+    <title>Design decision 0020</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
     <meta name="theme-color" content="#1d70b8">
 
@@ -170,12 +170,12 @@ data-module="govuk-service-navigation">
 
   
     <li class="govuk-breadcrumbs__list-item">
-      <a class="govuk-breadcrumbs__link" href="/planning-application-data-specification/justification">Justification</a>
+      <a class="govuk-breadcrumbs__link" href="/planning-application-data-specification/design-decision">Design decisions</a>
     </li>
   
 
   
-    <li class="govuk-breadcrumbs__list-item" aria-current="page">just-0019</li>
+    <li class="govuk-breadcrumbs__list-item" aria-current="page">Record condition text and reason separately</li>
   
 
   </ol>
@@ -186,102 +186,77 @@ data-module="govuk-service-navigation">
           
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-xl">just-0019</span>
-    <h1 class="govuk-heading-xl">Justification just-0019</h1>
+    <span class="govuk-caption-xl">Design decision</span>
+    <h1 class="govuk-heading-xl">Record condition text and reason separately</h1>
 
     <dl class="govuk-summary-list">
       <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Needs</dt>
-        <dd class="govuk-summary-list__value">
-          
-            <a class="govuk-link" href="/planning-application-data-specification/user-need/dd-need-036">dd-need-036</a>
-          
-        </dd>
+        <dt class="govuk-summary-list__key">Decision</dt>
+        <dd class="govuk-summary-list__value">0020</dd>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Satisfaction</dt>
-        <dd class="govuk-summary-list__value">full</dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Confidence</dt>
-        <dd class="govuk-summary-list__value">high</dd>
-      </div>
+      
       <div class="govuk-summary-list__row">
         <dt class="govuk-summary-list__key">Status</dt>
-        <dd class="govuk-summary-list__value">proposed</dd>
+        <dd class="govuk-summary-list__value">Proposed</dd>
       </div>
+      
+      
+      <div class="govuk-summary-list__row">
+        <dt class="govuk-summary-list__key">Date</dt>
+        <dd class="govuk-summary-list__value">2026-08-18</dd>
+      </div>
+      
     </dl>
 
-    
-      <div class="govuk-body">
-        <p>Keeping <code>reason</code> separate from the condition <code>description</code> makes both the requirement and its justification explicit. This helps applicants and developers understand why the condition was imposed and how it relates to policy or the proposal, without having to interpret a combined block of text.</p>
-<p>For now, the need is satisfied by <code>planning-condition.reason</code>, keeping <code>decision-condition</code> as the dataset that joins a condition to a particular decision. This placement is provisional while the distinction between reusable condition clauses and conditions as imposed is investigated. If the model changes, this justification must be reviewed, but the need for the reason remains.</p>
-      </div>
-    
+    <div class="app-prose">
+      <h3 class="govuk-heading-m" id="context">Context</h3>
+<p class="govuk-body">Planning decision notices commonly present a condition as two related but distinct pieces of information:</p>
+<ul class="govuk-list govuk-list--bullet">
+<li>the condition text, which states what must be done or restricted; and</li>
+<li>the reason, which explains why the condition was imposed.</li>
+</ul>
+<p class="govuk-body">For example:</p>
+<blockquote>
+<p class="govuk-body">The development must be carried out in accordance with the approved plans.</p>
+<p class="govuk-body"><strong>Reason:</strong> For the avoidance of doubt and in the interests of proper planning.</p>
+</blockquote>
+<p class="govuk-body">Some planning systems store or render both parts in one text field. However, evidence shows that a combined source value may still contain a clearly labelled reason, often introduced by <code class="app-code">Reason:</code>. This is an implementation characteristic and does not make the two pieces of information semantically equivalent.</p>
+<p class="govuk-body">This decision responds to <a class="govuk-link" href="../../user-needs/need/dd-need-036.md">user need <code class="app-code">dd-need-036</code></a>: applicants and developers need to see the reasons behind each condition so they can understand why it was imposed and how it relates to policy or the proposal. <a class="govuk-link" href="../../user-needs/justification/just-0019.md">Justification <code class="app-code">just-0019</code></a> records how the current specification satisfies that need.</p>
+<h3 class="govuk-heading-m" id="decision">Decision</h3>
+<p class="govuk-body">Record the condition text and reason as separate data items.</p>
+<p class="govuk-body">The condition text records the requirement that must be met. The reason records the justification for imposing that condition. It does not record a reason for refusing the planning application.</p>
+<h3 class="govuk-heading-m" id="rationale">Rationale</h3>
+<p class="govuk-body">Keeping the two values separate:</p>
+<ul class="govuk-list govuk-list--bullet">
+<li>answers two different questions: what is required, and why it is required;</li>
+<li>makes the justification for a condition visible and supports scrutiny of whether it is necessary, relevant, enforceable and reasonable;</li>
+<li>supports search and analysis of requirements and their policy or site-specific justifications independently;</li>
+<li>allows common condition wording to be compared or reused without assuming that its justification is identical in every case; and</li>
+<li>reflects the explicit condition-and-reason structure commonly presented in decision notices.</li>
+</ul>
+<p class="govuk-body">Both values may contain standard and case-specific material. Condition wording may include application-specific plans, dates or substitutions. A reason may use a standard rationale, cite local policy or explain a particular impact of the development. Separating them does not imply that one is always reusable and the other is always bespoke.</p>
+<h3 class="govuk-heading-m" id="consequences">Consequences</h3>
+<ul class="govuk-list govuk-list--bullet">
+<li>Publishers should map a reliably labelled reason separately even where a source system stores condition text and reason together.</li>
+<li>Publishers should not copy the same combined text into both fields. If the boundary cannot be identified reliably, they should report the reason as unavailable rather than invent a split.</li>
+<li>The exact text and reason issued with a decision must remain recoverable as authoritative information.</li>
+</ul>
+<h3 class="govuk-heading-m" id="alternatives-considered">Alternatives considered</h3>
+<ul class="govuk-list govuk-list--bullet">
+<li>Store condition text and reason as one value -&gt; rejected because it combines the requirement with its justification, limiting reuse, scrutiny and analysis even when the source document clearly distinguishes them.</li>
+<li>Treat the reason as unstructured supporting documentation only -&gt; rejected because reasons are routinely presented as part of the issued condition and have value as structured data.</li>
+</ul>
+<h3 class="govuk-heading-m" id="unresolved-questions">Unresolved questions</h3>
+<p class="govuk-body">This decision establishes the semantic separation only. It does not settle whether either value should ultimately be held on <code class="app-code">planning-condition</code>, <code class="app-code">decision-condition</code> or another future representation of an imposed condition.</p>
+<p class="govuk-body">For now, <code class="app-code">description</code> and <code class="app-code">reason</code> remain on <code class="app-code">planning-condition</code>. Further work will establish whether <code class="app-code">planning-condition</code> represents a reusable clause or an exact condition as imposed through a particular decision, and whether the reason justifies a general clause or its use in that particular case.</p>
+    </div>
 
     <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l app-strong-section-break">
 
-    
-      <h2 class="govuk-heading-m">Satisfied by:</h2>
-      <div class="govuk-body">
-        
-
-        
-
-        
-          <div class="govuk-!-margin-bottom-3">
-            
-              <div class="govuk-!-margin-bottom-1">
-          
-            
-
-
-
-
-  
-  
-
-
-<div class="kv-chip ">
-  <dt class="kv-chip__key">Field</dt>
-  <dd class="kv-chip__value">
-    
-      <a class="govuk-link app-link--text-colour govuk-link--no-visited-state" href="/planning-application-data-specification/dataset/planning-condition/#reason">reason</a>
-    
-  </dd>
-</div>
- in 
-
-
-
-
-  
-
-
-<div class="kv-chip ">
-  <dt class="kv-chip__key">Dataset</dt>
-  <dd class="kv-chip__value">
-    
-      <a class="govuk-link app-link--text-colour govuk-link--no-visited-state" href="/planning-application-data-specification/dataset/planning-condition">planning-condition</a>
-    
-  </dd>
-</div>
-
-          
-        </div>
-              
-            
-          </div>
-        
-      </div>
-    
-
-    <hr class="govuk-section-break govuk-section-break--visible govuk-section-break--l app-strong-section-break">
-    <h2 class="govuk-heading-m">Help improve this specification</h2>
-    <p class="govuk-body">To help keep this justification useful and up to date, you can:</p>
+    <h2 class="govuk-heading-m">Help improve this design decision</h2>
+    <p class="govuk-body">To help keep this design decision useful and up to date, you can raise feedback on GitHub.</p>
     <ul class="govuk-list govuk-list--bullet">
-      <li><a class="govuk-link" href="https://github.com/digital-land/planning-application-data-specification/issues/new?title=Feedback%20on%20justification%20just-0019">Raise feedback on GitHub for just-0019</a></li>
-      <li><a class="govuk-link" href="https://github.com/digital-land/planning-application-data-specification/edit/main/user-needs/justification/just-0019.md">Propose an edit on GitHub</a></li>
+      <li><a class="govuk-link" href="https://github.com/digital-land/planning-application-data-specification/issues/new?title=%5B0020%5D%20Feedback%20on%20design%20decision%3A%20Record%20condition%20text%20and%20reason%20separately">Raise feedback on GitHub for decision 0020</a></li>
     </ul>
   </div>
 </div>
