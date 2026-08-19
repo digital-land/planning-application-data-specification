@@ -14,10 +14,13 @@ themes:
   - transparency
 source:
   - type: interview
-    notes:
+    notes: Applicants and developers need the stated justification for each condition, including how it relates to planning policy or the particular proposal.
+  - type: other
+    notes: Decision notices commonly present condition text followed by a separately labelled reason. However there is evidence showing that some systems may store both in one value even where the issued notice distinguishes them.
 variations:
 next_step:
-notes:
+notes: |
+  The reason explains why the condition was imposed. It is distinct from the requirement expressed by the condition and from a reason for refusing the application.
 ---
 
 Similar needs:

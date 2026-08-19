@@ -15,7 +15,7 @@ fields:
 - field: description
   description: The text of the condition thats required to be met
 - field: reason
-  description: Explanation of why the condition was imposed
+  description: The reason for imposing the condition
 - field: organisation
   description: Identifier of the organisation responsible for this condition
 key-field: ''

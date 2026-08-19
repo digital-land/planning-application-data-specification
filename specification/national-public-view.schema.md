@@ -91,7 +91,7 @@ datasets:
       - field: description
         description: the text of the condition that must be met
       - field: reason
-        description: an explanation of why the condition was imposed
+        description: the reason for imposing the condition
       - field: organisation
         description: the organisation responsible for this condition
   - dataset: decision-condition

@@ -1,7 +1,7 @@
 ---
 cardinality: 1
 datatype: string
-description: A textual reason
+description: A textual explanation of why something is proposed, required or decided
 end-date: ''
 entry-date: 2025-06-26
 field: reason

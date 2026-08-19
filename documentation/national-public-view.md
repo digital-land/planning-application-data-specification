@@ -89,7 +89,7 @@ included dataset are filtered before publication.
 |  | reference | Reference for the planning condition. |  |
 |  | name | Plain-language label for the condition. |  |
 |  | description | Text of the condition that must be met. |  |
-|  | reason | Explanation of why the condition was imposed. |  |
+|  | reason | The reason for imposing the condition. |  |
 |  | organisation | Organisation responsible for this condition. |  |
 | decision-condition |  |  |  |
 |  | reference | Reference for the decision condition. |  |
@@ -115,6 +115,16 @@ included dataset are filtered before publication.
 |  | planning-application | Reference for the related planning application. |  |
 |  | permission-process-event | Type of event in the permission process. |  |
 |  | event-date | Date the event occurred. |  |
+
+### Understanding condition text and reason
+
+The condition `description` and `reason` are separate data items. The description records what is required. The reason explains why the condition was imposed. It is not a reason for refusing the planning application.
+
+For example:
+
+> **Condition:** The development must be carried out in accordance with the approved plans.
+>
+> **Reason:** For the avoidance of doubt and in the interests of proper planning.
 
 ## Notes on excluded fields
 
