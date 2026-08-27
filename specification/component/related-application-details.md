@@ -14,6 +14,20 @@ fields:
     required-if:
       - application-type:
           in: ['non-material-amendment']
+  - field: eia-application
+    applies-if:
+      application-type:
+        in:
+          - reserved-matters
+    required: true
+  - field: environmental-statement-submitted
+    applies-if:
+      application-type:
+        in:
+          - reserved-matters
+    required-if:
+      - field: eia-application
+        value: true
 entry-date: 2025-06-12
 end-date: ''
 ---
