@@ -13,9 +13,10 @@ fields:
       - hh
       - lbc
       - outline
+      - reserved-matters
       - technical-details-consent
-  description: A description of what is being proposed, including the development,
-    works, or change of use
+  description: A description of the development, works, change of use or reserved
+    matters for which approval is sought
   name: Proposal description
   required: true
 - field: reserved-matters
@@ -41,6 +42,7 @@ fields:
       - hh
       - lbc
       - outline
+      - reserved-matters
       - technical-details-consent
   required: true
 - field: proposal-started-date
@@ -53,6 +55,7 @@ fields:
       - hh
       - lbc
       - outline
+      - reserved-matters
       - technical-details-consent
   required-if:
   - field: proposal-started
@@ -67,6 +70,7 @@ fields:
       - hh
       - lbc
       - outline
+      - reserved-matters
       - technical-details-consent
   required: true
 - field: proposal-completed-date
@@ -79,6 +83,7 @@ fields:
       - hh
       - lbc
       - outline
+      - reserved-matters
       - technical-details-consent
   required-if:
   - field: proposal-completed
