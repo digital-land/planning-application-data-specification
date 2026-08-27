@@ -176,13 +176,14 @@ The current generator covers these patterns:
 | `required-if` with `any` containing `field` + `value` | Partially emitted as `anyOf` inside `if`. |
 | `required-if` with `any` containing `field` + `contains` | Partially emitted as a string `pattern` check. |
 | `required-if` with `any: true` and a list of fields | Partially emitted as checks for the JSON boolean value `true`. |
+| `required-if` with `operator: empty` | Emitted as a condition matching a missing property or an empty string, array, object or null value. |
 | `applies-if` using parent application types | Emitted using package application type inheritance resolution, so a child type such as `outline-some` satisfies rules written for `outline`. |
 
 The current generator does not yet cover these patterns:
 
 | Pattern | What is missing |
 | --- | --- |
-| `required-if` with `operator: not_empty` or `operator: empty` | Needs translation to JSON Schema presence and non-empty checks such as `required` plus `minLength`, `minItems` or `minProperties`, depending on the target datatype. |
+| `required-if` with `operator: not_empty` | Needs translation to JSON Schema presence and non-empty checks such as `required` plus `minLength`, `minItems` or `minProperties`, depending on the target datatype. |
 | `required-if` with comparison operators such as `<` | Needs typed comparison support, including date and datetime comparison semantics. |
 | `required-if` with `value-field` | Needs field-to-field comparison support. |
 | Explicit `all` conditions | Needs reliable `allOf` generation for grouped conditions. |

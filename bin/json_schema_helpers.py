@@ -1,6 +1,28 @@
 from typing import Any, Dict, List
 
 
+def create_empty_condition(field_ref: str) -> Dict[str, Any]:
+    """Match a missing property or a present value empty for its JSON type."""
+    return {
+        "anyOf": [
+            {"not": {"required": [field_ref]}},
+            {
+                "required": [field_ref],
+                "properties": {
+                    field_ref: {
+                        "anyOf": [
+                            {"type": "string", "maxLength": 0},
+                            {"type": "array", "maxItems": 0},
+                            {"type": "object", "maxProperties": 0},
+                            {"type": "null"},
+                        ]
+                    }
+                },
+            },
+        ]
+    }
+
+
 def create_simple_required_if_rule(
     field_ref: str, condition_field: str, condition_value: Any
 ) -> Dict[str, Any]:
@@ -82,7 +104,17 @@ def parse_and_generate_required_if_rules(
         any_conditions_list = required_if_config.get("any")
         any_fields_list = required_if_config.get("field")
 
-        if isinstance(any_conditions_list, list):
+        if (
+            required_if_config.get("operator") == "empty"
+            and isinstance(any_fields_list, str)
+        ):
+            rules.append(
+                {
+                    "if": create_empty_condition(any_fields_list),
+                    "then": {"required": [field_ref]},
+                }
+            )
+        elif isinstance(any_conditions_list, list):
             # Case: {"any": [{"field": "f1", "value": "v1"}, ...]}
             rules.append(create_anyof_conditions_rule(field_ref, any_conditions_list))
         elif any_conditions_list is True and isinstance(any_fields_list, list):

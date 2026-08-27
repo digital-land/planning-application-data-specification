@@ -264,9 +264,7 @@ There are two main types of conditionals in the markdown schemas.
 Supported conditions are converted to JSON Schema `if/then/else` constructs. Some are simple `if/then/else` constructs. The conditions
 evaluated within the `if` may in turn be combined using `allOf` or `anyOf` constructs resulting in logical and/or semantics.
 
-The generator currently supports value-based `required-if` conditions. It does
-not generate rules for operator conditions such as `empty`, `not_empty`, or
-field-to-field comparisons using `value-field`. JSON Schema Draft 7 cannot
+The generator supports value-based `required-if` conditions and `operator: empty`, including missing properties and empty strings, arrays, objects or null values. It does not generate rules for other operator conditions such as `not_empty` or field-to-field comparisons using `value-field`. JSON Schema Draft 7 cannot
 portably compare the values of two fields, so these conditions remain part of
 the source specification but are not enforced by the generated JSON Schema.
 

@@ -1,9 +1,31 @@
 from bin.json_schema_helpers import (
+    create_empty_condition,
     create_simple_required_if_rule,
     create_anyof_conditions_rule,
     create_anyof_fields_rule,
     parse_and_generate_required_if_rules,
 )
+
+
+def test_create_empty_condition_matches_missing_and_empty_values():
+    assert create_empty_condition("items") == {
+        "anyOf": [
+            {"not": {"required": ["items"]}},
+            {
+                "required": ["items"],
+                "properties": {
+                    "items": {
+                        "anyOf": [
+                            {"type": "string", "maxLength": 0},
+                            {"type": "array", "maxItems": 0},
+                            {"type": "object", "maxProperties": 0},
+                            {"type": "null"},
+                        ]
+                    }
+                },
+            },
+        ]
+    }
 
 
 def test_create_simple_required_if_rule():
@@ -177,6 +199,19 @@ def test_parse_required_if_unrecognized_dict_ignored():
     required_if_config = {"field": "some-field", "operator": "not_empty"}
     rules = parse_and_generate_required_if_rules(field_ref, required_if_config)
     assert rules == []
+
+
+def test_parse_required_if_empty_operator():
+    rules = parse_and_generate_required_if_rules(
+        "structured-items", {"field": "items-document", "operator": "empty"}
+    )
+
+    assert rules == [
+        {
+            "if": create_empty_condition("items-document"),
+            "then": {"required": ["structured-items"]},
+        }
+    ]
 
 
 def test_parse_required_if_unrecognized_type_ignored():
