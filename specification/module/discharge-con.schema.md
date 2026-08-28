@@ -1,18 +1,16 @@
 ---
-description: How any conditions imposed as part of being given planning permission
-  will be met
+module: discharge-con
+name: Discharge of conditions
+description: Information submitted to demonstrate how the requirements of one or
+  more planning conditions will be met
 end-date: ''
 entry-date: 2025-07-08
 fields:
-- applies-if:
-    application-type:
-      in:
-      - approval-condition
-  field: description-list
+- field: description
+  description: A full description or list of the materials or other details submitted
+    for approval
   required: true
-module: discharge-con
-name: Discharge condition
 rules:
-- Description-list must provide clear details of materials/details submitted for approval
-- This module is only applicable to approval-condition applications
+- rule: The description must clearly identify the materials or details being submitted
+    for approval
 ---
