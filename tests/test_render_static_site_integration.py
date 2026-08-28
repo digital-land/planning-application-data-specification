@@ -26,6 +26,26 @@ def test_render_site_builds_section_106_dataset(tmp_path, monkeypatch):
     # Basic smoke checks: title and at least one linked need/justification section
     assert "section 106 agreement" in html
     assert "Needs satisfied by this dataset" in html
+    assert (
+        'href="/static/vendor/govuk/govuk-frontend-6.4.0.min.css"' in html
+    )
+    assert "design.planning.data.gov.uk/static/stylesheets/application.css" not in html
+    assert 'import { initAll } from "/static/vendor/govuk/' in html
+    assert (
+        "design.planning.data.gov.uk/static/javascripts/digital-land-frontend.js"
+        in html
+    )
+
+    govuk_css = (
+        output_dir / "static" / "vendor" / "govuk" / "govuk-frontend-6.4.0.min.css"
+    ).read_text(encoding="utf-8")
+    assert '--govuk-frontend-version:"6.4.0"' in govuk_css
+    assert "url(/assets/" not in govuk_css
+
+    application_css = (
+        output_dir / "static" / "stylesheets" / "application.css"
+    ).read_text(encoding="utf-8")
+    assert ".js-enabled .js-hidden" in application_css
 
 
 def test_render_site_dataset_index_links_to_github_feedback(tmp_path, monkeypatch):
