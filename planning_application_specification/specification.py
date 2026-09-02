@@ -8,7 +8,7 @@ from typing import Optional
 
 from .application_types import canonical_application_ref, normalise_application_types
 from .applications import get_active_combined_application_refs, resolve_application
-from .guidance import Guidance, load_guidance
+from .guidance import Guidance, GuidanceIndex, load_guidance
 from .loader import _resolve_repo_root, load_specification_model
 from .models import ApplicationDef, ComponentUsage, FieldDef, FieldUsage
 
@@ -165,7 +165,7 @@ class Specification:
     datasets: dict
     applications: dict
     fields: dict
-    guidance_index: dict[str, dict[str, Guidance]]
+    guidance_index: GuidanceIndex
 
     @classmethod
     def load(cls, path: str | Path | None = None) -> "Specification":
@@ -182,8 +182,57 @@ class Specification:
             guidance_index=load_guidance(source_path),
         )
 
-    def guidance(self, *, dataset: str, field: str) -> Guidance | None:
-        return self.guidance_index.get(dataset, {}).get(field)
+    def guidance(
+        self,
+        *,
+        dataset: str | None = None,
+        module: str | None = None,
+        component: str | None = None,
+        field: str | None = None,
+    ) -> Guidance | None:
+        container_type, container_ref = self._guidance_container(
+            dataset=dataset,
+            module=module,
+            component=component,
+        )
+        return self.guidance_index.get((container_type, container_ref, field))
+
+    def guidance_entries(
+        self,
+        *,
+        dataset: str | None = None,
+        module: str | None = None,
+        component: str | None = None,
+    ) -> tuple[Guidance, ...]:
+        container_type, container_ref = self._guidance_container(
+            dataset=dataset,
+            module=module,
+            component=component,
+        )
+        return tuple(
+            guidance
+            for (entry_type, entry_ref, _), guidance in self.guidance_index.items()
+            if entry_type == container_type and entry_ref == container_ref
+        )
+
+    @staticmethod
+    def _guidance_container(
+        *,
+        dataset: str | None,
+        module: str | None,
+        component: str | None,
+    ) -> tuple[str, str]:
+        containers = [
+            ("dataset", dataset),
+            ("module", module),
+            ("component", component),
+        ]
+        selected = [(kind, ref) for kind, ref in containers if ref]
+        if len(selected) != 1:
+            raise ValueError(
+                "guidance requires exactly one of dataset=..., module=... or component=..."
+            )
+        return selected[0]
 
     def codelist(self, ref: str) -> Codelist:
         codelist_meta = self.tables.get("codelist", {}).get(ref)

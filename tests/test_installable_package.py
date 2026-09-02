@@ -15,6 +15,7 @@ from planning_application_specification.specification import (
     ResolvedField,
     SelectionContext,
 )
+from planning_application_specification.guidance import load_guidance
 
 
 def test_application_type_normalisation_is_shared_and_stable():
@@ -42,6 +43,46 @@ def test_contextual_dataset_field_guidance(project_root):
     assert guidance.field == "name"
     assert "Former Riverside Mill" in guidance.content
     assert spec.guidance(dataset="site", field="reference") is None
+
+
+def test_guidance_supports_container_contexts_and_discovery(tmp_path):
+    guidance_root = tmp_path / "specification" / "guidance"
+    files = {
+        guidance_root / "dataset" / "site" / "index.md": (
+            "---\ndataset: site\n---\n\nDataset guidance"
+        ),
+        guidance_root / "module" / "proposal-details" / "field" / "description.md": (
+            "---\nmodule: proposal-details\nfield: description\n---\n\nModule field guidance"
+        ),
+        guidance_root / "component" / "site-address" / "field" / "address-text.md": (
+            "---\ncomponent: site-address\nfield: address-text\n---\n\nComponent field guidance"
+        ),
+    }
+    for path, content in files.items():
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(content, encoding="utf-8")
+
+    spec = Specification(
+        source_path=tmp_path,
+        tables={},
+        modules={},
+        components={},
+        datasets={},
+        applications={},
+        fields={},
+        guidance_index=load_guidance(tmp_path),
+    )
+
+    assert spec.guidance(dataset="site").content == "Dataset guidance"
+    assert (
+        spec.guidance(module="proposal-details", field="description").content
+        == "Module field guidance"
+    )
+    assert (
+        spec.guidance(component="site-address", field="address-text").content
+        == "Component field guidance"
+    )
+    assert spec.guidance_entries(dataset="site") == (spec.guidance(dataset="site"),)
 
 
 def test_canonical_codelist_lookup_returns_items(project_root):
