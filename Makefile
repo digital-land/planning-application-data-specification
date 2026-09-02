@@ -7,6 +7,9 @@ BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
 PINNED_PIP      := 25.2
 PINNED_PIPTOOLS := 7.5.1
 
+# Port for test server
+PORT ?= 8081
+
 init::
 	# Tooling (pin pip to avoid CI drift)
 	python -m pip install --upgrade "pip==$(PINNED_PIP)" "setuptools>=68" "wheel>=0.42" "build>=1.0.0"
@@ -75,7 +78,7 @@ render-github-pages:: clean-static-site copy-assets
 
 serve-github-pages::
 	# Local preview: serve docs at root; URLs will use whatever base-url you rendered with
-	python3 -m http.server 8000 --bind :: -d docs
+	python3 -m http.server $(PORT) --bind :: -d docs
 
 clean::
 	rm -rf generated
