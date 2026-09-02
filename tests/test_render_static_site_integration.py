@@ -1,6 +1,7 @@
 from pathlib import Path
 
 from bin.render_static_site import build_site, parse_args
+from planning_application_specification import Guidance, Specification
 
 
 def test_render_site_builds_section_106_dataset(tmp_path, monkeypatch):
@@ -73,6 +74,40 @@ def test_render_site_dataset_index_links_to_github_feedback(tmp_path, monkeypatc
 
 
 def test_render_site_shows_contextual_field_guidance(tmp_path, monkeypatch):
+    package_guidance = Specification.guidance
+
+    def guidance_for_renderer(
+        specification,
+        *,
+        dataset=None,
+        module=None,
+        component=None,
+        field=None,
+    ):
+        examples = {
+            ("site", None, None, None): "Site dataset guidance",
+            (None, "proposal-details", None, None): "Proposal module guidance",
+            (None, "proposal-details", None, "description"): (
+                "Proposal description guidance"
+            ),
+            (None, None, "site-address", None): "Site address component guidance",
+            (None, None, "site-address", "address-text"): (
+                "Site address text guidance"
+            ),
+        }
+        content = examples.get((dataset, module, component, field))
+        if content:
+            return Guidance(content=content)
+        return package_guidance(
+            specification,
+            dataset=dataset,
+            module=module,
+            component=component,
+            field=field,
+        )
+
+    monkeypatch.setattr(Specification, "guidance", guidance_for_renderer)
+
     output_dir = tmp_path / "site"
     args = parse_args([
         "--output",
@@ -99,6 +134,19 @@ def test_render_site_shows_contextual_field_guidance(tmp_path, monkeypatch):
         '<p class="govuk-body">The <a class="govuk-link" href="#reference">'
         "reference</a> for the site</p>"
     ) in html
+    assert "Site dataset guidance" in html
+
+    module_html = (
+        output_dir / "module" / "proposal-details" / "index.html"
+    ).read_text(encoding="utf-8")
+    assert "Proposal module guidance" in module_html
+    assert "Proposal description guidance" in module_html
+
+    component_html = (
+        output_dir / "component" / "site-address" / "index.html"
+    ).read_text(encoding="utf-8")
+    assert "Site address component guidance" in component_html
+    assert "Site address text guidance" in component_html
 
 
 def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path, monkeypatch):

@@ -445,6 +445,22 @@ class FieldView:
         self.inherited_from = inherited_from
 
 
+def rendered_guidance(guidance) -> str:
+    return render_govuk_markdown(guidance.content) if guidance else ""
+
+
+def attach_field_guidance(
+    fields: List[FieldView],
+    specification: Specification,
+    **container: str,
+) -> None:
+    for field in fields:
+        field.guidance = rendered_guidance(
+            specification.guidance(field=field.ref, **container)
+        )
+        attach_field_guidance(field.children, specification, **container)
+
+
 def build_field_display(
     field_entry: Any, field_index: Dict[str, Any] = None
 ) -> FieldView:
@@ -1444,16 +1460,16 @@ def build_site(args: argparse.Namespace) -> None:
                 fv.satisfactions = satisfaction_messages_for_field(
                     all_need_justs, ds_id, fv.ref, renderer
                 )
-                guidance = specification.guidance(dataset=ds_id, field=fv.ref)
-                fv.guidance = (
-                    render_govuk_markdown(guidance.content) if guidance else ""
-                )
                 fields.append(fv)
+            attach_field_guidance(fields, specification, dataset=ds_id)
             dataset_ctx = {
                 "page_title": f"Dataset {ds_id}",
                 "links": {"back": renderer.url_for("/dataset")},
                 "title": ds.get("name", ds_id),
                 "description": ds.get("description", ""),
+                "guidance": rendered_guidance(
+                    specification.guidance(dataset=ds_id)
+                ),
                 "fields": fields,
                 "needs": [
                     {
@@ -1545,12 +1561,16 @@ def build_site(args: argparse.Namespace) -> None:
         module_template = env.get_template("module_detail.html")
         for m in submission_modules:
             mod_fields = build_field_views_from_items(m.items, field_index)
+            attach_field_guidance(mod_fields, specification, module=m.ref)
             rules = spec_tables.get("module", {}).get(m.ref, {}).get("rules", [])
             module_ctx = {
                 "page_title": f"Module {m.ref}",
                 "ref": m.ref,
                 "name": m.name or m.ref,
                 "description": m.description or "",
+                "guidance": rendered_guidance(
+                    specification.guidance(module=m.ref)
+                ),
                 "fields": mod_fields,
                 "rules": rules,
                 "usage": build_module_usage_view(specification, m.ref, renderer),
@@ -1582,12 +1602,16 @@ def build_site(args: argparse.Namespace) -> None:
         raw_components = spec_tables.get("component", {})
         for cref, comp in component_index.items():
             comp_fields = build_field_views_from_items(comp.items, field_index)
+            attach_field_guidance(comp_fields, specification, component=cref)
             comp_rules = raw_components.get(cref, {}).get("rules", [])
             comp_ctx = {
                 "page_title": f"Component {cref}",
                 "ref": cref,
                 "name": comp.name or comp.ref,
                 "description": comp.description or "",
+                "guidance": rendered_guidance(
+                    specification.guidance(component=cref)
+                ),
                 "fields": comp_fields,
                 "rules": comp_rules,
                 "usage": build_component_usage_view(specification, cref, renderer),
