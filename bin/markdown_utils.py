@@ -1,4 +1,5 @@
 import csv
+import re
 
 from bs4 import BeautifulSoup
 from markdown import markdown
@@ -76,7 +77,7 @@ def csv_to_markdown(
     return markdown_table
 
 
-def render_govuk_markdown(text, make_safe=True):
+def render_govuk_markdown(text, make_safe=True, capitalise=False):
     """Render markdown as HTML with GOV.UK Design System classes."""
     if text is None:
         return ""
@@ -84,9 +85,24 @@ def render_govuk_markdown(text, make_safe=True):
     soup = BeautifulSoup(markdown(text), "html.parser")
     add_govuk_markdown_attrs(soup)
 
+    if capitalise:
+        capitalise_first_visible_character(soup)
+
     if make_safe:
         return Markup(str(soup))
     return soup
+
+
+def capitalise_first_visible_character(soup):
+    """Capitalise the first letter in rendered content, ignoring HTML markup."""
+    for node in soup.find_all(string=True):
+        match = re.search(r"[A-Za-z]", str(node))
+        if not match:
+            continue
+        position = match.start()
+        text = str(node)
+        node.replace_with(text[:position] + text[position].upper() + text[position + 1 :])
+        return
 
 
 def add_govuk_markdown_attrs(soup):

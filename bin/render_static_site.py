@@ -423,6 +423,7 @@ class FieldView:
         target_dataset=None,
         target_dataset_href="",
         satisfactions=None,
+        guidance="",
         component_name=None,
         component_ref=None,
         inherited_from=None,
@@ -438,6 +439,7 @@ class FieldView:
         self.target_dataset = target_dataset
         self.target_dataset_href = target_dataset_href
         self.satisfactions = satisfactions or []
+        self.guidance = guidance
         self.component_name = component_name
         self.component_ref = component_ref
         self.inherited_from = inherited_from
@@ -1430,7 +1432,9 @@ def build_site(args: argparse.Namespace) -> None:
                 target_dataset = getattr(
                     f, "get", lambda k, default=None: f.get(k, default)
                 )("dataset", None)
-                fv.description = render_markdown(fv.description or "")
+                fv.description = render_govuk_markdown(
+                    fv.description or "", capitalise=True
+                )
                 fv.target_dataset = target_dataset
                 fv.target_dataset_href = (
                     renderer.url_for(f"/dataset/{target_dataset}")
@@ -1439,6 +1443,10 @@ def build_site(args: argparse.Namespace) -> None:
                 )
                 fv.satisfactions = satisfaction_messages_for_field(
                     all_need_justs, ds_id, fv.ref, renderer
+                )
+                guidance = specification.guidance(dataset=ds_id, field=fv.ref)
+                fv.guidance = (
+                    render_govuk_markdown(guidance.content) if guidance else ""
                 )
                 fields.append(fv)
             dataset_ctx = {

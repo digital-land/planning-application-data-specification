@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% set primary_navigation_current = "dataset" %}
+{% from "macros/summary_list.html" import summary_list_row %}
 
 {% block app_breadcrumbs %}
   {{- govukBreadcrumbs({
@@ -20,7 +21,7 @@
 </div>
   
 <div class='govuk-grid-row'>
-  <div class='govuk-grid-column-three-quarters'>
+  <div class='govuk-grid-column-full'>
     {% if description %}<p class="govuk-body-l">{{ description }}</p>{% endif %}
 
   {% if fields %}
@@ -32,12 +33,18 @@
           <dd class="govuk-summary-list__value">
             <div class="app-field-details__attrs">
               {% if field.description %}
-                <p class="govuk-body">{{ field.description | safe }}</p>
+                {{ field.description | safe }}
               {% endif %}
-              <p class="govuk-hint govuk-!-margin-bottom-1">Reference: <code>{{ field.ref }}</code></p>
-              {% if field.cardinality %}
-                <p class="govuk-hint govuk-!-margin-bottom-1">Cardinality: {{ field.cardinality }}</p>
-              {% endif %}
+              <dl class="govuk-summary-list govuk-summary-list--no-border">
+                {{ summary_list_row("Reference", field.ref) }}
+                {% if field.cardinality -%}
+                {{ summary_list_row("Cardinality", field.cardinality) }}
+                {%- endif %}
+                {% if field.datatype -%}
+                {{ summary_list_row("Datatype", field.datatype) }}
+                {%- endif %}
+              </dl>
+
               {% if field.datatype == "enum" and field.codelist %}
                 <p class="govuk-hint govuk-!-margin-bottom-1">
                   Codelist:
@@ -48,6 +55,16 @@
                 <p class="govuk-body">Links to dataset: <a class="govuk-link" href="{{ field.target_dataset_href }}">{{ field.target_dataset }}</a></p>
               {% endif %}
             </div>
+            {% if field.guidance %}
+            <details class="govuk-details govuk-!-margin-top-2 govuk-!-margin-bottom-2 govuk-!-padding-bottom-2 app-guidance-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">Guidance</span>
+              </summary>
+              <div class="govuk-details__text">
+                {{ field.guidance | safe }}
+              </div>
+            </details>
+            {% endif %}
             {% if field.satisfactions %}
             <details class="govuk-details govuk-!-margin-top-2">
               <summary class="govuk-details__summary">

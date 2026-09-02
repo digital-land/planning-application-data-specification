@@ -72,6 +72,35 @@ def test_render_site_dataset_index_links_to_github_feedback(tmp_path, monkeypatc
     )
 
 
+def test_render_site_shows_contextual_field_guidance(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    site_page = output_dir / "dataset" / "site" / "index.html"
+    html = site_page.read_text(encoding="utf-8")
+
+    guidance_position = html.index("Guidance")
+    needs_position = html.index("Needs this field satisfies", guidance_position)
+    assert "Former Riverside Mill" in html
+    assert guidance_position < needs_position
+    assert '<p class="govuk-body"><p>Plain-language name' not in html
+    assert (
+        '<p class="govuk-body">The <a class="govuk-link" href="#reference">'
+        "reference</a> for the site</p>"
+    ) in html
+
+
 def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path, monkeypatch):
     output_dir = tmp_path / "site"
     args = parse_args([
