@@ -23,6 +23,8 @@ tool: "⚒️ Tooling"
 fix:  "🐛 Bug Fixes"
 docs: "📚 Documentation"
 req: "📄 Planning requirement"
+need: "🎯 Need"
+guidance: "🧭 Guidance"
 
 ### Tags
 
