@@ -1,4 +1,4 @@
-from planning_application_specification import Specification
+from planning_application_specification import Guidance, Specification
 from planning_application_specification.application_types import (
     canonical_application_ref,
     normalise_application_types,
@@ -30,6 +30,18 @@ def test_specification_load_reads_local_checkout(project_root):
     assert "description" in spec.fields
     assert "planning-application" in spec.datasets
     assert "tenure-type" in spec.tables["codelist"]
+
+
+def test_contextual_dataset_field_guidance(project_root):
+    spec = Specification.load(project_root)
+
+    guidance = spec.guidance(dataset="site", field="name")
+
+    assert isinstance(guidance, Guidance)
+    assert guidance.dataset == "site"
+    assert guidance.field == "name"
+    assert "Former Riverside Mill" in guidance.content
+    assert spec.guidance(dataset="site", field="reference") is None
 
 
 def test_canonical_codelist_lookup_returns_items(project_root):

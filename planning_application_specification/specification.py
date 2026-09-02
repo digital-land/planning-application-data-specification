@@ -8,6 +8,7 @@ from typing import Optional
 
 from .application_types import canonical_application_ref, normalise_application_types
 from .applications import get_active_combined_application_refs, resolve_application
+from .guidance import Guidance, load_guidance
 from .loader import _resolve_repo_root, load_specification_model
 from .models import ApplicationDef, ComponentUsage, FieldDef, FieldUsage
 
@@ -164,6 +165,7 @@ class Specification:
     datasets: dict
     applications: dict
     fields: dict
+    guidance_index: dict[str, dict[str, Guidance]]
 
     @classmethod
     def load(cls, path: str | Path | None = None) -> "Specification":
@@ -177,7 +179,11 @@ class Specification:
             datasets=model["datasets"],
             applications=model["applications"],
             fields=model["fields"],
+            guidance_index=load_guidance(source_path),
         )
+
+    def guidance(self, *, dataset: str, field: str) -> Guidance | None:
+        return self.guidance_index.get(dataset, {}).get(field)
 
     def codelist(self, ref: str) -> Codelist:
         codelist_meta = self.tables.get("codelist", {}).get(ref)
