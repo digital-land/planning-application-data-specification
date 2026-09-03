@@ -9,7 +9,9 @@ field: name
 Use a short name that people can recognise and use when discussing the site.
 
 Prefer an established site or building name. If there is no established name,
-describe its location using a nearby road, place or landmark.
+use a short description based on a nearby road, place or landmark only where
+this helps people identify the site. Omit `name` where the address already
+identifies the site adequately and there is no meaningful separate name.
 
 ### Examples
 
@@ -22,6 +24,5 @@ describe its location using a nearby road, place or landmark.
 #### Avoid
 
 - `Site 1`
-- a planning application reference
+- a site or planning application reference
 - the full description of the proposed development
-- a postal address copied into the name when it adds nothing useful
