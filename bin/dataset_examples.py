@@ -70,6 +70,23 @@ def example_record_to_table_rows(record: dict[str, Any]) -> list[dict[str, str]]
     ]
 
 
+def example_records_to_wide_table(
+    records: list[dict[str, Any]],
+) -> dict[str, list[Any]]:
+    """Convert multiple JSON records into columns and one row per record."""
+    fields = list(dict.fromkeys(field for record in records for field in record))
+    return {
+        "fields": fields,
+        "rows": [
+            [
+                format_example_table_value(record[field]) if field in record else ""
+                for field in fields
+            ]
+            for record in records
+        ],
+    }
+
+
 def build_dataset_example_view(
     examples_root: Path,
     dataset_ref: str,
@@ -92,6 +109,7 @@ def build_dataset_example_view(
             for record in records
         ],
         "multiple_records": len(records) > 1,
+        "wide_table": example_records_to_wide_table(records),
         "json": json.dumps(data, indent=2, ensure_ascii=False),
     }
 

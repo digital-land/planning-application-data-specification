@@ -6,6 +6,7 @@ import pytest
 from bin.dataset_examples import (
     build_dataset_example_view,
     example_record_to_table_rows,
+    example_records_to_wide_table,
     render_dataset_examples_content,
     resolve_example_path,
 )
@@ -35,6 +36,25 @@ def test_example_record_to_table_rows_preserves_field_order():
         {"field": "application-types", "value": '["full"]'},
         {"field": "active", "value": "false"},
     ]
+
+
+def test_example_records_to_wide_table_uses_one_row_per_record():
+    assert example_records_to_wide_table(
+        [
+            {"reference": "document-001", "name": "Plan V1"},
+            {
+                "reference": "document-002",
+                "name": "Plan V2",
+                "replaces": "document-001",
+            },
+        ]
+    ) == {
+        "fields": ["reference", "name", "replaces"],
+        "rows": [
+            ["document-001", "Plan V1", ""],
+            ["document-002", "Plan V2", "document-001"],
+        ],
+    }
 
 
 def test_build_dataset_example_view_rejects_unknown_fields(tmp_path):
