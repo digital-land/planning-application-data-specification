@@ -1,8 +1,10 @@
 from bin.render_static_site import (
     build_codelist_usage_view,
     build_component_usage_view,
+    build_field_display,
     build_field_usage_view,
     build_module_usage_view,
+    build_national_public_view_datasets,
     build_need_maps,
     design_decision_feedback_url,
     extract_dataset_only_refs,
@@ -19,6 +21,37 @@ def test_url_for_handles_base_url():
     )
     # ensure leading slash is added if missing
     assert url_for("", "planning-application-data") == "/planning-application-data"
+
+
+def test_build_field_display_exposes_requirement_level():
+    field = build_field_display(
+        {"field": "name", "requirement-level": "SHOULD"},
+        field_index={},
+    )
+
+    assert field.requirement_level == "SHOULD"
+
+
+def test_national_public_view_fields_expose_publication_requirement_level():
+    class StubRenderer:
+        def url_for(self, path):
+            return path
+
+    datasets = build_national_public_view_datasets(
+        {
+            "datasets": [
+                {
+                    "dataset": "site",
+                    "fields": [{"field": "name", "requirement-level": "MUST"}],
+                }
+            ]
+        },
+        {"site": {"name": "Site"}},
+        {},
+        StubRenderer(),
+    )
+
+    assert datasets[0]["fields"][0]["requirement_level"] == "MUST"
 
 
 def test_extract_dataset_only_refs_filters_out_field_pairs():

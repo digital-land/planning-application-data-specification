@@ -173,6 +173,42 @@ def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path
     assert 'href="/codelist/decision-maker"' in dataset_html
 
 
+def test_render_site_shows_requirement_levels_for_datasets_and_public_view(
+    tmp_path, monkeypatch
+):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    dataset_html = (output_dir / "dataset" / "site" / "index.html").read_text(
+        encoding="utf-8"
+    )
+    public_view_html = (
+        output_dir / "view" / "national-public" / "index.html"
+    ).read_text(encoding="utf-8")
+
+    documentation_href = (
+        "https://github.com/digital-land/planning-application-data-specification/"
+        "blob/main/documentation/requirement-levels.md"
+    )
+    assert "Requirement level" in dataset_html
+    assert "Not specified" in dataset_html
+    assert f'href="{documentation_href}"' not in dataset_html
+    assert "Requirement level" in public_view_html
+    assert "Not specified" in public_view_html
+    assert f'href="{documentation_href}"' in public_view_html
+
+
 def test_render_site_shows_where_module_is_used(tmp_path, monkeypatch):
     output_dir = tmp_path / "site"
     args = parse_args([

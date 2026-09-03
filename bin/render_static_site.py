@@ -51,6 +51,10 @@ TEMPLATE_DIR = REPO_ROOT / "bin" / "templates"
 DEFAULT_PROGRESS_INPUT = (
     REPO_ROOT / "bin" / "admin_data" / "2024-application-volumes.csv"
 )
+REQUIREMENT_LEVELS_DOCUMENTATION_URL = (
+    "https://github.com/digital-land/planning-application-data-specification/"
+    "blob/main/documentation/requirement-levels.md"
+)
 
 
 def render_markdown(md_text: str) -> str:
@@ -419,6 +423,7 @@ class FieldView:
         datatype,
         codelist,
         required,
+        requirement_level=None,
         children=None,
         target_dataset=None,
         target_dataset_href="",
@@ -435,6 +440,7 @@ class FieldView:
         self.datatype = datatype
         self.codelist = codelist
         self.required = required
+        self.requirement_level = requirement_level
         self.children = children or []
         self.target_dataset = target_dataset
         self.target_dataset_href = target_dataset_href
@@ -498,6 +504,7 @@ def build_field_display(
             datatype=datatype,
             codelist=codelist,
             required=required,
+            requirement_level=overrides.get("requirement-level"),
             children=children,
             component_name=comp_name,
             component_ref=comp_ref,
@@ -528,6 +535,7 @@ def build_field_display(
             datatype=datatype,
             codelist=codelist,
             required=required,
+            requirement_level=field_entry.requirement_level,
             component_name=comp_name,
             component_ref=comp_ref,
         )
@@ -557,6 +565,7 @@ def build_field_display(
         datatype=datatype,
         codelist=codelist,
         required=field_entry.get("required"),
+        requirement_level=field_entry.get("requirement-level"),
         children=field_entry.get("children", []),
         component_name=comp_name,
         component_ref=comp_ref,
@@ -1078,6 +1087,7 @@ def build_national_public_view_datasets(
                     "description": field_view.description,
                     "datatype": field_view.datatype,
                     "cardinality": field_view.cardinality,
+                    "requirement_level": field_view.requirement_level,
                     "field_href": renderer.url_for(f"/field/{field_view.ref}"),
                     "target_dataset": target_dataset,
                     "target_dataset_href": (
@@ -1148,6 +1158,7 @@ def render_views(
             "datasets": datasets,
             "raw_schema_href": "https://github.com/digital-land/planning-application-data-specification/blob/main/specification/national-public-view.schema.md?plain=1",
             "info_href": renderer.url_for("/view/national-public/info/"),
+            "requirement_levels_href": REQUIREMENT_LEVELS_DOCUMENTATION_URL,
         },
     )
     renderer.write_page("view/national-public/index.html", public_view_html)
