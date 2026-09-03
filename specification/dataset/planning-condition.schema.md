@@ -12,6 +12,7 @@ fields:
 - field: reference
 - field: name
   description: Plain-language label for the condition so it can be identified without technical codes
+  requirement-level: SHOULD
 - field: description
   description: The text of the condition thats required to be met
 - field: reason

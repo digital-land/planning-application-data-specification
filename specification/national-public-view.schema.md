@@ -89,6 +89,7 @@ datasets:
         description: a reference for the planning condition
       - field: name
         description: a plain-language label for the condition
+        requirement-level: SHOULD
       - field: description
         description: the text of the condition that must be met
       - field: reason

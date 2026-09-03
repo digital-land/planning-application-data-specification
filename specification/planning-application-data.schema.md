@@ -109,6 +109,7 @@ datasets:
         description: the <a href="#reference">reference</a> for the planning condition
       - field: name
         description: a plain-language label for the condition
+        requirement-level: SHOULD
       - field: description
         description: the text of the condition that must be met
       - field: reason
