@@ -10,6 +10,7 @@ entity-minimum: ''
 entry-date: '2026-01-09'
 fields:
 - field: reference
+  requirement-level: MUST
 - field: name
   description: Title or plain-language label for the section 106 agreement so it can be identified
 - field: decision-notice

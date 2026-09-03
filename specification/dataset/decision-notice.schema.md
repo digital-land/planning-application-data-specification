@@ -23,6 +23,7 @@ fields:
   description: Optional notes that provide additional context about the decision notice
 - field: planning-application
 - field: reference
+  requirement-level: MUST
 key-field: ''
 licence: ogl3
 name: Decision notice

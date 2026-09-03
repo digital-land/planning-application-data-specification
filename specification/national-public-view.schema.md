@@ -13,6 +13,7 @@ datasets:
     name: planning application
     fields:
       - field: reference
+        requirement-level: MUST
         description: the reference used for the planning application, for example 2025/1674
       - field: name
         description: A plain-language label for the planning application so it can be identified without relying on its reference
@@ -46,6 +47,7 @@ datasets:
     name: site
     fields:
       - field: reference
+        requirement-level: MUST
         description: the reference for the site
       - field: name
         description: a plain-language name for the site so it can be referenced in discussions and reports
@@ -62,6 +64,7 @@ datasets:
     name: decision notice
     fields:
       - field: reference
+        requirement-level: MUST
         description: the reference for the decision notice
       - field: planning-application
         description: the reference for the planning application the decision notice is for
@@ -86,6 +89,7 @@ datasets:
     name: planning condition
     fields:
       - field: reference
+        requirement-level: MUST
         description: a reference for the planning condition
       - field: name
         description: a plain-language label for the condition
@@ -100,6 +104,7 @@ datasets:
     name: decision condition
     fields:
       - field: reference
+        requirement-level: MUST
         description: the reference for the decision condition
       - field: decision-notice
         description: the reference for the decision notice this condition is attached to
@@ -118,6 +123,7 @@ datasets:
     name: section 106 agreement
     fields:
       - field: reference
+        requirement-level: MUST
         description: the reference for the section 106 agreement
       - field: name
         description: Title or plain-language label for the section 106 agreement so it can be identified
@@ -137,6 +143,7 @@ datasets:
         - publish
     fields:
       - field: reference
+        requirement-level: MUST
         description: the reference for the document record
       - field: planning-application
         description: the reference for the related planning application
@@ -160,6 +167,7 @@ datasets:
         specification-profile: national-public-view
     fields:
       - field: reference
+        requirement-level: MUST
         description: the reference for the timeline entry
       - field: planning-application
         description: the reference for the related planning application

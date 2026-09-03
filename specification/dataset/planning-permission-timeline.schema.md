@@ -11,6 +11,7 @@ entity-minimum: ''
 entity-maximum: ''
 fields:
   - field: reference
+    requirement-level: MUST
     description: Unique identifier for the timeline entry
   - field: planning-application
   - field: permission-process-event

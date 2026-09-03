@@ -10,6 +10,7 @@ entity-minimum: ''
 entry-date: 2026-06-04
 fields:
   - field: reference
+    requirement-level: MUST
     description: Unique identifier for the planning application data record
   - field: planning-application
     description: Reference to the planning application this data relates to

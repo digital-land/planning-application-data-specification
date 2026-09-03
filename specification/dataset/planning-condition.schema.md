@@ -10,6 +10,7 @@ entity-minimum: ''
 entry-date: 2026-01-08
 fields:
 - field: reference
+  requirement-level: MUST
 - field: name
   description: Plain-language label for the condition so it can be identified without technical codes
   requirement-level: SHOULD

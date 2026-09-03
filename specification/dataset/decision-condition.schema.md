@@ -10,6 +10,7 @@ entity-minimum: ''
 entry-date: 2026-01-08
 fields:
 - field: reference
+  requirement-level: MUST
 - field: decision-notice
 - field: planning-condition
   description: Reference to the planning condition record linked to the decision

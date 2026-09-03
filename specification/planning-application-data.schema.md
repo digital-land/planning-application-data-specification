@@ -13,6 +13,7 @@ datasets:
     name: planning application
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the planning application
       - field: name
         description: A plain-language label for the planning application so it can be identified without relying on its reference
@@ -54,6 +55,7 @@ datasets:
     name: planning application data
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the planning application data record
       - field: planning-application
         description: the <a href="#reference">reference</a> for the related planning application
@@ -66,6 +68,7 @@ datasets:
     name: site
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the site
       - field: name
         description: Plain-language name for the site so it can be referenced in discussions and reports
@@ -82,6 +85,7 @@ datasets:
     name: decision notice
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the decision notice
       - field: planning-application
         description: the <a href="#reference">reference</a> for the related planning application
@@ -106,6 +110,7 @@ datasets:
     name: planning condition
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the planning condition
       - field: name
         description: a plain-language label for the condition
@@ -120,6 +125,7 @@ datasets:
     name: decision condition
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the decision condition
       - field: decision-notice
         description: the <a href="#reference">reference</a> for the decision notice this condition is attached to
@@ -137,6 +143,7 @@ datasets:
     name: section 106 agreement
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the section 106 agreement
       - field: name
         description: Title or plain-language label for the section 106 agreement so it can be identified
@@ -151,6 +158,7 @@ datasets:
     name: planning application document
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the document record
       - field: planning-application
         description: the <a href="#reference">reference</a> for the related planning application
@@ -170,6 +178,7 @@ datasets:
     name: planning permission timeline
     fields:
       - field: reference
+        requirement-level: MUST
         description: the <a href="#reference">reference</a> for the timeline entry
       - field: planning-application
         description: the <a href="#reference">reference</a> for the related planning application

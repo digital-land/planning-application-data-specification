@@ -7,6 +7,7 @@ name: Planning application document
 description: Links a planning application to the documents submitted with it.
 fields:
   - field: reference
+    requirement-level: MUST
     description: Unique identifier for the document record
   - field: planning-application
     description: Reference to the planning application this document relates to

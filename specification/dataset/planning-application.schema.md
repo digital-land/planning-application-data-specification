@@ -39,6 +39,7 @@ fields:
 - field: withdrawn-date
 - field: linked-applications
 - field: reference
+  requirement-level: MUST
 key-field: ''
 licence: ogl3
 name: Planning application
