@@ -25,6 +25,7 @@ if not hasattr(jinja_filters, "evalcontextfilter"):
     jinja_filters.evalcontextfilter = jinja_filters.pass_eval_context
 
 from bin.completeness import build_progress_view_model
+from bin.dataset_examples import render_dataset_examples_content
 from bin.jinja_filters import commanum_filter
 from bin.loader import load_needs, load_specification_model
 from bin.markdown_utils import render_govuk_markdown
@@ -1473,6 +1474,11 @@ def build_site(args: argparse.Namespace) -> None:
                 )
                 fields.append(fv)
             attach_field_guidance(fields, specification, dataset=ds_id)
+            allowed_example_fields = {
+                field.get("field")
+                for field in raw_fields
+                if isinstance(field, dict) and field.get("field")
+            }
             dataset_ctx = {
                 "page_title": f"Dataset {ds_id}",
                 "links": {"back": renderer.url_for("/dataset")},
@@ -1480,6 +1486,13 @@ def build_site(args: argparse.Namespace) -> None:
                 "description": ds.get("description", ""),
                 "guidance": rendered_guidance(
                     specification.guidance(dataset=ds_id)
+                ),
+                "examples": render_dataset_examples_content(
+                    dataset_ref=ds_id,
+                    allowed_fields=allowed_example_fields,
+                    examples_root=spec_root / "example" / "dataset",
+                    content_root=TEMPLATE_DIR / "content",
+                    template_environment=env,
                 ),
                 "fields": fields,
                 "needs": [

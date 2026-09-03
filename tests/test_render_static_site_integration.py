@@ -173,6 +173,43 @@ def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path
     assert 'href="/codelist/decision-maker"' in dataset_html
 
 
+def test_render_site_shows_dataset_examples(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    html = (
+        output_dir / "dataset" / "planning-application" / "index.html"
+    ).read_text(encoding="utf-8")
+
+    assert "Basic planning application" in html
+    assert 'data-module="govuk-tabs"' in html
+    assert 'class="govuk-tabs__list"' in html
+    assert 'class="govuk-tabs__tab"' in html
+    assert '<p class="govuk-body"><div class="govuk-tabs' not in html
+    assert 'href="#basic-planning-application-table"' in html
+    assert 'href="#basic-planning-application-json"' in html
+    assert "2026/0123/FUL" in html
+    assert "application-types" in html
+    assert html.index(">Fields</h2>") < html.index('id="examples"')
+    assert html.index('id="examples"') < html.index(
+        ">Needs satisfied by this dataset</h2>"
+    )
+    assert (
+        'class="govuk-section-break govuk-section-break--visible '
+        'govuk-section-break--l app-strong-section-break"' in html
+    )
+
 def test_render_site_shows_requirement_levels_for_datasets_and_public_view(
     tmp_path, monkeypatch
 ):
