@@ -58,6 +58,11 @@ class FieldUsage:
     original: FieldDef
     overrides: Dict[str, Any]
 
+    @property
+    def requirement_level(self) -> Optional[str]:
+        """Return the recording or publication requirement for this usage."""
+        return self.overrides.get("requirement-level")
+
 
 @dataclass
 class ComponentUsage:

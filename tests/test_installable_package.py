@@ -33,6 +33,51 @@ def test_specification_load_reads_local_checkout(project_root):
     assert "tenure-type" in spec.tables["codelist"]
 
 
+def test_specification_load_preserves_requirement_levels(tmp_path):
+    field_path = tmp_path / "specification" / "field" / "name.md"
+    dataset_path = tmp_path / "specification" / "dataset" / "site.schema.md"
+    view_path = tmp_path / "specification" / "national-public-view.schema.md"
+
+    field_path.parent.mkdir(parents=True)
+    dataset_path.parent.mkdir(parents=True)
+    field_path.write_text(
+        "---\nfield: name\nname: Name\n---\n",
+        encoding="utf-8",
+    )
+    dataset_path.write_text(
+        "---\n"
+        "dataset: site\n"
+        "name: Site\n"
+        "fields:\n"
+        "  - field: name\n"
+        "    requirement-level: SHOULD\n"
+        "---\n",
+        encoding="utf-8",
+    )
+    view_path.write_text(
+        "---\n"
+        "specification: national-public-view\n"
+        "datasets:\n"
+        "  - dataset: site\n"
+        "    fields:\n"
+        "      - field: name\n"
+        "        requirement-level: MUST\n"
+        "---\n",
+        encoding="utf-8",
+    )
+
+    spec = Specification.load(tmp_path)
+
+    dataset_usage = spec.datasets["site"].field_usages[0]
+    view_usage = spec.tables["specification"]["national-public-view"]["datasets"][0][
+        "fields"
+    ][0]
+
+    assert dataset_usage.requirement_level == "SHOULD"
+    assert dataset_usage.overrides["requirement-level"] == "SHOULD"
+    assert view_usage["requirement-level"] == "MUST"
+
+
 def test_contextual_dataset_field_guidance(project_root):
     spec = Specification.load(project_root)
 
