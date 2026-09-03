@@ -21,6 +21,7 @@ def perform_checks():
     from integrity_checks.components import check_all as check_components
     from integrity_checks.datasets import check_all as check_datasets
     from integrity_checks.fields import check_all as check_fields
+    from integrity_checks.guidance import check_all as check_guidance
     from integrity_checks.justifications import check_all as check_justifications
     from integrity_checks.modules import check_all as check_modules
     from integrity_checks.needs import check_all as check_needs
@@ -49,6 +50,15 @@ def perform_checks():
         ("usage", check_usage, usage_tables, codelists, applications),
         ("datasets", check_datasets, datasets, fields),
         ("modules", check_modules, modules, fields, applications),
+        (
+            "guidance",
+            check_guidance,
+            PROJECT_ROOT,
+            datasets,
+            modules,
+            components,
+            fields,
+        ),
         ("applications", check_applications, applications, fields, modules),
         ("codelists", check_codelists, codelists, fields),
         ("needs", check_needs, needs),

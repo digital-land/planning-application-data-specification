@@ -4,6 +4,7 @@ import pytest
 from bin.integrity_checks import applications as application_checks
 from bin.integrity_checks import components as component_checks
 from bin.integrity_checks import datasets as dataset_checks
+from bin.integrity_checks import guidance as guidance_checks
 from bin.integrity_checks import justifications as justification_checks
 from bin.integrity_checks import needs as need_checks
 from bin.integrity_checks import specifications as specification_checks
@@ -975,6 +976,73 @@ class TestIntegrityCheckUtils:
         assert not integrity_utils.run_checks(
             [(check_one, []), (check_two, [])]
         )
+
+
+class TestGuidanceIntegrityChecks:
+    def write_guidance(self, root, relative_path, metadata):
+        path = root / "specification" / "guidance" / relative_path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(f"---\n{metadata}---\n\nGuidance\n", encoding="utf-8")
+
+    def test_valid_contextual_guidance(self, tmp_path):
+        self.write_guidance(
+            tmp_path,
+            "module/proposal/field/address-text.md",
+            "module: proposal\nfield: address-text\n",
+        )
+        fields = {
+            "site-address": {"component": "address"},
+            "address-text": {},
+        }
+        components = {"address": {"fields": [{"field": "address-text"}]}}
+        modules = {"proposal": {"fields": [{"field": "site-address"}]}}
+
+        assert guidance_checks.check_references(
+            tmp_path, {}, modules, components, fields
+        )
+
+    def test_unknown_and_unused_guidance_references_are_reported(
+        self, tmp_path, capsys
+    ):
+        self.write_guidance(
+            tmp_path,
+            "dataset/missing/field/name.md",
+            "dataset: missing\nfield: name\n",
+        )
+        self.write_guidance(
+            tmp_path,
+            "dataset/site/field/missing.md",
+            "dataset: site\nfield: missing\n",
+        )
+        self.write_guidance(
+            tmp_path,
+            "dataset/site/field/reference.md",
+            "dataset: site\nfield: reference\n",
+        )
+
+        assert not guidance_checks.check_references(
+            tmp_path,
+            {"site": {"fields": [{"field": "name"}]}},
+            {},
+            {},
+            {"name": {}, "reference": {}},
+        )
+        output = capsys.readouterr().out
+        assert "referenced dataset 'missing' does not exist" in output
+        assert "referenced field 'missing' does not exist" in output
+        assert "field 'reference' is not used by dataset 'site'" in output
+
+    def test_path_and_metadata_must_match(self, tmp_path, capsys):
+        self.write_guidance(
+            tmp_path,
+            "dataset/site/field/name.md",
+            "dataset: other-site\nfield: name\n",
+        )
+
+        assert not guidance_checks.check_references(
+            tmp_path, {}, {}, {}, {}
+        )
+        assert "Guidance metadata does not match its path" in capsys.readouterr().out
 
 
 class TestUsageIntegrityChecks:
