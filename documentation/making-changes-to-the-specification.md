@@ -121,7 +121,7 @@ combination is recognised and has the expected payload shape.
 1. Identify the need that the field will help meet.
 2. Search `specification/field/` for a field with the same meaning. Reuse it if the meaning is the same. If no suitable field exists, follow [Adding a field](#adding-a-field) before continuing.
 3. Identify the canonical dataset in `specification/dataset/` and confirm that the information describes that dataset's subject. Do not add a field to a convenient dataset if it belongs to a different record.
-4. Add the field reference to the dataset's `fields` property. Dataset fields are optional unless the model explicitly says otherwise.
+4. Add the field reference to the dataset's `fields` property. Set `requirement-level` to `MUST`, `SHOULD` or `MAY` when that expectation has been decided. Existing usages may omit it while levels are introduced progressively. See [Required fields and requirement levels](requirement-levels.md).
 5. Add a context-specific description only where it makes the field clearer in this dataset. Use overrides or applicability rules only when they are necessary and do not change the canonical meaning.
 6. Search for every specification or view that includes the dataset. Add the field to each specification where it belongs. For the planning-application-data model, this normally includes [planning-application-data.schema.md](../specification/planning-application-data.schema.md).
 7. Make an explicit decision about whether the field should be included in the [national public view](#national-public-view). Do not assume that adding it to the wider specification means it should also be made available as open data.
@@ -138,9 +138,9 @@ When adding or changing a dataset field:
 1. Decide whether there is a clear public need for the information and whether publishing it supports transparency, discovery, accountability or reuse.
 2. Assess the publication risk. Consider personal data, commercially sensitive information, private or security-sensitive information, free text and fields whose contents cannot be reliably controlled.
 3. Check whether the entire dataset is public or whether it has a `record-inclusion` rule. A field should not bypass a rule that excludes sensitive or unpublished records.
-4. If the field should be open, add it under the relevant dataset in `specification/national-public-view.schema.md`, with a description suitable for the public view.
+4. If the field should be open, add it under the relevant dataset in `specification/national-public-view.schema.md`, with a description suitable for the public view. Set its publication `requirement-level` independently from its dataset level. See [Required fields and requirement levels](requirement-levels.md).
 5. If it only applies to certain application types, such as `development-scale`, add that condition
-6. If it is optional, make that clear, such as with the `notes` field
+6. Use `MUST`, `SHOULD` or `MAY` to state the publication expectation. Do not use `required` or `required-if` in a publication view.
 7. If the field should not be open, leave it out.
 8. Update the readable publication summary and any affected notes in [national-public-view.md](national-public-view.md). The schema remains the definitive contract.
 9. Mention the publication decision in the relevant justification where it is material to how the need is met.

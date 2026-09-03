@@ -37,8 +37,16 @@ The `datatype` value should reuse the planning.data.gov.uk datatypes where possi
 
 The generated [field datatype catalogue](field-datatypes.md) lists the datatypes currently used by field definitions and the upstream datatypes available to reuse.
 
-**`required` is specified in the module, not the field**
-Avoids context-dependent logic in the field definition
+**Requiredness is specified on a field usage, not the field definition**
+This avoids putting context-dependent rules in the shared field definition.
+
+Submission applications, modules and components use `required` and
+`required-if`. Planning application datasets and publication views use
+`requirement-level`, with one of the local values `MUST`, `SHOULD` or `MAY`.
+These mechanisms must not be mixed on the same field usage.
+
+See [Required fields and requirement levels](requirement-levels.md) for what
+each mechanism means, how to choose a level and examples.
 
 **Modules can override field attributes**
 But this should be done sparingly. It's better to create distinct field names for significantly different uses. [Example needed]

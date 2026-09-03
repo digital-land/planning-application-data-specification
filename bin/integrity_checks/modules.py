@@ -1,4 +1,5 @@
 from integrity_checks.utils import (
+    field_usage_requirement_errors,
     get_object_field_names,
     has_reference_error,
     iter_redundant_field_component_overrides,
@@ -253,6 +254,20 @@ def check_required_if_fields(modules):
     return not has_errors
 
 
+def check_field_requirement_attributes(modules):
+    """Check submission module fields do not use requirement-level."""
+    has_errors = False
+
+    for module_name, module in modules.items():
+        for field_name, message in field_usage_requirement_errors(
+            module.get("fields", []), allow_requirement_level=False
+        ):
+            print_error("module", module_name, f"field '{field_name}' {message}")
+            has_errors = True
+
+    return not has_errors
+
+
 def check_all(modules, fields, applications=None):
     """Run all module integrity checks.
 
@@ -270,6 +285,7 @@ def check_all(modules, fields, applications=None):
         (check_attrs, [modules]),
         (check_applies_if_structure, [modules, applications]),
         (check_required_if_fields, [modules]),
+        (check_field_requirement_attributes, [modules]),
     ]
 
     return run_checks(checks_with_args)

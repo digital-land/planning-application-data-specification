@@ -6,6 +6,7 @@ from bin.integrity_checks import components as component_checks
 from bin.integrity_checks import datasets as dataset_checks
 from bin.integrity_checks import guidance as guidance_checks
 from bin.integrity_checks import justifications as justification_checks
+from bin.integrity_checks import modules as module_checks
 from bin.integrity_checks import needs as need_checks
 from bin.integrity_checks import specifications as specification_checks
 from bin.integrity_checks import utils as integrity_utils
@@ -703,8 +704,53 @@ class TestDatasetIntegrityChecks:
             ("dataset", "planning-application", "unexpected attribute 'unexpected'")
         ]
 
+    @pytest.mark.parametrize("level", ["MUST", "SHOULD", "MAY"])
+    def test_requirement_level_accepts_local_values(self, level):
+        datasets = {
+            "planning-application": {
+                "fields": [{"field": "reference", "requirement-level": level}]
+            }
+        }
+
+        assert dataset_checks.check_field_requirement_attributes(datasets)
+
+    def test_requirement_level_may_be_missing_during_transition(self):
+        datasets = {
+            "planning-application": {"fields": [{"field": "reference"}]}
+        }
+
+        assert dataset_checks.check_field_requirement_attributes(datasets)
+
+    def test_requirement_level_rejects_unknown_value(self):
+        datasets = {
+            "planning-application": {
+                "fields": [{"field": "reference", "requirement-level": "OPTIONAL"}]
+            }
+        }
+
+        assert not dataset_checks.check_field_requirement_attributes(datasets)
+
+    @pytest.mark.parametrize("attribute", ["required", "required-if"])
+    def test_dataset_field_rejects_submission_requirement_attributes(self, attribute):
+        datasets = {
+            "planning-application": {
+                "fields": [{"field": "reference", attribute: True}]
+            }
+        }
+
+        assert not dataset_checks.check_field_requirement_attributes(datasets)
+
 
 class TestApplicationIntegrityChecks:
+    def test_application_field_rejects_requirement_level(self):
+        applications = {
+            "householder": {
+                "fields": [{"field": "reference", "requirement-level": "MUST"}]
+            }
+        }
+
+        assert not application_checks.check_field_requirement_attributes(applications)
+
     def test_application_field_required_when_application_does_not_extend(self):
         applications = {
             "householder": {
@@ -1568,7 +1614,78 @@ class TestNeedIntegrityChecks:
         assert need_checks.check_sources(needs)
 
 
+class TestRequirementLevelContextChecks:
+    def test_module_field_rejects_requirement_level(self):
+        modules = {
+            "site-details": {
+                "fields": [{"field": "site", "requirement-level": "MUST"}]
+            }
+        }
+
+        assert not module_checks.check_field_requirement_attributes(modules)
+
+    def test_component_field_rejects_requirement_level(self):
+        components = {
+            "address": {
+                "fields": [{"field": "postcode", "requirement-level": "MUST"}]
+            }
+        }
+
+        assert not component_checks.check_field_requirement_attributes(components)
+
+
 class TestSpecificationIntegrityChecks:
+    @pytest.mark.parametrize("level", ["MUST", "SHOULD", "MAY"])
+    def test_publication_view_accepts_local_requirement_levels(self, level):
+        specifications = {
+            "national-public-view": {
+                "datasets": [
+                    {
+                        "dataset": "site",
+                        "fields": [{"field": "name", "requirement-level": level}],
+                    }
+                ]
+            }
+        }
+
+        assert specification_checks.check_field_requirement_attributes(specifications)
+
+    def test_publication_view_rejects_unknown_requirement_level(self):
+        specifications = {
+            "national-public-view": {
+                "datasets": [
+                    {
+                        "dataset": "site",
+                        "fields": [
+                            {"field": "name", "requirement-level": "OPTIONAL"}
+                        ],
+                    }
+                ]
+            }
+        }
+
+        assert not specification_checks.check_field_requirement_attributes(
+            specifications
+        )
+
+    @pytest.mark.parametrize("attribute", ["required", "required-if"])
+    def test_publication_view_rejects_submission_requirement_attributes(
+        self, attribute
+    ):
+        specifications = {
+            "national-public-view": {
+                "datasets": [
+                    {
+                        "dataset": "site",
+                        "fields": [{"field": "name", attribute: True}],
+                    }
+                ]
+            }
+        }
+
+        assert not specification_checks.check_field_requirement_attributes(
+            specifications
+        )
     def test_datasets_exist_fails_when_dataset_attribute_is_missing(self):
         specifications = {
             "planning-application-data": {

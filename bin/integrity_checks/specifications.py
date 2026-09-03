@@ -1,4 +1,9 @@
-from integrity_checks.utils import has_reference_error, print_error, run_checks
+from integrity_checks.utils import (
+    field_usage_requirement_errors,
+    has_reference_error,
+    print_error,
+    run_checks,
+)
 
 # SPECIFICATIONS (.schema.md files in specification/)
 # ==================================================
@@ -91,12 +96,33 @@ def check_dataset_fields(specifications, datasets):
     return not has_errors
 
 
+def check_field_requirement_attributes(specifications):
+    """Check publication-view fields use valid requirement-level attributes."""
+    has_errors = False
+
+    for specification_name, specification in specifications.items():
+        for dataset in specification.get("datasets", []):
+            dataset_name = dataset.get("dataset", "unknown")
+            for field_name, message in field_usage_requirement_errors(
+                dataset.get("fields", []), allow_requirement_level=True
+            ):
+                print_error(
+                    "specification",
+                    specification_name,
+                    f"dataset '{dataset_name}' field '{field_name}' {message}",
+                )
+                has_errors = True
+
+    return not has_errors
+
+
 def check_all(specifications, datasets):
     """Run all specification integrity checks."""
     checks_with_args = [
         (check_specification_names, [specifications]),
         (check_datasets_exist, [specifications, datasets]),
         (check_dataset_fields, [specifications, datasets]),
+        (check_field_requirement_attributes, [specifications]),
     ]
 
     return run_checks(checks_with_args)

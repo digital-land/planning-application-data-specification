@@ -4,6 +4,8 @@ ANSI_RED = "\033[31m"
 ANSI_YELLOW = "\033[33m"
 ANSI_RESET = "\033[0m"
 
+REQUIREMENT_LEVELS = {"MUST", "SHOULD", "MAY"}
+
 
 def print_error(element: str, field_name: str, message: str):
     """Utility function to print errors in a consistent format."""
@@ -41,6 +43,38 @@ def get_object_field_names(field_definitions):
             if isinstance(field_name, str):
                 field_names.add(field_name)
     return field_names
+
+
+def field_usage_requirement_errors(field_usages, allow_requirement_level):
+    """Yield errors for requirement attributes used in the wrong context."""
+    for field_usage in field_usages or []:
+        if not isinstance(field_usage, dict):
+            continue
+
+        field_name = field_usage.get("field", "unknown")
+
+        if allow_requirement_level:
+            for submission_attribute in ("required", "required-if"):
+                if submission_attribute in field_usage:
+                    yield (
+                        field_name,
+                        f"uses submission attribute '{submission_attribute}'; "
+                        "dataset and publication-view fields use 'requirement-level'",
+                    )
+
+            if "requirement-level" in field_usage:
+                requirement_level = field_usage.get("requirement-level")
+                if requirement_level not in REQUIREMENT_LEVELS:
+                    yield (
+                        field_name,
+                        "'requirement-level' must be one of MUST, SHOULD or MAY",
+                    )
+        elif "requirement-level" in field_usage:
+            yield (
+                field_name,
+                "uses 'requirement-level'; submission fields use 'required' or "
+                "'required-if'",
+            )
 
 
 def iter_redundant_field_component_overrides(field_instances, fields):

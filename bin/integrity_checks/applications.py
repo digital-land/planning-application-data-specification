@@ -3,6 +3,7 @@ from pathlib import Path
 
 from csv_helpers import read_csv, read_csv_with_headers
 from integrity_checks.utils import (
+    field_usage_requirement_errors,
     has_reference_error,
     print_error,
     print_warning,
@@ -334,6 +335,20 @@ def check_module_references_exist(applications, modules_list):
     return not has_errors
 
 
+def check_field_requirement_attributes(applications):
+    """Check submission application fields do not use requirement-level."""
+    has_errors = False
+
+    for app_name, application in applications.items():
+        for field_name, message in field_usage_requirement_errors(
+            application.get("fields", []), allow_requirement_level=False
+        ):
+            print_error("application", app_name, f"field '{field_name}' {message}")
+            has_errors = True
+
+    return not has_errors
+
+
 def check_all(applications, fields, modules):
     """Run all application integrity checks.
 
@@ -348,6 +363,7 @@ def check_all(applications, fields, modules):
         (check_application_field_present, [applications, fields]),
         (check_modules_attr_present, [applications]),
         (check_module_references_exist, [applications, modules]),
+        (check_field_requirement_attributes, [applications]),
         (check_combined_application_types_headers, []),
         (check_combined_application_type_rows, [applications]),
     ]

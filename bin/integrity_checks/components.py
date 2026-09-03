@@ -3,6 +3,7 @@
 from typing import Any, Dict, List
 
 from integrity_checks.utils import (
+    field_usage_requirement_errors,
     get_object_field_names,
     iter_redundant_field_component_overrides,
     iter_required_if_field_refs,
@@ -268,6 +269,20 @@ def check_dates(components: List[Dict[str, Any]]) -> bool:
     return not has_errors
 
 
+def check_field_requirement_attributes(components):
+    """Check submission component fields do not use requirement-level."""
+    has_errors = False
+
+    for component_name, component in components.items():
+        for field_name, message in field_usage_requirement_errors(
+            component.get("fields", []), allow_requirement_level=False
+        ):
+            print_error(component_name, f"field '{field_name}' {message}")
+            has_errors = True
+
+    return not has_errors
+
+
 def check_all(
     components: List[Dict[str, Any]], fields: Dict[str, Any], valid_types: List[str]
 ) -> bool:
@@ -288,6 +303,7 @@ def check_all(
         # (check_application_type_references, [components, valid_types]),
         (check_field_condition_references, [components, fields, valid_types]),
         (check_dates, [components]),
+        (check_field_requirement_attributes, [components]),
     ]
 
     return run_checks(checks_with_args)

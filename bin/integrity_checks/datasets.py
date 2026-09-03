@@ -1,4 +1,5 @@
 from integrity_checks.utils import (
+    field_usage_requirement_errors,
     has_reference_error,
     print_error,
     print_warning,
@@ -137,6 +138,20 @@ def check_attrs(datasets):
     return not has_errors
 
 
+def check_field_requirement_attributes(datasets):
+    """Check dataset fields use valid requirement-level attributes."""
+    has_errors = False
+
+    for dataset_name, dataset in datasets.items():
+        for field_name, message in field_usage_requirement_errors(
+            dataset.get("fields", []), allow_requirement_level=True
+        ):
+            print_error("dataset", dataset_name, f"field '{field_name}' {message}")
+            has_errors = True
+
+    return not has_errors
+
+
 def check_all(datasets, fields):
     """Run all dataset integrity checks."""
     checks_with_args = [
@@ -144,6 +159,7 @@ def check_all(datasets, fields):
         (check_field_references, [datasets, fields]),
         (check_dates, [datasets]),
         (check_attrs, [datasets]),
+        (check_field_requirement_attributes, [datasets]),
     ]
 
     return run_checks(checks_with_args)
