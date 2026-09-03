@@ -11,6 +11,7 @@ entry-date: '2026-01-19'
 fields:
 - field: name
   description: Plain-language name for the site so it can be referenced in discussions and reports
+  requirement-level: SHOULD
 - field: reference
 - field: address-text
   description: Plain-language address for the site, where one is available

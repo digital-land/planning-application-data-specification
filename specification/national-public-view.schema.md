@@ -49,6 +49,7 @@ datasets:
         description: the reference for the site
       - field: name
         description: a plain-language name for the site so it can be referenced in discussions and reports
+        requirement-level: SHOULD
       - field: address-text
         description: the address for the site, where one is available
       - field: postcode
