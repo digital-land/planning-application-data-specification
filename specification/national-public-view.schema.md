@@ -98,7 +98,7 @@ datasets:
         description: the organisation issuing the decision notice
       - field: decision-maker
         requirement-level: MUST
-        description: who made the decision
+        description: the category of person or body that formally made the decision
       - field: planning-officer-recommendation
         requirement-level: SHOULD
         description: the recommendation made by the planning officer for this application
