@@ -156,6 +156,32 @@ def replace_example_placeholders(
     """Replace example placeholders without restyling the component HTML."""
     content = BeautifulSoup(rendered_markdown, "html.parser")
     for placeholder in content.select("dataset-example[data-reference]"):
+        replacement_target = placeholder
+        if (
+            placeholder.parent
+            and placeholder.parent.name == "p"
+            and not placeholder.parent.get_text(strip=True)
+        ):
+            replacement_target = placeholder.parent
+
+        heading = replacement_target.find_previous_sibling("h3")
+        if heading:
+            introduction_nodes = []
+            node = heading
+            while node and node is not replacement_target:
+                next_node = node.next_sibling
+                introduction_nodes.append(node)
+                node = next_node
+
+            row = content.new_tag("div", attrs={"class": "govuk-grid-row"})
+            column = content.new_tag(
+                "div", attrs={"class": "govuk-grid-column-two-thirds"}
+            )
+            replacement_target.insert_before(row)
+            row.append(column)
+            for introduction_node in introduction_nodes:
+                column.append(introduction_node)
+
         html = render_dataset_example_component(
             example_ref=placeholder["data-reference"],
             table_layout=placeholder.get("data-table", "vertical"),
@@ -164,13 +190,6 @@ def replace_example_placeholders(
             examples_root=examples_root,
             template_environment=template_environment,
         )
-        replacement_target = placeholder
-        if (
-            placeholder.parent
-            and placeholder.parent.name == "p"
-            and not placeholder.parent.get_text(strip=True)
-        ):
-            replacement_target = placeholder.parent
         replacement_target.replace_with(BeautifulSoup(html, "html.parser"))
     return Markup(str(content))
 
