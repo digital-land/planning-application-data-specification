@@ -22,6 +22,7 @@ datasets:
       - field: application-types
         description: one or more application types that the application covers
       - field: site
+        requirement-level: MUST
         description: the reference to the related site
         dataset: site
       - field: received-date
@@ -35,6 +36,7 @@ datasets:
       - field: withdrawn-date
         description: the date the planning application was withdrawn
       - field: linked-applications
+        requirement-level: MUST
         description: references to earlier applications this application directly links to
         dataset: planning-application
       - field: document-url
@@ -67,6 +69,7 @@ datasets:
         requirement-level: MUST
         description: the reference for the decision notice
       - field: planning-application
+        requirement-level: MUST
         description: the reference for the planning application the decision notice is for
         dataset: planning-application
       - field: decision
@@ -107,9 +110,11 @@ datasets:
         requirement-level: MUST
         description: the reference for the decision condition
       - field: decision-notice
+        requirement-level: MUST
         description: the reference for the decision notice this condition is attached to
         dataset: decision-notice
       - field: planning-condition
+        requirement-level: MUST
         description: the reference for the linked planning condition record
         dataset: planning-condition
       - field: organisation
@@ -117,6 +122,7 @@ datasets:
       - field: requested-by
         description: identifier of the body requesting the condition
       - field: discharged-by
+        requirement-level: MUST
         description: identifier of the decision notice discharging the condition
         dataset: decision-notice
   - dataset: section-106
@@ -128,6 +134,7 @@ datasets:
       - field: name
         description: Title or plain-language label for the section 106 agreement so it can be identified
       - field: decision-notice
+        requirement-level: MUST
         description: the reference for the decision notice tied to the section 106 agreement
         dataset: decision-notice
       - field: document-url
@@ -146,6 +153,7 @@ datasets:
         requirement-level: MUST
         description: the reference for the document record
       - field: planning-application
+        requirement-level: MUST
         description: the reference for the related planning application
         dataset: planning-application
       - field: document-url
@@ -155,6 +163,7 @@ datasets:
       - field: name
         description: Title or label used to identify the document
       - field: replaces
+        requirement-level: MUST
         description: Reference to an earlier document record replaced by this document
         dataset: planning-application-document
   - dataset: planning-permission-timeline
@@ -170,6 +179,7 @@ datasets:
         requirement-level: MUST
         description: the reference for the timeline entry
       - field: planning-application
+        requirement-level: MUST
         description: the reference for the related planning application
         dataset: planning-application
       - field: permission-process-event

@@ -14,6 +14,7 @@ fields:
 - field: name
   description: Title or plain-language label for the section 106 agreement so it can be identified
 - field: decision-notice
+  requirement-level: MUST
 - field: document-url
 - field: documentation-url
 key-field: ''

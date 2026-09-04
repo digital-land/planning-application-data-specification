@@ -21,6 +21,7 @@ fields:
   description: A plain-language label for the planning application so it can be identified without relying on its reference
 - field: application-types
 - field: site
+  requirement-level: MUST
 - field: received-date
   description: Date the planning authority received the application
 - field: planning-authority
@@ -38,6 +39,7 @@ fields:
 - field: planning-performance-agreement
 - field: withdrawn-date
 - field: linked-applications
+  requirement-level: MUST
 - field: reference
   requirement-level: MUST
 key-field: ''

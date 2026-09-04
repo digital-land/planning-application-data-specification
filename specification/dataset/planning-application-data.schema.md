@@ -13,6 +13,7 @@ fields:
     requirement-level: MUST
     description: Unique identifier for the planning application data record
   - field: planning-application
+    requirement-level: MUST
     description: Reference to the planning application this data relates to
   - field: submitted-data-uri
   - field: validated-data-uri

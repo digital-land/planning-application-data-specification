@@ -10,10 +10,12 @@ fields:
     requirement-level: MUST
     description: Unique identifier for the document record
   - field: planning-application
+    requirement-level: MUST
     description: Reference to the planning application this document relates to
   - field: name
     description: Title or label used to identify the document
   - field: replaces
+    requirement-level: MUST
     description: Reference to an earlier document record replaced by this document
     dataset: planning-application-document
   - field: public-register-status

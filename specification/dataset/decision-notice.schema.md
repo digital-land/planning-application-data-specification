@@ -22,6 +22,7 @@ fields:
 - field: notes
   description: Optional notes that provide additional context about the decision notice
 - field: planning-application
+  requirement-level: MUST
 - field: reference
   requirement-level: MUST
 key-field: ''

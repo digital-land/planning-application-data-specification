@@ -14,6 +14,7 @@ fields:
     requirement-level: MUST
     description: Unique identifier for the timeline entry
   - field: planning-application
+    requirement-level: MUST
   - field: permission-process-event
   - field: event-date
   - field: notes
