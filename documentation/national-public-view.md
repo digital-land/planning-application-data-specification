@@ -70,9 +70,10 @@ included dataset are filtered before publication.
 | site |  |  |  |
 |  | reference | Reference for the site. |  |
 |  | name | Plain-language name for the site. |  |
-|  | address-text | Plain-language address for the site, where available. |  |
+|  | address-text | Plain-language address or description that helps identify the site location. |  |
 |  | postcode | Postcode for the site, where available. |  |
-|  | description | Plain-language description of the site, where this helps identify the land or buildings. |  |
+|  | uprns | UPRNs for existing properties and premises within the site boundary, where known. |  |
+|  | usrns | USRNs for streets associated with the site, where known. |  |
 |  | geometry | Boundary for the site. |  |
 | decision-notice |  |  |  |
 |  | reference | Reference for the decision notice. |  |

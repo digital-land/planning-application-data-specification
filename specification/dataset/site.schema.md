@@ -16,13 +16,16 @@ fields:
   requirement-level: MUST
 - field: address-text
   requirement-level: MUST
-  description: Plain-language address for the site, where one is available
+  description: Plain-language address or description that helps identify the site location
 - field: postcode
   requirement-level: SHOULD
   description: Postcode for the site, where one is available
-- field: description
+- field: uprns
   requirement-level: SHOULD
-  description: Plain-language description of the site, where this helps identify the land or buildings
+  description: UPRNs for existing properties and premises within the site boundary, where known
+- field: usrns
+  requirement-level: SHOULD
+  description: USRNs for streets associated with the site, where known
 - field: geometry
   requirement-level: MUST
   description: the boundary of the site being recorded
