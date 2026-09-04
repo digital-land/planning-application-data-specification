@@ -149,6 +149,35 @@ def test_render_site_shows_contextual_field_guidance(tmp_path, monkeypatch):
     assert "Site address text guidance" in component_html
 
 
+def test_render_site_shows_need_satisfied_by_single_field_in_all_of(
+    tmp_path, monkeypatch
+):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    html = (
+        output_dir / "dataset" / "planning-application" / "index.html"
+    ).read_text(encoding="utf-8")
+    field_start = html.index('id="officer-name"')
+    field_end = html.index('id="development-scale"', field_start)
+    officer_name_html = html[field_start:field_end]
+
+    assert 'href="/user-need/dd-need-115"' in officer_name_html
+    assert "This field helps satisfy need" in officer_name_html
+    assert "No needs satisfied by this field" not in officer_name_html
+
+
 def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path, monkeypatch):
     output_dir = tmp_path / "site"
     args = parse_args([

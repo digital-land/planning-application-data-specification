@@ -434,6 +434,12 @@ def satisfaction_messages_for_field(
                                 "text": f"This field and {join_list_phrases(other_labels, 'and')} satisfy need <a class=\"govuk-link\" href=\"{need_href}\">{need_id}</a>."
                             }
                         )
+                    elif not nested_msgs:
+                        messages.append(
+                            {
+                                "text": f'This field helps satisfy need <a class="govuk-link" href="{need_href}">{need_id}</a>.'
+                            }
+                        )
                     messages.extend([{"text": m} for m in nested_msgs])
                 continue
 
