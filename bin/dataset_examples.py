@@ -11,6 +11,7 @@ from bin.markdown_utils import render_govuk_markdown
 
 
 EXAMPLE_REFERENCE_PATTERN = re.compile(r"^[a-z0-9][a-z0-9-]*$")
+EXAMPLE_TABLE_LAYOUTS = {"vertical", "wide"}
 
 
 def resolve_example_path(
@@ -92,8 +93,15 @@ def build_dataset_example_view(
     dataset_ref: str,
     example_ref: str,
     allowed_fields: set[str],
+    table_layout: str = "vertical",
 ) -> dict[str, Any]:
     """Build the view model used to render one dataset example."""
+    if table_layout not in EXAMPLE_TABLE_LAYOUTS:
+        raise ValueError(
+            f"Invalid table layout '{table_layout}' for example '{example_ref}'. "
+            "Use 'vertical' or 'wide'."
+        )
+
     path = resolve_example_path(examples_root, dataset_ref, example_ref)
     data = load_dataset_example(path)
     records = data if isinstance(data, list) else [data]
@@ -109,6 +117,7 @@ def build_dataset_example_view(
             for record in records
         ],
         "multiple_records": len(records) > 1,
+        "table_layout": table_layout,
         "wide_table": example_records_to_wide_table(records),
         "json": json.dumps(data, indent=2, ensure_ascii=False),
     }
@@ -117,6 +126,7 @@ def build_dataset_example_view(
 def render_dataset_example_component(
     *,
     example_ref: str,
+    table_layout: str,
     dataset_ref: str,
     allowed_fields: set[str],
     examples_root: Path,
@@ -128,6 +138,7 @@ def render_dataset_example_component(
         dataset_ref,
         example_ref,
         allowed_fields,
+        table_layout,
     )
     return template_environment.get_template(
         "components/dataset-example.html"
@@ -147,6 +158,7 @@ def replace_example_placeholders(
     for placeholder in content.select("dataset-example[data-reference]"):
         html = render_dataset_example_component(
             example_ref=placeholder["data-reference"],
+            table_layout=placeholder.get("data-table", "vertical"),
             dataset_ref=dataset_ref,
             allowed_fields=allowed_fields,
             examples_root=examples_root,
@@ -186,15 +198,23 @@ def render_dataset_examples_content(
 
     referenced_examples: set[str] = set()
 
-    def example_placeholder(example_ref: str) -> Markup:
+    def example_placeholder(
+        example_ref: str, table: str = "vertical"
+    ) -> Markup:
         if example_ref in referenced_examples:
             raise ValueError(
                 f"Example '{example_ref}' is included more than once for "
                 f"dataset '{dataset_ref}'"
             )
         referenced_examples.add(example_ref)
+        if table not in EXAMPLE_TABLE_LAYOUTS:
+            raise ValueError(
+                f"Invalid table layout '{table}' for example '{example_ref}'. "
+                "Use 'vertical' or 'wide'."
+            )
         return Markup(
-            f'<dataset-example data-reference="{example_ref}"></dataset-example>'
+            f'<dataset-example data-reference="{example_ref}" '
+            f'data-table="{table}"></dataset-example>'
         )
 
     rendered_markdown = template_environment.from_string(content.content).render(

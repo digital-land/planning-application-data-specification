@@ -97,6 +97,33 @@ def test_build_dataset_example_view_supports_multiple_records(tmp_path):
     ]
 
 
+def test_build_dataset_example_view_uses_selected_table_layout(tmp_path):
+    path = tmp_path / "planning-application" / "basic.json"
+    path.parent.mkdir(parents=True)
+    path.write_text(json.dumps({"reference": "PA-1"}))
+
+    view = build_dataset_example_view(
+        tmp_path,
+        "planning-application",
+        "basic",
+        {"reference"},
+        table_layout="wide",
+    )
+
+    assert view["table_layout"] == "wide"
+
+
+def test_build_dataset_example_view_rejects_unknown_table_layout(tmp_path):
+    with pytest.raises(ValueError, match="Use 'vertical' or 'wide'"):
+        build_dataset_example_view(
+            tmp_path,
+            "planning-application",
+            "basic",
+            {"reference"},
+            table_layout="sideways",
+        )
+
+
 def test_render_dataset_examples_content_resolves_example_call(tmp_path):
     examples_root = tmp_path / "examples"
     example_path = examples_root / "planning-application" / "basic.json"
@@ -134,3 +161,40 @@ def test_render_dataset_examples_content_resolves_example_call(tmp_path):
     assert "Examples" in rendered
     assert "basic" in rendered
     assert "PA-1" in rendered
+
+
+def test_render_dataset_examples_content_passes_wide_table_choice(tmp_path):
+    examples_root = tmp_path / "examples"
+    example_path = examples_root / "planning-application" / "basic.json"
+    example_path.parent.mkdir(parents=True)
+    example_path.write_text(json.dumps({"reference": "PA-1"}))
+
+    content_root = tmp_path / "content"
+    content_path = content_root / "dataset" / "planning-application" / "examples.md"
+    content_path.parent.mkdir(parents=True)
+    content_path.write_text(
+        "---\ndataset: planning-application\n---\n\n"
+        '{{ example("basic", table="wide") }}\n',
+        encoding="utf-8",
+    )
+
+    template_dir = tmp_path / "templates" / "components"
+    template_dir.mkdir(parents=True)
+    (template_dir / "dataset-example.html").write_text(
+        "<div>{{ example.table_layout }}</div>",
+        encoding="utf-8",
+    )
+    environment = jinja2.Environment(
+        loader=jinja2.FileSystemLoader(tmp_path / "templates"),
+        autoescape=True,
+    )
+
+    rendered = render_dataset_examples_content(
+        dataset_ref="planning-application",
+        allowed_fields={"reference"},
+        examples_root=examples_root,
+        content_root=content_root,
+        template_environment=environment,
+    )
+
+    assert "wide" in rendered
