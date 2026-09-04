@@ -19,6 +19,7 @@ from urllib.parse import quote
 import frontmatter
 import jinja2
 import jinja2.filters as jinja_filters
+from markupsafe import Markup
 
 # digital_land_frontend expects evalcontextfilter (removed in Jinja 3.1); alias it early.
 if not hasattr(jinja_filters, "evalcontextfilter"):
@@ -127,6 +128,17 @@ def render_markdown(md_text: str) -> str:
     if markdown_lib:
         return markdown_lib.markdown(md_text)
     return md_text
+
+
+def render_field_markdown(md_text: str, renderer: RenderContext) -> Markup:
+    """Render field Markdown and turn links to sibling fields into site links."""
+    soup = render_govuk_markdown(md_text, make_safe=False)
+    for link in soup.select("a[href]"):
+        match = re.fullmatch(r"([^/#]+)\.md(#[^#]*)?", link["href"])
+        if match:
+            fragment = match.group(2) or ""
+            link["href"] = renderer.url_for(f"/field/{match.group(1)}") + fragment
+    return Markup(str(soup))
 
 
 def extract_intro(md_text: str, stop_at_heading: str = "## ") -> str:
@@ -1831,6 +1843,8 @@ def build_site(args: argparse.Namespace) -> None:
             ctx = {
                 "page_title": f"Field {f.ref}",
                 "field": f,
+                "field_notes": render_field_markdown(f.notes, renderer),
+                "field_body": render_field_markdown(f.body, renderer),
                 "usage": build_field_usage_view(specification, f.ref, renderer),
             }
             field_html = field_detail_template.render(**ctx)

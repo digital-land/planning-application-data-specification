@@ -454,6 +454,30 @@ def test_render_site_shows_where_field_is_used(tmp_path, monkeypatch):
     assert 'href="/component/site-location"' in html
 
 
+def test_render_site_renders_field_notes_as_markdown(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    field_page = output_dir / "field" / "document-url" / "index.html"
+    html = field_page.read_text(encoding="utf-8")
+
+    assert 'Use <code class="app-code">document-url</code>' in html
+    assert 'href="/field/documentation-url"' in html
+    assert '>documentation-url</code></a>' in html
+    assert "Use `document-url`" not in html
+
+
 def test_render_site_shows_where_component_is_used(tmp_path, monkeypatch):
     output_dir = tmp_path / "site"
     args = parse_args([
