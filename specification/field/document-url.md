@@ -1,7 +1,7 @@
 ---
 cardinality: '1'
 datatype: url
-description: 'A url to a document'
+description: URL that resolves directly to a document file
 end-date: ''
 entry-date: '2026-01-05'
 field: document-url
@@ -11,3 +11,8 @@ replacement-field: ''
 start-date: ''
 typology: value
 ---
+
+Use `document-url` for a link that opens or downloads the document itself.
+
+Do not use a webpage that lists or describes documents. Record that using
+[`documentation-url`](documentation-url.md).
