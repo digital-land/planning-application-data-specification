@@ -2,9 +2,9 @@
 need: dd-need-035
 status: proposed
 priority: high
-name: Identify who made the decision
+name: Identify who formally made the decision
 statement: >
-  As a planning practitioner, I need to know who made the decision (officer, committee, SoS, Mayor, or PINS) so that I can understand the governance route and explain the reasoning and accountability behind the outcome.
+  As a planning practitioner, I need to know the category of person or body that formally made the decision so that I can understand who was accountable for the outcome.
 actors:
   - planning-practitioner
 scope: in
@@ -21,8 +21,8 @@ notes:
 
 Similar needs:
 
-As a policy maker, I need to know which body determined each application so that I can analyse patterns in decision-making, monitor delegation rates, and identify where escalations or interventions are occurring.
+As a policy maker, I need to know who formally determined each application so that I can analyse patterns in decision-making and monitor delegation rates.
 
-As a developer, I need to know who issued the decision so that I can understand the level of scrutiny applied and follow up with the correct decision-making body.
+As a developer, I need to know who formally made the decision so that I can understand the level of scrutiny applied and identify the accountable decision maker.
 
-As a member of the public, I need to know who made the decision so that I can understand the democratic process and raise any challenges or queries with the correct authority.
+As a member of the public, I need to know who formally made the decision so that I can understand who was accountable for the outcome.
