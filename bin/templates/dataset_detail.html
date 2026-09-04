@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% set primary_navigation_current = "dataset" %}
 {% from "macros/guidance.html" import guidance_details %}
-{% from "macros/summary_list.html" import summary_list_row %}
+{% from "macros/summary_list.html" import summary_list_link_row, summary_list_row %}
 
 {% block app_breadcrumbs %}
   {{- govukBreadcrumbs({
@@ -45,21 +45,26 @@
                 {% if field.datatype -%}
                 {{ summary_list_row("Datatype", field.datatype) }}
                 {%- endif %}
+                {% if field.datatype == "enum" and field.codelist -%}
+                {{ summary_list_link_row(
+                  "Allowed values",
+                  (field.codelist | replace("-", " ") | capitalize) ~ " codelist",
+                  url_for('/codelist/' ~ field.codelist)
+                ) }}
+                {%- endif %}
+                {% if field.target_dataset -%}
+                {{ summary_list_link_row(
+                  "Related dataset",
+                  (field.target_dataset | replace("-", " ") | capitalize) ~ " dataset",
+                  field.target_dataset_href
+                ) }}
+                {%- endif %}
                 <div class="govuk-summary-list__row">
                   <dt class="govuk-summary-list__key">Requirement level</dt>
                   <dd class="govuk-summary-list__value"><code>{{ field.requirement_level or "Not specified" }}</code></dd>
                 </div>
               </dl>
 
-              {% if field.datatype == "enum" and field.codelist %}
-                <p class="govuk-hint govuk-!-margin-bottom-1">
-                  Codelist:
-                  <a class="govuk-link" href="{{ url_for('/codelist/' ~ field.codelist) }}">{{ field.codelist }}</a>
-                </p>
-              {% endif %}
-              {% if field.target_dataset %}
-                <p class="govuk-body">Links to dataset: <a class="govuk-link" href="{{ field.target_dataset_href }}">{{ field.target_dataset }}</a></p>
-              {% endif %}
             </div>
             {{ guidance_details(field.guidance) }}
             {% if field.satisfactions %}

@@ -167,10 +167,27 @@ def test_render_site_links_codelists_on_module_and_dataset_detail_pages(tmp_path
     module_page = output_dir / "module" / "interest-details" / "index.html"
     module_html = module_page.read_text(encoding="utf-8")
     assert 'href="/codelist/applicant-interest-type"' in module_html
+    assert ">Allowed values</dt>" in module_html
 
     dataset_page = output_dir / "dataset" / "decision-notice" / "index.html"
     dataset_html = dataset_page.read_text(encoding="utf-8")
     assert 'href="/codelist/decision-maker"' in dataset_html
+    assert ">Allowed values</dt>" in dataset_html
+    assert ">Decision maker codelist</a>" in dataset_html
+    assert "Codelist:" not in dataset_html
+
+    planning_application_page = (
+        output_dir / "dataset" / "planning-application" / "index.html"
+    )
+    planning_application_html = planning_application_page.read_text(encoding="utf-8")
+    assert ">Related dataset</dt>" in planning_application_html
+    assert ">Site dataset</a>" in planning_application_html
+    assert "Links to dataset:" not in planning_application_html
+
+    component_page = output_dir / "component" / "waste-management" / "index.html"
+    component_html = component_page.read_text(encoding="utf-8")
+    assert 'href="/codelist/waste-throughput-unit"' in component_html
+    assert ">Waste throughput unit codelist</a>" in component_html
 
 
 def test_render_site_shows_dataset_examples(tmp_path, monkeypatch):

@@ -2,6 +2,7 @@
 {% set primary_navigation_current = "data-model" %}
 {% from "govuk_frontend_jinja/components/accordion/macro.html" import govukAccordion %}
 {% from "macros/guidance.html" import guidance_details %}
+{% from "macros/summary_list.html" import summary_list_link_row, summary_list_row %}
 {% from "partials/where_used.html" import render_where_used %}
 
 {% block app_breadcrumbs %}
@@ -29,20 +30,22 @@
           <strong class="govuk-tag govuk-tag--grey govuk-!-margin-bottom-1">Component</strong>
         {% endif %}
         {% if field.description %}<p class="govuk-body">{{ field.description }}</p>{% endif %}
-        {% if field.required is not none %}
-          <p class="govuk-hint govuk-!-margin-bottom-0">Required: {{ field.required }}</p>
-        {% endif %}
-        <p class="govuk-hint">Datatype: {{ field.datatype }}</p>
-        {% if field.cardinality %}
-          <p class="govuk-hint">
-            Expected number:
-            {% if field.cardinality == "n" %}
-              1 or more
-            {% else %}
-              1
-            {% endif %}
-          </p>
-        {% endif %}
+        <dl class="govuk-summary-list govuk-summary-list--no-border">
+          {% if field.required is not none -%}
+          {{ summary_list_row("Required", field.required) }}
+          {%- endif %}
+          {{ summary_list_row("Datatype", field.datatype) }}
+          {% if field.datatype == "enum" and field.codelist -%}
+          {{ summary_list_link_row(
+            "Allowed values",
+            (field.codelist | replace("-", " ") | capitalize) ~ " codelist",
+            url_for('/codelist/' ~ field.codelist)
+          ) }}
+          {%- endif %}
+          {% if field.cardinality -%}
+          {{ summary_list_row("Expected number", "1 or more" if field.cardinality == "n" else "1") }}
+          {%- endif %}
+        </dl>
 
         {{ guidance_details(field.guidance) }}
 
