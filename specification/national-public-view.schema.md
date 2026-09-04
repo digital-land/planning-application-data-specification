@@ -81,6 +81,7 @@ datasets:
       - field: decision-maker
         description: who made the decision
       - field: planning-officer-recommendation
+        requirement-level: SHOULD
         description: the recommendation made by the planning officer for this application
       - field: document-url
         description: the URL to the published decision notice

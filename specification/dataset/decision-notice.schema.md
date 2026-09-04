@@ -15,6 +15,7 @@ fields:
   description: Identifier of the organisation issuing the decision notice (planning authority, Planning Inspectorate, or Secretary of State)
 - field: decision-maker
 - field: planning-officer-recommendation
+  requirement-level: SHOULD
 - field: document-url
   description: URL to the published decision notice
 - field: documentation-url
