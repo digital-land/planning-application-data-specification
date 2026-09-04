@@ -1,12 +1,13 @@
 ---
 cardinality: '1'
-datatype: string
-description: Outcome of the planning decision
+codelist: decision
+datatype: enum
+description: Outcome of the planning decision, either grant or refuse
 end-date: ''
 entry-date: '2025-12-18'
 field: decision
 name: Decision
-notes: 'This maybe need a codelist to constrain what can be entered'
+notes: ''
 ---
 
-The decision issued for the planning application, for example granted, refused, withdrawn or approved with conditions. Use the published controlled list of decision outcomes where available to keep values consistent.
+The decision issued for the planning application. Use `grant` where permission or consent was granted and `refuse` where it was refused. Conditions are recorded separately from the decision outcome.
