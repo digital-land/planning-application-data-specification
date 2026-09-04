@@ -230,7 +230,10 @@ def test_render_site_shows_complete_householder_example(tmp_path, monkeypatch):
         encoding="utf-8"
     )
     assert "Planning application records" in index_html
-    assert 'href="/example/planning-application-data/householder-application/"' in index_html
+    assert (
+        'href="/example/planning-application-data/householder-application/"'
+        in index_html
+    )
     assert "Download the complete example" not in index_html
 
     detail_path = (
@@ -266,6 +269,55 @@ def test_render_site_shows_complete_householder_example(tmp_path, monkeypatch):
     )
     downloaded_example = detail_path.parent / "example.json"
     assert downloaded_example.read_bytes() == source_example.read_bytes()
+
+
+def test_render_site_shows_submission_examples(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    examples = {
+        "full": "full--ex1001.json",
+        "outline-some": "outline-some--ex1002.json",
+        "reserved-matters": "reserved-matters--ex1003.json",
+        "approval-condition": "approval-condition--ex1004.json",
+        "advertising": "advertising--ex1005.json",
+        "non-material-amendment": "non-material-amendment--ex1006.json",
+    }
+    index_html = (output_dir / "example" / "index.html").read_text(
+        encoding="utf-8"
+    )
+    assert "Submission payloads" in index_html
+    assert index_html.index("Submission payloads") < index_html.index(
+        "Planning application records"
+    )
+
+    for slug, filename in examples.items():
+        example_url = f"/example/submission/{slug}/"
+        assert f'href="{example_url}"' in index_html
+
+        detail_path = output_dir / example_url.removeprefix("/") / "index.html"
+        detail_html = detail_path.read_text(encoding="utf-8")
+        assert 'class="app-example-json app-complete-example-json"' in detail_html
+        assert (
+            f'href="{example_url}example.json" download' in detail_html
+        )
+        assert "<table" not in detail_html
+
+        source_path = Path("specification/example/application-type") / filename
+        downloaded_path = detail_path.parent / "example.json"
+        assert downloaded_path.read_bytes() == source_path.read_bytes()
+
 
 def test_render_site_shows_requirement_levels_for_datasets_and_public_view(
     tmp_path, monkeypatch

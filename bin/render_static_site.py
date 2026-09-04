@@ -57,6 +57,71 @@ REQUIREMENT_LEVELS_DOCUMENTATION_URL = (
     "blob/main/documentation/requirement-levels.md"
 )
 
+EXAMPLE_GROUPS = [
+    {
+        "name": "Submission payloads",
+        "examples": [
+            {
+                "slug": "full",
+                "title": "Example full planning application submission",
+                "description": "A submission for full planning permission.",
+                "source": "application-type/full--ex1001.json",
+            },
+            {
+                "slug": "outline-some",
+                "title": "Example outline planning application submission",
+                "description": (
+                    "A submission for outline planning permission with some "
+                    "matters reserved."
+                ),
+                "source": "application-type/outline-some--ex1002.json",
+            },
+            {
+                "slug": "reserved-matters",
+                "title": "Example reserved matters submission",
+                "description": "A submission for approval of reserved matters.",
+                "source": "application-type/reserved-matters--ex1003.json",
+            },
+            {
+                "slug": "approval-condition",
+                "title": "Example approval of conditions submission",
+                "description": "A submission seeking approval of conditions.",
+                "source": "application-type/approval-condition--ex1004.json",
+            },
+            {
+                "slug": "advertising",
+                "title": "Example advertising consent submission",
+                "description": "A submission for advertising consent.",
+                "source": "application-type/advertising--ex1005.json",
+            },
+            {
+                "slug": "non-material-amendment",
+                "title": "Example non-material amendment submission",
+                "description": "A submission for a non-material amendment.",
+                "source": "application-type/non-material-amendment--ex1006.json",
+            },
+        ],
+        "route": "submission",
+    },
+    {
+        "name": "Planning application records",
+        "examples": [
+            {
+                "slug": "householder-application",
+                "title": "Example householder application",
+                "description": (
+                    "A complete example of the records for a householder "
+                    "planning application."
+                ),
+                "source": (
+                    "planning-application-data/householder-application.json"
+                ),
+            }
+        ],
+        "route": "planning-application-data",
+    },
+]
+
 
 def render_markdown(md_text: str) -> str:
     if markdown_lib:
@@ -1177,55 +1242,61 @@ def render_views(
 
 
 def render_examples(renderer: RenderContext, spec_root: Path) -> None:
-    """Render the examples index and the complete householder example."""
-    category = "planning-application-data"
-    example_ref = "householder-application"
-    example_title = "Example householder application"
-    example_route = f"/example/{category}/{example_ref}/"
+    """Render the examples index and each complete JSON example."""
+    groups = []
+    for group in EXAMPLE_GROUPS:
+        examples = []
+        for example in group["examples"]:
+            example_route = f"/example/{group['route']}/{example['slug']}/"
+            examples.append(
+                {
+                    **example,
+                    "href": renderer.url_for(example_route),
+                }
+            )
+        groups.append({**group, "examples": examples})
 
     index_html = renderer.render(
         "example_index.html",
         {
             "page_title": "Examples",
-            "examples": [
-                {
-                    "name": example_title,
-                    "description": (
-                        "A fictional but realistic example of the records for a "
-                        "householder planning application."
-                    ),
-                    "href": renderer.url_for(example_route),
-                }
-            ],
+            "groups": groups,
         },
     )
     renderer.write_page("example/index.html", index_html)
 
-    example_path = spec_root / "example" / category / f"{example_ref}.json"
-    example_json = example_path.read_text(encoding="utf-8")
+    for group in EXAMPLE_GROUPS:
+        for example in group["examples"]:
+            example_path = spec_root / "example" / example["source"]
+            example_json = example_path.read_text(encoding="utf-8")
 
-    content_path = (
-        TEMPLATE_DIR / "content" / "example" / category / f"{example_ref}.md"
-    )
-    content = frontmatter.load(content_path)
-    rendered_content = renderer.env.from_string(content.content).render()
+            content_path = (
+                TEMPLATE_DIR
+                / "content"
+                / "example"
+                / group["route"]
+                / f"{example['slug']}.md"
+            )
+            content = frontmatter.load(content_path)
+            rendered_content = renderer.env.from_string(content.content).render()
 
-    download_path = f"example/{category}/{example_ref}/example.json"
-    detail_html = renderer.render(
-        "example_detail.html",
-        {
-            "page_title": example_title,
-            "title": example_title,
-            "description": render_govuk_markdown(rendered_content),
-            "example_json": example_json,
-            "download_href": renderer.url_for(f"/{download_path}"),
-        },
-    )
-    renderer.write_page(f"example/{category}/{example_ref}/index.html", detail_html)
+            output_path = f"example/{group['route']}/{example['slug']}"
+            download_path = f"{output_path}/example.json"
+            detail_html = renderer.render(
+                "example_detail.html",
+                {
+                    "page_title": example["title"],
+                    "title": example["title"],
+                    "description": render_govuk_markdown(rendered_content),
+                    "example_json": example_json,
+                    "download_href": renderer.url_for(f"/{download_path}"),
+                },
+            )
+            renderer.write_page(f"{output_path}/index.html", detail_html)
 
-    download_target = renderer.output_dir / download_path
-    ensure_dir(download_target.parent)
-    download_target.write_bytes(example_path.read_bytes())
+            download_target = renderer.output_dir / download_path
+            ensure_dir(download_target.parent)
+            download_target.write_bytes(example_path.read_bytes())
 
 
 def render_design_decisions(
