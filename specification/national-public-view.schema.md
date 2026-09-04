@@ -16,34 +16,45 @@ datasets:
         requirement-level: MUST
         description: the reference used for the planning application, for example 2025/1674
       - field: name
+        requirement-level: SHOULD
         description: A plain-language label for the planning application so it can be identified without relying on its reference
       - field: description
+        requirement-level: MUST
         description: the description of the proposed development
       - field: application-types
+        requirement-level: MUST
         description: one or more application types that the application covers
       - field: site
         requirement-level: MUST
         description: the reference to the related site
         dataset: site
       - field: received-date
+        requirement-level: MUST
         description: the date the planning authority received the application
       - field: planning-authority
+        requirement-level: MUST
         description: Identifier of the planning authority that received this planning application
       - field: development-scale
+        requirement-level: SHOULD
         description: the local planning authority's classification of a full or outline planning application by development scale, where applicable. Either major or minor
       - field: planning-performance-agreement
+        requirement-level: MUST
         description: whether the application was subject to a Planning Performance Agreement
       - field: withdrawn-date
+        requirement-level: SHOULD
         description: the date the planning application was withdrawn
       - field: linked-applications
         requirement-level: MUST
         description: references to earlier applications this application directly links to
         dataset: planning-application
       - field: document-url
+        requirement-level: SHOULD
         description: a URL to the completed application form published by the planning authority, where available
       - field: documentation-url
+        requirement-level: MUST
         description: a URL to the planning authority page where the completed application form or supporting application information can be accessed, where available
       - field: notes
+        requirement-level: MAY
         description: Optional notes that provide additional context about the planning application
   - dataset: site
     name: site
@@ -55,12 +66,16 @@ datasets:
         description: a plain-language name for the site so it can be referenced in discussions and reports
         requirement-level: SHOULD
       - field: address-text
+        requirement-level: MUST
         description: the address for the site, where one is available
       - field: postcode
+        requirement-level: SHOULD
         description: postcode for the site, where one is available
       - field: description
+        requirement-level: SHOULD
         description: a plain-language description of the site, where this helps identify the land or buildings
       - field: geometry
+        requirement-level: MUST
         description: the boundary for the site
   - dataset: decision-notice
     name: decision notice
@@ -73,21 +88,28 @@ datasets:
         description: the reference for the planning application the decision notice is for
         dataset: planning-application
       - field: decision
+        requirement-level: MUST
         description: the decision outcome for the planning application
       - field: decision-date
+        requirement-level: MUST
         description: the date the decision notice was issued
       - field: organisation
+        requirement-level: MUST
         description: the organisation issuing the decision notice
       - field: decision-maker
+        requirement-level: MUST
         description: who made the decision
       - field: planning-officer-recommendation
         requirement-level: SHOULD
         description: the recommendation made by the planning officer for this application
       - field: document-url
+        requirement-level: SHOULD
         description: the URL to the published decision notice
       - field: documentation-url
+        requirement-level: MUST
         description: the URL of the page where the decision notice can be found
       - field: notes
+        requirement-level: MAY
         description: Optional notes that provide additional context about the decision notice
   - dataset: planning-condition
     name: planning condition
@@ -99,10 +121,13 @@ datasets:
         description: a plain-language label for the condition
         requirement-level: SHOULD
       - field: description
+        requirement-level: MUST
         description: the text of the condition that must be met
       - field: reason
+        requirement-level: MUST
         description: the reason for imposing the condition
       - field: organisation
+        requirement-level: MUST
         description: the organisation responsible for this condition
   - dataset: decision-condition
     name: decision condition
@@ -133,14 +158,17 @@ datasets:
         requirement-level: MUST
         description: the reference for the section 106 agreement
       - field: name
+        requirement-level: SHOULD
         description: Title or plain-language label for the section 106 agreement so it can be identified
       - field: decision-notice
         requirement-level: MUST
         description: the reference for the decision notice tied to the section 106 agreement
         dataset: decision-notice
       - field: document-url
+        requirement-level: SHOULD
         description: the URL to the published section 106 agreement document
       - field: documentation-url
+        requirement-level: MUST
         description: the URL of the page where the section 106 agreement can be found
   - dataset: planning-application-document
     name: planning application document
@@ -158,10 +186,13 @@ datasets:
         description: the reference for the related planning application
         dataset: planning-application
       - field: document-url
+        requirement-level: SHOULD
         description: the URL to the document file
       - field: documentation-url
+        requirement-level: MUST
         description: the URL of the page where the document can be found
       - field: name
+        requirement-level: MUST
         description: Title or label used to identify the document
       - field: replaces
         requirement-level: MUST
@@ -184,8 +215,10 @@ datasets:
         description: the reference for the related planning application
         dataset: planning-application
       - field: permission-process-event
+        requirement-level: MUST
         description: the type of event in the permission process
       - field: event-date
+        requirement-level: MUST
         description: the date the event occurred
 ---
 

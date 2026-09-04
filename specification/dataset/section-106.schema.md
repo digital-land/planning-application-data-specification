@@ -12,11 +12,14 @@ fields:
 - field: reference
   requirement-level: MUST
 - field: name
+  requirement-level: SHOULD
   description: Title or plain-language label for the section 106 agreement so it can be identified
 - field: decision-notice
   requirement-level: MUST
 - field: document-url
+  requirement-level: SHOULD
 - field: documentation-url
+  requirement-level: MUST
 key-field: ''
 licence: ogl3
 name: Section 106 agreement

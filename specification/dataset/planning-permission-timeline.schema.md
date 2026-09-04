@@ -16,7 +16,9 @@ fields:
   - field: planning-application
     requirement-level: MUST
   - field: permission-process-event
+    requirement-level: MUST
   - field: event-date
+    requirement-level: MUST
   - field: notes
     description: Optional notes that provide additional context about the timeline event
 key-field: ''

@@ -15,12 +15,16 @@ fields:
 - field: reference
   requirement-level: MUST
 - field: address-text
+  requirement-level: MUST
   description: Plain-language address for the site, where one is available
 - field: postcode
+  requirement-level: SHOULD
   description: Postcode for the site, where one is available
 - field: description
+  requirement-level: SHOULD
   description: Plain-language description of the site, where this helps identify the land or buildings
 - field: geometry
+  requirement-level: MUST
   description: the boundary of the site being recorded
 key-field: ''
 licence: ogl3

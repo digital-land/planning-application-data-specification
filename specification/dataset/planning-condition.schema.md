@@ -15,10 +15,13 @@ fields:
   description: Plain-language label for the condition so it can be identified without technical codes
   requirement-level: SHOULD
 - field: description
+  requirement-level: MUST
   description: The text of the condition thats required to be met
 - field: reason
+  requirement-level: MUST
   description: The reason for imposing the condition
 - field: organisation
+  requirement-level: MUST
   description: Identifier of the organisation responsible for this condition
 key-field: ''
 licence: ogl3
