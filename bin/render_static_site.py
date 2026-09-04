@@ -1176,6 +1176,58 @@ def render_views(
     renderer.write_page("view/national-public/info/index.html", info_html)
 
 
+def render_examples(renderer: RenderContext, spec_root: Path) -> None:
+    """Render the examples index and the complete householder example."""
+    category = "planning-application-data"
+    example_ref = "householder-application"
+    example_title = "Example householder application"
+    example_route = f"/example/{category}/{example_ref}/"
+
+    index_html = renderer.render(
+        "example_index.html",
+        {
+            "page_title": "Examples",
+            "examples": [
+                {
+                    "name": example_title,
+                    "description": (
+                        "A fictional but realistic example of the records for a "
+                        "householder planning application."
+                    ),
+                    "href": renderer.url_for(example_route),
+                }
+            ],
+        },
+    )
+    renderer.write_page("example/index.html", index_html)
+
+    example_path = spec_root / "example" / category / f"{example_ref}.json"
+    example_json = example_path.read_text(encoding="utf-8")
+
+    content_path = (
+        TEMPLATE_DIR / "content" / "example" / category / f"{example_ref}.md"
+    )
+    content = frontmatter.load(content_path)
+    rendered_content = renderer.env.from_string(content.content).render()
+
+    download_path = f"example/{category}/{example_ref}/example.json"
+    detail_html = renderer.render(
+        "example_detail.html",
+        {
+            "page_title": example_title,
+            "title": example_title,
+            "description": render_govuk_markdown(rendered_content),
+            "example_json": example_json,
+            "download_href": renderer.url_for(f"/{download_path}"),
+        },
+    )
+    renderer.write_page(f"example/{category}/{example_ref}/index.html", detail_html)
+
+    download_target = renderer.output_dir / download_path
+    ensure_dir(download_target.parent)
+    download_target.write_bytes(example_path.read_bytes())
+
+
 def render_design_decisions(
     renderer: RenderContext,
     design_decisions: List[Dict[str, Any]],
@@ -1373,6 +1425,7 @@ def build_site(args: argparse.Namespace) -> None:
             dataset_index,
             field_index,
         )
+        render_examples(renderer, spec_root)
         render_design_decisions(renderer, design_decisions)
 
         # Datasets
@@ -1815,6 +1868,7 @@ def build_site(args: argparse.Namespace) -> None:
             "data_model": "data-model/index.html",
             "views": "view/index.html",
             "national_public_view": "view/national-public/index.html",
+            "examples": "example/index.html",
         }
         renderer.write_page("sitemap.json", json.dumps(site_map, indent=2))
 

@@ -210,6 +210,63 @@ def test_render_site_shows_dataset_examples(tmp_path, monkeypatch):
         'govuk-section-break--l app-strong-section-break"' in html
     )
 
+
+def test_render_site_shows_complete_householder_example(tmp_path, monkeypatch):
+    output_dir = tmp_path / "site"
+    args = parse_args([
+        "--output",
+        str(output_dir),
+        "--base-url",
+        "",
+        "--spec-root",
+        "specification",
+        "--needs-root",
+        "user-needs",
+    ])
+    monkeypatch.chdir(Path(__file__).parent.parent)
+    build_site(args)
+
+    index_html = (output_dir / "example" / "index.html").read_text(
+        encoding="utf-8"
+    )
+    assert "Planning application records" in index_html
+    assert 'href="/example/planning-application-data/householder-application/"' in index_html
+    assert "Download the complete example" not in index_html
+
+    detail_path = (
+        output_dir
+        / "example"
+        / "planning-application-data"
+        / "householder-application"
+        / "index.html"
+    )
+    detail_html = detail_path.read_text(encoding="utf-8")
+    assert "Example householder application" in detail_html
+    assert (
+        "This example shows a straightforward householder application from "
+        "receipt and validation through consultation and a delegated decision."
+        in detail_html
+    )
+    assert 'class="govuk-!-width-two-thirds app-example-introduction"' in detail_html
+    assert "confidential supporting information" in detail_html.lower()
+    assert 'href="/dataset/planning-application/"' in detail_html
+    assert 'href="/dataset/site/"' in detail_html
+    assert (
+        'href="/example/planning-application-data/'
+        'householder-application/example.json" download'
+        in detail_html
+    )
+    assert 'class="app-example-json app-complete-example-json"' in detail_html
+    assert 'data-module="govuk-tabs"' not in detail_html
+    assert "<table" not in detail_html
+    assert "&#34;planning-application&#34;" in detail_html
+
+    source_example = Path(
+        "specification/example/planning-application-data/householder-application.json"
+    )
+    downloaded_example = detail_path.parent / "example.json"
+    assert downloaded_example.read_bytes() == source_example.read_bytes()
+
 def test_render_site_shows_requirement_levels_for_datasets_and_public_view(
     tmp_path, monkeypatch
 ):
