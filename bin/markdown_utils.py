@@ -82,7 +82,7 @@ def render_govuk_markdown(text, make_safe=True, capitalise=False):
     if text is None:
         return ""
 
-    soup = BeautifulSoup(markdown(text), "html.parser")
+    soup = BeautifulSoup(markdown(text, extensions=["tables"]), "html.parser")
     add_govuk_markdown_attrs(soup)
 
     if capitalise:
@@ -130,6 +130,25 @@ def add_govuk_markdown_attrs(soup):
 
     for tag in soup.select("ol"):
         tag["class"] = "govuk-list govuk-list--number"
+
+    for tag in soup.select("table"):
+        tag["class"] = "govuk-table"
+
+    for tag in soup.select("thead"):
+        tag["class"] = "govuk-table__head"
+
+    for tag in soup.select("tbody"):
+        tag["class"] = "govuk-table__body"
+
+    for tag in soup.select("tr"):
+        tag["class"] = "govuk-table__row"
+
+    for tag in soup.select("th"):
+        tag["class"] = "govuk-table__header"
+        tag["scope"] = "col"
+
+    for tag in soup.select("td"):
+        tag["class"] = "govuk-table__cell"
 
     for tag in soup.select("a"):
         tag["class"] = "govuk-link"

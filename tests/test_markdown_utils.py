@@ -79,6 +79,20 @@ def test_render_govuk_markdown_adds_numbered_list_class():
     assert '<ol class="govuk-list govuk-list--number">' in result
 
 
+def test_render_govuk_markdown_adds_govuk_table_classes():
+    result = render_govuk_markdown(
+        "| Field | Value |\n"
+        "| --- | --- |\n"
+        "| reference | ABC-123 |"
+    )
+
+    assert '<table class="govuk-table">' in result
+    assert '<thead class="govuk-table__head">' in result
+    assert '<tr class="govuk-table__row">' in result
+    assert '<th class="govuk-table__header" scope="col">Field</th>' in result
+    assert '<td class="govuk-table__cell">reference</td>' in result
+
+
 def test_render_govuk_markdown_can_return_soup():
     result = render_govuk_markdown("# Heading", make_safe=False)
 
