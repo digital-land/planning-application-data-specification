@@ -154,7 +154,7 @@ datasets:
         description: an explanation of why the condition was imposed
       - field: organisation
         requirement-level: MUST
-        description: the organisation responsible for this condition
+        description: the organisation that maintains the condition clause
   - dataset: decision-condition
     name: decision condition
     fields:
@@ -169,8 +169,6 @@ datasets:
         requirement-level: MUST
         description: the <a href="#reference">reference</a> for the linked planning condition record
         dataset: planning-condition
-      - field: organisation
-        description: the organisation responsible for this condition within the decision
       - field: requested-by
         description: identifier of the body requesting the condition
       - field: discharged-by

@@ -16,8 +16,6 @@ fields:
 - field: planning-condition
   requirement-level: MUST
   description: Reference to the planning condition record linked to the decision
-- field: organisation
-  description: Identifier of the organisation responsible for this condition within the decision
 - field: requested-by
 - field: discharged-by
   requirement-level: MUST

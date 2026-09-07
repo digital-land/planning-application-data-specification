@@ -22,7 +22,7 @@ fields:
   description: The reason for imposing the condition
 - field: organisation
   requirement-level: MUST
-  description: Identifier of the organisation responsible for this condition
+  description: Identifier of the organisation that maintains the condition clause
 key-field: ''
 licence: ogl3
 name: Planning condition
