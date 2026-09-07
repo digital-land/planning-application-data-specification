@@ -11,3 +11,5 @@ notes: ''
 ---
 
 The decision issued for the planning application. Use `grant` where permission or consent was granted and `refuse` where it was refused. Conditions are recorded separately from the decision outcome.
+
+See [the decision to use a shared decision codelist](../../documentation/design-decisions/0023-use-a-shared-decision-codelist.md) for the rationale.
