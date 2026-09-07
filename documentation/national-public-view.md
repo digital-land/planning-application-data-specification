@@ -91,14 +91,13 @@ included dataset are filtered before publication.
 |  | name | Plain-language label for the condition. |  |
 |  | description | Text of the condition that must be met. |  |
 |  | reason | The reason for imposing the condition. |  |
-|  | organisation | Organisation responsible for this condition. |  |
+|  | organisation | Organisation that maintains the condition clause. |  |
 | decision-condition |  |  |  |
 |  | reference | Reference for the decision condition. |  |
 |  | decision-notice | Reference for the decision notice this condition is attached to. |  |
 |  | planning-condition | Reference for the linked planning condition record. |  |
-|  | organisation | Organisation responsible for this condition within the decision. |  |
 |  | requested-by | Identifier of the body requesting the condition. |  |
-|  | discharged-by | Identifier of the body discharging the condition. |  |
+|  | discharged-by | Reference to the decision notice discharging the condition. |  |
 | section-106 |  |  |  |
 |  | reference | Reference for the section 106 agreement. |  |
 |  | decision-notice | Reference for the decision notice tied to the section 106 agreement. |  |
