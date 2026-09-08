@@ -1127,6 +1127,8 @@ def render_data_model(renderer: RenderContext) -> None:
             "fields": renderer.url_for("/field/"),
             "codelists": renderer.url_for("/codelist/"),
             "datasets": renderer.url_for("/dataset/"),
+            "needs": renderer.url_for("/user-need/"),
+            "justifications": renderer.url_for("/justification/"),
             "design_decisions": renderer.url_for("/design-decision/"),
         },
     }

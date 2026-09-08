@@ -71,6 +71,16 @@ def test_render_site_dataset_index_links_to_github_feedback(tmp_path, monkeypatc
         'href="https://github.com/digital-land/planning-application-data-specification/issues/new"'
         in dataset_index
     )
+    assert "User needs explain why each dataset and field exists" in dataset_index
+    assert 'href="/user-need">View user needs</a>' in dataset_index
+
+    data_model = (output_dir / "data-model" / "index.html").read_text(
+        encoding="utf-8"
+    )
+    assert "Supporting information" in data_model
+    assert "Justification records capture how parts of the data model" in data_model
+    assert 'href="/user-need/">View user needs</a>' in data_model
+    assert 'href="/justification/">View justification records</a>' in data_model
 
 
 def test_render_site_shows_contextual_field_guidance(tmp_path, monkeypatch):
