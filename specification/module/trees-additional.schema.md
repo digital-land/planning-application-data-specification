@@ -28,8 +28,7 @@ fields:
 module: trees-additional
 name: Trees additional information
 rules:
-- rule: If condition-concerns is true then Arboricultural impact assessment document
-    is required
+- rule: If condition-concerns is true then Tree condition evidence (condition-of-trees) is required
 - rule: If causing-subsidence is true then Subsidence Report is required
 - rule: If causing-structural-damage is true then a Structural damage report is required
 - rule: supporting-documents must include sketch plan, supporting documents, reports,
