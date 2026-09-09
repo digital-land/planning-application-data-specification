@@ -1535,6 +1535,9 @@ def build_site(args: argparse.Namespace) -> None:
             "needs": [
                 {
                     "id": need.get("need"),
+                    "scope": need.get("scope") or "unspecified",
+                    "themes": need.get("themes") or [],
+                    "actors": need.get("actors") or [],
                     "name": need.get("name", ""),
                     "statement": need.get("statement") or need.get("name") or "",
                     "href": renderer.url_for(f"/user-need/{need.get('need')}"),
@@ -1545,6 +1548,13 @@ def build_site(args: argparse.Namespace) -> None:
                 for need in need_records
             ],
         }
+        needs_ctx["facets"] = [
+            {"name": "scope", "label": "Scope", "options": [("in", "In scope"), ("out-of-spec", "Out of scope")] + ([("unspecified", "Not specified")] if any(n["scope"] == "unspecified" for n in needs_ctx["needs"]) else [])},
+            {"name": "satisfaction", "label": "Satisfaction", "options": [("full", "Satisfied"), ("partial", "Partially satisfied"), ("none", "Not satisfied")]},
+        ] + [
+            {"name": name, "label": label, "options": [(value, value.replace("-", " ").capitalize()) for value in sorted({value for need in needs_ctx["needs"] for value in need[key]})]}
+            for name, label, key in [("theme", "Themes", "themes"), ("actor", "Actors", "actors")]
+        ]
         needs_html = env.get_template("needs_index.html").render(**needs_ctx)
         renderer.write_page("user-need/index.html", needs_html)
 

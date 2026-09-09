@@ -29,62 +29,59 @@
   </div>
 </div>
 
-<div class='govuk-grid-row govuk-!-margin-top-9'>
-  <div class='govuk-grid-column-two-thirds'>
-    <form class="govuk-!-margin-bottom-9" data-filter="form">
-      <label class="dl-list-filter__label govuk-label govuk-!-font-weight-bold" for="filter-needs-list">Search user needs</label>
-      <input class="dl-list-filter__input govuk-input" type="text"
-             id="filter-needs-list"
-             name="list_filter"
-             value=""
-             placeholder="For example, withdrawn">
+
+<form hidden data-needs-search class="govuk-grid-row govuk-!-margin-top-7">
+  <div class="govuk-grid-column-two-thirds govuk-!-margin-bottom-5">
+    <label class="govuk-label govuk-!-font-weight-bold" for="filter-needs-list">Search user needs</label>
+    <input class="govuk-input" id="filter-needs-list" name="list_filter" type="search" placeholder="For example, withdrawn">
+  </div>
+</form>
+<noscript><p class="govuk-body">All needs are shown. Enable JavaScript to search and filter them.</p></noscript>
+<p class="govuk-body" data-needs-count role="status" aria-live="polite">Showing {{ needs|length }} needs</p>
+<div class="govuk-grid-row needs-list__wrapper">
+  <div class="govuk-grid-column-one-third">
+    <form hidden data-need-filters class="app-filter-panel govuk-!-margin-bottom-6" aria-labelledby="filter-needs-heading">
+      <div class="app-active-filters-panel">
+        <h2 class="govuk-heading-m" id="filter-needs-heading">Filter user needs</h2>
+        <ul class="govuk-list" aria-label="Applied filters" data-selected-filters></ul>
+        <button type="button" class="govuk-button govuk-button--secondary app-clear-filters" data-clear-filters>Clear filters</button>
+      </div>
+      <div class="app-filter-facets">
+        {% for facet in facets %}
+        <details class="govuk-details" {% if facet.name in ['scope', 'satisfaction'] %}open{% endif %}>
+          <summary class="govuk-details__summary"><span class="govuk-details__summary-text">{{ facet.label }} (<span data-facet-count="{{ facet.name }}">0</span> selected)</span></summary>
+          <div class="govuk-details__text">
+            <fieldset class="govuk-fieldset">
+              <legend class="govuk-fieldset__legend govuk-visually-hidden">{{ facet.label }}</legend>
+              <div class="govuk-checkboxes govuk-checkboxes--small" {% if facet.options|length > 7 %}data-module="filter-checkboxes"{% endif %}>
+                {% if facet.options|length > 7 %}
+                <label for="options-{{ facet.name }}" class="govuk-label">Find {{ facet.label|lower }}</label>
+                <input id="options-{{ facet.name }}" class="govuk-input dl-filter-group__auto-filter__input govuk-!-margin-bottom-3" aria-describedby="options-count-{{ facet.name }}">
+                <span id="options-count-{{ facet.name }}" class="dl-filter-group__auto-filter__desc govuk-visually-hidden" aria-live="polite" data-single="option found" data-multiple="options found" data-selected="selected"></span>
+                {% endif %}
+                {% for value, label in facet.options %}
+                <div class="govuk-checkboxes__item">
+                  <input class="govuk-checkboxes__input" id="{{ facet.name }}-{{ loop.index }}" type="checkbox" name="{{ facet.name }}" data-filter-name="{{ facet.name }}" value="{{ value }}">
+                  <label class="govuk-label govuk-checkboxes__label" for="{{ facet.name }}-{{ loop.index }}">{{ label }}</label>
+                </div>
+                {% endfor %}
+              </div>
+            </fieldset>
+          </div>
+        </details>
+        {% endfor %}
+      </div>
     </form>
   </div>
-</div>
-
-<div class="needs-list__wrapper">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-full">
-      <div class="needs-list__count__wrapper">
-        <p class="govuk-body">Showing <span class="js-accessible-list-filter__count">{{ needs|length }}</span> needs</p>
-        <span class="govuk-body govuk-!-font-weight-bold govuk-visually-hidden js-list-filter__count" aria-hidden="true">{{ needs|length }}</span>
-      </div>
-    </div>
-  </div>
-
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-one-quarter">
-      <h4 class="govuk-heading-s">Filter needs</h4>
-      <form data-need-filters>
-        <div class="govuk-checkboxes">
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="filter-satisfied" type="checkbox"
-                  data-filter-name="satisfied" value="true">
-            <label class="govuk-label govuk-checkboxes__label" for="filter-satisfied">Satisfied</label>
-          </div>
-          <div class="govuk-checkboxes__item">
-            <input class="govuk-checkboxes__input" id="filter-not-satisfied" type="checkbox"
-                  data-filter-name="satisfied" value="false">
-            <label class="govuk-label govuk-checkboxes__label" for="filter-not-satisfied">Not satisfied</label>
-          </div>
-        </div>
-      </form>
-    </div>
-    <div class="govuk-grid-column-three-quarters">
-      {% include 'components/needs-list.html' %}
-      <p class="dl-list-filter__no-filter-match js-no-filter-list-matches">
-        No user needs match your search term. <a class="govuk-link" href="https://github.com/digital-land/planning-application-data-specification/issues/new?template=new-requirement.yml">Propose a new need or requirement on GitHub.</a>
-      </p>
-    </div>
+  <div class="govuk-grid-column-two-thirds">
+    {% include 'components/needs-list.html' %}
+    <p hidden class="govuk-body" data-no-needs>No user needs match your search and filters. Try changing your search or clearing filters.</p>
   </div>
 </div>
-
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <div class="app-engagement-panel">
-      <h3 class="govuk-heading-m">
-        Want to suggest a new need or improvement?
-      </h3>
+      <h3 class="govuk-heading-m">Want to suggest a new need or improvement?</h3>
       <p class="govuk-body">To help make sure we have good and useful needs, you can</p>
       <ul class="govuk-list govuk-list--bullet">
         <li>add evidence or challenge a user need in our list</li>
@@ -94,108 +91,10 @@
   </div>
 </div>
 {% endblock %}
-
 {% block pageScripts %}
 {{ super() }}
-<script>
-  // initialise list filter
-  const $form = document.querySelector('[data-filter="form"]');
-  const listFilter = new window.DLFrontend.ListFilter($form);
-
-  listFilter.init({
-    list_section_selector: '.needs-list__wrapper',
-    count_wrapper_selector: '.needs-list__count__wrapper'
-  });
-
-  // Update URL with filter value without reloading page
-  const $input = document.querySelector('#filter-needs-list');
-  const $serverFilterForm = document.querySelector('.govuk-form');
-
-  $input.addEventListener('keyup', function(e) {
-    const newUrl = new URL(window.location);
-    if (e.target.value) {
-      newUrl.searchParams.set('list_filter', e.target.value);
-    } else {
-      newUrl.searchParams.delete('list_filter');
-    }
-    window.history.pushState({}, '', newUrl);
-
-    // If enter key is pressed, trigger server form submission
-    if (e.key === 'Enter' && $serverFilterForm) {
-      // Get current URL and form data
-      const url = new URL($serverFilterForm.action || window.location.href);
-      const formData = new FormData($serverFilterForm);
-
-      // Add all form data to URL parameters
-      for (const [key, value] of formData.entries()) {
-        url.searchParams.append(key, value);
-      }
-
-      // Add the list filter value
-      if (e.target.value) {
-        url.searchParams.set('list_filter', e.target.value);
-      }
-
-      // Navigate to the URL with all parameters
-      window.location.href = url.toString();
-    }
-  });
-
-  // Prevent the list filter form from submitting
-  $form.addEventListener('submit', function(e) {
-    e.preventDefault();
-  });
-
-  // Handle server form submission to preserve list filter
-  if ($serverFilterForm) {
-    $serverFilterForm.addEventListener('submit', function(e) {
-      e.preventDefault();
-
-      // Get current URL and form data
-      const url = new URL($serverFilterForm.action || window.location.href);
-      const formData = new FormData($serverFilterForm);
-
-      // Add all form data to URL parameters
-      for (const [key, value] of formData.entries()) {
-        url.searchParams.append(key, value);
-      }
-
-      // Add the list filter if it exists
-      const listFilterValue = $input.value;
-      if (listFilterValue) {
-        url.searchParams.set('list_filter', listFilterValue);
-      }
-
-      // Navigate to the URL with all parameters
-      window.location.href = url.toString();
-    });
-  }
-
-  // If there's a filter value in the URL, trigger the filter
-  const urlParams = new URLSearchParams(window.location.search);
-  const filterValue = urlParams.get('list_filter');
-  if (filterValue) {
-    $input.value = filterValue;
-    // Create and dispatch a keyup event since that's what the ListFilter expects
-    const keyupEvent = new KeyboardEvent('keyup', {
-      bubbles: true,
-      cancelable: true,
-      key: 'dummy',
-      keyCode: 0
-    });
-    $input.dispatchEvent(keyupEvent);
-  }
-</script>
-<script type="module" src="{{ base_url }}/static/javascripts/need-filters.js"></script>
 <script type="module">
-  import NeedFilters from "{{ base_url }}/static/javascripts/need-filters.js";
-  const container = document.querySelector("[data-need-filters]");
-  if (container) {
-    const nf = new NeedFilters(container, {
-      count_wrapper_selector: '.needs-list__count__wrapper'
-    });
-    nf.init();
-    console.log("Need filters initialised");
-  }
+  import NeedFilters from "{{ url_for('/static/javascripts/need-filters.js') }}";
+  new NeedFilters(document.querySelector('[data-need-filters]')).init();
 </script>
 {% endblock %}
