@@ -1,7 +1,7 @@
 ---
 codelist: planning-requirement
 description: |
-  A list of planning requirements that may be requested as part of a planning application. These requirements include various documents, reports, and assessments that support planning applications.
+  A list of information requirements that may apply to a planning application. Each entry identifies information whose presence and adequacy can be checked, rather than a separate file that an applicant must supply. A document may address several requirements, and a requirement may be addressed by several documents. Whether a requirement applies depends on the application and relevant national and local requirements.
 end-date:
 entry-date: 2025-10-30
 fields:
