@@ -4,40 +4,40 @@ description: How any natural habitats on the development site will be improved b
 end-date: ''
 entry-date: 2025-06-16
 fields:
-- applies-if:
+- field: bng-exempt
+  applies-if:
     application-type:
       in:
       - hh
-  field: bng-exempt
   required: true
-- applies-if:
+- field: bng-condition-applies
+  applies-if:
     application-type:
       in:
       - full
       - technical-details-consent
       - outline
       - demolition-con-area
-  field: bng-condition-applies
   required: true
-- applies-if:
+- field: bng-condition-exemption-reasons
+  applies-if:
     application-type:
       in:
       - full
       - technical-details-consent
       - outline
       - demolition-con-area
-  field: bng-condition-exemption-reasons
   required-if:
   - field: bng-condition-applies
     value: false
-- applies-if:
+- field: bng-details
+  applies-if:
     application-type:
       in:
       - full
       - technical-details-consent
       - outline
       - demolition-con-area
-  field: bng-details
   required-if:
   - field: bng-condition-applies
     value: true
