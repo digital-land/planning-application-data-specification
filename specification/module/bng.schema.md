@@ -32,15 +32,16 @@ fields:
     value: false
 - field: bng-details
   applies-if:
-    application-type:
-      in:
-      - full
-      - technical-details-consent
-      - outline
-      - demolition-con-area
-  required-if:
-  - field: bng-condition-applies
-    value: true
+    all:
+    - application-type:
+        in:
+        - full
+        - technical-details-consent
+        - outline
+        - demolition-con-area
+    - field: bng-condition-applies
+      value: true
+  required: true
 module: bng
 name: Biodiversity net gain
 rules:
@@ -49,8 +50,8 @@ rules:
 - description: Exemption reasons must be provided when BNG condition does not apply
   rule: bng-condition-applies == false REQUIRES bng-condition-exemption-reasons.length
     >= 1
-- description: BNG details must be provided when BNG condition applies
-  rule: bng-condition-applies == true REQUIRES bng-details
+- description: BNG details must be provided when in scope and must not be provided otherwise
+  rule: BNG details are required when their applies-if condition is satisfied and are forbidden otherwise
 - description: BNG exempt must be false for householder applications (confirming exemption)
   rule: application-type == 'hh' RECOMMENDS bng-exempt == false
 - description: Exemption type must be from valid enumeration
