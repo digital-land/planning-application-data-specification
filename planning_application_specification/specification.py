@@ -744,13 +744,22 @@ class Specification:
         selection_application_types = self._selection_application_types_with_parents(
             selection
         )
-        if selection_application_types:
-            app_type_condition = applies_if.get("application-type")
+        def matches_application_types(condition):
+            # Answer conditions remain unresolved: selection contains no answers.
+            if not isinstance(condition, dict):
+                return True
+            children = condition.get("all")
+            if isinstance(children, list):
+                if not all(matches_application_types(child) for child in children):
+                    return False
+            app_type_condition = condition.get("application-type")
             if isinstance(app_type_condition, dict):
                 allowed = normalise_application_types(app_type_condition.get("in"))
                 if allowed:
                     return any(app_type in allowed for app_type in selection_application_types)
-        return True
+            return True
+
+        return matches_application_types(applies_if) if selection_application_types else True
 
     def _build_resolved_field(
         self,

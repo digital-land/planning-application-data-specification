@@ -71,7 +71,8 @@ Current V1 boundary:
 
 - works against a local checkout of this repository
 - evaluates codelist applicability from usage data using selection context
-- evaluates field `applies-if` only for `application-type` conditions
+- evaluates field `applies-if` only for `application-type` conditions, including those inside `all` groups
+- preserves the complete `applies-if` rule for consumers; `applies=True` means the application-type conditions allow the field, not that any answer conditions have been satisfied
 - exposes `required-if` as raw rule data and does not execute answer-dependent rules
 
 ## Combined applications
@@ -462,7 +463,8 @@ Current behaviour:
 
 - merges static override attributes from the field usage on top of the canonical field definition
 - returns `required-if` as raw rule data
-- evaluates `applies-if` only for `application-type` conditions
+- evaluates `applies-if` only for `application-type` conditions, including those inside `all` groups
+- preserves answer conditions without evaluating them; consumers must evaluate these before treating the field as in scope
 - returns a resolved field even when it does not apply, with `applies=False`
 
 This method currently aims to answer: "what does this field look like here?" It does not yet answer answer-dependent questions such as whether the field becomes required based on other submitted values.

@@ -525,6 +525,41 @@ def test_resolve_field_returns_component_level_override(project_root):
     assert resolved.container_ref == "bedroom-count"
 
 
+def test_bng_scope_filters_application_types_and_preserves_answer_condition(project_root):
+    spec = Specification.load(project_root)
+    expected_condition = {
+        "all": [
+            {"application-type": {"in": ["full", "technical-details-consent", "outline", "demolition-con-area"]}},
+            {"field": "bng-condition-applies", "value": True},
+        ]
+    }
+    for application_type, expected in [("hh", False), ("full", True), ("outline-some", True), (["hh", "full"], True)]:
+        items = spec.resolve_container_items(
+            module="bng", selection=SelectionContext(application_type=application_type)
+        )
+        details = next(item for item in items if item.ref == "bng-details")
+        assert details.applies is expected
+        assert details.applies_if == expected_condition
+        assert details.required is True
+
+
+def test_resolve_field_evaluates_all_but_defers_answer_conditions(project_root):
+    spec = Specification.load(project_root)
+    usage = next(item for item in spec.module("proposal-details").items if getattr(getattr(item, "original", None), "ref", None) == "is-psi")
+    answer = {"field": "description", "value": "example"}
+    conditions = [
+        (answer, True),
+        ({"all": [{"application-type": {"in": ["full"]}}, answer]}, True),
+        ({"all": [{"application-type": {"in": ["full"]}}, {"all": [{"application-type": {"in": ["hh"]}}, answer]}]}, False),
+    ]
+    for condition, expected in conditions:
+        usage.overrides["applies-if"] = condition
+        resolved = spec.resolve_field("is-psi", module="proposal-details", selection=SelectionContext(application_type="full"))
+        assert resolved.applies is expected
+        assert resolved.applies_if == condition
+        assert spec.resolve_field("is-psi", module="proposal-details").applies is True
+
+
 def test_resolve_field_respects_applies_if_selection(project_root):
     spec = Specification.load(project_root)
 
