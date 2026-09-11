@@ -2,6 +2,7 @@ from integrity_checks.utils import (
     field_usage_requirement_errors,
     get_object_field_names,
     has_reference_error,
+    iter_all_structure_errors,
     iter_redundant_field_component_overrides,
     iter_required_if_field_refs,
     iter_required_if_operator_errors,
@@ -149,6 +150,17 @@ def check_attrs(modules):
     return not has_errors
 
 
+def iter_applies_if_conditions(condition):
+    """Walk scope conditions, including those grouped under all."""
+    if not isinstance(condition, dict):
+        return
+    yield condition
+    children = condition.get("all", [])
+    if isinstance(children, list):
+        for child in children:
+            yield from iter_applies_if_conditions(child)
+
+
 def check_applies_if_structure(modules, application_types=None):
     """
     Ensure that any `applies-if` condition in module field entries is a dict
@@ -159,6 +171,7 @@ def check_applies_if_structure(modules, application_types=None):
           in: [outline, reserved-matters]
 
     Some authors use a list of condition objects; flag those as errors.
+    Check application-type references inside explicit all groups too.
     """
     has_errors = False
     valid_application_types = (
@@ -190,19 +203,85 @@ def check_applies_if_structure(modules, application_types=None):
                 has_errors = True
                 continue
 
-            application_type = applies_if.get("application-type")
-            if application_type is None or valid_application_types is None:
+            structure_errors = list(iter_all_structure_errors(applies_if, "applies-if"))
+            for error in structure_errors:
+                print_error("module", module_name, f"field #{field_def.get('field')} {error}")
+                has_errors = True
+            if structure_errors:
                 continue
 
-            application_type_refs = application_type.get("in", [])
-            for application_type_ref in application_type_refs:
-                if application_type_ref not in valid_application_types:
+            module_field_names = get_object_field_names(module_fields)
+            for condition in iter_applies_if_conditions(applies_if):
+                # Allow an incomplete equality condition through to the specific
+                # missing-value error below, but reject other vocabularies first.
+                if set(condition) not in (
+                    {"all"}, {"application-type"}, {"field", "value"}, {"field"},
+                ):
                     print_error(
-                        "module",
-                        module_name,
-                        f"field #{field_def.get('field')} references unknown applies-if application-type '{application_type_ref}'",
+                        "module", module_name,
+                        f"field #{field_def.get('field')} has an unsupported applies-if condition; "
+                        "use application-type with in, field with value, or an all group",
                     )
                     has_errors = True
+                    continue
+                if "field" in condition:
+                    if "value" not in condition:
+                        print_error(
+                            "module", module_name,
+                            f"field #{field_def.get('field')} applies-if answer condition must include 'value'",
+                        )
+                        has_errors = True
+                    reference = condition["field"]
+                    error = None
+                    if not isinstance(reference, str) or not reference.strip():
+                        error = "applies-if field reference must be a non-empty string"
+                    elif reference == field_def.get("field"):
+                        error = "applies-if field must not reference itself"
+                    elif "." in reference or reference not in module_field_names:
+                        error = f"applies-if field '{reference}' must name another field in the same module"
+                    if error:
+                        print_error("module", module_name, f"field #{field_def.get('field')} {error}")
+                        has_errors = True
+
+                if "application-type" not in condition:
+                    continue
+                application_type = condition["application-type"]
+                if not isinstance(application_type, dict):
+                    print_error(
+                        "module", module_name,
+                        f"field #{field_def.get('field')} applies-if application-type must be a mapping containing 'in'",
+                    )
+                    has_errors = True
+                    continue
+                if set(application_type) - {"in"}:
+                    print_error(
+                        "module", module_name,
+                        f"field #{field_def.get('field')} has an unsupported applies-if application-type selector; use only 'in'",
+                    )
+                    has_errors = True
+                    continue
+                application_type_refs = application_type.get("in")
+                if (
+                    not isinstance(application_type_refs, list)
+                    or not application_type_refs
+                    or any(not isinstance(ref, str) or not ref.strip() for ref in application_type_refs)
+                ):
+                    print_error(
+                        "module", module_name,
+                        f"field #{field_def.get('field')} applies-if application-type.in must be a non-empty list of non-empty strings",
+                    )
+                    has_errors = True
+                    continue
+                if valid_application_types is None:
+                    continue
+                for application_type_ref in application_type_refs:
+                    if application_type_ref not in valid_application_types:
+                        print_error(
+                            "module",
+                            module_name,
+                            f"field #{field_def.get('field')} references unknown applies-if application-type '{application_type_ref}'",
+                        )
+                        has_errors = True
 
     return not has_errors
 

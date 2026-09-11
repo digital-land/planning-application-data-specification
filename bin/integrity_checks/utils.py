@@ -95,6 +95,23 @@ def iter_redundant_field_component_overrides(field_instances, fields):
             yield field_name, override_component
 
 
+def iter_all_structure_errors(condition, path):
+    """Validate all group containers without interpreting leaf conditions."""
+    if not isinstance(condition, dict) or "all" not in condition:
+        return
+    group_path = f"{path}.all"
+    children = condition["all"]
+    if not isinstance(children, list) or not children:
+        yield f"{group_path} must be a non-empty list of condition mappings"
+        return
+    for index, child in enumerate(children):
+        child_path = f"{group_path}[{index}]"
+        if not isinstance(child, dict) or not child:
+            yield f"{child_path} must be a non-empty condition mapping"
+        else:
+            yield from iter_all_structure_errors(child, child_path)
+
+
 def iter_required_if_field_refs(required_if, *, inside_contains=False):
     """Yield top-level `field` references found within a required-if structure."""
     if isinstance(required_if, list):

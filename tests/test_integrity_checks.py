@@ -105,6 +105,150 @@ def module_without_applies_if():
 class TestAppliesIfStructure:
     """Test applies-if structure validation."""
 
+    @pytest.mark.parametrize("grouped", [False, True])
+    @pytest.mark.parametrize("condition", [
+        {"application-types": {"in": ["full"]}},
+        {"field": "answer", "operator": "empty"},
+        {"field": "answer", "in": [True]},
+        {"field": "answer", "contains": "yes"},
+        {"field": "answer", "value": True, "operator": "not_empty"},
+        {"any": [{"field": "answer", "value": True}]},
+        {"all": [{"field": "answer", "value": True}], "value": True},
+        {"application-type": {"in": ["full"]}, "field": "answer", "value": True},
+        {"application-type": {"value": "full"}},
+        {"application-type": {"in": ["full"], "extra": True}},
+    ])
+    def test_unsupported_condition_shapes(self, condition, grouped, capsys):
+        if grouped:
+            condition = {"all": [condition]}
+        modules = {"example": {"fields": [
+            {"field": "answer"},
+            {"field": "details", "applies-if": condition},
+        ]}}
+        assert not check_applies_if_structure(modules, application_types={"full": {}})
+        output = capsys.readouterr().out
+        assert "details" in output
+        assert "unsupported" in output
+        assert "must include 'value'" not in output
+
+    def test_empty_condition_is_rejected(self, capsys):
+        modules = {"example": {"fields": [{"field": "details", "applies-if": {}}]}}
+        assert not check_applies_if_structure(modules)
+        assert "unsupported" in capsys.readouterr().out
+
+    @pytest.mark.parametrize("grouped", [False, True])
+    @pytest.mark.parametrize("comparison, expected", [
+        ({}, False),
+        ({"value": True}, True),
+        ({"value": False}, True),
+        ({"value": 0}, True),
+    ])
+    def test_answer_condition_requires_value(self, grouped, comparison, expected, capsys):
+        condition = {"field": "answer", **comparison}
+        if grouped:
+            condition = {"all": [condition]}
+        modules = {"example": {"fields": [
+            {"field": "answer"},
+            {"field": "details", "applies-if": condition},
+        ]}}
+
+        assert check_applies_if_structure(modules) is expected
+        output = capsys.readouterr().out
+        if expected:
+            assert output == ""
+        else:
+            assert "details" in output
+            assert "applies-if" in output
+            assert "must include 'value'" in output
+
+    @pytest.mark.parametrize("grouped", [False, True])
+    @pytest.mark.parametrize("reference, message", [
+        ("missing", "same module"),
+        ("elsewhere", "same module"),
+        ("bng-details", "itself"),
+        ("other.answer", "same module"),
+        (None, "non-empty string"),
+        ("", "non-empty string"),
+        (" ", "non-empty string"),
+        (["bng-condition-applies"], "non-empty string"),
+        (123, "non-empty string"),
+    ])
+    def test_invalid_answer_reference(self, grouped, reference, message, capsys):
+        condition = {"field": reference, "value": True}
+        if grouped:
+            condition = {"all": [condition]}
+        modules = {
+            "bng": {"fields": [
+                {"field": "bng-condition-applies"},
+                {"field": "bng-details", "applies-if": condition},
+            ]},
+            "other": {"fields": [{"field": "elsewhere"}]},
+        }
+
+        assert not check_applies_if_structure(modules)
+        output = capsys.readouterr().out
+        assert "bng-details" in output
+        assert message in output
+
+    @pytest.mark.parametrize("grouped", [False, True])
+    @pytest.mark.parametrize("application_types", [None, {"full": {}}])
+    @pytest.mark.parametrize("selector", [
+        None, "full", ["full"], {}, {"in": None}, {"in": "full"},
+        {"in": []}, {"in": [""]}, {"in": [" "]}, {"in": [False]},
+        {"in": [123]}, {"in": [[]]}, {"in": [{}]},
+    ])
+    def test_application_type_list_structure(self, grouped, application_types, selector, capsys):
+        condition = {"application-type": selector}
+        if grouped:
+            condition = {"all": [condition]}
+        modules = {"bng": {"fields": [{"field": "bng-details", "applies-if": condition}]}}
+
+        assert not check_applies_if_structure(modules, application_types)
+        output = capsys.readouterr().out
+        assert "bng-details" in output
+        assert "application-type" in output
+
+    @pytest.mark.parametrize("group", [None, True, "condition", {}, [], [None], ["field"], [[]], [{}], [{"all": []}]])
+    def test_invalid_all_structure_fails(self, group, capsys):
+        modules = {"bng": {"fields": [{"field": "bng-details", "applies-if": {"all": group}}]}}
+
+        assert not check_applies_if_structure(modules)
+        output = capsys.readouterr().out
+        assert "bng-details" in output
+        assert "applies-if.all" in output
+
+    @pytest.mark.parametrize("grouped", [False, True])
+    def test_answer_only_condition_passes(self, grouped):
+        condition = {"field": "bng-condition-applies", "value": True}
+        if grouped:
+            condition = {"all": [condition]}
+        modules = {"bng": {"fields": [
+            {"field": "bng-condition-applies"},
+            {"field": "bng-details", "applies-if": condition},
+        ]}}
+
+        assert check_applies_if_structure(modules, application_types={"full": {}})
+
+    @pytest.mark.parametrize("depth", [0, 1, 2])
+    @pytest.mark.parametrize("application_type, expected", [("full", True), ("ful", False)])
+    def test_application_types_inside_all(self, depth, application_type, expected, capsys):
+        condition = {"application-type": {"in": [application_type]}}
+        for _ in range(depth):
+            condition = {"all": [condition, {"field": "bng-condition-applies", "value": True}]}
+        modules = {"bng": {"fields": [
+            {"field": "bng-condition-applies"},
+            {"field": "bng-details", "applies-if": condition},
+        ]}}
+
+        assert check_applies_if_structure(modules, application_types={"full": {}}) is expected
+        output = capsys.readouterr().out
+        if expected:
+            assert output == ""
+        else:
+            assert "bng" in output
+            assert "bng-details" in output
+            assert "unknown applies-if application-type 'ful'" in output
+
     def test_valid_structure_passes(self, valid_applies_if_module):
         """Test that valid applies-if structure passes."""
         has_no_errors = check_applies_if_structure(valid_applies_if_module)
@@ -170,10 +314,10 @@ class TestComplexAppliesIfScenarios:
             }
         }
 
-    def test_nested_conditions_valid(self, nested_applies_if_module):
-        """Test that nested applies-if conditions are valid."""
+    def test_unknown_condition_key_rejected(self, nested_applies_if_module):
+        """Unknown sibling conditions must not be silently ignored."""
         has_no_errors = check_applies_if_structure(nested_applies_if_module)
-        assert has_no_errors
+        assert not has_no_errors
 
     @pytest.mark.parametrize(
         "invalid_applies_if", [["list", "not", "dict"], "string-not-dict", 123]
