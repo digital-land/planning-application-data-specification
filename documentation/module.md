@@ -43,12 +43,11 @@ Each module has a canonical definition in a shared repository.
 * `name`
 * `description`
 * `fields[]` - List of field references
-* `applies-if` - A condition or expression that determines when the module is used (not sure if this is the right place for it)
 * `entry-date`
 * `end-date` - for deprecating fields
 * `rules`
 
-Each field item will need include the requirement level and, probably, a level of conditionality (for example, required if field X is Y)
+Each field entry can use `required`, `required-if` and `applies-if` to describe its requirements and scope.
 
 **Modules should reference fields by ID**
 With the field definitions living elsewhere.
@@ -65,14 +64,16 @@ Use this sparingly:
 This allows a shared field such as `description` to be reused across modules without losing the label or guidance that makes sense in that module.
 
 **Use of `applies-if`**
-Use of `applies-if` allows conditional inclusion without bloating the model.
+Put `applies-if` on a field entry in `fields`, not on the module itself. It controls whether that field may be supplied, including when the field contains a component.
+
+Use `required-if` to make an allowed field mandatory when a condition is met. Use `applies-if` to forbid a field unless its condition is met. Check scope first, then apply requiredness.
+
+Answer-based `applies-if` conditions refer to another field in the same module. Use `all` when both an application-type condition and an answer condition must match.
 
 For the current conditional rule vocabulary, see [co-constraints](co-constraints.md).
 
 ### Still to decide
 
-* Should `applies-if` support complex conditions or be limited to simple key-value checks?
-  Similarly is it bound to whats available in the module?
 * Do we allow modules to override field data types or other structural elements?
   Leaning no, maybe better to create new fields.
 * Should modules be allowed to reference other modules (i.e. support nesting or composition)?

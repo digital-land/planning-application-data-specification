@@ -16,10 +16,14 @@ There are two main conditional intents.
 
 | Intent | What it means | Current use |
 | --- | --- | --- |
-| `applies-if` | The field is in scope if the condition is satisfied. This usually means it should be presented to the user. | Currently used with `application-type`. |
-| `required-if` | The field requires a response if the condition is satisfied. | Used for conditional requiredness based on answers or other values. |
+| `applies-if` | The field is allowed only when the condition is satisfied. Otherwise, it must not be supplied. | Application-type conditions and comparisons with another answer in the same module. |
+| `required-if` | The field requires a response when the condition is satisfied. A condition that is not satisfied does not itself forbid a response. | Conditional requiredness based on answers or other values. |
 
-At the moment, `applies-if` is used to say that a field only applies for one or more application types.
+**Optional and out of scope are different.** Use `required-if` when a condition makes information mandatory but does not otherwise forbid it. Use `applies-if` when information must not be supplied unless the condition is met. Other scope and requiredness rules still apply.
+
+**Check scope before requiredness.** When a field is out of scope, supplying it is invalid. Do not check its requiredness or validate fields inside it. When it is in scope, apply its normal requirements.
+
+An `applies-if` condition can restrict a field to one or more application types.
 
 For example:
 
@@ -47,9 +51,9 @@ fields:
 
 ## Where conditions can point
 
-A condition often refers to another field in the same module or component, but it does not have to.
+For answer-based `applies-if`, use `field` and `value` to compare with another field in the same module. Do not use a self-reference or a path to another module. An application-type condition is optional; include it only when the field also needs that restriction.
 
-Conditions can refer to values elsewhere in the submission where needed. Use an explicit path when the field is outside the current module.
+A `required-if` condition often refers to another field in the same module or component, but can refer to values elsewhere in the submission. Use an explicit path when the field is outside the current module.
 
 For example:
 
@@ -67,6 +71,8 @@ These are the main patterns currently used.
 | Pattern | Vocabulary | Meaning |
 | --- | --- | --- |
 | Field applies for an application type | `applies-if` + `application-type` + `in` | Field is in scope for one or more application types. |
+| Field applies when an answer equals a value | `applies-if` + `field` + `value` | Field is allowed only when another answer in the same module matches the value. |
+| Field applies when all conditions match | `applies-if` + `all` | Field is allowed only when every listed condition is satisfied. |
 | Answer equals a value | `required-if` + `field` + `value` | Field is required when another field has a specific value. |
 | Answer is one of several values | `required-if` + `field` + `in` | Field is required when another field is one of a list of values. |
 | Answer contains a value | `required-if` + `field` + `contains` | Field is required when a list or multi-value field contains a value. |
@@ -110,10 +116,12 @@ The initial operator vocabulary used by submission co-constraints is:
 
 ## Any and all
 
-Use `any` and `all` when a rule depends on more than one condition.
+For `required-if`, use `any` and `all` when a rule depends on more than one condition.
 
-- `any` means the field is required if at least one listed condition is met
-- `all` means the field is required only if every listed condition is met
+- `any` means at least one listed condition must be met
+- `all` means every listed condition must be met
+
+For `applies-if`, use `all` to combine application-type and answer conditions. The group must contain a non-empty list of conditions. Its result controls scope, not requiredness.
 
 The specification should not rely on implied meaning when more than one condition is listed.
 
@@ -154,12 +162,35 @@ Co-constraints are conditional rules inside that composition.
 In practice:
 
 - application schemas decide whether a module is part of an application type
-- `applies-if` handles field-level variation when a shared module or component is used by multiple application types
-- `required-if` handles answer-level logic once the relevant field or module is in scope
+- `applies-if` on a field entry decides whether that field is in scope
+- `required` and `required-if` decide what must be supplied once the field is in scope
 
-Whole modules are not currently put in or out of scope by an applicant answer. Instead, this is usually handled at field level. A module may include a leading question, and later fields in the same module become required only if the answer makes them relevant.
+Whole modules are not put in or out of scope by an applicant answer. A field within a module can contain a component, so a condition on that field can put the whole component response out of scope without changing the component definition.
 
-Components are represented through fields, so the same field-level rules can control when a component-shaped response is required.
+### Example: BNG details
+
+The [BNG module](../specification/module/bng.schema.md) combines an application-type condition with an answer in the same module:
+
+```yaml
+- field: bng-details
+  applies-if:
+    all:
+    - application-type:
+        in:
+        - full
+        - technical-details-consent
+        - outline
+        - demolition-con-area
+    - field: bng-condition-applies
+      value: true
+  required: true
+```
+
+Both conditions must be satisfied. When they are, `bng-details` must be supplied and the required fields inside its component remain required. Otherwise, `bng-details` must not be supplied and missing fields inside it do not produce errors. The BNG module and its controlling question remain in place.
+
+Where `bng-condition-applies` is required, leaving it unanswered is still a missing-required-answer error. An omitted answer is not the same as answering `false`.
+
+This deliberately excludes BNG details when they do not apply, rather than making them optional. The aim is to avoid collecting unnecessary information from applicants and causing confusion for planning officers.
 
 ## JSON Schema generator coverage
 
