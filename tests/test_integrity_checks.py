@@ -105,6 +105,18 @@ def module_without_applies_if():
 class TestAppliesIfStructure:
     """Test applies-if structure validation."""
 
+    @pytest.mark.parametrize("attributes, expected", [({}, True), ({"applies-if": None}, False)])
+    def test_omitted_condition_differs_from_explicit_null(self, attributes, expected, capsys):
+        modules = {"bng": {"fields": [{"field": "bng-details", **attributes}]}}
+        assert check_applies_if_structure(modules) is expected
+        output = capsys.readouterr().out
+        if expected:
+            assert output == ""
+        else:
+            assert "bng-details" in output
+            assert "applies-if" in output
+            assert "NoneType" in output
+
     @pytest.mark.parametrize("grouped", [False, True])
     @pytest.mark.parametrize("condition", [
         {"application-types": {"in": ["full"]}},

@@ -181,9 +181,9 @@ def check_applies_if_structure(modules, application_types=None):
     for module_name, module in modules.items():
         module_fields = module.get("fields", [])
         for idx, field_def in enumerate(module_fields):
-            applies_if = field_def.get("applies-if")
-            if applies_if is None:
+            if "applies-if" not in field_def:
                 continue
+            applies_if = field_def["applies-if"]
             # if it's a list (common mistake) that's an error
             if isinstance(applies_if, list):
                 print_error(
