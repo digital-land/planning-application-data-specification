@@ -1,4 +1,74 @@
 
+<a name="v0.2.52"></a>
+## [v0.2.52](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.51...v0.2.52) (2026-09-11)
+
+handle application-type conditions inside applies-if all groups
+
+### ⚒️ Tooling
+
+* handle application-type conditions inside applies-if all groups (commit [153967c5](https://github.com/digital-land/planning-application-data-specification/commit/153967c5e7deadb9ec78aef736a169707075e242))
+* validate answer-based applies-if conditions (commit [8a84c1d6](https://github.com/digital-land/planning-application-data-specification/commit/8a84c1d6b9ae78b73da527174538647ee9f0b2b7))
+
+### 𝌭 Model changes
+
+* clarify agent contact reference must match agent details (commit [bfe4fe42](https://github.com/digital-land/planning-application-data-specification/commit/bfe4fe425e92eae36d2b2c375612a91bad35d6f4))
+* put BNG details out of scope when the BNG condition does not apply (commit [923fddc7](https://github.com/digital-land/planning-application-data-specification/commit/923fddc79ce5509c2589b07f948762b68149bcbc))
+
+### 🐛 Bug Fixes
+
+* readability of bng moduledefinition (commit [096e5ab8](https://github.com/digital-land/planning-application-data-specification/commit/096e5ab81e8ec45e3ba0611149cd482819de8a71))
+* allow partial fee information in submissions (commit [6835c19c](https://github.com/digital-land/planning-application-data-specification/commit/6835c19c17892b46d32377c50fd7a4299017db73))
+
+### 📚 Documentation
+
+* explain answer-based applicability and BNG scope (commit [127348be](https://github.com/digital-land/planning-application-data-specification/commit/127348be9ef8f46c63b40e2216006b807cb1f2f1))
+
+
+<a name="v0.2.51"></a>
+## [v0.2.51](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.50...v0.2.51) (2026-09-09)
+
+Planning requirements review: additions, consolidations and source updates
+
+### 𝌭 Model changes
+
+* clarify planning requirements and document coverage (commit [4797cb96](https://github.com/digital-land/planning-application-data-specification/commit/4797cb96cf40b3d0cd6a1249d96d0aad14a338dc))
+* require tree condition evidence for tree condition concerns (commit [76a60523](https://github.com/digital-land/planning-application-data-specification/commit/76a605230d624c3d8e1f3ed9cf987a68f00a8b95))
+* clarify organisations involved in planning conditions (commit [a45e8fce](https://github.com/digital-land/planning-application-data-specification/commit/a45e8fce9d2d9062976d30739a4bc7329a7de92e))
+* use the decision codelist for decisions and recommendations (commit [16eeb4cc](https://github.com/digital-land/planning-application-data-specification/commit/16eeb4ccfbf7155a5ece50ffe0b7b6e94bed3f57))
+* add decision codelist (commit [4a00b26e](https://github.com/digital-land/planning-application-data-specification/commit/4a00b26ec57050a4896515ec1ab4442fd6da83ec))
+
+### 🎯 Need
+
+* clarify responsibility for planning conditions' (commit [a28eba81](https://github.com/digital-land/planning-application-data-specification/commit/a28eba81928c1274a853890bcc60af2f46fa7aff))
+
+### 🐛 Bug Fixes
+
+* align condition documentation with the specification (commit [76964046](https://github.com/digital-land/planning-application-data-specification/commit/76964046ad88800a364e12a691656a50f8defb98))
+
+### 📄 Planning requirement
+
+* complete source updates from Camden planning requirements review (commit [964d9547](https://github.com/digital-land/planning-application-data-specification/commit/964d95477c9f3aa09c59f5eaf18eb543dee0ac0a))
+* replace Markdown sources with plain text for seven requirements (commit [030a9e4a](https://github.com/digital-land/planning-application-data-specification/commit/030a9e4acfed91cac418e5b11aa54dbeccae239d))
+* update NPPF sources for five planning requirements (commit [149bdc13](https://github.com/digital-land/planning-application-data-specification/commit/149bdc13b8bf331ac219e2608466f2bd7ad87d40))
+* consolidate site investigation into land contamination assessment (commit [e5779ade](https://github.com/digital-land/planning-application-data-specification/commit/e5779ade8e5d63d024d54b763b606657e76197bc))
+* consolidate ecology assessment into biodiversity survey and report (commit [5a9d7f7a](https://github.com/digital-land/planning-application-data-specification/commit/5a9d7f7a6a11b8e908e1b07591d6976bf9ade80f))
+* distinguish tree condition evidence from arboricultural impact assessment (commit [2ebe5eff](https://github.com/digital-land/planning-application-data-specification/commit/2ebe5effce443233cce9c9f5092d620a6cf9e632))
+* consolidate acoustic report into noise assessment (commit [a9881471](https://github.com/digital-land/planning-application-data-specification/commit/a9881471921c7239dd378281b64b2da279fa9a36))
+* add seven planning requirements from Camden’s NPPF review (commit [643a0fac](https://github.com/digital-land/planning-application-data-specification/commit/643a0fac94372a3ce632aea2dcd1566cecc7a0e7))
+
+### 📚 Documentation
+
+* link decision field to its design decision (commit [5aa2619f](https://github.com/digital-land/planning-application-data-specification/commit/5aa2619f4aa7fff6e0f4beeb3c24f40c1db29d59))
+* record the rationale for a shared decision codelist (commit [73f796ec](https://github.com/digital-land/planning-application-data-specification/commit/73f796ec120361da838b226d6ae261575062f869))
+
+### 🧭 Guidance
+
+* explain organisation roles for planning conditions (commit [bd1b5daf](https://github.com/digital-land/planning-application-data-specification/commit/bd1b5dafdea509f85f1d0e934ef1ff8cad807a21))
+* add examples of organisations involved in conditions (commit [43206fa3](https://github.com/digital-land/planning-application-data-specification/commit/43206fa3bd718ea98f75f34d312cdafe4bad0ad4))
+* clarify planning officer recommendation values (commit [fec2df37](https://github.com/digital-land/planning-application-data-specification/commit/fec2df3760571e9883b07bf36092377b3ee02aac))
+* update examples to use decision codelist values (commit [b1a837cc](https://github.com/digital-land/planning-application-data-specification/commit/b1a837cc26eb713ac2d40086e673622c8690f40c))
+
+
 <a name="v0.2.50"></a>
 ## [v0.2.50](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.47...v0.2.50) (2026-09-07)
 
