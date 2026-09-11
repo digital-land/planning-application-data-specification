@@ -13,4 +13,6 @@ fields:
       operator: not_empty
 module: agent-contact
 name: Agent contact details
+rules:
+- rule: agent-reference must match a reference in agent-details.agent.reference in the same submission.
 ---
