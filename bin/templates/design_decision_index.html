@@ -19,12 +19,18 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Design decisions</h1>
     <p class="govuk-body">These records explain decisions made while developing the planning application data standard.</p>
+    <form hidden data-decisions-search class="govuk-!-margin-bottom-5" role="search">
+      <label class="govuk-label govuk-!-font-weight-bold" for="filter-decisions-list">Search design decisions</label>
+      <div class="govuk-hint" id="filter-decisions-hint">Search by decision ID or title. Results update as you type.</div>
+      <input class="govuk-input" id="filter-decisions-list" name="list_filter" type="search" aria-describedby="filter-decisions-hint" aria-controls="decisions-list">
+    </form>
+    <p class="govuk-body" data-decisions-count role="status" aria-live="polite">Showing {{ decisions | length }} design decisions.</p>
   </div>
 </div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <table class="govuk-table govuk-!-margin-top-4">
+    <table class="govuk-table govuk-!-margin-top-4" id="decisions-list">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Decision</th>
@@ -34,7 +40,7 @@
       </thead>
       <tbody class="govuk-table__body">
         {% for decision in decisions %}
-          <tr class="govuk-table__row">
+          <tr class="govuk-table__row" data-decision-item>
             <td class="govuk-table__cell"><a class="govuk-link" href="{{ decision.href }}">{{ decision.decision_id }}: {{ decision.title }}</a></td>
             <td class="govuk-table__cell">{{ decision.status }}</td>
             <td class="govuk-table__cell">{{ decision.date }}</td>
@@ -42,6 +48,24 @@
         {% endfor %}
       </tbody>
     </table>
+    <p hidden class="govuk-body" data-no-decisions>No design decisions match your search. Try a different ID or title.</p>
   </div>
 </div>
+{% endblock %}
+
+{% block pageScripts %}
+{{ super() }}
+{% if decisions %}
+<script type="module">
+  import initIndexSearch from "{{ url_for('/static/javascripts/index-search.js') }}";
+  initIndexSearch({
+    form: document.querySelector('[data-decisions-search]'),
+    count: document.querySelector('[data-decisions-count]'),
+    noResults: document.querySelector('[data-no-decisions]'),
+    elements: document.querySelectorAll('[data-decision-item]'),
+    label: 'design decisions',
+    getText: element => element.querySelector('a').textContent
+  });
+</script>
+{% endif %}
 {% endblock %}
