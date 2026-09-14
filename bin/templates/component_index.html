@@ -14,19 +14,41 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Components</h1>
-    <p class="govuk-body">Showing {{ components | length }} components.</p>
+    <form hidden data-components-search class="govuk-!-margin-bottom-5" role="search">
+      <label class="govuk-label govuk-!-font-weight-bold" for="filter-components-list">Search components</label>
+      <div class="govuk-hint" id="filter-components-hint">Search by component name or description. Results update as you type.</div>
+      <input class="govuk-input" id="filter-components-list" name="list_filter" type="search" aria-describedby="filter-components-hint" aria-controls="components-list">
+    </form>
+    <p class="govuk-body" data-components-count role="status" aria-live="polite">Showing {{ components | length }} components.</p>
     {% if components %}
-      <ul class="govuk-list govuk-list--bullet">
+      <ul class="govuk-list govuk-list--bullet" id="components-list">
         {% for comp in components %}
-          <li>
+          <li data-component-item>
             <a class="govuk-link" href="{{ comp.href }}">{{ comp.name or comp.ref }}</a>
             {% if comp.description %}<div class="govuk-hint">{{ comp.description }}</div>{% endif %}
           </li>
         {% endfor %}
       </ul>
+      <p hidden class="govuk-body" data-no-components>No components match your search. Try a different name or description.</p>
     {% else %}
       <p class="govuk-body">No components found.</p>
     {% endif %}
   </div>
 </div>
+{% endblock %}
+
+{% block pageScripts %}
+{{ super() }}
+{% if components %}
+<script type="module">
+  import initIndexSearch from "{{ url_for('/static/javascripts/index-search.js') }}";
+  initIndexSearch({
+    form: document.querySelector('[data-components-search]'),
+    count: document.querySelector('[data-components-count]'),
+    noResults: document.querySelector('[data-no-components]'),
+    elements: document.querySelectorAll('[data-component-item]'),
+    label: 'components'
+  });
+</script>
+{% endif %}
 {% endblock %}
