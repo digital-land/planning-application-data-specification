@@ -1,9 +1,9 @@
-export default function initIndexSearch({ form, count, noResults, elements, label }) {
+export default function initIndexSearch({ form, count, noResults, elements, label, getText = element => element.textContent, renderItem = () => {} }) {
   const search = form.querySelector('input')
   const normalise = text => text.replace(/\s+/g, ' ').trim().toLowerCase()
   const items = [...elements].map(element => ({
     element,
-    text: normalise(element.textContent)
+    text: normalise(getText(element))
   }))
 
   function filterItems() {
@@ -11,6 +11,7 @@ export default function initIndexSearch({ form, count, noResults, elements, labe
     let matches = 0
     items.forEach(item => {
       item.element.hidden = !item.text.includes(term)
+      renderItem(item.element, term)
       if (!item.element.hidden) matches++
     })
     count.textContent = `Showing ${matches} of ${items.length} ${label}.`

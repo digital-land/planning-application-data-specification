@@ -19,12 +19,18 @@
   <div class="govuk-grid-column-two-thirds">
     <h1 class="govuk-heading-xl">Justifications</h1>
     <p class="govuk-body">These records explain how specific datasets or fields satisfy user needs.</p>
+    <form hidden data-justifications-search class="govuk-!-margin-bottom-5" role="search">
+      <label class="govuk-label govuk-!-font-weight-bold" for="filter-justifications-list">Search justifications</label>
+      <div class="govuk-hint" id="filter-justifications-hint">Search by ID, user need reference, data reference or explanation. Results update as you type.</div>
+      <input class="govuk-input" id="filter-justifications-list" name="list_filter" type="search" aria-describedby="filter-justifications-hint" aria-controls="justifications-list">
+    </form>
+    <p class="govuk-body" data-justifications-count role="status" aria-live="polite">Showing {{ justifications | length }} justifications.</p>
   </div>
 </div>
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <table class="govuk-table govuk-!-margin-top-4">
+    <table class="govuk-table govuk-!-margin-top-4" id="justifications-list">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">ID</th>
@@ -36,8 +42,12 @@
       </thead>
       <tbody class="govuk-table__body">
         {% for j in justifications %}
-          <tr class="govuk-table__row">
-            <td class="govuk-table__cell"><a class="govuk-link" href="{{ j.href }}">{{ j.id }}</a></td>
+          <tr class="govuk-table__row" data-justification-item data-search-body="{{ j.search_body | striptags | forceescape }}" data-search-references="{{ j.search_references | tojson | forceescape }}">
+            <td class="govuk-table__cell">
+              <a class="govuk-link" href="{{ j.href }}">{{ j.id }}</a>
+              <p hidden class="govuk-body-s govuk-!-margin-top-2 govuk-!-margin-bottom-0" data-search-excerpt></p>
+              <p hidden class="govuk-body-s govuk-!-margin-top-2 govuk-!-margin-bottom-0" data-search-reference-match></p>
+            </td>
             <td class="govuk-table__cell">{{ j.needs | join(", ") | safe }}</td>
             <td class="govuk-table__cell">{{ j.satisfaction }}</td>
             <td class="govuk-table__cell">{{ j.confidence }}</td>
@@ -46,6 +56,14 @@
         {% endfor %}
       </tbody>
     </table>
+    <p hidden class="govuk-body" data-no-justifications>No justifications match your search. Try a different term.</p>
   </div>
 </div>
+{% endblock %}
+
+{% block pageScripts %}
+{{ super() }}
+{% if justifications %}
+<script type="module" src="{{ url_for('/static/javascripts/justification-search.js') }}"></script>
+{% endif %}
 {% endblock %}

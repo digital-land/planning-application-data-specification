@@ -1353,6 +1353,23 @@ def render_design_decisions(
         )
 
 
+def justification_search_references(blob: Any) -> List[str]:
+    """Collect labelled references from nested satisfaction conditions."""
+    refs = []
+    if isinstance(blob, dict):
+        for key, value in blob.items():
+            if key in {"dataset", "field", "codelist", "module", "component"} and isinstance(value, str):
+                refs.append(f"{key.capitalize()}: {value}")
+            elif key == "includes" and isinstance(value, list):
+                refs.extend(f"Code: {code}" for code in value if isinstance(code, str))
+            elif isinstance(value, (dict, list)):
+                refs.extend(justification_search_references(value))
+    elif isinstance(blob, list):
+        for item in blob:
+            refs.extend(justification_search_references(item))
+    return list(dict.fromkeys(refs))
+
+
 def render_justifications_index(
     renderer: RenderContext,
     justifications: List[Dict[str, Any]],
@@ -1370,6 +1387,10 @@ def render_justifications_index(
                 "satisfaction": j.get("satisfaction", ""),
                 "confidence": j.get("confidence", ""),
                 "status": j.get("status", ""),
+                "search_references": justification_search_references(j.get("satisfied_by", {})),
+                "search_body": render_markdown(
+                    getattr(j, "content", "") or j.get("body", "") or j.get("notes", "") or ""
+                ),
                 "href": renderer.url_for(f"/justification/{j.get('id')}"),
             }
             for j in justifications

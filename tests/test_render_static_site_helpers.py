@@ -8,9 +8,24 @@ from bin.render_static_site import (
     build_need_maps,
     design_decision_feedback_url,
     extract_dataset_only_refs,
+    justification_search_references,
     parse_design_decision,
 )
 from bin.renderer import url_for
+
+
+def test_justification_search_references_handles_nested_conditions():
+    assert justification_search_references({"allOf": [
+        {"dataset": "planning-application", "field": "application-types"},
+        {"anyOf": [
+            {"codelist": "application-type", "includes": ["hh", "full"]},
+            {"dataset": "planning-application", "field": "reference"},
+        ]},
+    ]}) == [
+        "Dataset: planning-application", "Field: application-types",
+        "Codelist: application-type", "Code: hh", "Code: full", "Field: reference",
+    ]
+    assert justification_search_references(None) == []
 
 
 def test_url_for_handles_base_url():
