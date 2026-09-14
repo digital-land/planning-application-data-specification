@@ -33,10 +33,17 @@
       <p class="govuk-body">Explore an <a href="https://form-generator.prototype.development.planning.data.gov.uk/application" class="govuk-link">example implementation</a> that creates web and PDF forms from the submission specification.</p>
     </div>
 
+    <form hidden data-application-types-search class="govuk-!-margin-bottom-5" role="search">
+      <label class="govuk-label govuk-!-font-weight-bold" for="filter-application-types-list">Search application types</label>
+      <div class="govuk-hint" id="filter-application-types-hint">Search individual and combined application types by name or description. Results update as you type.</div>
+      <input class="govuk-input" id="filter-application-types-list" name="list_filter" type="search" aria-describedby="filter-application-types-hint" aria-controls="individual-application-types combined-application-types">
+    </form>
+
     <h2 class="govuk-heading-l">Individual application types</h2>
     <p class="govuk-body">Each individual application type defines the information needed for that type of planning application and how it should be structured.</p>
     <p class="govuk-body">The types covered in this standard are:</p>
-    <table class="govuk-table govuk-!-margin-top-5">
+    <p class="govuk-body" data-individual-count role="status" aria-live="polite">Showing {{ applications | length }} individual application types.</p>
+    <table class="govuk-table govuk-!-margin-top-5" id="individual-application-types">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Application type</th>
@@ -45,19 +52,21 @@
       </thead>
       <tbody class="govuk-table__body">
         {% for app in applications %}
-          <tr class="govuk-table__row">
+          <tr class="govuk-table__row" data-individual-application-type>
             <td class="govuk-table__cell"><a class="govuk-link" href="{{ app.href }}">{{ app.name }}</a></td>
             <td class="govuk-table__cell">{{ app.description }}</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
+    <p hidden class="govuk-body" data-no-individual-types>No individual application types match your search. Try a different name or description.</p>
 
     <h2 class="govuk-heading-l">Combined application types</h2>
     <p class="govuk-body">Some planning applications need more than one individual application type. The standard supports only the approved combinations listed below.</p>
     <p class="govuk-body">Read why the standard uses a <a class="govuk-link" href="{{ links.combined_application_decision }}">controlled list of combined application types</a>.</p>
     <p class="govuk-body">The combinations covered in this standard are:</p>
-    <table class="govuk-table govuk-!-margin-top-5">
+    <p class="govuk-body" data-combined-count role="status" aria-live="polite">Showing {{ combined_applications | length }} combined application types.</p>
+    <table class="govuk-table govuk-!-margin-top-5" id="combined-application-types">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Application type</th>
@@ -66,13 +75,14 @@
       </thead>
       <tbody class="govuk-table__body">
         {% for app in combined_applications %}
-          <tr class="govuk-table__row">
+          <tr class="govuk-table__row" data-combined-application-type>
             <td class="govuk-table__cell"><a class="govuk-link" href="{{ app.href }}">{{ app.name }}</a></td>
             <td class="govuk-table__cell">{{ app.description }}</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
+    <p hidden class="govuk-body" data-no-combined-types>No combined application types match your search. Try a different name or description.</p>
 
     <h2 class="govuk-heading-l">What's next</h2>
     <p class="govuk-body">The specifications will continue to evolve as we test them with planning authorities, suppliers and policy teams. We will add more application types to the standard as we work through more parts of the planning permission process.</p>
@@ -83,3 +93,22 @@
   </div>
 </div>
   {% endblock %}
+
+{% block pageScripts %}
+{{ super() }}
+{% if applications or combined_applications %}
+<script type="module">
+  import initIndexSearch from "{{ url_for('/static/javascripts/index-search.js') }}";
+  const form = document.querySelector('[data-application-types-search]');
+  for (const group of ['individual', 'combined']) {
+    initIndexSearch({
+      form,
+      count: document.querySelector(`[data-${group}-count]`),
+      noResults: document.querySelector(`[data-no-${group}-types]`),
+      elements: document.querySelectorAll(`[data-${group}-application-type]`),
+      label: `${group} application types`
+    });
+  }
+</script>
+{% endif %}
+{% endblock %}
