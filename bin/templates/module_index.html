@@ -22,7 +22,14 @@
     <h1 class="govuk-heading-xl">Modules</h1>
     <p class="govuk-body">Modules group related fields used by application types.</p>
 
-    <table class="govuk-table govuk-!-margin-top-4">
+    <form hidden data-modules-search class="govuk-!-margin-bottom-5" role="search">
+      <label class="govuk-label govuk-!-font-weight-bold" for="filter-modules-list">Search modules</label>
+      <div class="govuk-hint" id="filter-modules-hint">Search by module reference or description. Results update as you type.</div>
+      <input class="govuk-input" id="filter-modules-list" name="list_filter" type="search" aria-describedby="filter-modules-hint" aria-controls="modules-list">
+    </form>
+    <p class="govuk-body" data-modules-count role="status" aria-live="polite">Showing {{ modules | length }} modules.</p>
+
+    <table class="govuk-table govuk-!-margin-top-4" id="modules-list">
       <thead class="govuk-table__head">
         <tr class="govuk-table__row">
           <th scope="col" class="govuk-table__header">Module</th>
@@ -31,13 +38,30 @@
       </thead>
       <tbody class="govuk-table__body">
         {% for m in modules %}
-          <tr class="govuk-table__row">
+          <tr class="govuk-table__row" data-module-item>
             <td class="govuk-table__cell"><a class="govuk-link" href="{{ m.href }}">{{ m.ref }}</a></td>
             <td class="govuk-table__cell">{{ m.description }}</td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
+    <p hidden class="govuk-body" data-no-modules>No modules match your search. Try a different reference or description.</p>
   </div>
 </div>
+{% endblock %}
+
+{% block pageScripts %}
+{{ super() }}
+{% if modules %}
+<script type="module">
+  import initIndexSearch from "{{ url_for('/static/javascripts/index-search.js') }}";
+  initIndexSearch({
+    form: document.querySelector('[data-modules-search]'),
+    count: document.querySelector('[data-modules-count]'),
+    noResults: document.querySelector('[data-no-modules]'),
+    elements: document.querySelectorAll('[data-module-item]'),
+    label: 'modules'
+  });
+</script>
+{% endif %}
 {% endblock %}
