@@ -5,12 +5,14 @@ This guide explains how to make deliberate, traceable changes to the planning ap
 ## Principles for making a change
 
 - Start with a user need, policy requirement, delivery problem or other clearly stated reason for the change. Do not add data only because it might be useful one day.
-- Prefer reuse where the existing element has the same meaning. Do not reuse an element simply because it has a similar label or datatype.
+- Prefer reuse where the existing element records the same underlying fact for the same purpose. Do not reuse an element simply because it has a similar label or datatype.
 - Keep the meaning of established elements stable. Where a proposed change would alter an element's meaning, prefer a new element or deliberately generalise it with the impact made clear.
 - Make linked changes together. A change to a canonical field, codelist or dataset may require changes to its usages, justification, examples, generated outputs and documentation.
 - Keep the model independent of a particular form, screen or supplier implementation. Capture the information that needs to be exchanged or maintained, rather than presentation details.
 - Make the rationale reviewable. Record why the change exists and what need it helps meet.
 - Make small, coherent changes that can be reviewed and tested independently.
+- Keep enduring meaning and rules in canonical definitions. Keep progress notes, coverage assessments and unresolved implementation gaps in working material such as `tmp/`.
+- Use co-constraints sparingly to codify how an application must be completed, reusing established patterns. Creating a new co-constraint pattern is an absolute last resort. Capture potential policy rules and conditions in prose as a starting point.
 
 ## High-level workflow
 
@@ -27,7 +29,8 @@ This guide explains how to make deliberate, traceable changes to the planning ap
   - [Removing a field](#removing-a-field)
   - [Changing a field](#changing-a-field)
 - Components (needs content)
-- Modules (needs content)
+- [Modules](#modules)
+  - [Adding a module](#adding-a-module)
 - Datasets (needs content)
   - Adding a dataset (needs content)
   - Removing a dataset (needs content)
@@ -55,6 +58,24 @@ Fields are canonical definitions of individual data points. They are reused in m
 4. Add the field to the relevant module, dataset or other usage by following the workflow for that change type.
 5. Run `make checks`.
 
+Prefer the most specific existing field that fits. For example, `proposal-description` already describes proposed development, works or change of use, so it is a better fit for that fact than generic `description`. A module can override its description to clarify the proposal's scope while preserving its meaning and purpose.
+
+Do not force an exact answer into a different representation merely to reuse fields. An exact net dwelling increase should be one integer, rather than the same answer repeated in minimum and maximum fields.
+
+Keep references short and recognisable. Put detailed criteria in the description or Markdown body. For example, `use-two-years-plus` has a short reference while its definition explains qualifying uses, continuity and the period immediately before application. Keep route-specific detail in the relevant usage or module if it would narrow an otherwise shared field.
+
+#### No and not applicable
+
+Use an explicit `not-applicable` value when it records a useful distinction from a negative answer. Reuse an existing codelist such as `yes-no-not-applicable`. Do not treat an omitted response as an explicit answer.
+
+| Situation | Approach | Reason |
+| --- | --- | --- |
+| The Class MA form's Article 4 question is scoped to office conversions submitted before 1 August 2022 | Distinguish `yes`, `no` and `not-applicable` | `no` says the question applies but no relevant restriction exists; `not-applicable` says the application falls outside this question's scope. It does not imply the wrong form was used. |
+| No agricultural tenancy agreements exist | Do not add a `not-applicable` option to the follow-up consent boolean | The preceding answer already establishes why consent is not required. Another answer would repeat that fact. |
+| Only some building elements need material details | Collect the relevant entries without requiring an N/A entry for every other element | The absence of an irrelevant entry is sufficient where the module defines that meaning. |
+
+A paper form may combine “No / Not relevant”. Separate those answers when the distinction is useful in structured data, but do not claim the combined paper answer alone tells us which was intended.
+
 ### Removing a field
 
 
@@ -73,29 +94,41 @@ For a semantic change, such as changing what information the field represents:
 
 1. ...
 
+## Modules
+
+Modules group fields around a shared purpose. A form section may reuse existing fields while needing its own module. Agricultural tenancy consent, for example, establishes consent to a change of use; ownership notification establishes a different fact and is not a substitute.
+
+### Adding a module
+
+1. Identify the facts the section records and why they are needed. Check existing modules as well as individual fields.
+2. Reuse a module only when its purpose fits. Otherwise create a focused module and reuse fields where their meaning and purpose hold.
+3. Use a concise reference and name, then list fields in a useful order. Override field descriptions only where context needs clarifying.
+4. Mark unconditional required answers with `required: true`. Omit unnecessary `required: false` entries.
+5. Record potential policy rules and conditions as prose at the appropriate level. Application-specific conditions belong in the application definition; shared requirements belong in their common definitions.
+6. Use co-constraints sparingly where there is an established need to codify how the application must be completed. Reuse existing patterns; creating a new pattern is an absolute last resort, after checking whether existing patterns can express the requirement. See [Co-constraints](co-constraints.md).
+7. Run `make checks` and inspect the module and its field usages.
+
+Where alternative submission routes need a co-constraint, state whether at least one or exactly one route is allowed. The `existing-building-premises` module uses reciprocal `required-if` conditions with `operator: empty` for `addresses` and `supporting-documents`: at least one is needed, but both are allowed. A separate choice field is unnecessary when the supplied data already identifies the route. This is an example of an established completion requirement, not a reason to add co-constraints to every alternative or policy condition.
+
+An answer indicating ineligibility can still be valid submission data. Record the significance of stopping answers in notes or the body; do not automatically turn them into validation rules that block submission.
+
 ## Application types
 
-Application type definitions are the files in `specification/application/`.
-Before adding or changing one, identify the user need and legal basis, then
-check whether an existing application type can be extended (the new one has a parent type) and build out from there.
+Application type definitions are the files in `specification/application/`. Before adding or changing one, identify the user need and legal basis, then check whether an existing application type can be extended.
 
 ### Adding a new application
 
-An application definition should include a stable reference, name,
-description, legislation, dates as properties.
-The fields property MUST include `submission-details`.
-The modules property is where to list the expected modules.
+1. Include a stable reference, name, description, legislation and dates.
+2. Declare required `submission-details` explicitly in `fields`. This applies to both parent and child definitions, including those using `extends`; do not rely on field inheritance.
+3. List the expected modules, reusing modules inherited from the parent without copying them. Define any new fields, components and modules in their canonical locations first.
+4. Set `allow-additional-properties` explicitly.
+5. Capture potential application-specific policy rules and conditions as prose in `rules` as a starting point. These record requirements for review; they are not automatically executed checks. Keep common requirements in shared definitions rather than repeating them in each subtype.
+6. For each condition, identify the facts needed to evaluate it and look for them across the whole application. Record missing facts in a separate working assessment for the DM policy team, explaining what collecting them would enable. Distinguish eligibility checks from checks of which answers or evidence are required. Do not add questions solely to make automation possible without considering the need for those facts.
+7. Update affected codelists, codelist usage and examples within the agreed scope.
+8. Run `make checks` and `python spec.py inspect application <reference>`. Confirm both the expected inherited modules and the explicit `submission-details` application item. Passing integrity checks alone does not establish that the resolved application is complete.
+9. Review compiled and generated outputs where relevant through the normal generation workflow. Do not edit derived files directly.
 
-Keep conditional questions in the relevant module or component, and set
-`allow-additional-properties` explicitly.
-
-If the change adds a new concept, define the field, component or module in its canonical location before referencing it from the application. 
-
-Update any affected codelists, codelist usage and examples.
-
-Always run `make checks` and review the compiled application view, spreadsheet and JSON Schema before submitting the change for review.
-
-[THIS CONTENT NEEDS FLESHING OUT]
+Co-constraints in modules and components codify how to fill in an application, such as when a follow-up answer must be supplied. They are distinct from the prose policy rules above and should be used sparingly. Reuse established patterns; creating a new pattern is an absolute last resort. See [Co-constraints](co-constraints.md) before introducing one.
 
 ### Allowed combined application types
 

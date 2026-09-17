@@ -63,6 +63,10 @@ Use this sparingly:
 
 This allows a shared field such as `description` to be reused across modules without losing the label or guidance that makes sense in that module.
 
+**Conditional completion rules**
+
+Use co-constraints sparingly and reuse established patterns. Creating a new co-constraint pattern is an absolute last resort. They codify how an application must be completed, rather than serving as the starting point for potential policy rules. Capture those policy rules and conditions in prose first, placing application-specific rules in the application definition. Only use the conditional vocabulary below where an established completion requirement needs it. Omit unnecessary `required: false` entries.
+
 **Use of `applies-if`**
 Put `applies-if` on a field entry in `fields`, not on the module itself. It controls whether that field may be supplied, including when the field contains a component.
 

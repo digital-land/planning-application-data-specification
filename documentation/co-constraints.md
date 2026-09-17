@@ -2,13 +2,17 @@
 
 Co-constraints are conditional rules that say when a field applies or becomes required based on another value or context.
 
-In the submission specification they are currently used in module and component field entries. They help make the specification explicit about conditional questions without relying only on prose notes.
+In the submission specification they are currently used in module and component field entries. They codify rules for how to fill in an application, such as when a follow-up answer must be supplied.
 
 ## The principle
 
-The specification should prefer explicit rules over implied meaning, so it is easier to review, implement and test.
+Use co-constraints sparingly and reuse established patterns. Creating a new co-constraint pattern is an absolute last resort, after checking whether existing patterns can express the requirement.
 
-If a condition affects whether a field is in scope or whether a response is required, it should be written as structured vocabulary where possible.
+Capture potential policy rules and conditions as prose in `rules` at the appropriate level. Application-specific policy conditions belong in the application definition. This provides a starting point for review without claiming those conditions are executable.
+
+Use an established co-constraint pattern where a conditional completion requirement needs to be explicit. Confirm that the necessary facts are available and the intended behaviour is clear. Do not mechanically translate every policy condition or stopping answer into a co-constraint.
+
+When a co-constraint is justified, use the vocabulary below to make its behaviour explicit. The examples explain supported patterns, not a requirement to add them wherever a condition exists. A response can indicate that a proposal is ineligible while still being valid submission data.
 
 ## Conditional intents
 
