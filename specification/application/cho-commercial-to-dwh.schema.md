@@ -8,6 +8,9 @@ start-date: ''
 end-date: ''
 legislation:
   - https://www.legislation.gov.uk/uksi/2015/596/schedule/2/part/3
+fields:
+  - field: submission-details
+    required: true
 modules:
   - module: agricultural-tenancy-consent
   - module: existing-building-premises
