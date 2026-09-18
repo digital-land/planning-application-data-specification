@@ -7,7 +7,7 @@ from pathlib import Path
 from typing import Optional
 
 from .application_types import canonical_application_ref, normalise_application_types
-from .applications import get_active_combined_application_refs, resolve_application
+from .applications import get_current_combined_application_refs, resolve_application
 from .guidance import Guidance, GuidanceIndex, load_guidance
 from .loader import _resolve_repo_root, load_specification_model
 from .models import ApplicationDef, ComponentUsage, FieldDef, FieldUsage
@@ -290,6 +290,14 @@ class Specification:
             return self._build_application_view(application)
         raise TypeError(f"Unexpected application shape for {ref!r}")
 
+    def combined_applications(self) -> tuple[ApplicationDef, ...]:
+        """Current combinations in source order, with resolved items and metadata.
+
+        Current means a populated start-date and an empty end-date. Dates are
+        activation markers, not an as-of-date comparison.
+        """
+        return tuple(self.application(ref) for ref in get_current_combined_application_refs(self.tables))
+
     def applications_with_module(self, ref: str) -> tuple[ApplicationDef, ...]:
         self.module(ref)
         matching_applications = []
@@ -298,8 +306,7 @@ class Specification:
                 continue
             if any(module.ref == ref for module in application.modules):
                 matching_applications.append(application)
-        for application_ref in get_active_combined_application_refs(self.tables):
-            application = self.application(application_ref)
+        for application in self.combined_applications():
             if any(module.ref == ref for module in application.modules):
                 matching_applications.append(application)
         return tuple(sorted(matching_applications, key=lambda application: application.ref))

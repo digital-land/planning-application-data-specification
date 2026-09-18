@@ -92,6 +92,12 @@ Combined applications currently:
 - expose a deduped union of member modules
 - expose merged application-level items
 
+`spec.combined_applications()` returns current resolved combinations in CSV source order, including their names, descriptions and entry/start/end metadata. References are normalised before lookup. Current means a populated `start-date` and an empty `end-date`; dates are activation markers, not comparisons with today's date. A future populated start date therefore counts as started, and any populated end date counts as ended.
+
+Individual combination lookup rejects unstarted and ended combinations. Module-usage queries and the compatibility `get_active_combined_application_refs` helper use the same rule. This changes the previous package behaviour that allowed ended combinations.
+
+The CLI uses the same resolution through `python spec.py inspect application 'hh;lbc'` and `python spec.py inspect uses application 'hh;lbc'`.
+
 Example:
 
 ```python

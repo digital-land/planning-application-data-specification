@@ -697,3 +697,50 @@ def test_resolve_container_items_requires_exactly_one_container(project_root):
         pass
     else:
         raise AssertionError("Expected ValueError when both containers are provided")
+
+
+def test_combination_status_order_and_cli_agree(project_root, tmp_path, monkeypatch):
+    import pytest
+    from click.testing import CliRunner
+    import spec as cli_module
+
+    specification = Specification.load(project_root)
+    source = tmp_path / "specification"
+    source.mkdir()
+    (source / "combined-application-types.csv").write_text(
+        "application-types,name,description,entry-date,start-date,end-date\n"
+        "lbc;hh,First combination,First description,2026-01-01,2099-01-01,\n"
+        "full;lbc,Ended combination,,2026-01-01,2026-01-01,2099-12-31\n"
+        "hh;full,Unstarted combination,,2026-01-01,,\n"
+        "advertising;full,Second combination,,2026-01-01,2026-01-01,\n"
+    )
+    specification.tables["__root_path__"] = tmp_path
+    combinations = specification.combined_applications()
+    assert [item.ref for item in combinations] == ["hh;lbc", "advertising;full"]
+    assert combinations[0].name == "First combination"
+    assert combinations[0].description == "First description"
+    assert combinations[0].entry_date == "2026-01-01"
+    assert combinations[0].start_date == "2099-01-01"
+    assert combinations[0].modules
+    assert specification.application("lbc;hh").ref == "hh;lbc"
+    assert get_active_combined_application_refs(specification.tables) == {"hh;lbc", "advertising;full"}
+    module_ref = combinations[0].modules[0].ref
+    matches = specification.applications_with_module(module_ref)
+    assert "hh;lbc" in {item.ref for item in matches}
+    assert "full;lbc" not in {item.ref for item in matches}
+
+    monkeypatch.setattr(cli_module, "_load_specification", lambda: specification)
+    monkeypatch.setattr(cli_module, "load_content", lambda: specification.tables)
+    runner = CliRunner()
+    for command in (["inspect"], ["inspect", "uses"]):
+        result = runner.invoke(cli_module.cli, [*command, "application", "lbc;hh"])
+        assert result.exit_code == 0, result.output
+        for ref, message in (("lbc;full", "ended"), ("full;hh", "not yet active")):
+            with pytest.raises(ValueError, match=message):
+                specification.application(ref)
+            result = runner.invoke(cli_module.cli, [*command, "application", ref])
+            assert result.exit_code != 0
+            assert isinstance(result.exception, ValueError)
+            assert message in str(result.exception)
+        with pytest.raises(KeyError, match="Unknown combined"):
+            specification.application("hh;advertising")

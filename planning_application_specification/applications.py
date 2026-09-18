@@ -37,15 +37,30 @@ def _read_combined_application_rows(specification: dict) -> list[dict]:
         return list(csv.DictReader(csvfile))
 
 
-def get_active_combined_application_refs(specification: dict) -> set[str]:
-    active_refs = set()
+def _combined_application_status(row: dict) -> str:
+    """Interpret authored activation markers, without comparing calendar dates."""
+    if (row.get("end-date") or "").strip():
+        return "ended"
+    if not (row.get("start-date") or "").strip():
+        return "not yet active"
+    return "active"
+
+
+def get_current_combined_application_refs(specification: dict) -> tuple[str, ...]:
+    """Return current canonical references in CSV source order."""
+    refs = []
     for row in _read_combined_application_rows(specification):
-        if not (row.get("start-date") or "").strip():
+        if _combined_application_status(row) != "active":
             continue
-        canonical_ref = canonical_application_ref(row.get("application-types"))
-        if canonical_ref:
-            active_refs.add(canonical_ref)
-    return active_refs
+        ref = canonical_application_ref(row.get("application-types"))
+        if ref and ref not in refs:
+            refs.append(ref)
+    return tuple(refs)
+
+
+def get_active_combined_application_refs(specification: dict) -> set[str]:
+    """Compatibility query using the shared current-status rule."""
+    return set(get_current_combined_application_refs(specification))
 
 
 def _coerce_application_type_list(application: object) -> list[str] | None:
@@ -179,9 +194,10 @@ def resolve_application(application: object | str | list[str], specification: di
     if combo_row is None:
         raise KeyError(f"Unknown combined application type '{canonical_ref}'")
 
-    if not (combo_row.get("start-date") or "").strip():
+    status = _combined_application_status(combo_row)
+    if status != "active":
         raise ValueError(
-            f"Combined application type '{canonical_ref}' is recognised but not yet active"
+            f"Combined application type '{canonical_ref}' is recognised but {status}"
         )
 
     return _build_combined_application(application_types, combo_row, applications)
