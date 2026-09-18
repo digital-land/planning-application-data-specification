@@ -225,6 +225,14 @@ class DatasetDef:
 
 
 @dataclass
+class ApplicationField:
+    """Effective authored field entry, preserving omitted attributes and origin."""
+
+    definition: Dict[str, Any]
+    inherited_from: Optional[str] = None
+
+
+@dataclass
 class ApplicationDef:
     application: str
     ref: str
@@ -232,6 +240,7 @@ class ApplicationDef:
     description: str = ""
     application_types: List[str] = field(default_factory=list)
     is_combined: bool = False
+    resolved_fields: List[ApplicationField] = field(default_factory=list)
     extends: Optional[str] = None
     allow_additional_properties: Optional[bool] = False
     synonyms: List[str] = field(default_factory=list)

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import frontmatter
 
-from .applications import get_application_module_refs
+from .applications import get_application_module_refs, resolve_application_fields
 from .models import (
     ApplicationDef,
     ComponentDef,
@@ -137,9 +137,12 @@ def load_specification_model(root_path: str | Path | None = None):
     application_defs = {}
     for application_ref, content in tables.get("application", {}).items():
         application_def = dict(content)
+        resolved_fields = resolve_application_fields(application_ref, tables["application"])
+        application_def["fields"] = [item.definition for item in resolved_fields]
         application = ApplicationDef.from_spec(
             application_def, field_defs, component_defs, module_defs
         )
+        application.resolved_fields = resolved_fields
         if application.application:
             application_defs[application.ref] = application
 

@@ -4,6 +4,30 @@ import csv
 from pathlib import Path
 
 from .application_types import canonical_application_ref, normalise_application_types
+from .models import ApplicationField
+
+
+def resolve_application_fields(ref: str, applications: dict, visited=None) -> list[ApplicationField]:
+    """Resolve parent fields before child entries, replacing whole entries by ref.
+
+    Preserve the viewer's first-visit traversal for shared ancestors and cycles.
+    Missing parents are ignored, as in existing module resolution.
+    """
+    visited = set() if visited is None else visited
+    if ref in visited:
+        return []
+    visited.add(ref)
+    record = applications[ref]
+    fields = {}
+    for parent in _iter_parent_application_refs(record):
+        if parent in applications:
+            for item in resolve_application_fields(parent, applications, visited):
+                fields[item.definition["field"]] = ApplicationField(
+                    dict(item.definition), item.inherited_from or parent
+                )
+    for entry in record.get("fields", []) or []:
+        fields[entry["field"]] = ApplicationField(dict(entry))
+    return list(fields.values())
 
 
 def _resolve_repo_root_from_specification(specification: dict) -> Path:

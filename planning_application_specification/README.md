@@ -75,6 +75,14 @@ Current V1 boundary:
 - preserves the complete `applies-if` rule for consumers; `applies=True` means the application-type conditions allow the field, not that any answer conditions have been satisfied
 - exposes `required-if` as raw rule data and does not execute answer-dependent rules
 
+## Application field inheritance
+
+Single application definitions resolve application-level fields through `extends`, as well as modules. `application.items`, `field_usages` and `component_usages` include inherited fields; combined applications merge these effective items using their existing deduplication rules.
+
+For a single application, `application.resolved_fields` contains ordered `ApplicationField` records: `definition` preserves the effective authored entry (including omitted attributes), and `inherited_from` identifies its ancestor or is `None` for a locally authored entry. For example, `outline-some` inherits required `submission-details` from `outline`. Original authored tables remain unchanged.
+
+Parents are visited in declared order before local fields. A repeated reference replaces the whole entry without moving its position; an omitted attribute in a child replacement does not inherit that attribute from the parent entry. Shared ancestors are visited once per resolution and cyclic revisits are skipped, preserving the previous viewer traversal. Missing parents are skipped. These traversal rules prevent recursion but do not validate malformed inheritance graphs.
+
 ## Combined applications
 
 Combined applications are supported as a controlled list of active combinations defined in `specification/combined-application-types.csv`.

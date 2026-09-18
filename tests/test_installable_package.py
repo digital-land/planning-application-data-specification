@@ -6,7 +6,7 @@ from planning_application_specification.application_types import (
 from planning_application_specification.applications import (
     get_active_combined_application_refs,
 )
-from planning_application_specification.models import ApplicationDef
+from planning_application_specification.models import ApplicationDef, ComponentUsage
 from planning_application_specification.specification import (
     CodelistUsages,
     ComponentUsages,
@@ -744,3 +744,40 @@ def test_combination_status_order_and_cli_agree(project_root, tmp_path, monkeypa
             assert message in str(result.exception)
         with pytest.raises(KeyError, match="Unknown combined"):
             specification.application("hh;advertising")
+
+
+def test_application_field_inheritance_preserves_entries_order_and_origins():
+    from planning_application_specification.applications import resolve_application_fields
+
+    applications = {
+        "base": {"fields": [{"field": "a", "required": True}, {"field": "b", "required": True}]},
+        "middle": {"extends": "base", "fields": [{"field": "a", "required": False}]},
+        "child": {"extends": "middle", "fields": [{"field": "b"}, {"field": "c"}]},
+        "other": {"extends": "base", "fields": [{"field": "d"}]},
+        "diamond": {"extends": ["middle", "other"]},
+        "cycle-a": {"extends": "cycle-b", "fields": [{"field": "a"}]},
+        "cycle-b": {"extends": "cycle-a", "fields": [{"field": "b"}]},
+    }
+    fields = resolve_application_fields("child", applications)
+    assert [(item.definition["field"], item.inherited_from) for item in fields] == [("a", "middle"), ("b", None), ("c", None)]
+    assert fields[0].definition["required"] is False
+    assert "required" not in fields[1].definition
+    assert applications["base"]["fields"][0]["required"] is True
+    diamond = resolve_application_fields("diamond", applications)
+    assert [(item.definition["field"], item.inherited_from) for item in diamond] == [("a", "middle"), ("b", "base"), ("d", "other")]
+    assert [item.definition["field"] for item in resolve_application_fields("cycle-a", applications)] == ["b", "a"]
+
+
+def test_loaded_application_and_combination_include_inherited_fields(project_root, tmp_path):
+    specification = Specification.load(project_root)
+    application = specification.application("outline-some")
+    assert [(item.definition, item.inherited_from) for item in application.resolved_fields] == [({"field": "submission-details", "required": True}, "outline")]
+    assert "fields" not in specification.tables["application"]["outline-some"]
+    def refs(application):
+        return [item.referenced_by_field.original.ref if isinstance(item, ComponentUsage) else item.original.ref for item in application.items]
+    assert "submission-details" in refs(application)
+    source = tmp_path / "specification"
+    source.mkdir()
+    (source / "combined-application-types.csv").write_text("application-types,start-date,end-date\noutline-some;lbc,2026-01-01,\n")
+    specification.tables["__root_path__"] = tmp_path
+    assert refs(specification.application("outline-some;lbc")).count("submission-details") == 1
