@@ -1,4 +1,5 @@
 from integrity_checks.utils import (
+    check_unique_direct_fields,
     field_usage_requirement_errors,
     get_object_field_names,
     has_reference_error,
@@ -357,6 +358,7 @@ def check_all(modules, fields, applications=None):
     """
     # Define checks and their required arguments
     checks_with_args = [
+        (check_unique_direct_fields, [modules, "module"]),
         (check_module_names, [modules]),
         (check_field_references, [modules, fields]),
         (check_redundant_component_overrides, [modules, fields]),

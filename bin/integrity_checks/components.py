@@ -3,6 +3,7 @@
 from typing import Any, Dict, List
 
 from integrity_checks.utils import (
+    check_unique_direct_fields,
     field_usage_requirement_errors,
     get_object_field_names,
     iter_redundant_field_component_overrides,
@@ -297,6 +298,7 @@ def check_all(
         bool: True if all checks pass, False otherwise
     """
     checks_with_args = [
+        (check_unique_direct_fields, [components, "component"]),
         (check_component_names, [components]),
         (check_field_references, [components, fields]),
         (check_redundant_component_overrides, [components, fields]),

@@ -191,3 +191,19 @@ def run_checks(checks_with_args):
             all_passed = False
 
     return all_passed
+
+
+def check_unique_direct_fields(containers, kind):
+    """Require unique field references within each directly authored fields list."""
+    valid = True
+    for ref, container in containers.items():
+        seen = set()
+        for entry in container.get("fields", []) or []:
+            field = entry.get("field") if isinstance(entry, dict) else None
+            if not isinstance(field, str):
+                continue
+            if field in seen:
+                print_error(kind, ref, f"duplicate direct field '{field}'")
+                valid = False
+            seen.add(field)
+    return valid

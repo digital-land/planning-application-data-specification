@@ -2400,3 +2400,25 @@ class TestCodelistSourceData:
             assert not check_codelist_duplicate_keys(codelists)
         finally:
             source_path.unlink(missing_ok=True)
+
+
+@pytest.mark.parametrize('kind', ['module', 'component'])
+def test_duplicate_direct_fields_rejected(kind, capsys):
+    from integrity_checks.utils import check_unique_direct_fields
+    containers = {'waste': {'fields': [
+        {'field': 'unit-type', 'required': True},
+        {'field': 'unit-type', 'codelist': 'other-units'},
+    ]}}
+    assert not check_unique_direct_fields(containers, kind)
+    message = capsys.readouterr().out
+    assert kind in message and 'waste' in message and 'unit-type' in message
+
+
+@pytest.mark.parametrize('kind', ['module', 'component'])
+def test_direct_field_uniqueness_is_scoped_to_each_container(kind):
+    from integrity_checks.utils import check_unique_direct_fields
+    containers = {
+        'first': {'fields': [{'field': 'name'}, {'field': 'nested', 'component': 'second'}]},
+        'second': {'fields': [{'field': 'name'}]},
+    }
+    assert check_unique_direct_fields(containers, kind)
