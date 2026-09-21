@@ -781,3 +781,52 @@ def test_loaded_application_and_combination_include_inherited_fields(project_roo
     (source / "combined-application-types.csv").write_text("application-types,start-date,end-date\noutline-some;lbc,2026-01-01,\n")
     specification.tables["__root_path__"] = tmp_path
     assert refs(specification.application("outline-some;lbc")).count("submission-details") == 1
+
+
+def test_dataset_resolution_uses_existing_field_resolver(project_root):
+    import pytest
+    spec = Specification.load(project_root)
+    field = spec.resolve_field("officer-name", dataset="planning-application")
+    assert field.name == "Case officer"
+    assert field.base is spec.field("officer-name")
+    assert field.datatype == field.base.datatype
+    assert field.container_kind == "dataset"
+    assert field.container_ref == "planning-application"
+    items = spec.resolve_container_items(dataset="planning-application")
+    assert [item.ref for item in items] == [entry["field"] for entry in spec.tables["dataset"]["planning-application"]["fields"]]
+    assert next(item for item in items if item.ref == "officer-name") == field
+    assert spec.resolve_field("description", dataset="planning-application").usage.overrides["requirement-level"] == "MUST"
+    for resolve in (lambda **kw: spec.resolve_field("description", **kw), spec.resolve_container_items):
+        with pytest.raises(KeyError, match="Unknown dataset"):
+            resolve(dataset="missing")
+        with pytest.raises(ValueError):
+            resolve(dataset="planning-application", module="proposal-details")
+        with pytest.raises(ValueError):
+            resolve(dataset="planning-application", component="address")
+    with pytest.raises(KeyError, match="not found in dataset"):
+        spec.resolve_field("not-a-field", dataset="planning-application")
+
+
+def test_dataset_resolution_preserves_components_and_conditions(project_root):
+    from planning_application_specification.models import DatasetDef
+    spec = Specification.load(project_root)
+    condition = {"application-type": {"in": ["full"]}}
+    dataset = DatasetDef.from_spec(
+        {"dataset": "example", "fields": [
+            {"field": "description", "required": False, "cardinality": "0:1", "applies-if": condition},
+            {"field": "submission-details", "required": True},
+        ]}, spec.fields, spec.components,
+    )
+    spec.datasets["example"] = dataset
+    items = spec.resolve_container_items(dataset="example", selection=SelectionContext(application_type="hh"))
+    assert [item.ref for item in items] == ["description", "submission-details"]
+    assert items[0].required is False
+    assert items[0].cardinality == "0:1"
+    assert items[0].applies is False
+    assert items[0].applies_if == condition
+    assert isinstance(items[1], ResolvedComponentReference)
+    assert items[1].container_kind == "dataset"
+    field = spec.resolve_field("submission-details", dataset="example")
+    assert field.required is True
+    assert field.component == items[1].component_ref
+    assert spec.resolve_field("description", dataset="example", selection=SelectionContext(application_type="full")).applies is True

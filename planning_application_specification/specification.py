@@ -372,15 +372,41 @@ class Specification:
             components=component_matches,
         )
 
+    def dataset(self, ref: str):
+        """Return a canonical dataset definition by reference."""
+        if ref not in self.datasets:
+            raise KeyError(f"Unknown dataset: {ref}")
+        return self.datasets[ref]
+
     def resolve_field(
         self,
         ref: str,
         module: str | None = None,
         component: str | None = None,
         selection: SelectionContext | None = None,
+        *,
+        dataset: str | None = None,
     ) -> ResolvedField:
+        if dataset:
+            if module or component:
+                raise ValueError("dataset=... cannot be combined with module=... or component=...")
+            items = self.dataset(dataset).items
+            field_usage = self._find_field_usage(items, ref)
+            if field_usage is None:
+                field_usage = next((item.referenced_by_field for item in items
+                    if isinstance(item, ComponentUsage)
+                    and isinstance(item.referenced_by_field, FieldUsage)
+                    and item.referenced_by_field.original.ref == ref), None)
+            if not field_usage:
+                raise KeyError(f"Field '{ref}' not found in dataset '{dataset}'")
+            return self._build_resolved_field(
+                field_usage=field_usage,
+                container_ref=dataset,
+                container_kind="dataset",
+                selection=selection,
+            )
         if not module and not component:
-            raise ValueError("resolve_field(...) requires module=... or component=...")
+            raise ValueError("resolve_field(...) requires module=..., component=... or dataset=...")
 
         if module:
             module_def = self.module(module)
@@ -428,13 +454,19 @@ class Specification:
         module: str | None = None,
         component: str | None = None,
         selection: SelectionContext | None = None,
+        *,
+        dataset: str | None = None,
     ) -> tuple[ResolvedField | ResolvedComponentReference, ...]:
-        if bool(module) == bool(component):
+        if sum(bool(ref) for ref in (module, component, dataset)) != 1:
             raise ValueError(
-                "resolve_container_items(...) requires exactly one of module=... or component=..."
+                "resolve_container_items(...) requires exactly one of module=..., component=... or dataset=..."
             )
 
-        if module:
+        if dataset:
+            container_def = self.dataset(dataset)
+            container_ref = dataset
+            container_kind = "dataset"
+        elif module:
             container_def = self.module(module)
             container_ref = module
             container_kind = "module"

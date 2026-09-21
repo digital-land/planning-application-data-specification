@@ -119,6 +119,18 @@ print(householder_listed.is_combined)  # True
 
 ## Choosing the right method
 
+Dataset resolution uses the same API and override rules as modules and components:
+
+```python
+dataset = spec.dataset("planning-application")
+field = spec.resolve_field("officer-name", dataset="planning-application")
+items = spec.resolve_container_items(dataset="planning-application")
+```
+
+`dataset(...)` returns the canonical dataset. The resolvers return effective field properties and preserve authored item order, including component references. Results identify their `container_kind` as `dataset`. Requirement levels and dataset relationships remain available in `result.usage.overrides`; conditions use the existing `selection` behaviour. Base definitions remain available through `result.base`.
+
+The keyword-only `dataset` argument cannot be combined with `module` or `component`. A field lookup addresses a direct dataset field, including a field referencing a component; it does not search inside nested components. Unknown datasets and absent fields raise `KeyError`. Existing module/component calls remain supported. This resolves canonical datasets only, not profile or view selections and overrides.
+
 Use canonical lookup when you want the base definition:
 
 - `spec.application(ref)` for an application view over a canonical single application definition
