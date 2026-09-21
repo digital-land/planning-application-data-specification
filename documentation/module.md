@@ -49,6 +49,8 @@ Each module has a canonical definition in a shared repository.
 
 Each field entry can use `required`, `required-if` and `applies-if` to describe its requirements and scope.
 
+Each field reference may appear only once directly within a module's `fields` list, even if the entries have different conditions or overrides. This uniqueness rule also applies within each component. Separate modules and nested objects may reuse the same field reference.
+
 **Modules should reference fields by ID**
 With the field definitions living elsewhere.
 
