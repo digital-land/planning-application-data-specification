@@ -93,6 +93,10 @@ class ResolvedField:
     container_kind: str
 
     @property
+    def codelist(self) -> str | None:
+        return self.usage.overrides.get("codelist") or self.base.codelist
+
+    @property
     def requirement_level(self):
         return self.usage.overrides.get("requirement-level")
 
@@ -101,6 +105,10 @@ class ResolvedField:
 class ResolvedViewField(ResolvedField):
     dataset_field: ResolvedField
     view_ref: str
+
+    @property
+    def codelist(self) -> str | None:
+        return self.dataset_field.codelist
 
 
 @dataclass(frozen=True)
@@ -121,6 +129,10 @@ class ResolvedComponentReference:
     component: object
     container_ref: str
     container_kind: str
+
+    @property
+    def codelist(self) -> str | None:
+        return self.usage.overrides.get("codelist") or self.base.codelist
 
     @property
     def requirement_level(self):

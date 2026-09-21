@@ -830,3 +830,19 @@ def test_dataset_resolution_preserves_components_and_conditions(project_root):
     assert field.required is True
     assert field.component == items[1].component_ref
     assert spec.resolve_field("description", dataset="example", selection=SelectionContext(application_type="full")).applies is True
+
+
+def test_resolved_codelist_property(project_root):
+    from dataclasses import replace
+    spec = Specification.load(project_root)
+    field = spec.resolve_field('capacity-unit', component='waste-management')
+    assert field.codelist == 'waste-capacity-unit'
+    for override, expected in [('waste-throughput-unit', 'waste-throughput-unit'), ('', 'waste-capacity-unit'), (None, 'waste-capacity-unit')]:
+        usage = replace(field.usage, overrides={'codelist': override})
+        assert replace(field, usage=usage).codelist == expected
+    assert spec.resolve_field('description', dataset='planning-application').codelist is None
+    component = next(item for item in spec.resolve_container_items(module='applicant-details') if isinstance(item, ResolvedComponentReference))
+    assert replace(component, usage=replace(component.usage, overrides={'codelist': 'example'})).codelist == 'example'
+    view_field = spec.view('national-public').resolve_field('description', dataset='planning-application')
+    dataset_field = replace(view_field.dataset_field, usage=replace(view_field.dataset_field.usage, overrides={'codelist': 'dataset-options'}))
+    assert replace(view_field, dataset_field=dataset_field).codelist == 'dataset-options'

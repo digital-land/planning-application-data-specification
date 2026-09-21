@@ -139,6 +139,8 @@ Underlying dataset applicability remains accessible on the resolved result and o
 
 ## Choosing the right method
 
+Resolved fields and component references expose `codelist`: the usage's non-empty codelist override, otherwise the base field's codelist, or `None` when neither supplies one. Empty or null overrides retain the base codelist. View fields expose their underlying dataset field's effective codelist. This property returns a reference only; it does not load or filter codelist values. Authored overrides remain available through `usage.overrides`.
+
 Dataset resolution uses the same API and override rules as modules and components:
 
 ```python
