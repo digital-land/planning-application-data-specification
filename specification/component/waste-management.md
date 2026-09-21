@@ -8,12 +8,11 @@ fields:
     required: true
   - field: total-capacity
     required: true
-  - field: unit-type
+  - field: capacity-unit
     required: true
   - field: annual-throughput
     required: true
-  - field: unit-type
-    codelist: waste-throughput-unit
+  - field: throughput-unit
     required: true
 entry-date: 2025-07-09
 end-date: ''

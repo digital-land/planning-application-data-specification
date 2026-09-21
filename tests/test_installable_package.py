@@ -364,7 +364,7 @@ def test_codelist_usages_returns_module_usage_override_matches(project_root):
     assert interest_details.usage.original.codelist == "applicant-interest-type"
 
 
-def test_codelist_usages_returns_component_usage_override_matches(project_root):
+def test_codelist_usages_returns_throughput_component_matches(project_root):
     spec = Specification.load(project_root)
 
     usages = spec.codelist_usages("waste-throughput-unit")
@@ -376,9 +376,9 @@ def test_codelist_usages_returns_component_usage_override_matches(project_root):
 
     waste_management = component_matches["waste-management"]
     assert waste_management.container_type == "component"
-    assert waste_management.usage.original.ref == "unit-type"
-    assert waste_management.usage.original.codelist == "waste-capacity-unit"
-    assert waste_management.usage.overrides["codelist"] == "waste-throughput-unit"
+    assert waste_management.usage.original.ref == "throughput-unit"
+    assert waste_management.usage.original.codelist == "waste-throughput-unit"
+    assert "codelist" not in waste_management.usage.overrides
 
 
 def test_codelist_usages_supports_external_source_codelists(project_root):

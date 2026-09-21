@@ -12,7 +12,7 @@ fields:
     required-if:
       - field: is-total-capacity-known
         value: true
-  - field: unit-type
+  - field: capacity-unit
     required-if:
       - field: is-total-capacity-known
         value: true
@@ -22,8 +22,7 @@ fields:
     required-if:
       - field: is-annual-throughput-known
         value: true
-  - field: unit-type
-    codelist: waste-throughput-unit
+  - field: throughput-unit
     required-if:
       - field: is-annual-throughput-known
         value: true
