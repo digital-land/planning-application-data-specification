@@ -92,6 +92,16 @@ class ResolvedField:
     container_ref: str
     container_kind: str
 
+    @property
+    def requirement_level(self):
+        return self.usage.overrides.get("requirement-level")
+
+
+@dataclass(frozen=True)
+class ResolvedViewField(ResolvedField):
+    dataset_field: ResolvedField
+    view_ref: str
+
 
 @dataclass(frozen=True)
 class ResolvedComponentReference:
@@ -111,6 +121,10 @@ class ResolvedComponentReference:
     component: object
     container_ref: str
     container_kind: str
+
+    @property
+    def requirement_level(self):
+        return self.usage.overrides.get("requirement-level")
 
 
 @dataclass
@@ -371,6 +385,14 @@ class Specification:
             modules=module_matches,
             components=component_matches,
         )
+
+    def view(self, ref: str):
+        from .views import View
+        source_ref = ref if ref.endswith("-view") else f"{ref}-view"
+        definition = self.tables["specification"].get(source_ref)
+        if definition is None:
+            raise KeyError(f"Unknown view: {ref}")
+        return View(self, source_ref, definition)
 
     def dataset(self, ref: str):
         """Return a canonical dataset definition by reference."""

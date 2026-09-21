@@ -116,9 +116,19 @@ def check_field_requirement_attributes(specifications):
     return not has_errors
 
 
+def check_views(specifications, datasets):
+    from planning_application_specification.views import view_errors
+    errors = [error for ref, definition in specifications.items() if ref.endswith("-view")
+              for error in view_errors(ref, definition, datasets)]
+    for error in errors:
+        print_error("view", "definition", error)
+    return not errors
+
+
 def check_all(specifications, datasets):
     """Run all specification integrity checks."""
     checks_with_args = [
+        (check_views, [specifications, datasets]),
         (check_specification_names, [specifications]),
         (check_datasets_exist, [specifications, datasets]),
         (check_dataset_fields, [specifications, datasets]),

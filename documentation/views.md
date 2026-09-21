@@ -22,7 +22,9 @@ Without a record-inclusion rule, all records from the selected dataset are inclu
 
 Before creating a view, explain who needs this cut of the data, what they will use it for and why an existing view does not meet that need. Link to the relevant user needs (or objective). Choose datasets, fields and any record-inclusion rules to serve that purpose.
 
-The [national public view schema](../specification/national-public-view.schema.md) is the existing example. Its [output and record-inclusion guidance](required-national-public-view-output-and-rules-for-deriving-it.md) explains how its selection is expressed. General package support for resolving views is still being designed; these authoring rules do not imply that a view-resolution API or new validation checks are already implemented.
+The [national public view schema](../specification/national-public-view.schema.md) is the existing example. Its [output and record-inclusion guidance](required-national-public-view-output-and-rules-for-deriving-it.md) explains how its selection is expressed. View definitions currently use a `specification` reference ending in `-view` in a root-level specification schema file. The package and integrity checks use this convention to distinguish views from other specification profiles.
+
+The package provides a [view-resolution interface](../planning_application_specification/README.md#resolving-views). Integrity checks and package loading of a view share validation for selected references, duplicate selections, prohibited structural overrides, requirement levels and record-filter shapes. They do not execute record filters or establish that codelist profile selections meet the view's user needs.
 
 ## Explicit selection and order
 

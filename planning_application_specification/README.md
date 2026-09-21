@@ -117,6 +117,26 @@ print(householder_listed.ref)  # hh;lbc
 print(householder_listed.is_combined)  # True
 ```
 
+## Resolving views
+
+```python
+view = spec.view("national-public")  # also accepts "national-public-view"
+datasets = view.datasets()
+dataset = view.dataset("planning-application")
+fields = view.resolve_container_items(dataset="planning-application")
+field = view.resolve_field("description", dataset="planning-application")
+print(field.requirement_level)
+print(field.usage.overrides)
+print(field.dataset_field)
+print(dataset.record_inclusion)
+```
+
+Only explicitly selected datasets and fields are returned, in authored order. Unselected lookups raise `KeyError`. Invalid view definitions raise `ValueError` with the same messages used by integrity checks. Dataset results expose `ref`, `name`, `description`, `base` and `record_inclusion` (a copied rule dictionary or `None`). Filters are exposed, not executed.
+
+View fields retain the resolved-field interface, adding `dataset_field` and `view_ref`. `base` remains the canonical field; `usage.overrides` contains only view-authored overrides. Name and description use view, then dataset, then base precedence; an explicitly empty string is an override. Datatype and cardinality come from the dataset and cannot be overridden. `requirement_level` is the view's value or `None`, never inherited. The same convenience property is available on existing resolved fields and component references. Structural component fields remain whole selected fields; the view does not select inside components.
+
+Underlying dataset applicability remains accessible on the resolved result and on `dataset_field`; this interface does not evaluate view-specific conditions or record filters. See [Creating views](../documentation/views.md) for authoring rules.
+
 ## Choosing the right method
 
 Dataset resolution uses the same API and override rules as modules and components:
