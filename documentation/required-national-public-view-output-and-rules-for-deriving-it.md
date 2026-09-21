@@ -11,6 +11,8 @@ for deciding which records to include.
 
 ## Why use an extraction
 
+See [Creating views](views.md) for general authoring rules, including explicit selection, descriptive overrides and the boundary between selection and structural transformation.
+
 An extraction is safer than treating the public view as a complete record with
 some parts hidden. Nothing enters the national public view unless the standard
 explicitly says it should be extracted.

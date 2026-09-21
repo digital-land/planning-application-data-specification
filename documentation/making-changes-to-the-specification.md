@@ -164,6 +164,8 @@ combination is recognised and has the expected payload shape.
 
 ## National public view
 
+For the purpose, selection and override rules shared by views, see [Creating views](views.md). A view defines a specific cut of existing data; changing its structure requires an explicit transformation model.
+
 The [national public view schema](../specification/national-public-view.schema.md) is an explicit open-data extraction from the wider planning application data specification. Nothing is included unless that schema lists it.
 
 When adding or changing a dataset field:
