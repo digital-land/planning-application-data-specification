@@ -117,6 +117,24 @@ print(householder_listed.ref)  # hh;lbc
 print(householder_listed.is_combined)  # True
 ```
 
+## Resolving a named specification
+
+```python
+spec = Specification.load()
+planning_data = spec.specification("planning-application-data")
+datasets = planning_data.datasets()
+dataset = planning_data.dataset("decision-condition")
+fields = planning_data.resolve_container_items(dataset="decision-condition")
+field = planning_data.resolve_field("discharged-by", dataset="decision-condition")
+print(field.target_dataset)  # decision-notice
+```
+
+The returned `SpecificationDefinition` exposes `ref` and `name`. Datasets expose `ref`, `name`, `description` and `base`. Dataset membership and order follow the specification. An explicit field list determines field membership and order; omitting `fields` includes all dataset fields in dataset order, while `fields: []` includes none. Unknown or unselected references raise `KeyError`.
+
+Resolved results retain `base` and `usage.overrides` (only specification-authored settings), and expose `dataset_field` and `specification_ref`. Names and descriptions use explicit specification settings before the resolved dataset value. Requirement levels fall back to the dataset when omitted, unlike view publication requirements. Datatype, cardinality, codelist and target dataset retain the dataset's meaning: matching repeated declarations are accepted, conflicting declarations raise `ValueError`. Record filters belong in views. No record processing occurs.
+
+The `target_dataset` property is also available on ordinary resolved fields, component references and view fields. This is relationship metadata, not a generated URL. Existing authored definitions and their ordering are unchanged by resolution.
+
 ## Resolving views
 
 ```python

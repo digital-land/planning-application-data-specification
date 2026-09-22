@@ -97,6 +97,10 @@ class ResolvedField:
         return self.usage.overrides.get("codelist") or self.base.codelist
 
     @property
+    def target_dataset(self):
+        return self.usage.overrides.get("dataset")
+
+    @property
     def requirement_level(self):
         return self.usage.overrides.get("requirement-level")
 
@@ -107,8 +111,30 @@ class ResolvedViewField(ResolvedField):
     view_ref: str
 
     @property
+    def target_dataset(self):
+        return self.usage.overrides.get("dataset", self.dataset_field.target_dataset)
+
+    @property
     def codelist(self) -> str | None:
         return self.dataset_field.codelist
+
+
+@dataclass(frozen=True)
+class ResolvedSpecificationField(ResolvedField):
+    dataset_field: ResolvedField
+    specification_ref: str
+
+    @property
+    def requirement_level(self):
+        return self.usage.overrides.get("requirement-level", self.dataset_field.requirement_level)
+
+    @property
+    def codelist(self):
+        return self.dataset_field.codelist
+
+    @property
+    def target_dataset(self):
+        return self.dataset_field.target_dataset
 
 
 @dataclass(frozen=True)
@@ -133,6 +159,10 @@ class ResolvedComponentReference:
     @property
     def codelist(self) -> str | None:
         return self.usage.overrides.get("codelist") or self.base.codelist
+
+    @property
+    def target_dataset(self):
+        return self.usage.overrides.get("dataset")
 
     @property
     def requirement_level(self):
@@ -397,6 +427,13 @@ class Specification:
             modules=module_matches,
             components=component_matches,
         )
+
+    def specification(self, ref: str):
+        from .specifications import SpecificationDefinition
+        definition = self.tables["specification"].get(ref)
+        if definition is None or ref.endswith("-view"):
+            raise KeyError(f"Unknown specification: {ref}")
+        return SpecificationDefinition(self, ref, definition)
 
     def view(self, ref: str):
         from .views import View
