@@ -27,6 +27,7 @@ fields:
 - field: application-types
   requirement-level: MUST
 - field: site
+  dataset: site
   requirement-level: MUST
 - field: received-date
   requirement-level: MUST
@@ -50,6 +51,7 @@ fields:
 - field: withdrawn-date
   requirement-level: SHOULD
 - field: linked-applications
+  dataset: planning-application
   requirement-level: MUST
 - field: reference
   requirement-level: MUST

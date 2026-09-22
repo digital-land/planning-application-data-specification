@@ -12,12 +12,15 @@ fields:
 - field: reference
   requirement-level: MUST
 - field: decision-notice
+  dataset: decision-notice
   requirement-level: MUST
 - field: planning-condition
+  dataset: planning-condition
   requirement-level: MUST
   description: Reference to the planning condition record linked to the decision
 - field: requested-by
 - field: discharged-by
+  dataset: decision-notice
   requirement-level: MUST
 key-field: ''
 licence: ogl3

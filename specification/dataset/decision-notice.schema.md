@@ -30,6 +30,7 @@ fields:
   requirement-level: MAY
   description: Optional notes that provide additional context about the decision notice
 - field: planning-application
+  dataset: planning-application
   requirement-level: MUST
 - field: reference
   requirement-level: MUST
