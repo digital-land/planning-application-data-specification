@@ -12,14 +12,17 @@ entity-maximum: ''
 fields:
   - field: reference
     requirement-level: MUST
-    description: Unique identifier for the timeline entry
+    description: "Unique identifier for the timeline entry"
   - field: planning-application
     dataset: planning-application
     requirement-level: MUST
+    description: "The reference for the related planning application"
   - field: permission-process-event
     requirement-level: MUST
+    description: "The type of event in the permission process"
   - field: event-date
     requirement-level: MUST
+    description: "The date the event occurred"
   - field: notes
     description: Optional notes that provide additional context about the timeline event
 key-field: ''

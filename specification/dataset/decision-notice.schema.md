@@ -11,29 +11,35 @@ entry-date: '2025-12-18'
 fields:
 - field: decision
   requirement-level: MUST
+  description: "The decision outcome for the planning application"
 - field: decision-date
   requirement-level: MUST
+  description: "The date the decision notice was issued"
 - field: organisation
   requirement-level: MUST
-  description: Identifier of the organisation issuing the decision notice (planning authority, Planning Inspectorate, or Secretary of State)
+  description: "Identifier of the organisation issuing the decision notice (planning authority, Planning Inspectorate or Secretary of State)"
 - field: decision-maker
   requirement-level: MUST
+  description: "The category of person or body that formally made the decision"
 - field: planning-officer-recommendation
   requirement-level: SHOULD
+  description: "The recommendation made by the planning officer for this application"
 - field: document-url
   requirement-level: SHOULD
-  description: URL to the published decision notice
+  description: "The URL to the published decision notice"
 - field: documentation-url
   requirement-level: MUST
-  description: URL a page where the published decision notice can be found
+  description: "The URL of the page where the decision notice can be found"
 - field: notes
   requirement-level: MAY
   description: Optional notes that provide additional context about the decision notice
 - field: planning-application
   dataset: planning-application
   requirement-level: MUST
+  description: "The reference for the related planning application"
 - field: reference
   requirement-level: MUST
+  description: "The reference for the decision notice"
 key-field: ''
 licence: ogl3
 name: Decision notice

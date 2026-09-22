@@ -11,17 +11,21 @@ entry-date: 2026-01-08
 fields:
 - field: reference
   requirement-level: MUST
+  description: "The reference for the decision condition"
 - field: decision-notice
   dataset: decision-notice
   requirement-level: MUST
+  description: "The reference for the decision notice this condition is attached to"
 - field: planning-condition
   dataset: planning-condition
   requirement-level: MUST
-  description: Reference to the planning condition record linked to the decision
+  description: "The reference for the linked planning condition record"
 - field: requested-by
+  description: "Identifier of the body requesting the condition"
 - field: discharged-by
   dataset: decision-notice
   requirement-level: MUST
+  description: "Reference to the decision notice discharging the condition"
 key-field: ''
 licence: ogl3
 name: Decision condition

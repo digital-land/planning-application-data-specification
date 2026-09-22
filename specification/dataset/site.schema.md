@@ -14,6 +14,7 @@ fields:
   requirement-level: SHOULD
 - field: reference
   requirement-level: MUST
+  description: "The reference for the site"
 - field: address-text
   requirement-level: MUST
   description: Plain-language address or description that helps identify the site location
@@ -28,7 +29,7 @@ fields:
   description: USRNs for streets associated with the site, where known
 - field: geometry
   requirement-level: MUST
-  description: the boundary of the site being recorded
+  description: "The boundary for the site"
 key-field: ''
 licence: ogl3
 name: Site

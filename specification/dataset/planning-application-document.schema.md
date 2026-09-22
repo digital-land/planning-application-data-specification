@@ -8,11 +8,11 @@ description: Links a planning application to the documents submitted with it.
 fields:
   - field: reference
     requirement-level: MUST
-    description: Unique identifier for the document record
+    description: "Unique identifier for the document record"
   - field: planning-application
     dataset: planning-application
     requirement-level: MUST
-    description: Reference to the planning application this document relates to
+    description: "The reference for the related planning application"
   - field: name
     requirement-level: MUST
     description: Title or label used to identify the document
@@ -22,10 +22,13 @@ fields:
     dataset: planning-application-document
   - field: public-register-status
     requirement-level: MUST
+    description: "Whether the document has been assessed as suitable for public availability on the planning register"
   - field: document-url
     requirement-level: SHOULD
+    description: "The URL to the document file"
   - field: documentation-url
     requirement-level: MUST
+    description: "The URL of the page where the document can be found"
 entry-date: 2026-01-28
 end-date: ''
 entity-maximum: ''

@@ -11,18 +11,19 @@ entry-date: 2026-01-08
 fields:
 - field: reference
   requirement-level: MUST
+  description: "The reference for the planning condition"
 - field: name
-  description: Plain-language label for the condition so it can be identified without technical codes
+  description: "Plain-language label for the condition so it can be identified without technical codes"
   requirement-level: SHOULD
 - field: description
   requirement-level: MUST
-  description: The text of the condition thats required to be met
+  description: "The text of the condition that must be met"
 - field: reason
   requirement-level: MUST
-  description: The reason for imposing the condition
+  description: "An explanation of why the condition was imposed"
 - field: organisation
   requirement-level: MUST
-  description: Identifier of the organisation that maintains the condition clause
+  description: "Identifier of the organisation that maintains the condition clause"
 key-field: ''
 licence: ogl3
 name: Planning condition

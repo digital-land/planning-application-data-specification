@@ -11,13 +11,15 @@ entry-date: 2026-06-04
 fields:
   - field: reference
     requirement-level: MUST
-    description: Unique identifier for the planning application data record
+    description: "Unique identifier for the planning application data record"
   - field: planning-application
     dataset: planning-application
     requirement-level: MUST
-    description: Reference to the planning application this data relates to
+    description: "The reference for the related planning application"
   - field: submitted-data-uri
+    description: "The URI identifying the authoritative structured application data as first received by the planning authority"
   - field: validated-data-uri
+    description: "The URI identifying the authoritative structured application data accepted through planning validation"
 key-field: ''
 licence: ogl3
 name: Planning application data

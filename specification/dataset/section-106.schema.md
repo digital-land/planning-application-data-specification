@@ -11,16 +11,20 @@ entry-date: '2026-01-09'
 fields:
 - field: reference
   requirement-level: MUST
+  description: "The reference for the section 106 agreement"
 - field: name
   requirement-level: SHOULD
   description: Title or plain-language label for the section 106 agreement so it can be identified
 - field: decision-notice
   dataset: decision-notice
   requirement-level: MUST
+  description: "The reference for the decision notice tied to the section 106 agreement"
 - field: document-url
   requirement-level: SHOULD
+  description: "The URL to the published section 106 agreement document"
 - field: documentation-url
   requirement-level: MUST
+  description: "The URL of the page where the section 106 agreement can be found"
 key-field: ''
 licence: ogl3
 name: Section 106 agreement
