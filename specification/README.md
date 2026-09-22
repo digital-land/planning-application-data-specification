@@ -13,6 +13,8 @@ The planning application data specification describes the information that needs
 
 This README explains the different elements in this folder, how they fit together, and why they exist.
 
+See [Ownership of data-model definitions](../documentation/data-model-ownership.md) for the responsibilities of fields, datasets, specification assemblies and views, including where relationships belong.
+
 For a shorter primer on how the specification fits together and where to find fields, datatypes and codelists, see [how the specification fits together](https://github.com/digital-land/planning-application-data-specification/blob/main/documentation/how-the-specification-fits-together.md).
 
 ---

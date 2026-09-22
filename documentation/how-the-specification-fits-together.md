@@ -39,6 +39,8 @@ The underlying canonical files are in GitHub:
 
 ## How the parts fit together
 
+Datasets define records independently; a specification assembles related datasets into a named whole. Views select existing data for particular purposes. See [Ownership of data-model definitions](data-model-ownership.md) for where field properties, recording requirements and relationships belong, and how these responsibilities differ from view selection.
+
 The planning application data specification and submission specification use the same field and codelist definitions, but organise them differently.
 
 In the planning application data specification:
