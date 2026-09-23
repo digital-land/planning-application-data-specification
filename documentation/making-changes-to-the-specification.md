@@ -4,11 +4,14 @@ This guide explains how to make deliberate, traceable changes to the planning ap
 
 ## Principles for making a change
 
-- Start with a user need, policy requirement, delivery problem or other clearly stated reason for the change. Do not add data only because it might be useful one day.
+- Start with a user need, policy requirement, delivery problem or other clearly stated reason for the change. Do not add data only because it might be useful one day (is the information needed? is the requirement proportionate? how can the data be captured efficiently?)
 - Prefer reuse where the existing element records the same underlying fact for the same purpose. Do not reuse an element simply because it has a similar label or datatype.
 - Keep the meaning of established elements stable. Where a proposed change would alter an element's meaning, prefer a new element or deliberately generalise it with the impact made clear.
 - Make linked changes together. A change to a canonical field, codelist or dataset may require changes to its usages, justification, examples, generated outputs and documentation.
 - Keep the model independent of a particular form, screen or supplier implementation. Capture the information that needs to be exchanged or maintained, rather than presentation details.
+- Consider the effort involved to provide the information/data and avoid unnecessary duplication
+    - Existing system limitations or the possibility of manual work do not, on their own, justify excluding information supported by a clear user need.
+    - Assess whether the requirement is proportionate, and distinguish changes needed to the specification from changes needed to implement it.
 - Make the rationale reviewable. Record why the change exists and what need it helps meet.
 - Make small, coherent changes that can be reviewed and tested independently.
 - Keep enduring meaning and rules in canonical definitions. Keep progress notes, coverage assessments and unresolved implementation gaps in working material such as `tmp/`.
