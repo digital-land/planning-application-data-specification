@@ -4,10 +4,11 @@ status: proposed
 priority: medium
 name: Understand change of use outcomes
 statement: >
-  As a development management planner or place-shaping officer, I need to understand where changes of use are being permitted or refused so that I can monitor how neighbourhoods, centres, and employment areas are evolving over time.
+  As a strategic planning user, I need to understand where changes of use are
+  being permitted or refused and the uses involved so that I can assess how
+  neighbourhoods, centres and employment areas are evolving over time.
 actors:
-  - planner
-  - place-shaping-lead
+  - strategic-planning-user
 scope: in
 themes:
   - decision

@@ -1,13 +1,14 @@
 ---
 need: need-ps-015
-status: proposed
+status: retired
 priority: medium
 name: Monitor smaller-scale retail and service change
 statement: >
-  As a town centre or high street planner, I need to understand smaller-scale
-  changes in retail and service activity so that I can support centres to adapt
-  and remain viable.
+  As a strategic planning user, I need to understand patterns in smaller-scale
+  retail and service development so that I can assess how town centres and high
+  streets are changing and plan interventions that support their viability.
 actors:
+  - strategic-planning-user
   - town-centre-planner
   - high-street-planner
 scope: in
@@ -19,5 +20,9 @@ source:
     notes:
 variations:
 next_step:
-notes:
+notes: |
+  Retired after user-group rationalisation because the motivation was already
+  captured by need-ps-008. That need now makes explicit that users need to
+  distinguish major and minor development when understanding retail and service
+  development outcomes.
 ---

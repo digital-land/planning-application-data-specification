@@ -2,15 +2,15 @@
 need: need-ps-008
 status: proposed
 priority: medium
-name: Monitor major retail and service development outcomes
+name: Monitor retail and service development outcomes
 statement: >
-  As a town centre or economic regeneration lead, I need to understand the
-  volume and outcomes of major retail and service development applications so
-  that I can monitor how town centres, high streets and service hubs are
-  changing, and respond to shifts in commercial demand and consumer behaviour.
+  As a strategic planning user, I need to understand the volume and outcomes of
+  retail and service development applications, including how they differ
+  between major and minor development, so that I can assess how town centres,
+  high streets and service hubs are changing and plan interventions in response
+  to shifts in commercial demand and consumer behaviour.
 actors:
-  - town-centre-lead
-  - economic-regeneration-lead
+  - strategic-planning-user
 scope: in
 themes:
   - monitoring
@@ -20,5 +20,7 @@ source:
     notes:
 variations:
 next_step:
-notes:
+notes: |
+  Users need to be able to distinguish major and minor development so they can
+  compare change and outcomes at each scale.
 ---

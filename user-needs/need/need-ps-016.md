@@ -1,6 +1,6 @@
 ---
 need: need-ps-016
-status: proposed
+status: retired
 priority: medium
 name: Track minor traveller accommodation applications
 statement: >
@@ -19,5 +19,9 @@ source:
     notes:
 variations:
 next_step:
-notes:
+notes: |
+  Retired after user-group rationalisation because the motivation was already
+  captured by need-ps-009. That need now makes explicit that users need to
+  distinguish major and minor development when understanding traveller caravan
+  pitch provision and outcomes.
 ---

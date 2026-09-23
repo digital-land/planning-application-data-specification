@@ -4,12 +4,12 @@ status: proposed
 priority: medium
 name: Monitor minor industrial and storage proposals
 statement: >
-  As a development management or economic planning officer, I need to
-  understand minor industrial and storage proposals so that I can maintain
-  operational capacity for local trades, logistics, and service businesses and
-  support day-to-day economic functioning.
+  As a strategic planning user, I need to understand patterns in smaller-scale
+  industrial and storage development so that I can assess how changes affect
+  the supply of operational space for local trades, logistics and service
+  businesses.
 actors:
-  - development-management-planner
+  - strategic-planning-user
   - economic-planning-officer
 scope: in
 themes:

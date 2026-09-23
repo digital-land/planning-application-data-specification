@@ -2,11 +2,14 @@
 need: need-ps-024
 status: proposed
 priority: medium
-name: Track progress from permission in principle
+name: Track progress from permission in principle to technical details consent
 statement: >
-  As a strategic planner or housing delivery analyst, I need to understand when development sites move from early-stage permission in principle to detailed implementable consent so that I can assess how much planned development is progressing toward being deliverable and identify where the pipeline may be stalled or need support.
+  As a strategic planning user, I need to understand when development sites
+  move from permission in principle to technical details consent so that I can
+  assess how much planned development is progressing towards an implementable
+  permission and identify where the pipeline may be stalled or need support.
 actors:
-  - strategic-planner
+  - strategic-planning-user
   - analyst
 scope: in
 themes:

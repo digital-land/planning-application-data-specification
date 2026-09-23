@@ -4,9 +4,13 @@ status: proposed
 priority: medium
 name: Monitor major employment development outcomes
 statement: >
-  As a strategic planner or economic development analyst, I need to understand the volume and outcomes of major employment-related development applications (offices, R&D, light industry) so that I can monitor changes in local employment space, understand economic growth patterns, and ensure the area has suitable land and floorspace to support business and jobs.
+  As a strategic planning user, I need to understand the volume and outcomes of
+  major employment-related development applications, including offices,
+  research and development and light industry, so that I can assess changes in
+  employment space, understand economic growth patterns and plan for enough
+  suitable land and floorspace to support businesses and jobs.
 actors:
-  - strategic-planner
+  - strategic-planning-user
   - analyst
 scope: in
 themes:

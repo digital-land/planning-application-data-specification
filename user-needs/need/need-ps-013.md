@@ -4,11 +4,12 @@ status: proposed
 priority: medium
 name: Track smaller-scale commercial and workspace development
 statement: >
-  As a local economic development planner, I need to track smaller-scale
-  commercial and workspace development so that I can understand local business
-  requirements, maintain a mix of workspace, and support small business and
-  innovation activity.
+  As a strategic planning user, I need to understand patterns in smaller-scale
+  commercial and workspace development so that I can understand changing local
+  business needs, maintain an appropriate mix of workspace and support small
+  business and innovation.
 actors:
+  - strategic-planning-user
   - local-economic-development-planner
 scope: in
 themes:

@@ -4,13 +4,13 @@ status: proposed
 priority: medium
 name: Monitor major industrial and warehousing development outcomes
 statement: >
-  As a strategic planner or economic development analyst, I need to understand
-  the volume and outcomes of major industrial, storage and warehousing
-  development applications so that I can monitor how planning decisions may
-  affect industrial and logistics capacity and assess whether land supply
-  supports local business operations and wider economic activity.
+  As a strategic planning user, I need to understand the volume and outcomes of
+  major industrial, storage and warehousing development applications so that I
+  can assess how planning decisions affect industrial and logistics capacity
+  and whether enough suitable land is available to support businesses and wider
+  economic activity.
 actors:
-  - strategic-planner
+  - strategic-planning-user
   - analyst
 scope: in
 themes:

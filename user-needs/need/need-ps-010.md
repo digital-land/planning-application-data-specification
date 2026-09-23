@@ -2,15 +2,14 @@
 need: need-ps-010
 status: proposed
 priority: medium
-name: Monitor uncategorised major development outcomes
+name: Monitor other major development outcomes
 statement: >
-  As a strategic planner or analyst, I need to understand the volume and
-  outcomes of major development applications that do not fall into standard
-  categories so that I can maintain a complete picture of large-scale
-  development activity and identify emerging patterns or sectors not captured
-  elsewhere.
+  As a strategic planning user, I need to understand the volume and outcomes of
+  major development applications outside established development categories so
+  that I can maintain a complete picture of large-scale development activity
+  and identify emerging patterns or sectors.
 actors:
-  - strategic-planner
+  - strategic-planning-user
   - analyst
 scope: in
 themes:

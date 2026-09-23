@@ -2,12 +2,13 @@
 need: need-ps-020
 status: proposed
 priority: medium
-name: Track advertisement application decisions
+name: Monitor advertisement application outcomes
 statement: >
-  As a planner responsible for the public realm, I need to track decisions on advertisement applications so that I can manage visual amenity and the character of streets and centres.
+  As a strategic planning user, I need to understand patterns in advertisement
+  application decisions so that I can assess how advertising affects visual
+  amenity and the character of streets and centres.
 actors:
-  - planner
-  - place-shaping-lead
+  - strategic-planning-user
 scope: in
 themes:
   - decision
