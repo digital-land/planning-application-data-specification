@@ -4,9 +4,12 @@ status: proposed
 priority: high
 name: Track formal enforcement action
 statement: >
-  As a planning enforcement policy lead, I need to understand where formal enforcement action is being taken so that I can assess patterns of non-compliance and ensure enforcement powers are being used proportionately and effectively.
+  As a policy user, I need to understand where and how formal planning
+  enforcement powers are used so that I can identify patterns in non-compliance
+  and assess whether those powers are being used proportionately and
+  effectively.
 actors:
-  - policy-maker
+  - policy-user
 scope: in
 themes:
   - monitoring
@@ -15,6 +18,10 @@ source:
   - type: ps1-ps2
     notes:
 variations:
-next_step:
-notes:
+  - need-ps-003
+next_step: review
+notes: >
+  The current planning application and decision datasets do not model formal
+  enforcement action. Satisfying this need would require specification coverage
+  for enforcement activity.
 ---

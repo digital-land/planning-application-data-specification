@@ -2,12 +2,15 @@
 need: need-ps-027
 status: proposed
 priority: high
-name: Monitor use of PPAs, EOTs, and EIA timetable
+name: Measure use of determination timetable arrangements
 statement: >
-  As a central government analyst or planning system steward I need to monitor the volume of applications using PPAs, Extensions of Time, or the EIA timetable so that I can understand where additional negotiation, complexity or risk is concentrated in the system and assess whether guidance or support may be required.
+  As an analyst, I need to identify which applications are subject to a Planning
+  Performance Agreement, Extension of Time or EIA timetable so that I can report
+  consistently on how often each arrangement is used and compare patterns across
+  authorities and application types.
 actors:
+  - analyst
   - central-government-analyst
-  - planning-system-steward
 scope: in
 themes:
   - monitoring
@@ -17,6 +20,7 @@ source:
   - type: ps1-ps2
     notes:
 variations:
+  - need-ps-031
 next_step:
 notes:
 ---

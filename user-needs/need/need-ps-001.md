@@ -17,6 +17,7 @@ source:
     notes: >
       Research with MHCLG stats, August 2026, identifies comprehensive counts of applications on hand at a particular date as a key question and highlights the risk that older applications awaiting decisions could be missing from open data. This supports including outstanding caseload alongside incoming volumes.
 variations:
+  - need-ps-028
 next_step: review
 notes:
 ---

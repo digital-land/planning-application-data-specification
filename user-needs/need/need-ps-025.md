@@ -4,7 +4,9 @@ status: proposed
 priority: high
 name: Understand determination times
 statement: >
-  As a planning service manager, I need to understand how long applications are taking to determine so that I can ensure we meet statutory requirements and maintain service performance.
+  As a planning service manager, I need to compare how long applications take
+  to determine with the timetable that applies to each application so that I
+  can identify delays, manage performance and meet statutory requirements.
 actors:
   - planning-service-manager
 scope: in
@@ -15,6 +17,8 @@ source:
   - type: ps1-ps2
     notes:
 variations:
+  - need-ps-026
+  - need-ps-030
 next_step:
 notes:
 ---

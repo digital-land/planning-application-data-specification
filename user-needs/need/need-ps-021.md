@@ -4,8 +4,11 @@ status: proposed
 priority: medium
 name: Understand listed building alteration decisions
 statement: >
-  As a conservation or heritage officer, I need to understand decisions on alterations to listed buildings so that I can maintain the significance and integrity of heritage assets while enabling their continued use.
+  As a planning practitioner, I need to understand proposed alterations to
+  listed buildings and the decisions made so that I can protect their heritage
+  significance while supporting appropriate continued use.
 actors:
+  - planning-practitioner
   - conservation-officer
   - heritage-officer
 scope: in
@@ -17,6 +20,7 @@ source:
   - type: ps1-ps2
     notes:
 variations:
+  - need-ps-022
 next_step:
 notes:
 ---

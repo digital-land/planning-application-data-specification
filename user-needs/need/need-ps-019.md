@@ -2,11 +2,14 @@
 need: need-ps-019
 status: proposed
 priority: high
-name: Track householder proposals and decisions
+name: Understand householder proposals and decisions
 statement: >
-  As a development management planner, I need to understand householder proposals and decisions so that I can manage local casework and understand incremental change to neighbourhood character.
+  As a planning practitioner, I need to understand householder proposals and
+  decisions in an area so that I can assess how a current proposal relates to
+  previous changes and the existing character of the neighbourhood.
 actors:
-  - planner
+  - planning-practitioner
+  - development-management-planner
 scope: in
 themes:
   - decision
@@ -15,6 +18,7 @@ source:
   - type: ps1-ps2
     notes:
 variations:
+  - need-ps-029
 next_step:
 notes:
 ---

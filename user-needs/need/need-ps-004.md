@@ -4,10 +4,11 @@ status: proposed
 priority: high
 name: Track application decisions over time
 statement: >
-  As a planning manager or analyst I need to track how many applications are being decided, whether they are granted or refused, within a given time period so that I can understand workload levels, throughput, and the general success rate of applications.
+  As a planning service manager, I need to monitor the number and outcomes of
+  applications decided over time so that I can understand throughput, manage
+  workload and maintain service performance.
 actors:
-  - planning-manager
-  - analyst
+  - planning-service-manager
 scope: in
 themes:
   - decision
@@ -16,6 +17,8 @@ source:
   - type: ps1-ps2
     notes:
 variations:
+  - dd-need-031
+  - dd-need-013
 next_step:
 notes:
 ---

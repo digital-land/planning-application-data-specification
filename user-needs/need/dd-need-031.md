@@ -4,9 +4,10 @@ status: proposed
 priority: high
 name: Understand decision volumes and outcomes
 statement: >
-  As a planner or analyst, I need to understand the volume and outcomes of planning application decisions so that I can assess development trends, monitor the delivery pipeline, and identify where policy or resourcing changes may be required.
+  As an analyst, I need to measure the volume and outcomes of planning
+  application decisions over defined periods so that I can produce consistent
+  reporting and compare decision patterns over time.
 actors:
-  - planner
   - analyst
 scope: in
 themes:
@@ -16,6 +17,8 @@ source:
   - type: ps1-ps2
     notes:
 variations:
+  - need-ps-004
+  - dd-need-013
 next_step:
 notes:
 ---

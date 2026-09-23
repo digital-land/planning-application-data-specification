@@ -2,16 +2,15 @@
 need: need-ps-026
 status: proposed
 priority: high
-name: Monitor determination times across development types
+name: Compare determination times across authorities and development types
 statement: >
-  As a central government analyst or policy steward, I need to understand how
-  long planning authorities are taking to determine applications across
-  different development types so that I can monitor the performance of the
-  planning system, identify where there may be capacity challenges or systemic
-  delays, and target support.
+  As an analyst, I need to compare how long planning authorities take to
+  determine applications across development types so that I can produce
+  consistent performance reporting and identify patterns in delays and
+  capacity.
 actors:
+  - analyst
   - central-government-analyst
-  - policy-steward
 scope: in
 themes:
   - monitoring
@@ -20,6 +19,8 @@ source:
   - type: ps1-ps2
     notes:
 variations:
+  - need-ps-025
+  - need-ps-030
 next_step:
 notes:
 ---

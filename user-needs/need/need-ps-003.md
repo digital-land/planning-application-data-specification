@@ -4,9 +4,12 @@ status: proposed
 priority: low
 name: Track injunction outcomes
 statement: >
-  As a planning policy officer, I need to understand when injunctions are sought and whether they are granted or refused so that I can identify cases where breaches require severe legal intervention, understand the scale of complex or high-risk enforcement situations, and ensure that planning controls are being upheld where harm would otherwise continue.
+  As a policy user, I need to know when planning injunctions are sought and
+  their outcomes so that I can understand the scale and distribution of
+  enforcement cases requiring legal intervention and assess whether planning
+  controls are being upheld.
 actors:
-  - policy-maker
+  - policy-user
 scope: in
 themes:
   - monitoring
@@ -15,6 +18,10 @@ source:
   - type: ps1-ps2
     notes:
 variations:
-next_step:
-notes:
+  - need-ps-002
+next_step: review
+notes: >
+  The current planning application and decision datasets do not model planning
+  injunctions or their outcomes. Satisfying this need would require
+  specification coverage for enforcement activity.
 ---
