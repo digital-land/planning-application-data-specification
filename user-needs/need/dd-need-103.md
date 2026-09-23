@@ -4,14 +4,12 @@ status: proposed
 priority: high
 name: Record document publication decisions
 statement: >
-  As a planning authority officer, I need to record whether each application
-  document has been accepted for public availability so that personally
-  sensitive, commercially sensitive, private or security-sensitive material is
-  not made public by mistake.
+  As a planning authority, I need to record whether each application document
+  is approved for public availability so that sensitive material is not made
+  public by mistake and the publication decision remains part of the
+  application record.
 actors:
-  - planning-authority-officer
   - planning-authority
-  - public-register-service
 scope: in
 themes:
   - publication
@@ -22,9 +20,11 @@ source:
   - type: other
     notes: >
       NPSA security guidance highlights that some planning information may need
-      to be withheld from public publication where it creates security risk. This suggests a planning officer needs to make decision for each document.
+      to be withheld from public publication where it creates security risk.
+      This suggests a planning authority needs to make a publication decision
+      for each document.
 variations:
-  - dd-need-077
+  - dd-need-116
 next_step: 
 notes: |
   This is the active need for document publication decisions. It is about

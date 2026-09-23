@@ -3,13 +3,16 @@
 need: data-need-001
 status: proposed              # draft | proposed | accepted | retired
 priority: high                # low | medium | high
-name: Identify data entities consistently across systems
+name: Identify and match records consistently across systems
 statement: >
-  As a software supplier or data user, I need to reliably identify and match records across systems, even when labels or descriptions differ
+  As a data user, I need to identify and match the same records across datasets
+  and systems so that I can link information without relying on labels or
+  descriptions that may vary.
 # Optional but useful for filtering / reporting
 actors:
-  - software-supplier
   - data-user
+  - service-builder
+  - analyst
 scope: in # in-spec | out-of-spec | future
 themes:
   - data-principle

@@ -1,6 +1,6 @@
 ---
 need: data-need-004
-status: proposed
+status: retired
 priority: medium
 name: Capture what happened and when in a process
 statement: >
@@ -16,5 +16,8 @@ source:
     notes:
 variations:
 next_step:
-notes:
+notes: >
+  Retired as a duplicate of dd-need-062, which captures the same need for a
+  clear, dated record of key planning application events and is supported by
+  stronger user and PS1/PS2 evidence.
 ---
