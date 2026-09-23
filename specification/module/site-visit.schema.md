@@ -14,9 +14,10 @@ fields:
     - applicant
     - agent
 - field: other-contact
-  required-if:
-  - field: contact-type
+  applies-if:
+    field: contact-type
     value: other
+  required: true
 module: site-visit
 name: Site Visit Details
 rules:
