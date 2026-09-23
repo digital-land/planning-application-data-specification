@@ -2,12 +2,16 @@
 need: dd-need-037
 status: proposed
 priority: high
-name: Link conditions to the decision
+name: Know which decision a condition belongs to
 statement: >
-  As a planner, analyst, or system integrator, I need to know which decision a condition belongs to so that I can trace conditions back to the exact permission and avoid confusion or mis-assignment.
+  As a planning-system user, I need to know which decision each condition
+  belongs to so that I can trace it to the exact permission and avoid relying on
+  a condition associated with a different decision.
 actors:
-  - planner
+  - planning-system-user
+  - planning-practitioner
   - analyst
+  - service-builder
   - system-integrator
 scope: in
 themes:
@@ -17,10 +21,7 @@ source:
   - type: interview
     notes:
 variations:
+  - dd-need-117
 next_step:
 notes:
 ---
-
-Similar needs:
-
-As an applicant or agent, I need to confirm that a condition relates to the correct permission so that I can comply with the right requirements and avoid delays or disputes.

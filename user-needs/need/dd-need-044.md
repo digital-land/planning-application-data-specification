@@ -2,11 +2,14 @@
 need: dd-need-044
 status: proposed
 priority: high
-name: Trace how a condition was discharged
+name: Trace the decision that discharged a condition
 statement: >
-  As a planning officer or data user, I need to know which application or process was used to discharge a condition so that I can trace the decision history, understand the reasoning, and maintain an accurate audit trail
+  As a planning-system user, I need to know which decision discharged a
+  condition so that I can trace its status and decision history and maintain an
+  accurate audit trail.
 actors:
-  - planning-officer
+  - planning-system-user
+  - planning-practitioner
   - data-user
 scope: in
 themes:

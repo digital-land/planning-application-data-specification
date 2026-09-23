@@ -4,9 +4,11 @@ status: proposed
 priority: high
 name: Monitor conditions volume and type
 statement: >
-  As MHCLG, I need to monitor the number and type of conditions being applied so that we can see if they are increasing and assess the impact on the delivery of development in the UK
+  As a policy user, I need to monitor the number and type of conditions being
+  applied so that I can see if they are increasing and assess the impact on the
+  delivery of development in the UK.
 actors:
-  - mhclg
+  - policy-user
 scope: in
 themes:
   - conditions
@@ -16,6 +18,7 @@ source:
     notes: |
       Numerous users mentioned the increasing number of conditions as a factor delaying the delivery of schemes. This data is currently hard to access making this belief hard to verify.
 variations:
+  - dd-need-002
 next_step:
 notes:
 ---

@@ -2,11 +2,13 @@
 need: dd-need-005
 status: proposed
 priority: high
-name: Keep decision notices and conditions clear
+name: Provide clear and consistent decisions and conditions
 statement: >
-  As a local authority officer, I need decision notices and conditions to be published clearly and consistently so that applicants, consultees, and the public can more easily understand them.
+  As a planning authority, I need decision notices and conditions to be clear
+  and consistent so that people who rely on them can understand the decision
+  and the requirements attached to it.
 actors:
-  - planning-authority-officer
+  - planning-authority
 scope: in
 themes:
   - conditions
@@ -15,6 +17,9 @@ source:
   - type: interview
     notes:
 variations:
-next_step:
-notes:
+next_step: review
+notes: >
+  Define what clear and consistent means and test whether structured data alone
+  can satisfy this need or whether content and presentation requirements are
+  also needed.
 ---

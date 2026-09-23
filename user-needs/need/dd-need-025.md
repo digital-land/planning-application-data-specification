@@ -2,12 +2,14 @@
 need: dd-need-025
 status: proposed
 priority: medium
-name: Indicate standard vs unique conditions
+name: Distinguish reusable and bespoke conditions
 statement: >
-  As a planning officer or authority user, I need to indicate whether conditions are standard or unique so that reusable templates and bespoke drafting can be distinguished.
+  As a planning practitioner, I need to distinguish conditions based on reusable
+  wording from those drafted for a specific decision so that I can use
+  established clauses where appropriate and give bespoke requirements
+  appropriate scrutiny.
 actors:
-  - planning-officer
-  - authority-user
+  - planning-practitioner
 scope: in
 themes:
   - conditions
@@ -16,6 +18,7 @@ source:
   - type: interview
     notes:
 variations:
+  - dd-need-052
 next_step: review
 notes:
 ---

@@ -1,6 +1,6 @@
 ---
 need: dd-need-004
-status: proposed
+status: retired
 priority: high
 name: Know which organisation requested a condition
 statement: >
@@ -16,5 +16,8 @@ source:
     notes:
 variations:
 next_step:
-notes:
+notes: >
+  Retired after user-group rationalisation because developer is covered by the
+  applicant group and the same motivation is captured more clearly by
+  dd-need-039.
 ---

@@ -2,11 +2,13 @@
 need: dd-need-002
 status: proposed
 priority: high
-name: Record conditions in a structured way
+name: Maintain consistent condition records
 statement: >
-  As a local authority, I need to record conditions in a structured way so that they can be managed, tracked, and discharged consistently
+  As a planning authority, I need a consistent record of each condition so that
+  conditions can be managed, monitored and discharged throughout their
+  lifecycle.
 actors:
-  - local-authority
+  - planning-authority
 scope: in
 themes:
   - conditions
@@ -15,10 +17,7 @@ source:
   - type: interview
     notes:
 variations:
-next_step: rewrite
+  - dd-need-003
+next_step:
 notes:
 ---
-
-Similar need:
-
-As a planner, I need a way to record structured condition data so that I can analyse trends across applications and reduce delays.
