@@ -25,3 +25,6 @@ field | name | description | required | notes
 number | Phone number | A phone number | MAY | 
 contact-priority | Contact priority | The priority of a number | MAY | Select from the **contact-priority** enum
 
+**Validation rules**
+
+- agent-reference must match a reference in agent-details.agent.reference in the same submission.

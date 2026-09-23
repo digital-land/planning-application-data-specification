@@ -58,31 +58,6 @@
     "submission-details"
   ],
   "definitions": {
-    "agent": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
     "owner": {
       "type": "object",
       "properties": {
@@ -119,6 +94,46 @@
         "contact-address"
       ]
     },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
     "contact-address": {
       "type": "object",
       "properties": {
@@ -134,6 +149,29 @@
       },
       "required": [
         "address-text"
+      ]
+    },
+    "tree-details": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "species": {
+          "type": "string"
+        },
+        "description-of-works": {
+          "type": "string"
+        },
+        "reason": {
+          "type": "string"
+        },
+        "replanting-description": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference"
       ]
     },
     "contact-details": {
@@ -171,29 +209,6 @@
       },
       "required": []
     },
-    "tree-details": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "species": {
-          "type": "string"
-        },
-        "description-of-works": {
-          "type": "string"
-        },
-        "reason": {
-          "type": "string"
-        },
-        "replanting-description": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference"
-      ]
-    },
     "supporting-document": {
       "type": "object",
       "properties": {
@@ -205,34 +220,49 @@
         "reference"
       ]
     },
-    "applicant": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "reference": {
+        "agent-reference": {
           "type": "string"
         },
-        "person": {
-          "$ref": "#/definitions/person"
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "reference",
-        "person"
+        "agent-reference",
+        "contact-details"
       ]
     },
-    "applicant-details": {
+    "trees-additional": {
       "type": "object",
       "properties": {
-        "applicants": {
+        "advice-from-authority": {
+          "type": "string"
+        },
+        "condition-concerns": {
+          "type": "boolean"
+        },
+        "causing-subsidence": {
+          "type": "boolean"
+        },
+        "causing-structural-damage": {
+          "type": "boolean"
+        },
+        "supporting-documents": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/applicant"
+            "$ref": "#/definitions/supporting-document"
           },
           "minItems": 1
         }
       },
       "required": [
-        "applicants"
+        "condition-concerns",
+        "causing-subsidence",
+        "causing-structural-damage",
+        "supporting-documents"
       ]
     },
     "checklist": {
@@ -250,20 +280,25 @@
         "national-req-types"
       ]
     },
-    "agent-contact": {
+    "tpo": {
       "type": "object",
       "properties": {
-        "agent-reference": {
-          "type": "string"
+        "tpo-reference": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
         },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
+        "tpo-provided-by": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "system"
+          ]
         }
       },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
+      "required": []
     },
     "conflict-of-interest": {
       "type": "object",
@@ -312,6 +347,40 @@
         }
       ]
     },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "person-reference": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "person-reference",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
+      ]
+    },
     "applicant-contact": {
       "type": "object",
       "properties": {
@@ -327,25 +396,23 @@
         "contact-details"
       ]
     },
-    "tpo": {
+    "tree-work-details": {
       "type": "object",
       "properties": {
-        "tpo-reference": {
+        "description": {
+          "type": "string"
+        },
+        "tree-details": {
           "type": "array",
           "items": {
-            "type": "string"
+            "$ref": "#/definitions/tree-details"
           },
           "minItems": 1
-        },
-        "tpo-provided-by": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "system"
-          ]
         }
       },
-      "required": []
+      "required": [
+        "description"
+      ]
     },
     "trees-ownership": {
       "type": "object",
@@ -376,73 +443,6 @@
           "owner"
         ]
       }
-    },
-    "trees-additional": {
-      "type": "object",
-      "properties": {
-        "advice-from-authority": {
-          "type": "string"
-        },
-        "condition-concerns": {
-          "type": "boolean"
-        },
-        "causing-subsidence": {
-          "type": "boolean"
-        },
-        "causing-structural-damage": {
-          "type": "boolean"
-        },
-        "supporting-documents": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/supporting-document"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "condition-concerns",
-        "causing-subsidence",
-        "causing-structural-damage",
-        "supporting-documents"
-      ]
-    },
-    "tree-work-details": {
-      "type": "object",
-      "properties": {
-        "description": {
-          "type": "string"
-        },
-        "tree-details": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/tree-details"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "description"
-      ]
-    },
-    "declaration": {
-      "type": "object",
-      "properties": {
-        "person-reference": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "person-reference",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
     },
     "agent-details": {
       "type": "object",
@@ -1018,10 +1018,7 @@
           "minItems": 1
         }
       },
-      "required": [
-        "amount",
-        "amount-paid"
-      ]
+      "required": []
     },
     "document": {
       "type": "object",
@@ -1048,7 +1045,7 @@
               "biodiversity-survey-report",
               "cil-form",
               "condition-of-trees",
-              "completed-app-form",
+              "application-form",
               "daylight-sunlight-assessment",
               "design-and-access-statement",
               "elevation-existing",
@@ -1093,7 +1090,14 @@
               "site-investigation",
               "construction-management-plan",
               "waste-management-plan",
-              "water-impact-assessment"
+              "water-impact-assessment",
+              "viability-assessment",
+              "town-centre-impact-assessment",
+              "telecommunications-report",
+              "renewables-decommissioning-report",
+              "recreation-facilities-assessment",
+              "coastal-change-assessment",
+              "protected-landscape-assessment"
             ]
           },
           "minItems": 1

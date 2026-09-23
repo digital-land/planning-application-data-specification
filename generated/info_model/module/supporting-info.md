@@ -1,24 +1,35 @@
 # Supporting information
 
-Any additional information which will help with the planning application
+Drawings approved as part of the original decision and drawings submitted with the reserved matters application
 
 **Supporting information module**
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| replacement-drawings | Replacement drawings[]{} | List of approved drawings being replaced by new drawings |  | MUST |  |
+| approved-drawings | Approved drawings[]{} | Drawings approved as part of the original planning decision |  | MAY |  |
+| submitted-drawing-references | Submitted drawing references[] | Reference numbers of drawings submitted with the application for approval |  | MAY |  |
+| approved-drawings-document | Approved drawings schedule{} | Reference to an uploaded decision notice or drawing schedule that identifies drawings approved as part of the original planning decision |  | MAY |  |
+| submitted-drawings-document | Submitted drawings schedule{} | Reference to an uploaded schedule that identifies drawings submitted with the application for approval |  | MAY |  |
+| reason | Reason | Reasons for any changes to the original drawings |  | MAY |  |
 
 
-**Replacement drawing component**
+**Approved drawing component**
 
 field | name | description | required | notes
 -- | -- | -- | -- | --
-old-drawing-reference | Old drawing reference | Reference of the old drawing being replaced | MUST | 
-new-drawing-reference | New drawing reference | Reference for the new drawing that replaces the old drawing | MUST | 
-reason | Reason | A textual reason | MAY | 
+name | Name | Name or title of the approved drawing | MUST | 
+reference | Reference | Reference number of the approved drawing | MUST | 
+
+
+**Supporting document component**
+
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST |  | 
+details | Details | Additional details or information about an item | MAY |  | pip
 
 **Validation rules**
 
-- old-drawing-reference references must match existing approved drawing identifiers
-- new-drawing-reference references must match documents in application.documents
-- Each old-drawing-reference reference must be unique within replacement-drawings array
+- Provide approved-drawings and submitted-drawing-references, or approved-drawings-document and submitted-drawings-document, but do not mix the two routes
+- References must be unique within approved-drawings and submitted-drawing-references
+- approved-drawings-document and submitted-drawings-document references must match documents in submission-details.documents

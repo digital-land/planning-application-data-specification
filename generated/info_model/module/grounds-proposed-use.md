@@ -10,7 +10,7 @@ What the new site will be used for
 | specified-use | Specified use | A specified use if no applicable use class is available |  | MAY |  |
 | operation-type | Operation type | Whether the proposed use is temporary or permanent |  | MUST | Select from the **operation-type** enum |
 | temporary-details | Temporary details | Details of temporary use including duration and specific arrangements |  | MAY |  |
-| reason | Reason | A textual reason |  | MUST |  |
+| reason | Reason | A textual explanation of why something is proposed, required or decided |  | MUST |  |
 
 **Validation rules**
 

@@ -10,7 +10,7 @@ Evidence and explanations relating to a Lawful Development Certificate (LDC) app
 | grounds-post-2024 | Grounds post 2024[] | List of grounds post 2024-04-25 under which the certificate is sought |  | MAY | Select from the **grounds-ldc-post-apr-2024** enum |
 | other-details | Other details | Explanation if other ground is selected |  | MAY |  |
 | supporting-applications | Supporting applications[]{} | List of supporting planning permissions, certificates, or notices affecting the application site |  | MAY |  |
-| reason | Reason | A textual reason |  | MUST |  |
+| reason | Reason | A textual explanation of why something is proposed, required or decided |  | MUST |  |
 
 
 **Supporting applications component**

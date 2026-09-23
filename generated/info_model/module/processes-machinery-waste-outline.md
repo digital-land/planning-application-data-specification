@@ -20,10 +20,10 @@ field | name | description | required | notes
 waste-management-facility-type | Waste management facility type | Type of waste management facility being described in this entry | MUST | Select from the **waste-management-type** enum
 is-total-capacity-known | Is total capacity known | Whether the total capacity is known | MUST | 
 total-capacity | Total capacity | Total capacity of void in cubic metres (or tonnes/litres) | MAY | Rule: is a MUST if `is-total-capacity-known` is `True`
-unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `is-total-capacity-known` is `True`
+capacity-unit | Capacity unit | Unit used to express the total capacity of a waste management facility | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `is-total-capacity-known` is `True`
 is-annual-throughput-known | Is annual throughput known | Whether the annual throughput is known | MUST | 
 annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MAY | Rule: is a MUST if `is-annual-throughput-known` is `True`
-unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MAY | Select from the **waste-capacity-unit** enum. Rule: is a MUST if `is-annual-throughput-known` is `True`
+throughput-unit | Throughput unit | Unit used to express the annual throughput of a waste management facility | MAY | Select from the **waste-throughput-unit** enum. Rule: is a MUST if `is-annual-throughput-known` is `True`
 
 
 **Waste streams component**

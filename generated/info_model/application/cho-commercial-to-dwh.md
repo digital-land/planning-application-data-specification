@@ -1,6 +1,6 @@
-# Prior approval
+# Prior approval: Commercial, business and service use to dwellinghouses
 
-This applies to developments with permitted development rights (where developments are granted planning permission by national legislation without the need to submit a planning application)
+Prior approval for a change of use from Commercial, Business and Service use (Use Class E) to dwellinghouses (Use Class C3) under Class MA.
 
 ## Contents
 
@@ -10,11 +10,16 @@ This applies to developments with permitted development rights (where developmen
 
 * [Agent contact details](#agent-contact-details)
 * [Agent details](#agent-details)
+* [Agricultural tenancy consent](#agricultural-tenancy-consent)
 * [Applicant contact details](#applicant-contact-details)
 * [Applicant details](#applicant-details)
-* [Conflict of interest](#conflict-of-interest)
 * [Checklist](#checklist)
+* [Conflict of interest](#conflict-of-interest)
 * [Declaration](#declaration)
+* [Existing building premises](#existing-building-premises)
+* [Class MA current building and site eligibility](#class-ma-current-building-and-site-eligibility)
+* [Class MA proposed change eligibility](#class-ma-proposed-change-eligibility)
+* [Class MA proposed works and impacts](#class-ma-proposed-works-and-impacts)
 * [Site details](#site-details)
 
 ### Codelists
@@ -153,6 +158,19 @@ uprn | UPRN | Unique Property Reference Number for a property | MAY |
 
 
 
+## Agricultural tenancy consent
+
+Whether land is occupied under agricultural tenancy agreements and all parties have consented to the proposed change of use.
+
+**Agricultural tenancy consent module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| agricultural-tenants | Agricultural tenants | Whether any part of the land covered by or within the curtilage of the building is occupied under any agricultural tenancy agreements. | MUST |  |
+| tenancy-parties-consent | Consent of all tenancy parties | Whether all parties to the agricultural tenancy agreements have consented to the proposed change of use. | MAY | Rule: is a MUST if `agricultural-tenants` is `True`. Required when agricultural tenancy agreements exist. Consent must cover all parties to all relevant agreements, not only the tenants. |
+
+
+
 ## Applicant contact details
 
 Telephone number and email address of the applicant.
@@ -227,19 +245,6 @@ uprn | UPRN | Unique Property Reference Number for a property | MAY |
 - At least one applicant must be provided
 - Each applicant reference must be unique within the application
 
-## Conflict of interest
-
-Details of any conflict of interest that may exist between the applicant and planning authority.
-
-**Conflict of interest module**
-
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-
-**Validation rules**
-
-- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
-
 ## Checklist
 
 Checking whether all the requirements of the form have been met, such as proof of payment or supporting documentation.
@@ -254,6 +259,19 @@ Checking whether all the requirements of the form have been met, such as proof o
 
 - All values must be from the national-requirement-type codelist
 - Values must be valid for the current application type
+
+## Conflict of interest
+
+Details of any conflict of interest that may exist between the applicant and planning authority.
+
+**Conflict of interest module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+
+**Validation rules**
+
+- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
 
 ## Declaration
 
@@ -274,6 +292,87 @@ Signed and dated verification of the application's accuracy.
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
 - declaration-confirmed must be `true` for a submission to be valid
+
+## Existing building premises
+
+Addresses of flats and other premises within the existing building, supplied as a structured list or in supporting documents.
+
+**Existing building premises module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| addresses | Addresses[]{} | Addresses of all flats and other premises within the existing building. | MAY |  |
+| supporting-documents | Supporting documents[]{} | References to documents supplied with the application containing the complete list of addresses of flats and other premises within the existing building. | MAY |  |
+
+
+**Contact address component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+address-text | Address Text | Text representation of an address or site | MUST | 
+postcode | Postcode | Postcode for a contact address or site | MAY | 
+uprn | UPRN | Unique Property Reference Number for a property | MAY | 
+
+
+**Supporting document component**
+
+field | name | description | required | notes
+-- | -- | -- | -- | --
+reference | Reference | A unique reference for the data item | MUST | 
+
+**Validation rules**
+
+- At least one of addresses or supporting-documents must contain one or more items.
+- The complete list of addresses must be provided through at least one of these routes.
+
+## Class MA current building and site eligibility
+
+The qualifying use history and location restrictions of the existing building and site for a Class MA change of use from commercial, business and service use to dwellinghouses.
+
+**Class MA current building and site eligibility module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| use-two-years-plus | Qualifying use for at least two years | Whether the building has been in qualifying uses continuously for at least two years immediately before the application date. | MUST | The Class MA source form advises applicants answering No not to continue with this application route and to seek advice from the local planning authority. This records the significance of the answer, not a requirement for software to block submission. |
+| has-location-restriction | Has location restriction | Whether the building, land covered by it or land within its curtilage is affected by any of the location restrictions for the application route. | MUST | The Class MA source form advises applicants answering Yes not to continue with this application route and to seek advice from the local planning authority. This records the significance of the answer, not a requirement for software to block submission. |
+
+
+
+## Class MA proposed change eligibility
+
+Article 4 restrictions, space standards and continued residential use for a proposed Class MA change of use from commercial, business and service use to dwellinghouses.
+
+**Class MA proposed change eligibility module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| article-4-restriction | Article 4 restriction | Whether an Article 4 direction is or was in place that removed the relevant permitted development rights for the proposed change of use. | MUST | Select from the **yes-no-not-applicable** enum. The Class MA source form advises applicants answering Yes not to continue with this application route and to seek advice from the local planning authority. |
+| meets-space-standard | Meets space standard | Whether all proposed new dwellinghouses have gross internal floor areas of at least 37 square metres and comply with the nationally described space standard. | MUST | The Class MA source form advises applicants answering No not to continue with this application route and to seek advice from the local planning authority. |
+| dwellinghouse-use | Dwellinghouse use | Whether every dwellinghouse in the building will remain in Use Class C3 following the change of use, with no other use except purposes ancillary to its use as a dwellinghouse. | MUST |  |
+
+
+
+## Class MA proposed works and impacts
+
+The proposed development, net increase in dwellinghouses and impacts and risks associated with a Class MA change of use to dwellinghouses.
+
+**Class MA proposed works and impacts module**
+
+| reference | name | description | requirement | notes |
+| --- | --- | --- | --- | --- |
+| proposal-description | Proposal description | Description of the proposed development, including details of any dwellinghouses and other works proposed. | MUST |  |
+| natural-light-details | Natural light details | Details of the provision of adequate natural light in all habitable rooms of the proposed dwellinghouses. | MUST |  |
+| net-dwellings-increase | Net increase in dwellings | The number of dwellinghouses proposed by the development minus the number of dwellinghouses in the existing building. | MUST |  |
+| transport-impacts | Transport impacts | Details of transport impacts from the proposed development and how they will be mitigated, particularly to ensure safe site access. | MUST |  |
+| contamination-risks | Contamination risks | Details of contamination risks associated with the proposed development and how they will be mitigated. | MUST |  |
+| flooding-risks | Flooding risks | Details of flooding risks associated with the proposed development and how they will be mitigated. | MUST |  |
+| commercial-noise-impacts | Commercial noise impacts | Details of the impacts of noise from commercial premises on the intended occupiers of the proposed dwellinghouses and how they will be mitigated. | MUST |  |
+| fire-safety-impacts | Fire safety impacts | Details of fire safety impacts on the intended occupants of the building. | MAY |  |
+| conservation-area-impacts | Conservation area impacts | Details of the impacts of the proposed change of use on the character or sustainability of the conservation area and how they will be mitigated. | MAY |  |
+| industrial-area-impacts | Industrial area impacts | Details of impacts on intended occupiers from introducing residential use into an area used for general or heavy industry, waste management, storage and distribution or a mix of these uses, and how they will be mitigated. | MAY |  |
+| local-service-loss-impacts | Local service loss impacts | Details of impacts on local service provision from the loss of a registered nursery or health centre through the proposed development and how they will be mitigated. | MAY |  |
+
+
 
 ## Site details
 

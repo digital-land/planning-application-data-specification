@@ -9,7 +9,7 @@ How any natural habitats on the development site will be improved by the propose
 | bng-exempt | Biodiversity gain exemption | Statement whether the biodiversity gain condition will apply if permission is granted. Householder applicants need to confirm the biodiversity gain condition does not apply. | hh | MUST |  |
 | bng-condition-applies | Biodiversity gain condition applies | Does the applicant believe the Biodiversity Gain Condition applies to this application | full, technical-details-consent, outline, demolition-con-area | MUST |  |
 | bng-condition-exemption-reasons | Biodiversity gain condition exemption reason[]{} | Reasons why BNG does not apply, referencing exemptions or transitional arrangements | full, technical-details-consent, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `False` |
-| bng-details | Biodiversity net gain details{} | Comprehensive details about biodiversity net gain assessment including pre-development value, habitat loss information, and supporting documentation | full, technical-details-consent, outline, demolition-con-area | MAY | Rule: is a MUST if `bng-condition-applies` is `True` |
+| bng-details | Biodiversity net gain details{} | Comprehensive details about biodiversity net gain assessment including pre-development value, habitat loss information, and supporting documentation |  | MUST |  |
 
 
 **BNG exemption reason component**
@@ -55,7 +55,7 @@ details | Details | Additional details or information about an item | MAY |  | p
 
 - application-type == 'hh' REQUIRES only bng-exempt field
 - bng-condition-applies == false REQUIRES bng-condition-exemption-reasons.length >= 1
-- bng-condition-applies == true REQUIRES bng-details
+- BNG details are required when their applies-if condition is satisfied and are forbidden otherwise
 - application-type == 'hh' RECOMMENDS bng-exempt == false
 - bng-condition-exemption-reasons[].exemption-type must be from bng-exemption-type codelist
 - bng-details.pre-development-date < submission-details.submitted-at REQUIRES bng-details.earlier-date-reason

@@ -1,14 +1,13 @@
-# Discharge condition
+# Discharge of conditions
 
-How any conditions imposed as part of being given planning permission will be met
+Information submitted to demonstrate how the requirements of one or more planning conditions will be met
 
-**Discharge condition module**
+**Discharge of conditions module**
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| description-list | Description list | Description or list of materials/details that are being submitted for approval | approval-condition | MUST |  |
+| description | Description | A full description or list of the materials or other details submitted for approval |  | MUST |  |
 
 **Validation rules**
 
-- Description-list must provide clear details of materials/details submitted for approval
-- This module is only applicable to approval-condition applications
+- The description must clearly identify the materials or details being submitted for approval

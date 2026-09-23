@@ -22,7 +22,7 @@ details | Details | Additional details or information about an item | MAY |  | p
 
 **Validation rules**
 
-- If condition-concerns is true then Arboricultural impact assessment document is required
+- If condition-concerns is true then Tree condition evidence (condition-of-trees) is required
 - If causing-subsidence is true then Subsidence Report is required
 - If causing-structural-damage is true then a Structural damage report is required
 - supporting-documents must include sketch plan, supporting documents, reports, or photographs

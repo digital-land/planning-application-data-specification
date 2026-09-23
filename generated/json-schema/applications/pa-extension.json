@@ -38,6 +38,9 @@
     },
     "site-details": {
       "$ref": "#/definitions/site-details"
+    },
+    "submission-details": {
+      "$ref": "#/definitions/submission-details"
     }
   },
   "required": [
@@ -51,10 +54,78 @@
     "declaration",
     "desc-proposed-works",
     "eligibility-extension",
-    "site-details"
+    "site-details",
+    "submission-details"
   ],
   "definitions": {
-    "contact-address": {
+    "applicant": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "site-location": {
+      "type": "object",
+      "properties": {
+        "geometry": {
+          "type": "string"
+        },
+        "site-address": {
+          "$ref": "#/definitions/site-address"
+        },
+        "easting": {
+          "type": "number"
+        },
+        "northing": {
+          "type": "number"
+        },
+        "latitude": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "geometry",
+        "site-address"
+      ]
+    },
+    "agent": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
+        },
+        "user-role": {
+          "type": "string",
+          "enum": [
+            "agent",
+            "proxy"
+          ]
+        }
+      },
+      "required": [
+        "reference",
+        "person"
+      ]
+    },
+    "site-address": {
       "type": "object",
       "properties": {
         "address-text": {
@@ -63,12 +134,45 @@
         "postcode": {
           "type": "string"
         },
-        "uprn": {
-          "type": "string"
+        "uprns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "usrns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
         }
       },
       "required": [
         "address-text"
+      ]
+    },
+    "person": {
+      "type": "object",
+      "properties": {
+        "title": {
+          "type": "string"
+        },
+        "first-name": {
+          "type": "string"
+        },
+        "last-name": {
+          "type": "string"
+        },
+        "contact-address": {
+          "$ref": "#/definitions/contact-address"
+        }
+      },
+      "required": [
+        "first-name",
+        "last-name",
+        "contact-address"
       ]
     },
     "contact-details": {
@@ -106,96 +210,7 @@
       },
       "required": []
     },
-    "agent": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        },
-        "user-role": {
-          "type": "string",
-          "enum": [
-            "agent",
-            "proxy"
-          ]
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "applicant": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "person": {
-      "type": "object",
-      "properties": {
-        "title": {
-          "type": "string"
-        },
-        "first-name": {
-          "type": "string"
-        },
-        "last-name": {
-          "type": "string"
-        },
-        "contact-address": {
-          "$ref": "#/definitions/contact-address"
-        }
-      },
-      "required": [
-        "first-name",
-        "last-name",
-        "contact-address"
-      ]
-    },
-    "site-location": {
-      "type": "object",
-      "properties": {
-        "geometry": {
-          "type": "string"
-        },
-        "site-address": {
-          "$ref": "#/definitions/site-address"
-        },
-        "easting": {
-          "type": "number"
-        },
-        "northing": {
-          "type": "number"
-        },
-        "latitude": {
-          "type": "string"
-        },
-        "longitude": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "geometry",
-        "site-address"
-      ]
-    },
-    "site-address": {
+    "contact-address": {
       "type": "object",
       "properties": {
         "address-text": {
@@ -204,38 +219,42 @@
         "postcode": {
           "type": "string"
         },
-        "uprns": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        },
-        "usrns": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
+        "uprn": {
+          "type": "string"
         }
       },
       "required": [
         "address-text"
       ]
     },
-    "adj-premises": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "addresses": {
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "agent-reference",
+        "contact-details"
+      ]
+    },
+    "checklist": {
+      "type": "object",
+      "properties": {
+        "national-req-types": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/contact-address"
+            "type": "string"
           },
           "minItems": 1
         }
       },
       "required": [
-        "addresses"
+        "national-req-types"
       ]
     },
     "site-details": {
@@ -253,6 +272,30 @@
         "site-locations"
       ]
     },
+    "conflict-of-interest": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "declaration": {
+      "type": "object",
+      "properties": {
+        "person-reference": {
+          "type": "string"
+        },
+        "declaration-confirmed": {
+          "type": "boolean"
+        },
+        "declaration-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "person-reference",
+        "declaration-confirmed",
+        "declaration-date"
+      ]
+    },
     "applicant-details": {
       "type": "object",
       "properties": {
@@ -268,20 +311,52 @@
         "applicants"
       ]
     },
-    "checklist": {
+    "desc-proposed-works": {
       "type": "object",
       "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
+        "proposed-works-details": {
+          "type": "string"
+        },
+        "extension-depth": {
+          "type": "number"
+        },
+        "max-extension-height": {
+          "type": "number"
+        },
+        "eaves-height": {
+          "type": "number"
         }
       },
       "required": [
-        "national-req-types"
+        "proposed-works-details",
+        "extension-depth",
+        "max-extension-height",
+        "eaves-height"
       ]
+    },
+    "applicant-contact": {
+      "type": "object",
+      "properties": {
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "applicant-reference",
+        "contact-details"
+      ]
+    },
+    "agent-details": {
+      "type": "object",
+      "properties": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
     },
     "eligibility-extension": {
       "type": "object",
@@ -346,91 +421,704 @@
         ]
       }
     },
-    "agent-contact": {
+    "adj-premises": {
       "type": "object",
       "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
+        "addresses": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/contact-address"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "agent-reference",
-        "contact-details"
+        "addresses"
       ]
     },
-    "desc-proposed-works": {
+    "submission-details": {
       "type": "object",
       "properties": {
-        "proposed-works-details": {
+        "submission-reference": {
           "type": "string"
         },
-        "extension-depth": {
+        "application-types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "hh",
+              "full",
+              "outline",
+              "reserved-matters",
+              "demolition-con-area",
+              "lbc",
+              "advertising",
+              "ldc",
+              "prior-approval",
+              "s73",
+              "approval-condition",
+              "consent-under-tpo",
+              "non-material-amendment",
+              "pip",
+              "extraction-oil-gas",
+              "hedgerow-removal",
+              "notice-trees-in-con-area",
+              "waste-dev",
+              "land-drainage-consent",
+              "footpath-diversion",
+              "cert-alt-appropriate-dev",
+              "overhead-lines",
+              "nsips",
+              "mod-construction-hours",
+              "extend-duration-permission",
+              "mineral-extraction",
+              "mod-discharge-s106",
+              "twao",
+              "change-of-use",
+              "reg-3",
+              "reg-4",
+              "mineral-app",
+              "technical-details-consent",
+              "romp",
+              "haz-substance-consent",
+              "psi-app",
+              "ldc-existing-use",
+              "ldc-prospective-use",
+              "ldc-proposed-work-lb",
+              "outline-some",
+              "outline-all",
+              "pa-extension",
+              "pa-storey",
+              "pa-demo-building",
+              "cho-agri-to-dwh",
+              "cho-commercial-to-dwh",
+              "cho-commercial-to-mixed",
+              "cho-sui-to-dwh",
+              "cho-agri-to-flexcom",
+              "cho-agri-to-school",
+              "cho-comm-to-school",
+              "cho-amusements-to-dwh",
+              "pa-flats-de-blocks",
+              "pa-flats-de-comm",
+              "pa-flats-terr-comm",
+              "pa-flats-de-dwh",
+              "pa-flats-terr-dwh",
+              "pa-demo-replace-dwh",
+              "pa-ecomms-network",
+              "pa-build-agri-forest",
+              "pa-road-agri-forest",
+              "pa-excavate-agri",
+              "pa-fish-struct",
+              "pa-col-fac-shop",
+              "pa-roof-solar-nondom",
+              "pa-uni-building",
+              "pa-movable-structure",
+              "pa-accom-defence",
+              "pa-solar-eq-dom",
+              "pa-sa-solar-dom",
+              "pa-sa-solar-nondom",
+              "pa-solar-nondom-park",
+              "pa-tmp-school-vacant-comm",
+              "pa-tmp-use-comm-film"
+            ]
+          },
+          "minItems": 1
+        },
+        "specification-profile": {
+          "type": "string",
+          "enum": [
+            "mhclg-core",
+            "gla",
+            "national-public-view"
+          ]
+        },
+        "planning-authority": {
+          "type": "string",
+          "enum": [
+            "local-authority:ADU",
+            "local-authority:ALL",
+            "local-authority:AMB",
+            "local-authority:ARU",
+            "local-authority:ASF",
+            "local-authority:ASH",
+            "local-authority:AYL",
+            "local-authority:BAB",
+            "local-authority:BAE",
+            "local-authority:BAI",
+            "local-authority:BAN",
+            "local-authority:BAR",
+            "local-authority:BAS",
+            "local-authority:BBD",
+            "local-authority:BDF",
+            "local-authority:BDG",
+            "local-authority:BEN",
+            "local-authority:BEX",
+            "local-authority:BIR",
+            "local-authority:BKM",
+            "local-authority:BLA",
+            "local-authority:BMH",
+            "local-authority:BNE",
+            "local-authority:BNH",
+            "local-authority:BNS",
+            "local-authority:BOL",
+            "local-authority:BOS",
+            "local-authority:BOT",
+            "local-authority:BPC",
+            "local-authority:BPL",
+            "local-authority:BRA",
+            "local-authority:BRC",
+            "local-authority:BRD",
+            "local-authority:BRE",
+            "local-authority:BRM",
+            "local-authority:BRO",
+            "local-authority:BRT",
+            "local-authority:BRW",
+            "local-authority:BRX",
+            "local-authority:BRY",
+            "local-authority:BST",
+            "local-authority:BUC",
+            "local-authority:BUN",
+            "local-authority:BUR",
+            "local-authority:CAB",
+            "local-authority:CAM",
+            "local-authority:CAN",
+            "local-authority:CAR",
+            "local-authority:CAS",
+            "local-authority:CAT",
+            "local-authority:CBF",
+            "local-authority:CHA",
+            "local-authority:CHC",
+            "local-authority:CHE",
+            "local-authority:CHI",
+            "local-authority:CHL",
+            "local-authority:CHN",
+            "local-authority:CHO",
+            "local-authority:CHR",
+            "local-authority:CHS",
+            "local-authority:CHT",
+            "local-authority:CHW",
+            "local-authority:CLD",
+            "local-authority:CMA",
+            "local-authority:CMD",
+            "local-authority:COL",
+            "local-authority:CON",
+            "local-authority:COP",
+            "local-authority:COR",
+            "local-authority:COT",
+            "local-authority:COV",
+            "local-authority:CPCA",
+            "local-authority:CRA",
+            "local-authority:CRW",
+            "local-authority:CRY",
+            "local-authority:DAC",
+            "local-authority:DAL",
+            "local-authority:DAR",
+            "local-authority:DAV",
+            "local-authority:DBY",
+            "local-authority:DEB",
+            "local-authority:DER",
+            "local-authority:DEV",
+            "local-authority:DNC",
+            "local-authority:DOR",
+            "local-authority:DOV",
+            "local-authority:DST",
+            "local-authority:DUD",
+            "local-authority:DUR",
+            "local-authority:EAL",
+            "local-authority:EAS",
+            "local-authority:EAT",
+            "local-authority:ECA",
+            "local-authority:EDE",
+            "local-authority:EDN",
+            "local-authority:EDO",
+            "local-authority:EHA",
+            "local-authority:EHE",
+            "local-authority:ELI",
+            "local-authority:ELM",
+            "local-authority:ENF",
+            "local-authority:ENO",
+            "local-authority:EPP",
+            "local-authority:EPS",
+            "local-authority:ERE",
+            "local-authority:ERY",
+            "local-authority:ESK",
+            "local-authority:ESS",
+            "local-authority:EST",
+            "local-authority:ESX",
+            "local-authority:EXE",
+            "local-authority:FAR",
+            "local-authority:FEN",
+            "local-authority:FOE",
+            "local-authority:FOR",
+            "local-authority:FYL",
+            "local-authority:GAT",
+            "local-authority:GED",
+            "local-authority:GLA",
+            "local-authority:GLO",
+            "local-authority:GLS",
+            "local-authority:GMCA",
+            "local-authority:GOS",
+            "local-authority:GRA",
+            "local-authority:GRE",
+            "local-authority:GRT",
+            "local-authority:GRY",
+            "local-authority:HAA",
+            "local-authority:HAE",
+            "local-authority:HAG",
+            "local-authority:HAL",
+            "local-authority:HAM",
+            "local-authority:HAO",
+            "local-authority:HAR",
+            "local-authority:HAS",
+            "local-authority:HAT",
+            "local-authority:HAV",
+            "local-authority:HCK",
+            "local-authority:HEF",
+            "local-authority:HER",
+            "local-authority:HIG",
+            "local-authority:HIL",
+            "local-authority:HIN",
+            "local-authority:HMF",
+            "local-authority:HNS",
+            "local-authority:HOR",
+            "local-authority:HPL",
+            "local-authority:HRT",
+            "local-authority:HRW",
+            "local-authority:HRY",
+            "local-authority:HUN",
+            "local-authority:HYN",
+            "local-authority:IOS",
+            "local-authority:IOW",
+            "local-authority:IPS",
+            "local-authority:ISL",
+            "local-authority:KEC",
+            "local-authority:KEN",
+            "local-authority:KET",
+            "local-authority:KHL",
+            "local-authority:KIN",
+            "local-authority:KIR",
+            "local-authority:KTT",
+            "local-authority:KWL",
+            "local-authority:LAC",
+            "local-authority:LAN",
+            "local-authority:LBH",
+            "local-authority:LCE",
+            "local-authority:LCR",
+            "local-authority:LDS",
+            "local-authority:LEC",
+            "local-authority:LEE",
+            "local-authority:LEW",
+            "local-authority:LIC",
+            "local-authority:LIF",
+            "local-authority:LIN",
+            "local-authority:LIV",
+            "local-authority:LND",
+            "local-authority:LUT",
+            "local-authority:MAI",
+            "local-authority:MAL",
+            "local-authority:MAN",
+            "local-authority:MAS",
+            "local-authority:MAV",
+            "local-authority:MDB",
+            "local-authority:MDE",
+            "local-authority:MDW",
+            "local-authority:MEL",
+            "local-authority:MEN",
+            "local-authority:MIK",
+            "local-authority:MOL",
+            "local-authority:MRT",
+            "local-authority:MSS",
+            "local-authority:MSU",
+            "local-authority:NBL",
+            "local-authority:NDE",
+            "local-authority:NDO",
+            "local-authority:NEA",
+            "local-authority:NEC",
+            "local-authority:NECA",
+            "local-authority:NED",
+            "local-authority:NEL",
+            "local-authority:NET",
+            "local-authority:NEW",
+            "local-authority:NFK",
+            "local-authority:NGM",
+            "local-authority:NHE",
+            "local-authority:NKE",
+            "local-authority:NLN",
+            "local-authority:NNO",
+            "local-authority:NOR",
+            "local-authority:NOW",
+            "local-authority:NSM",
+            "local-authority:NTCA",
+            "local-authority:NTH",
+            "local-authority:NTT",
+            "local-authority:NTY",
+            "local-authority:NUN",
+            "local-authority:NWA",
+            "local-authority:NWL",
+            "local-authority:NWM",
+            "local-authority:NYK",
+            "local-authority:OAD",
+            "local-authority:OLD",
+            "local-authority:OXF",
+            "local-authority:OXO",
+            "local-authority:PEN",
+            "local-authority:PLY",
+            "local-authority:POL",
+            "local-authority:POR",
+            "local-authority:PRE",
+            "local-authority:PTE",
+            "local-authority:PUR",
+            "local-authority:RCC",
+            "local-authority:RCH",
+            "local-authority:RDB",
+            "local-authority:RDG",
+            "local-authority:RED",
+            "local-authority:REI",
+            "local-authority:RIB",
+            "local-authority:RIC",
+            "local-authority:RIH",
+            "local-authority:ROC",
+            "local-authority:ROH",
+            "local-authority:ROS",
+            "local-authority:ROT",
+            "local-authority:RUG",
+            "local-authority:RUH",
+            "local-authority:RUN",
+            "local-authority:RUS",
+            "local-authority:RUT",
+            "local-authority:RYE",
+            "local-authority:SAL",
+            "local-authority:SAW",
+            "local-authority:SBU",
+            "local-authority:SCA",
+            "local-authority:SCE",
+            "local-authority:SYMCA",
+            "local-authority:SDE",
+            "local-authority:SED",
+            "local-authority:SEG",
+            "local-authority:SEL",
+            "local-authority:SEV",
+            "local-authority:SFK",
+            "local-authority:SFT",
+            "local-authority:SGC",
+            "local-authority:SHA",
+            "local-authority:SHE",
+            "local-authority:SHF",
+            "local-authority:SHN",
+            "local-authority:SHO",
+            "local-authority:SHR",
+            "local-authority:SKE",
+            "local-authority:SKP",
+            "local-authority:SLA",
+            "local-authority:SLF",
+            "local-authority:SLG",
+            "local-authority:SND",
+            "local-authority:SNO",
+            "local-authority:SNR",
+            "local-authority:SOL",
+            "local-authority:SOM",
+            "local-authority:SOS",
+            "local-authority:SOX",
+            "local-authority:SPE",
+            "local-authority:SRI",
+            "local-authority:SRY",
+            "local-authority:SSO",
+            "local-authority:SST",
+            "local-authority:STA",
+            "local-authority:STE",
+            "local-authority:STF",
+            "local-authority:STH",
+            "local-authority:STN",
+            "local-authority:STO",
+            "local-authority:STR",
+            "local-authority:STS",
+            "local-authority:STT",
+            "local-authority:STV",
+            "local-authority:STY",
+            "local-authority:SUF",
+            "local-authority:SUR",
+            "local-authority:SWD",
+            "local-authority:SWK",
+            "local-authority:SWL",
+            "local-authority:SWT",
+            "local-authority:TAM",
+            "local-authority:TAN",
+            "local-authority:TAU",
+            "local-authority:TAW",
+            "local-authority:TEI",
+            "local-authority:TEN",
+            "local-authority:TES",
+            "local-authority:TEW",
+            "local-authority:TFW",
+            "local-authority:THA",
+            "local-authority:THE",
+            "local-authority:THR",
+            "local-authority:TOB",
+            "local-authority:TON",
+            "local-authority:TOR",
+            "local-authority:TRF",
+            "local-authority:TUN",
+            "local-authority:TVCA",
+            "local-authority:TWH",
+            "local-authority:UTT",
+            "local-authority:VAL",
+            "local-authority:WAE",
+            "local-authority:WAR",
+            "local-authority:WAT",
+            "local-authority:WAV",
+            "local-authority:WAW",
+            "local-authority:WBK",
+            "local-authority:WDE",
+            "local-authority:WDO",
+            "local-authority:WEA",
+            "local-authority:WECA",
+            "local-authority:WEL",
+            "local-authority:WEW",
+            "local-authority:WEY",
+            "local-authority:WFT",
+            "local-authority:WGN",
+            "local-authority:WIL",
+            "local-authority:WIN",
+            "local-authority:WKF",
+            "local-authority:WLA",
+            "local-authority:WLI",
+            "local-authority:WLL",
+            "local-authority:WLV",
+            "local-authority:WMCA",
+            "local-authority:WND",
+            "local-authority:WNM",
+            "local-authority:WOC",
+            "local-authority:WOI",
+            "local-authority:WOK",
+            "local-authority:WOR",
+            "local-authority:WOT",
+            "local-authority:WOX",
+            "local-authority:WRL",
+            "local-authority:WRT",
+            "local-authority:WSK",
+            "local-authority:WSM",
+            "local-authority:WSO",
+            "local-authority:WSX",
+            "local-authority:WYC",
+            "local-authority:WYCA",
+            "local-authority:WYE",
+            "local-authority:WYO",
+            "local-authority:WYR",
+            "local-authority:YOR",
+            "local-authority:CUA",
+            "local-authority:WFUA",
+            "local-authority:SUA",
+            "local-authority:NYUA",
+            "local-authority:YNYCA",
+            "local-authority:NNECA",
+            "local-authority:EMCCA",
+            "local-authority:NNUA",
+            "local-authority:WNUA",
+            "national-park-authority:Q20198711",
+            "national-park-authority:Q27159704",
+            "national-park-authority:Q27178932",
+            "national-park-authority:Q4972284",
+            "national-park-authority:Q5225646",
+            "national-park-authority:Q72617158",
+            "national-park-authority:Q72617669",
+            "national-park-authority:Q72617784",
+            "national-park-authority:Q72617890",
+            "national-park-authority:Q72617988",
+            "development-corporation:Q20648596",
+            "development-corporation:Q4916714",
+            "development-corporation:Q6670544",
+            "development-corporation:Q6670837",
+            "development-corporation:Q72456968",
+            "development-corporation:Q72463795",
+            "development-corporation:Q7799380",
+            "development-corporation:Q7860503",
+            "development-corporation:Q7986087",
+            "development-corporation:Q105544651",
+            "development-corporation:Q105544654",
+            "development-corporation:Q5061392",
+            "development-corporation:Q3258953",
+            "development-corporation:Q105544669",
+            "development-corporation:Q7694573",
+            "development-corporation:Q117149370",
+            "development-corporation:Q124604981",
+            "development-corporation:Q6515953",
+            "development-corporation:Q4968888",
+            "development-corporation:Q5182976",
+            "development-corporation:Q115585981",
+            "development-corporation:Q3920908",
+            "development-corporation:Q6861239",
+            "development-corporation:Q7177999",
+            "development-corporation:Q7205796",
+            "development-corporation:Q7832579",
+            "development-corporation:stockport-town-centre-MDC",
+            "development-corporation:northern-gateway-MDC",
+            "development-corporation:old-trafford-MDC",
+            "development-corporation:Q137717415"
+          ]
+        },
+        "submitted-at": {
+          "type": "string"
+        },
+        "created-at": {
+          "type": "string"
+        },
+        "documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/document"
+          },
+          "minItems": 1
+        },
+        "fee": {
+          "$ref": "#/definitions/fee"
+        }
+      },
+      "required": [
+        "submission-reference",
+        "application-types",
+        "specification-profile",
+        "planning-authority",
+        "submitted-at",
+        "created-at",
+        "documents"
+      ]
+    },
+    "fee": {
+      "type": "object",
+      "properties": {
+        "amount": {
           "type": "number"
         },
-        "max-extension-height": {
+        "amount-paid": {
           "type": "number"
         },
-        "eaves-height": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "proposed-works-details",
-        "extension-depth",
-        "max-extension-height",
-        "eaves-height"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
-    "declaration": {
-      "type": "object",
-      "properties": {
-        "person-reference": {
-          "type": "string"
-        },
-        "declaration-confirmed": {
-          "type": "boolean"
-        },
-        "declaration-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "person-reference",
-        "declaration-confirmed",
-        "declaration-date"
-      ]
-    },
-    "agent-details": {
-      "type": "object",
-      "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
         }
       },
       "required": []
     },
-    "conflict-of-interest": {
+    "document": {
       "type": "object",
-      "properties": {},
-      "required": []
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "document-types": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": [
+              "acoustic-report",
+              "affordable-housing-statement",
+              "air-quality-assessment",
+              "arboriculturist-report",
+              "archaeological-assessment",
+              "biodiversity-survey-report",
+              "cil-form",
+              "condition-of-trees",
+              "application-form",
+              "daylight-sunlight-assessment",
+              "design-and-access-statement",
+              "elevation-existing",
+              "elevation-proposed",
+              "energy-statement",
+              "eia",
+              "environmental-statement",
+              "flood-risk-assessment",
+              "floor-plan-existing",
+              "floor-plan-proposed",
+              "heritage-impact-assessment",
+              "heritage-statement",
+              "hydrocarbon-licence",
+              "land-contamination-assessment",
+              "landscaping-plan",
+              "lighting-assessment",
+              "location-plan",
+              "noise-and-traffic-assessment",
+              "noise-assessment",
+              "photos",
+              "planning-statement",
+              "roof-plan-existing",
+              "roof-plan-proposed",
+              "schedule-of-works",
+              "section-existing",
+              "section-proposed",
+              "site-plan",
+              "site-restoration",
+              "sketch-plan",
+              "sci",
+              "structural-damage",
+              "subsidence-report",
+              "sustainable-drainage-strategy",
+              "transport-assessment",
+              "travel-plan",
+              "ecology-assessment",
+              "fire-statement",
+              "habitat-baseline",
+              "proposed-habitat-plan",
+              "sustainability-statement",
+              "bng-metric",
+              "site-investigation",
+              "construction-management-plan",
+              "waste-management-plan",
+              "water-impact-assessment",
+              "viability-assessment",
+              "town-centre-impact-assessment",
+              "telecommunications-report",
+              "renewables-decommissioning-report",
+              "recreation-facilities-assessment",
+              "coastal-change-assessment",
+              "protected-landscape-assessment"
+            ]
+          },
+          "minItems": 1
+        },
+        "uploaded-date": {
+          "type": "string"
+        },
+        "file": {
+          "$ref": "#/definitions/file"
+        }
+      },
+      "required": [
+        "reference",
+        "name",
+        "document-types",
+        "uploaded-date",
+        "file"
+      ]
+    },
+    "file": {
+      "type": "object",
+      "properties": {
+        "base64-content": {
+          "type": "string"
+        },
+        "filename": {
+          "type": "string"
+        },
+        "mime-type": {
+          "type": "string"
+        },
+        "file-size": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "filename"
+      ]
     }
   }
 }

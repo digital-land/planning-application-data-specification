@@ -19,9 +19,9 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 waste-management-facility-type | Waste management facility type | Type of waste management facility being described in this entry | MUST | Select from the **waste-management-type** enum
 total-capacity | Total capacity | Total capacity of void in cubic metres (or tonnes/litres) | MUST | 
-unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MUST | Select from the **waste-capacity-unit** enum
+capacity-unit | Capacity unit | Unit used to express the total capacity of a waste management facility | MUST | Select from the **waste-capacity-unit** enum
 annual-throughput | Annual throughput | Maximum annual operational throughput in tonnes/litres | MUST | 
-unit-type | Unit type | Unit for capacity/throughput (e.g. cubic metres, tonnes, litres) | MUST | Select from the **waste-capacity-unit** enum
+throughput-unit | Throughput unit | Unit used to express the annual throughput of a waste management facility | MUST | Select from the **waste-throughput-unit** enum
 
 
 **Waste streams component**

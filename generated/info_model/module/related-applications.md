@@ -12,11 +12,13 @@ Details of any other development proposals made for the site
 
 **Related application details component**
 
-field | name | description | required | notes
--- | -- | -- | -- | --
-reference | Reference | The reference for the related application | MUST | 
-description | Description | A description of the related application | MUST | 
-decision-date | Decision date | The date when the decision was made, in YYYY-MM-DD format | MAY | 
+field | name | description | required | notes | only for application
+-- | -- | -- | -- | -- | --
+reference | Reference | The reference for the related application | MUST |  | 
+description | Description | A description of the related application | MUST |  | 
+decision-date | Decision date | The date when the decision was made, in YYYY-MM-DD format | MAY |  | 
+eia-application | EIA application | Whether the related application was an Environmental Impact Assessment application | MUST |  | reserved-matters
+environmental-statement-submitted | Environmental statement submitted | Whether an Environmental Statement was submitted with the related application | MAY | Rule: is a MUST if `eia-application` is `True` | reserved-matters
 
 **Validation rules**
 
