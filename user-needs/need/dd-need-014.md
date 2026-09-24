@@ -2,11 +2,13 @@
 need: dd-need-014
 status: proposed
 priority: high
-name: Record decision date
+name: Know when a decision was made
 statement: >
-  As a planning stakeholder, I need to know the exact date of the planning decision so that I can track the timeline of the application, understand processing times, and ensure compliance with statutory decision-making periods.
+  As a planning system user, I need to know when the formal decision was made so
+  that I can place it in the application timeline and distinguish it from
+  earlier resolutions or recommendations.
 actors:
-  - planning-stakeholder
+  - planning-system-user
 scope: in
 themes:
   - decision
@@ -15,10 +17,8 @@ source:
   - type: legislation
     notes:
 variations:
-next_step: rewrite
-notes:
+next_step:
+notes: >
+  Related performance needs are covered by need-ps-025 and need-ps-026. Related
+  interim resolution needs are covered by dd-need-101 and dd-need-102.
 ---
-
-Similar need:
-
-As a planner, I need to record determination targets and actual decision dates so that I can measure performance against statutory timescales.

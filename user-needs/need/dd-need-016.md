@@ -2,11 +2,13 @@
 need: dd-need-016
 status: proposed
 priority: high
-name: Know if a decision has a section 106 agreement
+name: Understand section 106 commitments linked to a decision
 statement: >
-  As a planning stakeholder, I need to know whether a planning decision includes a section 106 agreement so that I can understand what extra legal commitments, contributions, or requirements are tied to the development.
+  As a planning system user, I need to know whether a decision is linked to a
+  section 106 agreement and understand the commitments it secures so that I
+  have a complete picture of the permission.
 actors:
-  - planning-stakeholder
+  - planning-system-user
 scope: in
 themes:
   - obligations
@@ -15,6 +17,9 @@ source:
   - type: legislation
     notes:
 variations:
+  - dd-need-049
 next_step:
-notes:
+notes: >
+  Related authority and policy needs are covered by dd-need-060 and
+  dd-need-061.
 ---
