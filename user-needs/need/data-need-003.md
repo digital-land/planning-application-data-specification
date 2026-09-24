@@ -2,11 +2,13 @@
 need: data-need-003
 status: proposed
 priority: high
-name: Represent spatial representations consistently
+name: Represent spatial information consistently
 statement: >
-  As a planning system user or service builder, I need spatial representations to be captured consistently so that services can map applications, run spatial checks, and link them to other geospatial data without manual interpretation.
+  As a data user, I need spatial representations of application sites to be
+  captured consistently so that I can map applications, run spatial checks and
+  link them to other geospatial data without manual interpretation.
 actors:
-  - planning-system-user
+  - data-user
   - service-builder
 scope: in
 themes:

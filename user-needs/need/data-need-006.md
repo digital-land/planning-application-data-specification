@@ -2,9 +2,11 @@
 need: data-need-006
 status: proposed
 priority: medium
-name: Understand additional context about a record
+name: Understand qualifications affecting a record
 statement: >
-  As a data user, I need to understand relevant context that is not otherwise captured about a record so that I can interpret and use the data appropriately.
+  As a data user, I need to understand qualifications, source limitations or
+  unusual circumstances affecting a record so that I can judge how to
+  interpret and use it.
 actors:
   - data-user
 scope: in

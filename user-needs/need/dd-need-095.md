@@ -17,6 +17,8 @@ source:
   - type: data-design
     notes: Proposed from discussion about helping people discover applications affecting places they recognise or care about.
 variations:
+  - data-need-005
+  - dd-need-094
 next_step:
 notes:
 ---
