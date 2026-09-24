@@ -2,11 +2,13 @@
 need: dd-need-011
 status: proposed
 priority: high
-name: Submit geospatial data in usable formats
+name: Use accurate spatial information in assessment
 statement: >
-  As a planner, I need geospatial data (e.g. red line boundary, trees, community spaces) to be submitted in usable formats so that I don’t have to manually recreate it.
+  As a planning practitioner, I need accurate spatial information about the
+  proposal and relevant site features so that I can assess their location and
+  relationships without recreating them from documents.
 actors:
-  - planner
+  - planning-practitioner
 scope: in
 themes:
   - geospatial
@@ -15,10 +17,9 @@ source:
   - type: interview
     notes:
 variations:
-next_step: rewrite
-notes: this might need a rewrite because its a bit solution-y
+  - data-need-003
+next_step: review
+notes: >
+  The recorded interview source does not include supporting notes, so the
+  priority and strength of evidence need review.
 ---
-
-Similar needs:
-
- As a planner, I need to receive geospatial data that is accurate and machine-readable so that assessment work can focus on planning judgment rather than reproducing maps.

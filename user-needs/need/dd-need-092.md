@@ -20,6 +20,7 @@ source:
     notes: Proposed from recent discussion and needs further shaping before being
       treated as a settled in-scope requirement.
 variations:
+  - dd-need-086
 next_step: review
 notes: |
   Confidence: low. This need is about tracking housing delivery from planning permission through to completion.

@@ -2,20 +2,22 @@
 need: dd-need-034
 status: proposed
 priority: high
-name: Link decision to application
+name: Know which application a decision relates to
 statement: >
-  As a planner, analyst or developer, I need to know which application a decision relates to so that I can understand clearly what development has been approved or refused
+  As a planning system user, I need to know which application a decision relates
+  to so that I can understand which proposal was approved or refused.
 actors:
-  - planner
+  - planning-system-user
+  - planning-practitioner
   - analyst
-  - developer
+  - applicant
 scope: in
 themes:
   - decision
 source:
   - type: interview
     notes:
-variations: 
+variations:
   - dd-need-033
 next_step:
 notes:

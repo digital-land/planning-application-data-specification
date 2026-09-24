@@ -2,29 +2,27 @@
 need: dd-need-010
 status: proposed
 priority: medium
-name: Reflect policy changes in data capture
+name: Keep standards aligned with policy and regulation
 statement: >
-  As a planner, I need changes in policy and regulation to be reflected in how planning information is captured and used so that I am not forced to rely on workarounds for years.
+  As a planning practitioner, I need planning data standards and forms to keep
+  pace with policy and regulatory change so that I can work with current
+  requirements without relying on long-lived workarounds.
 actors:
-  - planner
+  - planning-practitioner
 scope: out-of-spec
 themes:
   - policy
   - data-quality
 source:
   - type: community-session
-    notes:
+    notes: >
+      Participants described forms and standards remaining out of date after
+      policy or legislative change, leading to long-lived workarounds. They also
+      highlighted practitioner feedback, community governance and coordination
+      between planning authorities as ways standards could continue to evolve.
 variations:
-next_step:
-notes:
+next_step: review
+notes: >
+  This concerns governance and maintenance of the standard rather than coverage
+  within the planning application data specification itself.
 ---
-
-Similar needs:
-
-As a planner, I need forms and standards that evolve with legislation so that I’m not stuck with outdated requirements.
-
-As a planner, I need to know that my feedback on data standards will be heard so that I can stop relying on workarounds and influence future improvements.
-
-As MHCLG, I need a community process for evolving standards so that they don’t stagnate or depend entirely on software suppliers.
-
-As a planning authority, I need to coordinate with peers (e.g. GLA, Camden) so that we identify common needs and avoid duplicating work.
