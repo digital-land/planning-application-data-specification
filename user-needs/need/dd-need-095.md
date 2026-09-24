@@ -4,12 +4,11 @@ status: proposed
 priority: high
 name: Find applications by local area
 statement: >
-  As a member of the public or planning-system user, I need to find
-  applications by local area so that I can understand planning activity
-  affecting places I live, work in or care about.
+  As a public user, I need to find applications by local area so that I can
+  understand planning activity affecting places where I live, work or that I
+  care about.
 actors:
-  - member-of-the-public
-  - planning-system-user
+  - public-user
 scope: in
 themes:
   - site

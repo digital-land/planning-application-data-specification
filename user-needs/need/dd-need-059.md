@@ -2,11 +2,14 @@
 need: dd-need-059
 status: proposed
 priority: high
-name: Monitor committee resolutions and delays
+name: Monitor delays between resolution and formal decision
 statement: >
-  As a policy maker or oversight body, I need visibility of committee resolutions so that I can see how long applications take to move from committee decision to formal determination and where delays occur.
+  As a policy user, I need to know when a determining authority resolved to
+  grant or refuse permission and when the formal decision was issued so that I
+  can identify delays in finalising decisions.
 actors:
-  - policy-maker
+  - policy-user
+  - oversight-body
 scope: in
 themes:
   - governance
@@ -16,11 +19,8 @@ source:
     notes:
 variations:
 next_step:
-notes:
+notes: >
+  Related authority record-keeping needs are covered by dd-need-101 and
+  dd-need-102. Shared case-status needs are covered by dd-need-110 and
+  dd-need-111.
 ---
-
-Similar needs:
-
-As a user of the planning system,
-I need to know the outcome of committee meetings on planning applications
-so that I can clearly understand the status and direction of a case before the final decision notice is published.

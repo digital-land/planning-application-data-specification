@@ -2,12 +2,14 @@
 need: dd-need-028
 status: proposed
 priority: high
-name: Access development description without opening documents
+name: Understand proposed development at scale
 statement: >
-  As a policy maker and data user, I need to know the description of development without having to open the application form / decision notice so that I can understand, search, and analyse decisions efficiently at scale.
+  As a data user, I need to understand what development is proposed without
+  having to interpret attached documents so that I can find and analyse
+  applications efficiently at scale.
 actors:
-  - policy-maker
   - data-user
+  - policy-user
 scope: in
 themes:
   - decision
@@ -16,6 +18,6 @@ source:
   - type: data-design
     notes:
 variations:
-next_step: review
+next_step:
 notes:
 ---

@@ -2,9 +2,11 @@
 need: dd-need-068
 status: proposed
 priority: medium
-name: Measure time taken to supply additional information
+name: Manage delays in supplying additional information
 statement: >
-  As a planning service manager or a government analyst, I need to know when additional information was requested and when it was supplied so that I can understand how long information requests take to resolve and assess delays in the planning process.
+  As a planning service manager, I need to know how long requests for
+  additional information take to resolve so that I can identify bottlenecks
+  and improve how the service handles applications.
 actors:
   - planning-service-manager
   - central-government-analyst
@@ -17,6 +19,7 @@ source:
   - type: interview
     notes:
 variations:
+  - dd-need-123
 next_step: review
 notes:
 ---

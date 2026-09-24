@@ -2,11 +2,13 @@
 need: dd-need-024
 status: proposed
 priority: high
-name: Know which applications are withdrawn
+name: Account for withdrawn applications in service reporting
 statement: >
-  As a planning manager, I need to know which applications are withdrawn so that I can report accurately on determination rates and workload.
+  As a planning service manager, I need to distinguish withdrawn applications
+  from those awaiting or receiving a decision so that I can report outcomes
+  accurately and maintain a reliable picture of workload.
 actors:
-  - planning-manager
+  - planning-service-manager
 scope: in
 themes:
   - processing
@@ -15,8 +17,9 @@ themes:
 source:
   - type: ps1-ps2
     notes:
-variations: 
+variations:
   - dd-need-055
+  - dd-need-075
 next_step:
 notes:
 ---

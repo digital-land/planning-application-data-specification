@@ -1,12 +1,15 @@
 ---
 need: dd-need-027
 status: proposed
-priority: high
-name: See officer recommendation to committee
+priority: medium
+name: Compare officer recommendations with final decisions
 statement: >
-  As a policy maker in MHCLG, I need to know what recommendation the planning officer made to the committee so that I can understand how professional judgment aligns with final decisions and identify where political or procedural factors may be influencing outcomes.
+  As a policy user, I need to compare the planning officer's recommendation
+  with the final decision and know who made that decision so that I can identify
+  patterns where decision-makers depart from professional recommendations and
+  investigate why.
 actors:
-  - policy-maker
+  - policy-user
 scope: in
 themes:
   - governance

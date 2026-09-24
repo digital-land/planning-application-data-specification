@@ -2,12 +2,14 @@
 need: dd-need-061
 status: proposed
 priority: high
-name: Record section 106 agreements across developments
+name: Understand obligations secured through section 106 agreements
 statement: >
-  As a planning authority or policy maker, I need a clear record of section 106 agreements across developments so that I can understand how often they are used, what types of obligations are being secured, and how effectively planning is delivering mitigation and community benefits over time.
+  As a policy user, I need comparable information about section 106 agreements
+  across developments so that I can understand how they are used and what
+  obligations, mitigation and community benefits they secure.
 actors:
   - planning-authority
-  - policy-maker
+  - policy-user
 scope: in
 themes:
   - monitoring
@@ -16,6 +18,12 @@ source:
   - type: interview
     notes:
 variations:
+  - dd-need-121
+  - dd-need-122
 next_step:
-notes:
+notes: >
+  This need concerns what section 106 agreements secure across developments.
+  dd-need-121 concerns whether those commitments were delivered, while
+  dd-need-122 captures the public-user need to understand what a particular
+  development is expected to provide locally.
 ---

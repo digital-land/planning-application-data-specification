@@ -4,12 +4,13 @@ status: draft
 priority: medium
 name: Trace homes from permission to delivery
 statement: >
-  As a housing-delivery-analyst or planning-authority-officer, I need homes or
-  housing outputs within a development to remain traceable from planning permission through amendments, starts and completions so that delivery,
-  tenure and obligations can be monitored accurately.
+  As an analyst, I need to trace housing outputs from planning permission
+  through amendments, commencement and completion so that I can accurately
+  monitor what housing is permitted and ultimately delivered, including its
+  tenure and associated obligations.
 actors:
+  - analyst
   - housing-delivery-analyst
-  - planning-authority-officer
 scope: in
 themes:
   - housing
@@ -21,9 +22,10 @@ source:
       treated as a settled in-scope requirement.
 variations:
   - dd-need-086
+  - dd-need-124
 next_step: review
 notes: |
-  Confidence: low. This need is about tracking housing delivery from planning permission through to completion.
+  Confidence: low. This need is about analysing housing delivery from planning permission through to completion.
 
   The planning application data specification could support this by recording housing outputs and links between related applications. It cannot on its own track later construction and delivery activity, which is likely to sit in other systems.
 
