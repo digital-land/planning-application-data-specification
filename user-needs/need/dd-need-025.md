@@ -19,6 +19,6 @@ source:
     notes:
 variations:
   - dd-need-052
-next_step: review
+next_step:
 notes:
 ---

@@ -20,7 +20,7 @@ source:
     notes: Proposed from recent discussion and should be reviewed against nearby
       supersession and amendment needs.
 variations:
-next_step: review
+next_step:
 notes: |
   This is intentionally distinct from `dd-need-054`, which is about conditions
   being superseded. This need is about identifying the live permission or

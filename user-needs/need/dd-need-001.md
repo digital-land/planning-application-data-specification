@@ -20,6 +20,6 @@ source:
     notes: >
       Research with MHCLG stats, August 2026, raises the question of how site IDs will remain consistent across applications spanning years when tracking sites over time. This is additional evidence for retaining context across related applications, including older records.
 variations:
-next_step: review
+next_step:
 notes: 
 ---

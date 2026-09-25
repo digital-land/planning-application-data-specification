@@ -21,7 +21,7 @@ source:
       highlighted practitioner feedback, community governance and coordination
       between planning authorities as ways standards could continue to evolve.
 variations:
-next_step: review
+next_step:
 notes: >
   This concerns governance and maintenance of the standard rather than coverage
   within the planning application data specification itself.

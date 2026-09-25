@@ -21,6 +21,6 @@ source:
     notes:
 variations:
   - dd-need-068
-next_step: review
+next_step:
 notes:
 ---

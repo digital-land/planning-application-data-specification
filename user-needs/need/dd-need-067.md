@@ -17,7 +17,7 @@ source:
   - type: interview
     notes:
 variations: 
-next_step: review
+next_step:
 notes: >
   We are less certain about the scope of this need. Knowing what information
   was requested, who requested it or whether it remains outstanding would

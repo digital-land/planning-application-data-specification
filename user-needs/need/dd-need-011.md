@@ -18,7 +18,7 @@ source:
     notes:
 variations:
   - data-need-003
-next_step: review
+next_step:
 notes: >
   The recorded interview source does not include supporting notes, so the
   priority and strength of evidence need review.

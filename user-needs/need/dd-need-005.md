@@ -17,7 +17,7 @@ source:
   - type: interview
     notes:
 variations:
-next_step: review
+next_step:
 notes: >
   Define what clear and consistent means and test whether structured data alone
   can satisfy this need or whether content and presentation requirements are

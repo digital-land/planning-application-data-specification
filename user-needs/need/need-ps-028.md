@@ -18,7 +18,7 @@ source:
       Research with MHCLG stats, August 2026, identifies a comprehensive count of applications on hand at a particular date as a key question and highlights the risk that older applications awaiting decisions could be missing from open data. It also highlights reporting gaps that can arise when new longitudinal data requirements are introduced without addressing existing records.
 variations:
   - need-ps-001
-next_step: review
+next_step:
 notes: >
   Confirm with statistics colleagues the meaning of applications on hand, the relevant dates and treatment of withdrawals, invalid applications and other states before mapping the need to the specification.
   This overlaps with need-ps-001, which supports operational workload management. It is distinct because consistent statistical snapshots require coverage of applications received before the reporting period and their state at the chosen date, rather than only current status or counts received and decided during a period. The analyst user group follows documentation/user-groups.md; central government statistics is the evidenced context.

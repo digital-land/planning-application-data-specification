@@ -18,7 +18,7 @@ source:
     notes: Planning permission time limits were discussed in the February 2026 community session as a useful point to capture explicitly and as something others need to access easily.
 variations:
   - dd-need-120
-next_step: review
+next_step:
 notes: |
   Confidence: medium. The core need is strong, but the session also highlighted important edge cases for outline permissions, reserved matters, tree works and enforcement.
 

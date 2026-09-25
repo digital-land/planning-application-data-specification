@@ -19,7 +19,7 @@ source:
     notes:
 variations:
   - dd-need-041
-next_step: review
+next_step:
 notes: >
   Split from dd-need-041 to separate practitioner compliance monitoring from
   applicant condition management. This variant is being recorded for review

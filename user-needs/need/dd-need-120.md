@@ -24,7 +24,7 @@ source:
       consents.
 variations:
   - dd-need-085
-next_step: review
+next_step:
 notes: |
   Confidence: medium. Establishing whether permission remains live requires evidence of both the applicable commencement deadline and whether qualifying development began before it.
 

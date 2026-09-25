@@ -23,7 +23,7 @@ source:
 variations:
   - dd-need-061
   - dd-need-122
-next_step: review
+next_step:
 notes: |
   Confidence: low. This post-permission monitoring need requires further evidence and definition before it becomes part of the current phase of specification work.
 

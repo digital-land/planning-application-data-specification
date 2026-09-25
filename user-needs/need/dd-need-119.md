@@ -20,7 +20,7 @@ source:
       sessions about gaps between submission and determination.
 variations:
   - dd-need-078
-next_step: review
+next_step:
 notes: >
   Priority is low for now. The analytical purpose and the information needed to
   support comparison across applications require further validation.

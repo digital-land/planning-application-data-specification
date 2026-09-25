@@ -15,7 +15,7 @@ source:
   - type: legislation
     notes:
 variations:
-next_step: review
+next_step:
 notes: |
   Need to verify there is a legal requirement to include site location plans on decision notices
 ---

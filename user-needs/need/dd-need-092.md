@@ -23,7 +23,7 @@ source:
 variations:
   - dd-need-086
   - dd-need-124
-next_step: review
+next_step:
 notes: |
   Confidence: low. This need is about analysing housing delivery from planning permission through to completion.
 

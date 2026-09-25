@@ -19,7 +19,7 @@ source:
     notes:
 variations:
   - need-ps-002
-next_step: review
+next_step:
 notes: >
   The current planning application and decision datasets do not model planning
   injunctions or their outcomes. Satisfying this need would require

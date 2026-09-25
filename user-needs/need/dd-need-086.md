@@ -20,7 +20,7 @@ source:
     notes: Community members highlighted the importance of distinguishing what was originally permitted from what was actually implemented.
 variations:
   - dd-need-092
-next_step: review
+next_step:
 notes: |
   Confidence: low. The need is important, but it extends beyond the immediate planning permission record and may depend on links to later implementation or monitoring data.
 

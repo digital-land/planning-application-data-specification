@@ -22,7 +22,7 @@ source:
       treated as a settled in-scope requirement.
 variations:
   - dd-need-092
-next_step: review
+next_step:
 notes: |
   Confidence: low. The planning application data specification can support links between permissions and amendments, but commencement and completion information may be maintained in other systems.
 

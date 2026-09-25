@@ -19,7 +19,7 @@ source:
     notes:
 variations:
   - need-ps-003
-next_step: review
+next_step:
 notes: >
   The current planning application and decision datasets do not model formal
   enforcement action. Satisfying this need would require specification coverage

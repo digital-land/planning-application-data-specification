@@ -21,7 +21,7 @@ source:
 variations:
   - dd-need-061
   - dd-need-121
-next_step: review
+next_step:
 notes: >
   This need concerns what has been secured, not whether those commitments were
   later delivered. Delivery and accountability are future considerations under
