@@ -28,5 +28,5 @@ notes: |
   Split from dd-need-102 to separate the applicant and public-user need to know
   the interim case status from the planning authority need to record it.
 
-  Related needs: dd-need-014, dd-need-059, dd-need-079.
+  Related needs: dd-need-014, dd-need-059, dd-need-062.
 ---

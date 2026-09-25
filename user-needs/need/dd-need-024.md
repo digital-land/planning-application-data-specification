@@ -18,7 +18,6 @@ source:
   - type: ps1-ps2
     notes:
 variations:
-  - dd-need-055
   - dd-need-075
 next_step:
 notes:

@@ -1,6 +1,6 @@
 ---
 need: dd-need-055
-status: proposed
+status: retired
 priority: high
 name: Know when an application is withdrawn
 statement: >
@@ -15,7 +15,9 @@ source:
   - type: interview
     notes:
 variations:
-  - dd-need-024
 next_step:
-notes:
+notes: >
+  Retired because this duplicated dd-need-075. If evidence establishes a need
+  to know the reason an application was withdrawn, that should be recorded as
+  a separate need with its own data requirement.
 ---

@@ -23,5 +23,5 @@ next_step:
 notes: |
   This need is about the interim position after a determining authority has resolved to grant permission, but before the formal decision notice is issued. It is separate from the final decision date.
 
-  Related needs: dd-need-014, dd-need-059, dd-need-079.
+  Related needs: dd-need-014, dd-need-059, dd-need-062.
 ---
