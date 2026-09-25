@@ -9,7 +9,6 @@ statement: >
   and improve how the service handles applications.
 actors:
   - planning-service-manager
-  - central-government-analyst
 scope: in
 themes:
   - processing

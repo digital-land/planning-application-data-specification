@@ -4,7 +4,9 @@ status: proposed
 priority: medium
 name: Know when an application was found valid
 statement: >
-  As a user of the planning system, I need to know when an application was validated so that I can see when formal assessment began and how long validation took.
+  As a planning-system user, I need to know the date from which an application
+  was treated as valid so that I can understand when it entered the formal
+  planning process.
 actors:
   - planning-system-user
 scope: in
@@ -14,9 +16,8 @@ themes:
 source:
   - type: legislation
     notes:
-  - type: ps1-ps2
-    notes:
 variations:
+  - dd-need-127
 next_step:
 notes:
 ---

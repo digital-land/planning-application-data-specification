@@ -1,6 +1,6 @@
 ---
 need: dd-need-070
-status: proposed
+status: retired
 priority: medium
 name: Know when consultation ends
 statement: >
@@ -18,5 +18,7 @@ source:
     notes:
 variations:
 next_step:
-notes:
+notes: >
+  Retired because the consultation end date is part of the consultation-period
+  need now captured by dd-need-069.
 ---

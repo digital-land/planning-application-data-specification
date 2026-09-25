@@ -2,9 +2,9 @@
 need: dd-need-076
 status: proposed
 priority: high
-name: Know when an extension of time was agreed
+name: Know the revised deadline after an extension of time
 statement: >
-  As a user of the planning system, I need to know when an extension of time was agreed so that I can assess revised deadlines and accountability for delays.
+  As a planning-system user, I need to know when an extension of time was agreed and the revised determination deadline so that I can understand the timetable that applies to the application.
 actors:
   - planning-system-user
 scope: in
@@ -17,6 +17,8 @@ source:
   - type: interview
     notes:
 variations:
+  - need-ps-025
 next_step:
-notes:
+notes: |
+  The original statutory deadline may be calculated from information such as the valid-from date, application type and development scale. The revised deadline is agreed in writing and cannot be inferred from the date on which the extension was agreed.
 ---

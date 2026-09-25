@@ -22,5 +22,5 @@ variations:
 next_step:
 notes: |
   Confidence: high. The sessions were clear that consultation dates alone are not enough for operational use.
-  Related needs: dd-need-069, dd-need-070, dd-need-071.
+  Related needs: dd-need-069, dd-need-071.
 ---

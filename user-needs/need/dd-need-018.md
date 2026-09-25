@@ -16,6 +16,8 @@ themes:
 source:
   - type: ps1-ps2
     notes:
+  - type: interview
+    notes: It is important to know the number of invalid applications so that policy users can investigate patterns.
 variations:
   - dd-need-065
   - dd-need-081

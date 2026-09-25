@@ -4,7 +4,9 @@ status: proposed
 priority: medium
 name: Know when an application was received
 statement: >
-  As a user of the planning system, I need to know when an application was received by the authority so that I can confirm it entered the system and track processing start.
+  As a planning-system user, I need to know when the planning authority first
+  received an application so that I can distinguish receipt from submission
+  and validation and understand when the authority's handling began.
 actors:
   - planning-system-user
 scope: in
@@ -15,6 +17,7 @@ source:
   - type: legislation
     notes:
 variations:
+  - dd-need-017
 next_step:
 notes:
 ---

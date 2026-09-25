@@ -17,6 +17,7 @@ source:
   - type: ps1-ps2
     notes:
 variations:
+  - dd-need-076
   - need-ps-026
   - need-ps-030
 next_step:

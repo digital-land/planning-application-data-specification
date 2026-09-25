@@ -4,7 +4,9 @@ status: proposed
 priority: medium
 name: Know when an application was submitted
 statement: >
-  As a user of the planning system, I need to know when an application was submitted so that I can understand when the clock started and assess timeliness.
+  As a planning-system user, I need to know when an application was submitted
+  so that I can distinguish submission from receipt by the planning authority
+  and understand the sequence and elapsed time between stages.
 actors:
   - planning-system-user
 scope: in

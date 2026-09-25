@@ -2,9 +2,11 @@
 need: dd-need-072
 status: proposed
 priority: medium
-name: Know when the Mayor called in an application
+name: Know when an application was called in
 statement: >
-  As a user of the planning system, I need to know when the Mayor called in an application so that I can understand the change in decision route and timetable.
+  As a planning-system user, I need to know whether and when a call-in direction
+  was issued so that I can understand the change in decision route and
+  timetable.
 actors:
   - planning-system-user
 scope: in
@@ -15,6 +17,9 @@ source:
   - type: ps1-ps2
     notes:
 variations:
-next_step: review
-notes: Ps1-ps2 requirement is broader than Mayoral call-ins so this might need updating.
+next_step:
+notes: >
+  This is the baseline need to know that a call-in direction was issued. More
+  evidence is needed before requiring the event to distinguish the Mayor,
+  Secretary of State or another body.
 ---

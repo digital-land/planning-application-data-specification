@@ -2,9 +2,9 @@
 need: dd-need-083
 status: proposed
 priority: high
-name: Access the officer report
+name: Understand the assessment and recommendation
 statement: >
-  As a user of the planning system, I need access to the officer report or decision report so that I can understand the assessment, recommendation and reasoning behind the decision.
+  As a planning-system user, I need to understand how the authority assessed the application, what recommendation was made and the reasons for it, so that I can scrutinise how the application was considered.
 actors:
   - planning-system-user
 scope: in
@@ -17,6 +17,6 @@ source:
 variations:
 next_step:
 notes: |
-  Confidence: high. The transcript strengthens this need by making clear that officer reports often contain most of the substantive reasoning for decisions and conditions, not just the final notice.
+  Confidence: high. An officer report, delegated report or equivalent decision report is one way to provide the assessment, recommendation and reasoning, but the need does not assume that every application has a document with a particular name.
   Related needs: dd-need-027, dd-need-030, dd-need-036, dd-need-077.
 ---

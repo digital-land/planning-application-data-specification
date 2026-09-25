@@ -4,7 +4,7 @@ status: proposed
 priority: low
 name: Know who is handling an application
 statement: >
-  As a planning-system user, I need to know who within the planning authority is responsible for handling an application so that I can understand where responsibility for the case sits and direct enquiries appropriately.
+  As a planning-system user, I need to know who is responsible for handling an application so that I can understand where responsibility for the case sits.
 actors:
   - planning-system-user
 scope: in
@@ -13,9 +13,10 @@ themes:
   - transparency
 source:
   - type: other
-    notes: Observed on various Council's online public access application details, which publishes the case officer assigned to the application
+    notes: Case officers are identified on various councils' public access application pages, demonstrating an established practice of showing who is assigned to an application.
 variations:
-next_step: review
+  - dd-need-128
+next_step:
 notes: >
-  Confidence: low. The source demonstrates an established publication practice but does not establish why users need the information. Research should verify the user purpose, whether users need the named case officer, the responsible team or a contact route, and whether the need differs between applicants and public users.
+  Confidence: low. The source demonstrates an established publication practice but does not fully establish why different users need the information. Research should verify whether users need the named case officer, the responsible team or both, and whether the need differs between applicants and public users.
 ---

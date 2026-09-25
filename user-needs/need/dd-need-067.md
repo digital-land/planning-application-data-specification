@@ -4,7 +4,9 @@ status: proposed
 priority: medium
 name: Know when additional information was requested
 statement: >
-  As a user of the planning system, I need to know when further information was requested so that I can see what triggered delays and what is outstanding.
+  As a planning-system user, I need to know whether and when additional
+  information was requested so that I can place the request in the application
+  timeline and understand its status at that point.
 actors:
   - planning-system-user
 scope: in
@@ -16,5 +18,8 @@ source:
     notes:
 variations: 
 next_step: review
-notes: We are less certain about the scope of this need; may be refined after feedback.
+notes: >
+  We are less certain about the scope of this need. Knowing what information
+  was requested, who requested it or whether it remains outstanding would
+  require separate actor-specific needs and additional data.
 ---
