@@ -18,9 +18,12 @@ source:
     notes: >
       Identified during review of dd-need-061 as a distinct public-user
       motivation for understanding section 106 commitments.
+  - type: other
+    notes: From Camden's DPR and DSN research.
 variations:
   - dd-need-061
   - dd-need-121
+  - cmd-need-025
 next_step:
 notes: >
   This need concerns what has been secured, not whether those commitments were
