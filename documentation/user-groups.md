@@ -10,6 +10,7 @@ The purpose of these groups is to keep user needs readable and reusable. A need 
 - Use a broader group when the same motivation genuinely applies across several kinds of user.
 - Do not list multiple users in the statement just to avoid choosing a group.
 - Do not use a specialist job title as the main actor unless the need only makes sense for that specialist role.
+- Use a defined user group in the need statement and include it in `actors`. Add more specific roles to `actors` when they help people filter needs, without narrowing the statement.
 - Keep specialist roles, sectors or service contexts as supporting detail where they help explain evidence or implementation.
 
 ## User groups
