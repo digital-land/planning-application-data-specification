@@ -4,7 +4,7 @@ import csv
 from pathlib import Path
 
 from .application_types import canonical_application_ref, normalise_application_types
-from .models import ApplicationField
+from .models import ApplicationField, ApplicationModule
 
 
 def resolve_application_fields(ref: str, applications: dict, visited=None) -> list[ApplicationField]:
@@ -149,6 +149,39 @@ def _collect_single_application_module_refs(app_obj: dict, applications: dict) -
 
     collect_from_app(app_obj)
     return sorted(collected)
+
+
+def resolve_application_modules(
+    ref: str, applications: dict, modules: dict, ordered_refs: list[str]
+) -> list[ApplicationModule]:
+    """Add explicit includers to the already resolved module order."""
+    included_by: dict[str, list[str]] = {}
+    visited: set[str] = set()
+
+    def visit(application_ref: str) -> None:
+        if application_ref in visited or application_ref not in applications:
+            return
+        visited.add(application_ref)
+        record = applications[application_ref]
+        for entry in _iter_module_entries(record):
+            module_ref = _extract_module_ref(entry)
+            if module_ref:
+                includers = included_by.setdefault(module_ref, [])
+                if application_ref not in includers:
+                    includers.append(application_ref)
+        for parent_ref in _iter_parent_application_refs(record):
+            visit(parent_ref)
+
+    visit(ref)
+    return [
+        ApplicationModule(
+            module=modules[module_ref],
+            included_by=tuple(included_by.get(module_ref, ())),
+            is_inherited=ref not in included_by.get(module_ref, ()),
+        )
+        for module_ref in ordered_refs
+        if module_ref in modules
+    ]
 
 
 def _find_combined_application_row(

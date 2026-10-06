@@ -232,6 +232,16 @@ class ApplicationField:
     inherited_from: Optional[str] = None
 
 
+@dataclass(frozen=True)
+class ApplicationModule:
+    """A module in an application, with its explicit source applications."""
+
+    module: ModuleDef
+    included_by: tuple[str, ...]
+    is_inherited: bool = False
+    contributing_members: tuple[str, ...] = ()
+
+
 @dataclass
 class ApplicationDef:
     application: str
@@ -240,7 +250,9 @@ class ApplicationDef:
     description: str = ""
     application_types: List[str] = field(default_factory=list)
     is_combined: bool = False
+    is_base_type: bool = False
     resolved_fields: List[ApplicationField] = field(default_factory=list)
+    resolved_modules: List[ApplicationModule] = field(default_factory=list)
     extends: Optional[str] = None
     allow_additional_properties: Optional[bool] = False
     synonyms: List[str] = field(default_factory=list)
@@ -295,6 +307,7 @@ class ApplicationDef:
             description=description,
             application_types=[app] if app else [],
             is_combined=False,
+            is_base_type=bool(app_content.get("base-type")),
             extends=extends,
             allow_additional_properties=allow_additional_properties,
             synonyms=synonyms,

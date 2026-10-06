@@ -83,6 +83,10 @@ For a single application, `application.resolved_fields` contains ordered `Applic
 
 Parents are visited in declared order before local fields. A repeated reference replaces the whole entry without moving its position; an omitted attribute in a child replacement does not inherit that attribute from the parent entry. Shared ancestors are visited once per resolution and cyclic revisits are skipped, preserving the previous viewer traversal. Missing parents are skipped. These traversal rules prevent recursion but do not validate malformed inheritance graphs.
 
+`application.is_base_type` identifies an authored base application. `application.resolved_modules` follows the same order as `application.modules`. Each entry has `module`, `included_by` and `is_inherited`. `included_by` lists the applications that explicitly include the module, including ancestors; `is_inherited` is true only when the requested single application does not include it directly. A child that includes a parent module again has both references in `included_by` and is not marked inherited. Module definitions are not overridden by inheritance.
+
+For a combination, `resolved_modules` also exposes `contributing_members`: the member application references whose effective modules contribute that module. Combination membership does not set `is_inherited`; `included_by` still identifies the actual explicit includers, which can be ancestors of those members. Application-type `applies-if` checks include parent types, including transitive parents and members of a combined selection.
+
 ## Combined applications
 
 Combined applications are supported as a controlled list of active combinations defined in `specification/combined-application-types.csv`.

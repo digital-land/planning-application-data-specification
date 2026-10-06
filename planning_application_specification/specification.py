@@ -10,7 +10,7 @@ from .application_types import canonical_application_ref, normalise_application_
 from .applications import get_current_combined_application_refs, resolve_application
 from .guidance import Guidance, GuidanceIndex, load_guidance
 from .loader import _resolve_repo_root, load_specification_model
-from .models import ApplicationDef, ComponentUsage, FieldDef, FieldUsage
+from .models import ApplicationDef, ApplicationModule, ComponentUsage, FieldDef, FieldUsage
 
 
 @dataclass(frozen=True)
@@ -358,7 +358,7 @@ class Specification:
         self.module(ref)
         matching_applications = []
         for application in self.applications.values():
-            if self._is_base_application_type(application.ref):
+            if application.is_base_type:
                 continue
             if any(module.ref == ref for module in application.modules):
                 matching_applications.append(application)
@@ -366,10 +366,6 @@ class Specification:
             if any(module.ref == ref for module in application.modules):
                 matching_applications.append(application)
         return tuple(sorted(matching_applications, key=lambda application: application.ref))
-
-    def _is_base_application_type(self, ref: str) -> bool:
-        application = self.tables.get("application", {}).get(ref, {})
-        return bool(application.get("base-type"))
 
     def field_usages(self, ref: str) -> FieldUsages:
         self.field(ref)
@@ -624,6 +620,23 @@ class Specification:
             if module:
                 module_defs.append(module)
 
+        resolved_modules = []
+        for module in module_defs:
+            contributors = [
+                member for member in member_applications
+                if any(usage.module.ref == module.ref for usage in member.resolved_modules)
+            ]
+            included_by = tuple(dict.fromkeys(
+                source for member in contributors
+                for usage in member.resolved_modules if usage.module.ref == module.ref
+                for source in usage.included_by
+            ))
+            resolved_modules.append(ApplicationModule(
+                module=module,
+                included_by=included_by,
+                contributing_members=tuple(member.ref for member in contributors),
+            ))
+
         items = self._merge_application_items(member_applications)
         field_usages = [item for item in items if isinstance(item, FieldUsage)]
         component_usages = [item for item in items if isinstance(item, ComponentUsage)]
@@ -653,6 +666,7 @@ class Specification:
             field_usages=field_usages,
             component_usages=component_usages,
             modules=module_defs,
+            resolved_modules=resolved_modules,
         )
 
     def _merge_application_items(

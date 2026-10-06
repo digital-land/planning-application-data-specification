@@ -632,6 +632,80 @@ def test_resolve_field_applies_if_matches_parent_application_type(project_root):
     assert full_only.applies is False
 
 
+def test_resolve_field_applies_if_matches_grandparent_in_combined_selection(project_root):
+    from copy import deepcopy
+
+    spec = Specification.load(project_root)
+    grandchild = deepcopy(spec.application("outline-some"))
+    grandchild.ref = "outline-grandchild"
+    grandchild.extends = "outline-some"
+    spec.applications[grandchild.ref] = grandchild
+
+    single = spec.resolve_field(
+        "description", module="proposal-details",
+        selection=SelectionContext(application_type=grandchild.ref),
+    )
+    combined = spec.resolve_field(
+        "description", module="proposal-details",
+        selection=SelectionContext(application_type=[grandchild.ref, "lbc"]),
+    )
+    assert single.applies is True
+    assert combined.applies is True
+    unrelated = spec.resolve_field(
+        "is-psi", module="proposal-details",
+        selection=SelectionContext(application_type=grandchild.ref),
+    )
+    assert unrelated.applies is False
+
+
+def test_application_module_metadata_handles_inheritance_and_combination(project_root, tmp_path):
+    from planning_application_specification.applications import resolve_application_modules
+
+    spec = Specification.load(project_root)
+    modules = {ref: spec.modules[ref] for ref in ("proposal-details", "applicant-details", "site-details")}
+    records = {
+        "base": {"modules": [{"module": "proposal-details"}, {"module": "site-details"}]},
+        "middle": {"extends": "base", "modules": [{"module": "proposal-details"}]},
+        "other": {"modules": [{"module": "site-details"}]},
+        "child": {"extends": ["middle", "other"], "modules": [{"module": "applicant-details"}, {"module": "site-details"}]},
+    }
+    resolved = resolve_application_modules(
+        "child", records, modules,
+        ["applicant-details", "proposal-details", "site-details"],
+    )
+    assert [(usage.module.ref, usage.included_by, usage.is_inherited) for usage in resolved] == [
+        ("applicant-details", ("child",), False),
+        ("proposal-details", ("middle", "base"), True),
+        ("site-details", ("child", "base", "other"), False),
+    ]
+
+    source = tmp_path / "specification"
+    source.mkdir()
+    (source / "combined-application-types.csv").write_text(
+        "application-types,start-date,end-date\noutline-some;lbc,2026-01-01,\n"
+    )
+    spec.tables["__root_path__"] = tmp_path
+    outline = spec.application("outline-some")
+    assert outline.is_base_type is False
+    assert spec.application("outline").is_base_type is True
+    assert [usage.module for usage in outline.resolved_modules] == outline.modules
+    assert outline.resolved_modules[0].module.ref == "access-rights-of-way"
+    assert outline.resolved_modules[0].included_by == ("outline-some",)
+    assert outline.resolved_modules[0].is_inherited is False
+    inherited = next(usage for usage in outline.resolved_modules if usage.module.ref == "agent-details")
+    assert inherited.included_by == ("outline",)
+    assert inherited.is_inherited is True
+    full = spec.application("full")
+    assert [usage.module for usage in full.resolved_modules] == full.modules
+    assert full.resolved_modules[0].included_by == ("full",)
+    shared_ref = next(module.ref for module in outline.modules if module.ref in {module.ref for module in spec.application("lbc").modules})
+    combined = spec.application("outline-some;lbc")
+    shared = next(usage for usage in combined.resolved_modules if usage.module.ref == shared_ref)
+    assert shared.contributing_members == ("lbc", "outline-some")
+    assert shared.is_inherited is False
+    assert shared.included_by == ("lbc", "outline")
+
+
 def test_resolve_container_items_returns_mixed_module_items_in_order(project_root):
     spec = Specification.load(project_root)
 

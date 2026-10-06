@@ -5,7 +5,7 @@ from pathlib import Path
 
 import frontmatter
 
-from .applications import get_application_module_refs, resolve_application_fields
+from .applications import get_application_module_refs, resolve_application_fields, resolve_application_modules
 from .models import (
     ApplicationDef,
     ComponentDef,
@@ -155,6 +155,10 @@ def load_specification_model(root_path: str | Path | None = None):
                 if module_defs.get(ref)
             ]
             app_def.modules = resolved_modules
+        app_def.resolved_modules = resolve_application_modules(
+            app_ref, tables["application"], module_defs,
+            [module.ref for module in app_def.modules],
+        )
 
     return {
         "tables": tables,
