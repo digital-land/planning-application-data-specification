@@ -53,6 +53,8 @@ The package exposes these constraints without evaluating submitted answers. JSON
 
 The same principle applies when an answer does not belong in the reused source dataset: model the additional information separately in the specification.
 
+This does not prevent adding a meaningful answer to a codelist maintained by this specification. The [affected-area-type codelist](../../specification/codelist/affected-area-type.schema.md) includes `no` ("No likely impact") alongside the two affected locations. The [biodiversity, geological and archaeological conservation module](../../specification/module/bio-geo-arch-con.schema.md) needs each assessment to distinguish no likely impact from an impact at either location. Because we own that codelist, adding the answer there keeps the required fields and their validation consistent without introducing separate flags. `no` is an explicit assessment, not an unknown answer or a missing value.
+
 However, “other” and “unknown” are different. An unknown flag does not represent a known value missing from a codelist. If a future requirement needs an “other” answer, define how to capture that value or its description and when it is allowed. This decision does not introduce a generic reason field or allow arbitrary values in the grade field.
 
 **Interface design:**
@@ -67,7 +69,7 @@ This follows [ADR 0016: Keep form generation details separate from structured da
 - Consumers can distinguish a supplied grade, an explicitly unknown grade and an unanswered question.
 - Suppliers must apply the rule across both fields when validating submissions.
 - Each use of this pattern must define its permitted combinations and whether an answer is required.
-- This decision does not require changing codelists owned by this specification where `unknown` is already an intentional permitted answer, such as the pattern in [ADR 0001](0001-use-enum-for-yes-no-unknown.md).
+- This decision does not prevent adding needed answers to codelists owned by this specification, or changing those where `unknown` is already an intentional permitted answer, such as the pattern in [ADR 0001](0001-use-enum-for-yes-no-unknown.md).
 
 **Alternatives considered:**
 

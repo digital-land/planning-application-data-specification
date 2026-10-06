@@ -1,7 +1,7 @@
 ---
 codelist: affected-area-type
 description: |
-  Specifies whether a biodiversity or geological feature is on the development site or on land directly next to it.
+  Specifies whether a biodiversity, geological or archaeological feature is likely to be affected on the development site, on adjacent land or not at all.
 end-date:
 entry-date: 2025-08-13
 fields:

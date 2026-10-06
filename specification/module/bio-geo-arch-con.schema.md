@@ -19,7 +19,7 @@ fields:
 module: bio-geo-arch-con
 name: Biodiversity, geological and archaeological conservation
 rules:
-- All impact assessments must use values from the affect-area codelist or 'no'
+- All impact assessments must use values from the affected-area-type codelist, including 'no' where there is no likely impact
 - Archaeological features impact is only required for extraction-oil-gas applications
 - Impact assessments should be based on ecological surveys and site assessments
 ---
