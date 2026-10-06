@@ -920,3 +920,30 @@ def test_resolved_codelist_property(project_root):
     view_field = spec.view('national-public').resolve_field('description', dataset='planning-application')
     dataset_field = replace(view_field.dataset_field, usage=replace(view_field.dataset_field.usage, overrides={'codelist': 'dataset-options'}))
     assert replace(view_field, dataset_field=dataset_field).codelist == 'dataset-options'
+
+
+def test_grade_unknown_constraints_survive_resolution(project_root):
+    spec = Specification.load(project_root)
+    flag = spec.resolve_field("listed-building-grade-unknown", module="lb-grade")
+    grade = spec.resolve_field("listed-building-grade", module="lb-grade")
+    assert flag.datatype == "boolean"
+    assert flag.has_fixed_value and flag.fixed_value is True
+    assert not grade.has_fixed_value
+    assert grade.codelist == "listed-building-grade"
+    assert grade.required and flag.required
+    assert flag.applies_if == {"field": "listed-building-grade", "operator": "empty"}
+    assert grade.applies_if == {"field": "listed-building-grade-unknown", "operator": "empty"}
+    assert flag.applies and grade.applies  # No submitted answers are evaluated.
+
+
+def test_fixed_false_is_not_absence(project_root):
+    from dataclasses import replace
+    from planning_application_specification.models import FieldUsage
+    spec = Specification.load(project_root)
+    flag = spec.resolve_field("listed-building-grade-unknown", module="lb-grade")
+    for overrides, present, value in [({}, False, None), ({"fixed-value": False}, True, False)]:
+        resolved = replace(flag, usage=replace(flag.usage, overrides=overrides))
+        raw = FieldUsage(original=flag.base, overrides=overrides)
+        for item in (resolved, raw):
+            assert item.has_fixed_value is present
+            assert item.fixed_value is value
