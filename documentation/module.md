@@ -47,7 +47,7 @@ Each module has a canonical definition in a shared repository.
 * `end-date` - for deprecating fields
 * `rules`
 
-Each field entry can use `required`, `required-if` and `applies-if` to describe its requirements and scope.
+Each field entry can use `required`, `required-if` and `applies-if` to describe its requirements and scope. It can also use `fixed-value` to constrain the supplied value.
 
 Each field reference may appear only once directly within a module's `fields` list, even if the entries have different conditions or overrides. This uniqueness rule also applies within each component. Separate modules and nested objects may reuse the same field reference.
 
@@ -64,6 +64,19 @@ Use this sparingly:
 * use `notes` for extra implementation guidance that should not change the label or core description
 
 This allows a shared field such as `description` to be reused across modules without losing the label or guidance that makes sense in that module.
+
+**Fixed values**
+
+When a field has `fixed-value`, its supplied value must equal that fixed value. This does not supply a default or make the field required. The value must also meet the field's datatype and codelist constraints.
+
+```yaml
+- field: listed-building-grade-unknown
+  fixed-value: true
+```
+
+This allows only the boolean `true`, not `false`, the number `1` or the string `"true"`. A `fixed-value: false` constraint is also valid and differs from having no constraint. Initially this attribute supports single-valued boolean, integer, number, decimal, string and enum module fields. It is not a constraint on each member of a list.
+
+The package exposes the constraint for consumers. Generated JSON Schema does not yet enforce it; see [generator coverage](co-constraints.md#json-schema-generator-coverage).
 
 **Conditional completion rules**
 

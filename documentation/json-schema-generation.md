@@ -454,3 +454,9 @@ Each application JSON Schema file contains:
 
 The current generation approach leverages the existing structured specification model and provides the basis for JSON Schema generation 
 while maintaining the integrity and conditional logic present in the current markdown based specifications.
+
+### Deferred support: unknown answers and fixed values
+
+The module model supports `applies-if` with `operator: empty` and module field `fixed-value`. The generator does not yet translate these additions. In particular, generated schemas cannot yet be relied on to validate the grade-or-unknown pattern. See [co-constraint coverage](co-constraints.md#json-schema-generator-coverage) for the outstanding work.
+
+Support for the grade-or-unknown pattern in generated schemas is tracked in [issue #420](https://github.com/digital-land/planning-application-data-specification/issues/420).

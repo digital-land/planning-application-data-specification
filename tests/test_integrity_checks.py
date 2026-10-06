@@ -120,7 +120,8 @@ class TestAppliesIfStructure:
     @pytest.mark.parametrize("grouped", [False, True])
     @pytest.mark.parametrize("condition", [
         {"application-types": {"in": ["full"]}},
-        {"field": "answer", "operator": "empty"},
+        {"field": "answer", "operator": "not_empty"},
+        {"field": "answer", "operator": "empty", "value": True},
         {"field": "answer", "in": [True]},
         {"field": "answer", "contains": "yes"},
         {"field": "answer", "value": True, "operator": "not_empty"},
@@ -2422,3 +2423,45 @@ def test_direct_field_uniqueness_is_scoped_to_each_container(kind):
         'second': {'fields': [{'field': 'name'}]},
     }
     assert check_unique_direct_fields(containers, kind)
+
+
+@pytest.mark.parametrize("grouped", [False, True])
+def test_applies_if_empty_condition(grouped):
+    condition = {"field": "answer", "operator": "empty"}
+    if grouped:
+        condition = {"all": [condition]}
+    modules = {"example": {"fields": [
+        {"field": "answer"}, {"field": "details", "applies-if": condition},
+    ]}}
+    assert check_applies_if_structure(modules)
+
+
+@pytest.mark.parametrize("reference", ["details", "missing", "other.answer", "", None])
+def test_applies_if_empty_rejects_invalid_references(reference):
+    modules = {"example": {"fields": [
+        {"field": "answer"},
+        {"field": "details", "applies-if": {"field": reference, "operator": "empty"}},
+    ]}}
+    assert not check_applies_if_structure(modules)
+
+
+@pytest.mark.parametrize("value, expected", [
+    (True, True), (False, True), (1, False), (0, False),
+    ("true", False), (None, False), ([], False), ({}, False),
+])
+def test_fixed_boolean_values_are_typed(value, expected):
+    fields = {"flag": {"datatype": "boolean", "cardinality": 1}}
+    modules = {"example": {"fields": [{"field": "flag", "fixed-value": value}]}}
+    assert module_checks.check_fixed_values(modules, fields) is expected
+
+
+@pytest.mark.parametrize("datatype,value,cardinality,expected", [
+    ("integer", 0, 1, True), ("integer", False, 1, False),
+    ("string", "answer", 1, True), ("enum", "unknown", 1, True),
+    ("decimal", 1.5, 1, True), ("boolean", True, "n", False),
+    ("object", {}, 1, False),
+])
+def test_fixed_values_match_scalar_field(datatype, value, cardinality, expected):
+    fields = {"answer": {"datatype": datatype, "cardinality": cardinality}}
+    modules = {"example": {"fields": [{"field": "answer", "fixed-value": value}]}}
+    assert module_checks.check_fixed_values(modules, fields) is expected

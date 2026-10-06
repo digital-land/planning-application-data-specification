@@ -59,6 +59,15 @@ class FieldUsage:
     overrides: Dict[str, Any]
 
     @property
+    def has_fixed_value(self) -> bool:
+        return "fixed-value" in self.overrides
+
+    @property
+    def fixed_value(self):
+        """The required supplied value, not a default. Check has_fixed_value first."""
+        return self.overrides.get("fixed-value")
+
+    @property
     def requirement_level(self) -> Optional[str]:
         """Return the recording or publication requirement for this usage."""
         return self.overrides.get("requirement-level")

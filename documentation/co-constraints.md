@@ -20,7 +20,7 @@ There are two main conditional intents.
 
 | Intent | What it means | Current use |
 | --- | --- | --- |
-| `applies-if` | The field is allowed only when the condition is satisfied. Otherwise, it must not be supplied. | Application-type conditions and comparisons with another answer in the same module. |
+| `applies-if` | The field is allowed only when the condition is satisfied. Otherwise, it must not be supplied. | Application-type conditions, comparisons with another answer and empty-answer checks in the same module. |
 | `required-if` | The field requires a response when the condition is satisfied. A condition that is not satisfied does not itself forbid a response. | Conditional requiredness based on answers or other values. |
 
 **Optional and out of scope are different.** Use `required-if` when a condition makes information mandatory but does not otherwise forbid it. Use `applies-if` when information must not be supplied unless the condition is met. Other scope and requiredness rules still apply.
@@ -55,7 +55,7 @@ fields:
 
 ## Where conditions can point
 
-For answer-based `applies-if`, use `field` and `value` to compare with another field in the same module. Do not use a self-reference or a path to another module. An application-type condition is optional; include it only when the field also needs that restriction.
+For answer-based `applies-if`, use `field` and `value` to compare with another field in the same module, or `field` and `operator: empty` to check whether it is missing or empty. Do not use a self-reference or a path to another module. An application-type condition is optional; include it only when the field also needs that restriction.
 
 A `required-if` condition often refers to another field in the same module or component, but can refer to values elsewhere in the submission. Use an explicit path when the field is outside the current module.
 
@@ -77,6 +77,7 @@ These are the main patterns currently used.
 | Field applies for an application type | `applies-if` + `application-type` + `in` | Field is in scope for one or more application types. |
 | Field applies when an answer equals a value | `applies-if` + `field` + `value` | Field is allowed only when another answer in the same module matches the value. |
 | Field applies when all conditions match | `applies-if` + `all` | Field is allowed only when every listed condition is satisfied. |
+| Field applies when another answer is empty | `applies-if` + `field` + `operator: empty` | Field is allowed only when another answer in the same module is missing or empty. |
 | Answer equals a value | `required-if` + `field` + `value` | Field is required when another field has a specific value. |
 | Answer is one of several values | `required-if` + `field` + `in` | Field is required when another field is one of a list of values. |
 | Answer contains a value | `required-if` + `field` + `contains` | Field is required when a list or multi-value field contains a value. |
@@ -89,7 +90,7 @@ These are the main patterns currently used.
 ## Operators and operands
 
 Operator conditions use the same flat condition structure as other `required-if`
-conditions. The operator determines whether the condition needs a right-hand
+conditions. `applies-if` also supports the unary `empty` operator; other operators remain limited to `required-if`. The operator determines whether the condition needs a right-hand
 operand.
 
 - unary operators such as `empty` and `not_empty` do not take an operand
@@ -196,6 +197,32 @@ Where `bng-condition-applies` is required, leaving it unanswered is still a miss
 
 This deliberately excludes BNG details when they do not apply, rather than making them optional. The aim is to avoid collecting unnecessary information from applicants and causing confusion for planning officers.
 
+### Example: a grade or an explicit unknown answer
+
+The [listed building grade module](../specification/module/lb-grade.schema.md) requires a grade from the external codelist or a separate unknown flag set to `true`:
+
+```yaml
+- field: listed-building-grade
+  required: true
+  applies-if:
+    field: listed-building-grade-unknown
+    operator: empty
+- field: listed-building-grade-unknown
+  required: true
+  fixed-value: true
+  applies-if:
+    field: listed-building-grade
+    operator: empty
+```
+
+For both `required-if` and `applies-if`, `empty` matches a missing property, `null`, an empty string, an empty array or an empty object. It does not match `false`, `0` or a whitespace-only string. This is a condition check, not permission to submit an empty or incorrectly typed value. Supplied fields must still pass their datatype, codelist and fixed-value constraints. Out-of-scope properties must be absent, even if their value is empty.
+
+Evaluate both conditions against the original submitted answers before applying requiredness. Do not fill defaults or remove out-of-scope fields while evaluating the other condition.
+
+A grade alone or the unknown flag alone is valid. Neither is invalid because an answer is required. Both are invalid because the fields are out of scope. The flag must be `true`; `false` is not an alternative way to supply a known grade. Omit the flag when supplying a grade.
+
+The package preserves these answer conditions for consumers; it does not evaluate submitted answers. This pattern extends the vocabulary without adding a submission validator to the package.
+
 ## JSON Schema generator coverage
 
 The co-constraint vocabulary is broader than the JSON Schema generator currently
@@ -221,6 +248,8 @@ The current generator does not yet cover these patterns:
 | `required-if` with `operator: not_empty` | Needs translation to JSON Schema presence and non-empty checks such as `required` plus `minLength`, `minItems` or `minProperties`, depending on the target datatype. |
 | `required-if` with comparison operators such as `<` | Needs typed comparison support, including date and datetime comparison semantics. |
 | `required-if` with `value-field` | Needs field-to-field comparison support. |
+| `applies-if` with `operator: empty` | Needs conditional scope, requiredness and prohibition when the other answer is not empty. |
+| Module field `fixed-value` | Needs an exact typed value constraint, without inserting defaults or changing requiredness. |
 | Explicit `all` conditions | Needs reliable `allOf` generation for grouped conditions. |
 | `field` paths outside the current object, such as `agent-details.agent.reference` | Needs a decision about whether dotted paths represent literal property names or nested object traversal in generated JSON Schema. |
 
@@ -240,3 +269,5 @@ Known open questions include:
 - how much of the broader validation rule vocabulary should be formalised in the same way
 
 These are future clean-up and tooling questions. The current direction is to keep the vocabulary minimal, explicit and testable.
+
+Support for the grade-or-unknown pattern in generated schemas is tracked in [issue #420](https://github.com/digital-land/planning-application-data-specification/issues/420).

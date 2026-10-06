@@ -97,6 +97,15 @@ class ResolvedField:
         return self.usage.overrides.get("codelist") or self.base.codelist
 
     @property
+    def has_fixed_value(self) -> bool:
+        return "fixed-value" in self.usage.overrides
+
+    @property
+    def fixed_value(self):
+        """The required supplied value, not a default. Check has_fixed_value first."""
+        return self.usage.overrides.get("fixed-value")
+
+    @property
     def target_dataset(self):
         return self.usage.overrides.get("dataset")
 

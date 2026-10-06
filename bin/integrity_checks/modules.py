@@ -215,18 +215,18 @@ def check_applies_if_structure(modules, application_types=None):
             for condition in iter_applies_if_conditions(applies_if):
                 # Allow an incomplete equality condition through to the specific
                 # missing-value error below, but reject other vocabularies first.
-                if set(condition) not in (
-                    {"all"}, {"application-type"}, {"field", "value"}, {"field"},
+                if ("operator" in condition and condition["operator"] != "empty") or set(condition) not in (
+                    {"all"}, {"application-type"}, {"field", "value"}, {"field"}, {"field", "operator"},
                 ):
                     print_error(
                         "module", module_name,
                         f"field #{field_def.get('field')} has an unsupported applies-if condition; "
-                        "use application-type with in, field with value, or an all group",
+                        "use application-type with in, field with value, field with operator: empty, or an all group",
                     )
                     has_errors = True
                     continue
                 if "field" in condition:
-                    if "value" not in condition:
+                    if "value" not in condition and "operator" not in condition:
                         print_error(
                             "module", module_name,
                             f"field #{field_def.get('field')} applies-if answer condition must include 'value'",
@@ -334,6 +334,33 @@ def check_required_if_fields(modules):
     return not has_errors
 
 
+def check_fixed_values(modules, fields):
+    """Check fixed-value constraints on single-valued scalar module entries."""
+    has_errors = False
+    for module_name, module in modules.items():
+        for entry in module.get("fields", []):
+            if "fixed-value" not in entry:
+                continue
+            definition = fields.get(entry.get("field"), {})
+            datatype = entry.get("datatype", definition.get("datatype"))
+            cardinality = str(entry.get("cardinality", definition.get("cardinality", "1")))
+            value = entry["fixed-value"]
+            valid_type = {
+                "boolean": type(value) is bool,
+                "integer": type(value) is int,
+                "number": type(value) in (int, float),
+                "decimal": type(value) in (int, float),
+                "string": isinstance(value, str),
+                "enum": isinstance(value, str),
+            }.get(datatype, False)
+            if cardinality != "1" or not valid_type:
+                print_error("module", module_name,
+                            f"field '{entry.get('field')}' fixed-value must match a supported "
+                            "single-valued scalar datatype (boolean, integer, number, decimal, string or enum)")
+                has_errors = True
+    return not has_errors
+
+
 def check_field_requirement_attributes(modules):
     """Check submission module fields do not use requirement-level."""
     has_errors = False
@@ -367,6 +394,7 @@ def check_all(modules, fields, applications=None):
         (check_applies_if_structure, [modules, applications]),
         (check_required_if_fields, [modules]),
         (check_field_requirement_attributes, [modules]),
+        (check_fixed_values, [modules, fields]),
     ]
 
     return run_checks(checks_with_args)

@@ -770,3 +770,9 @@ These modules are currently part of the implementation surface for migration wor
 Expected next additions include:
 
 - clearer public distinction between canonical definitions, usages and resolved views
+
+### Fixed values on module fields
+
+Resolved fields and raw `FieldUsage` objects expose `has_fixed_value` and `fixed_value`. Check `has_fixed_value` rather than the truthiness of `fixed_value`: `False` is a valid fixed value. The constraint does not provide a default or change requiredness.
+
+Answer-based `applies-if` rules, including `operator: empty`, remain available in the resolved rule metadata. The package does not evaluate submitted answers or enforce fixed values against a payload; consumers must do so. See [module attributes](../documentation/module.md) and [co-constraints](../documentation/co-constraints.md).
