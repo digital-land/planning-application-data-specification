@@ -218,60 +218,52 @@ data-module="govuk-service-navigation">
 <p class="govuk-body"><strong>Decision:</strong></p>
 <p class="govuk-body">Keep externally maintained codelists unchanged. Where the specification needs an explicit unknown answer, record it in a separate field.</p>
 <p class="govuk-body">This preserves the meaning of the source dataset and lets the specification describe uncertainty separately.</p>
-<p class="govuk-body">For listed building grade, use a boolean flag to record that the grade is unknown. The applicant must supply either a valid grade or the unknown flag set to <code class="app-code">true</code>. They must not supply both. Omitting both is not a valid answer where this information is required.</p>
-<p class="govuk-body">The module uses the boolean field <code class="app-code">listed-building-grade-unknown</code> with <code class="app-code">fixed-value: true</code>.</p>
+<p class="govuk-body">For listed building grade, require the applicant to say whether they know the grade. If they answer <code class="app-code">true</code>, they must supply a valid grade. If they answer <code class="app-code">false</code>, they are declaring that they do not know it and must not supply a grade. The answer is required, so omitting it is not valid.</p>
+<p class="govuk-body">For example, a response declaring that the grade is unknown is:</p>
 <p class="govuk-body"><code class="app-code">json
 {
-  "listed-building-grade-unknown": true
+  "listed-building-grade-known": false
 }</code></p>
-<p class="govuk-body">When the applicant supplies a grade from the codelist, they must omit the unknown flag. 
-A flag set to <code class="app-code">false</code> alone does not answer the question.</p>
 <table class="govuk-table">
 <thead class="govuk-table__head">
 <tr class="govuk-table__row">
+<th class="govuk-table__header" scope="col">Grade known</th>
 <th class="govuk-table__header" scope="col">Grade</th>
-<th class="govuk-table__header" scope="col">Unknown flag</th>
 <th class="govuk-table__header" scope="col">Result</th>
 </tr>
 </thead>
 <tbody class="govuk-table__body">
 <tr class="govuk-table__row">
+<td class="govuk-table__cell"><code class="app-code">true</code></td>
 <td class="govuk-table__cell">Valid codelist value</td>
-<td class="govuk-table__cell">Absent</td>
 <td class="govuk-table__cell">Valid</td>
 </tr>
 <tr class="govuk-table__row">
-<td class="govuk-table__cell">Absent</td>
 <td class="govuk-table__cell"><code class="app-code">true</code></td>
-<td class="govuk-table__cell">Valid</td>
+<td class="govuk-table__cell">Absent</td>
+<td class="govuk-table__cell">Invalid: grade required</td>
 </tr>
 <tr class="govuk-table__row">
-<td class="govuk-table__cell">Present</td>
-<td class="govuk-table__cell"><code class="app-code">true</code></td>
-<td class="govuk-table__cell">Invalid: contradictory answers</td>
-</tr>
-<tr class="govuk-table__row">
-<td class="govuk-table__cell">Absent</td>
-<td class="govuk-table__cell">Absent</td>
-<td class="govuk-table__cell">Invalid: unanswered</td>
-</tr>
-<tr class="govuk-table__row">
-<td class="govuk-table__cell">Absent</td>
 <td class="govuk-table__cell"><code class="app-code">false</code></td>
-<td class="govuk-table__cell">Invalid: no grade supplied</td>
+<td class="govuk-table__cell">Absent</td>
+<td class="govuk-table__cell">Valid: applicant does not know the grade</td>
 </tr>
 <tr class="govuk-table__row">
-<td class="govuk-table__cell">Present</td>
 <td class="govuk-table__cell"><code class="app-code">false</code></td>
-<td class="govuk-table__cell">Not the chosen representation: omit the flag when supplying a grade</td>
+<td class="govuk-table__cell">Present</td>
+<td class="govuk-table__cell">Invalid: grade is out of scope</td>
+</tr>
+<tr class="govuk-table__row">
+<td class="govuk-table__cell">Absent</td>
+<td class="govuk-table__cell">Any value</td>
+<td class="govuk-table__cell">Invalid: answer required</td>
 </tr>
 </tbody>
 </table>
 <p class="govuk-body">These requirements apply when the grade question is required. They do not make the module mandatory for application types that do not require it.</p>
 <p class="govuk-body"><strong>Conditional rules:</strong></p>
-<p class="govuk-body">The module must state the requirement to supply exactly one of the two answers. Validation must check both completeness and contradictions.</p>
-<p class="govuk-body">The <a class="govuk-link" href="../co-constraints.md">co-constraint guidance</a> now includes <code class="app-code">operator: empty</code> under <code class="app-code">applies-if</code>. Each answer applies only when the other is empty or missing and is required when in scope. Conditions are evaluated against the original payload, before requiredness. Supplied empty values must still satisfy the field constraints; they are not an alternative answer.</p>
-<p class="govuk-body">The unknown flag has <code class="app-code">fixed-value: true</code>. This requires the supplied value to be the boolean <code class="app-code">true</code>; it does not supply a default or make the field required by itself. See <a class="govuk-link" href="../module.md">module field attributes</a>.</p>
+<p class="govuk-body">The module requires the known answer and requires a codelist grade only when that answer is <code class="app-code">true</code>. When it is <code class="app-code">false</code>, the grade field is out of scope and must not be supplied.</p>
+<p class="govuk-body">The <a class="govuk-link" href="../co-constraints.md">co-constraint guidance</a> uses <code class="app-code">applies-if</code> with the boolean value <code class="app-code">true</code> to put the grade field in scope only when the applicant says they know it. The <code class="app-code">listed-building-grade-known</code> field itself is required in all cases.</p>
 <p class="govuk-body">The package exposes these constraints without evaluating submitted answers. JSON Schema generation is deferred and tracked in <a class="govuk-link" href="https://github.com/digital-land/planning-application-data-specification/issues/420">issue #420</a>. Until that work is complete, generated schemas do not fully enforce this pattern.</p>
 <p class="govuk-body"><strong>Other answers outside a codelist:</strong></p>
 <p class="govuk-body">The same principle applies when an answer does not belong in the reused source dataset: model the additional information separately in the specification.</p>
@@ -294,7 +286,7 @@ A flag set to <code class="app-code">false</code> alone does not answer the ques
 <li>Maintain a local extended copy: would create another list to keep aligned with the source.</li>
 <li>Allow an extra string through prose alone: would leave the codelist and machine-readable validation incomplete.</li>
 <li>Infer unknown from a missing grade: would confuse an explicit answer with an unanswered question.</li>
-<li>Require a true/false unknown flag for every answer: fits the value-based <code class="app-code">applies-if</code> pattern, but adds a redundant flag when the grade itself is supplied.</li>
+<li>Use a separate unknown flag: would require the applicant to provide a flag alongside the grade or unknown answer and would add an exact-value constraint. A required known/unknown answer directly controls whether the grade applies.</li>
 </ul>
     </div>
 
