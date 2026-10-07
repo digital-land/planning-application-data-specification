@@ -197,31 +197,23 @@ Where `bng-condition-applies` is required, leaving it unanswered is still a miss
 
 This deliberately excludes BNG details when they do not apply, rather than making them optional. The aim is to avoid collecting unnecessary information from applicants and causing confusion for planning officers.
 
-### Example: a grade or an explicit unknown answer
+### Example: a known or unknown listed building grade
 
-The [listed building grade module](../specification/module/lb-grade.schema.md) requires a grade from the external codelist or a separate unknown flag set to `true`:
+The [listed building grade module](../specification/module/lb-grade.schema.md) requires applicants to say whether they know the grade. A grade is required only when they answer `true`:
 
 ```yaml
+- field: listed-building-grade-known
+  required: true
 - field: listed-building-grade
   required: true
   applies-if:
-    field: listed-building-grade-unknown
-    operator: empty
-- field: listed-building-grade-unknown
-  required: true
-  fixed-value: true
-  applies-if:
-    field: listed-building-grade
-    operator: empty
+    field: listed-building-grade-known
+    value: true
 ```
 
-For both `required-if` and `applies-if`, `empty` matches a missing property, `null`, an empty string, an empty array or an empty object. It does not match `false`, `0` or a whitespace-only string. This is a condition check, not permission to submit an empty or incorrectly typed value. Supplied fields must still pass their datatype, codelist and fixed-value constraints. Out-of-scope properties must be absent, even if their value is empty.
+The `listed-building-grade-known` answer is always required. If it is `true`, the applicant must supply a grade from the external codelist. If it is `false`, the applicant is declaring that they do not know the grade and must omit `listed-building-grade`. This keeps the external codelist unchanged and distinguishes an explicit unknown answer from an unanswered question. The package exposes these conditions to consumers; it does not evaluate submitted answers.
 
-Evaluate both conditions against the original submitted answers before applying requiredness. Do not fill defaults or remove out-of-scope fields while evaluating the other condition.
-
-A grade alone or the unknown flag alone is valid. Neither is invalid because an answer is required. Both are invalid because the fields are out of scope. The flag must be `true`; `false` is not an alternative way to supply a known grade. Omit the flag when supplying a grade.
-
-The package preserves these answer conditions for consumers; it does not evaluate submitted answers. This pattern extends the vocabulary without adding a submission validator to the package.
+For both `required-if` and `applies-if`, `empty` matches a missing property, `null`, an empty string, an empty array or an empty object. It does not match `false`, `0` or a whitespace-only string. This is a condition check, not permission to submit an empty or incorrectly typed value. Supplied fields must still pass their datatype and codelist constraints. Out-of-scope properties must be absent, even if their value is empty.
 
 ## JSON Schema generator coverage
 
@@ -270,4 +262,4 @@ Known open questions include:
 
 These are future clean-up and tooling questions. The current direction is to keep the vocabulary minimal, explicit and testable.
 
-Support for the grade-or-unknown pattern in generated schemas is tracked in [issue #420](https://github.com/digital-land/planning-application-data-specification/issues/420).
+Support for this conditional grade requirement in generated schemas is tracked in [issue #420](https://github.com/digital-land/planning-application-data-specification/issues/420).

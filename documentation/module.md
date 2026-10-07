@@ -70,13 +70,15 @@ This allows a shared field such as `description` to be reused across modules wit
 When a field has `fixed-value`, its supplied value must equal that fixed value. This does not supply a default or make the field required. The value must also meet the field's datatype and codelist constraints.
 
 ```yaml
-- field: listed-building-grade-unknown
+- field: example-flag
   fixed-value: true
 ```
 
 This allows only the boolean `true`, not `false`, the number `1` or the string `"true"`. A `fixed-value: false` constraint is also valid and differs from having no constraint. Initially this attribute supports single-valued boolean, integer, number, decimal, string and enum module fields. It is not a constraint on each member of a list.
 
 The package exposes the constraint for consumers. Generated JSON Schema does not yet enforce it; see [generator coverage](co-constraints.md#json-schema-generator-coverage).
+
+No module in the specification currently uses `fixed-value`.
 
 **Conditional completion rules**
 

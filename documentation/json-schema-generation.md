@@ -455,8 +455,8 @@ Each application JSON Schema file contains:
 The current generation approach leverages the existing structured specification model and provides the basis for JSON Schema generation 
 while maintaining the integrity and conditional logic present in the current markdown based specifications.
 
-### Deferred support: unknown answers and fixed values
+### Deferred support: conditional listed building grades
 
-The module model supports `applies-if` with `operator: empty` and module field `fixed-value`. The generator does not yet translate these additions. In particular, generated schemas cannot yet be relied on to validate the grade-or-unknown pattern. See [co-constraint coverage](co-constraints.md#json-schema-generator-coverage) for the outstanding work.
+The module model supports answer-based `applies-if` conditions. The generator does not yet translate all conditional rules. In particular, generated schemas cannot yet be relied on to validate the rule that a listed building grade is required only when `listed-building-grade-known` is `true`. See [co-constraint coverage](co-constraints.md#json-schema-generator-coverage) for the outstanding work.
 
-Support for the grade-or-unknown pattern in generated schemas is tracked in [issue #420](https://github.com/digital-land/planning-application-data-specification/issues/420).
+Support for this conditional grade requirement in generated schemas is tracked in [issue #420](https://github.com/digital-land/planning-application-data-specification/issues/420).

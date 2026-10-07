@@ -922,28 +922,28 @@ def test_resolved_codelist_property(project_root):
     assert replace(view_field, dataset_field=dataset_field).codelist == 'dataset-options'
 
 
-def test_grade_unknown_constraints_survive_resolution(project_root):
+def test_grade_known_conditions_survive_resolution(project_root):
     spec = Specification.load(project_root)
-    flag = spec.resolve_field("listed-building-grade-unknown", module="lb-grade")
+    known = spec.resolve_field("listed-building-grade-known", module="lb-grade")
     grade = spec.resolve_field("listed-building-grade", module="lb-grade")
-    assert flag.datatype == "boolean"
-    assert flag.has_fixed_value and flag.fixed_value is True
+    assert known.datatype == "boolean"
+    assert known.required
+    assert not known.has_fixed_value
     assert not grade.has_fixed_value
     assert grade.codelist == "listed-building-grade"
-    assert grade.required and flag.required
-    assert flag.applies_if == {"field": "listed-building-grade", "operator": "empty"}
-    assert grade.applies_if == {"field": "listed-building-grade-unknown", "operator": "empty"}
-    assert flag.applies and grade.applies  # No submitted answers are evaluated.
+    assert grade.required
+    assert grade.applies_if == {"field": "listed-building-grade-known", "value": True}
+    assert known.applies and grade.applies  # No submitted answers are evaluated.
 
 
 def test_fixed_false_is_not_absence(project_root):
     from dataclasses import replace
     from planning_application_specification.models import FieldUsage
     spec = Specification.load(project_root)
-    flag = spec.resolve_field("listed-building-grade-unknown", module="lb-grade")
+    field = spec.resolve_field("listed-building-grade-known", module="lb-grade")
     for overrides, present, value in [({}, False, None), ({"fixed-value": False}, True, False)]:
-        resolved = replace(flag, usage=replace(flag.usage, overrides=overrides))
-        raw = FieldUsage(original=flag.base, overrides=overrides)
+        resolved = replace(field, usage=replace(field.usage, overrides=overrides))
+        raw = FieldUsage(original=field.base, overrides=overrides)
         for item in (resolved, raw):
             assert item.has_fixed_value is present
             assert item.fixed_value is value

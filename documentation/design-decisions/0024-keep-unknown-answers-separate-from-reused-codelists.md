@@ -15,37 +15,31 @@ Keep externally maintained codelists unchanged. Where the specification needs an
 
 This preserves the meaning of the source dataset and lets the specification describe uncertainty separately.
 
-For listed building grade, use a boolean flag to record that the grade is unknown. The applicant must supply either a valid grade or the unknown flag set to `true`. They must not supply both. Omitting both is not a valid answer where this information is required.
+For listed building grade, require the applicant to say whether they know the grade. If they answer `true`, they must supply a valid grade. If they answer `false`, they are declaring that they do not know it and must not supply a grade. The answer is required, so omitting it is not valid.
 
-The module uses the boolean field `listed-building-grade-unknown` with `fixed-value: true`.
+For example, a response declaring that the grade is unknown is:
 
 ```json
 {
-  "listed-building-grade-unknown": true
+  "listed-building-grade-known": false
 }
 ```
 
-When the applicant supplies a grade from the codelist, they must omit the unknown flag. 
-A flag set to `false` alone does not answer the question.
-
-| Grade | Unknown flag | Result |
+| Grade known | Grade | Result |
 | --- | --- | --- |
-| Valid codelist value | Absent | Valid |
-| Absent | `true` | Valid |
-| Present | `true` | Invalid: contradictory answers |
-| Absent | Absent | Invalid: unanswered |
-| Absent | `false` | Invalid: no grade supplied |
-| Present | `false` | Not the chosen representation: omit the flag when supplying a grade |
+| `true` | Valid codelist value | Valid |
+| `true` | Absent | Invalid: grade required |
+| `false` | Absent | Valid: applicant does not know the grade |
+| `false` | Present | Invalid: grade is out of scope |
+| Absent | Any value | Invalid: answer required |
 
 These requirements apply when the grade question is required. They do not make the module mandatory for application types that do not require it.
 
 **Conditional rules:**
 
-The module must state the requirement to supply exactly one of the two answers. Validation must check both completeness and contradictions.
+The module requires the known answer and requires a codelist grade only when that answer is `true`. When it is `false`, the grade field is out of scope and must not be supplied.
 
-The [co-constraint guidance](../co-constraints.md) now includes `operator: empty` under `applies-if`. Each answer applies only when the other is empty or missing and is required when in scope. Conditions are evaluated against the original payload, before requiredness. Supplied empty values must still satisfy the field constraints; they are not an alternative answer.
-
-The unknown flag has `fixed-value: true`. This requires the supplied value to be the boolean `true`; it does not supply a default or make the field required by itself. See [module field attributes](../module.md).
+The [co-constraint guidance](../co-constraints.md) uses `applies-if` with the boolean value `true` to put the grade field in scope only when the applicant says they know it. The `listed-building-grade-known` field itself is required in all cases.
 
 The package exposes these constraints without evaluating submitted answers. JSON Schema generation is deferred and tracked in [issue #420](https://github.com/digital-land/planning-application-data-specification/issues/420). Until that work is complete, generated schemas do not fully enforce this pattern.
 
@@ -77,4 +71,4 @@ This follows [ADR 0016: Keep form generation details separate from structured da
 - Maintain a local extended copy: would create another list to keep aligned with the source.
 - Allow an extra string through prose alone: would leave the codelist and machine-readable validation incomplete.
 - Infer unknown from a missing grade: would confuse an explicit answer with an unanswered question.
-- Require a true/false unknown flag for every answer: fits the value-based `applies-if` pattern, but adds a redundant flag when the grade itself is supplied.
+- Use a separate unknown flag: would require the applicant to provide a flag alongside the grade or unknown answer and would add an exact-value constraint. A required known/unknown answer directly controls whether the grade applies.
