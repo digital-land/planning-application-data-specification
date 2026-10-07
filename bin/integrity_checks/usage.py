@@ -44,7 +44,7 @@ def _iter_local_usage_tables(usage_tables):
 def _load_codelist_keys(codelists, codelist_name):
     _ = codelists
     try:
-        spec = Specification.load()
+        spec = Specification.load(Path(__file__).resolve().parents[2])
         return {
             (item.reference or "").strip()
             for item in spec.codelist(codelist_name).items

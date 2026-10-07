@@ -342,7 +342,7 @@ def generate_application_schema(app_ref, specification) -> Dict[str, Any]:
 def generate_json_schemas():
     """Main function to generate all JSON schemas"""
     print("Loading specification model...")
-    specification = Specification.load()
+    specification = Specification.load(Path(__file__).resolve().parents[1])
     applications = specification.applications
 
     # Ensure output directories exist

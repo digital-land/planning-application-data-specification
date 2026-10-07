@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from bin.markdown_utils import markdown_link, markdown_table
 from planning_application_specification import Specification
 from planning_application_specification.specification import (
@@ -162,7 +164,7 @@ def get_component_codelists(component):
 
 def format_main_module_table(module, app_type=None, package_spec=None):
     if package_spec is None:
-        package_spec = Specification.load()
+        package_spec = Specification.load(Path(__file__).resolve().parents[1])
 
     selection = SelectionContext(application_type=app_type) if app_type else None
     rows = list(
@@ -199,7 +201,7 @@ def format_main_module_table(module, app_type=None, package_spec=None):
 
 def format_component_table(component, app_type=None, package_spec=None):
     if package_spec is None:
-        package_spec = Specification.load()
+        package_spec = Specification.load(Path(__file__).resolve().parents[1])
 
     selection = SelectionContext(application_type=app_type) if app_type else None
     rows = list(
@@ -277,7 +279,7 @@ def append_component_sections(out, components, app_type=None, package_spec=None)
 
 def generate_module(module_ref, _specification=None, app_type=None, package_spec=None):
     if package_spec is None:
-        package_spec = Specification.load()
+        package_spec = Specification.load(Path(__file__).resolve().parents[1])
     try:
         module = package_spec.module(module_ref)
     except KeyError:
@@ -392,7 +394,7 @@ def generate_codelist_md_str(codelists):
 
 def generate_application_fields_section(app_type=None, package_spec=None):
     if package_spec is None:
-        package_spec = Specification.load()
+        package_spec = Specification.load(Path(__file__).resolve().parents[1])
 
     try:
         submission_details_field = package_spec.field("submission-details")
@@ -467,7 +469,7 @@ def generate_application(app_ref, _specification=None):
     """
     Generate the information model for a specific application type.
     """
-    package_spec = Specification.load()
+    package_spec = Specification.load(Path(__file__).resolve().parents[1])
     try:
         app = package_spec.application(app_ref)
     except KeyError:

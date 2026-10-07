@@ -17,7 +17,7 @@ init::
 
 	# Compile from .in to .txt (use backtracking resolver for consistency)
 	python -m piptools compile --resolver=backtracking requirements/requirements.in
-	python -m piptools compile --resolver=backtracking requirements/dev-requirements.in
+	python -m piptools compile --allow-unsafe --resolver=backtracking requirements/dev-requirements.in
 
 	# Sync the environment to the compiled lock files
 	python -m piptools sync requirements/dev-requirements.txt requirements/requirements.txt

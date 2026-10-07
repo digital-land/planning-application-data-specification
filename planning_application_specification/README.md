@@ -1,6 +1,6 @@
 # planning_application_specification
 
-Python package for loading and querying the planning application specification from a local checkout of this repository.
+Python package for loading and querying the planning application specification. A built wheel includes a snapshot of the canonical resources.
 
 This package is being introduced gradually so existing `/bin` scripts can move onto it in small safe steps. The current interface is intentionally small.
 
@@ -14,9 +14,7 @@ The current package has four kinds of query:
 
 ## Getting started
 
-For now, the package works against a local checkout of this repository.
-
-From the repo root:
+With an installed wheel, `Specification.load()` reads its bundled resources from any working directory:
 
 ```python
 from planning_application_specification import Specification
@@ -45,19 +43,19 @@ print(householder_listed.name)
 print(householder_listed.application_types)
 ```
 
-You can also load from an explicit repo path:
+During development, load authored files from an explicit repo path:
 
 ```python
 spec = Specification.load("/path/to/planning-application-data-specification")
 ```
 
-If the package cannot detect the repository root automatically, `Specification.load(...)` raises `FileNotFoundError`.
+An editable source install has no copied resource snapshot, so pass the checkout root explicitly. If the bundle is absent and no path is supplied, `Specification.load()` raises `FileNotFoundError`. `loader.load_needs()` follows the same default and accepts `root_path` for a local checkout.
 
 ## Current scope
 
 The implemented package currently supports:
 
-- loading the specification model from a local repo checkout
+- loading the bundled specification model or an explicit local repo checkout
 - canonical single-application lookup and controlled combined-application lookup
 - canonical codelist lookup
 - canonical field, component and module lookup
@@ -69,7 +67,7 @@ The implemented package currently supports:
 
 Current V1 boundary:
 
-- works against a local checkout of this repository
+- works against the installed canonical snapshot or an explicit local checkout
 - evaluates codelist applicability from usage data using selection context
 - evaluates field `applies-if` only for `application-type` conditions, including those inside `all` groups
 - preserves the complete `applies-if` rule for consumers; `applies=True` means the application-type conditions allow the field, not that any answer conditions have been satisfied
@@ -649,7 +647,7 @@ Attributes:
 
 These are currently available on the loaded object:
 
-- `source_path`: resolved repo root path used for loading
+- `source_path`: resolved resource root used for loading, either the installed bundle or an explicit local checkout
 - `tables`: raw frontmatter tables
 - `modules`: compiled module index
 - `components`: compiled component index

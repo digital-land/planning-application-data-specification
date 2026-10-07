@@ -1,6 +1,6 @@
 # Installing the specification package in another project
 
-Use these instructions to install the Python API into another project and read specification data from a local copy of this repository. You need Python 3.10 or later and a virtual environment for the consuming project.
+Use these instructions to install the Python API and read the bundled specification data. You need Python 3.10 or later and a virtual environment for the consuming project.
 
 ## Install for development
 
@@ -32,17 +32,23 @@ Run `make package` in the pa-explorer environment. This creates a wheel and sour
 
 Both archives contain the Python package and a snapshot of canonical specification definitions, guidance, examples, local codelist and usage CSVs, application types, planning requirements and user needs. These files sit under `planning_application_specification/resources/` in the archives. They are copied during packaging and are not generated source files. Research material, analysis data and generated site output are excluded. An unpacked source archive can build the same wheel without the original checkout.
 
-`Specification.load()` still takes a local repository path as shown below. The packaged snapshot is present for a later resource loading change and does not change that API in this release.
+`Specification.load()` reads the bundled snapshot by default. Pass a checkout path to work with local authored files instead.
 
 ## Use the package in your code
 
-In the consuming project, import `Specification` and load the local repository directory containing `specification/`, `data/` and `user-needs/`. For example, this retrieves the definition of the `description` field:
+In the consuming project, import `Specification` and load the bundled snapshot. For example, this retrieves the definition of the `description` field:
 
 ```python
 from planning_application_specification import Specification
 
-specification = Specification.load("/absolute/path/to/specification-checkout")
+specification = Specification.load()
 description = specification.field("description")
 ```
 
-The package reads data from that directory when loaded. After editing specification data, load it again to use the updated values; reinstalling the package is not necessary.
+To read an edited local checkout, pass its root explicitly:
+
+```python
+specification = Specification.load("/absolute/path/to/specification-checkout")
+```
+
+After editing local specification data, load it again to use the updated values; reinstalling the package is not necessary. Editable installs do not include the build-time resource copy, so they require this explicit path.

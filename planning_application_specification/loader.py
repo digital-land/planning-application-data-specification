@@ -42,12 +42,12 @@ def _resolve_repo_root(path: str | Path | None = None) -> Path:
             )
         return root
 
-    for candidate in [Path.cwd(), *Path.cwd().parents]:
-        if (candidate / "specification").exists():
-            return candidate
-
+    root = Path(__file__).resolve().parent / "resources"
+    if (root / "specification").is_dir():
+        return root
     raise FileNotFoundError(
-        "Could not detect the repository root. Pass the repo path to Specification.load(...)."
+        "Bundled specification resources are unavailable. "
+        "Pass a local checkout path to Specification.load(path) or load_needs(root_path)."
     )
 
 

@@ -263,7 +263,7 @@ def build_flat_rows(
     app_ref = app.application
     app_desc = app.description
     app_name = app.name
-    package_spec = Specification.load()
+    package_spec = Specification.load(Path(__file__).resolve().parents[1])
 
     flat_rows: List[Dict[str, Any]] = []
 

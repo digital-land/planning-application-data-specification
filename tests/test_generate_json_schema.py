@@ -51,7 +51,7 @@ def test_process_items_keeps_unhandled_required_if_over_protective():
 
     properties, required, conditional_rules = process_items(
         [field_instance],
-        specification=Specification.load(),
+        specification=Specification.load(Path(__file__).resolve().parents[1]),
         collected_components=set(),
         app_ref="hh",
     )
@@ -62,7 +62,7 @@ def test_process_items_keeps_unhandled_required_if_over_protective():
 
 
 def test_generate_application_schema_applies_parent_application_type_rules():
-    schema = generate_application_schema("outline-some", Specification.load())
+    schema = generate_application_schema("outline-some", Specification.load(Path(__file__).resolve().parents[1]))
     proposal_details = schema["definitions"]["proposal-details"]
 
     assert "description" in proposal_details["properties"]
@@ -71,7 +71,7 @@ def test_generate_application_schema_applies_parent_application_type_rules():
 
 
 def test_supporting_info_source_model_defines_both_complete_routes():
-    specification = Specification.load()
+    specification = Specification.load(Path(__file__).resolve().parents[1])
     supporting_info = specification.modules["supporting-info"]
     fields = {}
     for item in supporting_info.items:
@@ -115,7 +115,7 @@ def test_supporting_info_examples_cover_structured_and_document_routes():
 
 
 def test_supporting_info_schema_requires_a_complete_route_for_empty_values():
-    schema = generate_application_schema("reserved-matters", Specification.load())
+    schema = generate_application_schema("reserved-matters", Specification.load(Path(__file__).resolve().parents[1]))
     supporting_info_schema = {
         "$schema": schema["$schema"],
         "$ref": "#/definitions/supporting-info",

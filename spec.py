@@ -341,7 +341,7 @@ def uses():
 @click.argument("module_ref")
 def applications_with_module(module_ref):
     """Find applications that use a specific module."""
-    spec = Specification.load()
+    spec = Specification.load(PROJECT_ROOT)
     apps = spec.applications_with_module(module_ref)
 
     if apps:
@@ -455,7 +455,7 @@ def codelist_usage(codelist_ref):
 @click.argument("component_ref")
 def component_usage(component_ref):
     """Find fields and modules that use a given component."""
-    spec = Specification.load()
+    spec = Specification.load(PROJECT_ROOT)
     usages = spec.component_usages(component_ref)
     field_hits = usages.fields
     module_hits = usages.modules

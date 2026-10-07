@@ -37,11 +37,9 @@ def _resolve_repo_root_from_specification(specification: dict) -> Path:
     if isinstance(root, str) and root:
         return Path(root)
 
-    for candidate in [Path.cwd(), *Path.cwd().parents]:
-        if (candidate / "specification").exists():
-            return candidate
+    from .loader import _resolve_repo_root
 
-    raise FileNotFoundError("Could not detect the repository root from specification")
+    return _resolve_repo_root()
 
 
 def _combined_application_types_path(specification: dict) -> Path:
