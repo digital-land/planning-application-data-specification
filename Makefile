@@ -1,4 +1,4 @@
-.PHONY: tests
+.PHONY: tests package
 
 # current git branch
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
@@ -89,6 +89,9 @@ copy-output-docs:
 
 build: clean copy-output-docs
 	python3 -m bin.build
+
+package:
+	python -m build $(PACKAGE_BUILD_FLAGS) --sdist --wheel
 
 
 status:
