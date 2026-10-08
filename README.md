@@ -78,12 +78,15 @@ You can get involved by:
 
 ### Maintaining a CHANGELOG
 
-We maintain a [CHANGELOG](CHANGELOG.md) using [git-chglog](https://github.com/git-chglog/git-chglog). This groups commits by type and into releases. Types are configurable and set in [.chglog/config.yml](.chglog/config.yml). Releases are handled by `git tag`.
+We maintain a [CHANGELOG](CHANGELOG.md) using [git-chglog](https://github.com/git-chglog/git-chglog). This groups commits by type and into releases. Types are configurable in [.chglog/config.yml](.chglog/config.yml).
 
-If you make a PR with a number of commits (following [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/)) and want to update the CHANGELOG, run
+Use dated development versions such as `2026.10.7.dev1` before mandation. Follow the [package release instructions](documentation/releasing-specification-package.md) to update the package version, validate it and publish a GitHub prerelease. A Git tag alone does not make a release available to the viewer.
 
-```
-git tag -a v{version_number} -m "{release description}"
-# then
+After fetching published release tags, regenerate the changelog with:
+
+```sh
+git fetch origin --tags
 git-chglog -o CHANGELOG.md
 ```
+
+Review and commit the changelog separately using the project's conventional commit prefixes.
