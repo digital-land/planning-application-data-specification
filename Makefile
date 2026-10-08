@@ -1,4 +1,4 @@
-.PHONY: tests package
+.PHONY: tests package release check-release
 
 # current git branch
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
@@ -110,3 +110,11 @@ commit-issue-tracking::
 commit-outputs:
 	git add generated/
 	git diff --quiet && git diff --staged --quiet || (git commit -m "Latest generated outputs $(shell date +%F)"; git push origin $(BRANCH))
+
+# Supply the version once for package metadata and the local release tag.
+export VERSION
+release:
+	python scripts/prepare_release.py prepare
+
+check-release:
+	python scripts/prepare_release.py check
