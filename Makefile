@@ -62,23 +62,8 @@ export-elements-xlsx::
 jsonschema::
 	python3 -m bin.generate_json_schema
 
-clean-static-site::
-	rm -rf docs
-	mkdir -p docs
-
-copy-assets::
-	mkdir -p docs/static/{stylesheets,javascripts}
-	cp -r bin/assets/javascripts docs/static/
-
-render-local-site:: clean-static-site copy-assets
-	python3 -m bin.render_static_site --output docs --base-url ""
-
-render-github-pages:: clean-static-site copy-assets
-	python3 -m bin.render_static_site --output docs
-	python3 -m bin.inject_viewer_redirects --output docs
-
 serve-github-pages::
-	# Local preview: serve docs at root; URLs will use whatever base-url you rendered with
+	# Preview preserved redirect pages; never regenerate or clean docs
 	python3 -m http.server $(PORT) --bind :: -d docs
 
 clean::
