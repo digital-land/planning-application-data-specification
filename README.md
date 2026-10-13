@@ -95,6 +95,6 @@ Review and commit the changelog separately using the project's conventional comm
 
 Do not delete or rename the pages in `docs/`. They preserve established links by redirecting visitors to equivalent pages in the [replacement viewer](https://digital-land.github.io/planning-application-specification-viewer/). Keep GitHub Pages serving `main` → `/docs`. Assets and downloads remain at their existing URLs.
 
-During the transition, the site workflow injects redirects into the existing HTML and commits the result. It does not rebuild the old site. Each page keeps its original content, a canonical link, an automatic redirect and a visible link to its replacement. JavaScript preserves query strings and anchors; the no-JavaScript refresh goes to the equivalent page without preserving query strings.
+The old site workflow is disabled and removed. The renderer, source templates and frontend assets have been retired. The preserved HTML contains canonical links, automatic redirects and visible links to the replacement viewer. JavaScript preserves query strings and anchors; the no-JavaScript refresh goes to the equivalent page without preserving query strings.
 
-After the published redirects have been checked, disable the old site workflow and retire the renderer separately. Keep `docs/` and its redirects. Record the last pre-redirect commit before publishing so its pages can be restored if needed. Changes to the new viewer must continue to support these destination URLs.
+Use `make serve-github-pages` to preview the preserved pages. Do not regenerate or clean `docs/`. The redirect injection utility remains available for maintenance and is safe to run repeatedly. Changes to the new viewer must continue to support the destination URLs.
