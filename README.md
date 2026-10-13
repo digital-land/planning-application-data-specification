@@ -33,7 +33,7 @@ There is more information on how the specification is structured in the [/docume
 
 The canonical specification in this repository is used to generate the following outputs:
 
-* [a specification viewer](https://digital-land.github.io/planning-application-data-specification/) for an easier way to view and explore the specification
+* [a specification viewer](https://digital-land.github.io/planning-application-specification-viewer/) for an easier way to view and explore the specification
 * [compiled markdown representations of each application type](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/info_model/application) showing what is expected to be submitted for each application type
 * [spreadsheets for each application type](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/spreadsheet) so that people can use those to perform analysis tasks
 * [JSON schemas](https://github.com/digital-land/planning-application-data-specification/tree/main/generated/json-schema/applications) for each application type, which can be used to build services
@@ -90,3 +90,11 @@ git-chglog -o CHANGELOG.md
 ```
 
 Review and commit the changelog separately using the project's conventional commit prefixes.
+
+## Preserve the old viewer URLs
+
+Do not delete or rename the pages in `docs/`. They preserve established links by redirecting visitors to equivalent pages in the [replacement viewer](https://digital-land.github.io/planning-application-specification-viewer/). Keep GitHub Pages serving `main` → `/docs`. Assets and downloads remain at their existing URLs.
+
+During the transition, the site workflow injects redirects into the existing HTML and commits the result. It does not rebuild the old site. Each page keeps its original content, a canonical link, an automatic redirect and a visible link to its replacement. JavaScript preserves query strings and anchors; the no-JavaScript refresh goes to the equivalent page without preserving query strings.
+
+After the published redirects have been checked, disable the old site workflow and retire the renderer separately. Keep `docs/` and its redirects. Record the last pre-redirect commit before publishing so its pages can be restored if needed. Changes to the new viewer must continue to support these destination URLs.
