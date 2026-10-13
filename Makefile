@@ -75,6 +75,7 @@ render-local-site:: clean-static-site copy-assets
 
 render-github-pages:: clean-static-site copy-assets
 	python3 -m bin.render_static_site --output docs
+	python3 -m bin.inject_viewer_redirects --output docs
 
 serve-github-pages::
 	# Local preview: serve docs at root; URLs will use whatever base-url you rendered with

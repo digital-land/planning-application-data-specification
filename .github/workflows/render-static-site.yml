@@ -5,6 +5,8 @@ on:
   push:
     paths:
       - 'specification/**'
+      - 'bin/inject_viewer_redirects.py'
+      - '.github/workflows/render-static-site.yml'
 
 jobs:
   render-static-site:
@@ -30,13 +32,14 @@ jobs:
         run: |
           echo "GITHUB_TOKEN=$GITHUB_TOKEN" > .env
 
-      - name: Render static site
-        run: make render-github-pages
+      # Preserve every established URL, including pages removed from the current model.
+      - name: Add redirects to existing site pages
+        run: python3 -m bin.inject_viewer_redirects --output docs
 
       - name: Commit and push generated site
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add docs
-          git diff --quiet && git diff --staged --quiet || git commit -m "Render static site [skip ci]"
+          git diff --quiet && git diff --staged --quiet || git commit -m "Add viewer redirects [skip ci]"
           git push
