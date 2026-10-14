@@ -100,7 +100,7 @@ commit-outputs:
 # Supply the version once for package metadata and the local release tag.
 export VERSION
 release:
-	python scripts/prepare_release.py prepare
+	python bin/prepare_release.py prepare
 
 check-release:
-	python scripts/prepare_release.py check
+	python bin/prepare_release.py check
