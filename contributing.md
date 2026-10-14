@@ -1,36 +1,15 @@
+# Contributing
 
-Generating a CHANGELOG.
+See [making changes to the specification](documentation/making-changes-to-the-specification.md) for the design and review process. Keep each change in a focused commit so it can be reviewed on its own.
 
-We using 
-```
-git-chglog -o CHANGELOG.md
-```
+## Commits and changelog
 
-### Commits
+Use a commit message in the form `type: description`. The types included in the changelog are `spec`, `app`, `tool`, `fix`, `docs`, `req`, `need` and `guidance`. See the [changelog configuration](.chglog/config.yml) for the current grouping.
 
-We try to follow the [conventional commits](https://www.conventionalcommits.org/en/v1.0.0/) approach, which makes it easier to generate a changelog.
+To generate the changelog, fetch release tags and run `git-chglog -o CHANGELOG.md`. Review and commit the result separately.
 
-The structure of the commits should be
-```
-type: commit msg
-```
+## Releases
 
-The commit types that will be included and grouped in the CHANGELOG are:
+A release groups a series of reviewed commits. One versioned tag identifies the exact commit on `main` that contains those changes. Tags also give the changelog boundaries between groups of changes; a GitHub release makes the tagged version available to others.
 
-spec: "𝌭 Model changes"
-app: "👷‍♀️ Application changes"
-tool: "⚒️ Tooling"
-fix:  "🐛 Bug Fixes"
-docs: "📚 Documentation"
-req: "📄 Planning requirement"
-need: "🎯 Need"
-guidance: "🧭 Guidance"
-
-### Tags
-
-We use tags to group changes.
-
-We create new tags with 
-```
-git tag -a v0.1.1 -m "a description"
-```
+Follow [build and release the specification package](documentation/releasing-specification-package.md) to choose the current development version, run checks, create the matching tag and publish a GitHub prerelease.
