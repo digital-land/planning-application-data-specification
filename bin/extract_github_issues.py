@@ -182,7 +182,7 @@ def export_issue_csvs(
     repo_owner: str = "digital-land",
     repo_name: str = "planning-application-data-specification",
     github_token: Optional[str] = None,
-    output_dir: str = "issue-tracking",
+    output_dir: str = "generated/issue-tracking",
 ) -> Dict[str, str]:
     issues = fetch_open_issues(
         repo_owner=repo_owner,
@@ -240,8 +240,8 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     parser.add_argument(
         "--output-dir",
         dest="output_dir",
-        default="issue-tracking",
-        help="Directory to write CSV outputs. Defaults to issue-tracking.",
+        default="generated/issue-tracking",
+        help="Directory to write CSV outputs. Defaults to generated/issue-tracking.",
     )
     return parser.parse_args(argv)
 

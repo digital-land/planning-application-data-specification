@@ -133,7 +133,7 @@ python spec.py report summary --markdown
 The markdown option is useful when you want to write the summary into a document:
 
 ```bash
-python spec.py report summary --markdown > issue-tracking/declarative-model-progress.md
+python spec.py report summary --markdown > generated/issue-tracking/declarative-model-progress.md
 ```
 
 ## Check completeness

@@ -43,7 +43,7 @@ issue-tracking-data:
 
 
 declarative-progress:
-	python spec.py report summary --markdown > issue-tracking/declarative-model-progress.md
+	python spec.py report summary --markdown > generated/issue-tracking/declarative-model-progress.md
 
 
 specification::
@@ -67,7 +67,8 @@ serve-github-pages::
 	python3 -m http.server $(PORT) --bind :: -d docs
 
 clean::
-	rm -rf generated
+	rm -rf generated/info_model generated/json-schema generated/spreadsheet
+	rm -f generated/README.md
 	mkdir -p generated
 
 copy-output-docs: 
