@@ -2,6 +2,7 @@
 
 # current git branch
 BRANCH := $(shell git rev-parse --abbrev-ref HEAD)
+ISSUE_TRACKING_OUTPUTS := generated/issue-tracking/open-issues-raw.csv generated/issue-tracking/open-issue-labels-raw.csv generated/issue-tracking/open-issues-spreadsheet.csv generated/issue-tracking/declarative-model-progress.md
 
 # Pin versions known to work together
 PINNED_PIP      := 25.2
@@ -90,8 +91,8 @@ changelog:
 
 
 commit-issue-tracking::
-	git add .
-	git diff --quiet && git diff --staged --quiet || (git commit -m "Latest issue tracking updates $(shell date +%F)"; git push origin $(BRANCH))
+	git add -A -- $(ISSUE_TRACKING_OUTPUTS)
+	git diff --cached --quiet -- $(ISSUE_TRACKING_OUTPUTS) || (git commit --only -m "Latest issue tracking updates $(shell date +%F)" -- $(ISSUE_TRACKING_OUTPUTS) && git push origin $(BRANCH))
 
 
 commit-outputs:
