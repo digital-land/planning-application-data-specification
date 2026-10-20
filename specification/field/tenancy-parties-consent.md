@@ -14,3 +14,11 @@ This field records consent to the proposed change of use from all parties to the
 Answer Yes only when all parties have consented. Answer No if any party has not consented.
 
 Source: [Class MA application form, section 5, version ECAB 2024.1](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form064_england_en.pdf).
+
+## Agricultural buildings to dwellinghouses (Class Q)
+
+If yes, have all the parties to any agricultural tenancy agreements consented to the change of use?
+
+Answer Yes or No.
+
+Source: section 5 of the [prior approval application form for agricultural buildings to dwellinghouses (Class Q), version ECAB 2024.2](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form044_england_en.pdf).
