@@ -61,7 +61,7 @@ included dataset are filtered before publication.
 |  | received-date | Date the planning authority received the application. |  |
 |  | planning-authority | Identifier of the planning authority that received the planning application. |  |
 |  | development-scale | Local planning authority classification of a full or outline application by development scale, where applicable. |  |
-|  | planning-performance-agreement | Whether the application was subject to a Planning Performance Agreement. |  |
+|  | planning-performance-agreement | Classification of whether the application was subject to a Planning Performance Agreement. |  |
 |  | withdrawn-date | Date the planning application was withdrawn. |  |
 |  | linked-applications | References to earlier applications this application directly links to. |  |
 |  | document-url | URL to the completed application form published by the planning authority, where available. |  |
