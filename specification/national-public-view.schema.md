@@ -39,7 +39,7 @@ datasets:
         description: the local planning authority's classification of a full or outline planning application by development scale, where applicable. Either major or minor
       - field: planning-performance-agreement
         requirement-level: MUST
-        description: whether the application was subject to a Planning Performance Agreement
+        description: classification of whether the application was subject to a Planning Performance Agreement
       - field: withdrawn-date
         requirement-level: SHOULD
         description: the date the planning application was withdrawn

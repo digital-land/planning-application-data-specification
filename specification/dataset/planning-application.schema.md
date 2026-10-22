@@ -51,7 +51,7 @@ fields:
   description: "The local planning authority's classification of a full or outline planning application by development scale"
 - field: planning-performance-agreement
   requirement-level: MUST
-  description: "Whether the application was subject to a Planning Performance Agreement"
+  description: "Classification of whether the application was subject to a Planning Performance Agreement"
 - field: withdrawn-date
   requirement-level: SHOULD
   description: "The date the planning application was withdrawn"
