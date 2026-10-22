@@ -6,7 +6,7 @@ Details of why a Lawful Development Certificate is required.
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| proposal-incl-building-operations | Proposal incl building operations | Does the proposal include building operations? |  | MUST | For lawful development certificate for proposed work |
+| proposal-incl-building-operations | Proposal incl building operations | Does the proposal include building operations? |  | MUST | For lawful development certificate for proposed work. Related to cls-q-building-works-required, which asks whether specified conversion works are required rather than included. The fields could potentially be combined following review of their meanings and uses; they remain distinct for now. |
 | proposal-building-operations-description | Proposal building operations description | Description of the building operations included in the proposal |  | MAY | Rule: is a MUST if `proposal-incl-building-operations` is `True` |
 | proposal-incl-change-of-use | Proposal incl change of use | Does the proposal include a change of use? |  | MUST |  |
 | proposal-change-of-use-description | Proposal change of use description | Description of the change of use included in the proposal |  | MAY | Rule: is a MUST if `proposal-incl-change-of-use` is `True`. Required if proposal-incl-change-of-use is true |
