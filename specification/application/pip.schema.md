@@ -13,6 +13,7 @@ end-date: ''
 fields:
   - field: submission-details
     required: true
+  - field: additional-data
 modules:
   - module: agent-details
   - module: agent-contact
@@ -24,6 +25,6 @@ modules:
   - module: proposal-details-inc-non-residential
   - module: site-details
   - module: site-info
-allow-additional-properties: true
+allow-additional-properties: false
 ---
 

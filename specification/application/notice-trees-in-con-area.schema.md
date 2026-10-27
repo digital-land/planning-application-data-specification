@@ -12,6 +12,7 @@ end-date: ''
 fields:
   - field: submission-details
     required: true
+  - field: additional-data
 modules:
   - module: agent-contact
   - module: agent-details
@@ -24,5 +25,5 @@ modules:
   - module: trees-location
   - module: trees-ownership
   - module: tree-work-details
-allow-additional-properties: true
+allow-additional-properties: false
 ---

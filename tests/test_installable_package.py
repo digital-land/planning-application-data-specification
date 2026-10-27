@@ -238,8 +238,9 @@ def test_application_returns_uniform_application_view_for_single_type(project_ro
     assert application.ref == "hh"
     assert application.application_types == ["hh"]
     assert application.is_combined is False
-    assert application.allow_additional_properties is True
-    assert len(application.items) == 1
+    assert application.allow_additional_properties is False
+    assert len(application.items) == 2
+    assert [usage.original.ref for usage in application.field_usages] == ["additional-data"]
     assert len(application.component_usages) == 1
     assert len(application.modules) > 0
     assert application.modules[0].ref
@@ -258,9 +259,9 @@ def test_application_returns_uniform_application_view_for_combined_type(project_
     assert application.start_date == "2026-04-14"
     assert application.end_date == ""
     assert "householder planning permission" in application.description
-    assert application.allow_additional_properties is True
-    assert len(application.items) == 1
-    assert len(application.field_usages) == 0
+    assert application.allow_additional_properties is False
+    assert len(application.items) == 2
+    assert [usage.original.ref for usage in application.field_usages] == ["additional-data"]
     assert len(application.component_usages) == 1
     assert application.component_usages[0].component.ref == "submission-details"
     assert len(application.modules) > 0
@@ -494,7 +495,8 @@ def test_combined_application_dedupes_application_level_items(project_root):
             )
 
     assert item_keys == [
-        ("component", "submission-details", "submission-details")
+        ("component", "submission-details", "submission-details"),
+        ("field", "additional-data"),
     ]
 
 
@@ -845,16 +847,23 @@ def test_application_field_inheritance_preserves_entries_order_and_origins():
 def test_loaded_application_and_combination_include_inherited_fields(project_root, tmp_path):
     specification = Specification.load(project_root)
     application = specification.application("outline-some")
-    assert [(item.definition, item.inherited_from) for item in application.resolved_fields] == [({"field": "submission-details", "required": True}, "outline")]
-    assert "fields" not in specification.tables["application"]["outline-some"]
+    assert [(item.definition, item.inherited_from) for item in application.resolved_fields] == [
+        ({"field": "submission-details", "required": True}, "outline"),
+        ({"field": "additional-data"}, None),
+    ]
+    assert specification.tables["application"]["outline-some"]["fields"] == [
+        {"field": "additional-data"}
+    ]
     def refs(application):
         return [item.referenced_by_field.original.ref if isinstance(item, ComponentUsage) else item.original.ref for item in application.items]
     assert "submission-details" in refs(application)
+    assert "additional-data" in refs(application)
     source = tmp_path / "specification"
     source.mkdir()
     (source / "combined-application-types.csv").write_text("application-types,start-date,end-date\noutline-some;lbc,2026-01-01,\n")
     specification.tables["__root_path__"] = tmp_path
     assert refs(specification.application("outline-some;lbc")).count("submission-details") == 1
+    assert refs(specification.application("outline-some;lbc")).count("additional-data") == 1
 
 
 def test_dataset_resolution_uses_existing_field_resolver(project_root):

@@ -8,6 +8,7 @@ entry-date: 2025-01-07
 fields:
 - field: submission-details
   required: true
+- field: additional-data
 legislation:
 - https://www.legislation.gov.uk/ukpga/1990/9/contents
 modules:
@@ -34,5 +35,5 @@ name: Listed building consent
 notes: ''
 start-date: ''
 synonyms: []
-allow-additional-properties: true
+allow-additional-properties: false
 ---

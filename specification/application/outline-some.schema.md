@@ -6,6 +6,8 @@ description: Outline planning permission with some matters reserved
 entry-date: 2025-02-07
 start-date: ''
 end-date: ''
+fields:
+  - field: additional-data
 modules:
   - module: access-rights-of-way
   - module: bio-geo-arch-con
@@ -16,5 +18,5 @@ modules:
   - module: trees-hedges
   - module: vehicle-parking
   - module: waste-storage-collection
-allow-additional-properties: true
+allow-additional-properties: false
 ---

@@ -7,9 +7,11 @@ description: |
 entry-date: 2025-08-12
 start-date: ''
 end-date: ''
+fields:
+  - field: additional-data
 modules:
   - module: proposal-details-ldc
   - module: grounds-existing-use
   - module: grounds-proposed-use
-allow-additional-properties: true
+allow-additional-properties: false
 ---

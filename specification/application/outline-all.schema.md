@@ -6,5 +6,7 @@ description: Outline planning permission with all matters reserved
 entry-date: 2025-02-07
 start-date: ''
 end-date: ''
-allow-additional-properties: true
+fields:
+  - field: additional-data
+allow-additional-properties: false
 ---

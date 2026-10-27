@@ -12,6 +12,7 @@ end-date: ''
 fields:
   - field: submission-details
     required: true
+  - field: additional-data
 modules:
   - module: access-rights-of-way
   - module: agent-contact
@@ -43,5 +44,5 @@ modules:
   - module: trees-hedges
   - module: vehicle-parking
   - module: waste-storage-collection
-allow-additional-properties: true
+allow-additional-properties: false
 ---

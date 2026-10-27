@@ -95,6 +95,39 @@ def test_generate_application_schema_applies_parent_application_type_rules():
     assert "is-psi" not in proposal_details["properties"]
 
 
+def test_all_application_schemas_allow_only_named_additional_data_at_root():
+    specification = Specification.load(Path(__file__).resolve().parents[1])
+
+    for application_ref in specification.applications:
+        schema = generate_application_schema(application_ref, specification)
+        assert schema["additionalProperties"] is False, application_ref
+        assert schema["properties"]["additional-data"] == {
+            "type": "object",
+            "additionalProperties": True,
+        }, application_ref
+        assert "additional-data" not in schema["required"], application_ref
+
+
+def test_named_additional_data_schema_accepts_arbitrary_object_contents_only():
+    schema = generate_application_schema(
+        "hh", Specification.load(Path(__file__).resolve().parents[1])
+    )
+    root_shape = {
+        "type": "object",
+        "properties": {"additional-data": schema["properties"]["additional-data"]},
+        "additionalProperties": schema["additionalProperties"],
+    }
+    validator = Draft7Validator(root_shape)
+
+    assert validator.is_valid({})
+    assert validator.is_valid(
+        {"additional-data": {"supplier": {"value": [1, "two", None, True]}}}
+    )
+    assert not validator.is_valid({"additional-data": "not an object"})
+    assert not validator.is_valid({"additional-data": []})
+    assert not validator.is_valid({"additional-dtaa": {}})
+
+
 def test_supporting_info_source_model_defines_both_complete_routes():
     specification = Specification.load(Path(__file__).resolve().parents[1])
     supporting_info = specification.modules["supporting-info"]

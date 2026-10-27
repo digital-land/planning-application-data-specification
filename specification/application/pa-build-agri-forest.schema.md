@@ -6,8 +6,10 @@ description: Prior apporval for building development related to agricultural and
 entry-date: 2026-05-11
 start-date: ''
 end-date: ''
+fields:
+  - field: additional-data
 modules:
   - module: agri-forest-dev-elig
   - module: proposed-building
-allow-additional-properties: true
+allow-additional-properties: false
 ---

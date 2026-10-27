@@ -11,6 +11,7 @@ legislation:
 fields:
   - field: submission-details
     required: true
+  - field: additional-data
 modules:
   - module: cls-q-agri-tenancies
   - module: cls-q-current-unit-eligib
@@ -22,7 +23,7 @@ rules:
   - rule: Written confirmations from all relevant landlords and tenants consenting to the change of use must be included in submission-details.documents if cls-q-agri-tenancies.agricultural-tenants and cls-q-agri-tenancies.tenancy-parties-consent are both true.
   - rule: Written confirmations from all relevant landlords and tenants agreeing that the site is no longer required for any agricultural use must be included in submission-details.documents if cls-q-agri-tenancies.cls-q-tenancy-terminated and cls-q-agri-tenancies.cls-q-agri-use-not-required are both true.
   - rule: A site-specific flood risk assessment in submission-details.documents is required if the site is in Flood Zone 2 or 3 or an area with critical drainage problems.
-allow-additional-properties: true
+allow-additional-properties: false
 ---
 
 This application definition covers the [prior approval application form for agricultural or former agricultural buildings to dwellinghouses (Class Q), version ECAB 2024.2](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form044_england_en.pdf). It inherits applicant, agent, contact, site, checklist and declaration information from `prior-approval`. The inherited `conflict-of-interest` module is retained, although it is not present in this paper form.

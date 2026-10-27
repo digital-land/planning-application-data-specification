@@ -7,6 +7,7 @@ entry-date: 2025-07-22
 fields:
 - field: submission-details
   required: true
+- field: additional-data
 legislation:
 - https://www.legislation.gov.uk/uksi/2015/595/article/2/made
 modules:
@@ -30,5 +31,5 @@ name: Planning permission for relevant demolition in a conservation area
 notes: ''
 start-date: ''
 synonyms: []
-allow-additional-properties: true
+allow-additional-properties: false
 ---

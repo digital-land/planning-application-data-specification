@@ -6,10 +6,12 @@ description: Enlargement of a dwellinghouse by construction of additional storey
 entry-date: 2025-08-12
 start-date: ''
 end-date: ''
+fields:
+  - field: additional-data
 modules:
   - module: desc-work-impacts-risks
   - module: eligibility-related-works
   - module: eligibility-current-building
   - module: eligibility-proposal
-allow-additional-properties: true
+allow-additional-properties: false
 ---

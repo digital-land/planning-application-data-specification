@@ -7,11 +7,13 @@ description: |
 entry-date: 2025-08-12
 start-date: ''
 end-date: ''
+fields:
+  - field: additional-data
 modules:
   - module: desc-existing-use
   - module: use-works-activity
   - module: grounds-ldc
   - module: info-support-ldc
   - module: res-units
-allow-additional-properties: true
+allow-additional-properties: false
 ---

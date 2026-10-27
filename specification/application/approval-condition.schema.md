@@ -8,6 +8,7 @@ entry-date: 2025-01-07
 fields:
 - field: submission-details
   required: true
+- field: additional-data
 legislation:
 - https://www.legislation.gov.uk/ukpga/1990/8/section/74A
 - https://www.legislation.gov.uk/ukpga/1990/9/contents
@@ -32,5 +33,5 @@ synonyms:
 - Details pursuant
 - Discharge of condition
 - Approval of details
-allow-additional-properties: true
+allow-additional-properties: false
 ---

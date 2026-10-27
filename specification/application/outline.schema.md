@@ -13,6 +13,7 @@ end-date: ''
 fields:
   - field: submission-details
     required: true
+  - field: additional-data
 modules:
   - module: agent-contact
   - module: agent-details
@@ -35,4 +36,5 @@ modules:
   - module: site-area
   - module: site-details
   - module: site-visit
+allow-additional-properties: false
 ---

@@ -7,6 +7,7 @@ entry-date: 2025-01-07
 fields:
 - field: submission-details
   required: true
+- field: additional-data
 legislation:
 - https://www.legislation.gov.uk/ukpga/1990/8/part/VIII/chapter/I
 modules:
@@ -25,5 +26,5 @@ name: Consent under TPO
 notes: ''
 start-date: ''
 synonyms: []
-allow-additional-properties: true
+allow-additional-properties: false
 ---

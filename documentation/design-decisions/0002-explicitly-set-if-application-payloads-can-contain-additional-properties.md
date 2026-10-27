@@ -1,31 +1,24 @@
-## Decision: Explicitly set if application payloads can contain additional properties
+## Decision: Put additional submission data in a named block
 
-**Date:** 2025-12-16 
+**Date:** 2025-12-16
+**Updated:** 2026-10-28
 **Status:** Proposed
 
-**Context:**  
-When generating JSON Schemas from the declarative application definitions, we need a clear and explicit way to control whether application payloads may include properties beyond those defined by the specification.  
+**Context:**
+Submission services may need to provide information that the national submission specification does not define, for example to meet a local requirement or support an integration. The original approach set `allow-additional-properties: true` on application definitions, allowing any extra property at the payload root.
 
-By default, JSON Schema allows additional properties unless explicitly restricted. This implicit behaviour is easy to miss and can lead to inconsistent validation, unclear contracts with suppliers, and accidental data drift over time.  
+That leaves extra information mixed with standard fields and modules. An extra name could conflict with a future standard name, and a misspelt optional standard name could pass validation without being recognised as the intended field or module.
 
-We also need a simple mechanism that proovides flexibility so that some application types can be strictly closed if desired, while others can remain extensible, without introducing premature complexity into the declarative model.
+**Decision:**
+Set `allow-additional-properties: false` on application definitions. The root payload may contain only the fields and modules in its resolved application definition. Include an optional top-level `additional-data` field in current application definitions for information outside the national model.
 
-**Decision:**  
-We will introduce a top-level attribute on application definitions named `allow-additional-properties`.  
+The `additional-data` field has `datatype: object` and field-level `allow-additional-properties: true`. The national JSON Schema checks that its value is an object but does not constrain the properties or values within it. Standard fields and modules retain their existing validation rules.
 
-This flag will be used by schema generation tooling to explicitly set the `additionalProperties` behaviour on the root JSON Schema for that application type.
+**Rationale:**
+The named block preserves room for local and supplier data while giving it a predictable location. Closing the root protects standard names and allows future top-level properties to be added deliberately. A field is appropriate because this is an optional property of the submission payload, not a form section with nationally defined questions.
 
-**Rationale:**  
-Placing the flag at the application level makes the extensibility of each application type explicit, intentional, and easy to reason about. It reflects the fact that this is a rule about the *overall shape of the submission payload*, rather than a property of any individual field or module.  
+**Consequences:**
+Existing payloads with extra top-level properties must move those properties inside `additional-data` to validate against the revised schemas. Receiving systems should not assume that the national schema validates or gives meaning to the block's contents. Suppliers may group their entries under a stable supplier or service name to reduce clashes within the block.
 
-Using a simple boolean keeps the declarative model approachable and avoids over-engineering at an early stage. It allows us to:
-- make schema openness a conscious design choice
-- generate schemas that are explicit rather than relying on JSON Schema defaults
-- vary strictness between application types as desired
-
-This approach supports clearer governance, better validation behaviour, and more predictable downstream use of the data.
-
-**Alternatives Considered:**  
-- Relying on JSON Schema defaults → rejected because openness would be implicit and easy to overlook.  
-- Defining extensibility only at module level → rejected for now as it does not address top-level payload shape and adds complexity early.  
-- Introducing a richer extensibility model (e.g. open / closed / namespaced modes) → deferred to a later iteration once real extension needs emerge.
+**History:**
+The 2025 decision introduced the application-level `allow-additional-properties` flag so openness would be explicit rather than relying on JSON Schema's default. This 2026 revision retains that flag but sets it to `false` and provides a named place for additional data. Restricting the block for individual application types, including inherited or combined types, is a separate future decision.

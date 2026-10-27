@@ -11,6 +11,7 @@ legislation:
 fields:
   - field: submission-details
     required: true
+  - field: additional-data
 modules:
   - module: agricultural-tenancy-consent
   - module: existing-building-premises
@@ -24,7 +25,7 @@ rules:
   - rule: ma-works-impacts.local-service-loss-impacts is required if the proposal involves the loss of services provided by a registered nursery or health centre.
   - rule: A site-specific flood risk assessment in submission-details.documents is required if the site is in Flood Zone 2 or 3 or an area with critical drainage problems.
   - rule: Written confirmations of consent from all relevant parties must be included in submission-details.documents if agricultural-tenancy-consent.agricultural-tenants and agricultural-tenancy-consent.tenancy-parties-consent are both true.
-allow-additional-properties: true
+allow-additional-properties: false
 ---
 
 This application definition covers the [Class MA application form, version ECAB 2024.1](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form064_england_en.pdf). It inherits applicant, agent, contact, site, checklist and declaration information from `prior-approval`. The inherited `conflict-of-interest` module is also retained, although it is not present in this paper form.
