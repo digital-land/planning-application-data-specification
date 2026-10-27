@@ -10,70 +10,20 @@ The main aim for this piece of work was to:
 
 **"Combine the various 'separate modules & components' of the current declarative models into a 'composite for the whole specification payload.'**
 
-### Note
-**A major part missing in this work is sample application JSON data. This would have made testing the generation of JSON schema much easier
-and sustainable.** 
+### Examples
 
-An attempt to use LLMs was made to generate sample application, but the result was a mixed bag and required a fair bit of manual reworking.
+The [application type examples](../specification/example/application-type/) currently cover six application types. They are useful for checking the generated schemas, but do not yet cover every application type or every conditional rule.
 
-In the end only one example application was created [example-hh-payload-minimal.json](../specification/example/example-hh-payload-minimal.json)
+## Application schemas and combined applications
 
-It should be a high priority to create sample application payloads for each application type.
+The generator produces one self-contained JSON Schema for each authored application type. Each schema describes that type's resolved fields and modules. It sets `additionalProperties: false` at the payload root, so unknown top-level names fail validation. The optional `additional-data` field is a defined top-level property whose object contents remain open. The checked-in generated schemas must be rebuilt to reflect this change. See [Applications](application.md) for the submission rule.
 
-## Key design decision: One schema per application type
+A combined application is derived from an approved combination of member application types. Its payload contains the merged fields and modules of those types. Do not validate the entire combined payload separately against each member's JSON Schema: each closed schema would reject fields or modules belonging only to the other member. The package can [resolve a combined application definition](../planning_application_specification/README.md#combined-applications), but the current generator does not publish a combined JSON Schema. A validator needs a schema or equivalent validation contract built from that resolved combination.
 
-A key design decision in this architecture is to generate one self-contained JSON schema for each individual application type, rather than a single 
-monolithic schema to 
-validate all possible payloads.
-
-**This approach is a starting point and can be changed based on future based on feedback**.
-
-While the planning application data model allows a payload to represent multiple application types simultaneously (via the `application-types` array), 
-a single, all encompassing schema may require a number of nested `if/then` logic conditions to handle every possible combination of application types.
-The alternative approach of a single schema hasn't been tested given the time available but may be worth exploring at some point if required.
-
-The chosen approach promotes separation of concerns. Each schema is stand alone and the trade-off in taking this approach is that it would require
-validation orchestration.
-
-To restate this, the approach is to have:
-
-1.  **Schemas as rules to apply for each application type:** Each generated schema (e.g., `hh.json`, `lbc.json`) acts as a complete, focused, and 
-    more readable set of constraints for a single application type. It defines exactly which modules and fields are required for that specific type.
-
-2.  **Validation orchestration:** The responsibility for handling multi-type applications is placed on the consuming application (the "validator").
-    A validator should be implemented with the following logic:
-
-    * Inspect the `application-types` array in the incoming JSON payload. 
-    * For each type listed in the array, validate the entire payload against **each** of the relevant JSON schemas.
-
-A payload is only considered valid if it successfully validates against all the schemas it declares an interest in. This ensures that a combined 
-"Householder" and "Listed Building Consent" application, for example, contains all the required modules and fields for both types.
-**See the section below for an example validation script.**
-
-This modular architecture ensures the schemas themselves remain simpler and maintainable while providing the necessary building blocks for developers 
-to implement robust and flexible validation logic.
-
-#### Example validation orchestration script
-
-To illustrate how validation could be done for multi type planning applications an example script has been added to this
-repository and can be found here [bin/example_validator.py](../bin/example_validator.py)
-
-To use this script check out this repository and set up the required tools (create a python virtual env, activate it and run `make init`).
-
-Then you can run:
-
-```
- bin/example_validator.py --payload [path to application json ] --schema-dir [path to schema director]
-```
-So a real example you can run is:
-
-```
-bin/example_validator.py --payload specification/example/example-hh-payload-minimal.json --schema-dir generated/json-schema/applications
-```
-
+The historical [example validator](../bin/example_validator.py) still loops through single-type schemas for a multi-type payload. It does not implement this combined-application rule and should not be used to validate a combined submission against the current closed-root schemas.
 
 ## Future enhancements, questions and considerations
-1. Create a complete set of correct sample application types for testing.
+1. Extend the sample payloads to cover all application types and relevant conditions.
 2. How could/should the rules lists from the markdown schemas be incorporated into JSON schema?
 3. Would a single schema be a better approach?
 4. Publication of schemas. Github urls, release branch, tags for stable Github urls?
@@ -95,8 +45,8 @@ The current specification is organized as a hierarchical structure:
 
 ```
 Application (hh, full, lbc, etc.)
-├── Application-level Fields (application, etc.)
-│   └── Components (e.g., application core data)
+├── Submission-level fields (submission-details, additional-data)
+│   └── Components where a field has a defined structure
 └── Modules (agent-details, proposal-details, etc.)
     ├── Fields (with conditional logic)
     └── Components (reusable field groups)
@@ -106,7 +56,7 @@ Application (hh, full, lbc, etc.)
 
 #### 1. **Applications** (`specification/application/*.schema.md`)
 - Define application types (householder, full planning, listed building consent, etc.)
-- Include application-level fields (typically core submission data like reference, submitted-at)
+- Include submission-level fields, such as `submission-details` and optional `additional-data`
 - Reference modules for specific functional areas
 - Include application-specific metadata (legislation, synonyms, dates)
 
@@ -119,7 +69,8 @@ Application (hh, full, lbc, etc.)
 - Define individual data elements with:
   - **Datatype**: `string`, `number`, `boolean`, `enum`, `object`
   - **Cardinality**: `1` (single) or `n` (array)
-  - **Component reference**: Links to reusable components
+  - **Component reference**: Links to reusable components for structured object fields
+  - **Open object**: `allow-additional-properties: true` permits any properties within an object field without a component
   - **Codelist reference**: Links to enumerated values
 
 #### 4. **Components** (`specification/component/*.md`)
@@ -152,7 +103,8 @@ string → {"type": "string"}
 number → {"type": "number"}
 boolean → {"type": "boolean"}
 enum → {"type": "string", "enum": [values from CSV]}
-object → {"type": "object", "$ref": "#/definitions/ComponentName"}
+object with component → {"$ref": "#/definitions/ComponentName"}
+object with allow-additional-properties: true → {"type": "object", "additionalProperties": true}
 ```
 
 #### Cardinality mapping
@@ -352,20 +304,22 @@ Each application type gets its own self-contained JSON Schema file matching the 
 - `generated/json-schema/applications/lbc.json` (listed building consent)
 - `generated/json-schema/applications/advertising.json`
 - `generated/json-schema/applications/approval-condition.json`
-- etc. (24 total application schemas)
+- etc. (one schema per authored application type)
 
 #### 2. **Inline definitions**
-All modules and components are treated uniformly as properties with inline definitions:
+Modules and submission-level fields become root properties. Structured fields and modules can reference inline definitions. An open object field such as `additional-data` has no component definition:
 
 ```
 {
   "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "hh.json",
+  "type": "object",
+  "additionalProperties": false,
   "properties": {
     "agent-details": {"$ref": "#/definitions/agent-details"},
     "proposal-details": {"$ref": "#/definitions/proposal-details"},
-    "supporting-document": {"$ref": "#/definitions/supporting-document"},
-    "submission-details": {"$ref": "#/definitions/submission-details"}
+    "submission-details": {"$ref": "#/definitions/submission-details"},
+    "additional-data": {"type": "object", "additionalProperties": true}
   },
   "definitions": {
     "agent-details": {
@@ -373,10 +327,6 @@ All modules and components are treated uniformly as properties with inline defin
       "properties": {...}
     },
     "proposal-details": {
-      "type": "object",
-      "properties": {...}
-    },
-    "supporting-document": {
       "type": "object",
       "properties": {...}
     },
@@ -390,7 +340,7 @@ All modules and components are treated uniformly as properties with inline defin
 
 **Key architectural decisions:**
 - **Self-contained schemas**: Each application schema includes all necessary definitions inline
-- **Unified treatment**: Modules and components are both treated as properties with `$ref` pointers to inline definitions
+- **Defined root properties**: Only resolved application fields and modules are allowed at the payload root
 - **No external dependencies**: Each schema file works independently without requiring external references
 
 
@@ -398,7 +348,7 @@ All modules and components are treated uniformly as properties with inline defin
 
 #### Generator script
 
-The script for generation of json is [bin/generate_json_schema.py](bin/generate_json_schema.py)
+The generator is [bin/generate_json_schema.py](../bin/generate_json_schema.py).
 
 #### Output structure
 ```
@@ -413,12 +363,12 @@ generated/
 ```
 
 Each application JSON Schema file contains:
-- Main application `properties` with references to items in `defintions` list
+- Main application `properties` for its resolved fields and modules, with `additionalProperties: false` at the root
 - Inline module definitions in `definitions` section
 - Inline component definitions in `definitions` section
 
 #### Integration with existing workflow
-- Generator script added to `Makefile`: `json-schemas` target
+- Run the `jsonschema` target in the `Makefile` to regenerate the schemas
 
 ### Implementation scope
 
@@ -426,17 +376,17 @@ Each application JSON Schema file contains:
 - Field datatypes (`string`, `number`, `boolean`, `enum`, `object`)
 - Cardinality constraints (`1` vs `n` for arrays)
 - Module and Component references via `$ref` with definitions
-- Application level fields (core application data)
+- Submission-level fields, including the optional open `additional-data` object
 - Module and Component inclusion with (`applies-if`, `required-if`)
 
 **Future scope**: Complex validation rules from module `rules:` sections would require additional analysis and are not included in the initial implementation.
 
 ### Deliverables
 1. **JSON Schema generation script** (`bin/generate_json_schema.py`) - ✅ Complete
-2. **Generated schema files** (`generated/json-schema/applications/*.json`) - ✅ Complete (24 schemas)
+2. **Generated schema files** (`generated/json-schema/applications/*.json`) - rebuild after specification changes
 3. **Integration with build process** (Makefile targets) - ✅ Complete
-4. **Sample application json files for householder, full and outline** - [❌] Incomplete
-5. **Sample vaidation script using jsonschema (Python)** - ✅ Complete
+4. **Sample application JSON files** - six canonical application type examples; broader coverage remains to be done
+5. **Sample validation script using jsonschema (Python)** - historical example; does not validate combined applications against their resolved definition
 
 ### File paths and data sources
 

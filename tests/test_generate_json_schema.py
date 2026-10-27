@@ -128,6 +128,19 @@ def test_named_additional_data_schema_accepts_arbitrary_object_contents_only():
     assert not validator.is_valid({"additional-dtaa": {}})
 
 
+def test_complete_application_examples_use_the_named_additional_data_block():
+    project_root = Path(__file__).resolve().parents[1]
+    specification = Specification.load(project_root)
+
+    for path in (project_root / "specification/example/application-type").glob("*.json"):
+        application_ref = path.name.split("--", 1)[0]
+        payload = json.loads(path.read_text())
+        schema = generate_application_schema(application_ref, specification)
+
+        assert "additional-data" in payload, path.name
+        assert set(payload).issubset(schema["properties"]), path.name
+
+
 def test_supporting_info_source_model_defines_both_complete_routes():
     specification = Specification.load(Path(__file__).resolve().parents[1])
     supporting_info = specification.modules["supporting-info"]

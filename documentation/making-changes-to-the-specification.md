@@ -122,13 +122,13 @@ Application type definitions are the files in `specification/application/`. Befo
 ### Adding a new application
 
 1. Include a stable reference, name, description, legislation and dates.
-2. Declare required `submission-details` explicitly in `fields`. This applies to both parent and child definitions, including those using `extends`; do not rely on field inheritance.
+2. Ensure the resolved application includes required `submission-details` and optional `additional-data`. Add them to a new definition where they are not inherited. Current definitions also list `additional-data` explicitly in each application file.
 3. List the expected modules, reusing modules inherited from the parent without copying them. Define any new fields, components and modules in their canonical locations first.
-4. Set `allow-additional-properties` explicitly.
+4. Set application-level `allow-additional-properties: false` so unknown top-level payload properties fail validation. Do not set it to `true` to accommodate local or supplier data; a departure from this rule needs a specific reason and review. The optional `additional-data` field is available when information outside the national fields and modules needs to travel with the submission.
 5. Capture potential application-specific policy rules and conditions as prose in `rules` as a starting point. These record requirements for review; they are not automatically executed checks. Keep common requirements in shared definitions rather than repeating them in each subtype.
 6. For each condition, identify the facts needed to evaluate it and look for them across the whole application. Record missing facts in a separate working assessment for the DM policy team, explaining what collecting them would enable. Distinguish eligibility checks from checks of which answers or evidence are required. Do not add questions solely to make automation possible without considering the need for those facts.
 7. Update affected codelists, codelist usage and examples within the agreed scope.
-8. Run `make checks` and `python spec.py inspect application <reference>`. Confirm both the expected inherited modules and the explicit `submission-details` application item. Passing integrity checks alone does not establish that the resolved application is complete.
+8. Run `make checks` and `python spec.py inspect application <reference>`. Confirm the expected inherited modules, resolved `submission-details` and `additional-data` application items, and the closed payload root. Passing integrity checks alone does not establish that the resolved application is complete.
 9. Review compiled and generated outputs where relevant through the normal generation workflow. Do not edit derived files directly.
 
 Co-constraints in modules and components codify how to fill in an application, such as when a follow-up answer must be supplied. They are distinct from the prose policy rules above and should be used sparingly. Reuse established patterns; creating a new pattern is an absolute last resort. See [Co-constraints](co-constraints.md) before introducing one.

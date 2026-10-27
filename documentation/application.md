@@ -51,30 +51,22 @@ When building or validating a payload for a concrete application type, resolve t
 * de-duplicate repeated references
 * treat the resulting field and module references as top-level payload properties
 
-For `outline-some`, this means the payload includes the inherited `submission-details` field and inherited outline modules, plus the additional modules listed on `outline-some`.
+For `outline-some`, this means the payload includes the inherited `submission-details` and `additional-data` fields and inherited outline modules, plus the additional modules listed on `outline-some`.
 
-The resulting JSON payload is keyed by field or module reference, for example:
+The resulting JSON payload is keyed by field or module reference. Current application definitions set `allow-additional-properties: false`: an unknown top-level name fails validation, including the old `additional-properties` name. Do not enable unrestricted top-level properties to accommodate local or supplier data. Any exception would need its own reason and review.
 
-```json
-{
-  "submission-details": {},
-  "applicant-details": {},
-  "proposal-details": {},
-  "access-rights-of-way": {}
-}
-```
+The defined `additional-data` field is optional. Use it only when information outside the national fields and modules needs to travel with the submission. Its value must be an object; the national schema does not validate its contents. It cannot replace standard information, and receiving systems need an agreement to interpret anything inside it. The [full planning application example](../specification/example/application-type/full--ex1001.json) shows its placement.
 
-If the application definition has `allow-additional-properties: true`, the root payload may include extra top-level properties beyond the resolved field and module references.
-
-**Attributes of module definitions**
+**Attributes of application definitions**
 
 * `application` -  unique identifier for the application (e.g. `hh`)
 * `name`
 * `description`
 * `synonyms` - other names used for the application type
 * `legislation` - provides a link for legal context
-* `fields[]` - list of field references, currently including `submission-details`
+* `fields[]` - list of top-level field references, including required `submission-details` and optional `additional-data`
 * `modules` - a list of modules an applicant needs to complete
+* `allow-additional-properties` - whether unknown top-level properties are allowed; current application definitions set this to `false`
 * `entry-date`
 * `end-date` - for deprecating applications
 * `rules`
@@ -84,7 +76,7 @@ With the field and modules definitions defined elsewhere.
 
 ### Still to decide
 
-* If `fields` and `modules` need to be separate lists. The `fields` list is always going to reference the `submission-details` field. And arguably the `modules` are top-level fields that break down into substructures. Our current thinking is:
+* If `fields` and `modules` need to be separate lists. The `fields` list includes `submission-details` and `additional-data`. The modules are also top-level properties, but represent form sections. Our current thinking is:
   * Field components describe reusable data shapes — what structured data looks like.
   * Modules define reusable form sections — where and when that data is collected in an application.
   * The two work together: fields define structure, modules define context.
@@ -109,6 +101,7 @@ end-date: ''
 fields:
   - field: submission-details
     required: true
+  - field: additional-data
 modules:
   - module: access-rights-of-way
   - module: agent-contact
@@ -127,13 +120,15 @@ modules:
   - module: site-details
   - module: site-visit
   - module: trees-hedges
+allow-additional-properties: false
 ---
 ```
 
-### Validation rules for module (or component) definitions
+### Validation rules for application definitions
 
-* `fields` attribute must include `submission-details`
+* the resolved application must include required `submission-details`
+* current application definitions include optional `additional-data` and set `allow-additional-properties: false`
 * each `field` of `fields` must be defined in the set of specification fields
-* `modules` attribute must have 1 or more entries
+* the resolved application must contain the modules required for that application type; a child may inherit them from its parent
 * each `module` must be defined in the list of modules
 * `legislation` attribute must not be empty

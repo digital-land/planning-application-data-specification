@@ -29,6 +29,7 @@ Each field has a canonical definition in a shared repository.
 * `description`
 * `datatype`
 * `component`
+* `allow-additional-properties` - for an object whose properties are deliberately left open
 * `cardinality`
 * `entry-date`
 * `end-date` - for deprecating fields
@@ -70,6 +71,8 @@ For example, a generic `addresses` field can be reused where a form asks for mul
 
 **Use `component` for substructures**
 Semantically accurate for nested objects (like Person, Document, etc.)
+
+An object field normally references a component that describes its expected properties. Only use `allow-additional-properties: true` without a component when there is a specific reason for the properties to remain outside the national model. The generated JSON Schema then checks that the value is an object while allowing any properties within it. The submission-level [`additional-data`](../specification/field/additional-data.md) field is this exception. Do not use it as a substitute for defining information that belongs in a standard field or component.
 
 **Make dataset-constrained field usage explicit**
 When a field usage in a dataset is constrained to records from a specific dataset,
@@ -124,6 +127,7 @@ component: Applicant
 
 ### Validation rules for field definitions
 
-* every field of datatype `object` must have a `component` attribute
+* every field of datatype `object` must have a `component` attribute or `allow-additional-properties: true`, but not both
+* `allow-additional-properties` must be a boolean and can only be `true` on an object field
 * every field of datatype `enum` must have a `codelist` attribute
 * cardinality must be `1` or `n`

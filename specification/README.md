@@ -92,8 +92,7 @@ Modules:
 - mirror sections in traditional paper forms
 - make large application definitions manageable and reusable
 
-On the whole, you cannot add fields directly to an application.  
-Fields must belong to a module so they are grouped, reusable and understandable.
+Most form fields belong to modules so they are grouped, reusable and understandable. Submission-level fields such as `submission-details` and `additional-data` sit directly in an application definition.
 
 
 ### Components (submission)
@@ -211,7 +210,7 @@ More detail on this distinction is covered in [this explainer](https://github.co
 
 If something represents a thing that can exist, change state, or be referenced later, it belongs in a dataset.
 
-### Why can’t I just add a field directly to an application?
+### Why do most fields belong in modules rather than directly in an application?
 
 Because fields need context.
 
@@ -220,7 +219,7 @@ Modules:
 - support reuse
 - make requirements easier to understand and maintain
 
-Adding fields directly to applications would quickly lead to duplication and inconsistency.
+Putting form questions directly in each application would quickly lead to duplication and inconsistency. Submission-level fields are an exception: `submission-details` and `additional-data` describe the payload as a whole and sit directly in application definitions.
 
 
 ### Why is the same subject a module in one place and a dataset in another?
