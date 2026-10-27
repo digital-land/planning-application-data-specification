@@ -7,8 +7,8 @@ from utils import check_kebab_case
 # 1. field attr must be string, kebab-case and unique across all fields
 # 2. cardinality is one of: 1 or n
 # 3. check the data types TODO
-# 4. if datatype is object then must have component attr
-# 5. component attr must a component reference in /components
+# 4. an object must have a component, unless it explicitly allows additional properties
+# 5. a component must reference /components and cannot be combined with an open object
 # 6. if datatype is enum then must have codelist attr, and if has codelist then datatype must be enum
 # 7. codelist must be in codelist definitions
 # 8. every field must have entry-date and end-date attrs
@@ -53,22 +53,44 @@ def check_cardinality(fields):
 
 def check_object_components(fields, components):
     """
-    Check rules 4 & 5: if datatype is object then must have component attr,
-    and component must exist
+    Check rules 4 & 5: an object needs a known component or an explicit
+    allow-additional-properties flag, but not both.
     """
     has_errors = False
 
     for field_name, field in fields.items():
-        if field.get("datatype") == "object":
-            component = field.get("component")
-            field_name = field.get("field", "unknown")
+        datatype = field.get("datatype")
+        component = field.get("component")
+        allows_additional = field.get("allow-additional-properties", False)
+        field_name = field.get("field", field_name)
 
-            if not component:
+        if "allow-additional-properties" in field and not isinstance(
+            allows_additional, bool
+        ):
+            print_error(
+                "field", field_name, "allow-additional-properties must be a boolean"
+            )
+            has_errors = True
+        if allows_additional and datatype != "object":
+            print_error(
+                "field", field_name, "allow-additional-properties requires object datatype"
+            )
+            has_errors = True
+
+        if datatype == "object":
+            if allows_additional and component:
                 print_error(
-                    "field", field_name, "object type must have component attribute"
+                    "field", field_name, "object allowing additional properties must not reference a component"
                 )
                 has_errors = True
-            elif component not in components:
+            elif not component and not allows_additional:
+                print_error(
+                    "field",
+                    field_name,
+                    "object type must have a component or allow-additional-properties: true",
+                )
+                has_errors = True
+            elif component and component not in components:
                 print_error(
                     "field",
                     field_name,

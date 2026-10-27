@@ -14,6 +14,7 @@ class FieldDef:
     description: str = ""
     notes: str = ""
     component: Optional[str] = None
+    allow_additional_properties: bool = False
     resolved_component: Optional["ComponentUsage"] = None
     cardinality: str = "1"
     entry_date: Optional[str] = None
@@ -35,6 +36,7 @@ class FieldDef:
         description = spec.get("description", "") or ""
         notes = spec.get("notes", "") or ""
         component = spec.get("component")
+        allow_additional_properties = spec.get("allow-additional-properties", False)
         cardinality = str(spec.get("cardinality", "1"))
         entry_date = spec.get("entry-date") or spec.get("entry_date")
         end_date = spec.get("end-date") or spec.get("end_date")
@@ -47,6 +49,7 @@ class FieldDef:
             description=description,
             notes=notes,
             component=component,
+            allow_additional_properties=allow_additional_properties,
             cardinality=cardinality,
             entry_date=entry_date,
             end_date=end_date,

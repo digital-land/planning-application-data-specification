@@ -8,6 +8,7 @@ from bin.generate_json_schema import (
     process_items,
     resolve_field_schema,
 )
+from bin.models import FieldDef as LegacyFieldDef
 from planning_application_specification import Specification
 from planning_application_specification.models import (
     ComponentInstance,
@@ -32,6 +33,30 @@ def test_resolve_field_schema_maps_integer_to_json_schema_integer():
     schema = resolve_field_schema(field, specification=None)
 
     assert schema == {"type": "integer"}
+
+
+def test_open_object_field_is_loaded_and_generates_explicit_additional_properties():
+    source = {
+        "field": "example-extra",
+        "name": "Example extra",
+        "datatype": "object",
+        "allow-additional-properties": True,
+    }
+
+    for model in (FieldDef, LegacyFieldDef):
+        assert model.from_spec(source).allow_additional_properties is True
+
+    schema = resolve_field_schema(FieldDef.from_spec(source), specification=None)
+
+    assert schema == {"type": "object", "additionalProperties": True}
+
+
+def test_component_object_field_keeps_component_reference():
+    field = FieldDef(ref="example", name="Example", datatype="object", component="example")
+
+    assert resolve_field_schema(field, specification=None) == {
+        "$ref": "#/definitions/example"
+    }
 
 
 def test_process_items_keeps_unhandled_required_if_over_protective():

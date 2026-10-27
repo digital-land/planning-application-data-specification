@@ -19,6 +19,7 @@ class FieldDef:
     # preserves the calling field context while referencing the shared
     # ComponentDef.
     component: Optional[str] = None
+    allow_additional_properties: bool = False
     resolved_component: Optional["ComponentInstance"] = None
     # cardinality in the spec is typically '1' or 'n'
     cardinality: str = "1"
@@ -41,6 +42,7 @@ class FieldDef:
         description = spec.get("description", "") or ""
         notes = spec.get("notes", "") or ""
         component = spec.get("component")
+        allow_additional_properties = spec.get("allow-additional-properties", False)
         cardinality = str(spec.get("cardinality", "1"))
         entry_date = spec.get("entry-date") or spec.get("entry_date")
         end_date = spec.get("end-date") or spec.get("end_date")
@@ -53,6 +55,7 @@ class FieldDef:
             description=description,
             notes=notes,
             component=component,
+            allow_additional_properties=allow_additional_properties,
             cardinality=cardinality,
             entry_date=entry_date,
             end_date=end_date,

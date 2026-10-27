@@ -635,6 +635,40 @@ class TestFieldIntegrityChecks:
         has_no_errors = check_object_components(fields, components={})
         assert not has_no_errors
 
+    def test_object_field_allowing_additional_properties_without_component_passes(self):
+        fields = {
+            "example-extra": {
+                "field": "example-extra",
+                "datatype": "object",
+                "allow-additional-properties": True,
+            }
+        }
+
+        assert check_object_components(fields, components={})
+
+    def test_object_field_cannot_combine_component_with_additional_properties(self):
+        fields = {
+            "example-extra": {
+                "field": "example-extra",
+                "datatype": "object",
+                "component": "address",
+                "allow-additional-properties": True,
+            }
+        }
+
+        assert not check_object_components(fields, components={"address": {}})
+
+    def test_additional_properties_flag_requires_object_and_boolean(self):
+        fields = {
+            "example-extra": {
+                "field": "example-extra",
+                "datatype": "string",
+                "allow-additional-properties": "true",
+            }
+        }
+
+        assert not check_object_components(fields, components={})
+
     def test_object_field_with_unknown_component_fails(self):
         fields = {
             "site-location": {

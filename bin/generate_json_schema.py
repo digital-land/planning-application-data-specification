@@ -112,6 +112,8 @@ def resolve_field_schema(field_item, specification) -> Dict[str, Any]:
             schema = {"$ref": f"#/definitions/{component}"}
         else:
             schema = {"type": "object"}
+            if field_def.allow_additional_properties:
+                schema["additionalProperties"] = True
     else:
         # Default to string for unknown types
         schema = {"type": "string"}
