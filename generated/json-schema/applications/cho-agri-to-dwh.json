@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft-07/schema#",
   "$id": "cho-agri-to-dwh.json",
   "title": "Prior approval: Agricultural or former agricultural buildings to dwellinghouses",
-  "additionalProperties": true,
+  "additionalProperties": false,
   "description": "Prior approval for a change of use from agricultural or former agricultural buildings to dwellinghouses under Class Q, including associated building works.",
   "type": "object",
   "properties": {
@@ -50,6 +50,10 @@
     },
     "submission-details": {
       "$ref": "#/definitions/submission-details"
+    },
+    "additional-data": {
+      "type": "object",
+      "additionalProperties": true
     }
   },
   "required": [
@@ -70,25 +74,6 @@
     "submission-details"
   ],
   "definitions": {
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
     "applicant": {
       "type": "object",
       "properties": {
@@ -142,6 +127,41 @@
       "required": [
         "address-text"
       ]
+    },
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
     },
     "agent": {
       "type": "object",
@@ -223,95 +243,20 @@
         "address-text"
       ]
     },
-    "phone-number": {
+    "agent-contact": {
       "type": "object",
       "properties": {
-        "number": {
+        "agent-reference": {
           "type": "string"
         },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
-    },
-    "checklist": {
-      "type": "object",
-      "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "national-req-types"
+        "agent-reference",
+        "contact-details"
       ]
-    },
-    "cls-q-agri-tenancies": {
-      "type": "object",
-      "properties": {
-        "agricultural-tenants": {
-          "type": "boolean"
-        },
-        "tenancy-parties-consent": {
-          "type": "boolean"
-        },
-        "cls-q-tenancy-terminated": {
-          "type": "boolean"
-        },
-        "cls-q-agri-use-not-required": {
-          "type": "boolean"
-        }
-      },
-      "required": [
-        "agricultural-tenants",
-        "tenancy-parties-consent",
-        "cls-q-tenancy-terminated",
-        "cls-q-agri-use-not-required"
-      ]
-    },
-    "cls-q-current-unit-eligib": {
-      "type": "object",
-      "properties": {
-        "cls-q-unit-on-2023-07-24": {
-          "type": "boolean"
-        },
-        "cls-q-unit-10-years": {
-          "type": "string",
-          "enum": [
-            "yes",
-            "no",
-            "not-applicable"
-          ]
-        }
-      },
-      "required": [
-        "cls-q-unit-10-years"
-      ],
-      "if": {
-        "properties": {
-          "cls-q-eligib.cls-q-current-agri-unit": {
-            "const": true
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "cls-q-unit-on-2023-07-24"
-        ]
-      }
-    },
-    "conflict-of-interest": {
-      "type": "object",
-      "properties": {},
-      "required": []
     },
     "cls-q-works-impacts": {
       "type": "object",
@@ -358,51 +303,6 @@
         "noise-impacts",
         "contamination-risks",
         "flooding-risks"
-      ]
-    },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
       ]
     },
     "cls-q-former-unit-eligib": {
@@ -457,14 +357,86 @@
         }
       ]
     },
-    "agent-details": {
+    "conflict-of-interest": {
+      "type": "object",
+      "properties": {},
+      "required": []
+    },
+    "site-details": {
       "type": "object",
       "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
         }
       },
-      "required": []
+      "required": [
+        "site-locations"
+      ]
+    },
+    "cls-q-dwelling-limits": {
+      "type": "object",
+      "properties": {
+        "net-dwellings-increase": {
+          "type": "integer"
+        },
+        "single-dwelling-over-150sqm": {
+          "type": "boolean"
+        },
+        "cls-q-previous-dwellings": {
+          "type": "integer"
+        },
+        "floorspace": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "net-dwellings-increase",
+        "single-dwelling-over-150sqm",
+        "cls-q-previous-dwellings",
+        "floorspace"
+      ]
+    },
+    "cls-q-agri-tenancies": {
+      "type": "object",
+      "properties": {
+        "agricultural-tenants": {
+          "type": "boolean"
+        },
+        "tenancy-parties-consent": {
+          "type": "boolean"
+        },
+        "cls-q-tenancy-terminated": {
+          "type": "boolean"
+        },
+        "cls-q-agri-use-not-required": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "agricultural-tenants",
+        "tenancy-parties-consent",
+        "cls-q-tenancy-terminated",
+        "cls-q-agri-use-not-required"
+      ]
+    },
+    "applicant-contact": {
+      "type": "object",
+      "properties": {
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "applicant-reference",
+        "contact-details"
+      ]
     },
     "cls-q-eligib": {
       "type": "object",
@@ -506,43 +478,45 @@
         "has-location-restriction"
       ]
     },
-    "site-details": {
+    "agent-details": {
       "type": "object",
       "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
+        "agent": {
+          "$ref": "#/definitions/agent"
         }
       },
-      "required": [
-        "site-locations"
-      ]
+      "required": []
     },
-    "cls-q-dwelling-limits": {
+    "cls-q-current-unit-eligib": {
       "type": "object",
       "properties": {
-        "net-dwellings-increase": {
-          "type": "integer"
-        },
-        "single-dwelling-over-150sqm": {
+        "cls-q-unit-on-2023-07-24": {
           "type": "boolean"
         },
-        "cls-q-previous-dwellings": {
-          "type": "integer"
-        },
-        "floorspace": {
-          "type": "number"
+        "cls-q-unit-10-years": {
+          "type": "string",
+          "enum": [
+            "yes",
+            "no",
+            "not-applicable"
+          ]
         }
       },
       "required": [
-        "net-dwellings-increase",
-        "single-dwelling-over-150sqm",
-        "cls-q-previous-dwellings",
-        "floorspace"
-      ]
+        "cls-q-unit-10-years"
+      ],
+      "if": {
+        "properties": {
+          "cls-q-eligib.cls-q-current-agri-unit": {
+            "const": true
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "cls-q-unit-on-2023-07-24"
+        ]
+      }
     },
     "declaration": {
       "type": "object",
@@ -561,6 +535,36 @@
         "person-reference",
         "declaration-confirmed",
         "declaration-date"
+      ]
+    },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
+      ]
+    },
+    "checklist": {
+      "type": "object",
+      "properties": {
+        "national-req-types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "national-req-types"
       ]
     },
     "submission-details": {
