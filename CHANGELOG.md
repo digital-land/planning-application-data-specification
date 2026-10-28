@@ -1,4 +1,319 @@
 
+<a name="2026.10.28.dev1"></a>
+## [2026.10.28.dev1](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.63...2026.10.28.dev1) (2026-10-28)
+
+Development prerelease 2026.10.28.dev1
+
+### ⚒️ Tooling
+
+* prepare development prerelease 2026.10.28.dev1 (commit [1ebf03d7](https://github.com/digital-land/planning-application-data-specification/commit/1ebf03d7f3ddedd5594699e6c95f8b7f83f7d205))
+* support additional properties on object fields (commit [8005a86b](https://github.com/digital-land/planning-application-data-specification/commit/8005a86b98e31b0dbae3ea0749c3cd155044a4e2))
+* limit issue tracking commits to generated outputs (commit [d46cf00b](https://github.com/digital-land/planning-application-data-specification/commit/d46cf00b51fb294b6874f767fa6503425770b833))
+* move issue tracking outputs into generated (commit [0f296e9d](https://github.com/digital-land/planning-application-data-specification/commit/0f296e9d834db283cee112da7602b1a85c3f8ec7))
+* move release script into bin folder (commit [32103fbd](https://github.com/digital-land/planning-application-data-specification/commit/32103fbd79858b10fb499d1f744388741eb6dcc7))
+* remove retired specification site renderer (commit [912b1243](https://github.com/digital-land/planning-application-data-specification/commit/912b12431c0c344549a2de1b96fd508f229e48c7))
+* remove retired static site workflow (commit [b84c23ff](https://github.com/digital-land/planning-application-data-specification/commit/b84c23ff9865b5396e31eaa7a322e815e2bd2be2))
+
+### 𝌭 Model changes
+
+* put additional data in a named block (commit [7b4fb676](https://github.com/digital-land/planning-application-data-specification/commit/7b4fb6764ed3abf60cb09d4f1f3cbbc4f8a7397e))
+* replace PPA boolean with controlled classification (commit [200a2bfa](https://github.com/digital-land/planning-application-data-specification/commit/200a2bfa3e9ad0b04b8f6bb04432db7a92ebf2cd))
+* add Class Q works impacts and risks (commit [1f6a637d](https://github.com/digital-land/planning-application-data-specification/commit/1f6a637da4cd0cf6697292232f6c3fba01b8d41c))
+* add Class Q dwellinghouse and floor space limits (commit [6f7eea63](https://github.com/digital-land/planning-application-data-specification/commit/6f7eea632484d89ac96af5140496ed83b263f405))
+* add Class Q agricultural tenancy fields and module (commit [e9b34973](https://github.com/digital-land/planning-application-data-specification/commit/e9b3497358a68ab49c4910d194d19520d7ea5d79))
+* add Class Q former agricultural unit eligibility (commit [94999dea](https://github.com/digital-land/planning-application-data-specification/commit/94999dea5550dac3843fd2e5b204cc7c0444c29d))
+* add Class Q current agricultural unit eligibility (commit [7daab826](https://github.com/digital-land/planning-application-data-specification/commit/7daab8261492a81b0de3d563a6d4daa93c698c1f))
+* add Class Q general eligibility fields and module (commit [c5bfc966](https://github.com/digital-land/planning-application-data-specification/commit/c5bfc966aec5d43f0886d04b81f99576a0718369))
+
+### 🎯 Need
+
+* add proposed need to distinguish renegotiated PPAs (commit [2b970a72](https://github.com/digital-land/planning-application-data-specification/commit/2b970a72c4e2b7c2d98cce096df26c89a4492721))
+
+### 👷‍♀️ Application changes
+
+* add agricultural buildings to dwellinghouses prior approval (commit [57901e3d](https://github.com/digital-land/planning-application-data-specification/commit/57901e3d8791bf50a3d7cb75fb4bcb7be3ab0853))
+
+### 📚 Documentation
+
+* explain additional-data and allowed top-level fields (commit [3ab722c8](https://github.com/digital-land/planning-application-data-specification/commit/3ab722c836ba47ba19e3adab59e11a41d3a69007))
+* update redirect and release guidance (commit [99aca39a](https://github.com/digital-land/planning-application-data-specification/commit/99aca39af76ef9c6894d58d0e6ad7ed3de2aedf0))
+* explain why old viewer pages must be kept (commit [a3e61cea](https://github.com/digital-land/planning-application-data-specification/commit/a3e61ceacd6edf9150a249addbd5d002f80da705))
+* explain maintenance of preserved viewer redirects (commit [254d825e](https://github.com/digital-land/planning-application-data-specification/commit/254d825e49031c0fa5350d3b8b1c4bd95f50fe41))
+
+### 🧭 Guidance
+
+* explain PPA classification and update examples (commit [3b460fb1](https://github.com/digital-land/planning-application-data-specification/commit/3b460fb1673ada43f7dee2b5826c9fe403a0f82f))
+
+### BREAKING CHANGE
+
+
+Extra top-level submission properties must move inside additional-data.
+
+
+<a name="v0.2.63"></a>
+## [v0.2.63](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.62...v0.2.63) (2026-10-22)
+
+Replace PPA boolean with controlled classification
+
+### 𝌭 Model changes
+
+* replace PPA boolean with controlled classification (commit [7bd0260c](https://github.com/digital-land/planning-application-data-specification/commit/7bd0260c3cbe7fbc0e7c3628d2269a19e1874179))
+
+### 🎯 Need
+
+* add proposed need to distinguish renegotiated PPAs (commit [cfb8c8c9](https://github.com/digital-land/planning-application-data-specification/commit/cfb8c8c9b59a10f6fe54f5e4a0c3dba63da4287e))
+
+### 🧭 Guidance
+
+* explain PPA classification and update examples (commit [29a90c26](https://github.com/digital-land/planning-application-data-specification/commit/29a90c26f0a15f1a0483b45b73af4398049bc9aa))
+
+
+<a name="v0.2.62"></a>
+## [v0.2.62](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.61...v0.2.62) (2026-10-21)
+
+Add agricultural buildings to dwellinghouses prior approval application
+
+### 𝌭 Model changes
+
+* add Class Q works impacts and risks (commit [8f335824](https://github.com/digital-land/planning-application-data-specification/commit/8f33582404193529df398bc03fbea1f48990575e))
+* add Class Q dwellinghouse and floor space limits (commit [16dd07ff](https://github.com/digital-land/planning-application-data-specification/commit/16dd07ff2852be535da22e1e8f9c132c510bba60))
+* add Class Q agricultural tenancy fields and module (commit [9fe6e07d](https://github.com/digital-land/planning-application-data-specification/commit/9fe6e07d88b54f6ecf803fe4a050d3e713271aac))
+* add Class Q former agricultural unit eligibility (commit [29da8403](https://github.com/digital-land/planning-application-data-specification/commit/29da84032c3047805959d010ba63c4fc56728938))
+* add Class Q current agricultural unit eligibility (commit [3fc93769](https://github.com/digital-land/planning-application-data-specification/commit/3fc9376957e6a647fa5ef495cd4c4960c25c4a51))
+* add Class Q general eligibility fields and module (commit [6aa376a2](https://github.com/digital-land/planning-application-data-specification/commit/6aa376a29652cb660647a3c5929efd7e9accb121))
+
+### 👷‍♀️ Application changes
+
+* add agricultural buildings to dwellinghouses prior approval (commit [f5d23adf](https://github.com/digital-land/planning-application-data-specification/commit/f5d23adfc26b262ca24e5999aee2d69e5964e928))
+
+
+<a name="v0.2.61"></a>
+## [v0.2.61](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.60...v0.2.61) (2026-10-14)
+
+Repository clean up tasks
+
+### ⚒️ Tooling
+
+* limit issue tracking commits to generated outputs (commit [f75600f7](https://github.com/digital-land/planning-application-data-specification/commit/f75600f7b65d4640dda4c17c146481b8f17457df))
+* move issue tracking outputs into generated (commit [9a49129f](https://github.com/digital-land/planning-application-data-specification/commit/9a49129f5347da3704fa0de87773ac3f6efe8238))
+* move release script into bin folder (commit [651dd445](https://github.com/digital-land/planning-application-data-specification/commit/651dd44539021cac91903ca85b21693b7d9fc714))
+* remove retired specification site renderer (commit [bdae3e25](https://github.com/digital-land/planning-application-data-specification/commit/bdae3e2517cbbd4081a25d66c2ab3f92f55c3e33))
+* remove retired static site workflow (commit [cc0209f0](https://github.com/digital-land/planning-application-data-specification/commit/cc0209f0b661c0e60e15362364d74d4a17c69426))
+
+### 📚 Documentation
+
+* update redirect and release guidance (commit [ff9f4329](https://github.com/digital-land/planning-application-data-specification/commit/ff9f43296015a1e7d1cc7bb31f483548e1acc34c))
+* explain why old viewer pages must be kept (commit [b02ff259](https://github.com/digital-land/planning-application-data-specification/commit/b02ff2596f89672768a21ab5ea4955d12f389f41))
+* explain maintenance of preserved viewer redirects (commit [f1ed535f](https://github.com/digital-land/planning-application-data-specification/commit/f1ed535f47f502e2b239695d793de9abdcf3ec2a))
+
+
+<a name="v0.2.60"></a>
+## [v0.2.60](https://github.com/digital-land/planning-application-data-specification/compare/2026.10.7.dev1...v0.2.60) (2026-10-13)
+
+Move the viewer to its own repository, preserve existing URLs with redirects and remove the original renderer.
+
+### ⚒️ Tooling
+
+* remove retired specification site renderer (commit [33ceea64](https://github.com/digital-land/planning-application-data-specification/commit/33ceea64c95aa5f0f107b9f59f0b367126ea9616))
+* remove retired static site workflow (commit [dc97e2c6](https://github.com/digital-land/planning-application-data-specification/commit/dc97e2c629ee13d2f205a87648c8d7bc44615185))
+* prepare matching package versions and release tags (commit [beebbf41](https://github.com/digital-land/planning-application-data-specification/commit/beebbf41cb5eaa0a8bbc89faebe53f76a14f7fae))
+
+### 📚 Documentation
+
+* explain maintenance of preserved viewer redirects (commit [b5731c64](https://github.com/digital-land/planning-application-data-specification/commit/b5731c644842cfca3f28b37aa80a70a82551991e))
+* explain package installation and release preparation (commit [89552f50](https://github.com/digital-land/planning-application-data-specification/commit/89552f503617cf9e344ffe9753c68fce95d70f67))
+
+
+<a name="2026.10.7.dev1"></a>
+## [2026.10.7.dev1](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.59...2026.10.7.dev1) (2026-10-07)
+
+tool: load bundled specification resources by default
+
+### ⚒️ Tooling
+
+* load bundled specification resources by default (commit [cece9241](https://github.com/digital-land/planning-application-data-specification/commit/cece92417cda94f3e4e179b70ace5bfbe43cfff0))
+* bundle specification resources in package distributions (commit [9af9502e](https://github.com/digital-land/planning-application-data-specification/commit/9af9502e393a27876ee5ef2d8eaf0274042b45c7))
+
+
+<a name="v0.2.59"></a>
+## [v0.2.59](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.58...v0.2.59) (2026-10-07)
+
+Use explicit known answer for listed building grade
+
+### 𝌭 Model changes
+
+* use explicit known answer for listed building grade (commit [d3b54bc0](https://github.com/digital-land/planning-application-data-specification/commit/d3b54bc0cb852a72f65889e9cdc9ebdca580dd2a))
+
+
+<a name="v0.2.58"></a>
+## [v0.2.58](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.57...v0.2.58) (2026-10-06)
+
+Update example payloads and affected area types
+
+### ⚒️ Tooling
+
+* support empty scope conditions and fixed field values (commit [1791defb](https://github.com/digital-land/planning-application-data-specification/commit/1791defbaf100720d0fb417a9865f4342e80cbb3))
+* expose application base types and module origins (commit [6b446ef3](https://github.com/digital-land/planning-application-data-specification/commit/6b446ef376a03e751e745b74496198cc92af6db2))
+
+### 𝌭 Model changes
+
+* add no likely impact to affected area types (commit [a13d1ad1](https://github.com/digital-land/planning-application-data-specification/commit/a13d1ad1242cdf6dd2f90076196c32cfcb8b5818))
+* record unknown listed building grades separately (commit [cce33233](https://github.com/digital-land/planning-application-data-specification/commit/cce332335aca6b38a112d6739bc97ff128440336))
+
+### 🎯 Need
+
+* add Camden research user needs (commit [67717b68](https://github.com/digital-land/planning-application-data-specification/commit/67717b68a87456374ff958744d67483f7cf06a30))
+* complete user needs review (commit [9bdbfada](https://github.com/digital-land/planning-application-data-specification/commit/9bdbfadab93ee278c7f3895fd5790c55f8e37e1d))
+* rationalise process and transparency user needs (commit [a3f989f1](https://github.com/digital-land/planning-application-data-specification/commit/a3f989f171b7eebd7a6a3c3ca6e851c9b42e9a31))
+* rationalise application timeline needs (commit [78c11eb4](https://github.com/digital-land/planning-application-data-specification/commit/78c11eb42154ce5bef088f390491f8aa2c788ca2))
+* rationalise data-domain user needs (commit [cf133e67](https://github.com/digital-land/planning-application-data-specification/commit/cf133e67e7929c3571f465e740f1a38def999bca))
+
+### 🐛 Bug Fixes
+
+* use integer condition number in approval condition example (commit [c8c93b39](https://github.com/digital-land/planning-application-data-specification/commit/c8c93b39206b796ab4ee405b04fe03b92e80295a))
+* error in value in ex1002 sample mpayload (commit [07f1de18](https://github.com/digital-land/planning-application-data-specification/commit/07f1de184aa2196bd11dff6d88da5038ce4e66d6))
+* use integer residential unit counts in full example (commit [ce379adc](https://github.com/digital-land/planning-application-data-specification/commit/ce379adcfab562cc7c0a19e8b2e5be2d7e393e2a))
+* repair site visit other example (commit [22cd2955](https://github.com/digital-land/planning-application-data-specification/commit/22cd2955d0493635e58a857bb9c6bd7d27fd2952))
+* align right-of-way examples with codelist (commit [6385411c](https://github.com/digital-land/planning-application-data-specification/commit/6385411c7a81a1d34f03b2ef4126cf375ee2e29d))
+* include empty agent details in non-material amendment example (commit [6b955f98](https://github.com/digital-land/planning-application-data-specification/commit/6b955f98b6816fc66487e50d4060fd919ff1fe76))
+* complete reserved matters proposal details (commit [69779ea9](https://github.com/digital-land/planning-application-data-specification/commit/69779ea92912d996d1882d4a7689f7c896be88e2))
+* update reserved matters site location structure (commit [d1c534e0](https://github.com/digital-land/planning-application-data-specification/commit/d1c534e0984ed3e9f6c68a64c466e0f7ae39dc01))
+* update outline example address and site structures (commit [bace28b6](https://github.com/digital-land/planning-application-data-specification/commit/bace28b6978fa3952baf2fd25133fd25fa088c6f))
+* remove unsupported notes from full application example (commit [6314076c](https://github.com/digital-land/planning-application-data-specification/commit/6314076c383038b204ace37c6f7ac5f9343fd643))
+
+### 📚 Documentation
+
+* clarify user need actor guidance (commit [386d6094](https://github.com/digital-land/planning-application-data-specification/commit/386d609446f88f988e0f123b9a33db4eb076e1f7))
+
+
+<a name="v0.2.57"></a>
+## [v0.2.57](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.56...v0.2.57) (2026-09-28)
+
+Fix application-type examples for updated validator
+
+### 🐛 Bug Fixes
+
+* include empty agent details in non-material amendment example (commit [6826c238](https://github.com/digital-land/planning-application-data-specification/commit/6826c2382a21e55e0ea2099a26bd603cf9f1c575))
+* complete reserved matters proposal details (commit [5bb4bc60](https://github.com/digital-land/planning-application-data-specification/commit/5bb4bc60efc031f2bd42ccd87324ce6f68fe8715))
+* update reserved matters site location structure (commit [32a4afa5](https://github.com/digital-land/planning-application-data-specification/commit/32a4afa54875dcea8478b717dfeb30a030ff85a0))
+* update outline example address and site structures (commit [19e50aae](https://github.com/digital-land/planning-application-data-specification/commit/19e50aae944b9f61fd64fa99168da03bfc7bfad6))
+* remove unsupported notes from full application example (commit [81aa97ee](https://github.com/digital-land/planning-application-data-specification/commit/81aa97ee7c62c00c04b90054ca333ab20e92f9f3))
+
+
+<a name="v0.2.56"></a>
+## [v0.2.56](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.55...v0.2.56) (2026-09-25)
+
+Complete review of user needs
+
+### 🎯 Need
+
+* complete user needs review (commit [728741dc](https://github.com/digital-land/planning-application-data-specification/commit/728741dc7eb36ea1fd869432a8308313ad20ca6a))
+* rationalise process and transparency user needs (commit [4851e3d4](https://github.com/digital-land/planning-application-data-specification/commit/4851e3d4aeccf4008e08b2a894c27c090bc6fcef))
+* rationalise application timeline needs (commit [4d532cc7](https://github.com/digital-land/planning-application-data-specification/commit/4d532cc7ee2824fe5180b704a306316d52100a8a))
+* rationalise data-domain user needs (commit [95910738](https://github.com/digital-land/planning-application-data-specification/commit/959107386e7d00105c519b1dc5369768e301f9e8))
+* rationalise policy and monitoring user needs (commit [548e0515](https://github.com/digital-land/planning-application-data-specification/commit/548e051549a8a1f6f59f66a5507b37657ab19084))
+* rationalise planning stakeholder user needs (commit [19256743](https://github.com/digital-land/planning-application-data-specification/commit/19256743c90c2d59cc8f8c0068037f91e3d15dae))
+* rationalise planning practitioner user needs (commit [091138d0](https://github.com/digital-land/planning-application-data-specification/commit/091138d04e6f68cfa54dbca11becf7ee4901f342))
+* rationalise condition user needs (commit [8182a29e](https://github.com/digital-land/planning-application-data-specification/commit/8182a29edb6c5d26fedf4652bc564a71032236f8))
+* rationalise data and publication users (commit [9276fc62](https://github.com/digital-land/planning-application-data-specification/commit/9276fc62c49febd62ff564578894ec40177ee67e))
+* rationalise remaining PS1 and PS2 user needs (commit [2baefb4b](https://github.com/digital-land/planning-application-data-specification/commit/2baefb4b947105c850468e96ff122395f07bbbe6))
+
+### 📚 Documentation
+
+* add community reports (commit [01849f75](https://github.com/digital-land/planning-application-data-specification/commit/01849f7581ec4f39311a363d568abdcd19304fd0))
+
+
+<a name="v0.2.55"></a>
+## [v0.2.55](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.54...v0.2.55) (2026-09-24)
+
+Rationalise user groups and user needs
+
+### ⚒️ Tooling
+
+* resolve datasets assembled by a named specification (commit [a30a2853](https://github.com/digital-land/planning-application-data-specification/commit/a30a28537045d559159a8e79b15e65320d67966f))
+
+### 𝌭 Model changes
+
+* use applies-if to scope site visit other-contact details (commit [d6ad0764](https://github.com/digital-land/planning-application-data-specification/commit/d6ad0764bc38e0af0b7b6998022cc46a8501a5fc))
+* declare relationship targets in dataset definitions (commit [dbdfd2b5](https://github.com/digital-land/planning-application-data-specification/commit/dbdfd2b56a0ce83927d0dad5bf380ec00ee5ccae))
+
+### 🎯 Need
+
+* rationalise policy and monitoring user needs (commit [9409c7b6](https://github.com/digital-land/planning-application-data-specification/commit/9409c7b69f765e966af3a12f361dac38693d0f05))
+* rationalise planning stakeholder user needs (commit [982ee60c](https://github.com/digital-land/planning-application-data-specification/commit/982ee60cc30881d632f533af314b8343f843c97f))
+* rationalise planning practitioner user needs (commit [b785aab8](https://github.com/digital-land/planning-application-data-specification/commit/b785aab8afc0823c96d0c1b15d67c3bdb5074e4d))
+* rationalise condition user needs (commit [76bb36e4](https://github.com/digital-land/planning-application-data-specification/commit/76bb36e4b74dcaf4b5c0251cc388266d8bfcca22))
+* rationalise data and publication users (commit [69549f56](https://github.com/digital-land/planning-application-data-specification/commit/69549f5673b8cdcc7bc5199ffd0fd8edee5bfa91))
+* rationalise remaining PS1 and PS2 user needs (commit [9c1fb3aa](https://github.com/digital-land/planning-application-data-specification/commit/9c1fb3aa0011e2b6c7c9e28c1f5ffc3b768ac305))
+* rationalise strategic planning user needs (commit [552fa5fd](https://github.com/digital-land/planning-application-data-specification/commit/552fa5fdd317ac9a94526989361fa2f70e83d4e5))
+
+### 📚 Documentation
+
+* align dataset and specification field descriptions (commit [fae78115](https://github.com/digital-land/planning-application-data-specification/commit/fae781153811efb8d93cdffb9a83722a4ede9a51))
+* clarify ownership of data-model definitions (commit [db7a72b4](https://github.com/digital-land/planning-application-data-specification/commit/db7a72b4845114021141ebdcfc9620e928c8b562))
+
+### 🧭 Guidance
+
+* tweak principles for making changes (commit [456899ed](https://github.com/digital-land/planning-application-data-specification/commit/456899ed4ebb32eadefad97d5bae530a11021adb))
+
+
+<a name="v0.2.54"></a>
+## [v0.2.54](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.53...v0.2.54) (2026-09-23)
+
+Fix scope of site visit other-contact details
+
+### 𝌭 Model changes
+
+* use applies-if to scope site visit other-contact details (commit [ee7316c7](https://github.com/digital-land/planning-application-data-specification/commit/ee7316c7808d383e9883631623f9074768075b82))
+
+
+<a name="v0.2.53"></a>
+## [v0.2.53](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.52...v0.2.53) (2026-09-22)
+
+Extend the specification package API
+
+### ⚒️ Tooling
+
+* resolve datasets assembled by a named specification (commit [f29ec8b0](https://github.com/digital-land/planning-application-data-specification/commit/f29ec8b0f732d4c3a1e197f228172e71b908b72e))
+* expose effective codelists on resolved fields (commit [7c90a2ea](https://github.com/digital-land/planning-application-data-specification/commit/7c90a2eae0fccbe72cad450ebab2dd321c6ba2af))
+* reject duplicate direct fields in modules and components (commit [4cde156b](https://github.com/digital-land/planning-application-data-specification/commit/4cde156b446319adb2fc1977cceeffd7b89871d6))
+* add specification view resolution and shared validation (commit [6151c6b7](https://github.com/digital-land/planning-application-data-specification/commit/6151c6b72e30753b2ee347298c182db7cff93669))
+* extend field and container resolution to datasets (commit [4c64fc7b](https://github.com/digital-land/planning-application-data-specification/commit/4c64fc7be52cd93b1837c9bbcc5bf88c6bf512f4))
+* resolve inherited application fields in the package (commit [d735b0de](https://github.com/digital-land/planning-application-data-specification/commit/d735b0dec052a2519e3eddc0d2c92bb1ca05ca19))
+* centralise current combined application queries (commit [719e668f](https://github.com/digital-land/planning-application-data-specification/commit/719e668fef704fb7c34fd2bfa6fbca387a9c3a1d))
+* enable installing the specification API in other projects (commit [745c9309](https://github.com/digital-land/planning-application-data-specification/commit/745c9309057258049deaee0d7a0e9186760fa560))
+* reject explicitly empty applies-if conditions (commit [38fffbd4](https://github.com/digital-land/planning-application-data-specification/commit/38fffbd4d02699a521b91c6bcbdedaf720212180))
+* handle application-type conditions inside applies-if all groups (commit [38b71cb4](https://github.com/digital-land/planning-application-data-specification/commit/38b71cb45d84099966c0e091240dbdb7d6c8640c))
+* validate answer-based applies-if conditions (commit [c5ffe770](https://github.com/digital-land/planning-application-data-specification/commit/c5ffe7707e3dd9757a635bd0b85f22392a564354))
+
+### 𝌭 Model changes
+
+* declare relationship targets in dataset definitions (commit [ad0c9834](https://github.com/digital-land/planning-application-data-specification/commit/ad0c98348b0358344d101ec78f01baf5ed7dd06a))
+* require submission details for Class MA applications (commit [9d8ef17d](https://github.com/digital-land/planning-application-data-specification/commit/9d8ef17de1f3c24ac142a5781a97c704d8a34a28))
+* add Class MA change of use application definition (commit [75b256ac](https://github.com/digital-land/planning-application-data-specification/commit/75b256ac0053f763aa8ef612406e0446d4ce38a5))
+* add Class MA building eligibility module and fields (commit [ce8da36c](https://github.com/digital-land/planning-application-data-specification/commit/ce8da36cd392c6a5a0eca6ff101dd752d37cb4ae))
+* add Class MA works and impacts module and fields (commit [4076c099](https://github.com/digital-land/planning-application-data-specification/commit/4076c099dccfc1cf5b215cab20008b0bb58c84a8))
+* add existing building premises module with alternative submission routes (commit [122d6ec4](https://github.com/digital-land/planning-application-data-specification/commit/122d6ec4e692808d655f3f617c356d0b4ed8d06d))
+* add agricultural tenancy consent module and field (commit [2fa9e8ba](https://github.com/digital-land/planning-application-data-specification/commit/2fa9e8ba6481d3aa38a87bf920b22d92f375c2de))
+* add Class MA proposal eligibility module and fields (commit [84e98346](https://github.com/digital-land/planning-application-data-specification/commit/84e9834613fda86dc4cebb849f82234028ea2a57))
+* clarify agent contact reference must match agent details (commit [9caa72b4](https://github.com/digital-land/planning-application-data-specification/commit/9caa72b41f31b7d795857331d135bd6cd5ed9db5))
+* put BNG details out of scope when the BNG condition does not apply (commit [ca9b7758](https://github.com/digital-land/planning-application-data-specification/commit/ca9b775808e749642461da82f68a58f352149b94))
+
+### 🐛 Bug Fixes
+
+* distinguish waste capacity and throughput units (commit [0054da47](https://github.com/digital-land/planning-application-data-specification/commit/0054da47bdd95aa5b23516368b761a22729b4545))
+* readability of bng moduledefinition (commit [aba5289b](https://github.com/digital-land/planning-application-data-specification/commit/aba5289bda736dc8db0df7735b75d04a027a0a86))
+
+### 📚 Documentation
+
+* align dataset and specification field descriptions (commit [cb24a9c4](https://github.com/digital-land/planning-application-data-specification/commit/cb24a9c46377524c42146f7ecc08c9b6a42f1466))
+* clarify ownership of data-model definitions (commit [a84c8de6](https://github.com/digital-land/planning-application-data-specification/commit/a84c8de606fc9095579e738bdd4368e75cb49334))
+* update waste unit examples and field uniqueness guidance (commit [99950bfd](https://github.com/digital-land/planning-application-data-specification/commit/99950bfd08aab45c61895dfe0228fea6f22d6633))
+* explain view selection and authoring rules (commit [afb26f68](https://github.com/digital-land/planning-application-data-specification/commit/afb26f68b52d54a843d1199e712f957923a7a38a))
+* clarify specification change workflows and co-constraint guidance (commit [92ce8a42](https://github.com/digital-land/planning-application-data-specification/commit/92ce8a425738bbedba279dff51df9632a107723d))
+* explain answer-based applicability and BNG scope (commit [f6cca445](https://github.com/digital-land/planning-application-data-specification/commit/f6cca445b68806873ad531342dc76f4b66f518d0))
+
+
 <a name="v0.2.52"></a>
 ## [v0.2.52](https://github.com/digital-land/planning-application-data-specification/compare/v0.2.51...v0.2.52) (2026-09-11)
 
