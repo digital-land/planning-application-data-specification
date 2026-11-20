@@ -69,7 +69,7 @@ Current V1 boundary:
 
 - works against the installed canonical snapshot or an explicit local checkout
 - evaluates codelist applicability from usage data using selection context
-- evaluates field `applies-if` only for `application-type` conditions, including those inside `all` groups
+- evaluates field `applies-if` only for `application-type` conditions, including those inside nested `all` and `any` groups
 - preserves the complete `applies-if` rule for consumers; `applies=True` means the application-type conditions allow the field, not that any answer conditions have been satisfied
 - exposes `required-if` as raw rule data and does not execute answer-dependent rules
 
@@ -531,7 +531,7 @@ Current behaviour:
 
 - merges static override attributes from the field usage on top of the canonical field definition
 - returns `required-if` as raw rule data
-- evaluates `applies-if` only for `application-type` conditions, including those inside `all` groups
+- evaluates `applies-if` only for `application-type` conditions, including those inside nested `all` and `any` groups
 - preserves answer conditions without evaluating them; consumers must evaluate these before treating the field as in scope
 - returns a resolved field even when it does not apply, with `applies=False`
 
@@ -774,3 +774,5 @@ Expected next additions include:
 Resolved fields and raw `FieldUsage` objects expose `has_fixed_value` and `fixed_value`. Check `has_fixed_value` rather than the truthiness of `fixed_value`: `False` is a valid fixed value. The constraint does not provide a default or change requiredness.
 
 Answer-based `applies-if` rules, including `operator: empty`, remain available in the resolved rule metadata. The package does not evaluate submitted answers or enforce fixed values against a payload; consumers must do so. See [module attributes](../documentation/module.md) and [co-constraints](../documentation/co-constraints.md).
+
+For `applies-if.any`, a field remains available if any application-type branch matches or an answer branch could match. Answer branches remain unresolved until a consumer evaluates the submitted payload.
