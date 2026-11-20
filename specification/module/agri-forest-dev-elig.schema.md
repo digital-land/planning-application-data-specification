@@ -10,8 +10,8 @@ fields:
     required: true
   - field: land-parcel-area
     required: true
-  - field: agri-start-date
-    required: true
+  - field: agri-use-years
+  - field: agri-use-months
   - field: is-necessary-for-agri
     required: true
   - field: details
