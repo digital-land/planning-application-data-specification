@@ -208,3 +208,28 @@ def test_supporting_info_schema_requires_a_complete_route_for_empty_values():
     assert not validator.is_valid({})
     assert not validator.is_valid({"submitted-drawings-document": {}})
     assert not validator.is_valid({"submitted-drawing-references": []})
+
+
+def test_any_scope_height_combinations(project_root):
+    spec = Specification.load(project_root)
+    height = FieldInstance(
+        original=FieldDef(ref="height", name="Height", datatype="decimal"),
+        overrides={"required": True, "applies-if": {"any": [
+            {"application-type": {"in": ["pa-build-agri-forest"]}},
+            {"field": "height-applicable", "value": True},
+        ]}},
+    )
+    for app, payload, expected in [
+        ("pa-build-agri-forest", {"height": 4}, True),
+        ("pa-build-agri-forest", {}, False),
+        ("hh", {"height-applicable": True, "height": 4}, True),
+        ("hh", {"height-applicable": True}, False),
+        ("hh", {"height-applicable": False}, True),
+        ("hh", {"height-applicable": False, "height": 4}, False),
+        ("hh", {"height": 4}, False),
+    ]:
+        properties, required, rules = process_items([height], spec, set(), app)
+        schema = {"type": "object", "properties": properties, "allOf": rules}
+        if required:
+            schema["required"] = required
+        assert Draft7Validator(schema).is_valid(payload) is expected

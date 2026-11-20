@@ -125,7 +125,6 @@ class TestAppliesIfStructure:
         {"field": "answer", "in": [True]},
         {"field": "answer", "contains": "yes"},
         {"field": "answer", "value": True, "operator": "not_empty"},
-        {"any": [{"field": "answer", "value": True}]},
         {"all": [{"field": "answer", "value": True}], "value": True},
         {"application-type": {"in": ["full"]}, "field": "answer", "value": True},
         {"application-type": {"value": "full"}},
@@ -222,19 +221,20 @@ class TestAppliesIfStructure:
         assert "application-type" in output
 
     @pytest.mark.parametrize("group", [None, True, "condition", {}, [], [None], ["field"], [[]], [{}], [{"all": []}]])
-    def test_invalid_all_structure_fails(self, group, capsys):
-        modules = {"bng": {"fields": [{"field": "bng-details", "applies-if": {"all": group}}]}}
+    @pytest.mark.parametrize("operator", ["all", "any"])
+    def test_invalid_all_structure_fails(self, group, capsys, operator):
+        modules = {"bng": {"fields": [{"field": "bng-details", "applies-if": {operator: group}}]}}
 
         assert not check_applies_if_structure(modules)
         output = capsys.readouterr().out
         assert "bng-details" in output
-        assert "applies-if.all" in output
+        assert f"applies-if.{operator}" in output
 
-    @pytest.mark.parametrize("grouped", [False, True])
+    @pytest.mark.parametrize("grouped", [None, "all", "any"])
     def test_answer_only_condition_passes(self, grouped):
         condition = {"field": "bng-condition-applies", "value": True}
         if grouped:
-            condition = {"all": [condition]}
+            condition = {grouped: [condition]}
         modules = {"bng": {"fields": [
             {"field": "bng-condition-applies"},
             {"field": "bng-details", "applies-if": condition},

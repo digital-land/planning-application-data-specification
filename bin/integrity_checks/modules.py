@@ -3,7 +3,7 @@ from integrity_checks.utils import (
     field_usage_requirement_errors,
     get_object_field_names,
     has_reference_error,
-    iter_all_structure_errors,
+    iter_condition_group_errors,
     iter_redundant_field_component_overrides,
     iter_required_if_field_refs,
     iter_required_if_operator_errors,
@@ -152,14 +152,15 @@ def check_attrs(modules):
 
 
 def iter_applies_if_conditions(condition):
-    """Walk scope conditions, including those grouped under all."""
+    """Walk scope conditions, including nested all and any groups."""
     if not isinstance(condition, dict):
         return
     yield condition
-    children = condition.get("all", [])
-    if isinstance(children, list):
-        for child in children:
-            yield from iter_applies_if_conditions(child)
+    for operator in ("all", "any"):
+        children = condition.get(operator, [])
+        if isinstance(children, list):
+            for child in children:
+                yield from iter_applies_if_conditions(child)
 
 
 def check_applies_if_structure(modules, application_types=None):
@@ -204,7 +205,7 @@ def check_applies_if_structure(modules, application_types=None):
                 has_errors = True
                 continue
 
-            structure_errors = list(iter_all_structure_errors(applies_if, "applies-if"))
+            structure_errors = list(iter_condition_group_errors(applies_if, "applies-if"))
             for error in structure_errors:
                 print_error("module", module_name, f"field #{field_def.get('field')} {error}")
                 has_errors = True
@@ -216,12 +217,12 @@ def check_applies_if_structure(modules, application_types=None):
                 # Allow an incomplete equality condition through to the specific
                 # missing-value error below, but reject other vocabularies first.
                 if ("operator" in condition and condition["operator"] != "empty") or set(condition) not in (
-                    {"all"}, {"application-type"}, {"field", "value"}, {"field"}, {"field", "operator"},
+                    {"all"}, {"any"}, {"application-type"}, {"field", "value"}, {"field"}, {"field", "operator"},
                 ):
                     print_error(
                         "module", module_name,
                         f"field #{field_def.get('field')} has an unsupported applies-if condition; "
-                        "use application-type with in, field with value, field with operator: empty, or an all group",
+                        "use application-type with in, field with value, field with operator: empty, or an all or any group",
                     )
                     has_errors = True
                     continue

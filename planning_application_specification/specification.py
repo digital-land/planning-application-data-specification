@@ -885,6 +885,10 @@ class Specification:
             if isinstance(children, list):
                 if not all(matches_application_types(child) for child in children):
                     return False
+            alternatives = condition.get("any")
+            if isinstance(alternatives, list):
+                if not any(matches_application_types(child) for child in alternatives):
+                    return False
             app_type_condition = condition.get("application-type")
             if isinstance(app_type_condition, dict):
                 allowed = normalise_application_types(app_type_condition.get("in"))
