@@ -8,6 +8,9 @@ name: Agricultural and forestry development eligibility
 fields:
   - field: agri-unit-area
     required: true
+  - field: area-unit
+    description: Unit of measurement for the total area of the entire agricultural unit, either square metres or hectares.
+    required: true
   - field: land-parcel-area
     required: true
   - field: agri-use-years
