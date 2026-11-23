@@ -19,7 +19,6 @@ modules:
   - module: agent-details
   - module: applicant-contact
   - module: applicant-details
-  - module: conflict-of-interest
   - module: checklist
   - module: declaration
   - module: site-details
