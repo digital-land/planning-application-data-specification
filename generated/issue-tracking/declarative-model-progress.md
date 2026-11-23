@@ -1,6 +1,6 @@
 # Specification summary
 
-- **Applications**: 28
+- **Applications**: 29
 - **Modules**: 100
 - **Fields**: 557
 - **Components**: 57

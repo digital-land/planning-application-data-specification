@@ -13,7 +13,8 @@ Signed and dated verification of the application's accuracy.
 
 **Validation rules**
 
-- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
+- person-reference must equal an `applicant-details.applicants.reference` or an `agent-details.agent.reference`
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
+- declaration-date must not be before the date of any relevant pre-application application.
 - declaration-confirmed must be `true` for a submission to be valid
