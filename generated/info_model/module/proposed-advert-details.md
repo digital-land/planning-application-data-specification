@@ -15,7 +15,7 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 height-from-ground | Height from ground | Height, in metres, from ground to the base of the advertisement | MAY | in metres
 height | Height | Height, in metres, of dimensions of advertisement | MAY | in metres
-width | Width | Width of dimensions of advertisement | MAY | in metres
+width | Width | Width of the advertisement in metres. | MAY | in metres
 depth | Depth | Depth, in metres, of dimensions of advertisement | MAY | in metres
 symbol-height-max | Symbol height max | Maximum height, in metres, of any individual letters or symbols | MAY | 
 colour | Colour | Colour of proposed sign | MAY | 
