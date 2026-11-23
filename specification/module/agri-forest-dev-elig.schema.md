@@ -14,7 +14,9 @@ fields:
   - field: land-parcel-area
     required: true
   - field: agri-use-years
+    required: true
   - field: agri-use-months
+    required: true
   - field: is-necessary-for-agri
     required: true
   - field: details
@@ -36,13 +38,32 @@ fields:
     required: true
   - field: close-to-aerodrome
     required: true
+  - field: height-applicable
+    applies-if:
+      application-type:
+        in:
+        - pa-road-agri-forest
+        - pa-excavate-agri
+    required: true
   - field: proposed-height
     description: Height of the proposed agricultural or forestry development in metres
+    applies-if:
+      any:
+      - application-type:
+          in:
+          - pa-build-agri-forest
+      - field: height-applicable
+        value: true
     required: true
   - field: affects-heritage
+    description: Would the proposed development affect an ancient monument, archaeological site or listed building or would it be within a Site of Special Scientific Interest or a local nature reserve?
     required: true
   - field: heritage-nature-impact-details
     required-if:
     - field: affects-heritage
       value: true
 ---
+
+This module follows section 5, Agricultural and Forestry Developments, of the prior approval forms for [agricultural or forestry buildings](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form016_england_en.pdf), [private roads for agricultural or forestry use](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form017_england_en.pdf) and [excavation or waste deposit for agriculture](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form018_england_en.pdf).
+
+The building form requires a height in metres. The road and excavation forms also offer Not applicable, represented by the height-applicable answer.
