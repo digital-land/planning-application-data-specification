@@ -9,6 +9,7 @@ fields:
   - field: person
     required: true
   - field: company
+    description: Name of the company or organisation that the agent represents or works for.
   - field: user-role
 entry-date: 2025-05-28
 end-date: ''
