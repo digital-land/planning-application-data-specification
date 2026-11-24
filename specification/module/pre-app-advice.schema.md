@@ -7,9 +7,6 @@ fields:
   required: true
 - field: officer-name
   description: Name of the planning officer who provided the pre-application advice
-  required-if:
-  - field: advice-sought
-    value: true
 - field: reference
   required-if:
   - field: advice-sought
