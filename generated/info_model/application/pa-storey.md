@@ -13,7 +13,6 @@ Enlargement of a dwellinghouse by construction of additional storeys
 * [Applicant contact details](#applicant-contact-details)
 * [Applicant details](#applicant-details)
 * [Checklist](#checklist)
-* [Conflict of interest](#conflict-of-interest)
 * [Declaration](#declaration)
 * [Description of work impacts and risks](#description-of-work-impacts-and-risks)
 * [Eligibility current building](#eligibility-current-building)
@@ -133,7 +132,7 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
 person | Person{} | Detail to help identify a person | MUST | 
-company | Company | The name of a company (that the agent works for) | MAY | 
+company | Company | Name of the company or organisation that the agent represents or works for. | MAY | 
 user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
 
 
@@ -206,6 +205,7 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
 person | Person{} | Detail to help identify a person | MUST | 
+company | Company | Name of the applicant's company or organisation. | MAY | 
 
 
 **Person obj component**
@@ -246,19 +246,6 @@ Checking whether all the requirements of the form have been met, such as proof o
 - All values must be from the national-requirement-type codelist
 - Values must be valid for the current application type
 
-## Conflict of interest
-
-Details of any conflict of interest that may exist between the applicant and planning authority.
-
-**Conflict of interest module**
-
-| reference | name | description | requirement | notes |
-| --- | --- | --- | --- | --- |
-
-**Validation rules**
-
-- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
-
 ## Declaration
 
 Signed and dated verification of the application's accuracy.
@@ -274,9 +261,10 @@ Signed and dated verification of the application's accuracy.
 
 **Validation rules**
 
-- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
+- person-reference must equal an `applicant-details.applicants.reference` or an `agent-details.agent.reference`
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
+- declaration-date must not be before the date of any relevant pre-application application.
 - declaration-confirmed must be `true` for a submission to be valid
 
 ## Description of work impacts and risks
