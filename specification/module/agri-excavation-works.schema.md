@@ -15,10 +15,9 @@ fields:
   - field: prev-excavation-or-deposit
     required: true
   - field: previous-works-area
-    applies-if:
-      field: prev-excavation-or-deposit
-      value: true
-    required: true
+    required-if:
+      - field: prev-excavation-or-deposit
+        value: true
   - field: holding-size
     required: true
   - field: holding-number
@@ -31,10 +30,9 @@ fields:
   - field: affects-water
     required: true
   - field: water-impact-details
-    applies-if:
-      field: affects-water
-      value: true
-    required: true
+    required-if:
+      - field: affects-water
+        value: true
 ---
 
 This module captures section 4 of the [prior approval form for excavation or waste deposition for agriculture, ECAB 2019.1 RP](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form018_england_en.pdf).
