@@ -58,6 +58,52 @@
     "submission-details"
   ],
   "definitions": {
+    "contact-details": {
+      "type": "object",
+      "properties": {
+        "email": {
+          "type": "string"
+        },
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "email",
+        "phone-numbers"
+      ]
+    },
+    "supporting-document": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference"
+      ]
+    },
+    "phone-number": {
+      "type": "object",
+      "properties": {
+        "number": {
+          "type": "string"
+        },
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
+        }
+      },
+      "required": []
+    },
     "agent": {
       "type": "object",
       "properties": {
@@ -141,51 +187,23 @@
         "address-text"
       ]
     },
-    "supporting-document": {
+    "applicant": {
       "type": "object",
       "properties": {
         "reference": {
           "type": "string"
+        },
+        "person": {
+          "$ref": "#/definitions/person"
+        },
+        "company": {
+          "type": "string"
         }
       },
       "required": [
-        "reference"
+        "reference",
+        "person"
       ]
-    },
-    "contact-details": {
-      "type": "object",
-      "properties": {
-        "email": {
-          "type": "string"
-        },
-        "phone-numbers": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/phone-number"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "email",
-        "phone-numbers"
-      ]
-    },
-    "phone-number": {
-      "type": "object",
-      "properties": {
-        "number": {
-          "type": "string"
-        },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
-        }
-      },
-      "required": []
     },
     "site-location": {
       "type": "object",
@@ -242,39 +260,6 @@
         "address-text"
       ]
     },
-    "applicant": {
-      "type": "object",
-      "properties": {
-        "reference": {
-          "type": "string"
-        },
-        "person": {
-          "$ref": "#/definitions/person"
-        },
-        "company": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reference",
-        "person"
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
     "declaration": {
       "type": "object",
       "properties": {
@@ -294,44 +279,34 @@
         "declaration-date"
       ]
     },
-    "hedgerow-removal": {
+    "checklist": {
       "type": "object",
       "properties": {
-        "reason": {
-          "type": "string"
-        },
-        "supporting-documents": {
+        "national-req-types": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/supporting-document"
+            "type": "string"
           },
           "minItems": 1
-        },
-        "hedgerow-length": {
-          "type": "number"
-        },
-        "hedgerow-less-than-30-years": {
-          "type": "boolean"
-        },
-        "planting-evidence-attached": {
-          "type": "boolean"
-        },
-        "interest-declaration": {
-          "type": "string",
-          "enum": [
-            "owner",
-            "agricultural-tenant",
-            "farm-business-tenant",
-            "utility-operator"
-          ]
         }
       },
       "required": [
-        "reason",
-        "supporting-documents",
-        "hedgerow-length",
-        "hedgerow-less-than-30-years",
-        "interest-declaration"
+        "national-req-types"
+      ]
+    },
+    "site-details": {
+      "type": "object",
+      "properties": {
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "site-locations"
       ]
     },
     "pre-app-advice": {
@@ -357,20 +332,6 @@
         "advice-sought"
       ],
       "allOf": [
-        {
-          "if": {
-            "properties": {
-              "advice-sought": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "officer-name"
-            ]
-          }
-        },
         {
           "if": {
             "properties": {
@@ -415,14 +376,60 @@
         }
       ]
     },
-    "agent-details": {
+    "applicant-details": {
       "type": "object",
       "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
         }
       },
-      "required": []
+      "required": [
+        "applicants"
+      ]
+    },
+    "hedgerow-removal": {
+      "type": "object",
+      "properties": {
+        "reason": {
+          "type": "string"
+        },
+        "supporting-documents": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/supporting-document"
+          },
+          "minItems": 1
+        },
+        "hedgerow-length": {
+          "type": "number"
+        },
+        "hedgerow-less-than-30-years": {
+          "type": "boolean"
+        },
+        "planting-evidence-attached": {
+          "type": "boolean"
+        },
+        "interest-declaration": {
+          "type": "string",
+          "enum": [
+            "owner",
+            "agricultural-tenant",
+            "farm-business-tenant",
+            "utility-operator"
+          ]
+        }
+      },
+      "required": [
+        "reason",
+        "supporting-documents",
+        "hedgerow-length",
+        "hedgerow-less-than-30-years",
+        "interest-declaration"
+      ]
     },
     "agent-contact": {
       "type": "object",
@@ -439,35 +446,29 @@
         "contact-details"
       ]
     },
-    "site-details": {
+    "applicant-contact": {
       "type": "object",
       "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
+        "applicant-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
       "required": [
-        "site-locations"
+        "applicant-reference",
+        "contact-details"
       ]
     },
-    "checklist": {
+    "agent-details": {
       "type": "object",
       "properties": {
-        "national-req-types": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
+        "agent": {
+          "$ref": "#/definitions/agent"
         }
       },
-      "required": [
-        "national-req-types"
-      ]
+      "required": []
     },
     "site-visit": {
       "type": "object",
@@ -517,21 +518,6 @@
           ]
         }
       }
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
-      ]
     },
     "submission-details": {
       "type": "object",
@@ -1178,6 +1164,25 @@
         "file"
       ]
     },
+    "fee": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "amount-paid": {
+          "type": "number"
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": []
+    },
     "file": {
       "type": "object",
       "properties": {
@@ -1197,25 +1202,6 @@
       "required": [
         "filename"
       ]
-    },
-    "fee": {
-      "type": "object",
-      "properties": {
-        "amount": {
-          "type": "number"
-        },
-        "amount-paid": {
-          "type": "number"
-        },
-        "transactions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": []
     }
   }
 }
