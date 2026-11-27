@@ -359,7 +359,9 @@ Details of pre-application advice previously received from the planning authorit
 | advice-date | Advice date | Date when pre-application advice was received, in YYYY-MM-DD format | MAY | Rule: is a MUST if `advice-sought` is `True` |
 | advice-summary | Advice summary | Summary of the pre-application advice received from the planning authority | MAY | Rule: is a MUST if `advice-sought` is `True` |
 
+**Validation rules**
 
+- advice-date must be before the application submission date.
 
 ## Site details
 

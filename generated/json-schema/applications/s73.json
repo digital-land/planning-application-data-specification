@@ -70,6 +70,67 @@
     "submission-details"
   ],
   "definitions": {
+    "newspaper-notice": {
+      "type": "object",
+      "properties": {
+        "newspaper-name": {
+          "type": "string"
+        },
+        "publication-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "newspaper-name",
+        "publication-date"
+      ]
+    },
+    "related-application-details": {
+      "type": "object",
+      "properties": {
+        "reference": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        },
+        "decision-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reference",
+        "description",
+        "decision-date"
+      ]
+    },
+    "site-location": {
+      "type": "object",
+      "properties": {
+        "geometry": {
+          "type": "string"
+        },
+        "site-address": {
+          "$ref": "#/definitions/site-address"
+        },
+        "easting": {
+          "type": "number"
+        },
+        "northing": {
+          "type": "number"
+        },
+        "latitude": {
+          "type": "string"
+        },
+        "longitude": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "geometry",
+        "site-address"
+      ]
+    },
     "applicant": {
       "type": "object",
       "properties": {
@@ -110,46 +171,21 @@
         "contact-address"
       ]
     },
-    "site-location": {
+    "contact-address": {
       "type": "object",
       "properties": {
-        "geometry": {
+        "address-text": {
           "type": "string"
         },
-        "site-address": {
-          "$ref": "#/definitions/site-address"
-        },
-        "easting": {
-          "type": "number"
-        },
-        "northing": {
-          "type": "number"
-        },
-        "latitude": {
+        "postcode": {
           "type": "string"
         },
-        "longitude": {
+        "uprn": {
           "type": "string"
         }
       },
       "required": [
-        "geometry",
-        "site-address"
-      ]
-    },
-    "newspaper-notice": {
-      "type": "object",
-      "properties": {
-        "newspaper-name": {
-          "type": "string"
-        },
-        "publication-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "newspaper-name",
-        "publication-date"
+        "address-text"
       ]
     },
     "other-contact": {
@@ -171,41 +207,40 @@
         "email"
       ]
     },
-    "related-application-details": {
+    "contact-details": {
       "type": "object",
       "properties": {
-        "reference": {
+        "email": {
           "type": "string"
         },
-        "description": {
-          "type": "string"
-        },
-        "decision-date": {
-          "type": "string"
+        "phone-numbers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/phone-number"
+          },
+          "minItems": 1
         }
       },
       "required": [
-        "reference",
-        "description",
-        "decision-date"
+        "email",
+        "phone-numbers"
       ]
     },
-    "contact-address": {
+    "phone-number": {
       "type": "object",
       "properties": {
-        "address-text": {
+        "number": {
           "type": "string"
         },
-        "postcode": {
-          "type": "string"
-        },
-        "uprn": {
-          "type": "string"
+        "contact-priority": {
+          "type": "string",
+          "enum": [
+            "primary",
+            "secondary"
+          ]
         }
       },
-      "required": [
-        "address-text"
-      ]
+      "required": []
     },
     "agent": {
       "type": "object",
@@ -272,40 +307,140 @@
         "address-text"
       ]
     },
-    "contact-details": {
+    "agent-details": {
       "type": "object",
       "properties": {
-        "email": {
+        "agent": {
+          "$ref": "#/definitions/agent"
+        }
+      },
+      "required": []
+    },
+    "con-remove-vary": {
+      "type": "object",
+      "properties": {
+        "reason": {
           "type": "string"
         },
-        "phone-numbers": {
+        "condition-change": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "reason"
+      ]
+    },
+    "desc-your-proposal": {
+      "type": "object",
+      "properties": {
+        "related-application": {
+          "$ref": "#/definitions/related-application-details"
+        },
+        "condition-numbers": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/phone-number"
+            "type": "integer"
+          },
+          "minItems": 1
+        },
+        "has-development-started": {
+          "type": "boolean"
+        },
+        "development-start-date": {
+          "type": "string"
+        },
+        "has-development-completed": {
+          "type": "boolean"
+        },
+        "development-completed-date": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "related-application",
+        "has-development-started",
+        "has-development-completed"
+      ],
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "has-development-started": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "development-start-date"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "has-development-completed": {
+                "const": true
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "development-completed-date"
+            ]
+          }
+        }
+      ]
+    },
+    "site-details": {
+      "type": "object",
+      "properties": {
+        "site-locations": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/site-location"
           },
           "minItems": 1
         }
       },
       "required": [
-        "email",
-        "phone-numbers"
+        "site-locations"
       ]
     },
-    "phone-number": {
+    "applicant-contact": {
       "type": "object",
       "properties": {
-        "number": {
+        "applicant-reference": {
           "type": "string"
         },
-        "contact-priority": {
-          "type": "string",
-          "enum": [
-            "primary",
-            "secondary"
-          ]
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
         }
       },
+      "required": [
+        "applicant-reference",
+        "contact-details"
+      ]
+    },
+    "conflict-of-interest": {
+      "type": "object",
+      "properties": {},
       "required": []
+    },
+    "agent-contact": {
+      "type": "object",
+      "properties": {
+        "agent-reference": {
+          "type": "string"
+        },
+        "contact-details": {
+          "$ref": "#/definitions/contact-details"
+        }
+      },
+      "required": [
+        "agent-reference",
+        "contact-details"
+      ]
     },
     "pre-app-advice": {
       "type": "object",
@@ -374,103 +509,6 @@
         }
       ]
     },
-    "desc-your-proposal": {
-      "type": "object",
-      "properties": {
-        "related-application": {
-          "$ref": "#/definitions/related-application-details"
-        },
-        "condition-numbers": {
-          "type": "array",
-          "items": {
-            "type": "integer"
-          },
-          "minItems": 1
-        },
-        "has-development-started": {
-          "type": "boolean"
-        },
-        "development-start-date": {
-          "type": "string"
-        },
-        "has-development-completed": {
-          "type": "boolean"
-        },
-        "development-completed-date": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "related-application",
-        "has-development-started",
-        "has-development-completed"
-      ],
-      "allOf": [
-        {
-          "if": {
-            "properties": {
-              "has-development-started": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "development-start-date"
-            ]
-          }
-        },
-        {
-          "if": {
-            "properties": {
-              "has-development-completed": {
-                "const": true
-              }
-            }
-          },
-          "then": {
-            "required": [
-              "development-completed-date"
-            ]
-          }
-        }
-      ]
-    },
-    "applicant-contact": {
-      "type": "object",
-      "properties": {
-        "applicant-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "applicant-reference",
-        "contact-details"
-      ]
-    },
-    "conflict-of-interest": {
-      "type": "object",
-      "properties": {},
-      "required": []
-    },
-    "agent-contact": {
-      "type": "object",
-      "properties": {
-        "agent-reference": {
-          "type": "string"
-        },
-        "contact-details": {
-          "$ref": "#/definitions/contact-details"
-        }
-      },
-      "required": [
-        "agent-reference",
-        "contact-details"
-      ]
-    },
     "checklist": {
       "type": "object",
       "properties": {
@@ -485,69 +523,6 @@
       "required": [
         "national-req-types"
       ]
-    },
-    "con-remove-vary": {
-      "type": "object",
-      "properties": {
-        "reason": {
-          "type": "string"
-        },
-        "condition-change": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "reason"
-      ]
-    },
-    "site-visit": {
-      "type": "object",
-      "properties": {
-        "can-be-seen-from": {
-          "type": "boolean"
-        },
-        "contact-type": {
-          "type": "string",
-          "enum": [
-            "applicant",
-            "agent",
-            "other"
-          ]
-        },
-        "contact-reference": {
-          "type": "string"
-        },
-        "other-contact": {
-          "$ref": "#/definitions/other-contact"
-        }
-      },
-      "required": [
-        "can-be-seen-from",
-        "contact-type",
-        "contact-reference"
-      ],
-      "if": {
-        "required": [
-          "contact-type"
-        ],
-        "properties": {
-          "contact-type": {
-            "const": "other"
-          }
-        }
-      },
-      "then": {
-        "required": [
-          "other-contact"
-        ]
-      },
-      "else": {
-        "not": {
-          "required": [
-            "other-contact"
-          ]
-        }
-      }
     },
     "ownership-certs": {
       "type": "object",
@@ -604,6 +579,21 @@
         "declaration-date"
       ]
     },
+    "applicant-details": {
+      "type": "object",
+      "properties": {
+        "applicants": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/applicant"
+          },
+          "minItems": 1
+        }
+      },
+      "required": [
+        "applicants"
+      ]
+    },
     "declaration": {
       "type": "object",
       "properties": {
@@ -623,44 +613,54 @@
         "declaration-date"
       ]
     },
-    "agent-details": {
+    "site-visit": {
       "type": "object",
       "properties": {
-        "agent": {
-          "$ref": "#/definitions/agent"
-        }
-      },
-      "required": []
-    },
-    "applicant-details": {
-      "type": "object",
-      "properties": {
-        "applicants": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/applicant"
-          },
-          "minItems": 1
-        }
-      },
-      "required": [
-        "applicants"
-      ]
-    },
-    "site-details": {
-      "type": "object",
-      "properties": {
-        "site-locations": {
-          "type": "array",
-          "items": {
-            "$ref": "#/definitions/site-location"
-          },
-          "minItems": 1
+        "can-be-seen-from": {
+          "type": "boolean"
+        },
+        "contact-type": {
+          "type": "string",
+          "enum": [
+            "applicant",
+            "agent",
+            "other"
+          ]
+        },
+        "contact-reference": {
+          "type": "string"
+        },
+        "other-contact": {
+          "$ref": "#/definitions/other-contact"
         }
       },
       "required": [
-        "site-locations"
-      ]
+        "can-be-seen-from",
+        "contact-type",
+        "contact-reference"
+      ],
+      "if": {
+        "required": [
+          "contact-type"
+        ],
+        "properties": {
+          "contact-type": {
+            "const": "other"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "other-contact"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "other-contact"
+          ]
+        }
+      }
     },
     "submission-details": {
       "type": "object",
@@ -1210,6 +1210,25 @@
         "documents"
       ]
     },
+    "fee": {
+      "type": "object",
+      "properties": {
+        "amount": {
+          "type": "number"
+        },
+        "amount-paid": {
+          "type": "number"
+        },
+        "transactions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        }
+      },
+      "required": []
+    },
     "document": {
       "type": "object",
       "properties": {
@@ -1326,25 +1345,6 @@
       "required": [
         "filename"
       ]
-    },
-    "fee": {
-      "type": "object",
-      "properties": {
-        "amount": {
-          "type": "number"
-        },
-        "amount-paid": {
-          "type": "number"
-        },
-        "transactions": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          },
-          "minItems": 1
-        }
-      },
-      "required": []
     }
   }
 }

@@ -466,7 +466,9 @@ Details of pre-application advice previously received from the planning authorit
 | advice-date | Advice date | Date when pre-application advice was received, in YYYY-MM-DD format | MAY | Rule: is a MUST if `advice-sought` is `True` |
 | advice-summary | Advice summary | Summary of the pre-application advice received from the planning authority | MAY | Rule: is a MUST if `advice-sought` is `True` |
 
+**Validation rules**
 
+- advice-date must be before the application submission date.
 
 ## Description of the proposal
 
@@ -587,8 +589,8 @@ reference | Reference | A unique reference for the data item | MUST |
 
 **Validation rules**
 
-- falling-trees-document reference must match a document in application.documents
-- tree-removal-plan reference must match a document in application.documents
+- falling-trees-document reference must match a document in submission-details.documents
+- tree-removal-plan reference must match a document in submission-details.documents
 
 ## Required codelists
 
