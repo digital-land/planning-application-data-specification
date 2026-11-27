@@ -21,6 +21,8 @@ fields:
     value: true
 module: pre-app-advice
 name: Pre-application advice
+rules:
+- rule: advice-date must be before the application submission date.
 ---
 
 Is `advice-summary` required if the applicant provides a reference to a document they have uploaded?
