@@ -1,9 +1,9 @@
 # Specification summary
 
-- **Applications**: 28
-- **Modules**: 99
-- **Fields**: 547
-- **Components**: 57
-- **Codelists**: 54
+- **Applications**: 33
+- **Modules**: 104
+- **Fields**: 584
+- **Components**: 58
+- **Codelists**: 55
 - **Datasets**: 9
 - **Specifications**: 2

@@ -23,5 +23,5 @@ details | Details | Additional details or information about an item | MAY |  | p
 
 **Validation rules**
 
-- falling-trees-document reference must match a document in application.documents
-- tree-removal-plan reference must match a document in application.documents
+- falling-trees-document reference must match a document in submission-details.documents
+- tree-removal-plan reference must match a document in submission-details.documents

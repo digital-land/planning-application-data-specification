@@ -76,6 +76,7 @@ These are the main patterns currently used.
 | --- | --- | --- |
 | Field applies for an application type | `applies-if` + `application-type` + `in` | Field is in scope for one or more application types. |
 | Field applies when an answer equals a value | `applies-if` + `field` + `value` | Field is allowed only when another answer in the same module matches the value. |
+| Field applies when any condition matches | `applies-if` + `any` | Field is allowed when at least one listed condition is satisfied. |
 | Field applies when all conditions match | `applies-if` + `all` | Field is allowed only when every listed condition is satisfied. |
 | Field applies when another answer is empty | `applies-if` + `field` + `operator: empty` | Field is allowed only when another answer in the same module is missing or empty. |
 | Answer equals a value | `required-if` + `field` + `value` | Field is required when another field has a specific value. |
@@ -86,6 +87,22 @@ These are the main patterns currently used.
 | Unary operator check | `required-if` + `field` + `operator` | Field is required when a state check such as `empty` or `not_empty` is satisfied. |
 | Literal comparison | `required-if` + `field` + `operator` + `value` | Field is required when another field compares with a literal value. |
 | Field comparison | `required-if` + `field` + `operator` + `value-field` | Field is required when one field compares with another field. |
+
+For example, height can apply to every agricultural building proposal or when the height qualifier is true on another route:
+
+```yaml
+- field: proposed-height
+  applies-if:
+    any:
+    - application-type:
+        in:
+        - pa-build-agri-forest
+    - field: height-applicable
+      value: true
+  required: true
+```
+
+At least one branch must match. When neither matches, height must be omitted. A missing answer does not satisfy equality with true. The qualifying field needs its own scope and requiredness. During application selection, answer conditions remain unresolved, so a possible answer branch keeps the field available until payload validation.
 
 ## Operators and operands
 
@@ -126,7 +143,7 @@ For `required-if`, use `any` and `all` when a rule depends on more than one cond
 - `any` means at least one listed condition must be met
 - `all` means every listed condition must be met
 
-For `applies-if`, use `all` to combine application-type and answer conditions. The group must contain a non-empty list of conditions. Its result controls scope, not requiredness.
+For `applies-if`, use `all` when every condition must match and `any` when at least one condition must match. Both groups can contain application-type conditions, answer conditions and nested groups. The group must contain a non-empty list of conditions. Its result controls scope, not requiredness.
 
 The specification should not rely on implied meaning when more than one condition is listed.
 
@@ -232,6 +249,7 @@ The current generator covers these patterns:
 | `required-if` with `any: true` and a list of fields | Partially emitted as checks for the JSON boolean value `true`. |
 | `required-if` with `operator: empty` | Emitted as a condition matching a missing property or an empty string, array, object or null value. |
 | `applies-if` using parent application types | Emitted using package application type inheritance resolution, so a child type such as `outline-some` satisfies rules written for `outline`. |
+| `applies-if` equality and nested `any`/`all` with application-type conditions | Emitted as conditional scope with `anyOf`/`allOf`, requiredness when applicable and prohibition otherwise. |
 
 The current generator does not yet cover these patterns:
 
@@ -242,7 +260,8 @@ The current generator does not yet cover these patterns:
 | `required-if` with `value-field` | Needs field-to-field comparison support. |
 | `applies-if` with `operator: empty` | Needs conditional scope, requiredness and prohibition when the other answer is not empty. |
 | Module field `fixed-value` | Needs an exact typed value constraint, without inserting defaults or changing requiredness. |
-| Explicit `all` conditions | Needs reliable `allOf` generation for grouped conditions. |
+
+| Explicit `all` in `required-if` | Needs reliable `allOf` generation for grouped conditions. |
 | `field` paths outside the current object, such as `agent-details.agent.reference` | Needs a decision about whether dotted paths represent literal property names or nested object traversal in generated JSON Schema. |
 
 Until these patterns are implemented, generated schemas can be conservative.

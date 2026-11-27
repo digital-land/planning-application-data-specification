@@ -28,4 +28,4 @@ rules:
 allow-additional-properties: false
 ---
 
-This application definition covers the [Class MA application form, version ECAB 2024.1](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form064_england_en.pdf). It inherits applicant, agent, contact, site, checklist and declaration information from `prior-approval`. The inherited `conflict-of-interest` module is also retained, although it is not present in this paper form.
+This application definition covers the [Class MA application form, version ECAB 2024.1](https://ecab.planningportal.co.uk/uploads/appPDF/E2734Form064_england_en.pdf). It inherits applicant, agent, contact, site, checklist and declaration information from `prior-approval`.

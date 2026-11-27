@@ -3,6 +3,7 @@ import json
 from functools import lru_cache
 from glob import glob
 from pathlib import Path
+from types import SimpleNamespace
 from typing import Any, Dict, List, Set, Tuple
 
 from bin.json_schema_helpers import parse_and_generate_required_if_rules
@@ -126,6 +127,24 @@ def resolve_field_schema(field_item, specification) -> Dict[str, Any]:
     return schema
 
 
+def applies_if_schema(condition, specification, app_ref):
+    """Compile scope against an application selection and submitted answers."""
+    for operator, keyword in (("all", "allOf"), ("any", "anyOf")):
+        if operator in condition:
+            children = [applies_if_schema(child, specification, app_ref)
+                        for child in condition[operator]]
+            if any(child is None for child in children):
+                return None
+            return {keyword: children}
+    if "application-type" in condition:
+        usage = SimpleNamespace(overrides={"applies-if": condition})
+        return specification._usage_applies(usage, SelectionContext(application_type=app_ref))
+    if "field" in condition and "value" in condition:
+        reference = condition["field"]
+        return {"required": [reference], "properties": {reference: {"const": condition["value"]}}}
+    return None
+
+
 def process_items(
     items: List[Any],
     specification,
@@ -165,12 +184,25 @@ def process_items(
             is_required = overrides.get("required", field.required)
             required_if = overrides.get("required-if")
 
+            scope = overrides.get("applies-if")
+            compiled_scope = applies_if_schema(scope, specification, app_ref) if isinstance(scope, dict) else None
+            if compiled_scope is not None and compiled_scope is not True:
+                conditional_rules.append({
+                    "if": compiled_scope,
+                    "then": {"required": [field.ref]} if is_required else {},
+                    "else": {"not": {"required": [field.ref]}},
+                })
+                is_required = False
+
             if required_if:
                 parsed_conditional_rules = parse_and_generate_required_if_rules(
                     field.ref, required_if
                 )
                 if parsed_conditional_rules:
-                    conditional_rules.extend(parsed_conditional_rules)
+                    if compiled_scope is not None and compiled_scope is not True:
+                        conditional_rules.append({"if": compiled_scope, "then": {"allOf": parsed_conditional_rules}})
+                    else:
+                        conditional_rules.extend(parsed_conditional_rules)
                 else:
                     required.append(field.ref)
             elif is_required:

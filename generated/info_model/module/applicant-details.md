@@ -15,6 +15,7 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
 person | Person{} | Detail to help identify a person | MUST | 
+company | Company | Name of the applicant's company or organisation. | MAY | 
 
 
 **Person obj component**

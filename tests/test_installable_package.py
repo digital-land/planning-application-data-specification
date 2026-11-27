@@ -551,6 +551,8 @@ def test_resolve_field_evaluates_all_but_defers_answer_conditions(project_root):
     answer = {"field": "description", "value": "example"}
     conditions = [
         (answer, True),
+        ({"any": [{"application-type": {"in": ["hh"]}}, answer]}, True),
+        ({"any": [{"application-type": {"in": ["hh"]}}, {"application-type": {"in": ["lbc"]}}]}, False),
         ({"all": [{"application-type": {"in": ["full"]}}, answer]}, True),
         ({"all": [{"application-type": {"in": ["full"]}}, {"all": [{"application-type": {"in": ["hh"]}}, answer]}]}, False),
     ]

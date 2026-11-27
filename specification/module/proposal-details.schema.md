@@ -13,6 +13,7 @@ fields:
       - hh
       - lbc
       - outline
+      - pa-roof-solar-nondom
       - reserved-matters
       - technical-details-consent
   description: A description of the development, works, change of use or reserved

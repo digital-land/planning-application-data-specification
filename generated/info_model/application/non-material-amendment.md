@@ -134,7 +134,7 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
 person | Person{} | Detail to help identify a person | MUST | 
-company | Company | The name of a company (that the agent works for) | MAY | 
+company | Company | Name of the company or organisation that the agent represents or works for. | MAY | 
 user-role | User role | The role of the named individual. Agent or proxy | MAY | Select from the **user-role-type** enum
 
 
@@ -207,6 +207,7 @@ field | name | description | required | notes
 -- | -- | -- | -- | --
 reference | Reference | A unique reference for the data item | MUST | 
 person | Person{} | Detail to help identify a person | MUST | 
+company | Company | Name of the applicant's company or organisation. | MAY | 
 
 
 **Person obj component**
@@ -279,9 +280,10 @@ Signed and dated verification of the application's accuracy.
 
 **Validation rules**
 
-- person-reference must equal an `applicant-details.applicants.reference` or an `applicant-details.agent.reference`
+- person-reference must equal an `applicant-details.applicants.reference` or an `agent-details.agent.reference`
 - declaration-date must be in YYYY-MM-DD format
 - declaration-date must not be in the future
+- declaration-date must not be before the date of any relevant pre-application application.
 - declaration-confirmed must be `true` for a submission to be valid
 
 ## Description of your proposal
@@ -399,12 +401,14 @@ Details of pre-application advice previously received from the planning authorit
 | reference | name | description | requirement | notes |
 | --- | --- | --- | --- | --- |
 | advice-sought | Pre-application advice sought | Whether pre-application advice has been sought from the planning authority | MUST |  |
-| officer-name | Planning officer name | Name of the planning officer who provided the pre-application advice | MAY | Rule: is a MUST if `advice-sought` is `True` |
+| officer-name | Planning officer name | Name of the planning officer who provided the pre-application advice | MAY |  |
 | reference | Reference | A unique reference for the data item | MAY | Rule: is a MUST if `advice-sought` is `True` |
 | advice-date | Advice date | Date when pre-application advice was received, in YYYY-MM-DD format | MAY | Rule: is a MUST if `advice-sought` is `True` |
 | advice-summary | Advice summary | Summary of the pre-application advice received from the planning authority | MAY | Rule: is a MUST if `advice-sought` is `True` |
 
+**Validation rules**
 
+- advice-date must be before the application submission date.
 
 ## Site details
 

@@ -9,6 +9,7 @@ fields:
   - field: height-from-ground
   - field: height
   - field: width
+    description: Width of the advertisement in metres.
   - field: depth
   - field: symbol-height-max
   - field: colour
