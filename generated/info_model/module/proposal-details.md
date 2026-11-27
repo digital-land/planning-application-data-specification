@@ -6,7 +6,7 @@ What development, works or change of use is proposed
 
 | reference | name | description | only for application | requirement | notes |
 | --- | --- | --- | --- | --- | --- |
-| description | Proposal description | A description of the development, works, change of use or reserved matters for which approval is sought | advertising, demolition-con-area, full, hh, lbc, outline, reserved-matters, technical-details-consent | MUST |  |
+| description | Proposal description | A description of the development, works, change of use or reserved matters for which approval is sought | advertising, demolition-con-area, full, hh, lbc, outline, pa-roof-solar-nondom, reserved-matters, technical-details-consent | MUST |  |
 | reserved-matters | Reserved matters[] | Identifies which reserved matters are being submitted for approval as part of this application | outline, reserved-matters | MUST | Select from the **reserved-matter-type** enum |
 | related-application | Related application{} | Details about the approved development, as shown in the decision letter | reserved-matters | MUST |  |
 | proposal-started | Proposal started | Has any work on the proposal already been started | advertising, demolition-con-area, full, hh, lbc, outline, reserved-matters, technical-details-consent | MUST |  |
