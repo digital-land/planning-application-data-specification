@@ -53,6 +53,6 @@ fields:
 module: trees-hedges
 name: Trees and hedges information
 rules:
-- rule: falling-trees-document reference must match a document in application.documents
-- rule: tree-removal-plan reference must match a document in application.documents
+- rule: falling-trees-document reference must match a document in submission-details.documents
+- rule: tree-removal-plan reference must match a document in submission-details.documents
 ---
